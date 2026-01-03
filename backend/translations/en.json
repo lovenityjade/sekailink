@@ -1,0 +1,10 @@
+{
+    "nav_home": "Lobby",
+    "nav_studio": "YAML Studio",
+    "nav_vault": "ROM Vault",
+    "nav_settings": "Settings",
+    "btn_save": "Save",
+    "msg_welcome": "Welcome to SekaiLink",
+    "badge_supporter": "Supporter",
+    "badge_host": "Host Master"
+}

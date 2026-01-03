@@ -1,0 +1,118 @@
+# ==========================================
+# SekaiLink .gitignore
+# ==========================================
+
+# ------------------------------------------
+# CRITICAL: Environment & Secrets
+# ------------------------------------------
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+secrets/
+
+# ------------------------------------------
+# Python
+# ------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# ------------------------------------------
+# User Uploads (NEVER commit user data!)
+# ------------------------------------------
+backend/static/uploads/
+backend/static/uploads/yamls/
+
+# Note: ROMs are now stored in /tmp/generation/roms/ (temporary)
+# and automatically cleaned up
+*.z64
+*.n64
+*.sfc
+*.smc
+*.gba
+*.gb
+*.gbc
+*.nes
+
+# ------------------------------------------
+# Logs
+# ------------------------------------------
+*.log
+logs/
+*.log.*
+
+# ------------------------------------------
+# Database
+# ------------------------------------------
+*.db
+*.sqlite
+*.sqlite3
+
+# ------------------------------------------
+# Docker
+# ------------------------------------------
+docker-compose.override.yml
+
+# ------------------------------------------
+# IDE & Editors
+# ------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# ------------------------------------------
+# Testing
+# ------------------------------------------
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# ------------------------------------------
+# Temporary files
+# ------------------------------------------
+tmp/
+temp/
+*.tmp
+*.bak
+*.cache
+
+# ------------------------------------------
+# OS Files
+# ------------------------------------------
+Thumbs.db
+.DS_Store
+.Spotlight-V100
+.Trashes

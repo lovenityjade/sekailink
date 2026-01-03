@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod:*)",
+      "Bash(test:*)",
+      "Bash(docker:*)",
+      "Bash(docker-compose:*)",
+      "Bash(python3:*)",
+      "Bash(curl:*)",
+      "Bash(git clone:*)",
+      "Bash(tree:*)",
+      "Bash(wc:*)",
+      "Bash(grep:*)",
+      "Bash(git add:*)",
+      "Bash(git init:*)",
+      "Bash(git config:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: Complete Phase 1 - Foundation & Translation\n\n🎯 PHASE 1 COMPLETE: Foundation & Translation\n\nDatabase Models:\n- Created comprehensive models system \\(models/__init__.py\\)\n- Added 10 NEW models: Game, FavoriteGame, Friend, Ban, Warning, UserRating,\n  UserReview, ServerRating, TwitchConnection, CustomWorld\n- Updated 7 existing models with new fields\n- Total: 17 database models with full relationships\n\nState Machine:\n- Implemented racetime.gg pattern \\(models/choices.py\\)\n- Lobby states: open → pending → generating → ready → active → finished/cancelled/failed\n- Player states: waiting → ready → active → finished/dnf/forfeit\n- State transition validation\n\nTranslation:\n- Translated index.html to English\n- Translated dashboard.html to English \\(all French removed\\)\n- lobby.html already in English\n\nGame Catalog:\n- Created populate_games.py script\n- Scans Archipelago worlds directory\n- Auto-detects ROM requirements\n- Ready to populate 89+ games\n\nCode Refactoring:\n- Refactored main.py to use models package\n- Removed 100+ lines of inline model definitions\n- Clean modular architecture\n- All imports from models package\n\nTesting:\n- Docker containers restart successfully\n- All database tables created\n- API boots without errors\n- Existing functionality preserved\n\nDocumentation:\n- Created PROGRESS.md \\(detailed status tracking\\)\n- Created README.md \\(comprehensive project overview\\)\n- Updated .gitignore\n\nFiles Created:\n- backend/models/__init__.py \\(390 lines\\)\n- backend/models/choices.py \\(155 lines\\)\n- backend/populate_games.py \\(190 lines\\)\n- PROGRESS.md\n- README.md\n\nFiles Modified:\n- backend/main.py \\(refactored\\)\n- frontend/src/index.html \\(translated\\)\n- frontend/src/dashboard.html \\(translated\\)\n\nNext Phase: Core Pages & Navigation \\(17 templates to create\\)\n\n---\n\n🤖 Generated with Claude Code\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\n\nInspired by racetime.gg architecture\nEOF\n\\)\")"
+    ]
+  }
+}

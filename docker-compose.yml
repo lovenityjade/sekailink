@@ -1,0 +1,156 @@
+services:
+  # --- BASE DE DONNÉES ---
+  db:
+    image: postgres:15-alpine
+    container_name: sekailink_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # --- CACHE & TASK QUEUE (Pour la génération de seeds) ---
+  redis:
+    image: redis:7-alpine
+    container_name: sekailink_cache
+    restart: always
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # --- BACKEND API (Géré par Gunicorn sur le port 7000) ---
+  api:
+    build: ./backend
+    container_name: sekailink_api
+    restart: always
+    ports:
+      - "7000:7000"
+    volumes:
+      - ./backend:/app
+      - ./archipelago_core:/opt/Archipelago
+      - ./backend/static/uploads:/app/static/uploads
+      - ./backend/static/boxarts:/app/static/boxarts
+    environment:
+      # Flask Configuration
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
+      - FLASK_ENV=${FLASK_ENV:-production}
+      - FLASK_DEBUG=${FLASK_DEBUG:-False}
+
+      # Database
+      - DATABASE_URL=${DATABASE_URL}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+      # Redis & Celery
+      - REDIS_URL=${REDIS_URL}
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}
+
+      # Archipelago
+      - ARCHIPELAGO_PATH=/opt/Archipelago
+      - SERVER_PORT_RANGE_START=${SERVER_PORT_RANGE_START:-38281}
+      - SERVER_PORT_RANGE_END=${SERVER_PORT_RANGE_END:-38381}
+
+      # Discord OAuth2
+      - DISCORD_CLIENT_ID=${DISCORD_CLIENT_ID}
+      - DISCORD_CLIENT_SECRET=${DISCORD_CLIENT_SECRET}
+      - DISCORD_REDIRECT_URI=${DISCORD_REDIRECT_URI}
+
+      # Twitch OAuth (Optional)
+      - TWITCH_CLIENT_ID=${TWITCH_CLIENT_ID}
+      - TWITCH_CLIENT_SECRET=${TWITCH_CLIENT_SECRET}
+      - TWITCH_REDIRECT_URI=${TWITCH_REDIRECT_URI}
+
+      # Email/SMTP (Optional)
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_FROM=${SMTP_FROM}
+
+      # Application Settings
+      - BASE_URL=${BASE_URL}
+      - MAX_UPLOAD_SIZE=${MAX_UPLOAD_SIZE:-52428800}
+      - RATE_LIMIT_PER_MINUTE=${RATE_LIMIT_PER_MINUTE:-60}
+      - SESSION_LIFETIME=${SESSION_LIFETIME:-604800}
+
+      # Security
+      - CSRF_ENABLED=${CSRF_ENABLED:-True}
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
+
+      # Logging
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+
+      # Maintenance
+      - MAINTENANCE_MODE=${MAINTENANCE_MODE:-False}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # --- CELERY WORKER (Pour les tâches de génération) ---
+  celery_worker:
+    build: ./backend
+    container_name: sekailink_celery
+    restart: always
+    command: celery -A tasks worker --loglevel=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./backend:/app
+      - ./archipelago_core:/opt/Archipelago
+      - ./backend/static/uploads:/app/static/uploads
+    environment:
+      # Database
+      - DATABASE_URL=${DATABASE_URL}
+
+      # Redis & Celery
+      - REDIS_URL=${REDIS_URL}
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}
+
+      # Archipelago
+      - ARCHIPELAGO_PATH=/opt/Archipelago
+
+      # Logging
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # --- BOT DISCORD ---
+  bot:
+    build: ./discord_bot
+    container_name: sekailink_bot
+    restart: always
+    volumes:
+      - ./discord_bot:/app
+    environment:
+      # API Connection
+      - API_URL=http://api:7000
+
+      # Discord Bot
+      - DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN}
+      - DISCORD_GUILD_ID=${DISCORD_GUILD_ID}
+
+      # Logging
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:

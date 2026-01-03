@@ -1,0 +1,559 @@
+import os
+import sys
+import subprocess
+import shutil
+import logging
+from datetime import datetime
+from celery import Celery
+
+# --- LOGGING CONFIGURATION ---
+log_level = os.getenv('LOG_LEVEL', 'INFO').upper()
+logging.basicConfig(
+    level=getattr(logging, log_level),
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger("SekaiLink.Celery")
+
+# --- ENVIRONMENT VALIDATION ---
+def validate_celery_environment():
+    """
+    Validate that required environment variables for Celery are set.
+    Fails fast with clear error messages if any are missing.
+    """
+    required_vars = {
+        'REDIS_URL': 'Redis connection URL for Celery broker',
+        'DATABASE_URL': 'PostgreSQL database connection URL',
+        'ARCHIPELAGO_PATH': 'Path to Archipelago core installation',
+    }
+
+    missing_vars = []
+
+    for var_name, description in required_vars.items():
+        value = os.getenv(var_name)
+        if value is None or value.strip() == '':
+            missing_vars.append(f"  - {var_name}: {description}")
+
+    if missing_vars:
+        error_msg = "\n" + "="*70 + "\n"
+        error_msg += "❌ CELERY CONFIGURATION ERROR: Missing required environment variables\n"
+        error_msg += "="*70 + "\n\n"
+        error_msg += "Missing variables:\n"
+        error_msg += "\n".join(missing_vars) + "\n\n"
+        error_msg += "="*70 + "\n"
+        error_msg += "How to fix:\n"
+        error_msg += "  1. Ensure .env file exists and is properly configured\n"
+        error_msg += "  2. Check docker-compose.yml passes environment variables to celery_worker\n"
+        error_msg += "  3. See ENV_SETUP.md for detailed setup instructions\n"
+        error_msg += "="*70 + "\n"
+
+        logger.error(error_msg)
+        sys.exit(1)
+
+    logger.info("✅ Celery environment validation passed")
+
+# Validate environment before initializing Celery
+validate_celery_environment()
+
+# Configuration de Celery (Messagerie via Redis)
+# Environment is already validated, safe to use without defaults
+celery_app = Celery(
+    'tasks',
+    broker=os.getenv('REDIS_URL'),
+    backend=os.getenv('CELERY_RESULT_BACKEND', os.getenv('REDIS_URL'))
+)
+
+# Celery configuration
+celery_app.conf.update(
+    task_serializer='json',
+    accept_content=['json'],
+    result_serializer='json',
+    timezone='UTC',
+    enable_utc=True,
+    task_track_started=True,
+    task_time_limit=3600,  # 1 hour max per task
+    task_soft_time_limit=3300,  # 55 minutes soft limit
+)
+
+logger.info("🚀 Celery worker initialized successfully")
+
+# --- PORT POOL MANAGEMENT ---
+PORT_POOL_START = 38281
+PORT_POOL_END = 38380
+
+def find_available_port():
+    """
+    Find an available port from the pool (38281-38380).
+    Checks database for ports in use by active lobbies.
+    """
+    from sqlalchemy import create_engine
+    from sqlalchemy.orm import sessionmaker
+
+    engine = create_engine(os.getenv('DATABASE_URL'))
+    Session = sessionmaker(bind=engine)
+    db_session = Session()
+
+    try:
+        # Import Lobby model
+        sys.path.append('/app')
+        from main import Lobby
+
+        # Get all active lobbies with assigned ports
+        active_lobbies = db_session.query(Lobby).filter(
+            Lobby.server_port.isnot(None),
+            Lobby.status.in_(['generating', 'ready', 'active'])
+        ).all()
+
+        used_ports = {lobby.server_port for lobby in active_lobbies}
+
+        # Find first available port
+        for port in range(PORT_POOL_START, PORT_POOL_END + 1):
+            if port not in used_ports:
+                logger.info(f"📍 Found available port: {port}")
+                return port
+
+        logger.error("❌ No available ports in pool!")
+        return None
+
+    finally:
+        db_session.close()
+
+
+def start_archipelago_server(lobby_id, seed_file_path, port):
+    """
+    Start an Archipelago MultiServer for a lobby.
+    Returns the process object.
+    """
+    archipelago_path = os.getenv('ARCHIPELAGO_PATH')
+
+    # Check for MultiServer.py (newer) or ArchipelagoServer.py (older)
+    server_script = None
+    for script_name in ['MultiServer.py', 'ArchipelagoServer.py']:
+        script_path = os.path.join(archipelago_path, script_name)
+        if os.path.exists(script_path):
+            server_script = script_path
+            break
+
+    if not server_script:
+        logger.error(f"❌ No Archipelago server script found in {archipelago_path}")
+        return None
+
+    cmd = [
+        "python3",
+        server_script,
+        "--port", str(port),
+        seed_file_path
+    ]
+
+    # Create log file for server output
+    log_dir = f"/tmp/generation/{lobby_id}/logs"
+    os.makedirs(log_dir, exist_ok=True)
+    log_file_path = f"{log_dir}/server.log"
+
+    log_file = open(log_file_path, 'w')
+
+    logger.info(f"🌐 Starting Archipelago server on port {port}")
+    logger.info(f"   Command: {' '.join(cmd)}")
+    logger.info(f"   Logs: {log_file_path}")
+
+    try:
+        process = subprocess.Popen(
+            cmd,
+            cwd=archipelago_path,
+            stdout=log_file,
+            stderr=subprocess.STDOUT,
+            start_new_session=True  # Detach from parent process
+        )
+
+        # Store PID for later cleanup
+        pid_file = f"/tmp/generation/{lobby_id}/server.pid"
+        with open(pid_file, 'w') as f:
+            f.write(str(process.pid))
+
+        logger.info(f"✅ Archipelago server started (PID: {process.pid})")
+        return process
+
+    except Exception as e:
+        logger.error(f"❌ Failed to start Archipelago server: {e}")
+        log_file.close()
+        return None
+
+
+@celery_app.task(bind=True)
+def run_generator(self, lobby_id, yaml_paths, output_name):
+    """
+    Execute Archipelago seed generation with automatic cleanup.
+
+    This task:
+    1. Creates temporary lobby directory
+    2. Copies YAMLs (already done by main.py)
+    3. Copies required ROMs from user storage
+    4. Runs Archipelago generation
+    5. Saves patch URLs to database
+    6. Schedules cleanup
+    """
+    from sqlalchemy import create_engine
+    from sqlalchemy.orm import sessionmaker
+
+    lobby_dir = f"/tmp/generation/{lobby_id}"
+    patches_dir = f"{lobby_dir}/patches"
+    os.makedirs(patches_dir, exist_ok=True)
+
+    # Chemin vers le cœur d'Archipelago (monté dans Docker)
+    archipelago_path = os.getenv('ARCHIPELAGO_PATH')
+
+    logger.info(f"🎮 Starting generation for lobby {lobby_id} in {lobby_dir}")
+
+    # Connect to database
+    engine = create_engine(os.getenv('DATABASE_URL'))
+    Session = sessionmaker(bind=engine)
+    db_session = Session()
+
+    try:
+        # Import models dynamically
+        import sys
+        sys.path.append('/app')
+        from main import Lobby, LobbyPlayer, RomFile, User
+
+        # Get lobby and players
+        lobby = db_session.query(Lobby).get(lobby_id)
+        if not lobby:
+            logger.error(f"Lobby {lobby_id} not found")
+            return {"status": "ERROR", "details": "Lobby not found"}
+
+        players = db_session.query(LobbyPlayer).filter_by(lobby_id=lobby_id).all()
+        logger.info(f"📋 Found {len(players)} players in lobby")
+
+        # Copy ROMs for players who need them
+        rom_games = ['Pokemon Emerald', 'Pokemon FireRed', 'Zelda ALTTP', 'Super Metroid', 'A Link to the Past']
+
+        for player in players:
+            user = db_session.query(User).get(player.user_id)
+            logger.info(f"👤 Processing player: {user.username} (game: {player.game})")
+
+            # Check if this game needs a ROM
+            if player.rom_file_id:
+                rom = db_session.query(RomFile).get(player.rom_file_id)
+                if rom and rom.file_path and os.path.exists(rom.file_path):
+                    # Copy ROM to lobby directory
+                    rom_dest = os.path.join(lobby_dir, os.path.basename(rom.file_path))
+                    shutil.copy2(rom.file_path, rom_dest)
+                    logger.info(f"✅ Copied ROM for {user.username}: {rom.filename}")
+                else:
+                    logger.warning(f"⚠️ ROM not found for {user.username}")
+
+        # Run Archipelago generation
+        logger.info("🔧 Running Archipelago Generate.py...")
+
+        cmd = [
+            "python3",
+            f"{archipelago_path}/Generate.py",
+            "--player_files_path", lobby_dir,
+            "--outputpath", patches_dir,
+            "--seed", str(os.urandom(8).hex())
+        ]
+
+        logger.info(f"Command: {' '.join(cmd)}")
+        process = subprocess.run(cmd, capture_output=True, text=True, timeout=600, cwd=archipelago_path)
+
+        if process.returncode != 0:
+            logger.error(f"❌ Generation failed: {process.stderr}")
+            lobby.status = 'failed'
+            db_session.commit()
+
+            # Emit WebSocket event
+            emit_generation_complete(lobby_id, False, None, process.stderr)
+
+            cleanup_lobby_files.delay(lobby_id)
+            return {"status": "FAILED", "error": process.stderr}
+
+        logger.info(f"✅ Generation completed successfully")
+        logger.info(f"Output: {process.stdout}")
+
+        # Find generated files
+        generated_files = []
+        for filename in os.listdir(patches_dir):
+            if filename.endswith(('.zip', '.apbp', '.aplttp', '.apsoe', '.apsmz3', '.appatch')):
+                generated_files.append(filename)
+                logger.info(f"📦 Found patch file: {filename}")
+
+        # Map patch files to players
+        # Archipelago typically names files like "AP_<seed>_P<player_number>_<game>.zip"
+        # or creates individual patch files per player
+
+        if not generated_files:
+            logger.error("❌ No patch files generated")
+            lobby.status = 'failed'
+            db_session.commit()
+            emit_generation_complete(lobby_id, False, None, "No patch files generated")
+            cleanup_lobby_files.delay(lobby_id)
+            return {"status": "FAILED", "error": "No patch files generated"}
+
+        # Update players with patch URLs
+        for idx, player in enumerate(players):
+            user = db_session.query(User).get(player.user_id)
+
+            # Try to match patch file to player
+            # Simple approach: use index or find file with player name
+            patch_file = None
+
+            # Look for file with username
+            for f in generated_files:
+                if user.username.lower() in f.lower():
+                    patch_file = f
+                    break
+
+            # If not found, use main zip file (multiworld case)
+            if not patch_file and generated_files:
+                patch_file = generated_files[0]  # Use first file (usually the main .zip)
+
+            if patch_file:
+                player.patch_url = f"/api/lobbies/{lobby_id}/patches/{patch_file}"
+                logger.info(f"✅ Assigned patch to {user.username}: {patch_file}")
+
+        # Find and assign server port
+        port = find_available_port()
+        if not port:
+            logger.error("❌ No available ports for Archipelago server")
+            lobby.status = 'failed'
+            db_session.commit()
+            emit_generation_complete(lobby_id, False, None, "No available server ports")
+            cleanup_lobby_files.delay(lobby_id)
+            return {"status": "FAILED", "error": "No available server ports"}
+
+        # Start Archipelago server
+        # Use the main .zip file as the seed
+        seed_file = os.path.join(patches_dir, generated_files[0])
+        server_process = start_archipelago_server(lobby_id, seed_file, port)
+
+        if not server_process:
+            logger.error("❌ Failed to start Archipelago server")
+            lobby.status = 'failed'
+            db_session.commit()
+            emit_generation_complete(lobby_id, False, None, "Failed to start game server")
+            cleanup_lobby_files.delay(lobby_id)
+            return {"status": "FAILED", "error": "Failed to start game server"}
+
+        # Update lobby status
+        lobby.status = 'ready'
+        lobby.seed_url = f"/api/lobbies/{lobby_id}/patches/{generated_files[0]}"
+        lobby.server_port = port
+        lobby.started_at = datetime.utcnow()
+        db_session.commit()
+
+        logger.info(f"🎉 Generation complete for lobby {lobby_id}!")
+
+        # Emit WebSocket event
+        emit_generation_complete(lobby_id, True, lobby.seed_url, None)
+
+        # Schedule cleanup after 24 hours
+        cleanup_lobby_files.apply_async(args=[lobby_id], countdown=86400)
+
+        return {
+            "status": "SUCCESS",
+            "lobby_id": lobby_id,
+            "patches": generated_files,
+            "seed_url": lobby.seed_url
+        }
+
+    except subprocess.TimeoutExpired:
+        logger.error(f"⏱️ Generation timeout for lobby {lobby_id}")
+
+        lobby = db_session.query(Lobby).get(lobby_id)
+        if lobby:
+            lobby.status = 'failed'
+            db_session.commit()
+
+        emit_generation_complete(lobby_id, False, None, "Generation timeout (10 minutes)")
+        cleanup_lobby_files.delay(lobby_id)
+        return {"status": "ERROR", "details": "Generation timeout"}
+
+    except Exception as e:
+        logger.error(f"❌ Generation error for lobby {lobby_id}: {str(e)}")
+        logger.exception(e)
+
+        try:
+            lobby = db_session.query(Lobby).get(lobby_id)
+            if lobby:
+                lobby.status = 'failed'
+                db_session.commit()
+        except:
+            pass
+
+        emit_generation_complete(lobby_id, False, None, str(e))
+        cleanup_lobby_files.delay(lobby_id)
+        return {"status": "ERROR", "details": str(e)}
+
+    finally:
+        db_session.close()
+
+
+def emit_generation_complete(lobby_id, success, seed_url, error):
+    """Emit WebSocket event for generation completion"""
+    try:
+        # This would normally use socketio.emit, but we're in Celery
+        # For now, we'll update the database and let the frontend poll
+        # TODO: Use Redis pub/sub for real-time updates
+        logger.info(f"Generation complete: success={success}, seed_url={seed_url}, error={error}")
+    except Exception as e:
+        logger.error(f"Failed to emit WebSocket event: {e}")
+
+
+@celery_app.task
+def stop_archipelago_server(lobby_id):
+    """
+    Stop the Archipelago server for a lobby.
+    Reads the PID from file and kills the process.
+    """
+    pid_file = f"/tmp/generation/{lobby_id}/server.pid"
+
+    if not os.path.exists(pid_file):
+        logger.warning(f"No server PID file found for lobby {lobby_id}")
+        return {"status": "skipped", "reason": "no pid file"}
+
+    try:
+        with open(pid_file, 'r') as f:
+            pid = int(f.read().strip())
+
+        logger.info(f"🛑 Stopping Archipelago server for lobby {lobby_id} (PID: {pid})")
+
+        # Try to kill the process
+        try:
+            os.kill(pid, 15)  # SIGTERM - graceful shutdown
+            logger.info(f"✅ Sent SIGTERM to process {pid}")
+
+            # Wait a bit, then force kill if still running
+            import time
+            time.sleep(2)
+
+            try:
+                os.kill(pid, 9)  # SIGKILL - force kill
+                logger.info(f"✅ Sent SIGKILL to process {pid}")
+            except ProcessLookupError:
+                logger.info(f"✅ Process {pid} already terminated")
+
+        except ProcessLookupError:
+            logger.info(f"✅ Process {pid} not running")
+
+        return {"status": "stopped", "pid": pid}
+
+    except Exception as e:
+        logger.error(f"Failed to stop server for lobby {lobby_id}: {str(e)}")
+        return {"status": "error", "error": str(e)}
+
+
+@celery_app.task
+def cleanup_lobby_files(lobby_id):
+    """
+    Clean up temporary files for a lobby after generation.
+    This removes YAMLs, ROMs, and generated files from /tmp/generation/{lobby_id}
+    Also stops the Archipelago server if running.
+    """
+    # Stop the server first
+    stop_archipelago_server(lobby_id)
+
+    lobby_dir = f"/tmp/generation/{lobby_id}"
+
+    if not os.path.exists(lobby_dir):
+        logger.warning(f"Lobby directory {lobby_dir} does not exist, nothing to clean")
+        return {"status": "skipped", "reason": "directory not found"}
+
+    try:
+        # Get directory size for logging
+        total_size = sum(
+            os.path.getsize(os.path.join(dirpath, filename))
+            for dirpath, _, filenames in os.walk(lobby_dir)
+            for filename in filenames
+        )
+
+        # Remove the entire directory
+        shutil.rmtree(lobby_dir)
+
+        logger.info(f"🗑️ Cleaned up lobby {lobby_id} directory ({total_size / 1024 / 1024:.2f} MB freed)")
+        return {
+            "status": "cleaned",
+            "lobby_id": lobby_id,
+            "size_freed_mb": total_size / 1024 / 1024
+        }
+
+    except Exception as e:
+        logger.error(f"Failed to cleanup lobby {lobby_id}: {str(e)}")
+        return {"status": "error", "error": str(e)}
+
+
+@celery_app.task
+def cleanup_old_roms():
+    """
+    Monthly cleanup task to remove old ROM files.
+    Removes ROMs older than 30 days from /tmp/generation/roms/
+
+    This should be scheduled to run on the 1st of each month.
+    """
+    from datetime import timedelta
+    from sqlalchemy import create_engine
+    from sqlalchemy.orm import sessionmaker
+
+    logger.info("🗑️ Starting monthly ROM cleanup")
+
+    rom_base = "/tmp/generation/roms"
+    if not os.path.exists(rom_base):
+        logger.info("No ROM directory found, nothing to clean")
+        return {"status": "skipped", "reason": "no roms directory"}
+
+    # Connect to database to update records
+    engine = create_engine(os.getenv('DATABASE_URL'))
+    Session = sessionmaker(bind=engine)
+    db_session = Session()
+
+    cutoff_date = datetime.utcnow() - timedelta(days=30)
+    cleaned_count = 0
+    freed_space = 0
+
+    try:
+        # Import RomFile model dynamically to avoid circular imports
+        from main import RomFile
+
+        # Find old ROM records
+        old_roms = db_session.query(RomFile).filter(
+            RomFile.uploaded_at < cutoff_date
+        ).all()
+
+        for rom in old_roms:
+            # Delete physical file
+            if rom.file_path and os.path.exists(rom.file_path):
+                try:
+                    file_size = os.path.getsize(rom.file_path)
+                    os.remove(rom.file_path)
+                    freed_space += file_size
+                    logger.info(f"Deleted old ROM: {rom.file_path}")
+                except Exception as e:
+                    logger.error(f"Failed to delete ROM file {rom.file_path}: {e}")
+
+            # Delete database record
+            db_session.delete(rom)
+            cleaned_count += 1
+
+        db_session.commit()
+
+        # Also clean up any orphaned user directories
+        for user_dir in os.listdir(rom_base):
+            user_path = os.path.join(rom_base, user_dir)
+            if os.path.isdir(user_path) and not os.listdir(user_path):
+                # Remove empty user directories
+                os.rmdir(user_path)
+                logger.info(f"Removed empty ROM directory: {user_path}")
+
+        logger.info(f"✅ ROM cleanup complete: {cleaned_count} ROMs removed, {freed_space / 1024 / 1024:.2f} MB freed")
+
+        return {
+            "status": "success",
+            "roms_cleaned": cleaned_count,
+            "space_freed_mb": freed_space / 1024 / 1024
+        }
+
+    except Exception as e:
+        logger.error(f"ROM cleanup failed: {str(e)}")
+        db_session.rollback()
+        return {"status": "error", "error": str(e)}
+
+    finally:
+        db_session.close()

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SekaiLink - Archipelago Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --bg: #0a0a0c; --accent: #00ff88; --text: #e0e0e0; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center; }
+        .hero { max-width: 600px; padding: 20px; }
+        h1 { font-size: 3rem; margin-bottom: 10px; color: #fff; }
+        .accent { color: var(--accent); }
+        .btn-login { background: #5865F2; color: #fff; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 10px; font-size: 1.2rem; transition: 0.3s; }
+        .btn-login:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+        footer { position: absolute; bottom: 30px; font-size: 0.9rem; opacity: 0.6; }
+        a { color: var(--accent); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Sekai<span class="accent">Link</span></h1>
+        <p>Next-generation Multiworld hosting.</p>
+        <p style="margin-bottom: 40px;">Powered by <a href="https://archipelago.gg" target="_blank">Archipelago</a></p>
+        <a href="/api/auth/login" class="btn-login">
+            <i class="fab fa-discord"></i> Login with Discord
+        </a>
+    </div>
+    <footer>
+        SekaiLink is not affiliated with official Archipelago.gg technical support
+    </footer>
+</body>
+</html>
