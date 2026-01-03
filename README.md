@@ -259,7 +259,7 @@ For SekaiLink issues, use our Discord server. For Archipelago issues, visit the 
 
 SekaiLink is free to use! Donations help cover server costs.
 
-- VPS hosting: ~$20/month
+- VPS hosting: ~$40/month
 - Domain: ~$15/year
 - Development time: Volunteer
 
