@@ -190,20 +190,82 @@ def login():
 @app.route('/api/auth/callback')
 def callback():
     code = request.args.get('code')
-    data = {'client_id': DISCORD_CLIENT_ID, 'client_secret': DISCORD_CLIENT_SECRET, 'grant_type': 'authorization_code', 'code': code, 'redirect_uri': DISCORD_REDIRECT_URI}
-    r = requests.post('https://discord.com/api/oauth2/token', data=data).json()
-    token = r.get('access_token')
-    u = requests.get('https://discord.com/api/users/@me', headers={'Authorization': f'Bearer {token}'}).json()
-    user = User.query.filter_by(discord_id=u['id']).first()
-    if not user:
-        user = User(id=str(uuid.uuid4()), discord_id=u['id'], username=u['username'], avatar_url=f"https://cdn.discordapp.com/avatars/{u['id']}/{u['avatar']}.png", email=u.get('email'))
-        db.session.add(user)
-    else:
-        user.username = u['username']
-        user.avatar_url = f"https://cdn.discordapp.com/avatars/{u['id']}/{u['avatar']}.png"
-    db.session.commit()
-    session['user_id'] = user.id
-    return redirect("/dashboard.html")
+
+    # Error handling for OAuth
+    if not code:
+        logger.error("OAuth callback: No code provided")
+        return "OAuth Error: No authorization code provided", 400
+
+    # Exchange code for token
+    data = {
+        'client_id': DISCORD_CLIENT_ID,
+        'client_secret': DISCORD_CLIENT_SECRET,
+        'grant_type': 'authorization_code',
+        'code': code,
+        'redirect_uri': DISCORD_REDIRECT_URI
+    }
+
+    try:
+        token_response = requests.post('https://discord.com/api/oauth2/token', data=data)
+        token_response.raise_for_status()
+        r = token_response.json()
+
+        if 'access_token' not in r:
+            logger.error(f"OAuth token exchange failed: {r}")
+            return f"OAuth Error: Failed to get access token - {r.get('error', 'Unknown error')}", 400
+
+        token = r['access_token']
+
+        # Get user info from Discord
+        user_response = requests.get('https://discord.com/api/users/@me', headers={'Authorization': f'Bearer {token}'})
+        user_response.raise_for_status()
+        u = user_response.json()
+
+        if 'id' not in u:
+            logger.error(f"Discord user API returned invalid data: {u}")
+            return "OAuth Error: Failed to get user information from Discord", 400
+
+        # Create or update user
+        user = User.query.filter_by(discord_id=u['id']).first()
+        if not user:
+            user = User(
+                id=str(uuid.uuid4()),
+                discord_id=u['id'],
+                username=u['username'],
+                avatar_url=f"https://cdn.discordapp.com/avatars/{u['id']}/{u.get('avatar', 'default')}.png",
+                email=u.get('email')
+            )
+            db.session.add(user)
+            logger.info(f"Created new user: {user.username} ({user.discord_id})")
+        else:
+            user.username = u['username']
+            user.avatar_url = f"https://cdn.discordapp.com/avatars/{u['id']}/{u.get('avatar', 'default')}.png"
+            logger.info(f"Updated existing user: {user.username} ({user.discord_id})")
+
+        db.session.commit()
+
+        # Store user object in session (not just ID)
+        session['user_id'] = user.id
+        session['user'] = {
+            'id': user.id,
+            'username': user.username,
+            'avatar': user.avatar_url,
+            'email': user.email,
+            'discord_id': user.discord_id,
+            'role': user.role,
+            'bio': user.bio,
+            'pronouns': user.pronouns
+        }
+
+        logger.info(f"User {user.username} logged in successfully")
+        return redirect("/dashboard.html")
+
+    except requests.exceptions.RequestException as e:
+        logger.error(f"OAuth request failed: {str(e)}")
+        return f"OAuth Error: Failed to communicate with Discord - {str(e)}", 500
+    except Exception as e:
+        logger.error(f"OAuth callback error: {str(e)}")
+        return f"OAuth Error: {str(e)}", 500
 
 @app.route('/api/auth/logout')
 def logout():
@@ -224,6 +286,257 @@ def me():
         return jsonify({"status": "updated"})
     return jsonify({"logged_in": True, "username": user.username, "avatar": user.avatar_url, "bio": user.bio, "pronouns": user.pronouns})
 
+@app.route('/api/me/favorites', methods=['GET'])
+def get_user_favorites():
+    """Get user's favorite games"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    favorites = FavoriteGame.query.filter_by(user_id=uid).all()
+    games = []
+    for fav in favorites:
+        game = Game.query.get(fav.game_id)
+        if game:
+            games.append({
+                'id': game.id,
+                'name': game.name,
+                'slug': game.slug,
+                'boxart_url': game.boxart_url or '/static/boxarts/default.png',
+                'requires_rom': game.requires_rom,
+                'sync_count': game.sync_count,
+                'favorited_at': fav.created_at.isoformat()
+            })
+
+    return jsonify(games)
+
+@app.route('/api/friends', methods=['GET', 'POST'])
+def manage_friends():
+    """Get friends list or add a friend"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    if request.method == 'GET':
+        # Get friends and blacklist
+        friends = Friend.query.filter_by(user_id=uid).all()
+        result = {'friends': [], 'blacklist': []}
+
+        for friend in friends:
+            friend_user = User.query.get(friend.friend_id)
+            if friend_user:
+                friend_data = {
+                    'id': friend_user.id,
+                    'username': friend_user.username,
+                    'avatar': friend_user.avatar_url,
+                    'is_online': (datetime.utcnow() - friend_user.last_seen).seconds < 300 if friend_user.last_seen else False,
+                    'added_at': friend.created_at.isoformat()
+                }
+                if friend.is_blacklisted:
+                    result['blacklist'].append(friend_data)
+                else:
+                    result['friends'].append(friend_data)
+
+        return jsonify(result)
+
+    # POST - Add friend or blacklist
+    data = request.json
+    friend_username = data.get('username')
+    is_blacklist = data.get('blacklist', False)
+
+    if not friend_username:
+        return jsonify({"error": "Username required"}), 400
+
+    friend_user = User.query.filter_by(username=friend_username).first()
+    if not friend_user:
+        return jsonify({"error": "User not found"}), 404
+
+    if friend_user.id == uid:
+        return jsonify({"error": "Cannot add yourself"}), 400
+
+    # Check if already exists
+    existing = Friend.query.filter_by(user_id=uid, friend_id=friend_user.id).first()
+    if existing:
+        # Update blacklist status
+        existing.is_blacklisted = is_blacklist
+        db.session.commit()
+        return jsonify({"status": "updated", "blacklisted": is_blacklist})
+
+    # Create new friend entry
+    new_friend = Friend(user_id=uid, friend_id=friend_user.id, is_blacklisted=is_blacklist)
+    db.session.add(new_friend)
+    db.session.commit()
+
+    return jsonify({"status": "added", "blacklisted": is_blacklist})
+
+@app.route('/api/friends/<friend_id>', methods=['DELETE'])
+def remove_friend(friend_id):
+    """Remove a friend or unblock from blacklist"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    friend = Friend.query.filter_by(user_id=uid, friend_id=friend_id).first()
+    if not friend:
+        return jsonify({"error": "Friend not found"}), 404
+
+    db.session.delete(friend)
+    db.session.commit()
+
+    return jsonify({"status": "removed"})
+
+# --- GAMES API ---
+@app.route('/api/games', methods=['GET'])
+def list_games():
+    """
+    Get all games with optional filtering.
+
+    Query params:
+    - search: Search by name (case-insensitive)
+    - rom: 'required' or 'not_required'
+    - world_type: 'official' or 'custom'
+    - is_active: 'true' or 'false'
+    - sort: 'name', 'sync_count', 'created_at' (default: name)
+    - order: 'asc' or 'desc' (default: asc for name, desc for sync_count)
+    """
+    query = Game.query
+
+    # Search filter
+    search = request.args.get('search', '').strip()
+    if search:
+        query = query.filter(Game.name.ilike(f'%{search}%'))
+
+    # ROM requirement filter
+    rom_filter = request.args.get('rom')
+    if rom_filter == 'required':
+        query = query.filter(Game.requires_rom == True)
+    elif rom_filter == 'not_required':
+        query = query.filter(Game.requires_rom == False)
+
+    # World type filter
+    world_type = request.args.get('world_type')
+    if world_type in ['official', 'custom']:
+        query = query.filter(Game.world_type == world_type)
+
+    # Active status filter
+    is_active = request.args.get('is_active')
+    if is_active == 'true':
+        query = query.filter(Game.is_active == True)
+    elif is_active == 'false':
+        query = query.filter(Game.is_active == False)
+
+    # Sorting
+    sort_by = request.args.get('sort', 'name')
+    order = request.args.get('order', 'asc' if sort_by == 'name' else 'desc')
+
+    if sort_by == 'sync_count':
+        query = query.order_by(Game.sync_count.desc() if order == 'desc' else Game.sync_count.asc())
+    elif sort_by == 'created_at':
+        query = query.order_by(Game.created_at.desc() if order == 'desc' else Game.created_at.asc())
+    else:  # Default to name
+        query = query.order_by(Game.name.asc() if order == 'asc' else Game.name.desc())
+
+    games = query.all()
+
+    # Get user favorites if logged in
+    user_favorites = set()
+    uid = session.get('user_id')
+    if uid:
+        favorites = FavoriteGame.query.filter_by(user_id=uid).all()
+        user_favorites = {f.game_id for f in favorites}
+
+    return jsonify([{
+        'id': g.id,
+        'name': g.name,
+        'slug': g.slug,
+        'description': g.description,
+        'boxart_url': g.boxart_url or '/static/boxarts/default.png',
+        'requires_rom': g.requires_rom,
+        'world_type': g.world_type,
+        'sync_count': g.sync_count,
+        'is_active': g.is_active,
+        'is_favorited': g.id in user_favorites
+    } for g in games])
+
+@app.route('/api/games/<slug>', methods=['GET'])
+def get_game(slug):
+    """Get detailed information about a specific game."""
+    game = Game.query.filter_by(slug=slug).first()
+    if not game:
+        return jsonify({'error': 'Game not found'}), 404
+
+    # Get user favorite status if logged in
+    is_favorited = False
+    uid = session.get('user_id')
+    if uid:
+        favorite = FavoriteGame.query.filter_by(user_id=uid, game_id=game.id).first()
+        is_favorited = favorite is not None
+
+    # Get active lobbies for this game
+    active_lobbies = []
+    lobbies = Lobby.query.filter(
+        Lobby.status.in_(['open', 'pending', 'ready', 'active'])
+    ).all()
+
+    # Filter lobbies that have players with this game
+    for lobby in lobbies:
+        # Check if any player in this lobby is playing this game
+        players = LobbyPlayer.query.filter_by(lobby_id=lobby.id).all()
+        for player in players:
+            if player.game == game.name:
+                active_lobbies.append({
+                    'id': lobby.id,
+                    'name': lobby.name,
+                    'slug': lobby.slug,
+                    'host_name': User.query.get(lobby.host_id).username if lobby.host_id else 'Unknown',
+                    'player_count': len(players),
+                    'max_players': lobby.max_players,
+                    'status': lobby.status,
+                    'created_at': lobby.created_at.isoformat()
+                })
+                break
+
+    return jsonify({
+        'id': game.id,
+        'name': game.name,
+        'slug': game.slug,
+        'description': game.description,
+        'boxart_url': game.boxart_url or '/static/boxarts/default.png',
+        'requires_rom': game.requires_rom,
+        'world_type': game.world_type,
+        'sync_count': game.sync_count,
+        'is_active': game.is_active,
+        'is_favorited': is_favorited,
+        'active_lobbies': active_lobbies,
+        'created_at': game.created_at.isoformat()
+    })
+
+@app.route('/api/games/<slug>/favorite', methods=['POST'])
+def toggle_favorite(slug):
+    """Toggle favorite status for a game (requires authentication)."""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({'error': 'Not authenticated'}), 401
+
+    game = Game.query.filter_by(slug=slug).first()
+    if not game:
+        return jsonify({'error': 'Game not found'}), 404
+
+    # Check if already favorited
+    favorite = FavoriteGame.query.filter_by(user_id=uid, game_id=game.id).first()
+
+    if favorite:
+        # Unfavorite
+        db.session.delete(favorite)
+        db.session.commit()
+        return jsonify({'status': 'unfavorited', 'is_favorited': False})
+    else:
+        # Favorite
+        new_favorite = FavoriteGame(user_id=uid, game_id=game.id)
+        db.session.add(new_favorite)
+        db.session.commit()
+        return jsonify({'status': 'favorited', 'is_favorited': True})
+
 @app.route('/api/yamls', methods=['GET', 'POST'])
 def handle_yamls():
     uid = session.get('user_id')
@@ -240,6 +553,41 @@ def handle_yamls():
         db.session.commit()
         return jsonify({"status": "saved"})
     except: return jsonify({"error": "invalid yaml"}), 400
+
+@app.route('/api/yamls/<int:yaml_id>', methods=['PUT', 'DELETE'])
+def manage_yaml(yaml_id):
+    """Edit or delete a YAML file"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    yaml_file = YamlFile.query.filter_by(id=yaml_id, user_id=uid).first()
+    if not yaml_file:
+        return jsonify({"error": "YAML file not found"}), 404
+
+    if request.method == 'DELETE':
+        db.session.delete(yaml_file)
+        db.session.commit()
+        return jsonify({"status": "deleted"})
+
+    # PUT - Update YAML
+    data = request.json
+    try:
+        # Validate YAML content
+        y_data = yaml.safe_load(data.get('content', yaml_file.content))
+        game_name = next((k for k in y_data if k not in ['name', 'description', 'requires']), yaml_file.game)
+
+        # Update fields
+        if 'filename' in data:
+            yaml_file.filename = data['filename']
+        if 'content' in data:
+            yaml_file.content = data['content']
+            yaml_file.game = game_name
+
+        db.session.commit()
+        return jsonify({"status": "updated", "id": yaml_file.id})
+    except Exception as e:
+        return jsonify({"error": f"Invalid YAML: {str(e)}"}), 400
 
 @app.route('/api/roms', methods=['GET'])
 def list_roms():
@@ -704,6 +1052,175 @@ def kick_player(lobby_id):
 
     return jsonify({"message": "player kicked"}), 200
 
+@app.route('/api/lobbies/<int:lobby_id>/chat', methods=['GET', 'POST'])
+def lobby_chat(lobby_id):
+    """Get or send chat messages in a lobby"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    lobby = Lobby.query.get(lobby_id)
+    if not lobby:
+        return jsonify({"error": "Lobby not found"}), 404
+
+    # Check if user is in lobby
+    player = LobbyPlayer.query.filter_by(lobby_id=lobby_id, user_id=uid).first()
+    if not player:
+        return jsonify({"error": "Not in this lobby"}), 403
+
+    if request.method == 'GET':
+        # Get chat messages
+        limit = request.args.get('limit', 100, type=int)
+        messages = ChatMessage.query.filter_by(lobby_id=lobby_id)\
+            .filter(ChatMessage.deleted == False)\
+            .order_by(ChatMessage.sent_at.desc())\
+            .limit(limit)\
+            .all()
+
+        result = []
+        for msg in reversed(messages):  # Reverse to get chronological order
+            user_data = None
+            if msg.user_id:
+                user = User.query.get(msg.user_id)
+                if user:
+                    user_data = {
+                        'username': user.username,
+                        'avatar': user.avatar_url
+                    }
+
+            result.append({
+                'id': msg.id,
+                'user': user_data,
+                'message': msg.message,
+                'type': msg.message_type,
+                'sent_at': msg.sent_at.isoformat(),
+                'is_pinned': msg.is_pinned
+            })
+
+        return jsonify(result)
+
+    # POST - Send message
+    data = request.json
+    message_text = data.get('message', '').strip()
+
+    if not message_text or len(message_text) > 500:
+        return jsonify({"error": "Invalid message length"}), 400
+
+    new_message = ChatMessage(
+        lobby_id=lobby_id,
+        user_id=uid,
+        message=message_text,
+        message_type='user'
+    )
+    db.session.add(new_message)
+    db.session.commit()
+
+    return jsonify({"status": "sent", "id": new_message.id}), 201
+
+@app.route('/api/lobbies/<int:lobby_id>/settings', methods=['GET', 'PUT'])
+def lobby_settings(lobby_id):
+    """Get or update lobby settings (host only for PUT)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    lobby = Lobby.query.get(lobby_id)
+    if not lobby:
+        return jsonify({"error": "Lobby not found"}), 404
+
+    settings = LobbySettings.query.filter_by(lobby_id=lobby_id).first()
+    if not settings:
+        return jsonify({"error": "Settings not found"}), 404
+
+    if request.method == 'GET':
+        return jsonify({
+            'max_players': settings.max_players,
+            'time_limit_hours': settings.time_limit_hours,
+            'sync_rules': settings.sync_rules,
+            'allow_multigame': settings.allow_multigame,
+            'allow_broadcast': settings.allow_broadcast,
+            'disallow_rom_games': settings.disallow_rom_games,
+            'disallow_custom_worlds': settings.disallow_custom_worlds,
+            'voice_chat_enabled': settings.voice_chat_enabled,
+            'blacklisted_games': json.loads(settings.blacklisted_games) if settings.blacklisted_games else []
+        })
+
+    # PUT - Update settings (host only)
+    if lobby.host_id != uid:
+        return jsonify({"error": "Only host can update settings"}), 403
+
+    # Can't update settings after generation started
+    if lobby.status not in ['open', 'pending']:
+        return jsonify({"error": "Cannot update settings after generation"}), 400
+
+    data = request.json
+
+    # Update allowed fields
+    if 'max_players' in data:
+        settings.max_players = max(2, min(data['max_players'], 100))
+    if 'time_limit_hours' in data:
+        settings.time_limit_hours = data['time_limit_hours']
+    if 'sync_rules' in data:
+        settings.sync_rules = data['sync_rules']
+    if 'allow_multigame' in data:
+        settings.allow_multigame = data['allow_multigame']
+    if 'allow_broadcast' in data:
+        settings.allow_broadcast = data['allow_broadcast']
+    if 'disallow_rom_games' in data:
+        settings.disallow_rom_games = data['disallow_rom_games']
+    if 'disallow_custom_worlds' in data:
+        settings.disallow_custom_worlds = data['disallow_custom_worlds']
+    if 'voice_chat_enabled' in data:
+        settings.voice_chat_enabled = data['voice_chat_enabled']
+    if 'blacklisted_games' in data:
+        settings.blacklisted_games = json.dumps(data['blacklisted_games'])
+
+    db.session.commit()
+
+    return jsonify({"status": "updated"})
+
+@app.route('/api/users/<user_id>', methods=['GET'])
+def get_user_profile(user_id):
+    """Get public user profile"""
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Get user stats
+    total_syncs = LobbyPlayer.query.filter_by(user_id=user_id, status='finished').count()
+    total_dnf = LobbyPlayer.query.filter_by(user_id=user_id, status='dnf').count()
+
+    # Get server rating
+    server_rating = ServerRating.query.filter_by(user_id=user_id).first()
+
+    # Get user rating (average from other users)
+    user_ratings = UserRating.query.filter_by(rated_user_id=user_id).all()
+    avg_rating = 0
+    if user_ratings:
+        total = sum(r.punctuality + r.respect_others + r.respect_rules + r.fair_release for r in user_ratings)
+        avg_rating = total / (len(user_ratings) * 4)  # Average out of 5
+
+    return jsonify({
+        'id': user.id,
+        'username': user.username,
+        'avatar': user.avatar_url,
+        'bio': user.bio,
+        'pronouns': user.pronouns,
+        'created_at': user.created_at.isoformat(),
+        'last_seen': user.last_seen.isoformat() if user.last_seen else None,
+        'is_online': (datetime.utcnow() - user.last_seen).seconds < 300 if user.last_seen else False,
+        'stats': {
+            'total_syncs': total_syncs,
+            'total_dnf': total_dnf,
+            'completion_rate': round(total_syncs / (total_syncs + total_dnf) * 100, 1) if (total_syncs + total_dnf) > 0 else 0
+        },
+        'rating': {
+            'user_rating': round(avg_rating, 2),
+            'server_rating': server_rating.rating if server_rating else 5.0,
+            'total_reviews': len(user_ratings)
+        }
+    })
+
 @app.route('/api/generate', methods=['POST'])
 def generate_seed():
     """Start seed generation for a lobby"""
@@ -1103,7 +1620,16 @@ def handle_generation_complete(data):
 @app.route('/')
 def index():
     """Landing page"""
-    return render_template('index.html', user=session.get('user'))
+    from models import Game, Lobby
+
+    # Fetch top games by sync count
+    games = Game.query.order_by(Game.sync_count.desc()).limit(12).all()
+
+    # Fetch active lobbies (for now, just get all lobbies since we don't have state field yet)
+    # TODO: Filter by state once Lobby model is updated with state field
+    lobbies = Lobby.query.limit(10).all()
+
+    return render_template('index.html', user=session.get('user'), games=games, lobbies=lobbies)
 
 @app.route('/dashboard.html')
 def dashboard():
@@ -1118,10 +1644,20 @@ def lobby_page():
     return render_template('lobby.html', user=session.get('user'))
 
 @app.route('/game/<slug>')
-@app.route('/game.html')
-def game_page(slug=None):
+def game_page(slug):
     """Individual game page"""
-    return render_template('game.html', user=session.get('user'))
+    game = Game.query.filter_by(slug=slug).first()
+    if not game:
+        return "Game not found", 404
+
+    # Get user data if logged in
+    user_data = None
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+        if user:
+            user_data = {'username': user.username, 'avatar': user.avatar_url}
+
+    return render_template('game.html', user=user_data, game=game, slug=slug)
 
 @app.route('/create_room.html')
 def create_room_page():
@@ -1134,7 +1670,24 @@ def create_room_page():
 @app.route('/profile.html')
 def profile_page(user_id=None):
     """User profile page"""
-    return render_template('profile.html', user=session.get('user'))
+    # TODO: Fetch profile user from database
+    placeholder_profile_user = {
+        'id': user_id or 1,
+        'username': 'SampleUser',
+        'avatar': '/static/favicon.png',
+        'bio': 'This profile will load from the database once APIs are implemented.',
+        'pronouns': 'they/them',
+        'created_at': '2026-01-01',
+        'sync_count': 0,
+        'server_rating': 5.0,
+        'ratings': {
+            'punctuality': 5.0,
+            'respect_others': 5.0,
+            'respect_rules': 5.0,
+            'valid_release': 5.0
+        }
+    }
+    return render_template('profile.html', user=session.get('user'), profile_user=placeholder_profile_user)
 
 @app.route('/moderation.html')
 def moderation_page():
@@ -1195,6 +1748,31 @@ def credits_page():
 def contact_page():
     """Contact form"""
     return render_template('contact.html', user=session.get('user'))
+
+@app.route('/favicon.ico')
+def favicon():
+    """Serve favicon from static folder"""
+    return send_file(os.path.join(app.static_folder, 'favicon.png'), mimetype='image/png')
+
+@app.route('/games')
+def games_list():
+    """Games list page"""
+    # TODO: Fetch games from database
+    return render_template('index.html', user=session.get('user'))
+
+@app.route('/lobbies')
+def lobbies_list():
+    """Active lobbies list page"""
+    # TODO: Fetch lobbies from database
+    return render_template('index.html', user=session.get('user'))
+
+@app.route('/settings')
+def settings_page():
+    """User settings page - requires authentication"""
+    if 'user' not in session:
+        return redirect('/api/auth/login')
+    # TODO: Create settings.html template
+    return render_template('dashboard.html', user=session.get('user'))
 
 if __name__ == '__main__':
     # Use socketio.run() instead of app.run() for WebSocket support

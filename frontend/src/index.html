@@ -138,7 +138,7 @@
 
         <div class="text-center mt-xl">
             <p class="text-muted mb-md">
-                <strong>89+ games supported</strong> from Archipelago
+                <strong>82+ games supported</strong> from Archipelago
             </p>
             <a href="/games" class="btn btn-outline">View All Games</a>
         </div>
@@ -215,41 +215,82 @@
         });
     }
 
-    // Search and filter functionality for games
+    // Fetch and display games from API
+    const gameGrid = document.getElementById('gameGrid');
     const gameSearch = document.getElementById('gameSearch');
     const gameFilter = document.getElementById('gameFilter');
-    const gameCards = document.querySelectorAll('.game-card');
+    let allGames = [];
+
+    async function loadGames() {
+        try {
+            const response = await fetch('/api/games?sort=name&order=asc');
+            if (!response.ok) {
+                console.error('Failed to load games');
+                return;
+            }
+
+            allGames = await response.json();
+            displayGames(allGames);
+        } catch (error) {
+            console.error('Error loading games:', error);
+        }
+    }
+
+    function displayGames(games) {
+        if (!gameGrid) return;
+
+        if (games.length === 0) {
+            gameGrid.innerHTML = '<div class="text-center p-xl"><p class="text-muted">No games found</p></div>';
+            return;
+        }
+
+        gameGrid.innerHTML = games.map(game => `
+            <div class="game-card" data-game="${game.slug}" data-requires-rom="${game.requires_rom}">
+                <img src="${game.boxart_url}" alt="${escapeHtml(game.name)}" class="game-boxart">
+                <h3 class="game-name">${escapeHtml(game.name)}</h3>
+                <div class="game-stats">
+                    <span class="text-muted">${game.sync_count} syncs</span>
+                    ${game.requires_rom ? '<span class="badge badge-warning" title="ROM Required">ROM</span>' : ''}
+                </div>
+            </div>
+        `).join('');
+
+        // Make game cards clickable
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const slug = card.dataset.game;
+                if (slug) window.location.href = `/game/${slug}`;
+            });
+        });
+    }
 
     function filterGames() {
         const query = gameSearch ? gameSearch.value.toLowerCase() : '';
         const filter = gameFilter ? gameFilter.value : 'all';
 
-        gameCards.forEach(card => {
-            const name = card.querySelector('.game-name')?.textContent.toLowerCase() || '';
-            const requiresRom = card.dataset.requiresRom === 'true';
-
+        const filtered = allGames.filter(game => {
             // Search filter
-            const matchesSearch = name.includes(query);
+            const matchesSearch = game.name.toLowerCase().includes(query);
 
             // Category filter
             let matchesFilter = true;
-            if (filter === 'rom') matchesFilter = requiresRom;
-            if (filter === 'no-rom') matchesFilter = !requiresRom;
+            if (filter === 'rom') matchesFilter = game.requires_rom;
+            if (filter === 'no-rom') matchesFilter = !game.requires_rom;
+            if (filter === 'popular') matchesFilter = game.sync_count > 0;
 
-            // Show/hide card
-            card.style.display = (matchesSearch && matchesFilter) ? '' : 'none';
+            return matchesSearch && matchesFilter;
         });
+
+        displayGames(filtered);
     }
 
+    // Load games on page load
+    if (gameGrid) {
+        loadGames();
+    }
+
+    // Attach event listeners
     if (gameSearch) gameSearch.addEventListener('input', filterGames);
     if (gameFilter) gameFilter.addEventListener('change', filterGames);
-
-    // Make game cards clickable
-    gameCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const slug = card.dataset.game;
-            if (slug) window.location.href = `/game/${slug}`;
-        });
-    });
 </script>
 {% endblock %}

@@ -63,38 +63,6 @@
         </div>
     </section>
 
-    <!-- Past Lobbies -->
-    <section class="mt-xl">
-        <div class="flex justify-between items-center mb-lg">
-            <h2>Past Lobbies</h2>
-            <div class="flex gap-sm">
-                <select id="filter-status" class="form-select" style="width: 150px;">
-                    <option value="all">All</option>
-                    <option value="finished">Finished</option>
-                    <option value="cancelled">Cancelled</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="table-container">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Lobby Name</th>
-                        <th>Host</th>
-                        <th>Players</th>
-                        <th>Timer</th>
-                        <th>Status</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody id="past-lobbies">
-                    <!-- Past lobbies loaded dynamically -->
-                </tbody>
-            </table>
-        </div>
-    </section>
-
     <!-- Related Games -->
     <section class="mt-2xl">
         <h2 class="mb-lg">Similar Games</h2>
@@ -137,12 +105,14 @@ async function loadGameData() {
             document.getElementById('rom-required-badge').style.display = 'inline-flex';
         }
 
-        // Load favorite status
-        await loadFavoriteStatus();
+        // Update favorite status from game data
+        isFavorited = data.is_favorited;
+        updateFavoriteButton();
 
-        // Load lobbies
-        await loadCurrentLobbies();
-        await loadPastLobbies();
+        // Display active lobbies from game data
+        displayActiveLobbies(data.active_lobbies || []);
+
+        // Load related games
         await loadRelatedGames();
     } catch (error) {
         console.error('Error loading game:', error);
@@ -150,17 +120,49 @@ async function loadGameData() {
     }
 }
 
-// Load Favorite Status
-async function loadFavoriteStatus() {
-    try {
-        const response = await fetch(`/api/games/${gameSlug}/favorite`, { credentials: 'include' });
-        const data = await response.json();
+// Display Active Lobbies (from game data)
+function displayActiveLobbies(lobbies) {
+    const container = document.getElementById('current-lobbies');
 
-        isFavorited = data.is_favorited;
-        updateFavoriteButton();
-    } catch (error) {
-        console.error('Error loading favorite status:', error);
+    if (lobbies.length === 0) {
+        container.innerHTML = `
+            <div class="text-center p-xl">
+                <p class="text-muted">No active lobbies for this game.</p>
+                <a href="/create_room.html?game=${gameSlug}" class="btn mt-md">Create the first lobby!</a>
+            </div>
+        `;
+        return;
     }
+
+    container.innerHTML = lobbies.map(lobby => `
+        <div class="lobby-item">
+            <div class="lobby-header">
+                <div>
+                    <h3 class="lobby-name">
+                        <a href="/lobby/${lobby.slug || lobby.id}">${escapeHtml(lobby.name)}</a>
+                    </h3>
+                    <div class="lobby-info">
+                        <span class="lobby-info-item">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM12.93 11.93A7 7 0 108 15a7 7 0 004.93-3.07z"/>
+                            </svg>
+                            ${escapeHtml(lobby.host_name)}
+                        </span>
+                        <span class="lobby-info-item">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M5 6a2 2 0 114 0 2 2 0 01-4 0zm-3 8a2 2 0 114 0 2 2 0 01-4 0zm8 0a2 2 0 114 0 2 2 0 01-4 0z"/>
+                            </svg>
+                            ${lobby.player_count}/${lobby.max_players} Players
+                        </span>
+                        <span class="badge badge-${lobby.status === 'open' ? 'success' : 'info'}">
+                            ${lobby.status}
+                        </span>
+                    </div>
+                </div>
+                <a href="/lobby/${lobby.slug || lobby.id}" class="btn btn-sm">Join</a>
+            </div>
+        </div>
+    `).join('');
 }
 
 function updateFavoriteButton() {
@@ -192,112 +194,28 @@ async function toggleFavorite() {
     }
 }
 
-// Load Current Lobbies
-async function loadCurrentLobbies() {
-    try {
-        const response = await fetch(`/api/games/${gameSlug}/lobbies?status=active`, { credentials: 'include' });
-        const lobbies = await response.json();
 
-        const container = document.getElementById('current-lobbies');
-
-        if (lobbies.length === 0) {
-            container.innerHTML = `
-                <div class="text-center p-xl">
-                    <p class="text-muted">No active lobbies for this game.</p>
-                    <a href="/create_room.html?game=${gameSlug}" class="btn mt-md">Create the first lobby!</a>
-                </div>
-            `;
-            return;
-        }
-
-        container.innerHTML = lobbies.map(lobby => `
-            <div class="lobby-item">
-                <div class="lobby-header">
-                    <div>
-                        <h3 class="lobby-name">
-                            <a href="/lobby.html?id=${lobby.id}">${lobby.name}</a>
-                        </h3>
-                        <div class="lobby-info">
-                            <span class="lobby-info-item">
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                                    <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM12.93 11.93A7 7 0 108 15a7 7 0 004.93-3.07z"/>
-                                </svg>
-                                ${lobby.host_name}
-                            </span>
-                            <span class="lobby-info-item">
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                                    <path d="M5 6a2 2 0 114 0 2 2 0 01-4 0zm-3 8a2 2 0 114 0 2 2 0 01-4 0zm8 0a2 2 0 114 0 2 2 0 01-4 0z"/>
-                                </svg>
-                                ${lobby.player_count}/${lobby.max_players} Players
-                            </span>
-                            <span class="badge badge-${lobby.state === 'open' ? 'success' : 'info'}">
-                                ${lobby.state}
-                            </span>
-                        </div>
-                    </div>
-                    <a href="/lobby.html?id=${lobby.id}" class="btn btn-sm">Join</a>
-                </div>
-            </div>
-        `).join('');
-    } catch (error) {
-        console.error('Error loading current lobbies:', error);
-    }
-}
-
-// Load Past Lobbies
-async function loadPastLobbies() {
-    try {
-        const filterStatus = document.getElementById('filter-status').value;
-        const url = filterStatus === 'all'
-            ? `/api/games/${gameSlug}/lobbies?status=past`
-            : `/api/games/${gameSlug}/lobbies?status=${filterStatus}`;
-
-        const response = await fetch(url, { credentials: 'include' });
-        const lobbies = await response.json();
-
-        const container = document.getElementById('past-lobbies');
-
-        if (lobbies.length === 0) {
-            container.innerHTML = `
-                <tr>
-                    <td colspan="6" class="text-center text-muted">No past lobbies found</td>
-                </tr>
-            `;
-            return;
-        }
-
-        container.innerHTML = lobbies.map(lobby => `
-            <tr>
-                <td><a href="/lobby.html?id=${lobby.id}">${lobby.name}</a></td>
-                <td>${lobby.host_name}</td>
-                <td>${lobby.player_count} players</td>
-                <td>${lobby.timer || '--:--:--'}</td>
-                <td><span class="badge badge-${lobby.state === 'finished' ? 'success' : 'warning'}">${lobby.state}</span></td>
-                <td>${new Date(lobby.created_at).toLocaleDateString()}</td>
-            </tr>
-        `).join('');
-    } catch (error) {
-        console.error('Error loading past lobbies:', error);
-    }
-}
-
-// Load Related Games
+// Load Related Games (random selection for now)
 async function loadRelatedGames() {
     try {
-        const response = await fetch(`/api/games/${gameSlug}/related`, { credentials: 'include' });
-        const games = await response.json();
+        const response = await fetch(`/api/games?sort=sync_count&order=desc`, { credentials: 'include' });
+        const allGames = await response.json();
+
+        // Filter out current game and get 6 random games
+        const otherGames = allGames.filter(g => g.slug !== gameSlug);
+        const randomGames = otherGames.sort(() => 0.5 - Math.random()).slice(0, 6);
 
         const container = document.getElementById('related-games');
 
-        if (games.length === 0) {
-            container.innerHTML = '<p class="text-muted">No related games found</p>';
+        if (randomGames.length === 0) {
+            container.innerHTML = '<p class="text-muted">No other games found</p>';
             return;
         }
 
-        container.innerHTML = games.slice(0, 6).map(game => `
-            <div class="game-card" onclick="window.location.href='/game/${game.slug}'">
-                <img src="${game.boxart_url || '/static/boxarts/default.png'}" alt="${game.name}" class="game-boxart">
-                <h3 class="game-name">${game.name}</h3>
+        container.innerHTML = randomGames.map(game => `
+            <div class="game-card" onclick="window.location.href='/game/${game.slug}'" style="cursor: pointer;">
+                <img src="${game.boxart_url || '/static/boxarts/default.png'}" alt="${escapeHtml(game.name)}" class="game-boxart">
+                <h3 class="game-name">${escapeHtml(game.name)}</h3>
                 <div class="game-stats">
                     <span class="text-muted">${game.sync_count || 0} syncs</span>
                     ${game.requires_rom ? '<span class="badge badge-warning" title="ROM Required">ROM</span>' : ''}
@@ -306,11 +224,9 @@ async function loadRelatedGames() {
         `).join('');
     } catch (error) {
         console.error('Error loading related games:', error);
+        document.getElementById('related-games').innerHTML = '<p class="text-muted">Failed to load related games</p>';
     }
 }
-
-// Filter event
-document.getElementById('filter-status').addEventListener('change', loadPastLobbies);
 
 // Initialize
 loadGameData();

@@ -42,7 +42,9 @@ def slug_from_name(name):
 
 def scan_archipelago_worlds():
     """Scan Archipelago core directory for worlds"""
-    archipelago_path = Path('/home/sekailink/archipelago_core/worlds')
+    # Use environment variable or default to Docker path
+    base_path = os.getenv('ARCHIPELAGO_PATH', '/opt/Archipelago')
+    archipelago_path = Path(base_path) / 'worlds'
 
     if not archipelago_path.exists():
         print(f"❌ Archipelago path not found: {archipelago_path}")
