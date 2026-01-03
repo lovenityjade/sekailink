@@ -788,6 +788,19 @@ def create_lobby():
 
     logger.info(f"User {uid} created lobby {new_lobby.id}: {lobby_name}")
 
+    # Broadcast new lobby to all connected clients
+    user = User.query.get(uid)
+    socketio.emit('lobby_created', {
+        'lobby_id': new_lobby.id,
+        'name': lobby_name,
+        'host_name': user.username,
+        'status': new_lobby.status,
+        'visibility': new_lobby.visibility,
+        'max_players': settings.max_players,
+        'player_count': 1,
+        'created_at': new_lobby.created_at.isoformat()
+    }, broadcast=True)
+
     return jsonify({
         "lobby_id": new_lobby.id,
         "message": "Lobby created successfully"
@@ -915,6 +928,21 @@ def join_lobby(lobby_id):
 
     logger.info(f"User {uid} joined lobby {lobby_id}")
 
+    # Broadcast to lobby room
+    socketio.emit('player_joined', {
+        'user_id': uid,
+        'username': user.username,
+        'avatar': user.avatar_url,
+        'pronouns': user.pronouns,
+        'timestamp': datetime.utcnow().isoformat()
+    }, room=f"lobby_{lobby_id}")
+
+    # Update lobby list for all clients
+    socketio.emit('lobby_updated', {
+        'lobby_id': lobby_id,
+        'player_count': current_players + 1
+    }, broadcast=True)
+
     return jsonify({"message": "joined successfully"}), 200
 
 @app.route('/api/lobbies/<int:lobby_id>/leave', methods=['POST'])
@@ -971,6 +999,20 @@ def leave_lobby(lobby_id):
     db.session.commit()
 
     logger.info(f"User {uid} left lobby {lobby_id}")
+
+    # Broadcast to lobby room
+    socketio.emit('player_left', {
+        'user_id': uid,
+        'username': user.username,
+        'timestamp': datetime.utcnow().isoformat()
+    }, room=f"lobby_{lobby_id}")
+
+    # Update lobby list
+    remaining_players = LobbyPlayer.query.filter_by(lobby_id=lobby_id).count()
+    socketio.emit('lobby_updated', {
+        'lobby_id': lobby_id,
+        'player_count': remaining_players
+    }, broadcast=True)
 
     return jsonify({"message": "left successfully"}), 200
 
@@ -1179,6 +1221,128 @@ def lobby_settings(lobby_id):
 
     return jsonify({"status": "updated"})
 
+# ========================================
+# TIMER ENDPOINTS
+# ========================================
+
+@app.route('/api/lobbies/<int:lobby_id>/timer/start', methods=['POST'])
+def start_timer(lobby_id):
+    """Start the lobby timer (host only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    lobby = Lobby.query.get(lobby_id)
+    if not lobby:
+        return jsonify({"error": "Lobby not found"}), 404
+
+    # Only host can start timer
+    if lobby.host_id != uid:
+        return jsonify({"error": "Only host can start timer"}), 403
+
+    # Can only start timer when lobby is active
+    if lobby.status != 'active':
+        return jsonify({"error": "Lobby must be active to start timer"}), 400
+
+    # Start the timer
+    lobby.timer_started_at = datetime.utcnow()
+    db.session.commit()
+
+    # Get time limit from settings
+    settings = LobbySettings.query.filter_by(lobby_id=lobby_id).first()
+    time_limit_hours = settings.time_limit_hours if settings else None
+
+    # Broadcast timer started
+    socketio.emit('timer_started', {
+        'lobby_id': lobby_id,
+        'started_at': lobby.timer_started_at.isoformat(),
+        'time_limit_hours': time_limit_hours
+    }, room=f"lobby_{lobby_id}")
+
+    logger.info(f"Timer started for lobby {lobby_id} by user {uid}")
+
+    return jsonify({
+        'status': 'started',
+        'started_at': lobby.timer_started_at.isoformat(),
+        'time_limit_hours': time_limit_hours
+    })
+
+@app.route('/api/lobbies/<int:lobby_id>/timer/stop', methods=['POST'])
+def stop_timer(lobby_id):
+    """Stop the lobby timer (host only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    lobby = Lobby.query.get(lobby_id)
+    if not lobby:
+        return jsonify({"error": "Lobby not found"}), 404
+
+    # Only host can stop timer
+    if lobby.host_id != uid:
+        return jsonify({"error": "Only host can stop timer"}), 403
+
+    if not lobby.timer_started_at:
+        return jsonify({"error": "Timer not running"}), 400
+
+    # Calculate final elapsed time
+    elapsed_seconds = (datetime.utcnow() - lobby.timer_started_at).total_seconds()
+
+    # Stop the timer by marking lobby as finished
+    lobby.status = 'finished'
+    db.session.commit()
+
+    # Broadcast timer stopped
+    socketio.emit('timer_stopped', {
+        'lobby_id': lobby_id,
+        'elapsed_seconds': int(elapsed_seconds),
+        'stopped_at': datetime.utcnow().isoformat()
+    }, room=f"lobby_{lobby_id}")
+
+    logger.info(f"Timer stopped for lobby {lobby_id} by user {uid} after {int(elapsed_seconds)}s")
+
+    return jsonify({
+        'status': 'stopped',
+        'elapsed_seconds': int(elapsed_seconds)
+    })
+
+@app.route('/api/lobbies/<int:lobby_id>/timer', methods=['GET'])
+def get_timer_status(lobby_id):
+    """Get current timer status"""
+    lobby = Lobby.query.get(lobby_id)
+    if not lobby:
+        return jsonify({"error": "Lobby not found"}), 404
+
+    settings = LobbySettings.query.filter_by(lobby_id=lobby_id).first()
+
+    result = {
+        'is_running': lobby.timer_started_at is not None and lobby.status == 'active',
+        'started_at': lobby.timer_started_at.isoformat() if lobby.timer_started_at else None,
+        'time_limit_hours': settings.time_limit_hours if settings else None,
+        'restrict_time_limit': settings.restrict_time_limit if settings else False,
+        'elapsed_seconds': 0,
+        'remaining_seconds': None,
+        'is_warning': False,
+        'is_exceeded': False
+    }
+
+    if lobby.timer_started_at:
+        elapsed = (datetime.utcnow() - lobby.timer_started_at).total_seconds()
+        result['elapsed_seconds'] = int(elapsed)
+
+        if settings and settings.time_limit_hours:
+            time_limit_seconds = settings.time_limit_hours * 3600
+            result['remaining_seconds'] = int(time_limit_seconds - elapsed)
+
+            # Check if time limit exceeded
+            if elapsed >= time_limit_seconds:
+                result['is_exceeded'] = True
+            # Warning at 90% of time limit
+            elif elapsed >= time_limit_seconds * 0.9:
+                result['is_warning'] = True
+
+    return jsonify(result)
+
 @app.route('/api/users/<user_id>', methods=['GET'])
 def get_user_profile(user_id):
     """Get public user profile"""
@@ -1220,6 +1384,749 @@ def get_user_profile(user_id):
             'total_reviews': len(user_ratings)
         }
     })
+
+# ========================================
+# RATING & REVIEW ENDPOINTS
+# ========================================
+
+@app.route('/api/users/<user_id>/rate', methods=['POST'])
+def rate_user(user_id):
+    """Submit a rating for another user"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    # Can't rate yourself
+    if str(uid) == str(user_id):
+        return jsonify({"error": "Cannot rate yourself"}), 400
+
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Check if users have played together
+    played_together = db.session.query(LobbyPlayer).join(
+        LobbyPlayer,
+        LobbyPlayer.lobby_id == LobbyPlayer.lobby_id
+    ).filter(
+        LobbyPlayer.user_id == uid,
+        LobbyPlayer.user_id == user_id
+    ).first()
+
+    if not played_together:
+        return jsonify({"error": "You can only rate users you've played with"}), 403
+
+    data = request.json
+    punctuality = data.get('punctuality', 0)
+    respect_others = data.get('respect_others', 0)
+    respect_rules = data.get('respect_rules', 0)
+    fair_release = data.get('fair_release', 0)
+
+    # Validate ratings (1-5)
+    if not all(1 <= r <= 5 for r in [punctuality, respect_others, respect_rules, fair_release]):
+        return jsonify({"error": "All ratings must be between 1 and 5"}), 400
+
+    # Check if rating already exists
+    existing = UserRating.query.filter_by(
+        rater_id=uid,
+        rated_user_id=user_id
+    ).first()
+
+    if existing:
+        # Update existing rating
+        existing.punctuality = punctuality
+        existing.respect_others = respect_others
+        existing.respect_rules = respect_rules
+        existing.fair_release = fair_release
+        existing.rated_at = datetime.utcnow()
+    else:
+        # Create new rating
+        new_rating = UserRating(
+            rater_id=uid,
+            rated_user_id=user_id,
+            punctuality=punctuality,
+            respect_others=respect_others,
+            respect_rules=respect_rules,
+            fair_release=fair_release
+        )
+        db.session.add(new_rating)
+
+    db.session.commit()
+
+    logger.info(f"User {uid} rated user {user_id}")
+
+    return jsonify({"status": "success", "message": "Rating submitted"})
+
+@app.route('/api/users/<user_id>/ratings', methods=['GET'])
+def get_user_ratings(user_id):
+    """Get detailed rating breakdown for a user"""
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    ratings = UserRating.query.filter_by(rated_user_id=user_id).all()
+
+    if not ratings:
+        return jsonify({
+            'count': 0,
+            'average': {
+                'punctuality': 0,
+                'respect_others': 0,
+                'respect_rules': 0,
+                'fair_release': 0,
+                'overall': 0
+            }
+        })
+
+    avg_punctuality = sum(r.punctuality for r in ratings) / len(ratings)
+    avg_respect_others = sum(r.respect_others for r in ratings) / len(ratings)
+    avg_respect_rules = sum(r.respect_rules for r in ratings) / len(ratings)
+    avg_fair_release = sum(r.fair_release for r in ratings) / len(ratings)
+    overall = (avg_punctuality + avg_respect_others + avg_respect_rules + avg_fair_release) / 4
+
+    return jsonify({
+        'count': len(ratings),
+        'average': {
+            'punctuality': round(avg_punctuality, 2),
+            'respect_others': round(avg_respect_others, 2),
+            'respect_rules': round(avg_respect_rules, 2),
+            'fair_release': round(avg_fair_release, 2),
+            'overall': round(overall, 2)
+        }
+    })
+
+@app.route('/api/users/<user_id>/review', methods=['POST'])
+def write_review(user_id):
+    """Write a review for another user"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    # Can't review yourself
+    if str(uid) == str(user_id):
+        return jsonify({"error": "Cannot review yourself"}), 400
+
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    data = request.json
+    review_text = data.get('review', '').strip()
+
+    if not review_text or len(review_text) < 10:
+        return jsonify({"error": "Review must be at least 10 characters"}), 400
+
+    if len(review_text) > 500:
+        return jsonify({"error": "Review must be less than 500 characters"}), 400
+
+    # Check if review already exists
+    existing = UserReview.query.filter_by(
+        reviewer_id=uid,
+        reviewed_user_id=user_id
+    ).first()
+
+    if existing:
+        return jsonify({"error": "You already reviewed this user"}), 400
+
+    # Create new review (starts as pending moderation)
+    new_review = UserReview(
+        reviewer_id=uid,
+        reviewed_user_id=user_id,
+        review_text=review_text,
+        is_approved=False  # Requires moderation
+    )
+    db.session.add(new_review)
+    db.session.commit()
+
+    logger.info(f"User {uid} wrote review for user {user_id}")
+
+    return jsonify({
+        "status": "success",
+        "message": "Review submitted for moderation",
+        "review_id": new_review.id
+    })
+
+@app.route('/api/users/<user_id>/reviews', methods=['GET'])
+def get_user_reviews(user_id):
+    """Get approved reviews for a user"""
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Only show approved reviews
+    reviews = UserReview.query.filter_by(
+        reviewed_user_id=user_id,
+        is_approved=True
+    ).order_by(UserReview.created_at.desc()).all()
+
+    result = []
+    for review in reviews:
+        reviewer = User.query.get(review.reviewer_id)
+        result.append({
+            'id': review.id,
+            'reviewer': {
+                'id': reviewer.id,
+                'username': reviewer.username,
+                'avatar': reviewer.avatar_url
+            },
+            'review': review.review_text,
+            'likes': review.like_count,
+            'created_at': review.created_at.isoformat()
+        })
+
+    return jsonify(result)
+
+@app.route('/api/reviews/<int:review_id>/like', methods=['POST'])
+def like_review(review_id):
+    """Like a review"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    review = UserReview.query.get(review_id)
+    if not review:
+        return jsonify({"error": "Review not found"}), 404
+
+    if not review.is_approved:
+        return jsonify({"error": "Review not approved"}), 403
+
+    # Toggle like
+    review.like_count = (review.like_count or 0) + 1
+    db.session.commit()
+
+    return jsonify({"status": "success", "likes": review.like_count})
+
+@app.route('/api/reviews/<int:review_id>/report', methods=['POST'])
+def report_review(review_id):
+    """Report a review for moderation"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    review = UserReview.query.get(review_id)
+    if not review:
+        return jsonify({"error": "Review not found"}), 404
+
+    data = request.json
+    reason = data.get('reason', '').strip()
+
+    if not reason:
+        return jsonify({"error": "Report reason required"}), 400
+
+    # Mark review as requiring moderation
+    review.is_approved = False
+    db.session.commit()
+
+    logger.warning(f"Review {review_id} reported by user {uid}: {reason}")
+
+    return jsonify({"status": "success", "message": "Review reported to moderators"})
+
+@app.route('/api/reviews/<int:review_id>', methods=['DELETE'])
+def delete_review(review_id):
+    """Delete own review"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    review = UserReview.query.get(review_id)
+    if not review:
+        return jsonify({"error": "Review not found"}), 404
+
+    # Only reviewer can delete their own review
+    if review.reviewer_id != uid:
+        return jsonify({"error": "Can only delete your own reviews"}), 403
+
+    db.session.delete(review)
+    db.session.commit()
+
+    logger.info(f"User {uid} deleted review {review_id}")
+
+    return jsonify({"status": "success"})
+
+@app.route('/api/users/<user_id>/server-rating', methods=['GET'])
+def get_server_rating(user_id):
+    """Get auto-calculated server rating for a user"""
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    server_rating = ServerRating.query.filter_by(user_id=user_id).first()
+
+    if not server_rating:
+        # Create default rating if doesn't exist
+        server_rating = ServerRating(
+            user_id=user_id,
+            rating=5.0,
+            total_kicks=0,
+            total_bans=0,
+            total_warnings=0,
+            total_syncs_completed=0,
+            total_dnf=0
+        )
+        db.session.add(server_rating)
+        db.session.commit()
+
+    return jsonify({
+        'rating': server_rating.rating,
+        'stats': {
+            'kicks': server_rating.total_kicks,
+            'bans': server_rating.total_bans,
+            'warnings': server_rating.total_warnings,
+            'syncs_completed': server_rating.total_syncs_completed,
+            'dnf': server_rating.total_dnf
+        },
+        'last_updated': server_rating.last_updated.isoformat() if server_rating.last_updated else None
+    })
+
+# ========================================
+# REVIEW MODERATION ENDPOINTS
+# ========================================
+
+@app.route('/api/moderation/reviews', methods=['GET'])
+def get_pending_reviews():
+    """Get all reviews pending moderation (mods/admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    user = User.query.get(uid)
+    if not user or not (user.is_moderator or user.is_admin):
+        return jsonify({"error": "Requires moderator permissions"}), 403
+
+    # Get all pending reviews
+    pending = UserReview.query.filter_by(is_approved=False).order_by(UserReview.created_at.desc()).all()
+
+    result = []
+    for review in pending:
+        reviewer = User.query.get(review.reviewer_id)
+        reviewed = User.query.get(review.reviewed_user_id)
+        result.append({
+            'id': review.id,
+            'reviewer': {
+                'id': reviewer.id,
+                'username': reviewer.username,
+                'avatar': reviewer.avatar_url
+            },
+            'reviewed_user': {
+                'id': reviewed.id,
+                'username': reviewed.username,
+                'avatar': reviewed.avatar_url
+            },
+            'review_text': review.review_text,
+            'created_at': review.created_at.isoformat()
+        })
+
+    return jsonify(result)
+
+@app.route('/api/moderation/reviews/<int:review_id>/approve', methods=['POST'])
+def approve_review(review_id):
+    """Approve a review (mods/admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    user = User.query.get(uid)
+    if not user or not (user.is_moderator or user.is_admin):
+        return jsonify({"error": "Requires moderator permissions"}), 403
+
+    review = UserReview.query.get(review_id)
+    if not review:
+        return jsonify({"error": "Review not found"}), 404
+
+    review.is_approved = True
+    db.session.commit()
+
+    logger.info(f"Moderator {uid} approved review {review_id}")
+
+    return jsonify({"status": "success", "message": "Review approved"})
+
+@app.route('/api/moderation/reviews/<int:review_id>/reject', methods=['POST'])
+def reject_review(review_id):
+    """Reject and delete a review (mods/admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    user = User.query.get(uid)
+    if not user or not (user.is_moderator or user.is_admin):
+        return jsonify({"error": "Requires moderator permissions"}), 403
+
+    review = UserReview.query.get(review_id)
+    if not review:
+        return jsonify({"error": "Review not found"}), 404
+
+    db.session.delete(review)
+    db.session.commit()
+
+    logger.info(f"Moderator {uid} rejected and deleted review {review_id}")
+
+    return jsonify({"status": "success", "message": "Review rejected and deleted"})
+
+# ========================================
+# USER MANAGEMENT ENDPOINTS (Admin/Mod)
+# ========================================
+
+@app.route('/api/admin/users', methods=['GET'])
+def get_all_users():
+    """Get all users with search (admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    user = User.query.get(uid)
+    if not user or not user.is_admin:
+        return jsonify({"error": "Requires admin permissions"}), 403
+
+    search = request.args.get('search', '').strip()
+
+    query = User.query
+    if search:
+        query = query.filter(User.username.ilike(f'%{search}%'))
+
+    users = query.order_by(User.created_at.desc()).limit(100).all()
+
+    result = []
+    for u in users:
+        result.append({
+            'id': u.id,
+            'username': u.username,
+            'email': u.email,
+            'avatar': u.avatar_url,
+            'is_banned': u.is_banned,
+            'is_suspended': u.is_suspended,
+            'is_moderator': u.is_moderator,
+            'is_admin': u.is_admin,
+            'created_at': u.created_at.isoformat(),
+            'last_seen': u.last_seen.isoformat() if u.last_seen else None
+        })
+
+    return jsonify(result)
+
+@app.route('/api/admin/users/<user_id>/ban', methods=['POST'])
+def ban_user(user_id):
+    """Ban a user (mods/admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    moderator = User.query.get(uid)
+    if not moderator or not (moderator.is_moderator or moderator.is_admin):
+        return jsonify({"error": "Requires moderator permissions"}), 403
+
+    target_user = User.query.get(user_id)
+    if not target_user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Cannot ban admins
+    if target_user.is_admin:
+        return jsonify({"error": "Cannot ban administrators"}), 403
+
+    data = request.json
+    reason = data.get('reason', '').strip()
+    duration_days = data.get('duration_days', 0)  # 0 = permanent
+
+    if not reason:
+        return jsonify({"error": "Ban reason required"}), 400
+
+    # Create ban record
+    ban = Ban(
+        user_id=user_id,
+        banned_by=uid,
+        reason=reason,
+        duration_days=duration_days,
+        is_active=True
+    )
+    db.session.add(ban)
+
+    # Mark user as banned
+    target_user.is_banned = True
+    db.session.commit()
+
+    logger.warning(f"User {user_id} banned by moderator {uid} for: {reason}")
+
+    return jsonify({
+        "status": "success",
+        "message": f"User banned {f'for {duration_days} days' if duration_days > 0 else 'permanently'}"
+    })
+
+@app.route('/api/admin/users/<user_id>/unban', methods=['POST'])
+def unban_user(user_id):
+    """Unban a user (mods/admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    moderator = User.query.get(uid)
+    if not moderator or not (moderator.is_moderator or moderator.is_admin):
+        return jsonify({"error": "Requires moderator permissions"}), 403
+
+    target_user = User.query.get(user_id)
+    if not target_user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Deactivate all active bans
+    active_bans = Ban.query.filter_by(user_id=user_id, is_active=True).all()
+    for ban in active_bans:
+        ban.is_active = False
+
+    target_user.is_banned = False
+    db.session.commit()
+
+    logger.info(f"User {user_id} unbanned by moderator {uid}")
+
+    return jsonify({"status": "success", "message": "User unbanned"})
+
+@app.route('/api/admin/users/<user_id>/warn', methods=['POST'])
+def warn_user(user_id):
+    """Issue a warning to a user (mods/admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    moderator = User.query.get(uid)
+    if not moderator or not (moderator.is_moderator or moderator.is_admin):
+        return jsonify({"error": "Requires moderator permissions"}), 403
+
+    target_user = User.query.get(user_id)
+    if not target_user:
+        return jsonify({"error": "User not found"}), 404
+
+    data = request.json
+    reason = data.get('reason', '').strip()
+
+    if not reason:
+        return jsonify({"error": "Warning reason required"}), 400
+
+    warning = Warning(
+        user_id=user_id,
+        warned_by=uid,
+        reason=reason
+    )
+    db.session.add(warning)
+    db.session.commit()
+
+    logger.warning(f"Warning issued to user {user_id} by moderator {uid}: {reason}")
+
+    return jsonify({"status": "success", "message": "Warning issued"})
+
+@app.route('/api/admin/users/<user_id>/promote', methods=['POST'])
+def promote_user(user_id):
+    """Promote user to moderator or admin (admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    admin = User.query.get(uid)
+    if not admin or not admin.is_admin:
+        return jsonify({"error": "Requires admin permissions"}), 403
+
+    target_user = User.query.get(user_id)
+    if not target_user:
+        return jsonify({"error": "User not found"}), 404
+
+    data = request.json
+    role = data.get('role', 'moderator')  # 'moderator' or 'admin'
+
+    if role == 'admin':
+        target_user.is_admin = True
+        target_user.is_moderator = True
+    elif role == 'moderator':
+        target_user.is_moderator = True
+    else:
+        return jsonify({"error": "Invalid role"}), 400
+
+    db.session.commit()
+
+    logger.info(f"User {user_id} promoted to {role} by admin {uid}")
+
+    return jsonify({"status": "success", "message": f"User promoted to {role}"})
+
+@app.route('/api/admin/users/<user_id>/demote', methods=['POST'])
+def demote_user(user_id):
+    """Demote user from moderator/admin (admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    admin = User.query.get(uid)
+    if not admin or not admin.is_admin:
+        return jsonify({"error": "Requires admin permissions"}), 403
+
+    target_user = User.query.get(user_id)
+    if not target_user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Cannot demote yourself
+    if str(target_user.id) == str(uid):
+        return jsonify({"error": "Cannot demote yourself"}), 400
+
+    target_user.is_admin = False
+    target_user.is_moderator = False
+    db.session.commit()
+
+    logger.info(f"User {user_id} demoted by admin {uid}")
+
+    return jsonify({"status": "success", "message": "User demoted"})
+
+# ========================================
+# BAN APPEAL SYSTEM
+# ========================================
+
+@app.route('/api/bans/<int:ban_id>/appeal', methods=['POST'])
+def submit_ban_appeal(ban_id):
+    """Submit an appeal for a ban"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    ban = Ban.query.get(ban_id)
+    if not ban:
+        return jsonify({"error": "Ban not found"}), 404
+
+    # Only the banned user can appeal
+    if ban.user_id != uid:
+        return jsonify({"error": "Can only appeal your own bans"}), 403
+
+    if not ban.is_active:
+        return jsonify({"error": "Ban is not active"}), 400
+
+    if ban.appeal_text:
+        return jsonify({"error": "Appeal already submitted"}), 400
+
+    data = request.json
+    appeal_text = data.get('appeal', '').strip()
+
+    if not appeal_text or len(appeal_text) < 20:
+        return jsonify({"error": "Appeal must be at least 20 characters"}), 400
+
+    ban.appeal_text = appeal_text
+    ban.appeal_date = datetime.utcnow()
+    db.session.commit()
+
+    logger.info(f"Ban appeal submitted for ban {ban_id} by user {uid}")
+
+    return jsonify({"status": "success", "message": "Appeal submitted for review"})
+
+@app.route('/api/admin/ban-appeals', methods=['GET'])
+def get_ban_appeals():
+    """Get all pending ban appeals (mods/admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    moderator = User.query.get(uid)
+    if not moderator or not (moderator.is_moderator or moderator.is_admin):
+        return jsonify({"error": "Requires moderator permissions"}), 403
+
+    # Get bans with appeals that haven't been reviewed
+    appeals = Ban.query.filter(
+        Ban.appeal_text.isnot(None),
+        Ban.appeal_reviewed == False,
+        Ban.is_active == True
+    ).order_by(Ban.appeal_date.desc()).all()
+
+    result = []
+    for ban in appeals:
+        banned_user = User.query.get(ban.user_id)
+        banned_by_user = User.query.get(ban.banned_by)
+        result.append({
+            'ban_id': ban.id,
+            'user': {
+                'id': banned_user.id,
+                'username': banned_user.username,
+                'avatar': banned_user.avatar_url
+            },
+            'banned_by': {
+                'id': banned_by_user.id,
+                'username': banned_by_user.username
+            },
+            'reason': ban.reason,
+            'appeal_text': ban.appeal_text,
+            'ban_date': ban.banned_at.isoformat(),
+            'appeal_date': ban.appeal_date.isoformat() if ban.appeal_date else None,
+            'duration_days': ban.duration_days
+        })
+
+    return jsonify(result)
+
+@app.route('/api/admin/ban-appeals/<int:ban_id>/approve', methods=['POST'])
+def approve_ban_appeal(ban_id):
+    """Approve a ban appeal and unban user (mods/admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    moderator = User.query.get(uid)
+    if not moderator or not (moderator.is_moderator or moderator.is_admin):
+        return jsonify({"error": "Requires moderator permissions"}), 403
+
+    ban = Ban.query.get(ban_id)
+    if not ban:
+        return jsonify({"error": "Ban not found"}), 404
+
+    # Mark appeal as reviewed and deactivate ban
+    ban.appeal_reviewed = True
+    ban.is_active = False
+
+    # Unban user
+    user = User.query.get(ban.user_id)
+    user.is_banned = False
+
+    db.session.commit()
+
+    logger.info(f"Ban appeal approved for ban {ban_id} by moderator {uid}")
+
+    return jsonify({"status": "success", "message": "Ban appeal approved, user unbanned"})
+
+@app.route('/api/admin/ban-appeals/<int:ban_id>/reject', methods=['POST'])
+def reject_ban_appeal(ban_id):
+    """Reject a ban appeal (mods/admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    moderator = User.query.get(uid)
+    if not moderator or not (moderator.is_moderator or moderator.is_admin):
+        return jsonify({"error": "Requires moderator permissions"}), 403
+
+    ban = Ban.query.get(ban_id)
+    if not ban:
+        return jsonify({"error": "Ban not found"}), 404
+
+    ban.appeal_reviewed = True
+    # Ban stays active
+    db.session.commit()
+
+    logger.info(f"Ban appeal rejected for ban {ban_id} by moderator {uid}")
+
+    return jsonify({"status": "success", "message": "Ban appeal rejected"})
+
+# ========================================
+# LOBBY MODERATION
+# ========================================
+
+@app.route('/api/moderation/lobbies/<int:lobby_id>/close', methods=['POST'])
+def close_lobby_mod(lobby_id):
+    """Close a lobby (mods/admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    moderator = User.query.get(uid)
+    if not moderator or not (moderator.is_moderator or moderator.is_admin):
+        return jsonify({"error": "Requires moderator permissions"}), 403
+
+    lobby = Lobby.query.get(lobby_id)
+    if not lobby:
+        return jsonify({"error": "Lobby not found"}), 404
+
+    lobby.status = 'finished'
+    lobby.visibility = 'closed'
+    db.session.commit()
+
+    logger.warning(f"Lobby {lobby_id} closed by moderator {uid}")
+
+    return jsonify({"status": "success", "message": "Lobby closed"})
 
 @app.route('/api/generate', methods=['POST'])
 def generate_seed():
@@ -1328,8 +2235,20 @@ def handle_connect():
 
     user = User.query.get(uid)
     if user:
+        # Update last seen
+        user.last_seen = datetime.utcnow()
+        db.session.commit()
+
         logger.info(f"✅ User {user.username} connected via WebSocket")
         emit('connected', {'status': 'success', 'message': 'Connected to SekaiLink'})
+
+        # Broadcast online status to friends
+        friends = Friend.query.filter_by(friend_id=uid).all()
+        for friend in friends:
+            socketio.emit('friend_online', {
+                'user_id': uid,
+                'username': user.username
+            }, room=f"user_{friend.user_id}")
     else:
         return False
 
@@ -1341,6 +2260,15 @@ def handle_disconnect():
         user = User.query.get(uid)
         if user:
             logger.info(f"User {user.username} disconnected from WebSocket")
+
+            # Broadcast offline status to friends
+            friends = Friend.query.filter_by(friend_id=uid).all()
+            for friend in friends:
+                socketio.emit('friend_offline', {
+                    'user_id': uid,
+                    'username': user.username
+                }, room=f"user_{friend.user_id}")
+
             # Notify lobbies the user was in
             user_rooms = [room for room in rooms() if room != request.sid]
             for room in user_rooms:
@@ -1604,6 +2532,38 @@ def handle_generation_complete(data):
 
     logger.info(f"Generation {'completed' if success else 'failed'} for lobby {lobby_id}")
 
+# --- UTILITY EVENTS ---
+@socketio.on('heartbeat')
+def handle_heartbeat():
+    """Update user's last_seen timestamp"""
+    uid = session.get('user_id')
+    if uid:
+        user = User.query.get(uid)
+        if user:
+            user.last_seen = datetime.utcnow()
+            db.session.commit()
+            emit('heartbeat_ack', {'timestamp': datetime.utcnow().isoformat()})
+
+@socketio.on('typing')
+def handle_typing(data):
+    """Broadcast typing indicator in lobby"""
+    uid = session.get('user_id')
+    if not uid:
+        return
+
+    lobby_id = data.get('lobby_id')
+    is_typing = data.get('is_typing', True)
+
+    user = User.query.get(uid)
+    room = f"lobby_{lobby_id}"
+
+    # Broadcast to others in lobby (not to self)
+    emit('user_typing', {
+        'user_id': uid,
+        'username': user.username,
+        'is_typing': is_typing
+    }, room=room, include_self=False)
+
     # Broadcast result to lobby
     emit('generation_complete', {
         'lobby_id': lobby_id,
@@ -1773,6 +2733,285 @@ def settings_page():
         return redirect('/api/auth/login')
     # TODO: Create settings.html template
     return render_template('dashboard.html', user=session.get('user'))
+
+# ========================================
+# SYSTEM MANAGEMENT ENDPOINTS (Admin Only)
+# ========================================
+
+@app.route('/api/admin/server/status', methods=['GET'])
+def get_server_status():
+    """Get server status and statistics (admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    admin = User.query.get(uid)
+    if not admin or not admin.is_admin:
+        return jsonify({"error": "Requires admin permissions"}), 403
+
+    # Count statistics
+    total_users = User.query.count()
+    total_lobbies = Lobby.query.count()
+    active_lobbies = Lobby.query.filter_by(status='active').count()
+    total_bans = Ban.query.filter_by(is_active=True).count()
+    pending_appeals = Ban.query.filter(
+        Ban.appeal_text.isnot(None),
+        Ban.appeal_reviewed == False,
+        Ban.is_active == True
+    ).count()
+    pending_reviews = UserReview.query.filter_by(is_approved=False).count()
+
+    # Get disk usage for ROMs and YAMLs
+    import shutil
+    rom_dir = '/home/sekailink/backend/static/uploads/roms'
+    yaml_dir = '/home/sekailink/backend/static/uploads/yaml'
+
+    try:
+        rom_usage = shutil.disk_usage(rom_dir)
+        yaml_usage = shutil.disk_usage(yaml_dir)
+        rom_size_gb = rom_usage.used / (1024**3)
+        yaml_size_gb = yaml_usage.used / (1024**3)
+    except:
+        rom_size_gb = 0
+        yaml_size_gb = 0
+
+    return jsonify({
+        'status': 'online',
+        'stats': {
+            'total_users': total_users,
+            'total_lobbies': total_lobbies,
+            'active_lobbies': active_lobbies,
+            'total_bans': total_bans,
+            'pending_appeals': pending_appeals,
+            'pending_reviews': pending_reviews,
+            'rom_storage_gb': round(rom_size_gb, 2),
+            'yaml_storage_gb': round(yaml_size_gb, 2)
+        },
+        'uptime': 'N/A',  # TODO: Track actual uptime
+        'version': '1.0.0-beta'
+    })
+
+@app.route('/api/admin/server/logs', methods=['GET'])
+def get_server_logs():
+    """Get recent server logs (admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    admin = User.query.get(uid)
+    if not admin or not admin.is_admin:
+        return jsonify({"error": "Requires admin permissions"}), 403
+
+    lines = request.args.get('lines', 100, type=int)
+    log_file = '/var/log/sekailink/api.log'  # TODO: Configure log path
+
+    try:
+        import subprocess
+        result = subprocess.run(['tail', f'-{lines}', log_file],
+                              capture_output=True, text=True)
+        logs = result.stdout.split('\n')
+        return jsonify({'logs': logs})
+    except Exception as e:
+        return jsonify({'logs': [f'Error reading logs: {str(e)}']})
+
+@app.route('/api/admin/server/maintenance', methods=['POST'])
+def toggle_maintenance_mode():
+    """Toggle maintenance mode (admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    admin = User.query.get(uid)
+    if not admin or not admin.is_admin:
+        return jsonify({"error": "Requires admin permissions"}), 403
+
+    data = request.json
+    enabled = data.get('enabled', False)
+
+    # Store maintenance mode in a file or database
+    # For now, we'll use a simple file flag
+    flag_file = '/tmp/sekailink_maintenance'
+    if enabled:
+        with open(flag_file, 'w') as f:
+            f.write('1')
+        logger.warning(f"Maintenance mode ENABLED by admin {uid}")
+        message = "Maintenance mode enabled"
+    else:
+        if os.path.exists(flag_file):
+            os.remove(flag_file)
+        logger.info(f"Maintenance mode DISABLED by admin {uid}")
+        message = "Maintenance mode disabled"
+
+    return jsonify({"status": "success", "message": message, "enabled": enabled})
+
+@app.route('/api/admin/storage/purge-roms', methods=['POST'])
+def purge_roms():
+    """Purge all ROM files (admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    admin = User.query.get(uid)
+    if not admin or not admin.is_admin:
+        return jsonify({"error": "Requires admin permissions"}), 403
+
+    rom_dir = '/home/sekailink/backend/static/uploads/roms'
+
+    try:
+        import shutil
+        if os.path.exists(rom_dir):
+            # Count files before deletion
+            file_count = sum(len(files) for _, _, files in os.walk(rom_dir))
+
+            # Remove all ROM files
+            shutil.rmtree(rom_dir)
+            os.makedirs(rom_dir)
+
+            # Clear ROM database records
+            RomFile.query.delete()
+            db.session.commit()
+
+            logger.warning(f"All ROMs purged by admin {uid} ({file_count} files deleted)")
+
+            return jsonify({
+                "status": "success",
+                "message": f"Purged {file_count} ROM files",
+                "files_deleted": file_count
+            })
+        else:
+            return jsonify({"status": "success", "message": "ROM directory already empty"})
+    except Exception as e:
+        logger.error(f"Error purging ROMs: {str(e)}")
+        return jsonify({"error": f"Failed to purge ROMs: {str(e)}"}), 500
+
+@app.route('/api/admin/storage/purge-yamls', methods=['POST'])
+def purge_yamls():
+    """Purge all YAML files (admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    admin = User.query.get(uid)
+    if not admin or not admin.is_admin:
+        return jsonify({"error": "Requires admin permissions"}), 403
+
+    yaml_dir = '/home/sekailink/backend/static/uploads/yaml'
+
+    try:
+        import shutil
+        if os.path.exists(yaml_dir):
+            # Count files before deletion
+            file_count = sum(len(files) for _, _, files in os.walk(yaml_dir))
+
+            # Remove all YAML files
+            shutil.rmtree(yaml_dir)
+            os.makedirs(yaml_dir)
+
+            # Clear YAML database records
+            YamlFile.query.delete()
+            db.session.commit()
+
+            logger.warning(f"All YAMLs purged by admin {uid} ({file_count} files deleted)")
+
+            return jsonify({
+                "status": "success",
+                "message": f"Purged {file_count} YAML files",
+                "files_deleted": file_count
+            })
+        else:
+            return jsonify({"status": "success", "message": "YAML directory already empty"})
+    except Exception as e:
+        logger.error(f"Error purging YAMLs: {str(e)}")
+        return jsonify({"error": f"Failed to purge YAMLs: {str(e)}"}), 500
+
+@app.route('/api/admin/docker/restart', methods=['POST'])
+def restart_docker():
+    """Restart Docker containers (admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    admin = User.query.get(uid)
+    if not admin or not admin.is_admin:
+        return jsonify({"error": "Requires admin permissions"}), 403
+
+    data = request.json
+    service = data.get('service', 'all')  # 'api', 'db', 'redis', 'celery', or 'all'
+
+    try:
+        import subprocess
+        if service == 'all':
+            result = subprocess.run(['docker-compose', 'restart'],
+                                  cwd='/home/sekailink',
+                                  capture_output=True, text=True)
+        else:
+            result = subprocess.run(['docker-compose', 'restart', service],
+                                  cwd='/home/sekailink',
+                                  capture_output=True, text=True)
+
+        logger.warning(f"Docker service '{service}' restarted by admin {uid}")
+
+        return jsonify({
+            "status": "success",
+            "message": f"Docker service '{service}' restarted",
+            "output": result.stdout
+        })
+    except Exception as e:
+        logger.error(f"Error restarting Docker: {str(e)}")
+        return jsonify({"error": f"Failed to restart Docker: {str(e)}"}), 500
+
+@app.route('/api/admin/custom-worlds', methods=['GET'])
+def get_custom_worlds():
+    """Get list of installed custom worlds (admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    admin = User.query.get(uid)
+    if not admin or not admin.is_admin:
+        return jsonify({"error": "Requires admin permissions"}), 403
+
+    custom_worlds = CustomWorld.query.order_by(CustomWorld.created_at.desc()).all()
+
+    result = []
+    for world in custom_worlds:
+        result.append({
+            'id': world.id,
+            'name': world.name,
+            'version': world.version,
+            'author': world.author,
+            'description': world.description,
+            'is_enabled': world.is_enabled,
+            'created_at': world.created_at.isoformat()
+        })
+
+    return jsonify(result)
+
+@app.route('/api/admin/custom-worlds/<int:world_id>/toggle', methods=['POST'])
+def toggle_custom_world(world_id):
+    """Enable or disable a custom world (admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    admin = User.query.get(uid)
+    if not admin or not admin.is_admin:
+        return jsonify({"error": "Requires admin permissions"}), 403
+
+    world = CustomWorld.query.get(world_id)
+    if not world:
+        return jsonify({"error": "Custom world not found"}), 404
+
+    world.is_enabled = not world.is_enabled
+    db.session.commit()
+
+    logger.info(f"Custom world '{world.name}' {'enabled' if world.is_enabled else 'disabled'} by admin {uid}")
+
+    return jsonify({
+        "status": "success",
+        "message": f"Custom world {'enabled' if world.is_enabled else 'disabled'}",
+        "is_enabled": world.is_enabled
+    })
 
 if __name__ == '__main__':
     # Use socketio.run() instead of app.run() for WebSocket support

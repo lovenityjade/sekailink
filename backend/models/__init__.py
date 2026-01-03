@@ -48,6 +48,17 @@ class User(db.Model):
     # Timestamps
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+    # Role helper properties
+    @property
+    def is_admin(self):
+        """Check if user is an admin"""
+        return self.role == 'admin'
+
+    @property
+    def is_moderator(self):
+        """Check if user is a moderator or admin"""
+        return self.role in ('moderator', 'admin')
+
 
 class YamlFile(db.Model):
     """YAML configuration files for games"""

@@ -95,8 +95,129 @@ function confirmDialog(message) {
     return confirm(message);
 }
 
+// ========================================
+// WebSocket Connection (Socket.IO)
+// ========================================
+
+let socket = null;
+let heartbeatInterval = null;
+
+// Initialize Socket.IO connection
+function initializeWebSocket() {
+    // Only initialize if Socket.IO is available
+    if (typeof io === 'undefined') {
+        console.warn('Socket.IO client library not loaded');
+        return;
+    }
+
+    // Connect to server
+    socket = io({
+        transports: ['websocket', 'polling'],
+        reconnection: true,
+        reconnectionDelay: 1000,
+        reconnectionAttempts: 5
+    });
+
+    // Expose socket globally for other pages to use
+    window.socket = socket;
+
+    // Connection event handlers
+    socket.on('connect', () => {
+        console.log('✅ WebSocket connected');
+
+        // Start heartbeat to keep connection alive
+        if (heartbeatInterval) clearInterval(heartbeatInterval);
+        heartbeatInterval = setInterval(() => {
+            socket.emit('heartbeat');
+        }, 30000); // Every 30 seconds
+    });
+
+    socket.on('disconnect', () => {
+        console.log('❌ WebSocket disconnected');
+        if (heartbeatInterval) {
+            clearInterval(heartbeatInterval);
+            heartbeatInterval = null;
+        }
+    });
+
+    socket.on('connect_error', (error) => {
+        console.error('WebSocket connection error:', error);
+    });
+
+    socket.on('heartbeat_ack', (data) => {
+        console.log('💓 Heartbeat acknowledged');
+    });
+
+    // Friend status events
+    socket.on('friend_online', (data) => {
+        console.log(`🟢 Friend online: ${data.username}`);
+        showToast(`${data.username} is now online`, 'success');
+
+        // Update friend list if it exists on the page
+        updateFriendOnlineStatus(data.user_id, true);
+    });
+
+    socket.on('friend_offline', (data) => {
+        console.log(`⚫ Friend offline: ${data.username}`);
+
+        // Update friend list if it exists on the page
+        updateFriendOnlineStatus(data.user_id, false);
+    });
+
+    // Global lobby events (for homepage)
+    socket.on('lobby_created', (data) => {
+        console.log('🎮 New lobby created:', data.name);
+
+        // If there's a lobby list on the page, update it
+        if (typeof refreshLobbyList === 'function') {
+            refreshLobbyList();
+        }
+    });
+
+    socket.on('lobby_updated', (data) => {
+        console.log('🔄 Lobby updated:', data.lobby_id);
+
+        // If there's a lobby list on the page, update it
+        if (typeof updateLobbyInList === 'function') {
+            updateLobbyInList(data);
+        }
+    });
+
+    console.log('🔌 WebSocket initialized');
+}
+
+// Helper: Update friend online status in UI
+function updateFriendOnlineStatus(userId, isOnline) {
+    const friendElements = document.querySelectorAll(`[data-friend-id="${userId}"]`);
+    friendElements.forEach(element => {
+        const statusBadge = element.querySelector('.friend-status');
+        if (statusBadge) {
+            statusBadge.className = `badge badge-${isOnline ? 'success' : 'secondary'}`;
+            statusBadge.textContent = isOnline ? 'Online' : 'Offline';
+        }
+    });
+}
+
+// Join a specific lobby room
+function joinLobbyRoom(lobbyId) {
+    if (socket && socket.connected) {
+        socket.emit('join_lobby', { lobby_id: lobbyId });
+        console.log(`🚪 Joined lobby room: ${lobbyId}`);
+    }
+}
+
+// Leave a specific lobby room
+function leaveLobbyRoom(lobbyId) {
+    if (socket && socket.connected) {
+        socket.emit('leave_lobby', { lobby_id: lobbyId });
+        console.log(`🚪 Left lobby room: ${lobbyId}`);
+    }
+}
+
 // Fade-in animation observer
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize WebSocket on page load
+    initializeWebSocket();
     const fadeElements = document.querySelectorAll('.fade-in');
 
     const observer = new IntersectionObserver((entries) => {

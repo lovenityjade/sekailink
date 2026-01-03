@@ -179,6 +179,24 @@
                     </button>
                 </div>
 
+                <!-- Timer Controls -->
+                <div class="flex gap-sm mt-md" id="timer-controls" style="display: none;">
+                    <button class="btn btn-success" id="start-timer-btn" style="flex: 1;">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 3.5a.5.5 0 00-1 0V9a.5.5 0 00.252.434l3.5 2a.5.5 0 00.496-.868L8 8.71V3.5z"/>
+                            <path d="M8 16A8 8 0 108 0a8 8 0 000 16zm7-8A7 7 0 111 8a7 7 0 0114 0z"/>
+                        </svg>
+                        Start Timer
+                    </button>
+                    <button class="btn btn-danger" id="stop-timer-btn" style="display: none;">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"/>
+                            <path fill-rule="evenodd" d="M14 5a2 2 0 00-2-2H4a2 2 0 00-2 2v7a2 2 0 002 2h8a2 2 0 002-2V5zM3 5a1 1 0 011-1h8a1 1 0 011 1v7a1 1 0 01-1 1H4a1 1 0 01-1-1V5z"/>
+                        </svg>
+                        Stop Timer
+                    </button>
+                </div>
+
                 <!-- Host Console -->
                 <div class="divider"></div>
                 <details class="mt-md">
@@ -226,8 +244,6 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
-
 <script>
 // Get lobby ID from URL
 const urlParams = new URLSearchParams(window.location.search);
@@ -238,72 +254,172 @@ if (!lobbyId) {
     window.location.href = '/dashboard.html';
 }
 
-let socket;
 let currentUser = null;
 let lobbyData = null;
 let selectedYamlId = null;
 let timerInterval = null;
+let typingTimeout = null;
+let typingUsers = new Set();
 
-// Initialize Socket.IO
-function initSocket() {
-    socket = io(window.location.origin, {
-        transports: ['websocket', 'polling'],
-        withCredentials: true
-    });
+// Initialize Socket.IO for this lobby
+function initLobbySocket() {
+    // Use the global socket from main.js
+    if (!window.socket) {
+        console.error('Global socket not initialized');
+        return;
+    }
 
-    socket.on('connect', () => {
-        console.log('✅ Connected to server');
-        socket.emit('join_lobby', { lobby_id: lobbyId });
-    });
+    const socket = window.socket;
 
-    socket.on('disconnect', () => {
-        console.log('❌ Disconnected from server');
-    });
+    // Join this lobby room
+    socket.emit('join_lobby', { lobby_id: lobbyId });
+    console.log(`🚪 Joining lobby ${lobbyId}`);
 
-    socket.on('user_joined', (data) => {
+    // Player joined event
+    socket.on('player_joined', (data) => {
+        console.log('👋 Player joined:', data.username);
         addSystemMessage(`${data.username} joined the lobby`);
         loadLobbyData();
     });
 
-    socket.on('user_left', (data) => {
+    // Player left event
+    socket.on('player_left', (data) => {
+        console.log('👋 Player left:', data.username);
         addSystemMessage(`${data.username} left the lobby`);
         loadLobbyData();
     });
 
-    socket.on('player_status_changed', (data) => {
+    // Player ready event
+    socket.on('player_ready', (data) => {
+        console.log('✅ Player ready:', data.username);
+        addSystemMessage(`${data.username} is ready!`);
         loadLobbyData();
     });
 
+    // Chat message event
     socket.on('chat_message', (data) => {
         addChatMessage(data);
     });
 
+    // Typing indicator event
+    socket.on('user_typing', (data) => {
+        if (data.is_typing) {
+            typingUsers.add(data.username);
+        } else {
+            typingUsers.delete(data.username);
+        }
+        updateTypingIndicator();
+    });
+
+    // Generation complete event
     socket.on('generation_complete', (data) => {
         if (data.success) {
-            alert('✅ Generation complete! Seeds are ready.');
+            showToast('✅ Generation complete! Seeds are ready.', 'success');
             loadLobbyData();
         } else {
-            alert(`❌ Generation failed: ${data.error}`);
+            showToast(`❌ Generation failed: ${data.error}`, 'error');
         }
+    });
+
+    // Timer events
+    socket.on('timer_started', (data) => {
+        console.log('⏱️ Timer started');
+        showToast('Timer started!', 'info');
+        startTimerPolling();
+    });
+
+    socket.on('timer_stopped', (data) => {
+        console.log('⏹️ Timer stopped');
+        showToast(`Timer stopped after ${Math.floor(data.elapsed_seconds / 60)} minutes`, 'info');
+        stopTimerPolling();
+        loadLobbyData();
+    });
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+        socket.emit('leave_lobby', { lobby_id: lobbyId });
+        stopTimerPolling();
     });
 }
 
 // Timer Functions
-function startTimer(startTime) {
-    if (timerInterval) clearInterval(timerInterval);
+let timerPollInterval = null;
 
-    timerInterval = setInterval(() => {
-        const now = new Date();
-        const start = new Date(startTime);
-        const elapsed = Math.floor((now - start) / 1000);
+async function fetchTimerStatus() {
+    try {
+        const response = await fetch(`/api/lobbies/${lobbyId}/timer`, { credentials: 'include' });
+        if (!response.ok) return;
 
-        const hours = Math.floor(elapsed / 3600);
-        const minutes = Math.floor((elapsed % 3600) / 60);
-        const seconds = elapsed % 60;
+        const timerData = await response.json();
+        updateTimerDisplay(timerData);
+    } catch (error) {
+        console.error('Error fetching timer:', error);
+    }
+}
 
-        document.getElementById('timer-value').textContent =
-            `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    }, 1000);
+function updateTimerDisplay(timerData) {
+    const timerSection = document.getElementById('timer-section');
+    const timerValue = document.getElementById('timer-value');
+    const timeWarning = document.getElementById('time-limit-warning');
+    const timeRemaining = document.getElementById('time-remaining');
+
+    if (!timerData.is_running) {
+        timerSection.style.display = 'none';
+        return;
+    }
+
+    // Show timer section
+    timerSection.style.display = 'block';
+
+    // Format elapsed time
+    const elapsed = timerData.elapsed_seconds;
+    const hours = Math.floor(elapsed / 3600);
+    const minutes = Math.floor((elapsed % 3600) / 60);
+    const seconds = elapsed % 60;
+
+    timerValue.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+    // Handle time limit warnings
+    if (timerData.time_limit_hours && timerData.remaining_seconds !== null) {
+        if (timerData.is_exceeded) {
+            // Time limit exceeded - show critical warning
+            timeWarning.style.display = 'flex';
+            timeWarning.style.background = 'var(--status-error)';
+            timeWarning.style.color = 'white';
+            timeRemaining.textContent = 'TIME LIMIT EXCEEDED!';
+            timerValue.style.color = 'var(--status-error)';
+        } else if (timerData.is_warning) {
+            // Approaching time limit - show warning
+            const remainingMinutes = Math.floor(timerData.remaining_seconds / 60);
+            timeWarning.style.display = 'flex';
+            timeWarning.style.background = 'var(--status-warning)';
+            timeWarning.style.color = 'var(--text-primary)';
+            timeRemaining.textContent = `${remainingMinutes} minutes remaining`;
+            timerValue.style.color = 'var(--status-warning)';
+        } else {
+            // Normal - hide warning
+            timeWarning.style.display = 'none';
+            timerValue.style.color = 'var(--text-primary)';
+        }
+    } else {
+        timeWarning.style.display = 'none';
+        timerValue.style.color = 'var(--text-primary)';
+    }
+}
+
+function startTimerPolling() {
+    if (timerPollInterval) clearInterval(timerPollInterval);
+
+    // Poll timer status every second
+    fetchTimerStatus();
+    timerPollInterval = setInterval(fetchTimerStatus, 1000);
+}
+
+function stopTimerPolling() {
+    if (timerPollInterval) {
+        clearInterval(timerPollInterval);
+        timerPollInterval = null;
+    }
 }
 
 // Load User Info
@@ -387,11 +503,10 @@ async function loadLobbyData() {
     } else if (data.status === 'ready' || data.status === 'active') {
         patchCard.style.display = 'block';
         serverCard.style.display = 'block';
-        timerSection.style.display = 'block';
 
-        // Start timer if active
-        if (data.status === 'active' && data.timer_started_at) {
-            startTimer(data.timer_started_at);
+        // Start timer polling if active
+        if (data.status === 'active') {
+            startTimerPolling();
         }
 
         // Server info
@@ -406,6 +521,26 @@ async function loadLobbyData() {
 
         const allReady = data.players.every(p => p.is_ready);
         document.getElementById('start-btn').disabled = !allReady || data.status !== 'pending';
+
+        // Show timer controls for active lobbies
+        const timerControls = document.getElementById('timer-controls');
+        const startTimerBtn = document.getElementById('start-timer-btn');
+        const stopTimerBtn = document.getElementById('stop-timer-btn');
+
+        if (data.status === 'active') {
+            timerControls.style.display = 'flex';
+
+            // Update button states based on timer status
+            if (data.timer_started_at) {
+                startTimerBtn.style.display = 'none';
+                stopTimerBtn.style.display = 'block';
+            } else {
+                startTimerBtn.style.display = 'block';
+                stopTimerBtn.style.display = 'none';
+            }
+        } else {
+            timerControls.style.display = 'none';
+        }
     }
 }
 
@@ -514,15 +649,69 @@ async function kickPlayer(userId) {
     }
 }
 
-// Event Handlers
-document.getElementById('chat-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const input = document.getElementById('chat-input');
-    const message = input.value.trim();
+// Typing indicator display
+function updateTypingIndicator() {
+    const chatMessages = document.getElementById('chat-messages');
+    let typingIndicator = document.getElementById('typing-indicator');
 
-    if (message) {
-        socket.emit('chat_message', { lobby_id: lobbyId, message: message });
-        input.value = '';
+    if (typingUsers.size > 0) {
+        const names = Array.from(typingUsers);
+        let text = '';
+        if (names.length === 1) {
+            text = `${names[0]} is typing...`;
+        } else if (names.length === 2) {
+            text = `${names[0]} and ${names[1]} are typing...`;
+        } else {
+            text = `${names.length} people are typing...`;
+        }
+
+        if (!typingIndicator) {
+            typingIndicator = document.createElement('div');
+            typingIndicator.id = 'typing-indicator';
+            typingIndicator.className = 'chat-message system';
+            typingIndicator.style.fontStyle = 'italic';
+            typingIndicator.style.color = 'var(--text-muted)';
+            chatMessages.appendChild(typingIndicator);
+        }
+        typingIndicator.textContent = text;
+    } else if (typingIndicator) {
+        typingIndicator.remove();
+    }
+}
+
+// Event Handlers
+const chatInput = document.getElementById('chat-input');
+const chatForm = document.getElementById('chat-form');
+
+// Typing indicator on input
+chatInput.addEventListener('input', () => {
+    if (!window.socket) return;
+
+    // Clear previous timeout
+    if (typingTimeout) clearTimeout(typingTimeout);
+
+    // Emit typing started
+    window.socket.emit('typing', { lobby_id: lobbyId, is_typing: true });
+
+    // Stop typing after 2 seconds of inactivity
+    typingTimeout = setTimeout(() => {
+        window.socket.emit('typing', { lobby_id: lobbyId, is_typing: false });
+    }, 2000);
+});
+
+// Chat form submission
+chatForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+
+    if (message && window.socket) {
+        // Stop typing indicator
+        if (typingTimeout) clearTimeout(typingTimeout);
+        window.socket.emit('typing', { lobby_id: lobbyId, is_typing: false });
+
+        // Send message
+        window.socket.emit('chat_message', { lobby_id: lobbyId, message: message });
+        chatInput.value = '';
     }
 });
 
@@ -538,7 +727,9 @@ document.getElementById('ready-btn').addEventListener('click', async () => {
 
     if (response.ok) {
         loadLobbyData();
-        socket.emit('player_ready', { lobby_id: lobbyId });
+        if (window.socket) {
+            window.socket.emit('player_ready', { lobby_id: lobbyId });
+        }
     }
 });
 
@@ -551,7 +742,9 @@ document.getElementById('leave-btn').addEventListener('click', async () => {
     });
 
     if (response.ok) {
-        socket.emit('leave_lobby', { lobby_id: lobbyId });
+        if (window.socket) {
+            window.socket.emit('leave_lobby', { lobby_id: lobbyId });
+        }
         window.location.href = '/dashboard.html';
     }
 });
@@ -572,12 +765,67 @@ document.getElementById('start-btn').addEventListener('click', async () => {
     }
 });
 
+// Timer control buttons
+document.getElementById('start-timer-btn').addEventListener('click', async () => {
+    if (!confirm('Start the timer? This will begin tracking elapsed time for the sync.')) return;
+
+    const response = await fetch(`/api/lobbies/${lobbyId}/timer/start`, {
+        method: 'POST',
+        credentials: 'include'
+    });
+
+    if (response.ok) {
+        showToast('Timer started!', 'success');
+        document.getElementById('start-timer-btn').style.display = 'none';
+        document.getElementById('stop-timer-btn').style.display = 'block';
+        startTimerPolling();
+    } else {
+        const error = await response.json();
+        showToast(error.error || 'Failed to start timer', 'error');
+    }
+});
+
+document.getElementById('stop-timer-btn').addEventListener('click', async () => {
+    if (!confirm('Stop the timer? This will mark the sync as finished.')) return;
+
+    const response = await fetch(`/api/lobbies/${lobbyId}/timer/stop`, {
+        method: 'POST',
+        credentials: 'include'
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        const minutes = Math.floor(data.elapsed_seconds / 60);
+        showToast(`Timer stopped! Total time: ${minutes} minutes`, 'success');
+        stopTimerPolling();
+        loadLobbyData();
+    } else {
+        const error = await response.json();
+        showToast(error.error || 'Failed to stop timer', 'error');
+    }
+});
+
 // Initialize
 async function init() {
     await loadUserInfo();
     await loadYamls();
     await loadLobbyData();
-    initSocket();
+
+    // Wait for global socket to be ready
+    const waitForSocket = setInterval(() => {
+        if (window.socket && window.socket.connected) {
+            clearInterval(waitForSocket);
+            initLobbySocket();
+        }
+    }, 100);
+
+    // Timeout after 5 seconds
+    setTimeout(() => {
+        clearInterval(waitForSocket);
+        if (!window.socket || !window.socket.connected) {
+            console.error('WebSocket connection timeout');
+        }
+    }, 5000);
 }
 
 init();

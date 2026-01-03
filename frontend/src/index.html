@@ -195,6 +195,104 @@
 
 {% block extra_js %}
 <script>
+    // ========================================
+    // Lobby List Management
+    // ========================================
+
+    const lobbyList = document.getElementById('lobbyList');
+    let allLobbies = [];
+
+    // Load lobbies from API
+    async function loadLobbies() {
+        try {
+            const response = await fetch('/api/lobbies', { credentials: 'include' });
+            if (!response.ok) {
+                console.error('Failed to load lobbies');
+                return;
+            }
+
+            allLobbies = await response.json();
+            displayLobbies(allLobbies);
+        } catch (error) {
+            console.error('Error loading lobbies:', error);
+        }
+    }
+
+    // Display lobbies
+    function displayLobbies(lobbies) {
+        if (!lobbyList) return;
+
+        // Filter to only show open/pending/ready lobbies
+        const activeLobbies = lobbies.filter(lobby =>
+            ['open', 'pending', 'ready', 'active'].includes(lobby.status)
+        );
+
+        if (activeLobbies.length === 0) {
+            lobbyList.innerHTML = `
+                <div class="text-center p-xl">
+                    <p class="text-muted">No active lobbies at the moment.</p>
+                    ${document.querySelector('#userMenuBtn') ? '<a href="/create_room.html" class="btn mt-md">Create the first lobby!</a>' : ''}
+                </div>
+            `;
+            return;
+        }
+
+        lobbyList.innerHTML = activeLobbies.map(lobby => `
+            <div class="lobby-item" data-lobby-id="${lobby.id}">
+                <div class="lobby-header">
+                    <div>
+                        <h3 class="lobby-name">
+                            <a href="/lobby/${lobby.slug || lobby.id}">${escapeHtml(lobby.name)}</a>
+                        </h3>
+                        <div class="lobby-info">
+                            <span class="lobby-info-item">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM12.93 11.93A7 7 0 108 15a7 7 0 004.93-3.07z"/>
+                                </svg>
+                                ${escapeHtml(lobby.host_name || 'Unknown')}
+                            </span>
+                            <span class="lobby-info-item">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M5 6a2 2 0 114 0 2 2 0 01-4 0zm-3 8a2 2 0 114 0 2 2 0 01-4 0zm8 0a2 2 0 114 0 2 2 0 01-4 0z"/>
+                                </svg>
+                                <span class="player-count">${lobby.player_count || 0}/${lobby.max_players || 16}</span> Players
+                            </span>
+                            <span class="badge badge-${lobby.status === 'open' ? 'success' : 'info'}">
+                                ${lobby.status}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Refresh lobby list (called by WebSocket)
+    function refreshLobbyList() {
+        console.log('🔄 Refreshing lobby list...');
+        loadLobbies();
+    }
+
+    // Update specific lobby in list (called by WebSocket)
+    function updateLobbyInList(data) {
+        const lobbyElement = document.querySelector(`[data-lobby-id="${data.lobby_id}"]`);
+        if (lobbyElement && data.player_count !== undefined) {
+            const playerCountElement = lobbyElement.querySelector('.player-count');
+            if (playerCountElement) {
+                const maxPlayers = playerCountElement.textContent.split('/')[1];
+                playerCountElement.textContent = `${data.player_count}/${maxPlayers}`;
+            }
+        }
+    }
+
+    // Load lobbies on page load
+    if (lobbyList) {
+        loadLobbies();
+
+        // Refresh lobby list every 30 seconds as fallback
+        setInterval(refreshLobbyList, 30000);
+    }
+
     // Search functionality for lobbies
     const lobbySearch = document.getElementById('lobbySearch');
     if (lobbySearch) {

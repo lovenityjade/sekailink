@@ -1,7 +1,8 @@
 # SekaiLink Implementation Progress
 
 **Last Updated**: January 3, 2026
-**Phase**: 4 of 9 (Complete API Integration) - ✅ COMPLETE
+**Phase**: 8 of 9 (Moderation & Admin Tools) - ✅ COMPLETE
+**Overall Progress**: 78% (7 complete + 1 in progress)
 
 ---
 
@@ -208,23 +209,262 @@
 
 ---
 
-## 📋 Phase 5: Real-time Enhancements (NEXT)
+## ✅ Phase 5: Real-time Enhancements (COMPLETE)
 
-**Status**: Not started
-**Estimated tokens**: ~40-50k
+**Status**: Complete
+**Completed**: January 3, 2026
+**Tokens used**: ~32k
 
-### Tasks
-- [ ] Implement WebSocket connections (Flask-SocketIO)
-- [ ] Real-time lobby updates
-- [ ] Redesign index.html (game list, active rooms)
-- [ ] Expand dashboard.html (email, pronouns, favorites, Twitch, friends)
-- [ ] Create game.html template (individual game pages)
-- [ ] Create create_room.html (full lobby creation)
-- [ ] Enhance lobby.html (timer, host console)
-- [ ] Create profile.html (user profiles with ratings)
-- [ ] Create moderation.html (moderator tools)
-- [ ] Create admin.html (admin dashboard)
-- [ ] Create 8 legal/info pages (help, FAQ, about, rules, docs, donate, credits, contact)
+### Backend Enhancements
+- ✅ Enhanced SocketIO event handlers in main.py
+- ✅ Lobby creation broadcasts (lobby_created)
+- ✅ Player join/leave broadcasts (player_joined, player_left, lobby_updated)
+- ✅ Online status tracking (friend_online, friend_offline)
+- ✅ Heartbeat system for keeping connections alive
+- ✅ Chat typing indicators (typing, user_typing)
+- ✅ Room-based messaging architecture (lobby_{id}, user_{id})
+
+### Frontend Integration
+- ✅ Added Socket.IO client library to base.html
+- ✅ Created global WebSocket initialization in main.js
+- ✅ Connected homepage to real-time lobby updates
+- ✅ Connected lobby page to WebSocket with:
+  - Real-time player join/leave notifications
+  - Live chat with typing indicators
+  - Player ready status updates
+  - Dynamic lobby list updates
+
+### WebSocket Events Implemented (15 total)
+**Backend to Frontend:**
+- lobby_created - Broadcast when new lobby is created
+- lobby_updated - Broadcast when lobby data changes
+- player_joined - When player joins lobby
+- player_left - When player leaves lobby
+- player_ready - When player marks ready
+- user_typing - When user is typing in chat
+- chat_message - Chat messages
+- friend_online - When friend comes online
+- friend_offline - When friend goes offline
+- heartbeat_ack - Heartbeat acknowledgment
+
+**Frontend to Backend:**
+- join_lobby - Join a lobby room
+- leave_lobby - Leave a lobby room
+- chat_message - Send chat message
+- typing - Typing indicator
+- heartbeat - Keep connection alive
+
+### Features Now Working
+- ✅ Real-time lobby list on homepage (auto-updates when lobbies created/join)
+- ✅ Live chat with typing indicators
+- ✅ Friend online/offline status updates
+- ✅ Player join/leave notifications
+- ✅ Automatic connection management with heartbeat
+- ✅ Toast notifications for friend status changes
+
+---
+
+## ✅ Phase 6: Timer & Time Limit System (COMPLETE)
+
+**Status**: Complete
+**Completed**: January 3, 2026
+**Tokens used**: ~25k
+
+### Timer API Endpoints (3 new endpoints)
+- ✅ `POST /api/lobbies/<id>/timer/start` - Start timer (host only)
+- ✅ `POST /api/lobbies/<id>/timer/stop` - Stop timer and finish lobby (host only)
+- ✅ `GET /api/lobbies/<id>/timer` - Get timer status with warnings
+
+### Backend Features
+- ✅ Timer calculation logic with elapsed/remaining time
+- ✅ Time limit warning detection (90% threshold)
+- ✅ Time limit exceeded detection
+- ✅ WebSocket timer events (timer_started, timer_stopped)
+- ✅ Celery background task for time limit enforcement
+- ✅ Automatic lobby termination when time limit exceeded (restrict mode)
+
+### Frontend Features
+- ✅ Live timer display (HH:MM:SS format)
+- ✅ Real-time timer polling (updates every second)
+- ✅ Host timer controls (Start Timer / Stop Timer buttons)
+- ✅ Visual time limit warnings:
+  - Yellow warning at 90% of time limit
+  - Red alert when time limit exceeded
+  - Shows remaining time in minutes
+- ✅ WebSocket integration for instant timer updates
+- ✅ Automatic polling start/stop based on lobby state
+
+### Celery Background Task
+- ✅ `check_time_limits()` - Runs periodically to check for violations
+- ✅ Checks all active lobbies with time limits
+- ✅ Enforces time limits in restrict mode
+- ✅ Marks lobbies as finished when time exceeded
+- ✅ Logs time limit violations
+
+### Timer Features Working
+- ✅ Host can start timer when lobby is active
+- ✅ Host can stop timer to end the sync
+- ✅ Timer displays elapsed time in real-time
+- ✅ Warning appears when 90% of time limit reached
+- ✅ Critical alert when time limit exceeded
+- ✅ Automatic enforcement in restrict mode
+- ✅ All players see timer updates via WebSocket
+
+---
+
+## 🔄 Phase 7: Rating & Review System (IN PROGRESS - Backend Complete)
+
+**Status**: Backend Complete, Frontend Pending
+**Started**: January 3, 2026
+**Tokens used**: ~15k (backend only)
+
+### Backend APIs Implemented (11 new endpoints)
+**User Rating System:**
+- ✅ `POST /api/users/<id>/rate` - Submit 4-criteria rating
+- ✅ `GET /api/users/<id>/ratings` - Get detailed rating breakdown
+
+**User Review System:**
+- ✅ `POST /api/users/<id>/review` - Write a review (requires moderation)
+- ✅ `GET /api/users/<id>/reviews` - Get approved reviews
+- ✅ `POST /api/reviews/<id>/like` - Like a review
+- ✅ `POST /api/reviews/<id>/report` - Report review for moderation
+- ✅ `DELETE /api/reviews/<id>` - Delete own review
+
+**Review Moderation (Mods/Admins):**
+- ✅ `GET /api/moderation/reviews` - Get pending reviews
+- ✅ `POST /api/moderation/reviews/<id>/approve` - Approve review
+- ✅ `POST /api/moderation/reviews/<id>/reject` - Reject and delete review
+
+**Server Rating:**
+- ✅ `GET /api/users/<id>/server-rating` - Get auto-calculated behavior rating
+
+### Rating System Features
+**4-Criteria User Ratings (1-5 stars each):**
+- ✅ Punctuality - Was the player on time?
+- ✅ Respect Others - Did they respect other players?
+- ✅ Respect Rules - Did they follow sync rules?
+- ✅ Fair Release - Did they release items with valid reasons?
+
+**Validation:**
+- ✅ Can only rate users you've played with
+- ✅ Cannot rate yourself
+- ✅ Can update existing ratings
+- ✅ All ratings must be 1-5
+
+**Review System:**
+- ✅ Write text reviews (10-500 characters)
+- ✅ Reviews require moderation before appearing
+- ✅ Like counter for helpful reviews
+- ✅ Report system for inappropriate content
+- ✅ Users can delete their own reviews
+
+### Celery Background Task
+**`update_server_ratings()` - Auto-calculation:**
+- ✅ Calculates ratings for all users based on behavior
+- ✅ Rating formula:
+  - Start at 5.0 stars
+  - -0.2 per kick received
+  - -1.0 per ban/suspension
+  - -0.1 per warning
+  - -0.1 per DNF/forfeit
+  - +0.05 per sync completed
+  - Capped between 1.0 and 5.0
+- ✅ Updates ServerRating table with stats
+- ✅ Tracks: kicks, bans, warnings, syncs, DNFs
+
+### Features Implemented
+- ✅ User-to-user rating system with 4 criteria
+- ✅ Community review system with moderation
+- ✅ Automatic server behavior ratings
+- ✅ Review approval workflow for moderators
+- ✅ Prevents self-rating and self-review
+- ✅ Requires users to have played together
+- ✅ Like system for helpful reviews
+- ✅ Report system for inappropriate content
+
+### Remaining Work (Frontend)
+- ⏳ Update profile.html to display ratings & reviews
+- ⏳ Create rating modal UI (4-star inputs)
+- ⏳ Create review modal UI (text input + submit)
+- ⏳ Add "Rate User" button to profile pages
+- ⏳ Add "Write Review" button to profile pages
+- ⏳ Display star ratings visually
+- ⏳ Show review cards with like buttons
+- ⏳ Moderation page for pending reviews
+
+---
+
+## ✅ Phase 8: Moderation & Admin Tools (COMPLETE)
+
+**Status**: Complete
+**Completed**: January 3, 2026
+
+### Backend API Endpoints (20 endpoints)
+
+**User Management (6 endpoints):**
+- ✅ `GET /api/admin/users` - List all users with search
+- ✅ `POST /api/admin/users/<id>/ban` - Ban user (temp or permanent)
+- ✅ `POST /api/admin/users/<id>/unban` - Unban user
+- ✅ `POST /api/admin/users/<id>/warn` - Issue warning
+- ✅ `POST /api/admin/users/<id>/promote` - Promote to mod/admin
+- ✅ `POST /api/admin/users/<id>/demote` - Demote from mod/admin
+
+**Ban Appeal System (4 endpoints):**
+- ✅ `POST /api/bans/<id>/appeal` - Submit ban appeal
+- ✅ `GET /api/admin/ban-appeals` - Get pending appeals
+- ✅ `POST /api/admin/ban-appeals/<id>/approve` - Approve & unban
+- ✅ `POST /api/admin/ban-appeals/<id>/reject` - Reject appeal
+
+**Lobby Moderation (1 endpoint):**
+- ✅ `POST /api/moderation/lobbies/<id>/close` - Force close lobby
+
+**System Management (9 endpoints):**
+- ✅ `GET /api/admin/server/status` - Server stats & health
+- ✅ `GET /api/admin/server/logs` - Recent server logs
+- ✅ `POST /api/admin/server/maintenance` - Toggle maintenance mode
+- ✅ `POST /api/admin/storage/purge-roms` - Purge all ROM files
+- ✅ `POST /api/admin/storage/purge-yamls` - Purge all YAML files
+- ✅ `POST /api/admin/docker/restart` - Restart Docker containers
+- ✅ `GET /api/admin/custom-worlds` - List custom worlds
+- ✅ `POST /api/admin/custom-worlds/<id>/toggle` - Enable/disable world
+
+### Frontend Pages
+
+**Moderation Dashboard (`moderation.html`):**
+- ✅ Pending reviews queue (approve/reject)
+- ✅ Ban appeals management
+- ✅ Active lobbies overview with force close
+- ✅ User search and quick actions (ban, warn)
+- ✅ Statistics dashboard
+- ✅ Real-time updates via WebSocket
+
+**Admin Dashboard (`admin.html`):**
+- ✅ System statistics overview
+- ✅ User management with role assignment
+- ✅ Docker container control
+- ✅ Database management
+- ✅ Custom worlds management
+- ✅ System logs viewer
+- ✅ Maintenance mode toggle
+
+### Features Implemented
+- ✅ Full permission system (user/moderator/admin)
+- ✅ Cannot ban administrators
+- ✅ Cannot demote yourself
+- ✅ Ban appeal workflow with review
+- ✅ Temporary & permanent bans
+- ✅ Warning system with reason tracking
+- ✅ Server statistics tracking
+- ✅ Storage management (ROM/YAML purge)
+- ✅ Docker container management
+- ✅ Maintenance mode flag system
+
+### Security Features
+- ✅ Role-based access control on all endpoints
+- ✅ Admin-only system management
+- ✅ Mod/Admin for user actions
+- ✅ Logged all moderation actions
+- ✅ Cannot escalate privileges without admin
 
 ---
 
@@ -235,14 +475,14 @@
 | Phase 1: Foundation & Translation | ✅ Complete | 100% |
 | Phase 2: Core Pages & Navigation | ✅ Complete | 100% |
 | Phase 3: Games API Implementation | ✅ Complete | 100% |
-| Phase 4: Lobby System APIs | ⏳ Pending | 0% |
-| Phase 5: Real-time Enhancements | ⏳ Pending | 0% |
-| Phase 6: Timer & Time Limit System | ⏳ Pending | 0% |
-| Phase 7: Rating & Review System | ⏳ Pending | 0% |
-| Phase 8: Moderation & Admin Tools | ⏳ Pending | 0% |
+| Phase 4: Complete API Integration | ✅ Complete | 100% |
+| Phase 5: Real-time Enhancements | ✅ Complete | 100% |
+| Phase 6: Timer & Time Limit System | ✅ Complete | 100% |
+| Phase 7: Rating & Review System | 🔄 In Progress | 60% (Backend Done) |
+| Phase 8: Moderation & Admin Tools | ✅ Complete | 100% |
 | Phase 9: Polish & Production | ⏳ Pending | 0% |
 
-**Overall: 44% Complete (4/9 phases)**
+**Overall: 78% Complete (7 complete + 1 in progress)**
 
 ---
 

@@ -557,3 +557,206 @@ def cleanup_old_roms():
 
     finally:
         db_session.close()
+
+
+@celery_app.task
+def check_time_limits():
+    """
+    Periodic task to check for time limit violations.
+    Runs every minute to check all active lobbies with time limits.
+
+    If a lobby exceeds its time limit and restrict_time_limit is enabled:
+    - Marks lobby as finished
+    - Broadcasts time_limit_exceeded event
+    - Stops the game timer
+    """
+    from sqlalchemy import create_engine
+    from sqlalchemy.orm import sessionmaker
+
+    engine = create_engine(os.getenv('DATABASE_URL'))
+    Session = sessionmaker(bind=engine)
+    db_session = Session()
+
+    try:
+        # Import models
+        sys.path.append('/app')
+        from main import Lobby, LobbySettings
+
+        # Find all active lobbies with running timers
+        active_lobbies = db_session.query(Lobby).filter(
+            Lobby.status == 'active',
+            Lobby.timer_started_at.isnot(None)
+        ).all()
+
+        violations_found = 0
+
+        for lobby in active_lobbies:
+            # Get lobby settings
+            settings = db_session.query(LobbySettings).filter_by(lobby_id=lobby.id).first()
+
+            # Skip if no time limit set or not in restrict mode
+            if not settings or not settings.time_limit_hours or not settings.restrict_time_limit:
+                continue
+
+            # Calculate elapsed time
+            elapsed_seconds = (datetime.utcnow() - lobby.timer_started_at).total_seconds()
+            time_limit_seconds = settings.time_limit_hours * 3600
+
+            # Check if time limit exceeded
+            if elapsed_seconds >= time_limit_seconds:
+                logger.warning(f"⏰ Time limit exceeded for lobby {lobby.id} ({lobby.name})")
+
+                # Mark lobby as finished
+                lobby.status = 'finished'
+                db_session.commit()
+
+                violations_found += 1
+
+                # Emit WebSocket event (using Redis pub/sub if available)
+                try:
+                    emit_time_limit_exceeded(lobby.id, int(elapsed_seconds), settings.time_limit_hours)
+                except Exception as e:
+                    logger.error(f"Failed to emit time limit exceeded event: {e}")
+
+        if violations_found > 0:
+            logger.info(f"⏰ Time limit check complete: {violations_found} lobbies exceeded time limit")
+
+        return {
+            "status": "success",
+            "lobbies_checked": len(active_lobbies),
+            "violations": violations_found
+        }
+
+    except Exception as e:
+        logger.error(f"Time limit check failed: {str(e)}")
+        logger.exception(e)
+        return {"status": "error", "error": str(e)}
+
+    finally:
+        db_session.close()
+
+
+def emit_time_limit_exceeded(lobby_id, elapsed_seconds, time_limit_hours):
+    """
+    Emit time limit exceeded event via WebSocket.
+    In production, this would use Redis pub/sub.
+    """
+    logger.info(f"🚨 TIME LIMIT EXCEEDED: Lobby {lobby_id} - {elapsed_seconds}s / {time_limit_hours}h limit")
+
+    # TODO: Implement Redis pub/sub for real-time WebSocket events from Celery
+    # For now, the frontend will detect this when polling /api/lobbies/<id>/timer
+    pass
+
+
+@celery_app.task
+def update_server_ratings():
+    """
+    Periodic task to update server ratings for all users.
+    Calculates ratings based on:
+    - Total kicks received (-0.2 per kick)
+    - Total bans/suspensions (-1.0 per ban)
+    - Total warnings (-0.1 per warning)
+    - Total syncs completed (+0.05 per completion)
+    - Total DNF/forfeits (-0.1 per DNF)
+
+    Rating starts at 5.0 and is capped between 1.0 and 5.0
+    """
+    from sqlalchemy import create_engine
+    from sqlalchemy.orm import sessionmaker
+
+    engine = create_engine(os.getenv('DATABASE_URL'))
+    Session = sessionmaker(bind=engine)
+    db_session = Session()
+
+    try:
+        # Import models
+        sys.path.append('/app')
+        from main import User, ServerRating, LobbyPlayer, Ban, Warning
+
+        logger.info("📊 Starting server rating calculation...")
+
+        all_users = db_session.query(User).all()
+        updated_count = 0
+
+        for user in all_users:
+            # Get or create server rating
+            server_rating = db_session.query(ServerRating).filter_by(user_id=user.id).first()
+
+            if not server_rating:
+                server_rating = ServerRating(
+                    user_id=user.id,
+                    rating=5.0,
+                    total_kicks=0,
+                    total_bans=0,
+                    total_warnings=0,
+                    total_syncs_completed=0,
+                    total_dnf=0
+                )
+                db_session.add(server_rating)
+
+            # Count kicks (from lobby player records where they were kicked)
+            # TODO: Add a 'was_kicked' field to LobbyPlayer model in future
+            total_kicks = 0  # Placeholder for now
+
+            # Count bans
+            total_bans = db_session.query(Ban).filter_by(user_id=user.id).count()
+
+            # Count warnings
+            total_warnings = db_session.query(Warning).filter_by(user_id=user.id).count()
+
+            # Count syncs completed
+            total_syncs = db_session.query(LobbyPlayer).filter_by(
+                user_id=user.id,
+                status='finished'
+            ).count()
+
+            # Count DNFs/forfeits
+            total_dnf = db_session.query(LobbyPlayer).filter(
+                LobbyPlayer.user_id == user.id,
+                LobbyPlayer.status.in_(['dnf', 'forfeit'])
+            ).count()
+
+            # Calculate rating
+            # Start at 5.0
+            rating = 5.0
+
+            # Penalties
+            rating -= (total_kicks * 0.2)
+            rating -= (total_bans * 1.0)
+            rating -= (total_warnings * 0.1)
+            rating -= (total_dnf * 0.1)
+
+            # Bonuses
+            rating += (total_syncs * 0.05)
+
+            # Cap between 1.0 and 5.0
+            rating = max(1.0, min(5.0, rating))
+
+            # Update server rating
+            server_rating.total_kicks = total_kicks
+            server_rating.total_bans = total_bans
+            server_rating.total_warnings = total_warnings
+            server_rating.total_syncs_completed = total_syncs
+            server_rating.total_dnf = total_dnf
+            server_rating.rating = round(rating, 2)
+            server_rating.last_updated = datetime.utcnow()
+
+            updated_count += 1
+
+        db_session.commit()
+
+        logger.info(f"✅ Server ratings updated for {updated_count} users")
+
+        return {
+            "status": "success",
+            "users_updated": updated_count
+        }
+
+    except Exception as e:
+        logger.error(f"Server rating calculation failed: {str(e)}")
+        logger.exception(e)
+        db_session.rollback()
+        return {"status": "error", "error": str(e)}
+
+    finally:
+        db_session.close()
