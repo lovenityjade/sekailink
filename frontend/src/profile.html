@@ -1,0 +1,517 @@
+{% extends "base.html" %}
+
+{% block title %}{{ profile_user.username }} - Profile - SekaiLink{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="profile-avatar-section">
+            <img id="profile-avatar" src="" alt="Avatar" class="avatar avatar-xl">
+            <div class="flex gap-xs mt-md" id="profile-badges">
+                <!-- Badges loaded dynamically -->
+            </div>
+        </div>
+
+        <div class="profile-info-section">
+            <h1 class="profile-name" id="profile-username">Loading...</h1>
+            <p class="profile-pronouns" id="profile-pronouns"></p>
+            <p class="text-secondary mb-md" id="profile-bio">No bio provided</p>
+
+            <div class="flex gap-sm" id="profile-actions">
+                <!-- Actions loaded based on permissions -->
+            </div>
+        </div>
+    </div>
+
+    <div class="lobby-container" style="grid-template-columns: 2fr 1fr;">
+        <!-- Main Content -->
+        <div>
+            <!-- Ratings Section -->
+            <div class="rating-section">
+                <h2 class="mb-lg">Ratings</h2>
+
+                <div class="rating-grid">
+                    <!-- Server Rating -->
+                    <div class="rating-item">
+                        <div class="rating-value" id="server-rating">--</div>
+                        <div class="rating-stars" id="server-stars">☆☆☆☆☆</div>
+                        <div class="rating-label">Server Rating</div>
+                        <p class="form-hint">Calculated by behavior</p>
+                    </div>
+
+                    <!-- User Rating -->
+                    <div class="rating-item">
+                        <div class="rating-value" id="user-rating">--</div>
+                        <div class="rating-stars" id="user-stars">☆☆☆☆☆</div>
+                        <div class="rating-label">User Rating</div>
+                        <p class="form-hint">From <span id="rating-count">0</span> players</p>
+                    </div>
+                </div>
+
+                <!-- Detailed Ratings -->
+                <div class="card mt-lg">
+                    <h3 class="mb-md">Rating Breakdown</h3>
+                    <div class="dashboard-grid">
+                        <div>
+                            <label class="form-label">Punctuality</label>
+                            <div class="flex items-center gap-sm">
+                                <div class="progress" style="flex: 1;">
+                                    <div class="progress-bar" id="punctuality-bar" style="width: 0%;"></div>
+                                </div>
+                                <span id="punctuality-value" class="text-primary">0.0</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Respect for Others</label>
+                            <div class="flex items-center gap-sm">
+                                <div class="progress" style="flex: 1;">
+                                    <div class="progress-bar" id="respect-others-bar" style="width: 0%;"></div>
+                                </div>
+                                <span id="respect-others-value" class="text-primary">0.0</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Respect for Rules</label>
+                            <div class="flex items-center gap-sm">
+                                <div class="progress" style="flex: 1;">
+                                    <div class="progress-bar" id="respect-rules-bar" style="width: 0%;"></div>
+                                </div>
+                                <span id="respect-rules-value" class="text-primary">0.0</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Valid Release</label>
+                            <div class="flex items-center gap-sm">
+                                <div class="progress" style="flex: 1;">
+                                    <div class="progress-bar" id="valid-release-bar" style="width: 0%;"></div>
+                                </div>
+                                <span id="valid-release-value" class="text-primary">0.0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rate This User (if not self) -->
+            <div class="card mt-lg" id="rate-user-section" style="display: none;">
+                <h3 class="mb-md">Rate This Player</h3>
+                <form id="rate-user-form">
+                    <div class="dashboard-grid">
+                        <div class="form-group">
+                            <label class="form-label">Punctuality</label>
+                            <select class="form-select" id="rate-punctuality">
+                                <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                                <option value="4">⭐⭐⭐⭐ Good</option>
+                                <option value="3">⭐⭐⭐ Average</option>
+                                <option value="2">⭐⭐ Poor</option>
+                                <option value="1">⭐ Very Poor</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Respect for Others</label>
+                            <select class="form-select" id="rate-respect-others">
+                                <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                                <option value="4">⭐⭐⭐⭐ Good</option>
+                                <option value="3">⭐⭐⭐ Average</option>
+                                <option value="2">⭐⭐ Poor</option>
+                                <option value="1">⭐ Very Poor</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Respect for Rules</label>
+                            <select class="form-select" id="rate-respect-rules">
+                                <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                                <option value="4">⭐⭐⭐⭐ Good</option>
+                                <option value="3">⭐⭐⭐ Average</option>
+                                <option value="2">⭐⭐ Poor</option>
+                                <option value="1">⭐ Very Poor</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Valid Release</label>
+                            <select class="form-select" id="rate-valid-release">
+                                <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                                <option value="4">⭐⭐⭐⭐ Good</option>
+                                <option value="3">⭐⭐⭐ Average</option>
+                                <option value="2">⭐⭐ Poor</option>
+                                <option value="1">⭐ Very Poor</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn mt-md">Submit Rating</button>
+                </form>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="mt-xl">
+                <div class="flex justify-between items-center mb-lg">
+                    <h2>Reviews</h2>
+                    <button class="btn btn-sm" id="write-review-btn" onclick="showReviewModal()" style="display: none;">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M15.502 1.94a.5.5 0 010 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 01.707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 00-.121.196l-.805 2.414a.25.25 0 00.316.316l2.414-.805a.5.5 0 00.196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 002.5 15h11a1.5 1.5 0 001.5-1.5v-6a.5.5 0 00-1 0v6a.5.5 0 01-.5.5h-11a.5.5 0 01-.5-.5v-11a.5.5 0 01.5-.5H9a.5.5 0 000-1H2.5A1.5 1.5 0 001 2.5v11z"/>
+                        </svg>
+                        Write Review
+                    </button>
+                </div>
+
+                <div class="review-list" id="review-list">
+                    <!-- Reviews loaded dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div>
+            <!-- Stats Card -->
+            <div class="card">
+                <h3 class="mb-md">Statistics</h3>
+                <div class="flex flex-col gap-md">
+                    <div>
+                        <div class="text-muted text-sm">Syncs Completed</div>
+                        <div class="text-primary" style="font-size: var(--font-size-2xl); font-weight: 700;" id="stat-syncs-completed">0</div>
+                    </div>
+                    <div>
+                        <div class="text-muted text-sm">Syncs Hosted</div>
+                        <div class="text-primary" style="font-size: var(--font-size-2xl); font-weight: 700;" id="stat-syncs-hosted">0</div>
+                    </div>
+                    <div>
+                        <div class="text-muted text-sm">DNFs</div>
+                        <div class="text-primary" style="font-size: var(--font-size-2xl); font-weight: 700;" id="stat-dnf">0</div>
+                    </div>
+                    <div>
+                        <div class="text-muted text-sm">Member Since</div>
+                        <div class="text-muted text-sm" id="stat-member-since">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Favorite Games -->
+            <div class="card mt-lg">
+                <h3 class="mb-md">Favorite Games</h3>
+                <div id="favorite-games" class="flex flex-col gap-sm">
+                    <!-- Favorite games loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="card mt-lg">
+                <h3 class="mb-md">Recent Activity</h3>
+                <div id="recent-activity" class="flex flex-col gap-sm">
+                    <!-- Recent activity loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Write Review Modal -->
+<div class="modal-overlay" id="review-modal" style="display: none;">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 class="modal-title">Write a Review</h2>
+        </div>
+        <div class="modal-body">
+            <form id="review-form">
+                <div class="form-group">
+                    <label class="form-label">Your Review</label>
+                    <textarea id="review-text" class="form-textarea" rows="6" placeholder="Share your experience playing with this user..." required maxlength="1000"></textarea>
+                    <span class="form-hint">Be respectful and constructive</span>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" onclick="submitReview()">Submit Review</button>
+            <button class="btn btn-secondary" onclick="closeReviewModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Get user ID from URL
+const userId = window.location.pathname.split('/').pop();
+let currentUser = null;
+let profileUser = null;
+
+// Load Profile Data
+async function loadProfileData() {
+    try {
+        // Get current user
+        const meResponse = await fetch('/api/me', { credentials: 'include' });
+        const meData = await meResponse.json();
+        currentUser = meData.logged_in ? meData : null;
+
+        // Get profile user
+        const profileResponse = await fetch(`/api/users/${userId}`, { credentials: 'include' });
+        profileUser = await profileResponse.json();
+
+        // Update profile UI
+        document.getElementById('profile-avatar').src = profileUser.avatar;
+        document.getElementById('profile-username').textContent = profileUser.username;
+        document.getElementById('profile-pronouns').textContent = profileUser.pronouns || '';
+        document.getElementById('profile-bio').textContent = profileUser.bio || 'No bio provided';
+
+        // Update badges
+        const badgesContainer = document.getElementById('profile-badges');
+        if (profileUser.role === 'admin') {
+            badgesContainer.innerHTML = '<span class="badge badge-error">ADMIN</span>';
+        } else if (profileUser.role === 'moderator') {
+            badgesContainer.innerHTML = '<span class="badge badge-warning">MODERATOR</span>';
+        }
+
+        // Update ratings
+        updateRatings(profileUser.ratings);
+
+        // Update stats
+        document.getElementById('stat-syncs-completed').textContent = profileUser.stats?.syncs_completed || 0;
+        document.getElementById('stat-syncs-hosted').textContent = profileUser.stats?.syncs_hosted || 0;
+        document.getElementById('stat-dnf').textContent = profileUser.stats?.dnf_count || 0;
+        document.getElementById('stat-member-since').textContent = new Date(profileUser.created_at).toLocaleDateString();
+
+        // Show action buttons
+        updateActionButtons();
+
+        // Load additional data
+        await loadReviews();
+        await loadFavoriteGames();
+        await loadRecentActivity();
+    } catch (error) {
+        console.error('Error loading profile:', error);
+        alert('Failed to load profile');
+    }
+}
+
+function updateRatings(ratings) {
+    if (!ratings) return;
+
+    // Server rating
+    const serverRating = ratings.server_rating || 0;
+    document.getElementById('server-rating').textContent = serverRating.toFixed(1);
+    document.getElementById('server-stars').textContent = getStarDisplay(serverRating);
+
+    // User rating
+    const userRating = ratings.user_rating || 0;
+    const ratingCount = ratings.rating_count || 0;
+    document.getElementById('user-rating').textContent = userRating.toFixed(1);
+    document.getElementById('user-stars').textContent = getStarDisplay(userRating);
+    document.getElementById('rating-count').textContent = ratingCount;
+
+    // Detailed ratings
+    updateRatingBar('punctuality', ratings.punctuality || 0);
+    updateRatingBar('respect-others', ratings.respect_others || 0);
+    updateRatingBar('respect-rules', ratings.respect_rules || 0);
+    updateRatingBar('valid-release', ratings.valid_release || 0);
+}
+
+function updateRatingBar(name, value) {
+    const percentage = (value / 5) * 100;
+    document.getElementById(`${name}-bar`).style.width = `${percentage}%`;
+    document.getElementById(`${name}-value`).textContent = value.toFixed(1);
+}
+
+function getStarDisplay(rating) {
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+    const emptyStars = 5 - fullStars - halfStar;
+
+    return '★'.repeat(fullStars) + (halfStar ? '⯪' : '') + '☆'.repeat(emptyStars);
+}
+
+function updateActionButtons() {
+    const actionsContainer = document.getElementById('profile-actions');
+
+    if (!currentUser) return;
+
+    if (currentUser.id === profileUser.id) {
+        // Own profile
+        actionsContainer.innerHTML = `
+            <a href="/dashboard.html" class="btn btn-outline">Edit Profile</a>
+        `;
+    } else {
+        // Other user's profile
+        actionsContainer.innerHTML = `
+            <button class="btn btn-outline" onclick="toggleFriend()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 2a.5.5 0 01.5.5v5h5a.5.5 0 010 1h-5v5a.5.5 0 01-1 0v-5h-5a.5.5 0 010-1h5v-5A.5.5 0 018 2z"/>
+                </svg>
+                Add Friend
+            </button>
+            <button class="btn btn-secondary" onclick="reportUser()">Report</button>
+        `;
+
+        // Show rate section
+        document.getElementById('rate-user-section').style.display = 'block';
+        document.getElementById('write-review-btn').style.display = 'inline-flex';
+    }
+}
+
+async function loadReviews() {
+    try {
+        const response = await fetch(`/api/users/${userId}/reviews`, { credentials: 'include' });
+        const reviews = await response.json();
+
+        const container = document.getElementById('review-list');
+
+        if (reviews.length === 0) {
+            container.innerHTML = '<p class="text-muted">No reviews yet</p>';
+            return;
+        }
+
+        container.innerHTML = reviews.map(review => `
+            <div class="review-item">
+                <div class="review-header">
+                    <div class="review-author">
+                        <img src="${review.author_avatar}" alt="${review.author_name}" class="avatar avatar-sm">
+                        <div>
+                            <div class="text-primary">${review.author_name}</div>
+                            <div class="text-muted text-sm">${new Date(review.created_at).toLocaleDateString()}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-text">${escapeHtml(review.review_text)}</div>
+                <div class="review-actions">
+                    <button class="btn btn-sm btn-outline" onclick="likeReview('${review.id}')">
+                        👍 ${review.likes || 0}
+                    </button>
+                    <button class="btn btn-sm btn-outline" onclick="dislikeReview('${review.id}')">
+                        👎 ${review.dislikes || 0}
+                    </button>
+                    ${currentUser && currentUser.id !== review.author_id ? `
+                        <button class="btn btn-sm btn-danger" onclick="reportReview('${review.id}')">Report</button>
+                    ` : ''}
+                </div>
+            </div>
+        `).join('');
+    } catch (error) {
+        console.error('Error loading reviews:', error);
+    }
+}
+
+async function loadFavoriteGames() {
+    try {
+        const response = await fetch(`/api/users/${userId}/favorites`, { credentials: 'include' });
+        const games = await response.json();
+
+        const container = document.getElementById('favorite-games');
+
+        if (games.length === 0) {
+            container.innerHTML = '<p class="text-muted text-sm">No favorite games</p>';
+            return;
+        }
+
+        container.innerHTML = games.slice(0, 5).map(game => `
+            <a href="/game/${game.slug}" class="text-secondary" style="text-decoration: none;">
+                ${game.name}
+            </a>
+        `).join('');
+    } catch (error) {
+        console.error('Error loading favorite games:', error);
+    }
+}
+
+async function loadRecentActivity() {
+    const container = document.getElementById('recent-activity');
+    container.innerHTML = `
+        <div class="text-muted text-sm">
+            <div class="mb-xs">Completed "Epic Sync" 2 days ago</div>
+            <div class="mb-xs">Hosted "Quick Run" 5 days ago</div>
+            <div>Joined SekaiLink 30 days ago</div>
+        </div>
+    `;
+}
+
+// Rating Form
+document.getElementById('rate-user-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const ratingData = {
+        punctuality: parseInt(document.getElementById('rate-punctuality').value),
+        respect_others: parseInt(document.getElementById('rate-respect-others').value),
+        respect_rules: parseInt(document.getElementById('rate-respect-rules').value),
+        valid_release: parseInt(document.getElementById('rate-valid-release').value)
+    };
+
+    try {
+        const response = await fetch(`/api/users/${userId}/rate`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(ratingData)
+        });
+
+        if (response.ok) {
+            alert('Rating submitted successfully!');
+            loadProfileData(); // Reload to show updated ratings
+        } else {
+            alert('Failed to submit rating');
+        }
+    } catch (error) {
+        console.error('Error submitting rating:', error);
+    }
+});
+
+// Review Modal
+function showReviewModal() {
+    document.getElementById('review-modal').style.display = 'flex';
+}
+
+function closeReviewModal() {
+    document.getElementById('review-modal').style.display = 'none';
+    document.getElementById('review-text').value = '';
+}
+
+async function submitReview() {
+    const reviewText = document.getElementById('review-text').value.trim();
+
+    if (!reviewText) {
+        alert('Please write a review');
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/users/${userId}/review`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ review_text: reviewText })
+        });
+
+        if (response.ok) {
+            alert('Review submitted! It will be visible after moderation.');
+            closeReviewModal();
+            loadReviews();
+        } else {
+            alert('Failed to submit review');
+        }
+    } catch (error) {
+        console.error('Error submitting review:', error);
+    }
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Close modal on outside click
+document.getElementById('review-modal')?.addEventListener('click', (e) => {
+    if (e.target.id === 'review-modal') {
+        closeReviewModal();
+    }
+});
+
+// Initialize
+loadProfileData();
+</script>
+{% endblock %}

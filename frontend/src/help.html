@@ -1,0 +1,569 @@
+{% extends "base.html" %}
+
+{% block title %}Help & Documentation - SekaiLink{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="flex justify-between items-center mb-xl">
+        <h1>Help & Documentation</h1>
+        <a href="/faq.html" class="btn btn-outline">View FAQ</a>
+    </div>
+
+    <!-- Search -->
+    <div class="card mb-2xl">
+        <div class="card-body">
+            <input type="text" id="doc-search" class="form-input" placeholder="Search documentation...">
+        </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div style="display: grid; grid-template-columns: 250px 1fr; gap: var(--space-2xl);">
+        <!-- Sidebar -->
+        <aside style="position: sticky; top: var(--space-xl); height: fit-content;">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Contents</h3>
+                </div>
+                <nav style="padding: var(--space-md);">
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: var(--space-sm);"><a href="#getting-started" class="doc-link">Getting Started</a></li>
+                        <li style="margin-bottom: var(--space-sm);"><a href="#yaml-creation" class="doc-link">Creating YAMLs</a></li>
+                        <li style="margin-bottom: var(--space-sm);"><a href="#rom-upload" class="doc-link">ROM Management</a></li>
+                        <li style="margin-bottom: var(--space-sm);"><a href="#lobby-creation" class="doc-link">Creating Lobbies</a></li>
+                        <li style="margin-bottom: var(--space-sm);"><a href="#joining-lobby" class="doc-link">Joining Lobbies</a></li>
+                        <li style="margin-bottom: var(--space-sm);"><a href="#playing" class="doc-link">Playing a Sync</a></li>
+                        <li style="margin-bottom: var(--space-sm);"><a href="#custom-worlds" class="doc-link">Custom Worlds</a></li>
+                        <li style="margin-bottom: var(--space-sm);"><a href="#troubleshooting" class="doc-link">Troubleshooting</a></li>
+                        <li style="margin-bottom: var(--space-sm);"><a href="#api-docs" class="doc-link">API Documentation</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Getting Started -->
+            <section id="getting-started" class="doc-section card fade-in mb-xl">
+                <div class="card-header">
+                    <h2>Getting Started</h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="mb-md">What is SekaiLink?</h3>
+                    <p class="mb-lg">
+                        SekaiLink is a hosting platform for <a href="https://archipelago.gg" target="_blank" class="text-accent">Archipelago</a> multiworld sessions.
+                        We handle YAML collection, ROM verification, seed generation, and server hosting so you can focus on playing.
+                    </p>
+
+                    <h3 class="mb-md">Quick Start Guide</h3>
+                    <ol class="mb-lg" style="margin-left: var(--space-lg); line-height: 1.8;">
+                        <li><strong>Sign in with Discord</strong> - Click the "Sign in with Discord" button on the homepage</li>
+                        <li><strong>Create or upload your YAML</strong> - Go to Dashboard → YAML Manager</li>
+                        <li><strong>Upload ROMs (if needed)</strong> - Some games require ROM files for generation</li>
+                        <li><strong>Join or create a lobby</strong> - Browse active lobbies or create your own</li>
+                        <li><strong>Wait for generation</strong> - Once all players are ready, the host starts generation</li>
+                        <li><strong>Download your patch and play!</strong> - Connect to the server and enjoy</li>
+                    </ol>
+
+                    <div class="alert alert-info">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 15A7 7 0 118 1a7 7 0 010 14zm0 1A8 8 0 108 0a8 8 0 000 16z"/>
+                            <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 11-2 0 1 1 0 012 0z"/>
+                        </svg>
+                        <div>
+                            <strong>Important:</strong> Archipelago.gg and their community do NOT provide technical support for SekaiLink.
+                            For issues with SekaiLink, please visit our <a href="https://discord.gg/XvvcBxrRsk" target="_blank" class="text-accent">Discord server</a>.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- YAML Creation -->
+            <section id="yaml-creation" class="doc-section card fade-in mb-xl">
+                <div class="card-header">
+                    <h2>Creating YAMLs</h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="mb-md">What is a YAML?</h3>
+                    <p class="mb-lg">
+                        A YAML file is your personal configuration for a game in Archipelago. It defines your player name,
+                        game settings, item randomization options, and more.
+                    </p>
+
+                    <h3 class="mb-md">Creating a YAML on SekaiLink</h3>
+                    <ol class="mb-lg" style="margin-left: var(--space-lg); line-height: 1.8;">
+                        <li>Go to <strong>Dashboard → YAML Manager</strong></li>
+                        <li>Click <strong>"Create YAML"</strong></li>
+                        <li>Select your game from the dropdown</li>
+                        <li>Fill out the settings form with your preferences</li>
+                        <li>Click <strong>"Save YAML"</strong></li>
+                    </ol>
+
+                    <h3 class="mb-md">Uploading an Existing YAML</h3>
+                    <p class="mb-md">If you already have a YAML file from the Archipelago website or generator:</p>
+                    <ol class="mb-lg" style="margin-left: var(--space-lg); line-height: 1.8;">
+                        <li>Go to <strong>Dashboard → YAML Manager</strong></li>
+                        <li>Click <strong>"Upload YAML"</strong></li>
+                        <li>Select your .yaml or .yml file</li>
+                        <li>The system will validate your file automatically</li>
+                    </ol>
+
+                    <div class="alert alert-warning mb-md">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 15A7 7 0 118 1a7 7 0 010 14zm0 1A8 8 0 108 0a8 8 0 000 16z"/>
+                            <path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/>
+                        </svg>
+                        <div>
+                            <strong>Common YAML Mistakes:</strong>
+                            <ul style="margin-top: var(--space-sm); margin-left: var(--space-lg);">
+                                <li>Missing or incorrect <code>name</code> field</li>
+                                <li>Invalid game identifier</li>
+                                <li>Incorrect YAML syntax (indentation matters!)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="mb-md">Example YAML Structure</h3>
+                    <pre style="background: var(--bg-primary); padding: var(--space-md); border-radius: var(--radius-md); overflow-x: auto;"><code>name: YourPlayerName
+game: A Link to the Past
+A Link to the Past:
+  progression_balancing: 50
+  accessibility: items
+  # ... more settings ...</code></pre>
+                </div>
+            </section>
+
+            <!-- ROM Upload -->
+            <section id="rom-upload" class="doc-section card fade-in mb-xl">
+                <div class="card-header">
+                    <h2>ROM Management</h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="mb-md">Why ROMs Are Needed</h3>
+                    <p class="mb-lg">
+                        Some games (like A Link to the Past, Super Metroid, etc.) require ROM files to generate patches.
+                        These ROMs are used ONLY for generation and are never downloadable by other users.
+                    </p>
+
+                    <div class="alert alert-error mb-lg">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 15A7 7 0 118 1a7 7 0 010 14zm0 1A8 8 0 108 0a8 8 0 000 16z"/>
+                            <path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/>
+                        </svg>
+                        <div>
+                            <strong>Legal Notice:</strong> You must provide your own legally obtained ROM files.
+                            SekaiLink does not provide ROM downloads. All ROMs are automatically deleted on the 1st of each month.
+                        </div>
+                    </div>
+
+                    <h3 class="mb-md">Uploading ROMs</h3>
+                    <ol class="mb-lg" style="margin-left: var(--space-lg); line-height: 1.8;">
+                        <li>Go to <strong>Dashboard → ROM Manager</strong></li>
+                        <li>Find the game you need to upload a ROM for</li>
+                        <li>Click <strong>"Upload ROM"</strong></li>
+                        <li>Select your ROM file</li>
+                        <li>The system will verify the ROM's SHA-1 hash automatically</li>
+                    </ol>
+
+                    <h3 class="mb-md">ROM Verification</h3>
+                    <p class="mb-md">
+                        ROMs are verified using SHA-1 hashes to ensure they're the correct version for Archipelago.
+                        If your ROM fails verification:
+                    </p>
+                    <ul class="mb-lg" style="margin-left: var(--space-lg);">
+                        <li>Make sure it's the correct region (usually USA/Japan)</li>
+                        <li>Ensure it's not a pre-patched or modified ROM</li>
+                        <li>Check that it's the correct game version</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Lobby Creation -->
+            <section id="lobby-creation" class="doc-section card fade-in mb-xl">
+                <div class="card-header">
+                    <h2>Creating Lobbies</h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="mb-md">How to Create a Lobby</h3>
+                    <ol class="mb-lg" style="margin-left: var(--space-lg); line-height: 1.8;">
+                        <li>Click <strong>"Create Lobby"</strong> from the homepage or game page</li>
+                        <li>Enter a lobby name and description</li>
+                        <li>Set player limit (2-20 players)</li>
+                        <li>Configure lobby settings (see below)</li>
+                        <li>Click <strong>"Create Lobby"</strong></li>
+                    </ol>
+
+                    <h3 class="mb-md">Lobby Settings</h3>
+                    <table class="table mb-lg">
+                        <thead>
+                            <tr>
+                                <th>Setting</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Time Limit</strong></td>
+                                <td>Maximum time allowed for the sync (1-24 hours, or unlimited)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Restrict Time Limit</strong></td>
+                                <td>When enabled, items will auto-release and lobby closes when time expires</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Allow Multi-game</strong></td>
+                                <td>Players can join with different games</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Disallow ROM Games</strong></td>
+                                <td>Only allow games that don't require ROM uploads</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Disallow Custom Worlds</strong></td>
+                                <td>Only allow officially supported Archipelago games</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Allow Broadcasting</strong></td>
+                                <td>Players can mark themselves as streaming</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Voice Chat Enabled</strong></td>
+                                <td>Enable Discord voice channel for this lobby</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Blacklisted Games</strong></td>
+                                <td>Select specific games that are not allowed in this lobby</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 class="mb-md">Host Controls</h3>
+                    <p class="mb-md">As the lobby host, you have access to:</p>
+                    <ul class="mb-lg" style="margin-left: var(--space-lg);">
+                        <li><strong>Generate Seed</strong> - Start the generation process when all players are ready</li>
+                        <li><strong>Start Sync</strong> - Begin the timer when everyone is connected</li>
+                        <li><strong>Admin Console</strong> - Send server commands (/release, /kick, etc.)</li>
+                        <li><strong>Close Lobby</strong> - Prevent new players from joining</li>
+                        <li><strong>Delete Lobby</strong> - Permanently delete the lobby</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Joining Lobby -->
+            <section id="joining-lobby" class="doc-section card fade-in mb-xl">
+                <div class="card-header">
+                    <h2>Joining Lobbies</h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="mb-md">Finding Lobbies</h3>
+                    <p class="mb-md">Browse active lobbies from:</p>
+                    <ul class="mb-lg" style="margin-left: var(--space-lg);">
+                        <li>Homepage - Shows all active lobbies</li>
+                        <li>Game pages - Shows lobbies for that specific game</li>
+                        <li>Direct invite link from the host</li>
+                    </ul>
+
+                    <h3 class="mb-md">Joining a Lobby</h3>
+                    <ol class="mb-lg" style="margin-left: var(--space-lg); line-height: 1.8;">
+                        <li>Find a lobby you want to join</li>
+                        <li>Click <strong>"Join"</strong></li>
+                        <li>Select your YAML from the dropdown</li>
+                        <li>If the game requires a ROM, ensure you've uploaded it</li>
+                        <li>Click <strong>"Ready"</strong> when you're prepared</li>
+                    </ol>
+
+                    <h3 class="mb-md">Player States</h3>
+                    <ul class="mb-lg" style="margin-left: var(--space-lg);">
+                        <li><span class="badge badge-info">Waiting</span> - Joined but not ready yet</li>
+                        <li><span class="badge badge-success">Ready</span> - YAML and ROM (if needed) uploaded, ready for generation</li>
+                        <li><span class="badge badge-warning">Active</span> - Currently playing</li>
+                        <li><span class="badge badge-success">Finished</span> - Completed the sync successfully</li>
+                        <li><span class="badge badge-error">DNF</span> - Did not finish</li>
+                        <li><span class="badge badge-error">Forfeit</span> - Left the sync early</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Playing -->
+            <section id="playing" class="doc-section card fade-in mb-xl">
+                <div class="card-header">
+                    <h2>Playing a Sync</h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="mb-md">Connecting to the Server</h3>
+                    <ol class="mb-lg" style="margin-left: var(--space-lg); line-height: 1.8;">
+                        <li>Wait for the host to generate the seed</li>
+                        <li>Download your patch file from the lobby page</li>
+                        <li>Apply the patch to your ROM using the appropriate patcher</li>
+                        <li>Launch your Archipelago client</li>
+                        <li>Connect to the server using the address shown in the lobby (sekailink.xyz:PORT)</li>
+                    </ol>
+
+                    <h3 class="mb-md">During the Sync</h3>
+                    <ul class="mb-lg" style="margin-left: var(--space-lg);">
+                        <li>Use the lobby chat to communicate with other players</li>
+                        <li>Watch the timer to track elapsed time</li>
+                        <li>Mark yourself as "Finished" when you complete your goal</li>
+                        <li>Use "DNF" if you need to quit but want to stay connected</li>
+                        <li>Use "Forfeit" if you need to leave entirely</li>
+                    </ul>
+
+                    <h3 class="mb-md">Rules & Etiquette</h3>
+                    <ul class="mb-lg" style="margin-left: var(--space-lg);">
+                        <li>Be respectful to other players</li>
+                        <li>Don't rage quit - use DNF or Forfeit properly</li>
+                        <li>Follow the lobby's custom rules</li>
+                        <li>If you need to release items early, ask the host first</li>
+                        <li>Report any issues to moderators, not in general chat</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Custom Worlds -->
+            <section id="custom-worlds" class="doc-section card fade-in mb-xl">
+                <div class="card-header">
+                    <h2>Custom Worlds</h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="mb-md">What are Custom Worlds?</h3>
+                    <p class="mb-lg">
+                        Custom worlds are community-developed game implementations that aren't officially part of Archipelago yet.
+                        They may be unstable or have bugs.
+                    </p>
+
+                    <div class="alert alert-warning mb-lg">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 15A7 7 0 118 1a7 7 0 010 14zm0 1A8 8 0 108 0a8 8 0 000 16z"/>
+                            <path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/>
+                        </svg>
+                        <div>
+                            <strong>Warning:</strong> Custom worlds are experimental. If you encounter issues,
+                            please report them on the <a href="https://discord.gg/XvvcBxrRsk" target="_blank" class="text-accent">SekaiLink Discord</a>,
+                            NOT on the Archipelago Discord.
+                        </div>
+                    </div>
+
+                    <h3 class="mb-md">Uploading Custom Worlds</h3>
+                    <ol class="mb-lg" style="margin-left: var(--space-lg); line-height: 1.8;">
+                        <li>Obtain a .apworld file from the developer</li>
+                        <li>Go to <strong>Dashboard → Custom Worlds</strong></li>
+                        <li>Click <strong>"Upload Custom World"</strong></li>
+                        <li>Select your .apworld file</li>
+                        <li>Wait for admin approval (usually 1-3 days)</li>
+                    </ol>
+
+                    <p class="mb-lg">
+                        Once approved, the custom world will be available for use in lobbies.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section id="troubleshooting" class="doc-section card fade-in mb-xl">
+                <div class="card-header">
+                    <h2>Troubleshooting</h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="mb-md">Common Issues</h3>
+
+                    <div class="mb-lg">
+                        <h4 class="mb-sm"><strong>YAML Upload Failed</strong></h4>
+                        <ul style="margin-left: var(--space-lg);">
+                            <li>Check your YAML syntax - indentation must be correct</li>
+                            <li>Ensure the <code>name</code> field is present</li>
+                            <li>Verify the game identifier is valid</li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-lg">
+                        <h4 class="mb-sm"><strong>ROM Verification Failed</strong></h4>
+                        <ul style="margin-left: var(--space-lg);">
+                            <li>Ensure you're using the correct ROM version</li>
+                            <li>Check that the ROM isn't pre-patched</li>
+                            <li>Verify the region (usually USA or Japan)</li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-lg">
+                        <h4 class="mb-sm"><strong>Can't Ready Up</strong></h4>
+                        <ul style="margin-left: var(--space-lg);">
+                            <li>Make sure you've selected a YAML</li>
+                            <li>If the game requires a ROM, ensure it's uploaded and verified</li>
+                            <li>Check that the lobby hasn't started generation yet</li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-lg">
+                        <h4 class="mb-sm"><strong>Generation Failed</strong></h4>
+                        <ul style="margin-left: var(--space-lg);">
+                            <li>Check the lobby chat for error messages</li>
+                            <li>Verify all players have valid YAMLs</li>
+                            <li>Ensure all required ROMs are uploaded</li>
+                            <li>If using custom worlds, they may have conflicts</li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-lg">
+                        <h4 class="mb-sm"><strong>Can't Connect to Server</strong></h4>
+                        <ul style="margin-left: var(--space-lg);">
+                            <li>Verify the server address and port are correct</li>
+                            <li>Check that the server is running (lobby state should be "Active")</li>
+                            <li>Ensure your firewall isn't blocking the connection</li>
+                            <li>Try restarting your Archipelago client</li>
+                        </ul>
+                    </div>
+
+                    <h3 class="mb-md">Getting Support</h3>
+                    <p class="mb-md">If you need help:</p>
+                    <ul class="mb-lg" style="margin-left: var(--space-lg);">
+                        <li>Join our <a href="https://discord.gg/XvvcBxrRsk" target="_blank" class="text-accent">Discord server</a></li>
+                        <li>Check the <a href="/faq.html" class="text-accent">FAQ page</a></li>
+                        <li>Report bugs on <a href="https://github.com/lovenityjade/sekailink" target="_blank" class="text-accent">GitHub</a></li>
+                        <li>Contact us via <a href="/contact.html" class="text-accent">email</a></li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- API Documentation -->
+            <section id="api-docs" class="doc-section card fade-in mb-xl">
+                <div class="card-header">
+                    <h2>API Documentation</h2>
+                </div>
+                <div class="card-body">
+                    <p class="mb-lg">
+                        SekaiLink provides a REST API for developers building bots, trackers, or other integrations.
+                    </p>
+
+                    <h3 class="mb-md">Base URL</h3>
+                    <pre style="background: var(--bg-primary); padding: var(--space-md); border-radius: var(--radius-md);"><code>https://sekailink.xyz/api</code></pre>
+
+                    <h3 class="mb-md mt-lg">Common Endpoints</h3>
+                    <table class="table mb-lg">
+                        <thead>
+                            <tr>
+                                <th>Endpoint</th>
+                                <th>Method</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>/games</code></td>
+                                <td>GET</td>
+                                <td>List all available games</td>
+                            </tr>
+                            <tr>
+                                <td><code>/games/:slug</code></td>
+                                <td>GET</td>
+                                <td>Get game details</td>
+                            </tr>
+                            <tr>
+                                <td><code>/lobbies</code></td>
+                                <td>GET</td>
+                                <td>List active lobbies</td>
+                            </tr>
+                            <tr>
+                                <td><code>/lobbies/:id</code></td>
+                                <td>GET</td>
+                                <td>Get lobby details</td>
+                            </tr>
+                            <tr>
+                                <td><code>/users/:id</code></td>
+                                <td>GET</td>
+                                <td>Get user profile</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="mb-md">
+                        For full API documentation, see our <a href="/docs.html" class="text-accent">API reference page</a>.
+                    </p>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Search functionality
+document.getElementById('doc-search').addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    const sections = document.querySelectorAll('.doc-section');
+
+    sections.forEach(section => {
+        const text = section.textContent.toLowerCase();
+        section.style.display = text.includes(query) ? '' : 'none';
+    });
+});
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('.doc-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+
+// Highlight active section in sidebar
+const observerOptions = {
+    root: null,
+    rootMargin: '-20% 0px -80% 0px',
+    threshold: 0
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            document.querySelectorAll('.doc-link').forEach(link => {
+                link.style.color = link.getAttribute('href') === `#${id}`
+                    ? 'var(--accent-primary)'
+                    : 'var(--text-primary)';
+                link.style.fontWeight = link.getAttribute('href') === `#${id}`
+                    ? 'bold'
+                    : 'normal';
+            });
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.doc-section').forEach(section => {
+    observer.observe(section);
+});
+</script>
+
+<style>
+.doc-link {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.doc-link:hover {
+    color: var(--accent-primary);
+}
+
+.doc-section {
+    scroll-margin-top: var(--space-xl);
+}
+
+code {
+    background: var(--bg-primary);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    color: var(--accent-primary);
+}
+
+pre code {
+    display: block;
+    padding: 0;
+    background: none;
+}
+</style>
+{% endblock %}

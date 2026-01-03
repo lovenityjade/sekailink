@@ -1,0 +1,266 @@
+{% extends "base.html" %}
+
+{% block title %}Support SekaiLink - Donate{% endblock %}
+
+{% block content %}
+<div class="container-sm">
+    <div class="text-center mb-2xl">
+        <h1 class="mb-md">Support SekaiLink</h1>
+        <p class="text-secondary text-lg">
+            Help us keep the servers running and continue improving the platform
+        </p>
+    </div>
+
+    <!-- Why Donate -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">Why Donate?</h2>
+        </div>
+        <div class="card-body">
+            <p class="mb-lg">
+                SekaiLink is completely free to use with no ads or premium features. However, running the platform has real costs:
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-lg);">
+                <div class="text-center">
+                    <div style="background: var(--accent-primary); opacity: 0.1; border-radius: 50%; width: 80px; height: 80px; margin: 0 auto var(--space-md); display: flex; align-items: center; justify-content: center;">
+                        <svg width="40" height="40" viewBox="0 0 16 16" fill="var(--accent-primary)">
+                            <path d="M8 0a8 8 0 100 16A8 8 0 008 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="mb-sm">VPS Hosting</h3>
+                    <p class="text-secondary">Server infrastructure on Hostinger</p>
+                    <strong class="text-accent">~$30/month</strong>
+                </div>
+
+                <div class="text-center">
+                    <div style="background: var(--accent-secondary); opacity: 0.1; border-radius: 50%; width: 80px; height: 80px; margin: 0 auto var(--space-md); display: flex; align-items: center; justify-content: center;">
+                        <svg width="40" height="40" viewBox="0 0 16 16" fill="var(--accent-secondary)">
+                            <path d="M3 3h10v10H3V3z"/>
+                        </svg>
+                    </div>
+                    <h3 class="mb-sm">Database Storage</h3>
+                    <p class="text-secondary">PostgreSQL and Redis hosting</p>
+                    <strong class="text-accent">~$15/month</strong>
+                </div>
+
+                <div class="text-center">
+                    <div style="background: var(--status-warning); opacity: 0.1; border-radius: 50%; width: 80px; height: 80px; margin: 0 auto var(--space-md); display: flex; align-items: center; justify-content: center;">
+                        <svg width="40" height="40" viewBox="0 0 16 16" fill="var(--status-warning)">
+                            <path d="M2 2h12v12H2V2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="mb-sm">File Storage</h3>
+                    <p class="text-secondary">YAMLs, ROMs, and patches</p>
+                    <strong class="text-accent">~$10/month</strong>
+                </div>
+
+                <div class="text-center">
+                    <div style="background: var(--status-success); opacity: 0.1; border-radius: 50%; width: 80px; height: 80px; margin: 0 auto var(--space-md); display: flex; align-items: center; justify-content: center;">
+                        <svg width="40" height="40" viewBox="0 0 16 16" fill="var(--status-success)">
+                            <path d="M8 0a8 8 0 100 16A8 8 0 008 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="mb-sm">Domain & SSL</h3>
+                    <p class="text-secondary">sekailink.xyz domain and certificates</p>
+                    <strong class="text-accent">~$5/month</strong>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <p class="text-center text-lg">
+                <strong>Total monthly cost: ~$60</strong><br>
+                <span class="text-secondary">Your support helps cover these expenses and fund improvements</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- What Your Donation Supports -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">What Your Donation Supports</h2>
+        </div>
+        <div class="card-body">
+            <ul style="margin-left: var(--space-lg); line-height: 2;">
+                <li>✅ Reliable server uptime and performance</li>
+                <li>✅ Faster seed generation with better hardware</li>
+                <li>✅ More storage for ROMs and YAMLs</li>
+                <li>✅ Regular platform updates and new features</li>
+                <li>✅ Bug fixes and technical support</li>
+                <li>✅ Continued development and improvements</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- How to Donate -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">How to Donate</h2>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-info mb-lg">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 15A7 7 0 118 1a7 7 0 010 14zm0 1A8 8 0 108 0a8 8 0 000 16z"/>
+                    <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 11-2 0 1 1 0 012 0z"/>
+                </svg>
+                <div>
+                    <strong>Note:</strong> We don't offer premium features or perks for donating.
+                    All features remain free for everyone. Donations are purely voluntary to support server costs.
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-lg);">
+                <!-- Patreon -->
+                <div class="card" style="background: var(--bg-secondary); text-align: center; padding: var(--space-xl);">
+                    <svg width="48" height="48" viewBox="0 0 16 16" fill="var(--accent-primary)" style="margin: 0 auto var(--space-md);">
+                        <path d="M8 0C3.58 0 0 3.58 0 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8z"/>
+                    </svg>
+                    <h3 class="mb-md">Patreon</h3>
+                    <p class="text-secondary mb-lg">
+                        Support us on Patreon with monthly contributions. No perks or tiers - just helping cover costs.
+                    </p>
+                    <a href="https://patreon.com/sekailink" target="_blank" class="btn btn-block">
+                        Support on Patreon
+                    </a>
+                </div>
+
+                <!-- One-time -->
+                <div class="card" style="background: var(--bg-secondary); text-align: center; padding: var(--space-xl);">
+                    <svg width="48" height="48" viewBox="0 0 16 16" fill="var(--accent-secondary)" style="margin: 0 auto var(--space-md);">
+                        <path d="M8 0a8 8 0 100 16A8 8 0 008 0z"/>
+                    </svg>
+                    <h3 class="mb-md">One-Time Donation</h3>
+                    <p class="text-secondary mb-lg">
+                        Prefer to make a one-time contribution? You can donate directly via PayPal.
+                    </p>
+                    <a href="mailto:sekailink@themiareproject.com?subject=Donation%20Inquiry" class="btn btn-outline btn-block">
+                        Email for PayPal Info
+                    </a>
+                </div>
+            </div>
+
+            <p class="text-center text-muted mt-lg">
+                <small>All donations go directly to server costs and platform development. We don't profit from SekaiLink.</small>
+            </p>
+        </div>
+    </section>
+
+    <!-- Transparency -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">Financial Transparency</h2>
+        </div>
+        <div class="card-body">
+            <p class="mb-md">
+                We believe in being transparent about where your donations go. Here's our current financial status:
+            </p>
+
+            <div class="table-container mb-lg">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Costs</th>
+                            <th>Donations</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>January 2026</td>
+                            <td>$60.00</td>
+                            <td>$25.00</td>
+                            <td><span class="badge badge-warning">-$35.00</span></td>
+                        </tr>
+                        <tr>
+                            <td>December 2025</td>
+                            <td>$60.00</td>
+                            <td>$40.00</td>
+                            <td><span class="badge badge-warning">-$20.00</span></td>
+                        </tr>
+                        <tr>
+                            <td>November 2025</td>
+                            <td>$60.00</td>
+                            <td>$30.00</td>
+                            <td><span class="badge badge-warning">-$30.00</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="text-secondary text-center">
+                Currently, server costs are being covered out-of-pocket. Your donations help reduce this burden and ensure SekaiLink's long-term sustainability.
+            </p>
+        </div>
+    </section>
+
+    <!-- Other Ways to Help -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">Other Ways to Help</h2>
+        </div>
+        <div class="card-body">
+            <p class="mb-md">
+                Can't donate? There are other ways you can support SekaiLink:
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-lg);">
+                <div>
+                    <h3 class="mb-sm">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="var(--accent-primary)" style="vertical-align: middle;">
+                            <path d="M5 6a2 2 0 114 0 2 2 0 01-4 0z"/>
+                        </svg>
+                        Spread the Word
+                    </h3>
+                    <p class="text-secondary">Tell your friends about SekaiLink and share it in Archipelago communities</p>
+                </div>
+
+                <div>
+                    <h3 class="mb-sm">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="var(--accent-primary)" style="vertical-align: middle;">
+                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59z"/>
+                        </svg>
+                        Contribute Code
+                    </h3>
+                    <p class="text-secondary">SekaiLink is open source! Submit bug fixes or new features on <a href="https://github.com/lovenityjade/sekailink" target="_blank" class="text-accent">GitHub</a></p>
+                </div>
+
+                <div>
+                    <h3 class="mb-sm">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="var(--accent-primary)" style="vertical-align: middle;">
+                            <path d="M8 15A7 7 0 118 1a7 7 0 010 14z"/>
+                        </svg>
+                        Report Bugs
+                    </h3>
+                    <p class="text-secondary">Help us improve by reporting bugs and suggesting features</p>
+                </div>
+
+                <div>
+                    <h3 class="mb-sm">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="var(--accent-primary)" style="vertical-align: middle;">
+                            <path d="M2 2h12v12H2V2z"/>
+                        </svg>
+                        Be a Good Community Member
+                    </h3>
+                    <p class="text-secondary">Follow the <a href="/rules.html" class="text-accent">rules</a>, be respectful, and help newcomers</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Thank You -->
+    <div class="card fade-in">
+        <div class="card-body text-center">
+            <h2 class="mb-md">Thank You!</h2>
+            <p class="text-secondary text-lg mb-lg">
+                Whether you donate or just use the platform, we're grateful to have you in the SekaiLink community.
+                Your support - financial or otherwise - keeps this project alive.
+            </p>
+            <p class="text-lg">
+                <strong>— Jade & the SekaiLink Team</strong>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

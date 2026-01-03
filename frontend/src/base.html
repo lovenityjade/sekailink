@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SekaiLink - Next-generation Archipelago Multiworld hosting platform">
+    <meta name="keywords" content="Archipelago, multiworld, randomizer, gaming, speedrun">
+    <title>{% block title %}SekaiLink - Archipelago Multiworld Hosting{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/global.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/pages.css">
+
+    <!-- Additional page-specific styles -->
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="site-header">
+        <nav class="container">
+            <div class="nav-wrapper">
+                <!-- Logo -->
+                <a href="/" class="logo">
+                    <span class="logo-text">Sekai<span class="accent">Link</span></span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="nav-links">
+                    {% if user %}
+                        <a href="/dashboard.html" class="nav-link">Dashboard</a>
+                        <a href="/games" class="nav-link">Games</a>
+                        <a href="/lobbies" class="nav-link">Active Lobbies</a>
+                    {% endif %}
+                </div>
+
+                <!-- User Menu -->
+                <div class="nav-user">
+                    {% if user %}
+                        <div class="user-dropdown">
+                            <button class="user-dropdown-trigger" id="userMenuBtn">
+                                <img src="{{ user.avatar }}" alt="{{ user.username }}" class="avatar avatar-sm">
+                                <span class="username">{{ user.username }}</span>
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M4 6l4 4 4-4"/>
+                                </svg>
+                            </button>
+                            <div class="user-dropdown-menu" id="userMenu">
+                                <a href="/profile/{{ user.id }}" class="dropdown-item">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM12.93 11.93A7 7 0 108 15a7 7 0 004.93-3.07z"/>
+                                    </svg>
+                                    Profile
+                                </a>
+                                <a href="/dashboard.html" class="dropdown-item">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M2 4a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V4z"/>
+                                    </svg>
+                                    Dashboard
+                                </a>
+                                <a href="/settings" class="dropdown-item">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M8 4.754a3.246 3.246 0 100 6.492 3.246 3.246 0 000-6.492zM5.754 8a2.246 2.246 0 114.492 0 2.246 2.246 0 01-4.492 0z"/>
+                                        <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 01-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 01-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 01.52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 011.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 011.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 01.52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 01-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 01-1.255-.52l-.094-.319z"/>
+                                    </svg>
+                                    Settings
+                                </a>
+                                {% if user.role == 'moderator' or user.role == 'admin' %}
+                                    <div class="dropdown-divider"></div>
+                                    <a href="/moderation.html" class="dropdown-item">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                            <path d="M8 1.5l6 2v4.5c0 3.5-2.5 6-6 8-3.5-2-6-4.5-6-8V3.5l6-2z"/>
+                                        </svg>
+                                        Moderation
+                                    </a>
+                                {% endif %}
+                                {% if user.role == 'admin' %}
+                                    <a href="/admin.html" class="dropdown-item">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                            <path d="M2 2h12v12H2V2zm2 2v8h8V4H4z"/>
+                                        </svg>
+                                        Admin Panel
+                                    </a>
+                                {% endif %}
+                                <div class="dropdown-divider"></div>
+                                <a href="/api/auth/logout" class="dropdown-item text-error">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M11 8l-5-5v3H2v4h4v3l5-5zM14 2v12h-2V2h2z"/>
+                                    </svg>
+                                    Logout
+                                </a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="/api/auth/login" class="btn btn-discord">
+                            <svg width="20" height="20" viewBox="0 0 71 55" fill="currentColor">
+                                <g clip-path="url(#clip0)">
+                                    <path d="M60.1045 4.8978C55.5792 2.8214 50.7265 1.2916 45.6527 0.41542C45.5603 0.39851 45.468 0.440769 45.4204 0.525289C44.7963 1.6353 44.105 3.0834 43.6209 4.2216C38.1637 3.4046 32.7345 3.4046 27.3892 4.2216C26.905 3.0581 26.1886 1.6353 25.5617 0.525289C25.5141 0.443589 25.4218 0.40133 25.3294 0.41542C20.2584 1.2888 15.4057 2.8186 10.8776 4.8978C10.8384 4.9147 10.8048 4.9429 10.7825 4.9795C1.57795 18.7309 -0.943561 32.1443 0.293408 45.3914C0.299005 45.4562 0.335386 45.5182 0.385761 45.5576C6.45866 50.0174 12.3413 52.7249 18.1147 54.5195C18.2071 54.5477 18.305 54.5139 18.3638 54.4378C19.7295 52.5728 20.9469 50.6063 21.9907 48.5383C22.0523 48.4172 21.9935 48.2735 21.8676 48.2256C19.9366 47.4931 18.0979 46.6 16.3292 45.5858C16.1893 45.5041 16.1781 45.304 16.3068 45.2082C16.679 44.9293 17.0513 44.6391 17.4067 44.3461C17.471 44.2926 17.5606 44.2813 17.6362 44.3151C29.2558 49.6202 41.8354 49.6202 53.3179 44.3151C53.3935 44.2785 53.4831 44.2898 53.5502 44.3433C53.9057 44.6363 54.2779 44.9293 54.6529 45.2082C54.7816 45.304 54.7732 45.5041 54.6333 45.5858C52.8646 46.6197 51.0259 47.4931 49.0921 48.2228C48.9662 48.2707 48.9102 48.4172 48.9718 48.5383C50.038 50.6034 51.2554 52.5699 52.5959 54.435C52.6519 54.5139 52.7526 54.5477 52.845 54.5195C58.6464 52.7249 64.529 50.0174 70.6019 45.5576C70.6551 45.5182 70.6887 45.459 70.6943 45.3942C72.1747 30.0791 68.2147 16.7757 60.1968 4.9823C60.1772 4.9429 60.1437 4.9147 60.1045 4.8978ZM23.7259 37.3253C20.2276 37.3253 17.3451 34.1136 17.3451 30.1693C17.3451 26.225 20.1717 23.0133 23.7259 23.0133C27.308 23.0133 30.1626 26.2532 30.1066 30.1693C30.1066 34.1136 27.28 37.3253 23.7259 37.3253ZM47.3178 37.3253C43.8196 37.3253 40.9371 34.1136 40.9371 30.1693C40.9371 26.225 43.7636 23.0133 47.3178 23.0133C50.9 23.0133 53.7545 26.2532 53.6986 30.1693C53.6986 34.1136 50.9 37.3253 47.3178 37.3253Z"/>
+                                </g>
+                            </svg>
+                            Login with Discord
+                        </a>
+                    {% endif %}
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle" id="mobileMenuBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div class="mobile-nav" id="mobileNav">
+                {% if user %}
+                    <a href="/dashboard.html" class="mobile-nav-link">Dashboard</a>
+                    <a href="/games" class="mobile-nav-link">Games</a>
+                    <a href="/lobbies" class="mobile-nav-link">Active Lobbies</a>
+                    <a href="/profile/{{ user.id }}" class="mobile-nav-link">Profile</a>
+                    <a href="/settings" class="mobile-nav-link">Settings</a>
+                    {% if user.role == 'moderator' or user.role == 'admin' %}
+                        <a href="/moderation.html" class="mobile-nav-link">Moderation</a>
+                    {% endif %}
+                    {% if user.role == 'admin' %}
+                        <a href="/admin.html" class="mobile-nav-link">Admin Panel</a>
+                    {% endif %}
+                    <a href="/api/auth/logout" class="mobile-nav-link text-error">Logout</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="site-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- About Section -->
+                <div class="footer-section">
+                    <h3 class="footer-title">About SekaiLink</h3>
+                    <p class="footer-text">
+                        Next-generation Archipelago Multiworld hosting platform.
+                    </p>
+                    <p class="footer-text text-muted">
+                        Powered by <a href="https://archipelago.gg" target="_blank" rel="noopener">Archipelago</a>
+                    </p>
+                </div>
+
+                <!-- Help & Resources -->
+                <div class="footer-section">
+                    <h3 class="footer-title">Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="/help.html">Help</a></li>
+                        <li><a href="/faq.html">FAQ</a></li>
+                        <li><a href="/docs.html">Documentation</a></li>
+                        <li><a href="/rules.html">Rules</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal -->
+                <div class="footer-section">
+                    <h3 class="footer-title">Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/credits.html">Credits</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Community -->
+                <div class="footer-section">
+                    <h3 class="footer-title">Community</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://discord.gg/XvvcBxrRsk" target="_blank" rel="noopener">Discord</a></li>
+                        <li><a href="https://github.com/lovenityjade/sekailink" target="_blank" rel="noopener">GitHub</a></li>
+                        <li><a href="/donate.html">Donate</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <p class="footer-disclaimer">
+                    <strong>Important:</strong> SekaiLink is not affiliated with official Archipelago.gg technical support.
+                    For SekaiLink issues, use our <a href="https://discord.gg/XvvcBxrRsk" target="_blank">Discord server</a>.
+                    For Archipelago issues, visit the official <a href="https://discord.gg/archipelago" target="_blank">Archipelago Discord</a>.
+                </p>
+                <p class="footer-copyright">
+                    &copy; 2025 SekaiLink. Created by <a href="https://github.com/lovenityjade" target="_blank">lovenityjade</a>.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/static/js/main.js"></script>
+    {% block extra_js %}{% endblock %}
+
+    <script>
+        // User dropdown toggle
+        const userMenuBtn = document.getElementById('userMenuBtn');
+        const userMenu = document.getElementById('userMenu');
+
+        if (userMenuBtn) {
+            userMenuBtn.addEventListener('click', () => {
+                userMenu.classList.toggle('active');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!userMenuBtn.contains(e.target) && !userMenu.contains(e.target)) {
+                    userMenu.classList.remove('active');
+                }
+            });
+        }
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileNav.classList.toggle('active');
+            });
+        }
+    </script>
+</body>
+</html>

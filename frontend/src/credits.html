@@ -1,0 +1,314 @@
+{% extends "base.html" %}
+
+{% block title %}Credits - SekaiLink{% endblock %}
+
+{% block content %}
+<div class="container-sm">
+    <div class="text-center mb-2xl">
+        <h1 class="mb-md">Credits & Acknowledgments</h1>
+        <p class="text-secondary text-lg">
+            SekaiLink wouldn't exist without these amazing projects and people
+        </p>
+    </div>
+
+    <!-- Archipelago -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">Archipelago Multiworld Randomizer</h2>
+        </div>
+        <div class="card-body">
+            <div class="flex items-start gap-lg mb-lg">
+                <div style="flex: 1;">
+                    <p class="mb-md">
+                        <strong>The Foundation of Everything</strong>
+                    </p>
+                    <p class="mb-md">
+                        SekaiLink is built on top of <a href="https://archipelago.gg" target="_blank" class="text-accent">Archipelago</a>,
+                        the incredible open-source multiworld randomizer that makes all of this possible. We use their generation tools,
+                        server software, and game implementations.
+                    </p>
+                    <p class="mb-md">
+                        Archipelago is maintained by a dedicated team of developers and hundreds of contributors who create
+                        game worlds, fix bugs, and build features for the community.
+                    </p>
+                    <a href="https://archipelago.gg" target="_blank" class="btn">
+                        Visit Archipelago.gg
+                    </a>
+                    <a href="https://github.com/ArchipelagoMW/Archipelago" target="_blank" class="btn btn-outline">
+                        GitHub Repository
+                    </a>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 15A7 7 0 118 1a7 7 0 010 14zm0 1A8 8 0 108 0a8 8 0 000 16z"/>
+                    <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 11-2 0 1 1 0 012 0z"/>
+                </svg>
+                <div>
+                    <strong>Important:</strong> SekaiLink is NOT officially affiliated with Archipelago.
+                    We're an independent platform that uses their open-source code under the MIT license.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Racetime.gg -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">Racetime.gg</h2>
+        </div>
+        <div class="card-body">
+            <p class="mb-md">
+                <strong>Architectural Inspiration</strong>
+            </p>
+            <p class="mb-lg">
+                SekaiLink's architecture and design patterns were heavily inspired by <a href="https://racetime.gg" target="_blank" class="text-accent">racetime.gg</a>,
+                the premier platform for speedrunning races. Their state machine approach, lobby management system, and permission
+                hierarchy served as excellent references for building SekaiLink.
+            </p>
+            <p class="text-secondary">
+                Thank you to the racetime.gg team for building such a well-architected platform and making it open source!
+            </p>
+        </div>
+    </section>
+
+    <!-- Open Source Projects -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">Open Source Technologies</h2>
+        </div>
+        <div class="card-body">
+            <p class="mb-lg">
+                SekaiLink is built with these excellent open-source projects:
+            </p>
+
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Purpose</th>
+                            <th>License</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="https://flask.palletsprojects.com/" target="_blank" class="text-accent">Flask 3.0</a></td>
+                            <td>Python web framework</td>
+                            <td>BSD-3-Clause</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://www.sqlalchemy.org/" target="_blank" class="text-accent">SQLAlchemy</a></td>
+                            <td>Database ORM</td>
+                            <td>MIT</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://www.postgresql.org/" target="_blank" class="text-accent">PostgreSQL 15</a></td>
+                            <td>Relational database</td>
+                            <td>PostgreSQL License</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://redis.io/" target="_blank" class="text-accent">Redis 7</a></td>
+                            <td>Cache & message broker</td>
+                            <td>BSD-3-Clause</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://docs.celeryq.dev/" target="_blank" class="text-accent">Celery 5.3</a></td>
+                            <td>Task queue for generation</td>
+                            <td>BSD-3-Clause</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://socket.io/" target="_blank" class="text-accent">Socket.IO</a></td>
+                            <td>Real-time WebSocket communication</td>
+                            <td>MIT</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://www.docker.com/" target="_blank" class="text-accent">Docker</a></td>
+                            <td>Containerization</td>
+                            <td>Apache 2.0</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://ace.c9.io/" target="_blank" class="text-accent">ACE Editor</a></td>
+                            <td>YAML code editor</td>
+                            <td>BSD-3-Clause</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://jinja.palletsprojects.com/" target="_blank" class="text-accent">Jinja2</a></td>
+                            <td>Template engine</td>
+                            <td>BSD-3-Clause</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://python-discord.com/" target="_blank" class="text-accent">Discord.py</a></td>
+                            <td>Discord bot integration</td>
+                            <td>MIT</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Infrastructure -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">Infrastructure & Hosting</h2>
+        </div>
+        <div class="card-body">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-lg);">
+                <div class="text-center">
+                    <h3 class="mb-sm">
+                        <svg width="24" height="24" viewBox="0 0 16 16" fill="var(--accent-primary)" style="vertical-align: middle;">
+                            <path d="M8 0a8 8 0 100 16A8 8 0 008 0z"/>
+                        </svg>
+                        Hostinger
+                    </h3>
+                    <p class="text-secondary">VPS hosting for our Ubuntu server</p>
+                    <a href="https://www.hostinger.com/" target="_blank" class="btn btn-sm btn-outline mt-md">Visit Hostinger</a>
+                </div>
+
+                <div class="text-center">
+                    <h3 class="mb-sm">
+                        <svg width="24" height="24" viewBox="0 0 16 16" fill="var(--accent-primary)" style="vertical-align: middle;">
+                            <path d="M2 2h12v12H2V2z"/>
+                        </svg>
+                        Ubuntu Linux
+                    </h3>
+                    <p class="text-secondary">Server operating system</p>
+                    <a href="https://ubuntu.com/" target="_blank" class="btn btn-sm btn-outline mt-md">Visit Ubuntu</a>
+                </div>
+
+                <div class="text-center">
+                    <h3 class="mb-sm">
+                        <svg width="24" height="24" viewBox="0 0 16 16" fill="var(--accent-primary)" style="vertical-align: middle;">
+                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59z"/>
+                        </svg>
+                        GitHub
+                    </h3>
+                    <p class="text-secondary">Code hosting and version control</p>
+                    <a href="https://github.com/" target="_blank" class="btn btn-sm btn-outline mt-md">Visit GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Development Tools -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">Development Tools</h2>
+        </div>
+        <div class="card-body">
+            <p class="mb-lg">Tools that helped build SekaiLink:</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-md);">
+                <div class="badge badge-info" style="padding: var(--space-md); display: block; text-align: center;">
+                    <strong>Python 3.11</strong><br>
+                    <span class="text-sm text-muted">Programming language</span>
+                </div>
+                <div class="badge badge-info" style="padding: var(--space-md); display: block; text-align: center;">
+                    <strong>VSCode</strong><br>
+                    <span class="text-sm text-muted">Code editor</span>
+                </div>
+                <div class="badge badge-info" style="padding: var(--space-md); display: block; text-align: center;">
+                    <strong>Git</strong><br>
+                    <span class="text-sm text-muted">Version control</span>
+                </div>
+                <div class="badge badge-info" style="padding: var(--space-md); display: block; text-align: center;">
+                    <strong>Postman</strong><br>
+                    <span class="text-sm text-muted">API testing</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Team -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">The SekaiLink Team</h2>
+        </div>
+        <div class="card-body">
+            <div class="text-center mb-xl">
+                <h3 class="mb-md">Creator & Lead Developer</h3>
+                <div style="max-width: 400px; margin: 0 auto;">
+                    <div class="flex items-center gap-md" style="background: var(--bg-secondary); padding: var(--space-lg); border-radius: var(--radius-lg);">
+                        <img src="/static/jade-avatar.png" alt="Jade" style="width: 80px; height: 80px; border-radius: 50%;" onerror="this.src='/static/default-avatar.png'">
+                        <div style="text-align: left;">
+                            <h4 class="mb-xs">Jade (lovenityjade)</h4>
+                            <p class="text-secondary text-sm mb-sm">Full-stack developer from Québec</p>
+                            <div class="flex gap-sm">
+                                <a href="https://github.com/lovenityjade" target="_blank" class="text-accent text-sm">GitHub</a>
+                                <span class="text-muted">•</span>
+                                <a href="https://discord.gg/XvvcBxrRsk" target="_blank" class="text-accent text-sm">Discord</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <h3 class="mb-md text-center">Special Thanks</h3>
+            <p class="text-center text-secondary mb-lg">
+                To everyone who has contributed feedback, bug reports, feature suggestions, and support.
+                The SekaiLink community makes this project possible!
+            </p>
+        </div>
+    </section>
+
+    <!-- Community -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">Community & Contributors</h2>
+        </div>
+        <div class="card-body">
+            <p class="mb-md">
+                Thank you to everyone in the Archipelago and speedrunning communities who have supported this project:
+            </p>
+
+            <ul style="margin-left: var(--space-lg); line-height: 1.8;">
+                <li>All our beta testers who found bugs and provided feedback</li>
+                <li>Contributors who submitted code, documentation, and translations</li>
+                <li>Donors who help keep the servers running</li>
+                <li>Community members who spread the word about SekaiLink</li>
+                <li>The Archipelago Discord community for their encouragement</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- License -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">License & Source Code</h2>
+        </div>
+        <div class="card-body">
+            <p class="mb-md">
+                SekaiLink is open source under the <strong>MIT License</strong>.
+            </p>
+            <p class="mb-lg">
+                You're free to view, modify, and distribute the code. Contributions are welcome!
+            </p>
+            <div class="flex gap-sm justify-center">
+                <a href="https://github.com/lovenityjade/sekailink" target="_blank" class="btn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                    View on GitHub
+                </a>
+                <a href="https://github.com/lovenityjade/sekailink/blob/main/LICENSE" target="_blank" class="btn btn-outline">
+                    Read License
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Thank You -->
+    <div class="card fade-in">
+        <div class="card-body text-center">
+            <h2 class="mb-md">Thank You!</h2>
+            <p class="text-secondary text-lg">
+                To every developer, contributor, and community member who made SekaiLink possible - thank you. ❤️
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

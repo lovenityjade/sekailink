@@ -1,0 +1,550 @@
+{% extends "base.html" %}
+
+{% block title %}FAQ - SekaiLink{% endblock %}
+
+{% block content %}
+<div class="container-sm">
+    <div class="flex justify-between items-center mb-xl">
+        <h1>Frequently Asked Questions</h1>
+        <a href="/help.html" class="btn btn-outline">View Documentation</a>
+    </div>
+
+    <!-- Search -->
+    <div class="card mb-2xl">
+        <div class="card-body">
+            <input type="text" id="faq-search" class="form-input" placeholder="Search questions...">
+        </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="flex gap-sm mb-xl" style="flex-wrap: wrap;">
+        <button class="btn btn-sm active" data-category="all" onclick="filterCategory('all')">All</button>
+        <button class="btn btn-sm btn-outline" data-category="general" onclick="filterCategory('general')">General</button>
+        <button class="btn btn-sm btn-outline" data-category="setup" onclick="filterCategory('setup')">Setup</button>
+        <button class="btn btn-sm btn-outline" data-category="lobbies" onclick="filterCategory('lobbies')">Lobbies</button>
+        <button class="btn btn-sm btn-outline" data-category="technical" onclick="filterCategory('technical')">Technical</button>
+        <button class="btn btn-sm btn-outline" data-category="account" onclick="filterCategory('account')">Account</button>
+    </div>
+
+    <!-- General Questions -->
+    <section class="mb-2xl">
+        <h2 class="mb-lg">General</h2>
+
+        <div class="faq-item" data-category="general">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">What is SekaiLink?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        SekaiLink is a hosting platform for <a href="https://archipelago.gg" target="_blank" class="text-accent">Archipelago</a> multiworld sessions.
+                        We provide YAML management, ROM verification, automatic seed generation, and server hosting to make playing Archipelago syncs easier.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="general">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">Is SekaiLink free?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        Yes! SekaiLink is completely free to use. We accept <a href="/donate.html" class="text-accent">donations</a> to help cover server costs,
+                        but all features are available to everyone at no charge.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="general">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">Is SekaiLink affiliated with Archipelago?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        No, SekaiLink is an independent project. We use Archipelago's open-source code and tools, but we are not officially affiliated.
+                        <strong>Do NOT ask for SekaiLink support on the Archipelago Discord</strong> - use our <a href="https://discord.gg/XvvcBxrRsk" target="_blank" class="text-accent">Discord server</a> instead.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="general">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">How many games are supported?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        SekaiLink supports all 89+ officially supported Archipelago games, plus approved custom worlds.
+                        You can view the complete game list on the <a href="/" class="text-accent">homepage</a>.
+                    </p>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <!-- Setup Questions -->
+    <section class="mb-2xl">
+        <h2 class="mb-lg">Setup & Getting Started</h2>
+
+        <div class="faq-item" data-category="setup">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">How do I create an account?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        SekaiLink uses Discord OAuth for authentication. Simply click "Sign in with Discord" on the homepage
+                        and authorize the application. No separate account creation is needed.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="setup">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">Do I need to upload my YAML every time?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        No! Once you upload or create a YAML, it's saved to your account. You can reuse it in multiple lobbies.
+                        Go to <strong>Dashboard → YAML Manager</strong> to see all your saved YAMLs.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="setup">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">Which games require ROM uploads?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        Games marked with a <span class="badge badge-warning">ROM Required</span> badge need ROM files for generation.
+                        Common examples include:
+                    </p>
+                    <ul style="margin-left: var(--space-lg); margin-top: var(--space-sm);">
+                        <li>The Legend of Zelda: A Link to the Past</li>
+                        <li>Super Metroid</li>
+                        <li>Super Mario World</li>
+                        <li>Final Fantasy</li>
+                        <li>Pokémon Red/Blue</li>
+                    </ul>
+                    <p class="mt-md">
+                        Check the game page or your ROM Manager to see which games you need ROMs for.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="setup">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">Where can I get ROMs?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        <strong>SekaiLink does NOT provide ROMs.</strong> You must obtain your own legally dumped ROMs.
+                        We cannot provide links or assistance in acquiring ROMs due to legal restrictions.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="setup">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">My ROM upload failed. What should I do?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>ROM verification can fail for several reasons:</p>
+                    <ul style="margin-left: var(--space-lg); margin-top: var(--space-sm);">
+                        <li><strong>Wrong version</strong> - Make sure you're using the correct region (usually USA or Japan)</li>
+                        <li><strong>Pre-patched ROM</strong> - ROMs must be unmodified/vanilla</li>
+                        <li><strong>Incorrect game</strong> - Double-check you selected the right game</li>
+                    </ul>
+                    <p class="mt-md">
+                        The error message will show the expected SHA-1 hash. You can verify your ROM's hash using tools like HashCalc or 7-Zip.
+                    </p>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <!-- Lobby Questions -->
+    <section class="mb-2xl">
+        <h2 class="mb-lg">Lobbies & Playing</h2>
+
+        <div class="faq-item" data-category="lobbies">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">How do I create a lobby?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        Click <strong>"Create Lobby"</strong> from the homepage or any game page. Fill out the lobby settings
+                        (name, player limit, rules, etc.) and click "Create Lobby". You'll be taken to the lobby page where
+                        players can join.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="lobbies">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">Can I join a lobby after generation starts?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        No, you must join before the host starts generation. Once generation begins, the lobby is locked
+                        and no new players can join.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="lobbies">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">What happens if the host leaves?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        If the host leaves before generation, another player will be promoted to host automatically.
+                        If the host leaves after the server is running, the server continues and other players can still play.
+                        Moderators can also take control of lobbies if needed.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="lobbies">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">How long does generation take?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        Generation typically takes 1-5 minutes depending on:
+                    </p>
+                    <ul style="margin-left: var(--space-lg); margin-top: var(--space-sm);">
+                        <li>Number of players (more players = longer generation)</li>
+                        <li>Game complexity (some games take longer to generate)</li>
+                        <li>Server load (peak times may be slower)</li>
+                    </ul>
+                    <p class="mt-md">
+                        You'll see real-time progress updates in the lobby chat during generation.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="lobbies">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">What does "DNF" and "Forfeit" mean?</h3>
+                </summary>
+                <div class="card-body">
+                    <ul style="margin-left: var(--space-lg);">
+                        <li><strong>DNF (Did Not Finish)</strong> - You can't complete the sync but want to stay connected to help others</li>
+                        <li><strong>Forfeit</strong> - You're leaving the sync entirely and disconnecting</li>
+                    </ul>
+                    <p class="mt-md">
+                        Using these properly instead of rage quitting helps maintain good server ratings and etiquette.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="lobbies">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">Can I play multiple games in one lobby?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        Yes, if the host enabled <strong>"Allow Multi-game"</strong> when creating the lobby. This lets each player
+                        join with different games. If disabled, all players must play the same game.
+                    </p>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <!-- Technical Questions -->
+    <section class="mb-2xl">
+        <h2 class="mb-lg">Technical Issues</h2>
+
+        <div class="faq-item" data-category="technical">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">I can't connect to the server. What should I do?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>Try these troubleshooting steps:</p>
+                    <ol style="margin-left: var(--space-lg); margin-top: var(--space-sm);">
+                        <li>Verify the server address and port in the lobby page</li>
+                        <li>Make sure the lobby state is "Active" (server must be running)</li>
+                        <li>Check your firewall settings - ensure the port isn't blocked</li>
+                        <li>Restart your Archipelago client</li>
+                        <li>Try connecting using the IP address instead of hostname</li>
+                    </ol>
+                    <p class="mt-md">
+                        If still unable to connect, ask for help in our <a href="https://discord.gg/XvvcBxrRsk" target="_blank" class="text-accent">Discord server</a>.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="technical">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">Generation failed. What went wrong?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>Common causes of generation failure:</p>
+                    <ul style="margin-left: var(--space-lg); margin-top: var(--space-sm);">
+                        <li><strong>Invalid YAML</strong> - One or more players have malformed settings</li>
+                        <li><strong>Missing ROM</strong> - A required ROM wasn't uploaded</li>
+                        <li><strong>Incompatible settings</strong> - Player settings create an impossible seed</li>
+                        <li><strong>Custom world error</strong> - An unstable custom world caused a crash</li>
+                    </ul>
+                    <p class="mt-md">
+                        Check the lobby chat for specific error messages. The host can try generation again after fixing issues.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="technical">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">Is there a time limit?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        Lobbies can have optional time limits (1-24 hours) set by the host. If <strong>"Restrict Time Limit"</strong>
+                        is enabled, the server will automatically release all items and close the lobby when time expires.
+                    </p>
+                    <p class="mt-md">
+                        If not restricted, the time limit is just a guideline and won't force anything.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="technical">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">Are ROMs stored permanently?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        <strong>No.</strong> All ROMs are automatically deleted on the 1st of each month for storage and legal reasons.
+                        You'll need to re-upload them monthly if you want to play ROM-based games.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="technical">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">Can I download other players' ROMs?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        <strong>Absolutely not.</strong> ROMs are used ONLY for seed generation on the server.
+                        There is no way to download ROMs, period. Don't ask for this feature - it will never be added.
+                    </p>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <!-- Account Questions -->
+    <section class="mb-2xl">
+        <h2 class="mb-lg">Account & Privacy</h2>
+
+        <div class="faq-item" data-category="account">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">How do I delete my account?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        Go to <strong>Dashboard → Profile & Settings</strong> and click <strong>"Delete Account"</strong>.
+                        This will permanently delete your account, YAMLs, and all associated data.
+                    </p>
+                    <p class="mt-md">
+                        <strong>Warning:</strong> This action cannot be undone!
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="account">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">What data does SekaiLink collect?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>We collect:</p>
+                    <ul style="margin-left: var(--space-lg); margin-top: var(--space-sm);">
+                        <li>Discord user ID, username, and avatar (from OAuth)</li>
+                        <li>Email address (optional, for important notifications only)</li>
+                        <li>YAMLs you create/upload</li>
+                        <li>ROMs you upload (automatically deleted monthly)</li>
+                        <li>Lobby participation history</li>
+                        <li>Chat messages (for moderation purposes)</li>
+                    </ul>
+                    <p class="mt-md">
+                        We <strong>never</strong> share your data with third parties. See our <a href="/about.html" class="text-accent">About page</a> for more details.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="account">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">What are ratings and reviews?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        After playing in a lobby, you can rate other players on 4 criteria (punctuality, respect, following rules, valid release).
+                        These ratings help build a community of good players.
+                    </p>
+                    <p class="mt-md">
+                        You can also write reviews, which are moderated before appearing on profiles.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item" data-category="account">
+            <details class="card mb-md">
+                <summary class="card-header" style="cursor: pointer; user-select: none;">
+                    <h3 class="card-title">Can I get banned?</h3>
+                </summary>
+                <div class="card-body">
+                    <p>
+                        Yes. Users can be banned for:
+                    </p>
+                    <ul style="margin-left: var(--space-lg); margin-top: var(--space-sm);">
+                        <li>Harassment or toxic behavior</li>
+                        <li>Repeated rule violations</li>
+                        <li>Cheating or exploiting</li>
+                        <li>Spamming or advertising</li>
+                    </ul>
+                    <p class="mt-md">
+                        Bans can be temporary or permanent. You can appeal bans via the Contact page.
+                    </p>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <!-- Still Have Questions? -->
+    <div class="card fade-in">
+        <div class="card-body text-center">
+            <h2 class="mb-md">Still have questions?</h2>
+            <p class="text-secondary mb-lg">
+                Can't find what you're looking for? Check our full documentation or reach out to us directly.
+            </p>
+            <div class="flex gap-sm justify-center">
+                <a href="/help.html" class="btn">View Documentation</a>
+                <a href="https://discord.gg/XvvcBxrRsk" target="_blank" class="btn btn-outline">Join Discord</a>
+                <a href="/contact.html" class="btn btn-outline">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Search functionality
+document.getElementById('faq-search').addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    const items = document.querySelectorAll('.faq-item');
+
+    items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(query) ? '' : 'none';
+    });
+});
+
+// Category filtering
+function filterCategory(category) {
+    const items = document.querySelectorAll('.faq-item');
+    const buttons = document.querySelectorAll('[data-category]');
+
+    // Update button states
+    buttons.forEach(btn => {
+        if (btn.getAttribute('data-category') === category) {
+            btn.classList.add('active');
+            btn.classList.remove('btn-outline');
+        } else {
+            btn.classList.remove('active');
+            btn.classList.add('btn-outline');
+        }
+    });
+
+    // Filter items
+    items.forEach(item => {
+        if (category === 'all' || item.getAttribute('data-category') === category) {
+            item.style.display = '';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+
+// Auto-expand from URL hash
+window.addEventListener('DOMContentLoaded', () => {
+    if (window.location.hash) {
+        const target = document.querySelector(window.location.hash);
+        if (target && target.tagName === 'DETAILS') {
+            target.open = true;
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+});
+</script>
+
+<style>
+details summary {
+    list-style: none;
+}
+
+details summary::-webkit-details-marker {
+    display: none;
+}
+
+details[open] summary {
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: var(--space-md);
+}
+
+details summary:hover {
+    background: var(--bg-secondary);
+}
+
+.faq-item {
+    transition: opacity var(--transition-normal);
+}
+
+.btn.active {
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+}
+</style>
+{% endblock %}

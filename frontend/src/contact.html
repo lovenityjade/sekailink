@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - SekaiLink{% endblock %}
+
+{% block content %}
+<div class="container-sm">
+    <div class="text-center mb-2xl">
+        <h1 class="mb-md">Contact Us</h1>
+        <p class="text-secondary text-lg">
+            Need help? Have feedback? We'd love to hear from you!
+        </p>
+    </div>
+
+    <!-- Quick Links -->
+    <section class="mb-2xl">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-lg);">
+            <a href="https://discord.gg/XvvcBxrRsk" target="_blank" class="card hover-lift" style="text-decoration: none; color: inherit; transition: transform var(--transition-fast);">
+                <div class="card-body text-center">
+                    <svg width="48" height="48" viewBox="0 0 16 16" fill="var(--accent-primary)" style="margin-bottom: var(--space-md);">
+                        <path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"/>
+                    </svg>
+                    <h3 class="mb-sm">Discord Server</h3>
+                    <p class="text-secondary mb-md">Join our Discord for live support, bug reports, and community discussion</p>
+                    <span class="btn btn-sm">Join Discord</span>
+                </div>
+            </a>
+
+            <a href="https://github.com/lovenityjade/sekailink/issues" target="_blank" class="card hover-lift" style="text-decoration: none; color: inherit; transition: transform var(--transition-fast);">
+                <div class="card-body text-center">
+                    <svg width="48" height="48" viewBox="0 0 16 16" fill="var(--accent-secondary)" style="margin-bottom: var(--space-md);">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                    <h3 class="mb-sm">GitHub Issues</h3>
+                    <p class="text-secondary mb-md">Report bugs, request features, or contribute code on GitHub</p>
+                    <span class="btn btn-sm btn-outline">Open Issue</span>
+                </div>
+            </a>
+
+            <a href="mailto:sekailink@themiareproject.com" class="card hover-lift" style="text-decoration: none; color: inherit; transition: transform var(--transition-fast);">
+                <div class="card-body text-center">
+                    <svg width="48" height="48" viewBox="0 0 16 16" fill="var(--status-warning)" style="margin-bottom: var(--space-md);">
+                        <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+                    </svg>
+                    <h3 class="mb-sm">Email Support</h3>
+                    <p class="text-secondary mb-md">For private inquiries, ban appeals, or general questions</p>
+                    <span class="btn btn-sm btn-outline">Send Email</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">Send Us a Message</h2>
+        </div>
+        <div class="card-body">
+            <form id="contact-form">
+                <div class="form-group">
+                    <label class="form-label">Your Name <span style="color: var(--status-error);">*</span></label>
+                    <input type="text" id="contact-name" class="form-input" placeholder="John Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email Address <span style="color: var(--status-error);">*</span></label>
+                    <input type="email" id="contact-email" class="form-input" placeholder="you@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Subject <span style="color: var(--status-error);">*</span></label>
+                    <select id="contact-subject" class="form-select" required>
+                        <option value="">Select a topic...</option>
+                        <option value="bug">Bug Report</option>
+                        <option value="feature">Feature Request</option>
+                        <option value="support">Technical Support</option>
+                        <option value="ban_appeal">Ban Appeal</option>
+                        <option value="abuse">Report Abuse</option>
+                        <option value="feedback">General Feedback</option>
+                        <option value="partnership">Partnership/Collaboration</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Message <span style="color: var(--status-error);">*</span></label>
+                    <textarea id="contact-message" class="form-textarea" rows="8" placeholder="Tell us what's on your mind..." required></textarea>
+                    <span class="form-hint">Be as detailed as possible. Include usernames, lobby IDs, or error messages if applicable.</span>
+                </div>
+
+                <div class="form-checkbox mb-lg">
+                    <input type="checkbox" id="contact-copy" checked>
+                    <label for="contact-copy">Send me a copy of this message</label>
+                </div>
+
+                <button type="submit" class="btn btn-lg btn-block">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+                    </svg>
+                    Send Message
+                </button>
+            </form>
+
+            <div id="contact-success" class="alert alert-success mt-lg" style="display: none;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M13.854 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L6.5 10.293l6.646-6.647a.5.5 0 01.708 0z"/>
+                </svg>
+                <div>
+                    <strong>Message sent!</strong> We'll get back to you within 1-3 business days.
+                </div>
+            </div>
+
+            <div id="contact-error" class="alert alert-error mt-lg" style="display: none;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M4.646 4.646a.5.5 0 01.708 0L8 7.293l2.646-2.647a.5.5 0 01.708.708L8.707 8l2.647 2.646a.5.5 0 01-.708.708L8 8.707l-2.646 2.647a.5.5 0 01-.708-.708L7.293 8 4.646 5.354a.5.5 0 010-.708z"/>
+                </svg>
+                <div>
+                    <strong>Error:</strong> Failed to send message. Please try again or email us directly.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Link -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">Before You Contact Us...</h2>
+        </div>
+        <div class="card-body">
+            <p class="mb-md">
+                Many common questions are answered in our documentation. Check these resources first:
+            </p>
+
+            <div class="flex gap-sm flex-wrap">
+                <a href="/faq.html" class="btn btn-outline">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 15A7 7 0 118 1a7 7 0 010 14zm0 1A8 8 0 108 0a8 8 0 000 16z"/>
+                        <path d="M5.255 5.786a.237.237 0 00.241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 00.25.246h.811a.25.25 0 00.25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                    </svg>
+                    FAQ
+                </a>
+                <a href="/help.html" class="btn btn-outline">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M3 3h10v1H3V3zm0 3h10v1H3V6zm0 3h10v1H3V9zm0 3h7v1H3v-1z"/>
+                    </svg>
+                    Help Docs
+                </a>
+                <a href="/rules.html" class="btn btn-outline">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 15A7 7 0 118 1a7 7 0 010 14zm0 1A8 8 0 108 0a8 8 0 000 16z"/>
+                        <path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/>
+                    </svg>
+                    Rules
+                </a>
+                <a href="/docs.html" class="btn btn-outline">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M2 2h12v12H2V2zm2 2v8h8V4H4z"/>
+                    </svg>
+                    API Docs
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Response Time -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">Response Times</h2>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Contact Method</th>
+                        <th>Expected Response Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Discord</strong></td>
+                        <td>1-24 hours (usually faster)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Email</strong></td>
+                        <td>1-3 business days</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GitHub Issues</strong></td>
+                        <td>1-5 business days</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contact Form</strong></td>
+                        <td>1-3 business days</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="text-secondary mt-md">
+                <strong>Note:</strong> Response times may be longer during high-traffic periods or holidays.
+                For urgent issues, Discord is your best option.
+            </p>
+        </div>
+    </section>
+
+    <!-- Social Media -->
+    <div class="card fade-in">
+        <div class="card-header">
+            <h2 class="card-title">Stay Connected</h2>
+        </div>
+        <div class="card-body text-center">
+            <p class="mb-lg">Follow us for updates, announcements, and community highlights</p>
+            <div class="flex gap-md justify-center">
+                <a href="https://discord.gg/XvvcBxrRsk" target="_blank" class="btn btn-outline">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"/>
+                    </svg>
+                    Discord
+                </a>
+                <a href="https://github.com/lovenityjade/sekailink" target="_blank" class="btn btn-outline">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Contact Form Submission
+document.getElementById('contact-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = {
+        name: document.getElementById('contact-name').value,
+        email: document.getElementById('contact-email').value,
+        subject: document.getElementById('contact-subject').value,
+        message: document.getElementById('contact-message').value,
+        send_copy: document.getElementById('contact-copy').checked
+    };
+
+    try {
+        const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(formData)
+        });
+
+        if (response.ok) {
+            document.getElementById('contact-success').style.display = 'flex';
+            document.getElementById('contact-error').style.display = 'none';
+            document.getElementById('contact-form').reset();
+
+            // Scroll to success message
+            document.getElementById('contact-success').scrollIntoView({ behavior: 'smooth' });
+        } else {
+            throw new Error('Failed to send message');
+        }
+    } catch (error) {
+        console.error('Error sending message:', error);
+        document.getElementById('contact-success').style.display = 'none';
+        document.getElementById('contact-error').style.display = 'flex';
+    }
+});
+</script>
+
+<style>
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+</style>
+{% endblock %}

@@ -1,0 +1,886 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - SekaiLink{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="flex justify-between items-center mb-xl">
+        <h1>Admin Dashboard</h1>
+        <div class="flex gap-sm">
+            <button class="btn btn-outline" onclick="refreshAllData()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 3a5 5 0 104.546 2.914.5.5 0 01.908-.417A6 6 0 118 2v1z"/>
+                    <path d="M8 4.466V.534a.25.25 0 01.41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 018 4.466z"/>
+                </svg>
+                Refresh
+            </button>
+            <button class="btn btn-warning" id="maintenance-toggle" onclick="toggleMaintenance()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 15A7 7 0 118 1a7 7 0 010 14zm0 1A8 8 0 108 0a8 8 0 000 16z"/>
+                    <path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/>
+                </svg>
+                <span id="maintenance-text">Enable Maintenance</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- System Statistics -->
+    <section class="mb-2xl">
+        <h2 class="mb-lg">System Overview</h2>
+        <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-lg);">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: var(--accent-primary); opacity: 0.1; border-radius: var(--radius-lg); padding: var(--space-md); width: fit-content; margin-bottom: var(--space-md);">
+                    <svg width="24" height="24" viewBox="0 0 16 16" fill="var(--accent-primary)">
+                        <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM12.93 11.93A7 7 0 108 15a7 7 0 004.93-3.07z"/>
+                    </svg>
+                </div>
+                <div class="stat-value" id="total-users">0</div>
+                <div class="stat-label">Total Users</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: var(--accent-secondary); opacity: 0.1; border-radius: var(--radius-lg); padding: var(--space-md); width: fit-content; margin-bottom: var(--space-md);">
+                    <svg width="24" height="24" viewBox="0 0 16 16" fill="var(--accent-secondary)">
+                        <path d="M2 2h12v12H2V2zm2 2v8h8V4H4z"/>
+                    </svg>
+                </div>
+                <div class="stat-value" id="total-lobbies">0</div>
+                <div class="stat-label">Total Lobbies</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: var(--status-success); opacity: 0.1; border-radius: var(--radius-lg); padding: var(--space-md); width: fit-content; margin-bottom: var(--space-md);">
+                    <svg width="24" height="24" viewBox="0 0 16 16" fill="var(--status-success)">
+                        <path d="M2 4h12v8H2V4zm2 2v4h8V6H4z"/>
+                    </svg>
+                </div>
+                <div class="stat-value" id="total-games">0</div>
+                <div class="stat-label">Games Available</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: var(--status-warning); opacity: 0.1; border-radius: var(--radius-lg); padding: var(--space-md); width: fit-content; margin-bottom: var(--space-md);">
+                    <svg width="24" height="24" viewBox="0 0 16 16" fill="var(--status-warning)">
+                        <path d="M3 3h10v10H3V3zm2 2v6h6V5H5z"/>
+                    </svg>
+                </div>
+                <div class="stat-value" id="storage-usage">0 GB</div>
+                <div class="stat-label">Storage Used</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tabs -->
+    <div class="dashboard-tabs mb-lg">
+        <button class="dashboard-tab active" onclick="switchAdminTab('users')">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM12.93 11.93A7 7 0 108 15a7 7 0 004.93-3.07z"/>
+            </svg>
+            User Management
+        </button>
+        <button class="dashboard-tab" onclick="switchAdminTab('docker')">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M2 2h12v12H2V2zm2 2v8h8V4H4z"/>
+            </svg>
+            Docker Control
+        </button>
+        <button class="dashboard-tab" onclick="switchAdminTab('database')">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 1a7 7 0 100 14A7 7 0 008 1z"/>
+            </svg>
+            Database
+        </button>
+        <button class="dashboard-tab" onclick="switchAdminTab('custom-worlds')">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 0a8 8 0 100 16A8 8 0 008 0zM2.5 8a5.5 5.5 0 0111 0 5.5 5.5 0 01-11 0z"/>
+            </svg>
+            Custom Worlds
+        </button>
+        <button class="dashboard-tab" onclick="switchAdminTab('logs')">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M3 3h10v1H3V3zm0 3h10v1H3V6zm0 3h10v1H3V9zm0 3h7v1H3v-1z"/>
+            </svg>
+            System Logs
+        </button>
+    </div>
+
+    <!-- User Management Tab -->
+    <div class="tab-content active" id="users-tab">
+        <div class="card fade-in">
+            <div class="card-header">
+                <h2 class="card-title">User Management</h2>
+                <div class="flex gap-sm">
+                    <input type="text" id="user-search" class="form-input" placeholder="Search users..." style="width: 300px;">
+                    <select id="role-filter" class="form-select" onchange="loadUsers()">
+                        <option value="all">All Roles</option>
+                        <option value="user">User</option>
+                        <option value="moderator">Moderator</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Role</th>
+                            <th>Warnings</th>
+                            <th>Bans</th>
+                            <th>Status</th>
+                            <th>Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-list">
+                        <tr>
+                            <td colspan="7" class="text-center text-muted">Loading users...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Docker Control Tab -->
+    <div class="tab-content" id="docker-tab">
+        <div class="card fade-in">
+            <div class="card-header">
+                <h2 class="card-title">Docker Container Management</h2>
+                <button class="btn btn-sm" onclick="loadDockerStatus()">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 3a5 5 0 104.546 2.914.5.5 0 01.908-.417A6 6 0 118 2v1z"/>
+                    </svg>
+                    Refresh Status
+                </button>
+            </div>
+
+            <div class="card-body">
+                <div id="docker-containers" style="display: flex; flex-direction: column; gap: var(--space-md);">
+                    <!-- Containers loaded dynamically -->
+                </div>
+
+                <div class="divider"></div>
+
+                <h3 class="mb-md">Container Logs</h3>
+                <div class="form-group">
+                    <select id="log-container" class="form-select" onchange="loadContainerLogs()">
+                        <option value="">Select container...</option>
+                        <option value="sekailink_api">API (Flask)</option>
+                        <option value="sekailink_db">Database (PostgreSQL)</option>
+                        <option value="sekailink_redis">Redis</option>
+                        <option value="sekailink_celery">Celery Worker</option>
+                    </select>
+                </div>
+
+                <div class="console-output" id="container-logs" style="max-height: 400px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 12px;">
+                    <div class="text-muted">Select a container to view logs...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Database Tab -->
+    <div class="tab-content" id="database-tab">
+        <div class="card fade-in">
+            <div class="card-header">
+                <h2 class="card-title">Database Management</h2>
+            </div>
+
+            <div class="card-body">
+                <div class="alert alert-warning mb-lg">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 15A7 7 0 118 1a7 7 0 010 14zm0 1A8 8 0 108 0a8 8 0 000 16z"/>
+                        <path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/>
+                    </svg>
+                    <div>
+                        <strong>Warning:</strong> These operations are destructive and cannot be undone. Use with caution.
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-lg);">
+                    <!-- Purge ROMs -->
+                    <div class="card" style="background: var(--bg-secondary);">
+                        <div class="card-header">
+                            <h3>Purge Old ROMs</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-secondary mb-md">Delete ROM files older than 30 days to free up storage space.</p>
+                            <div class="mb-md">
+                                <strong>ROMs to be deleted:</strong> <span id="old-roms-count">--</span><br>
+                                <strong>Space to be freed:</strong> <span id="old-roms-size">-- MB</span>
+                            </div>
+                            <button class="btn btn-warning btn-block" onclick="purgeRoms()">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"/>
+                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                </svg>
+                                Purge ROMs
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Purge Orphaned YAMLs -->
+                    <div class="card" style="background: var(--bg-secondary);">
+                        <div class="card-header">
+                            <h3>Purge Orphaned YAMLs</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-secondary mb-md">Delete YAML files not associated with any user account.</p>
+                            <div class="mb-md">
+                                <strong>YAMLs to be deleted:</strong> <span id="orphan-yamls-count">--</span><br>
+                                <strong>Space to be freed:</strong> <span id="orphan-yamls-size">-- MB</span>
+                            </div>
+                            <button class="btn btn-warning btn-block" onclick="purgeYamls()">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"/>
+                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                </svg>
+                                Purge YAMLs
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Clean Finished Lobbies -->
+                    <div class="card" style="background: var(--bg-secondary);">
+                        <div class="card-header">
+                            <h3>Clean Old Lobbies</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-secondary mb-md">Archive lobbies finished more than 90 days ago.</p>
+                            <div class="mb-md">
+                                <strong>Lobbies to archive:</strong> <span id="old-lobbies-count">--</span>
+                            </div>
+                            <button class="btn btn-warning btn-block" onclick="cleanLobbies()">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M3 3h10v10H3V3zm2 2v6h6V5H5z"/>
+                                </svg>
+                                Archive Lobbies
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Worlds Tab -->
+    <div class="tab-content" id="custom-worlds-tab">
+        <div class="card fade-in">
+            <div class="card-header">
+                <h2 class="card-title">Custom World Approval Queue</h2>
+            </div>
+
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>World Name</th>
+                            <th>Submitted By</th>
+                            <th>File Size</th>
+                            <th>Submitted</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="custom-worlds-list">
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">Loading custom worlds...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Logs Tab -->
+    <div class="tab-content" id="logs-tab">
+        <div class="card fade-in">
+            <div class="card-header">
+                <h2 class="card-title">System Logs</h2>
+                <div class="flex gap-sm">
+                    <select id="log-level" class="form-select" onchange="loadSystemLogs()">
+                        <option value="all">All Levels</option>
+                        <option value="error">Errors Only</option>
+                        <option value="warning">Warnings</option>
+                        <option value="info">Info</option>
+                    </select>
+                    <button class="btn btn-sm" onclick="loadSystemLogs()">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 3a5 5 0 104.546 2.914.5.5 0 01.908-.417A6 6 0 118 2v1z"/>
+                        </svg>
+                        Refresh
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="console-output" id="system-logs" style="max-height: 600px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 12px;">
+                    <div class="text-muted">Loading logs...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Change Role Modal -->
+<div class="modal-overlay" id="role-modal" style="display: none;">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 class="modal-title">Change User Role</h2>
+        </div>
+        <div class="modal-body">
+            <p>User: <strong id="role-username">...</strong></p>
+            <form id="role-form">
+                <div class="form-group">
+                    <label class="form-label">New Role</label>
+                    <select id="new-role" class="form-select" required>
+                        <option value="user">User</option>
+                        <option value="moderator">Moderator</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" onclick="submitRoleChange()">Change Role</button>
+            <button class="btn btn-secondary" onclick="closeRoleModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Custom World Review Modal -->
+<div class="modal-overlay" id="world-review-modal" style="display: none;">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 class="modal-title">Review Custom World</h2>
+        </div>
+        <div class="modal-body">
+            <div class="mb-md">
+                <strong>World Name:</strong> <span id="world-name">...</span><br>
+                <strong>Submitted By:</strong> <span id="world-submitter">...</span><br>
+                <strong>File Size:</strong> <span id="world-size">...</span>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Review Notes (optional)</label>
+                <textarea id="world-notes" class="form-textarea" rows="4" placeholder="Add notes about this world..."></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-success" onclick="approveWorld()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M13.854 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L6.5 10.293l6.646-6.647a.5.5 0 01.708 0z"/>
+                </svg>
+                Approve
+            </button>
+            <button class="btn btn-danger" onclick="rejectWorld()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M4.646 4.646a.5.5 0 01.708 0L8 7.293l2.646-2.647a.5.5 0 01.708.708L8.707 8l2.647 2.646a.5.5 0 01-.708.708L8 8.707l-2.646 2.647a.5.5 0 01-.708-.708L7.293 8 4.646 5.354a.5.5 0 010-.708z"/>
+                </svg>
+                Reject
+            </button>
+            <button class="btn btn-secondary" onclick="closeWorldReviewModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let selectedUserId = null;
+let selectedWorldId = null;
+let maintenanceMode = false;
+
+// Tab Switching
+function switchAdminTab(tabName) {
+    document.querySelectorAll('.dashboard-tab').forEach(tab => tab.classList.remove('active'));
+    event.target.closest('.dashboard-tab').classList.add('active');
+
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+    document.getElementById(tabName + '-tab').classList.add('active');
+
+    // Load data for the selected tab
+    if (tabName === 'users') loadUsers();
+    if (tabName === 'docker') loadDockerStatus();
+    if (tabName === 'database') loadDatabaseStats();
+    if (tabName === 'custom-worlds') loadCustomWorlds();
+    if (tabName === 'logs') loadSystemLogs();
+}
+
+// Refresh All Data
+async function refreshAllData() {
+    await loadSystemStats();
+    await loadUsers();
+}
+
+// Load System Statistics
+async function loadSystemStats() {
+    try {
+        const response = await fetch('/api/admin/stats', { credentials: 'include' });
+        const stats = await response.json();
+
+        document.getElementById('total-users').textContent = stats.total_users || 0;
+        document.getElementById('total-lobbies').textContent = stats.total_lobbies || 0;
+        document.getElementById('total-games').textContent = stats.total_games || 0;
+        document.getElementById('storage-usage').textContent = `${(stats.storage_gb || 0).toFixed(2)} GB`;
+
+        maintenanceMode = stats.maintenance_mode || false;
+        updateMaintenanceButton();
+    } catch (error) {
+        console.error('Error loading stats:', error);
+    }
+}
+
+// Toggle Maintenance Mode
+async function toggleMaintenance() {
+    const confirmed = confirm(
+        maintenanceMode
+            ? 'Disable maintenance mode? Users will be able to access the site.'
+            : 'Enable maintenance mode? This will prevent users from accessing the site.'
+    );
+
+    if (!confirmed) return;
+
+    try {
+        const response = await fetch('/api/admin/maintenance', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ enabled: !maintenanceMode })
+        });
+
+        if (response.ok) {
+            maintenanceMode = !maintenanceMode;
+            updateMaintenanceButton();
+            alert(`Maintenance mode ${maintenanceMode ? 'enabled' : 'disabled'}`);
+        }
+    } catch (error) {
+        console.error('Error toggling maintenance:', error);
+        alert('Failed to toggle maintenance mode');
+    }
+}
+
+function updateMaintenanceButton() {
+    const btn = document.getElementById('maintenance-toggle');
+    const text = document.getElementById('maintenance-text');
+
+    if (maintenanceMode) {
+        btn.classList.remove('btn-warning');
+        btn.classList.add('btn-success');
+        text.textContent = 'Disable Maintenance';
+    } else {
+        btn.classList.remove('btn-success');
+        btn.classList.add('btn-warning');
+        text.textContent = 'Enable Maintenance';
+    }
+}
+
+// Load Users
+async function loadUsers() {
+    try {
+        const roleFilter = document.getElementById('role-filter').value;
+        const searchQuery = document.getElementById('user-search').value;
+
+        const params = new URLSearchParams();
+        if (roleFilter !== 'all') params.append('role', roleFilter);
+        if (searchQuery) params.append('search', searchQuery);
+
+        const response = await fetch(`/api/admin/users?${params}`, { credentials: 'include' });
+        const users = await response.json();
+
+        const container = document.getElementById('users-list');
+
+        if (users.length === 0) {
+            container.innerHTML = `
+                <tr>
+                    <td colspan="7" class="text-center text-muted">No users found</td>
+                </tr>
+            `;
+            return;
+        }
+
+        container.innerHTML = users.map(user => `
+            <tr>
+                <td>
+                    <div class="flex items-center gap-sm">
+                        <img src="${user.avatar_url || '/static/default-avatar.png'}" alt="" style="width: 32px; height: 32px; border-radius: 50%;">
+                        <div>
+                            <strong>${escapeHtml(user.username)}</strong><br>
+                            <span class="text-muted text-sm">${user.email || 'No email'}</span>
+                        </div>
+                    </div>
+                </td>
+                <td><span class="badge badge-${user.role === 'admin' ? 'error' : user.role === 'moderator' ? 'warning' : 'info'}">${user.role}</span></td>
+                <td>${user.warning_count || 0}</td>
+                <td>${user.ban_count || 0}</td>
+                <td>
+                    ${user.is_banned ? '<span class="badge badge-error">Banned</span>' :
+                      user.is_suspended ? '<span class="badge badge-warning">Suspended</span>' :
+                      '<span class="badge badge-success">Active</span>'}
+                </td>
+                <td>${new Date(user.created_at).toLocaleDateString()}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline" onclick="showRoleModal(${user.id}, '${escapeHtml(user.username)}', '${user.role}')">Change Role</button>
+                </td>
+            </tr>
+        `).join('');
+    } catch (error) {
+        console.error('Error loading users:', error);
+    }
+}
+
+// Role Management
+function showRoleModal(userId, username, currentRole) {
+    selectedUserId = userId;
+    document.getElementById('role-username').textContent = username;
+    document.getElementById('new-role').value = currentRole;
+    document.getElementById('role-modal').style.display = 'flex';
+}
+
+function closeRoleModal() {
+    document.getElementById('role-modal').style.display = 'none';
+}
+
+async function submitRoleChange() {
+    const newRole = document.getElementById('new-role').value;
+
+    try {
+        const response = await fetch(`/api/admin/users/${selectedUserId}/role`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ role: newRole })
+        });
+
+        if (response.ok) {
+            closeRoleModal();
+            loadUsers();
+            alert('Role updated successfully');
+        } else {
+            alert('Failed to update role');
+        }
+    } catch (error) {
+        console.error('Error updating role:', error);
+        alert('Failed to update role');
+    }
+}
+
+// Docker Management
+async function loadDockerStatus() {
+    try {
+        const response = await fetch('/api/admin/docker/status', { credentials: 'include' });
+        const containers = await response.json();
+
+        const container = document.getElementById('docker-containers');
+
+        container.innerHTML = containers.map(c => `
+            <div class="card" style="background: var(--bg-secondary); padding: var(--space-md);">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 style="margin-bottom: var(--space-xs);">${c.name}</h3>
+                        <div class="flex gap-sm items-center">
+                            <span class="badge badge-${c.status === 'running' ? 'success' : 'error'}">${c.status}</span>
+                            <span class="text-muted text-sm">Uptime: ${c.uptime || 'N/A'}</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-sm">
+                        ${c.status === 'running' ? `
+                            <button class="btn btn-sm btn-warning" onclick="dockerAction('${c.name}', 'restart')">Restart</button>
+                            <button class="btn btn-sm btn-danger" onclick="dockerAction('${c.name}', 'stop')">Stop</button>
+                        ` : `
+                            <button class="btn btn-sm btn-success" onclick="dockerAction('${c.name}', 'start')">Start</button>
+                        `}
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    } catch (error) {
+        console.error('Error loading Docker status:', error);
+    }
+}
+
+async function dockerAction(containerName, action) {
+    const confirmed = confirm(`Are you sure you want to ${action} ${containerName}?`);
+    if (!confirmed) return;
+
+    try {
+        const response = await fetch(`/api/admin/docker/${action}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ container: containerName })
+        });
+
+        if (response.ok) {
+            alert(`Container ${action}ed successfully`);
+            loadDockerStatus();
+        } else {
+            alert(`Failed to ${action} container`);
+        }
+    } catch (error) {
+        console.error('Error performing Docker action:', error);
+        alert(`Failed to ${action} container`);
+    }
+}
+
+async function loadContainerLogs() {
+    const containerName = document.getElementById('log-container').value;
+    if (!containerName) return;
+
+    try {
+        const response = await fetch(`/api/admin/docker/logs?container=${containerName}`, { credentials: 'include' });
+        const data = await response.json();
+
+        const logsContainer = document.getElementById('container-logs');
+        logsContainer.innerHTML = data.logs.split('\n').map(line =>
+            `<div style="margin-bottom: 4px;">${escapeHtml(line)}</div>`
+        ).join('');
+
+        // Auto-scroll to bottom
+        logsContainer.scrollTop = logsContainer.scrollHeight;
+    } catch (error) {
+        console.error('Error loading logs:', error);
+    }
+}
+
+// Database Management
+async function loadDatabaseStats() {
+    try {
+        const response = await fetch('/api/admin/database/stats', { credentials: 'include' });
+        const stats = await response.json();
+
+        document.getElementById('old-roms-count').textContent = stats.old_roms_count || 0;
+        document.getElementById('old-roms-size').textContent = `${(stats.old_roms_size_mb || 0).toFixed(2)} MB`;
+        document.getElementById('orphan-yamls-count').textContent = stats.orphan_yamls_count || 0;
+        document.getElementById('orphan-yamls-size').textContent = `${(stats.orphan_yamls_size_mb || 0).toFixed(2)} MB`;
+        document.getElementById('old-lobbies-count').textContent = stats.old_lobbies_count || 0;
+    } catch (error) {
+        console.error('Error loading database stats:', error);
+    }
+}
+
+async function purgeRoms() {
+    const confirmed = confirm('Are you sure you want to purge old ROMs? This action cannot be undone.');
+    if (!confirmed) return;
+
+    try {
+        const response = await fetch('/api/admin/database/purge-roms', {
+            method: 'POST',
+            credentials: 'include'
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            alert(`Purged ${data.deleted_count} ROMs, freed ${data.freed_mb.toFixed(2)} MB`);
+            loadDatabaseStats();
+        }
+    } catch (error) {
+        console.error('Error purging ROMs:', error);
+        alert('Failed to purge ROMs');
+    }
+}
+
+async function purgeYamls() {
+    const confirmed = confirm('Are you sure you want to purge orphaned YAMLs? This action cannot be undone.');
+    if (!confirmed) return;
+
+    try {
+        const response = await fetch('/api/admin/database/purge-yamls', {
+            method: 'POST',
+            credentials: 'include'
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            alert(`Purged ${data.deleted_count} YAMLs, freed ${data.freed_mb.toFixed(2)} MB`);
+            loadDatabaseStats();
+        }
+    } catch (error) {
+        console.error('Error purging YAMLs:', error);
+        alert('Failed to purge YAMLs');
+    }
+}
+
+async function cleanLobbies() {
+    const confirmed = confirm('Are you sure you want to archive old lobbies?');
+    if (!confirmed) return;
+
+    try {
+        const response = await fetch('/api/admin/database/clean-lobbies', {
+            method: 'POST',
+            credentials: 'include'
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            alert(`Archived ${data.archived_count} lobbies`);
+            loadDatabaseStats();
+        }
+    } catch (error) {
+        console.error('Error cleaning lobbies:', error);
+        alert('Failed to clean lobbies');
+    }
+}
+
+// Custom Worlds Management
+async function loadCustomWorlds() {
+    try {
+        const response = await fetch('/api/admin/custom-worlds', { credentials: 'include' });
+        const worlds = await response.json();
+
+        const container = document.getElementById('custom-worlds-list');
+
+        if (worlds.length === 0) {
+            container.innerHTML = `
+                <tr>
+                    <td colspan="6" class="text-center text-muted">No pending custom worlds</td>
+                </tr>
+            `;
+            return;
+        }
+
+        container.innerHTML = worlds.map(world => `
+            <tr>
+                <td><strong>${escapeHtml(world.name)}</strong></td>
+                <td>${escapeHtml(world.submitted_by)}</td>
+                <td>${(world.file_size_mb || 0).toFixed(2)} MB</td>
+                <td>${new Date(world.submitted_at).toLocaleDateString()}</td>
+                <td><span class="badge badge-warning">${world.status}</span></td>
+                <td>
+                    <button class="btn btn-sm btn-outline" onclick="showWorldReviewModal(${world.id}, '${escapeHtml(world.name)}', '${escapeHtml(world.submitted_by)}', ${world.file_size_mb})">Review</button>
+                </td>
+            </tr>
+        `).join('');
+    } catch (error) {
+        console.error('Error loading custom worlds:', error);
+    }
+}
+
+function showWorldReviewModal(worldId, name, submitter, sizeMb) {
+    selectedWorldId = worldId;
+    document.getElementById('world-name').textContent = name;
+    document.getElementById('world-submitter').textContent = submitter;
+    document.getElementById('world-size').textContent = `${sizeMb.toFixed(2)} MB`;
+    document.getElementById('world-review-modal').style.display = 'flex';
+}
+
+function closeWorldReviewModal() {
+    document.getElementById('world-review-modal').style.display = 'none';
+}
+
+async function approveWorld() {
+    const notes = document.getElementById('world-notes').value;
+
+    try {
+        const response = await fetch(`/api/admin/custom-worlds/${selectedWorldId}/approve`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ notes })
+        });
+
+        if (response.ok) {
+            closeWorldReviewModal();
+            loadCustomWorlds();
+            alert('Custom world approved');
+        }
+    } catch (error) {
+        console.error('Error approving world:', error);
+        alert('Failed to approve world');
+    }
+}
+
+async function rejectWorld() {
+    const notes = document.getElementById('world-notes').value;
+    if (!notes.trim()) {
+        alert('Please provide a reason for rejection');
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/admin/custom-worlds/${selectedWorldId}/reject`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ notes })
+        });
+
+        if (response.ok) {
+            closeWorldReviewModal();
+            loadCustomWorlds();
+            alert('Custom world rejected');
+        }
+    } catch (error) {
+        console.error('Error rejecting world:', error);
+        alert('Failed to reject world');
+    }
+}
+
+// System Logs
+async function loadSystemLogs() {
+    try {
+        const level = document.getElementById('log-level').value;
+        const response = await fetch(`/api/admin/logs?level=${level}`, { credentials: 'include' });
+        const data = await response.json();
+
+        const container = document.getElementById('system-logs');
+
+        container.innerHTML = data.logs.map(log => {
+            const levelColor = {
+                'ERROR': 'var(--status-error)',
+                'WARNING': 'var(--status-warning)',
+                'INFO': 'var(--accent-primary)',
+                'DEBUG': 'var(--text-secondary)'
+            }[log.level] || 'var(--text-primary)';
+
+            return `
+                <div style="margin-bottom: 8px;">
+                    <span style="color: var(--text-muted);">${log.timestamp}</span>
+                    <span style="color: ${levelColor}; font-weight: bold; margin: 0 8px;">[${log.level}]</span>
+                    <span>${escapeHtml(log.message)}</span>
+                </div>
+            `;
+        }).join('');
+
+        // Auto-scroll to bottom
+        container.scrollTop = container.scrollHeight;
+    } catch (error) {
+        console.error('Error loading system logs:', error);
+    }
+}
+
+// Utility function
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// User search
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('user-search');
+    let searchTimeout;
+
+    searchInput.addEventListener('input', () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            loadUsers();
+        }, 300);
+    });
+});
+
+// Close modals when clicking outside
+document.querySelectorAll('.modal-overlay').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+});
+
+// Initialize
+loadSystemStats();
+loadUsers();
+</script>
+{% endblock %}

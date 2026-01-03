@@ -1,0 +1,678 @@
+/*
+ * SekaiLink Page-Specific Styles
+ * Custom styles for individual pages
+ */
+
+/* ============================================================================
+   INDEX PAGE (Landing)
+   ============================================================================ */
+
+.hero {
+    text-align: center;
+    padding: var(--space-2xl) 0;
+    background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.hero-title {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--space-md);
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--text-muted);
+    margin-bottom: var(--space-xl);
+}
+
+.hero-cta {
+    display: inline-flex;
+    gap: var(--space-md);
+}
+
+/* Game Grid */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+}
+
+.game-card {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-base);
+    cursor: pointer;
+}
+
+.game-card:hover {
+    border-color: var(--accent-primary);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px var(--shadow-color);
+}
+
+.game-boxart {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-sm);
+}
+
+.game-name {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.game-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+/* Lobby List */
+.lobby-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.lobby-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    transition: all var(--transition-fast);
+}
+
+.lobby-item:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.lobby-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-sm);
+}
+
+.lobby-name {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.lobby-info {
+    display: flex;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+.lobby-info-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+/* ============================================================================
+   DASHBOARD PAGE
+   ============================================================================ */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+}
+
+.dashboard-section {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+}
+
+.dashboard-section-title {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-md);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.yaml-list,
+.rom-list,
+.session-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.yaml-item,
+.rom-item,
+.session-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-sm);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    transition: background var(--transition-fast);
+}
+
+.yaml-item:hover,
+.rom-item:hover,
+.session-item:hover {
+    background: var(--bg-hover);
+}
+
+.item-actions {
+    display: flex;
+    gap: var(--space-xs);
+}
+
+/* File Upload Area */
+.upload-area {
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.upload-area:hover,
+.upload-area.drag-over {
+    border-color: var(--accent-primary);
+    background: rgba(0, 255, 136, 0.05);
+}
+
+.upload-icon {
+    font-size: var(--font-size-4xl);
+    color: var(--text-muted);
+    margin-bottom: var(--space-md);
+}
+
+/* ============================================================================
+   LOBBY PAGE
+   ============================================================================ */
+
+.lobby-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+}
+
+.lobby-main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.lobby-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.lobby-title-section {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+}
+
+.lobby-slug {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+}
+
+/* Timer Display */
+.timer-display {
+    text-align: center;
+    padding: var(--space-xl);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+}
+
+.timer-value {
+    font-size: var(--font-size-4xl);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.timer-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+.time-limit-warning {
+    margin-top: var(--space-md);
+    padding: var(--space-sm);
+    background: rgba(255, 187, 0, 0.1);
+    border: 1px solid var(--status-warning);
+    border-radius: var(--radius-md);
+    color: var(--status-warning);
+    font-size: var(--font-size-sm);
+}
+
+/* Player List */
+.player-list {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+}
+
+.player-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-sm);
+}
+
+.player-item:last-child {
+    margin-bottom: 0;
+}
+
+.player-status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: var(--radius-full);
+    flex-shrink: 0;
+}
+
+.player-status-indicator.waiting {
+    background: var(--text-muted);
+}
+
+.player-status-indicator.ready {
+    background: var(--status-warning);
+}
+
+.player-status-indicator.active {
+    background: var(--status-info);
+}
+
+.player-status-indicator.finished {
+    background: var(--status-success);
+}
+
+.player-status-indicator.dnf,
+.player-status-indicator.forfeit {
+    background: var(--status-error);
+}
+
+.player-info {
+    flex: 1;
+}
+
+.player-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.player-game {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+/* Chat Box */
+.chat-container {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.chat-message {
+    display: flex;
+    gap: var(--space-sm);
+    padding: var(--space-sm);
+    border-radius: var(--radius-md);
+}
+
+.chat-message.system {
+    background: rgba(0, 204, 255, 0.1);
+    font-style: italic;
+    color: var(--status-info);
+}
+
+.chat-message.bot {
+    background: rgba(0, 255, 136, 0.1);
+    color: var(--accent-primary);
+}
+
+.chat-message.pinned {
+    background: rgba(255, 187, 0, 0.1);
+    border-left: 3px solid var(--status-warning);
+}
+
+.chat-username {
+    font-weight: 600;
+    color: var(--accent-primary);
+}
+
+.chat-timestamp {
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+}
+
+.chat-input-area {
+    padding: var(--space-lg);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: var(--space-sm);
+}
+
+/* Host Console */
+.host-console {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+}
+
+.console-output {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    height: 200px;
+    overflow-y: auto;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    color: var(--accent-primary);
+    margin-bottom: var(--space-md);
+}
+
+.console-input {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+/* ============================================================================
+   PROFILE PAGE
+   ============================================================================ */
+
+.profile-header {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    display: flex;
+    gap: var(--space-xl);
+    align-items: center;
+}
+
+.profile-avatar-section {
+    text-align: center;
+}
+
+.profile-info-section {
+    flex: 1;
+}
+
+.profile-name {
+    font-size: var(--font-size-3xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.profile-pronouns {
+    font-size: var(--font-size-base);
+    color: var(--text-muted);
+    margin-bottom: var(--space-md);
+}
+
+.profile-badges {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+}
+
+/* Rating Display */
+.rating-section {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+}
+
+.rating-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+}
+
+.rating-item {
+    text-align: center;
+}
+
+.rating-value {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.rating-stars {
+    color: var(--status-warning);
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-xs);
+}
+
+.rating-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+/* Review List */
+.review-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.review-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+}
+
+.review-author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.review-text {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--space-md);
+}
+
+.review-actions {
+    display: flex;
+    gap: var(--space-sm);
+    font-size: var(--font-size-sm);
+}
+
+/* ============================================================================
+   MODERATION/ADMIN PAGES
+   ============================================================================ */
+
+.admin-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-lg);
+}
+
+.stat-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    text-align: center;
+}
+
+.stat-value {
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.admin-section {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-lg);
+}
+
+.log-viewer {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    height: 400px;
+    overflow-y: auto;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+}
+
+.log-entry {
+    padding: var(--space-xs) 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.log-entry:last-child {
+    border-bottom: none;
+}
+
+.log-timestamp {
+    color: var(--text-muted);
+}
+
+.log-level-info {
+    color: var(--status-info);
+}
+
+.log-level-warning {
+    color: var(--status-warning);
+}
+
+.log-level-error {
+    color: var(--status-error);
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 1024px) {
+    .lobby-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: var(--font-size-3xl);
+    }
+
+    .game-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .rating-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .admin-dashboard {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .hero-cta {
+        flex-direction: column;
+    }
+
+    .lobby-info {
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+
+    .chat-container {
+        height: 300px;
+    }
+}

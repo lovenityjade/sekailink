@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+
+{% block title %}About - SekaiLink{% endblock %}
+
+{% block content %}
+<div class="container-sm">
+    <h1 class="mb-2xl">About SekaiLink</h1>
+
+    <!-- Mission -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">Our Mission</h2>
+        </div>
+        <div class="card-body">
+            <p class="mb-md">
+                SekaiLink was created to make playing <a href="https://archipelago.gg" target="_blank" class="text-accent">Archipelago</a> multiworld sessions easier and more accessible.
+                We saw players struggling with manual YAML collection, ROM sharing, and server setup, so we built a platform to handle all of that automatically.
+            </p>
+            <p>
+                Our goal is to let players focus on what matters: <strong>playing great games together</strong>.
+            </p>
+        </div>
+    </section>
+
+    <!-- What We Do -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">What We Provide</h2>
+        </div>
+        <div class="card-body">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-lg);">
+                <div>
+                    <h3 class="mb-sm">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="var(--accent-primary)" style="vertical-align: middle;">
+                            <path d="M2 2h12v12H2V2zm2 2v8h8V4H4z"/>
+                        </svg>
+                        YAML Management
+                    </h3>
+                    <p class="text-secondary">Create, upload, and manage your Archipelago settings in one place. No more lost YAML files.</p>
+                </div>
+
+                <div>
+                    <h3 class="mb-sm">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="var(--accent-primary)" style="vertical-align: middle;">
+                            <path d="M8 8a3 3 0 100-6 3 3 0 000 6z"/>
+                        </svg>
+                        ROM Verification
+                    </h3>
+                    <p class="text-secondary">Automatic SHA-1 verification ensures ROMs are compatible before generation.</p>
+                </div>
+
+                <div>
+                    <h3 class="mb-sm">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="var(--accent-primary)" style="vertical-align: middle;">
+                            <path d="M3 3h10v10H3V3z"/>
+                        </svg>
+                        Seed Generation
+                    </h3>
+                    <p class="text-secondary">One-click generation with real-time progress updates. No command-line required.</p>
+                </div>
+
+                <div>
+                    <h3 class="mb-sm">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="var(--accent-primary)" style="vertical-align: middle;">
+                            <path d="M8 0a8 8 0 100 16A8 8 0 008 0z"/>
+                        </svg>
+                        Server Hosting
+                    </h3>
+                    <p class="text-secondary">Dedicated servers for your multiworld sessions. No port forwarding needed.</p>
+                </div>
+
+                <div>
+                    <h3 class="mb-sm">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="var(--accent-primary)" style="vertical-align: middle;">
+                            <path d="M5 6a2 2 0 114 0 2 2 0 01-4 0z"/>
+                        </svg>
+                        Community Features
+                    </h3>
+                    <p class="text-secondary">Friends lists, player ratings, reviews, and more to build a great community.</p>
+                </div>
+
+                <div>
+                    <h3 class="mb-sm">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="var(--accent-primary)" style="vertical-align: middle;">
+                            <path d="M8 15A7 7 0 118 1a7 7 0 010 14z"/>
+                        </svg>
+                        Custom Worlds
+                    </h3>
+                    <p class="text-secondary">Support for community-developed custom Archipelago worlds.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">Technology Stack</h2>
+        </div>
+        <div class="card-body">
+            <p class="mb-lg">
+                SekaiLink is built with modern, open-source technologies:
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-md);">
+                <div class="badge badge-info" style="padding: var(--space-md); display: block; text-align: center;">
+                    <strong>Flask 3.0</strong><br>
+                    <span class="text-sm text-muted">Python web framework</span>
+                </div>
+                <div class="badge badge-info" style="padding: var(--space-md); display: block; text-align: center;">
+                    <strong>PostgreSQL 15</strong><br>
+                    <span class="text-sm text-muted">Database</span>
+                </div>
+                <div class="badge badge-info" style="padding: var(--space-md); display: block; text-align: center;">
+                    <strong>Redis 7</strong><br>
+                    <span class="text-sm text-muted">Caching & real-time</span>
+                </div>
+                <div class="badge badge-info" style="padding: var(--space-md); display: block; text-align: center;">
+                    <strong>Celery 5.3</strong><br>
+                    <span class="text-sm text-muted">Task queue</span>
+                </div>
+                <div class="badge badge-info" style="padding: var(--space-md); display: block; text-align: center;">
+                    <strong>Socket.IO</strong><br>
+                    <span class="text-sm text-muted">WebSockets</span>
+                </div>
+                <div class="badge badge-info" style="padding: var(--space-md); display: block; text-align: center;">
+                    <strong>Docker</strong><br>
+                    <span class="text-sm text-muted">Containerization</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">The Team</h2>
+        </div>
+        <div class="card-body">
+            <p class="mb-lg">
+                SekaiLink is maintained by a small team of Archipelago enthusiasts who wanted to make multiworld sessions better for everyone.
+            </p>
+            <div class="text-center">
+                <p class="mb-md">
+                    <strong>Creator & Lead Developer:</strong> Jade (lovenityjade)
+                </p>
+                <p class="text-secondary">
+                    Special thanks to the Archipelago development team for their amazing open-source work,
+                    and to racetime.gg for architectural inspiration.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy & Data -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">Privacy & Data Policy</h2>
+        </div>
+        <div class="card-body">
+            <h3 class="mb-md">What We Collect</h3>
+            <ul class="mb-lg" style="margin-left: var(--space-lg); line-height: 1.8;">
+                <li><strong>Discord Information:</strong> User ID, username, avatar (via OAuth)</li>
+                <li><strong>Email:</strong> Optional, only if you provide it for notifications</li>
+                <li><strong>YAMLs:</strong> Your uploaded/created Archipelago settings</li>
+                <li><strong>ROMs:</strong> Temporarily stored, automatically deleted monthly</li>
+                <li><strong>Lobby History:</strong> Which lobbies you've participated in</li>
+                <li><strong>Chat Messages:</strong> Stored for moderation purposes</li>
+                <li><strong>Ratings & Reviews:</strong> Community feedback you give/receive</li>
+            </ul>
+
+            <h3 class="mb-md">What We DON'T Do</h3>
+            <ul class="mb-lg" style="margin-left: var(--space-lg); line-height: 1.8;">
+                <li>❌ We never sell your data to third parties</li>
+                <li>❌ We never share ROMs with other users</li>
+                <li>❌ We never send marketing emails (only important notifications)</li>
+                <li>❌ We don't track you outside of SekaiLink</li>
+                <li>❌ We don't use invasive analytics or tracking pixels</li>
+            </ul>
+
+            <h3 class="mb-md">Data Retention</h3>
+            <ul style="margin-left: var(--space-lg); line-height: 1.8;">
+                <li><strong>ROMs:</strong> Deleted on the 1st of every month</li>
+                <li><strong>Finished Lobbies:</strong> Archived after 90 days</li>
+                <li><strong>Account Data:</strong> Deleted immediately when you delete your account</li>
+                <li><strong>Chat Logs:</strong> Retained for 1 year for moderation</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Open Source -->
+    <section class="card fade-in mb-2xl">
+        <div class="card-header">
+            <h2 class="card-title">Open Source</h2>
+        </div>
+        <div class="card-body">
+            <p class="mb-md">
+                SekaiLink is built on open-source software and gives back to the community.
+                Our code is available on <a href="https://github.com/lovenityjade/sekailink" target="_blank" class="text-accent">GitHub</a>
+                for transparency and contributions.
+            </p>
+            <p class="mb-lg">
+                We use and contribute to:
+            </p>
+            <ul style="margin-left: var(--space-lg); line-height: 1.8;">
+                <li><a href="https://github.com/ArchipelagoMW/Archipelago" target="_blank" class="text-accent">Archipelago</a> - The core multiworld randomizer</li>
+                <li><a href="https://flask.palletsprojects.com/" target="_blank" class="text-accent">Flask</a> - Python web framework</li>
+                <li><a href="https://socket.io/" target="_blank" class="text-accent">Socket.IO</a> - Real-time communication</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="card fade-in">
+        <div class="card-header">
+            <h2 class="card-title">Get in Touch</h2>
+        </div>
+        <div class="card-body">
+            <p class="mb-lg">
+                Have questions, suggestions, or want to contribute? We'd love to hear from you!
+            </p>
+            <div class="flex gap-sm justify-center flex-wrap">
+                <a href="https://discord.gg/XvvcBxrRsk" target="_blank" class="btn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"/>
+                    </svg>
+                    Discord Server
+                </a>
+                <a href="https://github.com/lovenityjade/sekailink" target="_blank" class="btn btn-outline">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                    GitHub
+                </a>
+                <a href="/contact.html" class="btn btn-outline">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+                    </svg>
+                    Email Us
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

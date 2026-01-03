@@ -7,7 +7,7 @@ import yaml
 import hashlib
 from datetime import datetime
 from urllib.parse import quote
-from flask import Flask, session, request, jsonify, redirect, send_file
+from flask import Flask, session, request, jsonify, redirect, send_file, render_template
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit, join_room, leave_room, rooms
 import requests
@@ -115,7 +115,20 @@ logger = logging.getLogger("SekaiLink")
 logger.info("✅ Environment validation passed")
 logger.info(f"🚀 Starting SekaiLink API (Environment: {os.getenv('FLASK_ENV', 'production')})")
 
-app = Flask(__name__)
+# Configure Flask to serve frontend templates and static files
+# In Docker: /frontend is mounted from host ./frontend directory
+# In development: use relative path
+if os.path.exists('/frontend'):
+    # Docker environment
+    frontend_dir = '/frontend'
+else:
+    # Local development
+    frontend_dir = os.path.join(os.path.dirname(__file__), '..', 'frontend')
+
+app = Flask(__name__,
+            template_folder=os.path.join(frontend_dir, 'src'),
+            static_folder=os.path.join(frontend_dir, 'static'),
+            static_url_path='/static')
 app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -1082,6 +1095,106 @@ def handle_generation_complete(data):
         'error': error,
         'timestamp': datetime.utcnow().isoformat()
     }, room=room)
+
+# ============================================================================
+# HTML TEMPLATE ROUTES
+# ============================================================================
+
+@app.route('/')
+def index():
+    """Landing page"""
+    return render_template('index.html', user=session.get('user'))
+
+@app.route('/dashboard.html')
+def dashboard():
+    """User dashboard - requires authentication"""
+    if 'user' not in session:
+        return redirect('/api/auth/login')
+    return render_template('dashboard.html', user=session.get('user'))
+
+@app.route('/lobby.html')
+def lobby_page():
+    """Lobby detail page"""
+    return render_template('lobby.html', user=session.get('user'))
+
+@app.route('/game/<slug>')
+@app.route('/game.html')
+def game_page(slug=None):
+    """Individual game page"""
+    return render_template('game.html', user=session.get('user'))
+
+@app.route('/create_room.html')
+def create_room_page():
+    """Create lobby page - requires authentication"""
+    if 'user' not in session:
+        return redirect('/api/auth/login')
+    return render_template('create_room.html', user=session.get('user'))
+
+@app.route('/profile/<int:user_id>')
+@app.route('/profile.html')
+def profile_page(user_id=None):
+    """User profile page"""
+    return render_template('profile.html', user=session.get('user'))
+
+@app.route('/moderation.html')
+def moderation_page():
+    """Moderation dashboard - requires moderator role"""
+    if 'user' not in session:
+        return redirect('/api/auth/login')
+    user = session.get('user')
+    if user.get('role') not in ['moderator', 'admin']:
+        return "Forbidden", 403
+    return render_template('moderation.html', user=user)
+
+@app.route('/admin.html')
+def admin_page():
+    """Admin dashboard - requires admin role"""
+    if 'user' not in session:
+        return redirect('/api/auth/login')
+    user = session.get('user')
+    if user.get('role') != 'admin':
+        return "Forbidden", 403
+    return render_template('admin.html', user=user)
+
+@app.route('/help.html')
+def help_page():
+    """Help and documentation"""
+    return render_template('help.html', user=session.get('user'))
+
+@app.route('/faq.html')
+def faq_page():
+    """Frequently asked questions"""
+    return render_template('faq.html', user=session.get('user'))
+
+@app.route('/about.html')
+def about_page():
+    """About SekaiLink"""
+    return render_template('about.html', user=session.get('user'))
+
+@app.route('/rules.html')
+def rules_page():
+    """Rules and code of conduct"""
+    return render_template('rules.html', user=session.get('user'))
+
+@app.route('/docs.html')
+def docs_page():
+    """API documentation"""
+    return render_template('docs.html', user=session.get('user'))
+
+@app.route('/donate.html')
+def donate_page():
+    """Donation page"""
+    return render_template('donate.html', user=session.get('user'))
+
+@app.route('/credits.html')
+def credits_page():
+    """Credits and acknowledgments"""
+    return render_template('credits.html', user=session.get('user'))
+
+@app.route('/contact.html')
+def contact_page():
+    """Contact form"""
+    return render_template('contact.html', user=session.get('user'))
 
 if __name__ == '__main__':
     # Use socketio.run() instead of app.run() for WebSocket support

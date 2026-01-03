@@ -1,281 +1,675 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>SekaiLink - Dashboard</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
-    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root { --bg: #0a0a0c; --panel: #141417; --accent: #00ff88; --text: #e0e0e0; --border: #2d2d33; }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: flex; height: 100vh; overflow: hidden; }
-        
-        .sidebar { width: 80px; background: #000; display: flex; flex-direction: column; align-items: center; padding: 20px 0; border-right: 1px solid var(--border); }
-        .nav-item { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; cursor: pointer; color: #555; font-size: 1.2rem; }
-        .nav-item.active { background: var(--accent); color: #000; box-shadow: 0 0 15px rgba(0,255,136,0.4); }
+{% extends "base.html" %}
 
-        .main { flex: 1; display: flex; flex-direction: column; }
-        .header { height: 70px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 30px; justify-content: space-between; background: #000; }
-        .view { display: none; padding: 40px; overflow-y: auto; flex: 1; }
-        .view.active { display: block; }
+{% block title %}Dashboard - SekaiLink{% endblock %}
 
-        .card { background: var(--panel); border-radius: 16px; padding: 30px; border: 1px solid var(--border); margin-bottom: 20px; }
-        .btn { padding: 12px 24px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; background: var(--accent); color: #000; }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+{% block extra_css %}
+<style>
+.dashboard-tabs {
+    display: flex;
+    gap: var(--space-sm);
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: var(--space-xl);
+}
 
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        td, th { padding: 15px; border-bottom: 1px solid #1a1a1d; text-align: left; }
-        .status-badge { background: #222; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; }
-        
-        .drop-zone { border: 2px dashed var(--border); border-radius: 16px; padding: 40px; text-align: center; cursor: pointer; }
-        .progress-container { width: 100%; background: #1a1a1d; border-radius: 8px; margin-top: 15px; height: 10px; display: none; }
-        .progress-bar { height: 100%; background: var(--accent); width: 0%; transition: width 0.1s; }
+.dashboard-tab {
+    padding: var(--space-md) var(--space-lg);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+}
 
-        #studioContainer { display: flex; height: calc(100vh - 150px); gap: 20px; }
-        #yamlList { width: 250px; background: #000; border: 1px solid var(--border); border-radius: 12px; overflow-y: auto; padding: 10px; }
-        .yaml-item { padding: 10px; border-bottom: 1px solid #111; cursor: pointer; }
-        .yaml-item:hover { color: var(--accent); }
-        #editor { flex: 1; border-radius: 12px; overflow: hidden; }
-    </style>
-</head>
-<body>
+.dashboard-tab:hover {
+    color: var(--text-primary);
+}
 
-    <nav class="sidebar">
-        <div class="nav-item active" onclick="switchTab('home')"><i class="fas fa-home"></i></div>
-        <div class="nav-item" onclick="switchTab('studio')"><i class="fas fa-code"></i></div>
-        <div class="nav-item" onclick="switchTab('vault')"><i class="fas fa-microchip"></i></div>
-        <div class="nav-item" onclick="switchTab('settings')"><i class="fas fa-user-cog"></i></div>
-    </nav>
+.dashboard-tab.active {
+    color: var(--accent-primary);
+}
 
-    <div class="main">
-        <div class="header">
-            <h2 id="pageTitle">LOBBIES</h2>
-            <div style="display:flex; align-items:center; gap:15px">
-                <b id="usernameDisplay">...</b>
-                <img id="userAvatar" src="" style="width:40px; border-radius:50%">
+.dashboard-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent-primary);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.yaml-editor-container {
+    display: flex;
+    gap: var(--space-lg);
+    height: 600px;
+}
+
+.yaml-list {
+    width: 250px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    overflow-y: auto;
+}
+
+.yaml-list-item {
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    margin-bottom: var(--space-xs);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.yaml-list-item:hover {
+    background: var(--bg-tertiary);
+    color: var(--accent-primary);
+}
+
+.yaml-list-item.active {
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+}
+
+.yaml-editor-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+#aceEditor {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.friends-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--space-md);
+}
+
+.friend-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.friend-status {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    border: 2px solid var(--bg-secondary);
+}
+
+.friend-status.online {
+    background: var(--status-success);
+}
+
+.friend-status.offline {
+    background: var(--text-muted);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="flex justify-between items-center mb-xl">
+        <h1>Dashboard</h1>
+        <div class="flex gap-sm items-center">
+            <img src="{{ user.avatar }}" alt="{{ user.username }}" class="avatar">
+            <span class="username">{{ user.username }}</span>
+        </div>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="dashboard-tabs">
+        <button class="dashboard-tab active" onclick="switchDashboardTab('lobbies')">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M2 2h12v12H2V2zm2 2v8h8V4H4z"/>
+            </svg>
+            Lobbies
+        </button>
+        <button class="dashboard-tab" onclick="switchDashboardTab('yaml')">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M4 1.5H3a2 2 0 00-2 2V14a2 2 0 002 2h10a2 2 0 002-2V3.5a2 2 0 00-2-2h-1v1h1a1 1 0 011 1V14a1 1 0 01-1 1H3a1 1 0 01-1-1V3.5a1 1 0 011-1h1v-1z"/>
+            </svg>
+            YAML Manager
+        </button>
+        <button class="dashboard-tab" onclick="switchDashboardTab('roms')">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 1.5l6 2v4.5c0 3.5-2.5 6-6 8-3.5-2-6-4.5-6-8V3.5l6-2z"/>
+            </svg>
+            ROM Vault
+        </button>
+        <button class="dashboard-tab" onclick="switchDashboardTab('favorites')">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+            </svg>
+            Favorites
+        </button>
+        <button class="dashboard-tab" onclick="switchDashboardTab('friends')">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 100-6 3 3 0 000 6z"/>
+                <path d="M5.216 14A2.238 2.238 0 015 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 005 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
+                <path d="M4.5 8a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/>
+            </svg>
+            Friends
+        </button>
+        <button class="dashboard-tab" onclick="switchDashboardTab('settings')">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 4.754a3.246 3.246 0 100 6.492 3.246 3.246 0 000-6.492zM5.754 8a2.246 2.246 0 114.492 0 2.246 2.246 0 01-4.492 0z"/>
+            </svg>
+            Settings
+        </button>
+    </div>
+
+    <!-- Tab Content: Lobbies -->
+    <div id="lobbies-tab" class="tab-content active">
+        <div class="flex justify-between items-center mb-lg">
+            <h2>My Multiworld Sessions</h2>
+            <a href="/create_room.html" class="btn">+ Create Lobby</a>
+        </div>
+
+        <div class="lobby-list" id="lobbyList">
+            <!-- Lobbies loaded dynamically -->
+        </div>
+    </div>
+
+    <!-- Tab Content: YAML Manager -->
+    <div id="yaml-tab" class="tab-content">
+        <div class="flex justify-between items-center mb-lg">
+            <h2>YAML Manager</h2>
+            <div class="flex gap-sm">
+                <button class="btn btn-outline" onclick="createNewYaml()">+ New YAML</button>
+                <button class="btn" onclick="saveCurrentYaml()">Save</button>
             </div>
         </div>
 
-        <div id="homeView" class="view active">
-            <div style="display:flex; justify-content:space-between; align-items:center">
-                <h1>My Multiworld Sessions</h1>
-                <button class="btn" onclick="openGenerator()">+ Create Session</button>
+        <div class="yaml-editor-container">
+            <div class="yaml-list" id="yamlList">
+                <!-- YAML files loaded dynamically -->
             </div>
-            <div class="card">
-                <table>
-                    <thead><tr><th>Name</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
-                    <tbody id="lobbyTableBody"></tbody>
-                </table>
-            </div>
-        </div>
 
-        <div id="vaultView" class="view">
-            <h1>ROM Vault</h1>
-            <div class="drop-zone" id="dropZone">
-                <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: var(--accent)"></i>
-                <p>Drop your ROMs here</p>
-                <input type="file" id="romInput" style="display:none" multiple>
-                <button class="btn" onclick="document.getElementById('romInput').click()">Browse</button>
-                <div class="progress-container" id="progressContainer"><div class="progress-bar" id="progressBar"></div></div>
-            </div>
-            <div class="card" style="margin-top:20px">
-                <table>
-                    <thead><tr><th>File</th><th>Game</th><th>SHA-1</th><th>Status</th></tr></thead>
-                    <tbody id="romTableBody"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <div id="studioView" class="view">
-            <h1>YAML Studio</h1>
-            <div id="studioContainer">
-                <div id="yamlList"></div>
-                <div style="flex:1; display:flex; flex-direction:column; gap:10px">
-                    <input type="text" id="yamlName" placeholder="filename.yaml" style="background:#000; color:#fff; border:1px solid var(--border); padding:10px; border-radius:8px">
-                    <div id="editor"></div>
-                    <button class="btn" onclick="saveYaml()">Save</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="settingsView" class="view">
-            <h1>Profile Settings</h1>
-            <div class="card" style="max-width:500px">
-                <label>Bio</label><br>
-                <textarea id="bioInput" style="width:100%; height:100px; background:#000; color:#fff; border:1px solid var(--border); border-radius:8px; margin: 10px 0"></textarea>
-                <button class="btn" onclick="updateProfile()">Update</button>
-            </div>
-        </div>
-
-        <div id="genModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center">
-            <div class="card" style="width:450px">
-                <h3>New Generation</h3>
-                <input type="text" id="newLobbyName" placeholder="Session name" style="width:100%; padding:10px; margin-bottom:15px; background:#000; border:1px solid var(--border); color:#fff">
-                <div id="yamlSelectorList" style="max-height:200px; overflow-y:auto; margin-bottom:15px"></div>
-                <div style="display:flex; gap:10px">
-                    <button class="btn" onclick="startGeneration(event)" style="flex:1">Start</button>
-                    <button class="btn" onclick="closeGenerator()" style="background:#444; color:#fff">Cancel</button>
-                </div>
+            <div class="yaml-editor-panel">
+                <input type="text" id="yamlFilename" class="form-input" placeholder="filename.yaml">
+                <div id="aceEditor"></div>
             </div>
         </div>
     </div>
 
-    <script>
-        let userData = {};
-        const editor = ace.edit("editor");
-        editor.setTheme("ace/theme/tomorrow_night_eighties");
-        editor.session.setMode("ace/mode/yaml");
+    <!-- Tab Content: ROM Vault -->
+    <div id="roms-tab" class="tab-content">
+        <h2 class="mb-lg">ROM Vault</h2>
 
-        async function init() {
-            const res = await fetch('/api/me');
-            if(!res.ok) return location.href = '/';
-            userData = await res.json();
-            document.getElementById('usernameDisplay').innerText = userData.username;
-            document.getElementById('userAvatar').src = userData.avatar;
-            document.getElementById('bioInput').value = userData.bio || "";
-            loadLobbies(); loadYamls(); loadRoms();
-            setInterval(loadLobbies, 10000);
-        }
+        <div class="alert alert-warning mb-lg">
+            <strong>Important:</strong> ROMs are for storage online for use on this website. No download links will be given in any circumstances and you must provide your own ROMs. We'll be doing SHA verifications to make sure your ROM is compatible with the selected games. Note that all ROMs are cleared every 1st of the month.
+        </div>
 
-        function switchTab(tab) {
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-            document.getElementById(tab + 'View').classList.add('active');
-            document.getElementById('pageTitle').innerText = tab.toUpperCase();
-            
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => { if(item.getAttribute('onclick').includes(tab)) item.classList.add('active'); });
-        }
+        <div class="upload-area" id="romDropZone">
+            <div class="upload-icon">📁</div>
+            <p class="text-primary mb-sm">Drop your ROMs here</p>
+            <p class="text-muted mb-md">or click to browse</p>
+            <input type="file" id="romFileInput" multiple style="display: none;">
+            <button class="btn" onclick="document.getElementById('romFileInput').click()">Browse Files</button>
 
-        async function loadLobbies() {
-            const res = await fetch('/api/lobbies', { credentials: 'include' });
-            if(!res.ok) return;
-            const lobbies = await res.json();
-            document.getElementById('lobbyTableBody').innerHTML = lobbies.map(l => `
-                <tr>
-                    <td><b>${l.name}</b></td>
-                    <td>${l.players}</td>
-                    <td><span class="status-badge">${l.status}</span></td>
-                    <td>
-                        <button class="btn" style="padding:5px 15px; font-size:0.8rem" onclick="joinLobby(${l.id})">
-                            <i class="fas fa-sign-in-alt"></i> JOIN
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-        }
+            <div class="progress mt-lg" id="romUploadProgress" style="display: none;">
+                <div class="progress-bar progress-bar-animated" id="romUploadBar"></div>
+            </div>
+        </div>
 
-        async function joinLobby(lobbyId) {
-            const res = await fetch(`/api/lobbies/${lobbyId}/join`, {
-                method: 'POST',
-                credentials: 'include'
-            });
+        <div class="card mt-lg">
+            <h3 class="mb-md">Uploaded ROMs</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>File</th>
+                        <th>Game</th>
+                        <th>SHA-1</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="romTableBody">
+                    <!-- ROMs loaded dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-            if (res.ok) {
-                window.location.href = `/lobby.html?id=${lobbyId}`;
-            } else {
-                const data = await res.json();
-                alert(`Failed to join: ${data.error}`);
+    <!-- Tab Content: Favorites -->
+    <div id="favorites-tab" class="tab-content">
+        <div class="flex justify-between items-center mb-lg">
+            <h2>Favorite Games</h2>
+            <a href="/games" class="btn btn-outline">Browse Games</a>
+        </div>
+
+        <div class="game-grid" id="favoritesGrid">
+            <!-- Favorite games loaded dynamically -->
+        </div>
+    </div>
+
+    <!-- Tab Content: Friends -->
+    <div id="friends-tab" class="tab-content">
+        <div class="flex justify-between items-center mb-lg">
+            <h2>Friends & Blacklist</h2>
+            <button class="btn" onclick="showAddFriendModal()">+ Add Friend</button>
+        </div>
+
+        <div class="card mb-lg">
+            <h3 class="mb-md">Friends</h3>
+            <div class="friends-grid" id="friendsList">
+                <!-- Friends loaded dynamically -->
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="mb-md">Blacklist</h3>
+            <div class="friends-grid" id="blacklistList">
+                <!-- Blacklist loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Content: Settings -->
+    <div id="settings-tab" class="tab-content">
+        <h2 class="mb-xl">Profile Settings</h2>
+
+        <div class="dashboard-grid">
+            <!-- Account Information -->
+            <div class="card">
+                <h3 class="mb-lg">Account Information</h3>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="emailInput" class="form-input" placeholder="your@email.com">
+                    <span class="form-hint">For important messages; Won't be shared with third parties</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Pronouns</label>
+                    <input type="text" id="pronounsInput" class="form-input" placeholder="they/them, she/her, he/him, etc.">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Profile Bio</label>
+                    <textarea id="bioInput" class="form-textarea" placeholder="Tell us about yourself..."></textarea>
+                </div>
+
+                <button class="btn" onclick="updateProfile()">Update Profile</button>
+            </div>
+
+            <!-- Twitch Integration -->
+            <div class="card">
+                <h3 class="mb-lg">Twitch and Broadcasting</h3>
+                <div id="twitchConnected" style="display: none;">
+                    <div class="flex items-center gap-md mb-md">
+                        <img id="twitchAvatar" src="" alt="Twitch" class="avatar avatar-sm">
+                        <div>
+                            <p class="text-primary mb-0" id="twitchUsername">...</p>
+                            <p class="text-muted text-sm">Connected</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-danger" onclick="disconnectTwitch()">Disconnect Twitch</button>
+                </div>
+
+                <div id="twitchNotConnected">
+                    <p class="text-muted mb-md">Connect your Twitch account to enable streaming features</p>
+                    <button class="btn" style="background: #9146FF;" onclick="connectTwitch()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/>
+                        </svg>
+                        Connect with Twitch
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Danger Zone -->
+        <div class="card" style="border-color: var(--status-error);">
+            <h3 class="text-error mb-lg">Danger Zone</h3>
+            <p class="text-muted mb-md">Once you delete your account, there is no going back. Please be certain.</p>
+            <button class="btn btn-danger" onclick="showDeleteAccountModal()">Delete Account</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+<script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
+
+<script>
+let userData = {};
+let aceEditor;
+
+// Initialize ACE Editor
+function initAceEditor() {
+    aceEditor = ace.edit("aceEditor");
+    aceEditor.setTheme("ace/theme/tomorrow_night_eighties");
+    aceEditor.session.setMode("ace/mode/yaml");
+    aceEditor.setOptions({
+        fontSize: "14px",
+        showPrintMargin: false
+    });
+}
+
+// Switch Dashboard Tabs
+function switchDashboardTab(tabName) {
+    // Update tab buttons
+    document.querySelectorAll('.dashboard-tab').forEach(tab => tab.classList.remove('active'));
+    event.target.closest('.dashboard-tab').classList.add('active');
+
+    // Update tab content
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+    document.getElementById(tabName + '-tab').classList.add('active');
+
+    // Initialize ACE editor when YAML tab is opened
+    if (tabName === 'yaml' && !aceEditor) {
+        setTimeout(initAceEditor, 100);
+    }
+}
+
+// Load User Data
+async function loadUserData() {
+    const res = await fetch('/api/me', { credentials: 'include' });
+    if (!res.ok) {
+        window.location.href = '/';
+        return;
+    }
+    userData = await res.json();
+
+    // Populate form fields
+    document.getElementById('emailInput').value = userData.email || '';
+    document.getElementById('pronounsInput').value = userData.pronouns || '';
+    document.getElementById('bioInput').value = userData.bio || '';
+
+    // Load all data
+    loadLobbies();
+    loadYamls();
+    loadRoms();
+    loadFavorites();
+    loadFriends();
+    checkTwitchConnection();
+
+    // Auto-refresh lobbies
+    setInterval(loadLobbies, 10000);
+}
+
+// Load Lobbies
+async function loadLobbies() {
+    const res = await fetch('/api/lobbies', { credentials: 'include' });
+    if (!res.ok) return;
+
+    const lobbies = await res.json();
+    const container = document.getElementById('lobbyList');
+
+    if (lobbies.length === 0) {
+        container.innerHTML = `
+            <div class="text-center p-xl">
+                <p class="text-muted">You haven't joined any lobbies yet.</p>
+                <a href="/create_room.html" class="btn mt-md">Create your first lobby!</a>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = lobbies.map(lobby => `
+        <div class="lobby-item">
+            <div class="lobby-header">
+                <div>
+                    <h3 class="lobby-name">
+                        <a href="/lobby.html?id=${lobby.id}">${lobby.name}</a>
+                    </h3>
+                    <div class="lobby-info">
+                        <span class="lobby-info-item">
+                            ${lobby.player_count}/${lobby.max_players} Players
+                        </span>
+                        <span class="badge badge-${lobby.state === 'open' ? 'success' : 'info'}">
+                            ${lobby.state}
+                        </span>
+                    </div>
+                </div>
+                <div class="flex gap-sm">
+                    <a href="/lobby.html?id=${lobby.id}" class="btn btn-sm">Join</a>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Load YAMLs
+async function loadYamls() {
+    const res = await fetch('/api/yamls', { credentials: 'include' });
+    if (!res.ok) return;
+
+    const yamls = await res.json();
+    const container = document.getElementById('yamlList');
+
+    container.innerHTML = yamls.map(yaml => `
+        <div class="yaml-list-item" onclick="loadYamlToEditor('${yaml.id}')">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M4 1.5H3a2 2 0 00-2 2V14a2 2 0 002 2h10a2 2 0 002-2V3.5a2 2 0 00-2-2h-1v1h1a1 1 0 011 1V14a1 1 0 01-1 1H3a1 1 0 01-1-1V3.5a1 1 0 011-1h1v-1z"/>
+            </svg>
+            ${yaml.filename}
+        </div>
+    `).join('');
+}
+
+async function loadYamlToEditor(yamlId) {
+    const res = await fetch('/api/yamls', { credentials: 'include' });
+    const yamls = await res.json();
+    const yaml = yamls.find(y => y.id == yamlId);
+
+    if (yaml && aceEditor) {
+        aceEditor.setValue(yaml.content);
+        aceEditor.clearSelection();
+        document.getElementById('yamlFilename').value = yaml.filename;
+    }
+}
+
+function createNewYaml() {
+    if (aceEditor) {
+        aceEditor.setValue('# New YAML Configuration\n');
+        aceEditor.clearSelection();
+        document.getElementById('yamlFilename').value = 'untitled.yaml';
+    }
+}
+
+async function saveCurrentYaml() {
+    const filename = document.getElementById('yamlFilename').value;
+    const content = aceEditor.getValue();
+
+    if (!filename) {
+        alert('Please enter a filename');
+        return;
+    }
+
+    const res = await fetch('/api/yamls', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ filename, content })
+    });
+
+    if (res.ok) {
+        alert('YAML saved successfully!');
+        loadYamls();
+    } else {
+        alert('Failed to save YAML');
+    }
+}
+
+// Load ROMs
+async function loadRoms() {
+    const res = await fetch('/api/roms', { credentials: 'include' });
+    if (!res.ok) return;
+
+    const roms = await res.json();
+    const container = document.getElementById('romTableBody');
+
+    if (roms.length === 0) {
+        container.innerHTML = `
+            <tr>
+                <td colspan="5" class="text-center text-muted">No ROMs uploaded yet</td>
+            </tr>
+        `;
+        return;
+    }
+
+    container.innerHTML = roms.map(rom => `
+        <tr>
+            <td>${rom.name}</td>
+            <td>${rom.game}</td>
+            <td><code>${rom.sha.substring(0, 16)}...</code></td>
+            <td><span class="badge badge-${rom.status === 'verified' ? 'success' : 'warning'}">${rom.status}</span></td>
+            <td>
+                <button class="btn btn-sm btn-danger" onclick="deleteRom('${rom.id}')">Delete</button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+// ROM Upload
+const romDropZone = document.getElementById('romDropZone');
+const romFileInput = document.getElementById('romFileInput');
+
+romDropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    romDropZone.classList.add('drag-over');
+});
+
+romDropZone.addEventListener('dragleave', () => {
+    romDropZone.classList.remove('drag-over');
+});
+
+romDropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    romDropZone.classList.remove('drag-over');
+    const files = e.dataTransfer.files;
+    uploadRoms(files);
+});
+
+romFileInput.addEventListener('change', (e) => {
+    uploadRoms(e.target.files);
+});
+
+async function uploadRoms(files) {
+    const progress = document.getElementById('romUploadProgress');
+    const bar = document.getElementById('romUploadBar');
+
+    for (const file of files) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        progress.style.display = 'block';
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api/roms/upload', true);
+
+        xhr.upload.onprogress = (e) => {
+            if (e.lengthComputable) {
+                const percent = Math.round((e.loaded / e.total) * 100);
+                bar.style.width = percent + '%';
             }
-        }
+        };
 
-        async function openGenerator() {
-            const lobbyName = prompt('Enter lobby name:');
-            if (!lobbyName) return;
-
-            const res = await fetch('/api/lobbies/create', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify({
-                    name: lobbyName,
-                    max_players: 10,
-                    visibility: 'open'
-                })
-            });
-
-            if (res.ok) {
-                const data = await res.json();
-                window.location.href = `/lobby.html?id=${data.lobby_id}`;
-            } else {
-                alert('Failed to create lobby');
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                loadRoms();
+                progress.style.display = 'none';
+                bar.style.width = '0%';
             }
-        }
+        };
 
-        async function loadYamls() {
-            const res = await fetch('/api/yamls');
-            const yamls = await res.json();
-            document.getElementById('yamlList').innerHTML = yamls.map(y => `
-                <div class="yaml-item" onclick="loadToEditor('${y.id}')">📄 ${y.filename}</div>
-            `).join('');
-        }
+        xhr.send(formData);
+    }
+}
 
-        async function loadToEditor(id) {
-            const res = await fetch('/api/yamls');
-            const yamls = await res.json();
-            const y = yamls.find(i => i.id == id);
-            if(y) { editor.setValue(y.content); document.getElementById('yamlName').value = y.filename; }
-        }
+// Load Favorites
+async function loadFavorites() {
+    // TODO: Implement favorites API
+    document.getElementById('favoritesGrid').innerHTML = `
+        <div class="text-center p-xl">
+            <p class="text-muted">No favorite games yet. Browse games to add favorites!</p>
+        </div>
+    `;
+}
 
-        async function saveYaml() {
-            const name = document.getElementById('yamlName').value;
-            await fetch('/api/yamls', { method: 'POST', headers: {'Content-Type': 'application/json'}, 
-                body: JSON.stringify({filename: name, content: editor.getValue()}) });
-            loadYamls(); alert("YAML Saved");
-        }
+// Load Friends
+async function loadFriends() {
+    // TODO: Implement friends API
+    document.getElementById('friendsList').innerHTML = `
+        <div class="text-center p-xl">
+            <p class="text-muted">No friends yet. Add friends to see them here!</p>
+        </div>
+    `;
+}
 
-        async function loadRoms() {
-            const res = await fetch('/api/roms');
-            const roms = await res.json();
-            document.getElementById('romTableBody').innerHTML = roms.map(r => `
-                <tr><td>${r.name}</td><td>${r.game}</td><td><code>${r.sha.substring(0,8)}</code></td>
-                <td><span class="status-badge">${r.status}</span></td></tr>
-            `).join('');
-        }
+// Update Profile
+async function updateProfile() {
+    const email = document.getElementById('emailInput').value;
+    const pronouns = document.getElementById('pronounsInput').value;
+    const bio = document.getElementById('bioInput').value;
 
-        async function uploadRom(file) {
-            const formData = new FormData(); formData.append('file', file);
-            const container = document.getElementById('progressContainer'); const bar = document.getElementById('progressBar');
-            container.style.display = 'block';
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/api/roms/upload', true);
-            xhr.upload.onprogress = (e) => { if(e.lengthComputable) bar.style.width = Math.round((e.loaded/e.total)*100)+'%'; };
-            xhr.onload = () => { if(xhr.status === 200) { loadRoms(); container.style.display = 'none'; bar.style.width = '0%'; } };
-            xhr.send(formData);
-        }
+    const res = await fetch('/api/me', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email, pronouns, bio })
+    });
 
-        document.getElementById('romInput').onchange = (e) => { for(let f of e.target.files) uploadRom(f); };
-        const dz = document.getElementById('dropZone');
-        dz.ondragover = (e) => e.preventDefault();
-        dz.ondrop = (e) => { e.preventDefault(); for(let f of e.dataTransfer.files) uploadRom(f); };
+    if (res.ok) {
+        alert('Profile updated successfully!');
+    } else {
+        alert('Failed to update profile');
+    }
+}
 
-        function openGenerator() { document.getElementById('genModal').style.display = 'flex'; updateYamlSelector(); }
-        function closeGenerator() { document.getElementById('genModal').style.display = 'none'; }
+// Twitch Integration
+async function checkTwitchConnection() {
+    // TODO: Check if Twitch is connected
+    // For now, show not connected
+    document.getElementById('twitchConnected').style.display = 'none';
+    document.getElementById('twitchNotConnected').style.display = 'block';
+}
 
-        async function updateYamlSelector() {
-            const res = await fetch('/api/yamls'); const yamls = await res.json();
-            document.getElementById('yamlSelectorList').innerHTML = yamls.map(y => `
-                <div style="padding:5px"><input type="checkbox" class="yaml-check" value="${y.id}"> ${y.filename}</div>
-            `).join('');
-        }
+function connectTwitch() {
+    window.location.href = '/api/twitch/connect';
+}
 
-        async function startGeneration(e) {
-            const btn = e.target; const name = document.getElementById('newLobbyName').value;
-            const selected = Array.from(document.querySelectorAll('.yaml-check:checked')).map(cb => cb.value);
-            if(!name || selected.length === 0) return alert("Select name and YAMLs");
-            btn.disabled = true; btn.innerText = "Generating...";
-            await fetch('/api/generate', { method: 'POST', headers: {'Content-Type': 'application/json'}, 
-                body: JSON.stringify({ name: name, yaml_ids: selected }) });
-            closeGenerator(); loadLobbies(); btn.disabled = false; btn.innerText = "Start";
-        }
+async function disconnectTwitch() {
+    const res = await fetch('/api/twitch/disconnect', { method: 'POST', credentials: 'include' });
+    if (res.ok) {
+        alert('Twitch disconnected');
+        checkTwitchConnection();
+    }
+}
 
-        async function updateProfile() {
-            const bio = document.getElementById('bioInput').value;
-            await fetch('/api/me', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ bio: bio }) });
-            alert("Profile updated");
-        }
-
-        init();
-    </script>
-</body>
-</html>
+// Initialize
+loadUserData();
+</script>
+{% endblock %}

@@ -37,6 +37,7 @@ services:
       - "7000:7000"
     volumes:
       - ./backend:/app
+      - ./frontend:/frontend
       - ./archipelago_core:/opt/Archipelago
       - ./backend/static/uploads:/app/static/uploads
       - ./backend/static/boxarts:/app/static/boxarts

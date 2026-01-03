@@ -1,0 +1,343 @@
+{% extends "base.html" %}
+
+{% block title %}Create Lobby - SekaiLink{% endblock %}
+
+{% block content %}
+<div class="container-sm">
+    <div class="card fade-in">
+        <div class="card-header">
+            <h1 class="card-title">Create New Lobby</h1>
+        </div>
+
+        <div class="card-body">
+            <form id="create-lobby-form">
+                <!-- Basic Information -->
+                <div class="form-group">
+                    <label class="form-label">Lobby Name <span style="color: var(--status-error);">*</span></label>
+                    <input type="text" id="lobby-name" class="form-input" placeholder="Epic Multiworld Adventure" required maxlength="100">
+                    <span class="form-hint">Choose a descriptive name for your lobby</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Player Limit <span style="color: var(--status-error);">*</span></label>
+                    <select id="player-limit" class="form-select" required>
+                        <option value="2">2 Players</option>
+                        <option value="3">3 Players</option>
+                        <option value="4">4 Players</option>
+                        <option value="5">5 Players</option>
+                        <option value="6">6 Players</option>
+                        <option value="8">8 Players</option>
+                        <option value="10" selected>10 Players</option>
+                        <option value="12">12 Players</option>
+                        <option value="15">15 Players</option>
+                        <option value="20">20 Players</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Lobby Visibility</label>
+                    <select id="visibility" class="form-select">
+                        <option value="open" selected>Open - Anyone can join</option>
+                        <option value="private">Private - Requires invite link</option>
+                    </select>
+                </div>
+
+                <!-- Sync Rules -->
+                <div class="form-group">
+                    <label class="form-label">Sync Rules</label>
+                    <textarea id="sync-rules" class="form-textarea" rows="4" placeholder="Enter your custom rules for this sync...&#10;&#10;Example:&#10;- Be respectful&#10;- No rage quitting&#10;- Have fun!"></textarea>
+                    <span class="form-hint">Describe the rules and expectations for your sync</span>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Time Settings -->
+                <h3 class="mb-md">Time Settings</h3>
+
+                <div class="form-group">
+                    <label class="form-label">Time Limit</label>
+                    <select id="time-limit" class="form-select">
+                        <option value="0" selected>No time limit</option>
+                        <option value="1">1 hour</option>
+                        <option value="2">2 hours</option>
+                        <option value="3">3 hours</option>
+                        <option value="4">4 hours</option>
+                        <option value="5">5 hours</option>
+                        <option value="6">6 hours</option>
+                        <option value="8">8 hours</option>
+                        <option value="12">12 hours</option>
+                        <option value="24">24 hours</option>
+                    </select>
+                    <span class="form-hint">Maximum time allowed for the sync</span>
+                </div>
+
+                <div class="form-checkbox">
+                    <input type="checkbox" id="restrict-time-limit">
+                    <label for="restrict-time-limit">
+                        <strong>Enforce time limit</strong>
+                        <p class="form-hint mt-xs">When enabled, items will be auto-released and lobby closed when time expires</p>
+                    </label>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Game Settings -->
+                <h3 class="mb-md">Game Settings</h3>
+
+                <div class="form-checkbox mb-md">
+                    <input type="checkbox" id="allow-multigame" checked>
+                    <label for="allow-multigame">
+                        <strong>Allow Multi-game</strong>
+                        <p class="form-hint mt-xs">Players can join with different games</p>
+                    </label>
+                </div>
+
+                <div class="form-checkbox mb-md">
+                    <input type="checkbox" id="disallow-rom-games">
+                    <label for="disallow-rom-games">
+                        <strong>Disallow ROM Games</strong>
+                        <p class="form-hint mt-xs">Only allow games that don't require ROM uploads</p>
+                    </label>
+                </div>
+
+                <div class="form-checkbox mb-md">
+                    <input type="checkbox" id="disallow-custom-worlds">
+                    <label for="disallow-custom-worlds">
+                        <strong>Disallow Custom Worlds</strong>
+                        <p class="form-hint mt-xs">Only allow officially supported Archipelago games</p>
+                    </label>
+                </div>
+
+                <!-- Blacklisted Games -->
+                <div class="form-group">
+                    <label class="form-label">Blacklisted Games</label>
+                    <div id="blacklist-games" class="mb-sm" style="display: flex; flex-wrap: wrap; gap: var(--space-xs);"></div>
+                    <button type="button" class="btn btn-sm btn-outline" onclick="showGameSelector()">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 2a.5.5 0 01.5.5v5h5a.5.5 0 010 1h-5v5a.5.5 0 01-1 0v-5h-5a.5.5 0 010-1h5v-5A.5.5 0 018 2z"/>
+                        </svg>
+                        Add Game
+                    </button>
+                    <span class="form-hint">Select games that are not allowed in this lobby</span>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Additional Features -->
+                <h3 class="mb-md">Additional Features</h3>
+
+                <div class="form-checkbox mb-md">
+                    <input type="checkbox" id="allow-broadcast" checked>
+                    <label for="allow-broadcast">
+                        <strong>Allow Broadcasting</strong>
+                        <p class="form-hint mt-xs">Players can mark themselves as streaming</p>
+                    </label>
+                </div>
+
+                <div class="form-checkbox mb-md">
+                    <input type="checkbox" id="voice-chat-enabled" checked>
+                    <label for="voice-chat-enabled">
+                        <strong>Voice Chat Enabled</strong>
+                        <p class="form-hint mt-xs">Enable Discord voice channel for this lobby</p>
+                    </label>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Submit -->
+                <div class="flex gap-md">
+                    <button type="submit" class="btn btn-lg" style="flex: 1;">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 2a.5.5 0 01.5.5v5h5a.5.5 0 010 1h-5v5a.5.5 0 01-1 0v-5h-5a.5.5 0 010-1h5v-5A.5.5 0 018 2z"/>
+                        </svg>
+                        Create Lobby
+                    </button>
+                    <a href="/dashboard.html" class="btn btn-secondary btn-lg">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Game Selector Modal -->
+<div class="modal-overlay" id="game-selector-modal" style="display: none;">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 class="modal-title">Select Games to Blacklist</h2>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <input type="text" id="game-search" class="form-input" placeholder="Search games...">
+            </div>
+
+            <div id="game-list" style="max-height: 400px; overflow-y: auto;">
+                <!-- Games loaded dynamically -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeGameSelector()">Close</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let blacklistedGames = [];
+let allGames = [];
+
+// Load Games for Blacklist
+async function loadGames() {
+    try {
+        const response = await fetch('/api/games', { credentials: 'include' });
+        const games = await response.json();
+        allGames = games;
+    } catch (error) {
+        console.error('Error loading games:', error);
+    }
+}
+
+function showGameSelector() {
+    const modal = document.getElementById('game-selector-modal');
+    const gameList = document.getElementById('game-list');
+
+    // Filter out already blacklisted games
+    const availableGames = allGames.filter(g => !blacklistedGames.includes(g.slug));
+
+    gameList.innerHTML = availableGames.map(game => `
+        <div class="form-checkbox" style="padding: var(--space-sm);">
+            <input type="checkbox" id="game-${game.slug}" value="${game.slug}">
+            <label for="game-${game.slug}">
+                <strong>${game.name}</strong>
+                ${game.requires_rom ? '<span class="badge badge-warning">ROM</span>' : ''}
+            </label>
+        </div>
+    `).join('');
+
+    modal.style.display = 'flex';
+
+    // Add selected games when checkboxes change
+    gameList.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                addBlacklistedGame(e.target.value);
+                e.target.checked = false;
+            }
+        });
+    });
+}
+
+function closeGameSelector() {
+    document.getElementById('game-selector-modal').style.display = 'none';
+}
+
+function addBlacklistedGame(gameSlug) {
+    if (blacklistedGames.includes(gameSlug)) return;
+
+    blacklistedGames.push(gameSlug);
+    updateBlacklistDisplay();
+}
+
+function removeBlacklistedGame(gameSlug) {
+    blacklistedGames = blacklistedGames.filter(g => g !== gameSlug);
+    updateBlacklistDisplay();
+}
+
+function updateBlacklistDisplay() {
+    const container = document.getElementById('blacklist-games');
+
+    if (blacklistedGames.length === 0) {
+        container.innerHTML = '<span class="text-muted">No games blacklisted</span>';
+        return;
+    }
+
+    container.innerHTML = blacklistedGames.map(slug => {
+        const game = allGames.find(g => g.slug === slug);
+        return `
+            <span class="badge badge-error" style="cursor: pointer;" onclick="removeBlacklistedGame('${slug}')">
+                ${game ? game.name : slug}
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" style="margin-left: 4px;">
+                    <path d="M4.646 4.646a.5.5 0 01.708 0L8 7.293l2.646-2.647a.5.5 0 01.708.708L8.707 8l2.647 2.646a.5.5 0 01-.708.708L8 8.707l-2.646 2.647a.5.5 0 01-.708-.708L7.293 8 4.646 5.354a.5.5 0 010-.708z"/>
+                </svg>
+            </span>
+        `;
+    }).join('');
+}
+
+// Game Search
+document.addEventListener('DOMContentLoaded', () => {
+    const gameSearch = document.getElementById('game-search');
+    if (gameSearch) {
+        gameSearch.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const gameList = document.getElementById('game-list');
+            const checkboxes = gameList.querySelectorAll('.form-checkbox');
+
+            checkboxes.forEach(checkbox => {
+                const label = checkbox.querySelector('label').textContent.toLowerCase();
+                checkbox.style.display = label.includes(query) ? '' : 'none';
+            });
+        });
+    }
+});
+
+// Form Submission
+document.getElementById('create-lobby-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = {
+        name: document.getElementById('lobby-name').value,
+        max_players: parseInt(document.getElementById('player-limit').value),
+        visibility: document.getElementById('visibility').value,
+        rules: document.getElementById('sync-rules').value,
+        time_limit_hours: parseInt(document.getElementById('time-limit').value) || null,
+        restrict_time_limit: document.getElementById('restrict-time-limit').checked,
+        settings: {
+            allow_multigame: document.getElementById('allow-multigame').checked,
+            disallow_rom_games: document.getElementById('disallow-rom-games').checked,
+            disallow_custom_worlds: document.getElementById('disallow-custom-worlds').checked,
+            allow_broadcast: document.getElementById('allow-broadcast').checked,
+            voice_chat_enabled: document.getElementById('voice-chat-enabled').checked,
+            blacklisted_games: blacklistedGames
+        }
+    };
+
+    try {
+        const response = await fetch('/api/lobbies/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(formData)
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            window.location.href = `/lobby.html?id=${data.lobby_id}`;
+        } else {
+            const error = await response.json();
+            alert(`Failed to create lobby: ${error.error || 'Unknown error'}`);
+        }
+    } catch (error) {
+        console.error('Error creating lobby:', error);
+        alert('Failed to create lobby. Please try again.');
+    }
+});
+
+// Close modal when clicking outside
+document.getElementById('game-selector-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'game-selector-modal') {
+        closeGameSelector();
+    }
+});
+
+// Initialize
+loadGames();
+
+// Pre-fill from URL params
+const urlParams = new URLSearchParams(window.location.search);
+const gameParam = urlParams.get('game');
+if (gameParam) {
+    // TODO: Pre-select game or add to whitelist
+}
+</script>
+{% endblock %}

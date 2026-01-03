@@ -1,0 +1,504 @@
+{% extends "base.html" %}
+
+{% block title %}API Documentation - SekaiLink{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-lg">API Documentation</h1>
+
+    <div class="alert alert-info mb-2xl">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 15A7 7 0 118 1a7 7 0 010 14zm0 1A8 8 0 108 0a8 8 0 000 16z"/>
+            <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 11-2 0 1 1 0 012 0z"/>
+        </svg>
+        <div>
+            The SekaiLink API is a REST API for building bots, trackers, and integrations.
+            All endpoints return JSON and follow RESTful conventions.
+        </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div style="display: grid; grid-template-columns: 250px 1fr; gap: var(--space-2xl);">
+        <!-- Sidebar -->
+        <aside style="position: sticky; top: var(--space-xl); height: fit-content;">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Endpoints</h3>
+                </div>
+                <nav style="padding: var(--space-md);">
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: var(--space-sm);"><a href="#auth" class="doc-link">Authentication</a></li>
+                        <li style="margin-bottom: var(--space-sm);"><a href="#games" class="doc-link">Games</a></li>
+                        <li style="margin-bottom: var(--space-sm);"><a href="#lobbies" class="doc-link">Lobbies</a></li>
+                        <li style="margin-bottom: var(--space-sm);"><a href="#users" class="doc-link">Users</a></li>
+                        <li style="margin-bottom: var(--space-sm);"><a href="#yaml" class="doc-link">YAML Manager</a></li>
+                        <li style="margin-bottom: var(--space-sm);"><a href="#websocket" class="doc-link">WebSocket Events</a></li>
+                        <li style="margin-bottom: var(--space-sm);"><a href="#errors" class="doc-link">Error Handling</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Base URL -->
+            <section class="card fade-in mb-xl">
+                <div class="card-header">
+                    <h2>Base URL</h2>
+                </div>
+                <div class="card-body">
+                    <pre style="background: var(--bg-primary); padding: var(--space-md); border-radius: var(--radius-md);"><code>https://sekailink.xyz/api</code></pre>
+                    <p class="mt-md text-secondary">
+                        All API requests should be prefixed with this base URL.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Authentication -->
+            <section id="auth" class="card fade-in mb-xl">
+                <div class="card-header">
+                    <h2>Authentication</h2>
+                </div>
+                <div class="card-body">
+                    <p class="mb-lg">
+                        SekaiLink uses session-based authentication via Discord OAuth2. Most endpoints require authentication.
+                    </p>
+
+                    <h3 class="mb-md">OAuth Flow</h3>
+                    <div class="code-block mb-lg">
+                        <strong>GET</strong> <code>/auth/discord</code><br>
+                        <span class="text-secondary">Initiates Discord OAuth2 flow. Redirects to Discord for authorization.</span>
+                    </div>
+
+                    <div class="code-block mb-lg">
+                        <strong>GET</strong> <code>/auth/callback</code><br>
+                        <span class="text-secondary">OAuth callback endpoint. Creates session cookie.</span>
+                    </div>
+
+                    <div class="code-block mb-lg">
+                        <strong>GET</strong> <code>/auth/logout</code><br>
+                        <span class="text-secondary">Destroys session and logs out user.</span>
+                    </div>
+
+                    <h3 class="mb-md">Session Cookies</h3>
+                    <p>
+                        Include <code>credentials: 'include'</code> in fetch requests to send session cookies:
+                    </p>
+                    <pre class="mt-md" style="background: var(--bg-primary); padding: var(--space-md); border-radius: var(--radius-md);"><code>fetch('/api/lobbies', {
+    credentials: 'include'
+})</code></pre>
+                </div>
+            </section>
+
+            <!-- Games -->
+            <section id="games" class="card fade-in mb-xl">
+                <div class="card-header">
+                    <h2>Games</h2>
+                </div>
+                <div class="card-body">
+                    <div class="endpoint-block mb-lg">
+                        <div class="endpoint-header">
+                            <span class="badge badge-success">GET</span>
+                            <code>/api/games</code>
+                        </div>
+                        <p class="mt-md mb-md">List all available games with filters.</p>
+                        <strong>Query Parameters:</strong>
+                        <ul style="margin-left: var(--space-lg); margin-top: var(--space-sm);">
+                            <li><code>search</code> - Search by game name</li>
+                            <li><code>requires_rom</code> - Filter by ROM requirement (true/false)</li>
+                            <li><code>limit</code> - Limit results (default: 50)</li>
+                            <li><code>offset</code> - Pagination offset</li>
+                        </ul>
+                        <strong class="mt-md">Example Response:</strong>
+                        <pre class="mt-sm" style="background: var(--bg-primary); padding: var(--space-md); border-radius: var(--radius-md);"><code>[
+    {
+        "slug": "a-link-to-the-past",
+        "name": "The Legend of Zelda: A Link to the Past",
+        "description": "Classic SNES adventure",
+        "requires_rom": true,
+        "boxart_url": "/static/boxarts/alttp.png",
+        "sync_count": 1234
+    }
+]</code></pre>
+                    </div>
+
+                    <div class="endpoint-block mb-lg">
+                        <div class="endpoint-header">
+                            <span class="badge badge-success">GET</span>
+                            <code>/api/games/:slug</code>
+                        </div>
+                        <p class="mt-md">Get detailed information about a specific game.</p>
+                    </div>
+
+                    <div class="endpoint-block mb-lg">
+                        <div class="endpoint-header">
+                            <span class="badge badge-warning">POST</span>
+                            <code>/api/games/:slug/favorite</code>
+                        </div>
+                        <p class="mt-md">Toggle favorite status for a game. Requires authentication.</p>
+                    </div>
+
+                    <div class="endpoint-block">
+                        <div class="endpoint-header">
+                            <span class="badge badge-success">GET</span>
+                            <code>/api/games/:slug/lobbies</code>
+                        </div>
+                        <p class="mt-md">Get lobbies for a specific game.</p>
+                        <strong>Query Parameters:</strong>
+                        <ul style="margin-left: var(--space-lg); margin-top: var(--space-sm);">
+                            <li><code>status</code> - Filter by status (active, finished, cancelled)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lobbies -->
+            <section id="lobbies" class="card fade-in mb-xl">
+                <div class="card-header">
+                    <h2>Lobbies</h2>
+                </div>
+                <div class="card-body">
+                    <div class="endpoint-block mb-lg">
+                        <div class="endpoint-header">
+                            <span class="badge badge-success">GET</span>
+                            <code>/api/lobbies</code>
+                        </div>
+                        <p class="mt-md mb-md">List all active lobbies.</p>
+                        <strong>Example Response:</strong>
+                        <pre class="mt-sm" style="background: var(--bg-primary); padding: var(--space-md); border-radius: var(--radius-md);"><code>[
+    {
+        "id": 123,
+        "slug": "epic-game-1234",
+        "name": "Epic Multiworld Adventure",
+        "host_name": "JohnDoe",
+        "max_players": 10,
+        "player_count": 5,
+        "state": "open",
+        "created_at": "2026-01-03T12:00:00Z"
+    }
+]</code></pre>
+                    </div>
+
+                    <div class="endpoint-block mb-lg">
+                        <div class="endpoint-header">
+                            <span class="badge badge-warning">POST</span>
+                            <code>/api/lobbies/create</code>
+                        </div>
+                        <p class="mt-md mb-md">Create a new lobby. Requires authentication.</p>
+                        <strong>Request Body:</strong>
+                        <pre class="mt-sm" style="background: var(--bg-primary); padding: var(--space-md); border-radius: var(--radius-md);"><code>{
+    "name": "My Lobby",
+    "max_players": 10,
+    "visibility": "open",
+    "rules": "Be respectful!",
+    "time_limit_hours": 3,
+    "restrict_time_limit": true,
+    "settings": {
+        "allow_multigame": true,
+        "disallow_rom_games": false,
+        "allow_broadcast": true,
+        "blacklisted_games": ["game-slug"]
+    }
+}</code></pre>
+                    </div>
+
+                    <div class="endpoint-block mb-lg">
+                        <div class="endpoint-header">
+                            <span class="badge badge-success">GET</span>
+                            <code>/api/lobbies/:id</code>
+                        </div>
+                        <p class="mt-md">Get detailed lobby information including players.</p>
+                    </div>
+
+                    <div class="endpoint-block mb-lg">
+                        <div class="endpoint-header">
+                            <span class="badge badge-warning">POST</span>
+                            <code>/api/lobbies/:id/join</code>
+                        </div>
+                        <p class="mt-md mb-md">Join a lobby. Requires authentication.</p>
+                        <strong>Request Body:</strong>
+                        <pre class="mt-sm" style="background: var(--bg-primary); padding: var(--space-md); border-radius: var(--radius-md);"><code>{
+    "yaml_id": 456
+}</code></pre>
+                    </div>
+
+                    <div class="endpoint-block mb-lg">
+                        <div class="endpoint-header">
+                            <span class="badge badge-warning">POST</span>
+                            <code>/api/lobbies/:id/ready</code>
+                        </div>
+                        <p class="mt-md">Toggle ready status. Requires authentication.</p>
+                    </div>
+
+                    <div class="endpoint-block">
+                        <div class="endpoint-header">
+                            <span class="badge badge-danger">DELETE</span>
+                            <code>/api/lobbies/:id</code>
+                        </div>
+                        <p class="mt-md">Delete a lobby. Host only.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Users -->
+            <section id="users" class="card fade-in mb-xl">
+                <div class="card-header">
+                    <h2>Users</h2>
+                </div>
+                <div class="card-body">
+                    <div class="endpoint-block mb-lg">
+                        <div class="endpoint-header">
+                            <span class="badge badge-success">GET</span>
+                            <code>/api/users/:id</code>
+                        </div>
+                        <p class="mt-md mb-md">Get user profile information.</p>
+                        <strong>Example Response:</strong>
+                        <pre class="mt-sm" style="background: var(--bg-primary); padding: var(--space-md); border-radius: var(--radius-md);"><code>{
+    "id": 789,
+    "username": "JohnDoe",
+    "avatar_url": "https://cdn.discord.com/...",
+    "pronouns": "he/him",
+    "bio": "Love playing Archipelago!",
+    "server_rating": 4.8,
+    "syncs_completed": 42,
+    "created_at": "2025-06-15T00:00:00Z"
+}</code></pre>
+                    </div>
+
+                    <div class="endpoint-block mb-lg">
+                        <div class="endpoint-header">
+                            <span class="badge badge-warning">POST</span>
+                            <code>/api/users/:id/rate</code>
+                        </div>
+                        <p class="mt-md mb-md">Rate another user. Requires authentication.</p>
+                        <strong>Request Body:</strong>
+                        <pre class="mt-sm" style="background: var(--bg-primary); padding: var(--space-md); border-radius: var(--radius-md);"><code>{
+    "punctuality": 5,
+    "respect_others": 5,
+    "respect_rules": 4,
+    "valid_release": 5
+}</code></pre>
+                    </div>
+
+                    <div class="endpoint-block">
+                        <div class="endpoint-header">
+                            <span class="badge badge-success">GET</span>
+                            <code>/api/users/:id/reviews</code>
+                        </div>
+                        <p class="mt-md">Get approved reviews for a user.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- YAML Manager -->
+            <section id="yaml" class="card fade-in mb-xl">
+                <div class="card-header">
+                    <h2>YAML Manager</h2>
+                </div>
+                <div class="card-body">
+                    <div class="endpoint-block mb-lg">
+                        <div class="endpoint-header">
+                            <span class="badge badge-success">GET</span>
+                            <code>/api/yaml</code>
+                        </div>
+                        <p class="mt-md">List user's YAMLs. Requires authentication.</p>
+                    </div>
+
+                    <div class="endpoint-block mb-lg">
+                        <div class="endpoint-header">
+                            <span class="badge badge-warning">POST</span>
+                            <code>/api/yaml/upload</code>
+                        </div>
+                        <p class="mt-md">Upload a YAML file. Requires authentication.</p>
+                    </div>
+
+                    <div class="endpoint-block">
+                        <div class="endpoint-header">
+                            <span class="badge badge-danger">DELETE</span>
+                            <code>/api/yaml/:id</code>
+                        </div>
+                        <p class="mt-md">Delete a YAML. Requires authentication.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- WebSocket Events -->
+            <section id="websocket" class="card fade-in mb-xl">
+                <div class="card-header">
+                    <h2>WebSocket Events</h2>
+                </div>
+                <div class="card-body">
+                    <p class="mb-lg">
+                        Real-time updates use Socket.IO. Connect to <code>wss://sekailink.xyz</code> with Socket.IO client.
+                    </p>
+
+                    <h3 class="mb-md">Event Format</h3>
+                    <pre class="mb-lg" style="background: var(--bg-primary); padding: var(--space-md); border-radius: var(--radius-md);"><code>{
+    "type": "event_name",
+    "data": { ... },
+    "version": 1
+}</code></pre>
+
+                    <h3 class="mb-md">Lobby Events</h3>
+                    <ul style="margin-left: var(--space-lg); line-height: 1.8;">
+                        <li><code>lobby_updated</code> - Lobby settings or state changed</li>
+                        <li><code>player_joined</code> - New player joined</li>
+                        <li><code>player_left</code> - Player left</li>
+                        <li><code>player_ready</code> - Player readied up</li>
+                        <li><code>generation_started</code> - Seed generation began</li>
+                        <li><code>generation_progress</code> - Generation progress update</li>
+                        <li><code>generation_complete</code> - Generation finished</li>
+                        <li><code>timer_started</code> - Sync timer started</li>
+                        <li><code>chat_message</code> - New chat message</li>
+                    </ul>
+
+                    <h3 class="mb-md mt-lg">Example Usage</h3>
+                    <pre style="background: var(--bg-primary); padding: var(--space-md); border-radius: var(--radius-md);"><code>const socket = io('https://sekailink.xyz');
+
+socket.on('connect', () => {
+    socket.emit('join_lobby', { lobby_id: 123 });
+});
+
+socket.on('lobby_updated', (data) => {
+    console.log('Lobby updated:', data);
+});</code></pre>
+                </div>
+            </section>
+
+            <!-- Error Handling -->
+            <section id="errors" class="card fade-in mb-xl">
+                <div class="card-header">
+                    <h2>Error Handling</h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="mb-md">HTTP Status Codes</h3>
+                    <table class="table mb-lg">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Meaning</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>200</code></td>
+                                <td>Success</td>
+                            </tr>
+                            <tr>
+                                <td><code>201</code></td>
+                                <td>Created</td>
+                            </tr>
+                            <tr>
+                                <td><code>400</code></td>
+                                <td>Bad Request - Invalid parameters</td>
+                            </tr>
+                            <tr>
+                                <td><code>401</code></td>
+                                <td>Unauthorized - Not logged in</td>
+                            </tr>
+                            <tr>
+                                <td><code>403</code></td>
+                                <td>Forbidden - Insufficient permissions</td>
+                            </tr>
+                            <tr>
+                                <td><code>404</code></td>
+                                <td>Not Found</td>
+                            </tr>
+                            <tr>
+                                <td><code>429</code></td>
+                                <td>Too Many Requests - Rate limited</td>
+                            </tr>
+                            <tr>
+                                <td><code>500</code></td>
+                                <td>Internal Server Error</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 class="mb-md">Error Response Format</h3>
+                    <pre style="background: var(--bg-primary); padding: var(--space-md); border-radius: var(--radius-md);"><code>{
+    "error": "Error message here",
+    "code": "ERROR_CODE",
+    "details": { ... }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- Rate Limiting -->
+            <section class="card fade-in">
+                <div class="card-header">
+                    <h2>Rate Limiting</h2>
+                </div>
+                <div class="card-body">
+                    <p class="mb-md">API requests are rate limited to prevent abuse:</p>
+                    <ul style="margin-left: var(--space-lg); line-height: 1.8;">
+                        <li><strong>Authenticated users:</strong> 100 requests per minute</li>
+                        <li><strong>Unauthenticated:</strong> 20 requests per minute</li>
+                        <li><strong>WebSocket:</strong> 50 events per minute</li>
+                    </ul>
+                    <p class="mt-lg text-secondary">
+                        Rate limit headers are included in all API responses:
+                    </p>
+                    <pre class="mt-md" style="background: var(--bg-primary); padding: var(--space-md); border-radius: var(--radius-md);"><code>X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 95
+X-RateLimit-Reset: 1641024000</code></pre>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Smooth scrolling for anchor links
+document.querySelectorAll('.doc-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+</script>
+
+<style>
+.doc-link {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.doc-link:hover {
+    color: var(--accent-primary);
+}
+
+.endpoint-block {
+    border-left: 3px solid var(--accent-primary);
+    padding-left: var(--space-md);
+}
+
+.endpoint-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 1.1em;
+}
+
+code {
+    background: var(--bg-primary);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    color: var(--accent-primary);
+}
+
+pre code {
+    display: block;
+    padding: 0;
+    background: none;
+}
+</style>
+{% endblock %}

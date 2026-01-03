@@ -1,32 +1,255 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>SekaiLink - Archipelago Hub</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root { --bg: #0a0a0c; --accent: #00ff88; --text: #e0e0e0; }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center; }
-        .hero { max-width: 600px; padding: 20px; }
-        h1 { font-size: 3rem; margin-bottom: 10px; color: #fff; }
-        .accent { color: var(--accent); }
-        .btn-login { background: #5865F2; color: #fff; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 10px; font-size: 1.2rem; transition: 0.3s; }
-        .btn-login:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
-        footer { position: absolute; bottom: 30px; font-size: 0.9rem; opacity: 0.6; }
-        a { color: var(--accent); text-decoration: none; }
-    </style>
-</head>
-<body>
-    <div class="hero">
-        <h1>Sekai<span class="accent">Link</span></h1>
-        <p>Next-generation Multiworld hosting.</p>
-        <p style="margin-bottom: 40px;">Powered by <a href="https://archipelago.gg" target="_blank">Archipelago</a></p>
-        <a href="/api/auth/login" class="btn-login">
-            <i class="fab fa-discord"></i> Login with Discord
-        </a>
-    </div>
-    <footer>
-        SekaiLink is not affiliated with official Archipelago.gg technical support
-    </footer>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}SekaiLink - Archipelago Multiworld Hosting{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Hero Section -->
+    <section class="hero fade-in">
+        <h1 class="hero-title">Welcome to SekaiLink</h1>
+        <p class="hero-subtitle">Next-generation Archipelago Multiworld hosting platform</p>
+
+        {% if not user %}
+        <div class="hero-cta">
+            <a href="/api/auth/login" class="btn btn-discord btn-lg">
+                <svg width="24" height="24" viewBox="0 0 71 55" fill="currentColor">
+                    <g clip-path="url(#clip0)">
+                        <path d="M60.1045 4.8978C55.5792 2.8214 50.7265 1.2916 45.6527 0.41542C45.5603 0.39851 45.468 0.440769 45.4204 0.525289C44.7963 1.6353 44.105 3.0834 43.6209 4.2216C38.1637 3.4046 32.7345 3.4046 27.3892 4.2216C26.905 3.0581 26.1886 1.6353 25.5617 0.525289C25.5141 0.443589 25.4218 0.40133 25.3294 0.41542C20.2584 1.2888 15.4057 2.8186 10.8776 4.8978C10.8384 4.9147 10.8048 4.9429 10.7825 4.9795C1.57795 18.7309 -0.943561 32.1443 0.293408 45.3914C0.299005 45.4562 0.335386 45.5182 0.385761 45.5576C6.45866 50.0174 12.3413 52.7249 18.1147 54.5195C18.2071 54.5477 18.305 54.5139 18.3638 54.4378C19.7295 52.5728 20.9469 50.6063 21.9907 48.5383C22.0523 48.4172 21.9935 48.2735 21.8676 48.2256C19.9366 47.4931 18.0979 46.6 16.3292 45.5858C16.1893 45.5041 16.1781 45.304 16.3068 45.2082C16.679 44.9293 17.0513 44.6391 17.4067 44.3461C17.471 44.2926 17.5606 44.2813 17.6362 44.3151C29.2558 49.6202 41.8354 49.6202 53.3179 44.3151C53.3935 44.2785 53.4831 44.2898 53.5502 44.3433C53.9057 44.6363 54.2779 44.9293 54.6529 45.2082C54.7816 45.304 54.7732 45.5041 54.6333 45.5858C52.8646 46.6197 51.0259 47.4931 49.0921 48.2228C48.9662 48.2707 48.9102 48.4172 48.9718 48.5383C50.038 50.6034 51.2554 52.5699 52.5959 54.435C52.6519 54.5139 52.7526 54.5477 52.845 54.5195C58.6464 52.7249 64.529 50.0174 70.6019 45.5576C70.6551 45.5182 70.6887 45.459 70.6943 45.3942C72.1747 30.0791 68.2147 16.7757 60.1968 4.9823C60.1772 4.9429 60.1437 4.9147 60.1045 4.8978ZM23.7259 37.3253C20.2276 37.3253 17.3451 34.1136 17.3451 30.1693C17.3451 26.225 20.1717 23.0133 23.7259 23.0133C27.308 23.0133 30.1626 26.2532 30.1066 30.1693C30.1066 34.1136 27.28 37.3253 23.7259 37.3253ZM47.3178 37.3253C43.8196 37.3253 40.9371 34.1136 40.9371 30.1693C40.9371 26.225 43.7636 23.0133 47.3178 23.0133C50.9 23.0133 53.7545 26.2532 53.6986 30.1693C53.6986 34.1136 50.9 37.3253 47.3178 37.3253Z"/>
+                    </g>
+                </svg>
+                Get Started
+            </a>
+            <a href="/help.html" class="btn btn-outline btn-lg">Learn More</a>
+        </div>
+        {% else %}
+        <div class="hero-cta">
+            <a href="/dashboard.html" class="btn btn-lg">Go to Dashboard</a>
+            <a href="#games" class="btn btn-outline btn-lg">Browse Games</a>
+        </div>
+        {% endif %}
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Active Lobbies Section -->
+    <section class="mt-xl">
+        <div class="flex justify-between items-center mb-lg">
+            <h2>Active Lobbies</h2>
+            <div class="flex gap-sm">
+                <input type="text" id="lobbySearch" class="form-input" placeholder="Search lobbies..." style="width: 300px;">
+                {% if user %}
+                <a href="/create_room.html" class="btn">+ Create Lobby</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="lobby-list" id="lobbyList">
+            <!-- Lobbies will be loaded dynamically -->
+            {% if lobbies %}
+                {% for lobby in lobbies %}
+                <div class="lobby-item">
+                    <div class="lobby-header">
+                        <div>
+                            <h3 class="lobby-name">
+                                <a href="/lobby.html?id={{ lobby.id }}">{{ lobby.name }}</a>
+                            </h3>
+                            <div class="lobby-info">
+                                <span class="lobby-info-item">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM12.93 11.93A7 7 0 108 15a7 7 0 004.93-3.07z"/>
+                                    </svg>
+                                    {{ lobby.host_name }}
+                                </span>
+                                <span class="lobby-info-item">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M5 6a2 2 0 114 0 2 2 0 01-4 0zm-3 8a2 2 0 114 0 2 2 0 01-4 0zm8 0a2 2 0 114 0 2 2 0 01-4 0z"/>
+                                    </svg>
+                                    {{ lobby.player_count }}/{{ lobby.max_players }} Players
+                                </span>
+                                <span class="lobby-info-item">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M8 3.5a.5.5 0 00-1 0V9a.5.5 0 00.252.434l3.5 2a.5.5 0 00.496-.868L8 8.71V3.5z"/>
+                                        <path d="M8 16A8 8 0 108 0a8 8 0 000 16zm7-8A7 7 0 111 8a7 7 0 0114 0z"/>
+                                    </svg>
+                                    {{ lobby.timer or "Not started" }}
+                                </span>
+                                <span class="badge badge-{{ 'success' if lobby.state == 'open' else 'info' }}">
+                                    {{ lobby.state|capitalize }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+            <div class="text-center p-xl">
+                <p class="text-muted">No active lobbies at the moment.</p>
+                {% if user %}
+                <a href="/create_room.html" class="btn mt-md">Create the first lobby!</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Games Section -->
+    <section class="mt-xl" id="games">
+        <div class="flex justify-between items-center mb-lg">
+            <h2>Supported Games</h2>
+            <div class="flex gap-sm">
+                <input type="text" id="gameSearch" class="form-input" placeholder="Search games..." style="width: 300px;">
+                <select class="form-select" id="gameFilter" style="width: 200px;">
+                    <option value="all">All Games</option>
+                    <option value="popular">Most Popular</option>
+                    <option value="rom">ROM Required</option>
+                    <option value="no-rom">No ROM Needed</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="game-grid" id="gameGrid">
+            <!-- Games will be loaded dynamically -->
+            {% if games %}
+                {% for game in games %}
+                <div class="game-card" data-game="{{ game.slug }}" data-requires-rom="{{ game.requires_rom }}">
+                    <img src="{{ game.boxart_url or '/static/boxarts/default.png' }}" alt="{{ game.name }}" class="game-boxart">
+                    <h3 class="game-name">{{ game.name }}</h3>
+                    <div class="game-stats">
+                        <span class="text-muted">{{ game.sync_count }} syncs</span>
+                        {% if game.requires_rom %}
+                        <span class="badge badge-warning" title="ROM Required">ROM</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+            <!-- Placeholder games (static for demo) -->
+            <div class="game-card">
+                <img src="/static/boxarts/default.png" alt="Game" class="game-boxart skeleton">
+                <h3 class="game-name">Loading games...</h3>
+                <div class="game-stats">
+                    <span class="text-muted">-- syncs</span>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="text-center mt-xl">
+            <p class="text-muted mb-md">
+                <strong>89+ games supported</strong> from Archipelago
+            </p>
+            <a href="/games" class="btn btn-outline">View All Games</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="mt-2xl">
+        <h2 class="text-center mb-xl">Why SekaiLink?</h2>
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3 class="mb-md">
+                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor" style="color: var(--accent-primary);">
+                        <path d="M8 4.754a3.246 3.246 0 100 6.492 3.246 3.246 0 000-6.492zM5.754 8a2.246 2.246 0 114.492 0 2.246 2.246 0 01-4.492 0z"/>
+                    </svg>
+                    Real-time Lobbies
+                </h3>
+                <p class="text-muted">WebSocket-powered live updates for seamless coordination</p>
+            </div>
+
+            <div class="card">
+                <h3 class="mb-md">
+                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor" style="color: var(--accent-primary);">
+                        <path d="M8 16A8 8 0 108 0a8 8 0 000 16zm.93-9.412l-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 110-2 1 1 0 010 2z"/>
+                    </svg>
+                    Easy YAML Management
+                </h3>
+                <p class="text-muted">Create, edit, and validate your game configurations</p>
+            </div>
+
+            <div class="card">
+                <h3 class="mb-md">
+                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor" style="color: var(--accent-primary);">
+                        <path d="M8 1.5l6 2v4.5c0 3.5-2.5 6-6 8-3.5-2-6-4.5-6-8V3.5l6-2z"/>
+                    </svg>
+                    Secure ROM Vault
+                </h3>
+                <p class="text-muted">Temporary ROM storage with SHA-1 verification</p>
+            </div>
+
+            <div class="card">
+                <h3 class="mb-md">
+                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor" style="color: var(--accent-primary);">
+                        <path d="M8 3.5a.5.5 0 00-1 0V9a.5.5 0 00.252.434l3.5 2a.5.5 0 00.496-.868L8 8.71V3.5z"/>
+                        <path d="M8 16A8 8 0 108 0a8 8 0 000 16zm7-8A7 7 0 111 8a7 7 0 0114 0z"/>
+                    </svg>
+                    Time Limits
+                </h3>
+                <p class="text-muted">Optional time limits with automatic enforcement</p>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Search functionality for lobbies
+    const lobbySearch = document.getElementById('lobbySearch');
+    if (lobbySearch) {
+        lobbySearch.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const lobbyItems = document.querySelectorAll('.lobby-item');
+
+            lobbyItems.forEach(item => {
+                const name = item.querySelector('.lobby-name').textContent.toLowerCase();
+                const host = item.querySelector('.lobby-info-item').textContent.toLowerCase();
+
+                if (name.includes(query) || host.includes(query)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    }
+
+    // Search and filter functionality for games
+    const gameSearch = document.getElementById('gameSearch');
+    const gameFilter = document.getElementById('gameFilter');
+    const gameCards = document.querySelectorAll('.game-card');
+
+    function filterGames() {
+        const query = gameSearch ? gameSearch.value.toLowerCase() : '';
+        const filter = gameFilter ? gameFilter.value : 'all';
+
+        gameCards.forEach(card => {
+            const name = card.querySelector('.game-name')?.textContent.toLowerCase() || '';
+            const requiresRom = card.dataset.requiresRom === 'true';
+
+            // Search filter
+            const matchesSearch = name.includes(query);
+
+            // Category filter
+            let matchesFilter = true;
+            if (filter === 'rom') matchesFilter = requiresRom;
+            if (filter === 'no-rom') matchesFilter = !requiresRom;
+
+            // Show/hide card
+            card.style.display = (matchesSearch && matchesFilter) ? '' : 'none';
+        });
+    }
+
+    if (gameSearch) gameSearch.addEventListener('input', filterGames);
+    if (gameFilter) gameFilter.addEventListener('change', filterGames);
+
+    // Make game cards clickable
+    gameCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const slug = card.dataset.game;
+            if (slug) window.location.href = `/game/${slug}`;
+        });
+    });
+</script>
+{% endblock %}
