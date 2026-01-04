@@ -93,6 +93,18 @@
                         <option value="">-- Choose a YAML --</option>
                     </select>
                 </div>
+
+                <!-- ROM Selection (shown only if game requires ROM) -->
+                <div class="form-group" id="rom-selection-group" style="display: none;">
+                    <label class="form-label">Select ROM for <span id="rom-game-name"></span></label>
+                    <select id="rom-select" class="form-select">
+                        <option value="">-- Choose a ROM --</option>
+                    </select>
+                    <span class="form-hint" style="color: var(--status-warning);">
+                        This game requires a ROM file. Please select one from your vault or upload one in your dashboard.
+                    </span>
+                </div>
+
                 <button class="btn" id="ready-btn" disabled>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                         <path d="M13.854 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L6.5 10.293l6.646-6.647a.5.5 0 01.708 0z"/>
@@ -257,6 +269,9 @@ if (!lobbyId) {
 let currentUser = null;
 let lobbyData = null;
 let selectedYamlId = null;
+let selectedRomId = null;
+let selectedGameRequiresRom = false;
+let allGames = [];
 let timerInterval = null;
 let typingTimeout = null;
 let typingUsers = new Set();
@@ -435,6 +450,16 @@ async function loadUserInfo() {
     currentUser = data;
 }
 
+// Load Games
+async function loadGames() {
+    try {
+        const response = await fetch('/api/games', { credentials: 'include' });
+        allGames = await response.json();
+    } catch (error) {
+        console.error('Error loading games:', error);
+    }
+}
+
 // Load YAMLs
 async function loadYamls() {
     const response = await fetch('/api/yamls', { credentials: 'include' });
@@ -444,14 +469,89 @@ async function loadYamls() {
     yamls.forEach(yaml => {
         const option = document.createElement('option');
         option.value = yaml.id;
-        option.textContent = `${yaml.filename}`;
+        option.textContent = `${yaml.filename} (${yaml.game})`;
+        option.dataset.game = yaml.game;
         select.appendChild(option);
     });
 
-    select.addEventListener('change', (e) => {
+    select.addEventListener('change', async (e) => {
         selectedYamlId = e.target.value;
-        document.getElementById('ready-btn').disabled = !selectedYamlId;
+        const selectedOption = e.target.selectedOptions[0];
+        const gameName = selectedOption ? selectedOption.dataset.game : null;
+
+        // Check if game requires ROM
+        if (gameName) {
+            const game = allGames.find(g => g.slug === gameName || g.name === gameName);
+            selectedGameRequiresRom = game && game.requires_rom;
+
+            if (selectedGameRequiresRom) {
+                // Show ROM selection
+                document.getElementById('rom-game-name').textContent = gameName;
+                document.getElementById('rom-selection-group').style.display = 'block';
+                await loadRomsForGame(gameName);
+                updateReadyButton();
+            } else {
+                // Hide ROM selection
+                document.getElementById('rom-selection-group').style.display = 'none';
+                selectedRomId = null;
+                updateReadyButton();
+            }
+        } else {
+            document.getElementById('rom-selection-group').style.display = 'none';
+            selectedRomId = null;
+            updateReadyButton();
+        }
     });
+
+    // ROM select change handler
+    document.getElementById('rom-select').addEventListener('change', (e) => {
+        selectedRomId = e.target.value;
+        updateReadyButton();
+    });
+}
+
+// Load ROMs for specific game
+async function loadRomsForGame(gameName) {
+    try {
+        const response = await fetch('/api/roms', { credentials: 'include' });
+        const roms = await response.json();
+
+        const select = document.getElementById('rom-select');
+        select.innerHTML = '<option value="">-- Choose a ROM --</option>';
+
+        const gameRoms = roms.filter(rom => rom.game_detected === gameName);
+
+        if (gameRoms.length === 0) {
+            select.innerHTML = '<option value="">No ROMs available for this game</option>';
+            return;
+        }
+
+        gameRoms.forEach(rom => {
+            const option = document.createElement('option');
+            option.value = rom.id;
+            option.textContent = `${rom.filename} (${rom.status})`;
+            select.appendChild(option);
+        });
+    } catch (error) {
+        console.error('Error loading ROMs:', error);
+    }
+}
+
+// Update ready button state
+function updateReadyButton() {
+    const readyBtn = document.getElementById('ready-btn');
+
+    if (!selectedYamlId) {
+        readyBtn.disabled = true;
+        return;
+    }
+
+    if (selectedGameRequiresRom && !selectedRomId) {
+        readyBtn.disabled = true;
+        return;
+    }
+
+    readyBtn.disabled = false;
 }
 
 // Load Lobby Data
@@ -718,11 +818,18 @@ chatForm.addEventListener('submit', async (e) => {
 document.getElementById('ready-btn').addEventListener('click', async () => {
     if (!selectedYamlId) return;
 
+    const requestBody = { yaml_id: selectedYamlId };
+
+    // Add ROM ID if game requires it
+    if (selectedGameRequiresRom && selectedRomId) {
+        requestBody.rom_id = selectedRomId;
+    }
+
     const response = await fetch(`/api/lobbies/${lobbyId}/ready`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ yaml_id: selectedYamlId })
+        body: JSON.stringify(requestBody)
     });
 
     if (response.ok) {
@@ -730,6 +837,9 @@ document.getElementById('ready-btn').addEventListener('click', async () => {
         if (window.socket) {
             window.socket.emit('player_ready', { lobby_id: lobbyId });
         }
+    } else {
+        const error = await response.json();
+        alert(`Error: ${error.error || 'Failed to mark as ready'}`);
     }
 });
 
@@ -808,6 +918,7 @@ document.getElementById('stop-timer-btn').addEventListener('click', async () => 
 // Initialize
 async function init() {
     await loadUserInfo();
+    await loadGames();  // Load games first to check ROM requirements
     await loadYamls();
     await loadLobbyData();
 

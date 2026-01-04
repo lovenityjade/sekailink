@@ -777,11 +777,15 @@ def create_lobby():
     if not lobby_name or len(lobby_name) > 100:
         return jsonify({"error": "invalid lobby name"}), 400
 
+    # Generate unique slug
+    lobby_slug = generate_lobby_slug(lobby_name)
+
     # Create lobby
     new_lobby = Lobby(
         host_id=uid,
         name=lobby_name,
-        status='pending',
+        slug=lobby_slug,
+        status='open',  # Start as open, transitions to pending when players ready
         visibility=data.get('visibility', 'open')
     )
     db.session.add(new_lobby)
@@ -1052,6 +1056,7 @@ def toggle_ready(lobby_id):
 
     data = request.json
     yaml_id = data.get('yaml_id')
+    rom_id = data.get('rom_id')  # Optional, for games that require ROMs
 
     if not yaml_id:
         return jsonify({"error": "yaml_id required"}), 400
@@ -1061,6 +1066,25 @@ def toggle_ready(lobby_id):
     if not yaml_file:
         return jsonify({"error": "yaml not found"}), 404
 
+    # Check if game requires ROM
+    game = Game.query.filter_by(slug=yaml_file.game).first()
+    if game and game.requires_rom:
+        if not rom_id:
+            return jsonify({"error": "This game requires a ROM. Please select one."}), 400
+
+        # Validate ROM belongs to user and matches game
+        rom_file = RomFile.query.filter_by(id=rom_id, user_id=uid).first()
+        if not rom_file:
+            return jsonify({"error": "ROM not found"}), 404
+
+        # Validate ROM is for the correct game
+        if rom_file.game_detected != yaml_file.game:
+            return jsonify({"error": f"ROM does not match game. Expected {yaml_file.game}, got {rom_file.game_detected}"}), 400
+
+        player.rom_file_id = rom_id
+    else:
+        player.rom_file_id = None  # Clear ROM if not required
+
     # Update player
     player.yaml_file_id = yaml_id
     player.game = yaml_file.game
@@ -1068,7 +1092,7 @@ def toggle_ready(lobby_id):
 
     db.session.commit()
 
-    logger.info(f"User {uid} ready status: {player.is_ready} in lobby {lobby_id}")
+    logger.info(f"User {uid} ready status: {player.is_ready} in lobby {lobby_id} (game: {player.game}, ROM: {rom_id or 'not required'})")
 
     return jsonify({
         "is_ready": player.is_ready,
