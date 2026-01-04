@@ -21,7 +21,16 @@
       "Bash(do echo -n \"$page: \")",
       "Bash(done)",
       "Bash(for file in css/global.css css/components.css css/pages.css js/main.js)",
-      "Bash(do echo -n \"$file: \")"
+      "Bash(do echo -n \"$file: \")",
+      "Bash(git stash:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfix: Phase 9 - Critical Bug Fixes & System Audit\n\n🐛 BUGS FIXED \\(4 Critical Issues\\):\n\n1. Lobby URL Routing Mismatch ✅\n   - Fixed: frontend/src/index.html:245\n   - Changed: /lobby/$lobby.slug → /lobby.html?id=$lobby.id\n   - Impact: Lobby links from homepage now work\n\n2. Missing Twitch Disconnect Endpoint ✅\n   - Added: backend/main.py:388 \\(POST /api/twitch/disconnect\\)\n   - Impact: Users can disconnect Twitch accounts\n\n3. Lobby List API Response Mismatch ✅\n   - Fixed: backend/main.py:752-763 \\(GET /api/lobbies\\)\n   - Added fields: host_name, player_count, max_players, slug\n   - Changed: players \"X/Y\" → separate integers\n   - Impact: Homepage lobby list displays correctly\n\n4. Server URL Display ✅\n   - Verified: lobby.html already shows sekailink.xyz:<port>\n   - Impact: Players can connect to game servers\n\n📊 AUDIT COMPLETED:\n\nFrontend Pages Verified:\n- index.html, base.html, dashboard.html, create_room.html\n- lobby.html, game.html, profile.html\n- moderation.html, admin.html\n- All info pages \\(help, faq, about, rules, docs, donate, credits, contact\\)\n\nAPI Endpoints Verified \\(20+\\):\n- Lobbies: list, create, join, leave, ready, kick, timer, generate\n- Games: list, details, favorite\n- YAMLs: list, upload, edit, delete\n- ROMs: list, upload, delete\n- Friends: list, add, remove\n- Auth: login, logout, callback\n- Twitch: disconnect \\(NEW\\)\n- Moderation: 20+ admin/mod endpoints\n- All routes working correctly\n\nGeneration System Verified:\n- Generate endpoint triggers Celery task\n- Server port assignment \\(38281-38380\\)\n- YAML/ROM file handling\n- Patch file generation\n- Server startup process\n- URL display to users\n\n🎯 NEXT STEPS:\n\nNeeds Live Testing:\n1. End-to-end generation flow \\(create → upload → ready → generate → connect\\)\n2. WebSocket real-time updates\n3. Archipelago client connection\n4. ROM games with patches\n5. Error handling edge cases\n\nDocumentation:\n- Created BUGS_FOUND.md - Bug tracking document\n- Created PHASE9_PROGRESS.md - Comprehensive progress report\n\nOverall Status: 85% of Phase 9 complete\nRemaining: Live testing, error handling, edge case fixes\n\n---\n\n🤖 Generated with Claude Code\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit:*)",
+      "Bash(cat:*)",
+      "Bash(find archipelago_core -maxdepth 2 -name \"requirements.txt\" -exec echo \"=== {} ===\" ; -exec head -20 {} ;)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(timeout 10 docker logs:*)",
+      "Bash(/home/sekailink/backup.sh:*)"
     ]
   }
 }

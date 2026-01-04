@@ -284,7 +284,7 @@ def me():
         user.pronouns = data.get('pronouns', user.pronouns)
         db.session.commit()
         return jsonify({"status": "updated"})
-    return jsonify({"logged_in": True, "username": user.username, "avatar": user.avatar_url, "bio": user.bio, "pronouns": user.pronouns})
+    return jsonify({"logged_in": True, "id": user.id, "username": user.username, "avatar": user.avatar_url, "bio": user.bio, "pronouns": user.pronouns})
 
 @app.route('/api/me/favorites', methods=['GET'])
 def get_user_favorites():
@@ -385,6 +385,22 @@ def remove_friend(friend_id):
 
     return jsonify({"status": "removed"})
 
+@app.route('/api/twitch/status', methods=['GET'])
+def twitch_status():
+    """Check if user has connected Twitch account"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"connected": False}), 401
+
+    connection = TwitchConnection.query.filter_by(user_id=uid).first()
+    if connection:
+        return jsonify({
+            "connected": True,
+            "twitch_username": connection.twitch_username
+        })
+    else:
+        return jsonify({"connected": False})
+
 @app.route('/api/twitch/disconnect', methods=['POST'])
 def disconnect_twitch():
     """Disconnect Twitch account"""
@@ -400,6 +416,97 @@ def disconnect_twitch():
         logger.info(f"User {uid} disconnected Twitch account")
 
     return jsonify({"status": "disconnected"})
+
+@app.route('/api/twitch/connect')
+def twitch_connect():
+    """Initiate Twitch OAuth flow"""
+    uid = session.get('user_id')
+    if not uid:
+        return redirect('/login.html')
+
+    # Twitch OAuth URL
+    twitch_client_id = os.getenv('TWITCH_CLIENT_ID')
+    twitch_redirect_uri = os.getenv('TWITCH_REDIRECT_URI', 'https://sekailink.xyz/api/twitch/callback')
+
+    url = f"https://id.twitch.tv/oauth2/authorize?client_id={twitch_client_id}&redirect_uri={quote(twitch_redirect_uri, safe='')}&response_type=code&scope=user:read:email"
+    return redirect(url)
+
+@app.route('/api/twitch/callback')
+def twitch_callback():
+    """Handle Twitch OAuth callback"""
+    uid = session.get('user_id')
+    if not uid:
+        return redirect('/login.html')
+
+    code = request.args.get('code')
+    if not code:
+        logger.error("Twitch OAuth callback: No code provided")
+        return "OAuth Error: No authorization code provided", 400
+
+    # Exchange code for token
+    twitch_client_id = os.getenv('TWITCH_CLIENT_ID')
+    twitch_client_secret = os.getenv('TWITCH_CLIENT_SECRET')
+    twitch_redirect_uri = os.getenv('TWITCH_REDIRECT_URI', 'https://sekailink.xyz/api/twitch/callback')
+
+    data = {
+        'client_id': twitch_client_id,
+        'client_secret': twitch_client_secret,
+        'grant_type': 'authorization_code',
+        'code': code,
+        'redirect_uri': twitch_redirect_uri
+    }
+
+    try:
+        token_response = requests.post('https://id.twitch.tv/oauth2/token', data=data)
+        token_response.raise_for_status()
+        r = token_response.json()
+
+        if 'access_token' not in r:
+            logger.error(f"Twitch OAuth token exchange failed: {r}")
+            return f"OAuth Error: Failed to get access token - {r.get('error', 'Unknown error')}", 400
+
+        access_token = r['access_token']
+
+        # Get Twitch user info
+        headers = {
+            'Authorization': f'Bearer {access_token}',
+            'Client-Id': twitch_client_id
+        }
+        user_response = requests.get('https://api.twitch.tv/helix/users', headers=headers)
+        user_response.raise_for_status()
+        user_data = user_response.json()
+
+        if not user_data.get('data'):
+            logger.error("Twitch user data is empty")
+            return "OAuth Error: Failed to get user data", 400
+
+        twitch_user = user_data['data'][0]
+        twitch_user_id = twitch_user['id']
+        twitch_username = twitch_user['login']
+
+        # Save or update Twitch connection
+        connection = TwitchConnection.query.filter_by(user_id=uid).first()
+        if connection:
+            connection.twitch_user_id = twitch_user_id
+            connection.twitch_username = twitch_username
+            connection.access_token = access_token
+        else:
+            connection = TwitchConnection(
+                user_id=uid,
+                twitch_user_id=twitch_user_id,
+                twitch_username=twitch_username,
+                access_token=access_token
+            )
+            db.session.add(connection)
+
+        db.session.commit()
+        logger.info(f"User {uid} connected Twitch account: {twitch_username}")
+
+        return redirect('/dashboard.html')
+
+    except requests.RequestException as e:
+        logger.error(f"Twitch OAuth error: {str(e)}")
+        return f"OAuth Error: {str(e)}", 500
 
 # --- GAMES API ---
 @app.route('/api/games', methods=['GET'])
@@ -562,10 +669,9 @@ def get_game_options(slug):
     """
     Get game options for YAML creator form
 
-    This endpoint uses Archipelago's Options system to generate
-    dynamic form metadata for YAML creation.
+    This endpoint uses simple text parsing to avoid Archipelago dependencies.
     """
-    from yaml_creator import get_game_options
+    from yaml_creator_new import get_game_options
 
     try:
         options_data = get_game_options(slug)
@@ -588,7 +694,7 @@ def create_yaml_from_form(slug):
     - 'export': Download YAML file
     - 'save': Save YAML to user's vault
     """
-    from yaml_creator import form_data_to_yaml, validate_and_save_yaml
+    from yaml_creator_new import form_data_to_yaml, validate_and_save_yaml
     from flask import Response
 
     uid = session.get('user_id')
@@ -634,8 +740,14 @@ def yaml_creator_page(slug):
     if not uid:
         return redirect('/api/auth/login')
 
+    # Get user data
+    user = User.query.get(uid)
+    user_data = None
+    if user:
+        user_data = {'username': user.username, 'avatar': user.avatar_url}
+
     # Serve the YAML creator HTML
-    return send_file('../frontend/src/yaml_creator.html')
+    return render_template('yaml_creator.html', user=user_data, slug=slug)
 
 
 @app.route('/api/yamls', methods=['GET', 'POST'])
@@ -648,7 +760,8 @@ def handle_yamls():
     data = request.json
     try:
         y_data = yaml.safe_load(data['content'])
-        game_name = next((k for k in y_data if k not in ['name', 'description', 'requires']), "Unknown")
+        # Get game name from the 'game' key in YAML
+        game_name = y_data.get('game', 'Unknown')
         new_f = YamlFile(user_id=uid, filename=data['filename'], content=data['content'], game=game_name)
         db.session.add(new_f)
         db.session.commit()
@@ -676,7 +789,8 @@ def manage_yaml(yaml_id):
     try:
         # Validate YAML content
         y_data = yaml.safe_load(data.get('content', yaml_file.content))
-        game_name = next((k for k in y_data if k not in ['name', 'description', 'requires']), yaml_file.game)
+        # Get game name from the 'game' key in YAML
+        game_name = y_data.get('game', yaml_file.game)
 
         # Update fields
         if 'filename' in data:
@@ -692,10 +806,19 @@ def manage_yaml(yaml_id):
 
 @app.route('/api/roms', methods=['GET'])
 def list_roms():
+    """List ROMs - optionally filter by lobby_id for lobby-specific ROMs"""
     uid = session.get('user_id')
     if not uid: return jsonify([]), 401
-    roms = RomFile.query.filter_by(user_id=uid).all()
-    return jsonify([{"id": r.id, "name": r.filename, "sha": r.sha1, "game": r.game_detected, "status": r.status} for r in roms])
+
+    # Filter by lobby if lobby_id is provided
+    lobby_id = request.args.get('lobby_id')
+    if lobby_id:
+        roms = RomFile.query.filter_by(lobby_id=lobby_id).all()
+    else:
+        # Legacy: show user's ROMs (for dashboard)
+        roms = RomFile.query.filter_by(user_id=uid, lobby_id=None).all()
+
+    return jsonify([{"id": r.id, "name": r.filename, "sha": r.sha1, "game_detected": r.game_detected, "status": r.status} for r in roms])
 
 @app.route('/api/roms/upload', methods=['POST'])
 def upload_rom():
@@ -817,11 +940,19 @@ def get_lobbies():
     uid = session.get('user_id')
     if not uid: return jsonify([]), 401
 
-    # Get all open lobbies
-    lobbies = Lobby.query.filter(
-        Lobby.visibility.in_(['open', 'private']),
-        Lobby.status.in_(['pending', 'ready', 'active'])
-    ).order_by(Lobby.created_at.desc()).all()
+    # Check if filtering for user's lobbies only
+    mine_only = request.args.get('mine') == 'true'
+
+    if mine_only:
+        # Get only lobbies where user is a player
+        user_lobby_ids = [lp.lobby_id for lp in LobbyPlayer.query.filter_by(user_id=uid).all()]
+        lobbies = Lobby.query.filter(Lobby.id.in_(user_lobby_ids)).order_by(Lobby.created_at.desc()).all()
+    else:
+        # Get all open lobbies
+        lobbies = Lobby.query.filter(
+            Lobby.visibility.in_(['open', 'private']),
+            Lobby.status.in_(['open', 'pending', 'ready', 'active'])
+        ).order_by(Lobby.created_at.desc()).all()
 
     result = []
     for l in lobbies:
@@ -900,18 +1031,22 @@ def create_lobby():
 
     logger.info(f"User {uid} created lobby {new_lobby.id}: {lobby_name}")
 
-    # Broadcast new lobby to all connected clients
-    user = User.query.get(uid)
-    socketio.emit('lobby_created', {
-        'lobby_id': new_lobby.id,
-        'name': lobby_name,
-        'host_name': user.username,
-        'status': new_lobby.status,
-        'visibility': new_lobby.visibility,
-        'max_players': settings.max_players,
-        'player_count': 1,
-        'created_at': new_lobby.created_at.isoformat()
-    }, broadcast=True)
+    # Broadcast new lobby to all connected clients (non-blocking)
+    try:
+        user = User.query.get(uid)
+        socketio.emit('lobby_created', {
+            'lobby_id': new_lobby.id,
+            'name': lobby_name,
+            'host_name': user.username,
+            'status': new_lobby.status,
+            'visibility': new_lobby.visibility,
+            'max_players': settings.max_players,
+            'player_count': 1,
+            'created_at': new_lobby.created_at.isoformat()
+        }, broadcast=True)
+    except Exception as e:
+        logger.error(f"Failed to broadcast lobby creation: {e}")
+        # Continue anyway - lobby is created
 
     return jsonify({
         "lobby_id": new_lobby.id,
@@ -1126,6 +1261,28 @@ def leave_lobby(lobby_id):
         'player_count': remaining_players
     }, broadcast=True)
 
+    # If no players left, close and clean up the lobby
+    if remaining_players == 0:
+        logger.info(f"Lobby {lobby_id} is now empty - closing and cleaning up")
+
+        # Delete lobby-specific ROMs from database
+        RomFile.query.filter_by(lobby_id=lobby_id).delete()
+
+        # Update lobby status to finished
+        lobby.status = 'finished'
+        lobby.ended_at = datetime.utcnow()
+        db.session.commit()
+
+        # Clean up files asynchronously
+        from tasks import cleanup_lobby_files
+        cleanup_lobby_files.delay(lobby_id)
+
+        # Broadcast lobby closed
+        socketio.emit('lobby_closed', {
+            'lobby_id': lobby_id,
+            'reason': 'All players left'
+        }, room=f"lobby_{lobby_id}")
+
     return jsonify({"message": "left successfully"}), 200
 
 @app.route('/api/lobbies/<int:lobby_id>/ready', methods=['POST'])
@@ -1290,6 +1447,76 @@ def lobby_chat(lobby_id):
     db.session.commit()
 
     return jsonify({"status": "sent", "id": new_message.id}), 201
+
+@app.route('/api/lobbies/upload-rom', methods=['POST'])
+def upload_lobby_rom():
+    """Upload temporary ROM for lobby generation"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "not authenticated"}), 401
+
+    if 'file' not in request.files:
+        return jsonify({"error": "no file provided"}), 400
+
+    file = request.files['file']
+    lobby_id = request.form.get('lobby_id')
+
+    if not lobby_id:
+        return jsonify({"error": "lobby_id required"}), 400
+
+    # Verify user is in the lobby
+    player = LobbyPlayer.query.filter_by(lobby_id=lobby_id, user_id=uid).first()
+    if not player:
+        return jsonify({"error": "not in lobby"}), 403
+
+    # Create temporary directory for this lobby
+    temp_dir = f"/tmp/lobbies/{lobby_id}"
+    os.makedirs(temp_dir, exist_ok=True)
+
+    # Save file temporarily
+    filename = secure_filename(file.filename)
+    temp_path = os.path.join(temp_dir, f"{uid}_{filename}")
+    file.save(temp_path)
+
+    # Calculate SHA1 for verification
+    import hashlib
+    sha1_hash = hashlib.sha1()
+    with open(temp_path, 'rb') as f:
+        while chunk := f.read(8192):
+            sha1_hash.update(chunk)
+    sha1 = sha1_hash.hexdigest()
+
+    # Get YAML to detect game (if user has selected one)
+    yaml_id = request.form.get('yaml_id')
+    game_detected = "Unknown"
+    if yaml_id:
+        yaml_file = YamlFile.query.get(yaml_id)
+        if yaml_file:
+            game_detected = yaml_file.game
+
+    # Save to database for tracking
+    rom_record = RomFile(
+        user_id=uid,
+        lobby_id=lobby_id,
+        filename=filename,
+        file_path=temp_path,
+        sha1=sha1,
+        game_detected=game_detected,
+        status='uploaded'
+    )
+    db.session.add(rom_record)
+    db.session.commit()
+
+    logger.info(f"User {uid} uploaded ROM {filename} (SHA1: {sha1}) for lobby {lobby_id} (temp: {temp_path})")
+
+    # Return ROM record
+    return jsonify({
+        "rom_id": rom_record.id,
+        "filename": filename,
+        "sha1": sha1,
+        "game_detected": game_detected,
+        "message": "ROM uploaded successfully (temporary)"
+    }), 200
 
 @app.route('/api/lobbies/<int:lobby_id>/settings', methods=['GET', 'PUT'])
 def lobby_settings(lobby_id):

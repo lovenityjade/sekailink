@@ -73,11 +73,12 @@ class YamlFile(db.Model):
 
 
 class RomFile(db.Model):
-    """ROM file uploads (temporary storage)"""
+    """ROM file uploads (temporary, lobby-specific storage)"""
     __tablename__ = 'rom_files'
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.String, db.ForeignKey('users.id'))
+    lobby_id = db.Column(db.Integer, db.ForeignKey('lobbies.id'), nullable=True)  # Link to specific lobby
     filename = db.Column(db.String(255))
     file_path = db.Column(db.String(500))  # Temporary storage path
     sha1 = db.Column(db.String(40))

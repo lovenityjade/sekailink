@@ -571,33 +571,54 @@ def cleanup_lobby_files(lobby_id):
     # Stop the server first
     stop_archipelago_server(lobby_id)
 
+    # Clean up generation directory
     lobby_dir = f"/tmp/generation/{lobby_id}"
+    rom_dir = f"/tmp/lobbies/{lobby_id}"
 
-    if not os.path.exists(lobby_dir):
-        logger.warning(f"Lobby directory {lobby_dir} does not exist, nothing to clean")
-        return {"status": "skipped", "reason": "directory not found"}
+    total_size = 0
+    cleaned_dirs = []
 
-    try:
-        # Get directory size for logging
-        total_size = sum(
-            os.path.getsize(os.path.join(dirpath, filename))
-            for dirpath, _, filenames in os.walk(lobby_dir)
-            for filename in filenames
-        )
+    # Clean generation directory
+    if os.path.exists(lobby_dir):
+        try:
+            dir_size = sum(
+                os.path.getsize(os.path.join(dirpath, filename))
+                for dirpath, _, filenames in os.walk(lobby_dir)
+                for filename in filenames
+            )
+            shutil.rmtree(lobby_dir)
+            total_size += dir_size
+            cleaned_dirs.append("generation")
+            logger.info(f"🗑️ Cleaned up generation dir for lobby {lobby_id}")
+        except Exception as e:
+            logger.error(f"Failed to cleanup generation dir: {str(e)}")
 
-        # Remove the entire directory
-        shutil.rmtree(lobby_dir)
+    # Clean temporary ROM upload directory
+    if os.path.exists(rom_dir):
+        try:
+            dir_size = sum(
+                os.path.getsize(os.path.join(dirpath, filename))
+                for dirpath, _, filenames in os.walk(rom_dir)
+                for filename in filenames
+            )
+            shutil.rmtree(rom_dir)
+            total_size += dir_size
+            cleaned_dirs.append("roms")
+            logger.info(f"🗑️ Cleaned up ROM dir for lobby {lobby_id}")
+        except Exception as e:
+            logger.error(f"Failed to cleanup ROM dir: {str(e)}")
 
-        logger.info(f"🗑️ Cleaned up lobby {lobby_id} directory ({total_size / 1024 / 1024:.2f} MB freed)")
-        return {
-            "status": "cleaned",
-            "lobby_id": lobby_id,
-            "size_freed_mb": total_size / 1024 / 1024
-        }
+    if not cleaned_dirs:
+        logger.warning(f"No directories to clean for lobby {lobby_id}")
+        return {"status": "skipped", "reason": "no directories found"}
 
-    except Exception as e:
-        logger.error(f"Failed to cleanup lobby {lobby_id}: {str(e)}")
-        return {"status": "error", "error": str(e)}
+    logger.info(f"🗑️ Cleaned up lobby {lobby_id}: {', '.join(cleaned_dirs)} ({total_size / 1024 / 1024:.2f} MB freed)")
+    return {
+        "status": "cleaned",
+        "lobby_id": lobby_id,
+        "directories": cleaned_dirs,
+        "size_freed_mb": total_size / 1024 / 1024
+    }
 
 
 @celery_app.task

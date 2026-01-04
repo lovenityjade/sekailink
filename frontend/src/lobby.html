@@ -96,12 +96,26 @@
 
                 <!-- ROM Selection (shown only if game requires ROM) -->
                 <div class="form-group" id="rom-selection-group" style="display: none;">
-                    <label class="form-label">Select ROM for <span id="rom-game-name"></span></label>
+                    <label class="form-label">ROM for <span id="rom-game-name"></span></label>
                     <select id="rom-select" class="form-select">
                         <option value="">-- Choose a ROM --</option>
                     </select>
-                    <span class="form-hint" style="color: var(--status-warning);">
-                        This game requires a ROM file. Please select one from your vault or upload one in your dashboard.
+
+                    <!-- ROM Upload -->
+                    <div style="margin-top: var(--space-sm);">
+                        <label class="btn btn-sm" style="cursor: pointer; margin-right: var(--space-xs);">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-bottom; margin-right: 0.25rem;">
+                                <path d="M.5 9.9a.5.5 0 01.5.5v2.5a1 1 0 001 1h12a1 1 0 001-1v-2.5a.5.5 0 011 0v2.5a2 2 0 01-2 2H2a2 2 0 01-2-2v-2.5a.5.5 0 01.5-.5z"/>
+                                <path d="M7.646 1.146a.5.5 0 01.708 0l3 3a.5.5 0 01-.708.708L8.5 2.707V11.5a.5.5 0 01-1 0V2.707L5.354 4.854a.5.5 0 11-.708-.708l3-3z"/>
+                            </svg>
+                            Upload New ROM
+                            <input type="file" id="rom-file-input" accept=".gb,.gbc,.gba,.sfc,.smc,.nes,.z64,.n64" style="display: none;" onchange="handleRomUpload(event)">
+                        </label>
+                        <span id="rom-upload-status" class="text-muted text-sm"></span>
+                    </div>
+
+                    <span class="form-hint" style="color: var(--status-info);">
+                        Upload a ROM file for this lobby (temporary - will be deleted when lobby ends)
                     </span>
                 </div>
 
@@ -376,6 +390,15 @@ function initLobbySocket() {
         loadLobbyData();
     });
 
+    socket.on('lobby_closed', (data) => {
+        console.log('🚪 Lobby closed:', data.reason);
+        showToast(`Lobby closed: ${data.reason}`, 'warning');
+        // Redirect to home page after 2 seconds
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 2000);
+    });
+
     // Cleanup on page unload
     window.addEventListener('beforeunload', () => {
         socket.emit('leave_lobby', { lobby_id: lobbyId });
@@ -539,7 +562,8 @@ async function loadYamls() {
 // Load ROMs for specific game
 async function loadRomsForGame(gameName) {
     try {
-        const response = await fetch('/api/roms', { credentials: 'include' });
+        // Load lobby-specific ROMs
+        const response = await fetch(`/api/roms?lobby_id=${lobbyId}`, { credentials: 'include' });
         const roms = await response.json();
 
         const select = document.getElementById('rom-select');
@@ -548,18 +572,71 @@ async function loadRomsForGame(gameName) {
         const gameRoms = roms.filter(rom => rom.game_detected === gameName);
 
         if (gameRoms.length === 0) {
-            select.innerHTML = '<option value="">No ROMs available for this game</option>';
+            select.innerHTML = '<option value="">No ROMs uploaded yet - use button below to upload</option>';
             return;
         }
 
         gameRoms.forEach(rom => {
             const option = document.createElement('option');
             option.value = rom.id;
-            option.textContent = `${rom.filename} (${rom.status})`;
+            option.textContent = `${rom.name} (${rom.status})`;
             select.appendChild(option);
         });
     } catch (error) {
         console.error('Error loading ROMs:', error);
+    }
+}
+
+// Handle ROM file upload
+async function handleRomUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const statusEl = document.getElementById('rom-upload-status');
+    statusEl.textContent = 'Uploading...';
+    statusEl.style.color = 'var(--text-secondary)';
+
+    try {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('lobby_id', lobbyId);
+        formData.append('yaml_id', selectedYamlId);
+
+        const response = await fetch('/api/lobbies/upload-rom', {
+            method: 'POST',
+            body: formData,
+            credentials: 'include'
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            statusEl.textContent = `✓ ${result.filename} uploaded`;
+            statusEl.style.color = 'var(--success)';
+
+            // Reload ROMs for the current game
+            const selectedOption = document.getElementById('yaml-select').selectedOptions[0];
+            if (selectedOption) {
+                const gameName = selectedOption.dataset.game;
+                await loadRomsForGame(gameName);
+
+                // Auto-select the newly uploaded ROM
+                const romSelect = document.getElementById('rom-select');
+                romSelect.value = result.rom_id;
+                selectedRomId = result.rom_id;
+                updateReadyButton();
+            }
+
+            // Clear file input
+            event.target.value = '';
+        } else {
+            statusEl.textContent = `✗ ${result.error || 'Upload failed'}`;
+            statusEl.style.color = 'var(--danger)';
+        }
+    } catch (error) {
+        console.error('Error uploading ROM:', error);
+        statusEl.textContent = '✗ Upload failed';
+        statusEl.style.color = 'var(--danger)';
     }
 }
 

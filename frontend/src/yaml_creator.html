@@ -310,8 +310,8 @@
     </div>
 
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const gameSlug = urlParams.get('game');
+        // Get game slug from Jinja template variable
+        const gameSlug = "{{ slug }}";
 
         let gameData = null;
 
