@@ -2224,10 +2224,11 @@ def generate_seed():
     lobby.status = 'generating'
     db.session.commit()
 
-    # Start generation task
-    run_generator.delay(lobby_id, temp_dir, lobby.name)
+    # Start generation task using WebHostLib integration
+    from tasks import run_webhost_generation
+    run_webhost_generation.delay(lobby_id)
 
-    logger.info(f"Started generation for lobby {lobby_id}")
+    logger.info(f"Started WebHostLib generation for lobby {lobby_id}")
 
     return jsonify({
         "status": "started",

@@ -179,9 +179,117 @@ def start_archipelago_server(lobby_id, seed_file_path, port):
 
 
 @celery_app.task(bind=True)
+def run_webhost_generation(self, lobby_id):
+    """
+    Generate using WebHostLib integration (NEW - RECOMMENDED)
+    This replaces run_generator with Archipelago's proven WebHostLib logic
+    """
+    from generation_bridge import generate_multiworld
+    from sqlalchemy import create_engine
+    from sqlalchemy.orm import sessionmaker
+
+    logger.info(f"🎮 Starting WebHostLib generation for lobby {lobby_id}")
+
+    # Connect to database
+    engine = create_engine(os.getenv('DATABASE_URL'))
+    Session = sessionmaker(bind=engine)
+    db_session = Session()
+
+    try:
+        # Import models
+        sys.path.append('/app')
+        from models import Lobby
+
+        # Generate using WebHostLib
+        result = generate_multiworld(lobby_id, db_session)
+
+        if not result.get('success'):
+            logger.error(f"❌ Generation failed: {result.get('error')}")
+
+            # Update lobby status
+            lobby = db_session.query(Lobby).get(lobby_id)
+            if lobby:
+                lobby.status = 'failed'
+                db_session.commit()
+
+            return {"status": "ERROR", "error": result.get('error')}
+
+        # Extract results
+        seed_name = result['seed']
+        multidata_file = result['multidata_file']
+        patch_files = result['patch_files']
+
+        logger.info(f"✅ Generation successful: {seed_name}")
+        logger.info(f"📦 Generated {len(patch_files)} patch files")
+
+        # Copy files to persistent storage
+        import shutil
+        lobby_dir = f"/tmp/generation/{lobby_id}"
+        patches_dir = f"{lobby_dir}/patches"
+        os.makedirs(patches_dir, exist_ok=True)
+
+        # Copy multidata
+        multidata_dest = os.path.join(lobby_dir, os.path.basename(multidata_file))
+        shutil.copy2(multidata_file, multidata_dest)
+        logger.info(f"📦 Copied multidata to {multidata_dest}")
+
+        # Copy patches
+        for patch_file in patch_files:
+            patch_dest = os.path.join(patches_dir, os.path.basename(patch_file))
+            shutil.copy2(patch_file, patch_dest)
+            logger.info(f"🎮 Copied patch: {os.path.basename(patch_file)}")
+
+        # Clean up temp directory
+        result['temp_dir'].cleanup()
+
+        # Find available port
+        port = find_available_port()
+
+        # Start server using multidata
+        logger.info(f"🚀 Starting server on port {port}")
+        pid = start_archipelago_server(lobby_id, multidata_dest, port)
+
+        # Update lobby
+        lobby = db_session.query(Lobby).get(lobby_id)
+        if lobby:
+            lobby.status = 'ready'
+            lobby.server_port = port
+            lobby.seed_url = seed_name
+            db_session.commit()
+
+        logger.info(f"✅ Server started (PID: {pid}) on port {port}")
+
+        return {
+            "status": "SUCCESS",
+            "seed": seed_name,
+            "port": port,
+            "patch_count": len(patch_files)
+        }
+
+    except Exception as e:
+        logger.error(f"❌ Generation exception: {str(e)}")
+        logger.exception(e)
+
+        # Update lobby status
+        from models import Lobby
+        lobby = db_session.query(Lobby).get(lobby_id)
+        if lobby:
+            lobby.status = 'failed'
+            db_session.commit()
+
+        return {"status": "ERROR", "error": str(e)}
+
+    finally:
+        db_session.close()
+
+
+@celery_app.task(bind=True)
 def run_generator(self, lobby_id, yaml_paths, output_name):
     """
     Execute Archipelago seed generation with automatic cleanup.
+
+    DEPRECATED: Use run_webhost_generation() instead
+    This is kept for backward compatibility only
 
     This task:
     1. Creates temporary lobby directory
