@@ -95,7 +95,7 @@ def find_available_port():
     try:
         # Import Lobby model
         sys.path.append('/app')
-        from main import Lobby
+        from models import Lobby
 
         # Get all active lobbies with assigned ports
         active_lobbies = db_session.query(Lobby).filter(
@@ -209,10 +209,10 @@ def run_generator(self, lobby_id, yaml_paths, output_name):
     db_session = Session()
 
     try:
-        # Import models dynamically
+        # Import models from models package
         import sys
         sys.path.append('/app')
-        from main import Lobby, LobbyPlayer, RomFile, User
+        from models import Lobby, LobbyPlayer, RomFile, User
 
         # Get lobby and players
         lobby = db_session.query(Lobby).get(lobby_id)
@@ -510,7 +510,7 @@ def cleanup_old_roms():
 
     try:
         # Import RomFile model dynamically to avoid circular imports
-        from main import RomFile
+        from models import RomFile
 
         # Find old ROM records
         old_roms = db_session.query(RomFile).filter(
@@ -580,7 +580,7 @@ def check_time_limits():
     try:
         # Import models
         sys.path.append('/app')
-        from main import Lobby, LobbySettings
+        from models import Lobby, LobbySettings
 
         # Find all active lobbies with running timers
         active_lobbies = db_session.query(Lobby).filter(
@@ -671,7 +671,7 @@ def update_server_ratings():
     try:
         # Import models
         sys.path.append('/app')
-        from main import User, ServerRating, LobbyPlayer, Ban, Warning
+        from models import User, ServerRating, LobbyPlayer, Ban, Warning
 
         logger.info("📊 Starting server rating calculation...")
 
