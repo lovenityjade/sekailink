@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create YAML - SekaiLink</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/static/css/global.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/pages.css">
+    <style>
+        .yaml-creator-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .yaml-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .yaml-header h1 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .yaml-header .game-name {
+            color: var(--accent-primary);
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .yaml-form {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .form-section h2 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            border-bottom: 2px solid var(--accent-primary);
+            padding-bottom: 0.5rem;
+        }
+
+        .option-group {
+            background: var(--bg-primary);
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .option-group-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .option-group-title:hover {
+            color: var(--accent-primary);
+        }
+
+        .option-group-title svg {
+            transition: transform 0.2s;
+        }
+
+        .option-group.collapsed .option-group-title svg {
+            transform: rotate(-90deg);
+        }
+
+        .option-group.collapsed .options-container {
+            display: none;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .option-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option-label {
+            font-weight: 500;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .option-description {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .option-input input[type="text"],
+        .option-input input[type="number"],
+        .option-input select,
+        .option-input textarea {
+            width: 100%;
+            padding: 0.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .option-input input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            cursor: pointer;
+        }
+
+        .option-input input[type="range"] {
+            width: 100%;
+        }
+
+        .range-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 0.25rem;
+        }
+
+        .range-value {
+            color: var(--accent-primary);
+            font-weight: 600;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .toggle-container {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .toggle-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .toggle-btn.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-secondary);
+        }
+
+        .info-tooltip {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            color: white;
+            text-align: center;
+            line-height: 16px;
+            font-size: 12px;
+            cursor: help;
+            position: relative;
+        }
+
+        .info-tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 50%;
+            bottom: 100%;
+            transform: translateX(-50%);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            padding: 0.5rem;
+            border-radius: 4px;
+            white-space: nowrap;
+            z-index: 1000;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .meta-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-secondary);
+        }
+
+        .error-message {
+            background: #ff4444;
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .success-message {
+            background: #44ff44;
+            color: #000;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="yaml-creator-container">
+        <div class="yaml-header">
+            <h1>Create YAML Configuration</h1>
+            <div class="game-name" id="gameName">Loading...</div>
+        </div>
+
+        <div id="messageContainer"></div>
+
+        <div id="loadingMessage" class="loading">
+            <p>Loading game options...</p>
+        </div>
+
+        <form id="yamlForm" class="yaml-form" style="display: none;">
+            <!-- Meta Options -->
+            <div class="form-section">
+                <h2>Player Information</h2>
+                <div class="meta-options">
+                    <div class="option-item">
+                        <label class="option-label" for="playerName">
+                            Player Name
+                            <span class="info-tooltip" data-tooltip="This is the name you use to connect with your game">?</span>
+                        </label>
+                        <input type="text" id="playerName" name="name" placeholder="Player" maxlength="16" required>
+                    </div>
+                    <div class="option-item">
+                        <label class="option-label" for="description">Description (Optional)</label>
+                        <input type="text" id="description" name="description" placeholder="Auto-generated">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option Groups -->
+            <div id="optionGroups"></div>
+
+            <!-- Buttons -->
+            <div class="button-row">
+                <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
+                <button type="submit" name="intent" value="save" class="btn btn-secondary">Save to Vault</button>
+                <button type="submit" name="intent" value="export" class="btn btn-primary">Download YAML</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const gameSlug = urlParams.get('game');
+
+        let gameData = null;
+
+        async function loadGameOptions() {
+            try {
+                const response = await fetch(`/api/games/${encodeURIComponent(gameSlug)}/options`);
+                const data = await response.json();
+
+                if (data.error) {
+                    showError(data.error);
+                    return;
+                }
+
+                gameData = data;
+                renderForm(data);
+            } catch (error) {
+                showError('Failed to load game options: ' + error.message);
+            }
+        }
+
+        function renderForm(data) {
+            document.getElementById('gameName').textContent = data.game_display_name || data.game_name;
+            document.getElementById('loadingMessage').style.display = 'none';
+            document.getElementById('yamlForm').style.display = 'block';
+
+            const optionGroupsContainer = document.getElementById('optionGroups');
+            optionGroupsContainer.innerHTML = '';
+
+            for (const [groupName, groupOptions] of Object.entries(data.option_groups)) {
+                const groupDiv = document.createElement('div');
+                groupDiv.className = 'option-group';
+
+                const groupTitle = document.createElement('div');
+                groupTitle.className = 'option-group-title';
+                groupTitle.innerHTML = `
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M6 4l4 4-4 4"/>
+                    </svg>
+                    ${groupName}
+                `;
+                groupTitle.onclick = () => groupDiv.classList.toggle('collapsed');
+
+                const optionsContainer = document.createElement('div');
+                optionsContainer.className = 'options-container';
+
+                for (const [optionName, option] of Object.entries(groupOptions)) {
+                    const optionElement = renderOption(optionName, option);
+                    if (optionElement) {
+                        optionsContainer.appendChild(optionElement);
+                    }
+                }
+
+                groupDiv.appendChild(groupTitle);
+                groupDiv.appendChild(optionsContainer);
+                optionGroupsContainer.appendChild(groupDiv);
+            }
+        }
+
+        function renderOption(name, option) {
+            const div = document.createElement('div');
+            div.className = 'option-item';
+
+            const label = document.createElement('label');
+            label.className = 'option-label';
+            label.innerHTML = `
+                ${option.display_name}
+                ${option.description ? `<span class="info-tooltip" data-tooltip="${escapeHtml(option.description)}">?</span>` : ''}
+            `;
+
+            const inputContainer = document.createElement('div');
+            inputContainer.className = 'option-input';
+
+            let input;
+
+            switch (option.type) {
+                case 'toggle':
+                    input = createToggle(name, option);
+                    break;
+
+                case 'choice':
+                    input = createChoice(name, option);
+                    break;
+
+                case 'range':
+                case 'named_range':
+                    input = createRange(name, option);
+                    break;
+
+                case 'free_text':
+                    input = document.createElement('input');
+                    input.type = 'text';
+                    input.name = name;
+                    input.value = option.default || '';
+                    break;
+
+                case 'text_choice':
+                    input = createTextChoice(name, option);
+                    break;
+
+                default:
+                    // Skip unsupported types for now
+                    return null;
+            }
+
+            if (option.description) {
+                const desc = document.createElement('div');
+                desc.className = 'option-description';
+                desc.textContent = option.description.split('\n')[0]; // First line only
+                div.appendChild(label);
+                div.appendChild(desc);
+                inputContainer.appendChild(input);
+                div.appendChild(inputContainer);
+            } else {
+                div.appendChild(label);
+                inputContainer.appendChild(input);
+                div.appendChild(inputContainer);
+            }
+
+            return div;
+        }
+
+        function createToggle(name, option) {
+            const container = document.createElement('div');
+            container.className = 'toggle-container';
+
+            const noBtn = document.createElement('button');
+            noBtn.type = 'button';
+            noBtn.className = 'toggle-btn' + (option.default === 0 ? ' active' : '');
+            noBtn.textContent = 'No';
+            noBtn.onclick = () => {
+                noBtn.classList.add('active');
+                yesBtn.classList.remove('active');
+                hiddenInput.value = '0';
+            };
+
+            const yesBtn = document.createElement('button');
+            yesBtn.type = 'button';
+            yesBtn.className = 'toggle-btn' + (option.default === 1 ? ' active' : '');
+            yesBtn.textContent = 'Yes';
+            yesBtn.onclick = () => {
+                yesBtn.classList.add('active');
+                noBtn.classList.remove('active');
+                hiddenInput.value = '1';
+            };
+
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = name;
+            hiddenInput.value = option.default || '0';
+
+            container.appendChild(noBtn);
+            container.appendChild(yesBtn);
+            container.appendChild(hiddenInput);
+
+            return container;
+        }
+
+        function createChoice(name, option) {
+            const select = document.createElement('select');
+            select.name = name;
+
+            if (option.choice_names) {
+                for (const choiceName of option.choice_names) {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = choiceName;
+                    optionElement.textContent = choiceName;
+                    if (option.default && option.default.toString() === choiceName) {
+                        optionElement.selected = true;
+                    }
+                    select.appendChild(optionElement);
+                }
+            }
+
+            return select;
+        }
+
+        function createRange(name, option) {
+            const container = document.createElement('div');
+
+            const range = document.createElement('input');
+            range.type = 'range';
+            range.name = name;
+            range.min = option.min || 0;
+            range.max = option.max || 100;
+            range.value = option.default || option.min || 0;
+
+            const display = document.createElement('div');
+            display.className = 'range-display';
+
+            const minLabel = document.createElement('span');
+            minLabel.textContent = option.min || 0;
+
+            const valueLabel = document.createElement('span');
+            valueLabel.className = 'range-value';
+            valueLabel.textContent = range.value;
+
+            const maxLabel = document.createElement('span');
+            maxLabel.textContent = option.max || 100;
+
+            range.oninput = () => {
+                valueLabel.textContent = range.value;
+            };
+
+            display.appendChild(minLabel);
+            display.appendChild(valueLabel);
+            display.appendChild(maxLabel);
+
+            container.appendChild(range);
+            container.appendChild(display);
+
+            return container;
+        }
+
+        function createTextChoice(name, option) {
+            const container = document.createElement('div');
+
+            const select = document.createElement('select');
+            select.name = name;
+
+            if (option.choice_names) {
+                for (const choiceName of option.choice_names) {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = choiceName;
+                    optionElement.textContent = choiceName;
+                    select.appendChild(optionElement);
+                }
+            }
+
+            // Add custom option
+            const customOption = document.createElement('option');
+            customOption.value = '__custom__';
+            customOption.textContent = 'Custom...';
+            select.appendChild(customOption);
+
+            const customInput = document.createElement('input');
+            customInput.type = 'text';
+            customInput.name = name + '-custom';
+            customInput.placeholder = 'Enter custom value';
+            customInput.style.display = 'none';
+            customInput.style.marginTop = '0.5rem';
+
+            select.onchange = () => {
+                if (select.value === '__custom__') {
+                    customInput.style.display = 'block';
+                    select.name = '';
+                } else {
+                    customInput.style.display = 'none';
+                    select.name = name;
+                }
+            };
+
+            container.appendChild(select);
+            container.appendChild(customInput);
+
+            return container;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function showError(message) {
+            const container = document.getElementById('messageContainer');
+            container.innerHTML = `<div class="error-message">${escapeHtml(message)}</div>`;
+            document.getElementById('loadingMessage').style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            const container = document.getElementById('messageContainer');
+            container.innerHTML = `<div class="success-message">${escapeHtml(message)}</div>`;
+        }
+
+        // Handle form submission
+        document.getElementById('yamlForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const intent = e.submitter.value;
+
+            formData.append('intent', intent);
+            formData.append('game', gameSlug);
+
+            try {
+                const response = await fetch(`/api/games/${encodeURIComponent(gameSlug)}/create-yaml`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (intent === 'export') {
+                    // Download YAML file
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${document.getElementById('playerName').value || 'player'}.yaml`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                    showSuccess('YAML downloaded successfully!');
+                } else if (intent === 'save') {
+                    // Save to vault
+                    const result = await response.json();
+                    if (result.success) {
+                        showSuccess('YAML saved to your vault!');
+                        setTimeout(() => {
+                            window.location.href = '/dashboard.html#yamls';
+                        }, 1500);
+                    } else {
+                        showError(result.error || 'Failed to save YAML');
+                    }
+                }
+            } catch (error) {
+                showError('Request failed: ' + error.message);
+            }
+        });
+
+        // Load options on page load
+        if (gameSlug) {
+            loadGameOptions();
+        } else {
+            showError('No game specified');
+        }
+    </script>
+</body>
+</html>

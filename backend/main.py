@@ -553,6 +553,91 @@ def toggle_favorite(slug):
         db.session.commit()
         return jsonify({'status': 'favorited', 'is_favorited': True})
 
+# ========================================
+# YAML CREATOR ROUTES
+# ========================================
+
+@app.route('/api/games/<slug>/options', methods=['GET'])
+def get_game_options(slug):
+    """
+    Get game options for YAML creator form
+
+    This endpoint uses Archipelago's Options system to generate
+    dynamic form metadata for YAML creation.
+    """
+    from yaml_creator import get_game_options
+
+    try:
+        options_data = get_game_options(slug)
+
+        if 'error' in options_data:
+            return jsonify(options_data), 404
+
+        return jsonify(options_data)
+    except Exception as e:
+        logger.error(f"Error getting game options: {str(e)}")
+        return jsonify({'error': f'Failed to load game options: {str(e)}'}), 500
+
+
+@app.route('/api/games/<slug>/create-yaml', methods=['POST'])
+def create_yaml_from_form(slug):
+    """
+    Create YAML from form data
+
+    Supports two intents:
+    - 'export': Download YAML file
+    - 'save': Save YAML to user's vault
+    """
+    from yaml_creator import form_data_to_yaml, validate_and_save_yaml
+    from flask import Response
+
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({'error': 'Not authenticated'}), 401
+
+    try:
+        # Get form data
+        form_data = request.form.to_dict()
+        intent = form_data.get('intent', 'export')
+
+        # Convert form data to YAML
+        yaml_content = form_data_to_yaml(slug, form_data)
+
+        if intent == 'save':
+            # Save to database
+            result = validate_and_save_yaml(uid, slug, yaml_content, db.session)
+
+            if not result.get('success'):
+                return jsonify(result), 400
+
+            return jsonify(result)
+
+        else:  # export (download)
+            # Return YAML file for download
+            player_name = form_data.get('name', 'player')
+            response = Response(yaml_content)
+            response.headers['Content-Type'] = 'text/yaml'
+            response.headers['Content-Disposition'] = f'attachment; filename={player_name}.yaml'
+            return response
+
+    except Exception as e:
+        logger.error(f"Error creating YAML: {str(e)}")
+        return jsonify({'error': f'Failed to create YAML: {str(e)}'}), 500
+
+
+@app.route('/games/<slug>/create-yaml')
+def yaml_creator_page(slug):
+    """Serve the YAML creator page for a specific game"""
+    uid = session.get('user_id')
+
+    # Check if user is authenticated
+    if not uid:
+        return redirect('/api/auth/login')
+
+    # Serve the YAML creator HTML
+    return send_file('../frontend/src/yaml_creator.html')
+
+
 @app.route('/api/yamls', methods=['GET', 'POST'])
 def handle_yamls():
     uid = session.get('user_id')
