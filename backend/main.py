@@ -181,6 +181,31 @@ with app.app_context():
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+# --- MAINTENANCE MODE CHECK ---
+@app.before_request
+def check_maintenance_mode():
+    """Check if site is in maintenance mode before processing any request"""
+    # Allow access to maintenance page and admin API
+    if request.path == '/maintenance.html' or request.path.startswith('/api/admin/server/maintenance'):
+        return None
+
+    # Check if maintenance mode is enabled
+    maintenance_file = '/tmp/sekailink_maintenance'
+    if os.path.exists(maintenance_file):
+        # Redirect all requests to maintenance page
+        if request.path.startswith('/api/'):
+            # For API requests, return JSON
+            return jsonify({
+                "error": "Site is under maintenance",
+                "message": "SekaiLink is currently undergoing maintenance. Please check back later.",
+                "expected_return": "Friday, January 10, 2026"
+            }), 503
+        else:
+            # For page requests, show maintenance page
+            return render_template('maintenance.html'), 503
+
+    return None
+
 # --- ROUTES D'AUTHENTIFICATION ---
 @app.route('/api/auth/login')
 def login():
