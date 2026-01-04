@@ -41,6 +41,7 @@ services:
       - ./archipelago_core:/opt/Archipelago
       - ./backend/static/uploads:/app/static/uploads
       - ./backend/static/boxarts:/app/static/boxarts
+      - ./data:/app/data  # Persistent data (maintenance flags, etc.)
     environment:
       # Flask Configuration
       - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}

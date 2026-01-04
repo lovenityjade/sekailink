@@ -190,7 +190,8 @@ def check_maintenance_mode():
         return None
 
     # Check if maintenance mode is enabled
-    maintenance_file = '/tmp/sekailink_maintenance'
+    # Use persistent location instead of /tmp (survives container restarts)
+    maintenance_file = '/app/data/maintenance'
     if os.path.exists(maintenance_file):
         # Redirect all requests to maintenance page
         if request.path.startswith('/api/'):
@@ -3412,8 +3413,8 @@ def toggle_maintenance_mode():
     enabled = data.get('enabled', False)
 
     # Store maintenance mode in a file or database
-    # For now, we'll use a simple file flag
-    flag_file = '/tmp/sekailink_maintenance'
+    # Use persistent location (survives container restarts)
+    flag_file = '/app/data/maintenance'
     if enabled:
         with open(flag_file, 'w') as f:
             f.write('1')
