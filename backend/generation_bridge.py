@@ -9,7 +9,8 @@ import sys
 import os
 
 # Add Archipelago to Python path
-ARCHIPELAGO_PATH = os.path.join(os.path.dirname(__file__), '..', 'archipelago_core')
+# Use environment variable in Docker, fallback to relative path for local development
+ARCHIPELAGO_PATH = os.getenv('ARCHIPELAGO_PATH', os.path.join(os.path.dirname(__file__), '..', 'archipelago_core'))
 sys.path.insert(0, ARCHIPELAGO_PATH)
 
 import tempfile

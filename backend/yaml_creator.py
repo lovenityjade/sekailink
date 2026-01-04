@@ -9,7 +9,8 @@ import sys
 import os
 
 # Add Archipelago to Python path
-ARCHIPELAGO_PATH = os.path.join(os.path.dirname(__file__), '..', 'archipelago_core')
+# Use environment variable in Docker, fallback to relative path for local development
+ARCHIPELAGO_PATH = os.getenv('ARCHIPELAGO_PATH', os.path.join(os.path.dirname(__file__), '..', 'archipelago_core'))
 sys.path.insert(0, ARCHIPELAGO_PATH)
 
 import yaml
@@ -28,22 +29,52 @@ def get_game_options(game_slug: str, visibility_level=Options.Visibility.simple_
     Get options for a specific game with metadata for form generation
 
     Args:
-        game_slug: The game identifier (e.g., "A Link to the Past")
+        game_slug: The game identifier slug (e.g., "a-link-to-the-past")
         visibility_level: Which options to show (simple_ui or complex_ui)
 
     Returns:
         Dict with option groups and metadata
     """
+    # Import here to avoid circular dependency
+    from models import Game
+    from sqlalchemy.orm import scoped_session, sessionmaker
+    from sqlalchemy import create_engine
+    import os
+
+    # Get game name from database
+    database_url = os.getenv('DATABASE_URL')
+    engine = create_engine(database_url)
+    Session = scoped_session(sessionmaker(bind=engine))
+    session = Session()
+
     try:
-        world = AutoWorldRegister.world_types[game_slug]
-    except KeyError:
-        return {"error": f"Game '{game_slug}' not found"}
+        game = session.query(Game).filter_by(slug=game_slug).first()
+        if not game:
+            session.close()
+            return {"error": f"Game with slug '{game_slug}' not found in database"}
+
+        game_name = game.name
+        session.close()
+
+        # Now look up in AutoWorldRegister using the actual game name
+        world = AutoWorldRegister.world_types.get(game_name)
+        if not world:
+            return {"error": f"Game '{game_name}' not found in Archipelago worlds"}
+    except Exception as e:
+        logger.error(f"Error looking up game: {e}")
+        return {"error": f"Failed to lookup game: {str(e)}"}
 
     if world.hidden or world.web.options_page is False:
         return {"error": f"Game '{game_slug}' does not support YAML creation"}
 
     # Get option groups using Archipelago's function
-    option_groups = Options.get_option_groups(world, visibility_level=visibility_level)
+    try:
+        logger.info(f"Getting option groups for {game_name}, visibility_level={visibility_level}")
+        option_groups = Options.get_option_groups(world, visibility_level=visibility_level)
+        logger.info(f"Successfully got {len(option_groups)} option groups")
+    except Exception as e:
+        logger.error(f"Error in get_option_groups: {e}", exc_info=True)
+        return {"error": f"Failed to get option groups: {str(e)}"}
 
     # Build form data
     form_data = {
@@ -52,19 +83,52 @@ def get_game_options(game_slug: str, visibility_level=Options.Visibility.simple_
         "option_groups": {}
     }
 
-    for group_name, group_options in option_groups.items():
-        form_data["option_groups"][group_name] = {}
+    try:
+        for group_name, group_options in option_groups.items():
+            logger.info(f"Processing group: {group_name}")
+            form_data["option_groups"][group_name] = {}
 
-        for option_name, option_class in group_options.items():
-            option_info = build_option_metadata(option_name, option_class)
-            form_data["option_groups"][group_name][option_name] = option_info
+            for option_name, option_class in group_options.items():
+                logger.debug(f"Building metadata for option: {option_name}")
+                option_info = build_option_metadata(option_name, option_class)
+                form_data["option_groups"][group_name][option_name] = option_info
+    except Exception as e:
+        logger.error(f"Error building form data: {e}", exc_info=True)
+        return {"error": f"Failed to build form: {str(e)}"}
 
     # Add presets if available
-    form_data["presets"] = {}
-    for preset_name, preset_options in world.web.options_presets.items():
-        form_data["presets"][preset_name] = preset_options
+    try:
+        form_data["presets"] = {}
+        logger.info(f"Loading presets from world.web.options_presets")
+        for preset_name, preset_options in world.web.options_presets.items():
+            form_data["presets"][preset_name] = preset_options
+        logger.info(f"Successfully loaded {len(form_data['presets'])} presets")
+    except Exception as e:
+        logger.error(f"Error loading presets: {e}", exc_info=True)
+        form_data["presets"] = {}  # Continue without presets
+
+    # Convert any frozensets or sets to lists for JSON serialization
+    import json
+    try:
+        # This will raise an error if there are non-serializable objects
+        json.dumps(form_data)
+    except TypeError as e:
+        logger.warning(f"JSON serialization issue, attempting to fix: {e}")
+        form_data = make_json_safe(form_data)
 
     return form_data
+
+
+def make_json_safe(obj):
+    """Recursively convert non-JSON-serializable objects"""
+    if isinstance(obj, (set, frozenset)):
+        return list(obj)
+    elif isinstance(obj, dict):
+        return {k: make_json_safe(v) for k, v in obj.items()}
+    elif isinstance(obj, (list, tuple)):
+        return [make_json_safe(item) for item in obj]
+    else:
+        return obj
 
 
 def build_option_metadata(option_name: str, option_class: Type[Options.Option]) -> Dict[str, Any]:
@@ -93,9 +157,17 @@ def build_option_metadata(option_name: str, option_class: Type[Options.Option]) 
             name: value for name, value in option_class.options.items()
             if name not in option_class.aliases  # Exclude aliases
         }
+        # Get unique values, try to sort but handle mixed types
+        unique_values = set(option_class.options.values())
+        try:
+            sorted_values = sorted(unique_values)
+        except TypeError:
+            # Mixed types (e.g., tuples and ints), can't sort
+            sorted_values = list(unique_values)
+
         metadata["choice_names"] = [
             option_class.name_lookup[value]
-            for value in sorted(set(option_class.options.values()))
+            for value in sorted_values
         ]
 
     elif issubclass(option_class, Options.Range):
