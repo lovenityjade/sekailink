@@ -1981,6 +1981,204 @@ def ban_user(user_id):
         "message": f"User banned {f'for {duration_days} days' if duration_days > 0 else 'permanently'}"
     })
 
+# ========================================
+# SERVER MANAGEMENT ROUTES (ADMIN/MOD)
+# ========================================
+
+@app.route('/api/admin/servers', methods=['GET'])
+def list_servers():
+    """List all running Archipelago servers (mods/admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    user = User.query.get(uid)
+    if not user or not (user.is_moderator or user.is_admin):
+        return jsonify({"error": "Requires moderator permissions"}), 403
+
+    from server_manager import get_server_manager
+
+    server_manager = get_server_manager()
+    servers = server_manager.list_servers()
+
+    return jsonify({
+        "servers": [
+            {
+                "lobby_id": s.lobby_id,
+                "pid": s.pid,
+                "port": s.port,
+                "status": s.status.value,
+                "started_at": s.started_at.isoformat(),
+                "cpu_percent": s.cpu_percent,
+                "memory_mb": s.memory_mb,
+                "uptime_seconds": (datetime.utcnow() - s.started_at).total_seconds()
+            }
+            for s in servers
+        ],
+        "total": len(servers)
+    })
+
+
+@app.route('/api/admin/servers/<int:lobby_id>', methods=['GET'])
+def get_server_info(lobby_id):
+    """Get detailed server information (mods/admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    user = User.query.get(uid)
+    if not user or not (user.is_moderator or user.is_admin):
+        return jsonify({"error": "Requires moderator permissions"}), 403
+
+    from server_manager import get_server_manager
+
+    server_manager = get_server_manager()
+    server_info = server_manager.check_health(lobby_id)
+
+    if not server_info:
+        return jsonify({"error": "Server not found"}), 404
+
+    return jsonify({
+        "lobby_id": server_info.lobby_id,
+        "pid": server_info.pid,
+        "port": server_info.port,
+        "status": server_info.status.value,
+        "started_at": server_info.started_at.isoformat(),
+        "last_health_check": server_info.last_health_check.isoformat() if server_info.last_health_check else None,
+        "multidata_path": server_info.multidata_path,
+        "log_path": server_info.log_path,
+        "cpu_percent": server_info.cpu_percent,
+        "memory_mb": server_info.memory_mb,
+        "uptime_seconds": (datetime.utcnow() - server_info.started_at).total_seconds()
+    })
+
+
+@app.route('/api/admin/servers/<int:lobby_id>/stop', methods=['POST'])
+def stop_server(lobby_id):
+    """Stop a running server (mods/admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    user = User.query.get(uid)
+    if not user or not (user.is_moderator or user.is_admin):
+        return jsonify({"error": "Requires moderator permissions"}), 403
+
+    from server_manager import get_server_manager
+
+    data = request.json or {}
+    graceful = data.get('graceful', True)
+
+    server_manager = get_server_manager()
+    success = server_manager.stop_server(lobby_id, graceful=graceful)
+
+    if success:
+        # Update lobby status
+        lobby = Lobby.query.get(lobby_id)
+        if lobby:
+            lobby.status = 'finished'
+            lobby.server_port = None
+            db.session.commit()
+
+        logger.info(f"🛑 Server stopped for lobby {lobby_id} by moderator {uid}")
+
+        return jsonify({
+            "status": "success",
+            "message": f"Server stopped {'gracefully' if graceful else 'forcefully'}"
+        })
+    else:
+        return jsonify({"error": "Failed to stop server"}), 500
+
+
+@app.route('/api/admin/servers/<int:lobby_id>/restart', methods=['POST'])
+def restart_server(lobby_id):
+    """Restart a running server (mods/admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    user = User.query.get(uid)
+    if not user or not (user.is_moderator or user.is_admin):
+        return jsonify({"error": "Requires moderator permissions"}), 403
+
+    from server_manager import get_server_manager
+
+    server_manager = get_server_manager()
+    new_info = server_manager.restart_server(lobby_id)
+
+    if new_info:
+        logger.info(f"🔄 Server restarted for lobby {lobby_id} by moderator {uid}")
+
+        return jsonify({
+            "status": "success",
+            "message": "Server restarted successfully",
+            "server": {
+                "pid": new_info.pid,
+                "port": new_info.port,
+                "status": new_info.status.value
+            }
+        })
+    else:
+        return jsonify({"error": "Failed to restart server"}), 500
+
+
+@app.route('/api/admin/servers/<int:lobby_id>/health', methods=['GET'])
+def check_server_health(lobby_id):
+    """Check server health (mods/admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    user = User.query.get(uid)
+    if not user or not (user.is_moderator or user.is_admin):
+        return jsonify({"error": "Requires moderator permissions"}), 403
+
+    from server_manager import get_server_manager
+
+    server_manager = get_server_manager()
+    health = server_manager.check_health(lobby_id)
+
+    if not health:
+        return jsonify({"error": "Server not found"}), 404
+
+    return jsonify({
+        "lobby_id": health.lobby_id,
+        "status": health.status.value,
+        "healthy": health.status.value == "running",
+        "cpu_percent": health.cpu_percent,
+        "memory_mb": health.memory_mb,
+        "uptime_seconds": (datetime.utcnow() - health.started_at).total_seconds()
+    })
+
+
+@app.route('/api/admin/servers/<int:lobby_id>/logs', methods=['GET'])
+def get_archipelago_server_logs(lobby_id):
+    """Get Archipelago server logs (mods/admins only)"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    user = User.query.get(uid)
+    if not user or not (user.is_moderator or user.is_admin):
+        return jsonify({"error": "Requires moderator permissions"}), 403
+
+    from server_manager import get_server_manager
+
+    lines = request.args.get('lines', 50, type=int)
+
+    server_manager = get_server_manager()
+    logs = server_manager.get_server_log(lobby_id, lines=lines)
+
+    if logs is None:
+        return jsonify({"error": "Server not found or logs not available"}), 404
+
+    return jsonify({
+        "lobby_id": lobby_id,
+        "lines": lines,
+        "logs": logs
+    })
+
+
 @app.route('/api/admin/users/<user_id>/unban', methods=['POST'])
 def unban_user(user_id):
     """Unban a user (mods/admins only)"""

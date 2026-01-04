@@ -245,9 +245,21 @@ def run_webhost_generation(self, lobby_id):
         # Find available port
         port = find_available_port()
 
-        # Start server using multidata
-        logger.info(f"🚀 Starting server on port {port}")
-        pid = start_archipelago_server(lobby_id, multidata_dest, port)
+        # Start server using ServerManager (NEW - multiprocess isolation)
+        logger.info(f"🚀 Starting server with ServerManager on port {port}")
+
+        from server_manager import get_server_manager
+        server_manager = get_server_manager()
+
+        server_info = server_manager.start_server(lobby_id, multidata_dest, port)
+
+        if not server_info:
+            logger.error(f"❌ Failed to start server for lobby {lobby_id}")
+            lobby = db_session.query(Lobby).get(lobby_id)
+            if lobby:
+                lobby.status = 'failed'
+                db_session.commit()
+            return {"status": "ERROR", "error": "Failed to start server"}
 
         # Update lobby
         lobby = db_session.query(Lobby).get(lobby_id)
@@ -257,7 +269,7 @@ def run_webhost_generation(self, lobby_id):
             lobby.seed_url = seed_name
             db_session.commit()
 
-        logger.info(f"✅ Server started (PID: {pid}) on port {port}")
+        logger.info(f"✅ Server started (PID: {server_info.pid}) on port {port}")
 
         return {
             "status": "SUCCESS",
