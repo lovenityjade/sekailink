@@ -262,9 +262,37 @@
                             </span>
                         </div>
                     </div>
+                    <div class="lobby-actions">
+                        <button class="btn btn-sm" onclick="joinLobby(${lobby.id})">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M8 2a.5.5 0 01.5.5v5h5a.5.5 0 010 1h-5v5a.5.5 0 01-1 0v-5h-5a.5.5 0 010-1h5v-5A.5.5 0 018 2z"/>
+                            </svg>
+                            Join
+                        </button>
+                    </div>
                 </div>
             </div>
         `).join('');
+    }
+
+    // Join lobby function
+    async function joinLobby(lobbyId) {
+        try {
+            const response = await fetch(\`/api/lobbies/\${lobbyId}/join\`, {
+                method: 'POST',
+                credentials: 'include'
+            });
+
+            if (response.ok) {
+                window.location.href = \`/lobby.html?id=\${lobbyId}\`;
+            } else {
+                const error = await response.json();
+                alert(\`Failed to join lobby: \${error.error || 'Unknown error'}\`);
+            }
+        } catch (error) {
+            console.error('Error joining lobby:', error);
+            alert('Failed to join lobby. Please try again.');
+        }
     }
 
     // Refresh lobby list (called by WebSocket)

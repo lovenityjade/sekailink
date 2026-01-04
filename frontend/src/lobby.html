@@ -554,6 +554,30 @@ function updateReadyButton() {
     readyBtn.disabled = false;
 }
 
+// Join lobby if not already in it
+async function joinLobbyIfNeeded() {
+    // Try to join the lobby
+    try {
+        const response = await fetch(`/api/lobbies/${lobbyId}/join`, {
+            method: 'POST',
+            credentials: 'include'
+        });
+
+        if (response.ok) {
+            console.log('✅ Joined lobby successfully');
+        } else if (response.status === 200) {
+            // Already in lobby
+            console.log('✅ Already in lobby');
+        } else {
+            const error = await response.json();
+            console.error('Failed to join lobby:', error);
+            alert(`Cannot join lobby: ${error.error || 'Unknown error'}`);
+        }
+    } catch (error) {
+        console.error('Error joining lobby:', error);
+    }
+}
+
 // Load Lobby Data
 async function loadLobbyData() {
     const response = await fetch(`/api/lobbies/${lobbyId}`, { credentials: 'include' });
@@ -918,6 +942,7 @@ document.getElementById('stop-timer-btn').addEventListener('click', async () => 
 // Initialize
 async function init() {
     await loadUserInfo();
+    await joinLobbyIfNeeded();  // Auto-join lobby if not already in it
     await loadGames();  // Load games first to check ROM requirements
     await loadYamls();
     await loadLobbyData();
