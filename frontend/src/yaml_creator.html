@@ -411,6 +411,15 @@
                     input = createTextChoice(name, option);
                     break;
 
+                case 'option_set':
+                case 'option_list':
+                    input = createOptionList(name, option);
+                    break;
+
+                case 'option_counter':
+                    input = createOptionCounter(name, option);
+                    break;
+
                 default:
                     // Skip unsupported types for now
                     return null;
@@ -565,6 +574,86 @@
 
             container.appendChild(select);
             container.appendChild(customInput);
+
+            return container;
+        }
+
+        function createOptionList(name, option) {
+            const container = document.createElement('div');
+            container.style.marginTop = '0.5rem';
+
+            const validKeys = option.valid_keys || [];
+
+            if (validKeys.length === 0) {
+                const info = document.createElement('div');
+                info.textContent = 'No predefined options available';
+                info.style.color = 'var(--text-secondary)';
+                container.appendChild(info);
+                return container;
+            }
+
+            // Create checkboxes for each valid key
+            validKeys.forEach(key => {
+                const checkboxContainer = document.createElement('div');
+                checkboxContainer.style.marginBottom = '0.5rem';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.name = `${name}[]`;
+                checkbox.value = key;
+                checkbox.id = `${name}_${key}`;
+
+                const label = document.createElement('label');
+                label.htmlFor = `${name}_${key}`;
+                label.textContent = key;
+                label.style.marginLeft = '0.5rem';
+                label.style.cursor = 'pointer';
+
+                checkboxContainer.appendChild(checkbox);
+                checkboxContainer.appendChild(label);
+                container.appendChild(checkboxContainer);
+            });
+
+            return container;
+        }
+
+        function createOptionCounter(name, option) {
+            const container = document.createElement('div');
+            container.style.marginTop = '0.5rem';
+
+            const validKeys = option.valid_keys || [];
+
+            if (validKeys.length === 0) {
+                const info = document.createElement('div');
+                info.textContent = 'No items available';
+                info.style.color = 'var(--text-secondary)';
+                container.appendChild(info);
+                return container;
+            }
+
+            // Create quantity inputs for each valid key
+            validKeys.forEach(key => {
+                const itemContainer = document.createElement('div');
+                itemContainer.style.display = 'flex';
+                itemContainer.style.alignItems = 'center';
+                itemContainer.style.gap = '0.5rem';
+                itemContainer.style.marginBottom = '0.5rem';
+
+                const labelSpan = document.createElement('span');
+                labelSpan.textContent = key;
+                labelSpan.style.flex = '1';
+
+                const qtyInput = document.createElement('input');
+                qtyInput.type = 'number';
+                qtyInput.name = `${name}||${key}||qty`;
+                qtyInput.min = '0';
+                qtyInput.value = '0';
+                qtyInput.style.width = '80px';
+
+                itemContainer.appendChild(labelSpan);
+                itemContainer.appendChild(qtyInput);
+                container.appendChild(itemContainer);
+            });
 
             return container;
         }

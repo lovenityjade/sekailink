@@ -155,11 +155,37 @@
                 <div class="alert alert-info">
                     <p class="mb-xs">
                         <strong>Server Address:</strong> <code id="server-address">...</code>
+                        <span id="server-status-badge" style="margin-left: 0.5rem; display: none;"></span>
                     </p>
                     <p class="mb-0">
                         <strong>Port:</strong> <code id="server-port" style="font-size: var(--font-size-xl);">...</code>
                     </p>
                 </div>
+
+                <!-- Server Status Widget -->
+                <div id="server-status-widget" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--bg-tertiary); border-radius: 6px; border: 1px solid var(--border-color);">
+                    <div style="font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary);">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-bottom; margin-right: 0.5rem;">
+                            <path d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995A.905.905 0 018 4zm.002 6a1 1 0 110 2 1 1 0 010-2z"/>
+                        </svg>
+                        Server Health
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; font-size: 0.875rem;">
+                        <div>
+                            <div style="color: var(--text-secondary); margin-bottom: 0.25rem;">Status</div>
+                            <div id="server-health-status" style="font-weight: 600; color: var(--success);">-</div>
+                        </div>
+                        <div>
+                            <div style="color: var(--text-secondary); margin-bottom: 0.25rem;">CPU</div>
+                            <div id="server-health-cpu" style="font-weight: 500;">-</div>
+                        </div>
+                        <div>
+                            <div style="color: var(--text-secondary); margin-bottom: 0.25rem;">Memory</div>
+                            <div id="server-health-memory" style="font-weight: 500;">-</div>
+                        </div>
+                    </div>
+                </div>
+
                 <p class="form-hint">
                     Connect using your Archipelago client with the address and port above.
                 </p>
