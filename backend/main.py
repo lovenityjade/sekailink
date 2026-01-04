@@ -385,6 +385,22 @@ def remove_friend(friend_id):
 
     return jsonify({"status": "removed"})
 
+@app.route('/api/twitch/disconnect', methods=['POST'])
+def disconnect_twitch():
+    """Disconnect Twitch account"""
+    uid = session.get('user_id')
+    if not uid:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    # Delete Twitch connection
+    connection = TwitchConnection.query.filter_by(user_id=uid).first()
+    if connection:
+        db.session.delete(connection)
+        db.session.commit()
+        logger.info(f"User {uid} disconnected Twitch account")
+
+    return jsonify({"status": "disconnected"})
+
 # --- GAMES API ---
 @app.route('/api/games', methods=['GET'])
 def list_games():
@@ -729,13 +745,20 @@ def get_lobbies():
         settings = LobbySettings.query.filter_by(lobby_id=l.id).first()
         max_players = settings.max_players if settings else 10
 
+        # Get host username
+        host = User.query.get(l.host_id)
+        host_name = host.username if host else 'Unknown'
+
         result.append({
             "id": l.id,
             "name": l.name,
+            "slug": l.slug,
             "status": l.status,
             "visibility": l.visibility,
             "host_id": l.host_id,
-            "players": f"{player_count}/{max_players}",
+            "host_name": host_name,
+            "player_count": player_count,
+            "max_players": max_players,
             "created_at": l.created_at.strftime("%Y-%m-%d %H:%M")
         })
 
