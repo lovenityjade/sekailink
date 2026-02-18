@@ -1,0 +1,27 @@
+{
+  "game_id": "yoshisisland",
+  "display_name": "Yoshi's Island",
+  "emu": "bizhawk",
+  "ap_client": "sni",
+  "lua_connector": "lua/connector.lua",
+  "tracker_pack_uid": "",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apyi"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [
+      "cb472164c5a71ccd3739963390ec6a50"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}
+

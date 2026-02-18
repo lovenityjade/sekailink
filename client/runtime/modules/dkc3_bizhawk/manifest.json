@@ -1,0 +1,26 @@
+{
+  "game_id": "dkc3",
+  "display_name": "Donkey Kong Country 3",
+  "emu": "bizhawk",
+  "ap_client": "sni",
+  "lua_connector": "lua/connector.lua",
+  "tracker_pack_uid": "https://github.com/PoryGone/DKC3_AP_Tracker",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apdkc3"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [
+      "120abf304f0c40fe059f6a192ed4f947"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

@@ -1,0 +1,709 @@
+/* Overrides for existing client components/pages (UI-only rework, functionality unchanged). */
+
+/* Put prototype into a distinct body mode so existing CSS can stay intact. */
+body.sklp-ui {
+  background: var(--sklp-bg-0);
+  color: var(--sklp-text-0);
+}
+
+body.sklp-ui,
+body.sklp-ui * {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body.sklp-ui input,
+body.sklp-ui textarea,
+body.sklp-ui [contenteditable="true"],
+body.sklp-ui .sklp-chat-scroll,
+body.sklp-ui .sklp-msg,
+body.sklp-ui .sklp-msg-body,
+body.sklp-ui .skl-chat-log,
+body.sklp-ui .skl-chat-message,
+body.sklp-ui .skl-chat-body,
+body.sklp-ui .skl-chat-form input,
+body.sklp-ui .skl-chat-form textarea {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Hide legacy page background (we use sklp-atmo instead). */
+body.sklp-ui .page-bg {
+  display: none !important;
+}
+
+/* App shell layout: match the 3-column mockup proportions. */
+body.sklp-ui .skl-app-shell {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 238px minmax(680px, 1fr);
+  gap: 14px;
+  padding: 66px 18px 16px 16px;
+}
+
+body.sklp-ui .skl-app-main {
+  min-width: 0;
+  padding: 0;
+}
+
+/* Sidebar: glass + crisp cyan borders. */
+body.sklp-ui .skl-sidebar {
+  background: linear-gradient(180deg, rgba(6, 16, 17, 0.78), rgba(6, 16, 17, 0.62));
+  border: 1px solid var(--sklp-border);
+  border-radius: var(--sklp-r-xl);
+  box-shadow: var(--sklp-shadow);
+  overflow: hidden;
+}
+
+body.sklp-ui .skl-sidebar {
+  width: 238px;
+  min-width: 238px;
+}
+
+body.sklp-ui .skl-sidebar-nav {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+body.sklp-ui .skl-sidebar-link-static {
+  cursor: default;
+}
+
+body.sklp-ui .skl-sidebar-link-static:hover {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+body.sklp-ui .sklp-friends-block {
+  margin-top: 6px;
+  border: 1px solid rgba(56, 243, 221, 0.12);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.16);
+  overflow-x: hidden;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+body.sklp-ui .sklp-friends-group-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 0;
+  border-top: 1px solid rgba(56, 243, 221, 0.10);
+  background: rgba(8, 24, 26, 0.72);
+  color: rgba(220, 250, 242, 0.9);
+  font-family: var(--sklp-font-tech);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+body.sklp-ui .sklp-friends-group-head:first-child {
+  border-top: 0;
+}
+
+body.sklp-ui .sklp-friends-list {
+  max-height: none;
+  overflow: visible;
+  padding: 6px;
+}
+
+body.sklp-ui .sklp-friend-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(240, 255, 252, 0.9);
+  padding: 6px;
+  position: relative;
+  cursor: pointer;
+}
+
+body.sklp-ui .sklp-friend-row:hover {
+  border-color: rgba(56, 243, 221, 0.26);
+  background: rgba(56, 243, 221, 0.08);
+}
+
+body.sklp-ui .sklp-friend-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(56, 243, 221, 0.12);
+  border: 1px solid rgba(56, 243, 221, 0.22);
+}
+
+body.sklp-ui .sklp-friend-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body.sklp-ui .sklp-friend-name {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  text-align: left;
+}
+
+body.sklp-ui .sklp-friend-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+}
+
+body.sklp-ui .sklp-friend-status-dot.online {
+  background: #5ce7b5;
+  box-shadow: 0 0 8px rgba(92, 231, 181, 0.5);
+}
+
+body.sklp-ui .sklp-friend-status-dot.offline {
+  background: rgba(170, 190, 186, 0.5);
+}
+
+body.sklp-ui .sklp-friend-card {
+  position: absolute;
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 210px;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(56, 243, 221, 0.24);
+  background: linear-gradient(180deg, rgba(8, 27, 29, 0.96), rgba(5, 16, 17, 0.86));
+  box-shadow: var(--sklp-glow), 0 10px 26px rgba(0, 0, 0, 0.52);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 20;
+}
+
+body.sklp-ui .sklp-friend-row:hover .sklp-friend-card {
+  opacity: 1;
+}
+
+body.sklp-ui .sklp-friend-card-name {
+  display: block;
+  font-family: var(--sklp-font-tech);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body.sklp-ui .sklp-friend-card-status {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  opacity: 0.78;
+}
+
+body.sklp-ui .sklp-profile-name-btn {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: rgba(240, 255, 252, 0.92);
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+
+body.sklp-ui .sklp-status-menu {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+  min-width: 150px;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(56, 243, 221, 0.30);
+  background: linear-gradient(180deg, rgba(9, 31, 33, 0.96), rgba(5, 16, 17, 0.86));
+  box-shadow: var(--sklp-glow), 0 12px 28px rgba(0, 0, 0, 0.52);
+  z-index: 50;
+}
+
+body.sklp-ui .sklp-status-menu button {
+  width: 100%;
+  border: 1px solid rgba(56, 243, 221, 0.16);
+  background: rgba(0, 0, 0, 0.14);
+  color: rgba(240, 255, 252, 0.9);
+  border-radius: 8px;
+  padding: 7px 8px;
+  text-align: left;
+  font-size: 11px;
+  font-family: var(--sklp-font-tech);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body.sklp-ui .sklp-status-menu button + button {
+  margin-top: 6px;
+}
+
+body.sklp-ui .skl-sidebar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: var(--sklp-r-xl);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.55), inset 0 0 0 2px rgba(56, 243, 221, 0.06);
+}
+
+body.sklp-ui .skl-sidebar-profile {
+  border-top: 1px solid rgba(56, 243, 221, 0.14);
+}
+
+/* Main panels: glass + inner border + glow. */
+body.sklp-ui .skl-app-panel,
+body.sklp-ui .skl-panel,
+body.sklp-ui .skl-roomlist-page .skl-app-panel {
+  position: relative;
+  overflow: hidden;
+  background: var(--sklp-panel-metal);
+  border: 1px solid var(--sklp-border);
+  border-radius: var(--sklp-r-xl);
+  box-shadow: var(--sklp-glow), var(--sklp-shadow);
+}
+
+body.sklp-ui .skl-app-panel::after,
+body.sklp-ui .skl-panel::after,
+body.sklp-ui .skl-roomlist-page .skl-app-panel::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  padding: 1px;
+  border-radius: var(--sklp-r-xl);
+  pointer-events: none;
+  opacity: 0;
+  background:
+    conic-gradient(
+      from 0deg,
+      rgba(56, 243, 221, 0) 0deg,
+      rgba(56, 243, 221, 0) 224deg,
+      rgba(56, 243, 221, 0.84) 262deg,
+      rgba(92, 231, 181, 0.72) 288deg,
+      rgba(56, 243, 221, 0) 325deg,
+      rgba(56, 243, 221, 0) 360deg
+    );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: sklp-border-orbit 10.2s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(56, 243, 221, 0.55));
+}
+
+body.sklp-ui h1, body.sklp-ui h2, body.sklp-ui h3, body.sklp-ui h4, body.sklp-ui h5 {
+  font-family: var(--sklp-font-tech);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(210, 255, 246, 0.92);
+}
+
+body.sklp-ui .skl-eyebrow {
+  color: rgba(56, 243, 221, 0.78) !important;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Buttons: sharp, bracket corners, glow on hover. */
+body.sklp-ui .skl-btn,
+body.sklp-ui button {
+  border-radius: 10px;
+  border: 1px solid rgba(56, 243, 221, 0.34);
+  background: linear-gradient(180deg, rgba(10, 24, 26, 0.85), rgba(6, 16, 17, 0.70));
+  color: rgba(240, 255, 252, 0.92);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+body.sklp-ui .skl-btn:hover,
+body.sklp-ui button:hover {
+  border-color: rgba(56, 243, 221, 0.55);
+  box-shadow: var(--sklp-glow-strong), 0 14px 34px rgba(0, 0, 0, 0.55);
+}
+
+body.sklp-ui .skl-btn.primary {
+  background: linear-gradient(180deg, rgba(24, 78, 74, 0.88), rgba(9, 31, 32, 0.78));
+  border-color: rgba(56, 243, 221, 0.55);
+}
+
+/* Inputs: dark glass with crisp outline. */
+body.sklp-ui input.input,
+body.sklp-ui input[type="search"].input,
+body.sklp-ui textarea.input,
+body.sklp-ui select.input {
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(56, 243, 221, 0.18);
+  color: rgba(240, 255, 252, 0.92);
+}
+
+body.sklp-ui select,
+body.sklp-ui .skl-lobby-form select,
+body.sklp-ui .skl-settings-grid select {
+  color-scheme: dark;
+  background: linear-gradient(180deg, rgba(8, 24, 25, 0.92), rgba(4, 12, 13, 0.86));
+  color: rgba(235, 255, 250, 0.96);
+  border: 1px solid rgba(56, 243, 221, 0.28);
+}
+
+body.sklp-ui select option {
+  background: #071617;
+  color: rgba(235, 255, 250, 0.96);
+}
+
+body.sklp-ui input.input::placeholder,
+body.sklp-ui textarea.input::placeholder {
+  color: rgba(210, 245, 236, 0.48);
+}
+
+/* Filter chips: match ALL/OPEN/FN style. */
+body.sklp-ui .pill.skl-filter-chip {
+  border-radius: 999px;
+  border: 1px solid rgba(56, 243, 221, 0.20);
+  background: rgba(0, 0, 0, 0.18);
+  color: rgba(210, 245, 236, 0.72);
+}
+
+body.sklp-ui .pill.skl-filter-chip.active {
+  border-color: rgba(56, 243, 221, 0.55);
+  color: rgba(240, 255, 252, 0.92);
+  box-shadow: 0 0 0 1px rgba(56, 243, 221, 0.08), var(--sklp-glow);
+}
+
+body.sklp-ui .skl-sidebar-settings {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid rgba(56, 243, 221, 0.34);
+  background: linear-gradient(180deg, rgba(16, 52, 53, 0.86), rgba(8, 24, 25, 0.74));
+  color: rgba(240, 255, 252, 0.92);
+  box-shadow: 0 0 0 1px rgba(56, 243, 221, 0.10), 0 0 14px rgba(56, 243, 221, 0.14);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+body.sklp-ui .skl-sidebar-settings svg {
+  color: rgba(99, 251, 229, 0.96);
+}
+
+body.sklp-ui .skl-sidebar-settings:hover {
+  border-color: rgba(56, 243, 221, 0.56);
+  box-shadow: 0 0 0 1px rgba(56, 243, 221, 0.16), 0 0 18px rgba(56, 243, 221, 0.20);
+}
+
+body.sklp-ui .sklp-settings-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(2, 8, 10, 0.72);
+  backdrop-filter: blur(2px);
+  display: grid;
+  place-items: center;
+  padding: 22px;
+}
+
+body.sklp-ui .sklp-settings-modal {
+  width: min(1220px, calc(100vw - 44px));
+  height: min(880px, calc(100vh - 44px));
+  border-radius: 14px;
+  border: 1px solid rgba(56, 243, 221, 0.34);
+  background: var(--sklp-panel-metal);
+  box-shadow: var(--sklp-glow-strong), var(--sklp-shadow);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+}
+
+body.sklp-ui .sklp-settings-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(56, 243, 221, 0.14);
+}
+
+body.sklp-ui .sklp-settings-modal-body {
+  min-height: 0;
+  overflow: auto;
+  padding: 10px;
+}
+
+body.sklp-ui .skl-modal-backdrop {
+  background: rgba(2, 8, 10, 0.78);
+  backdrop-filter: blur(3px);
+}
+
+body.sklp-ui .skl-modal-panel {
+  border: 1px solid rgba(56, 243, 221, 0.34);
+  border-radius: var(--sklp-r-xl);
+  background: var(--sklp-panel-metal);
+  box-shadow: var(--sklp-glow-strong), var(--sklp-shadow);
+}
+
+body.sklp-ui .skl-modal-header {
+  border-bottom: 1px solid rgba(56, 243, 221, 0.16);
+}
+
+body.sklp-ui .skl-modal-close {
+  border-color: rgba(56, 243, 221, 0.38);
+  background: linear-gradient(180deg, rgba(12, 40, 42, 0.86), rgba(6, 18, 19, 0.74));
+  color: rgba(240, 255, 252, 0.9);
+}
+
+body.sklp-ui .skl-lobby-form-row .input,
+body.sklp-ui .skl-lobby-form .input,
+body.sklp-ui .skl-lobby-form select {
+  border: 1px solid rgba(56, 243, 221, 0.24);
+  background: rgba(0, 0, 0, 0.22);
+  color: rgba(240, 255, 252, 0.92);
+}
+
+body.sklp-ui .skl-app-panel:nth-of-type(2n)::after,
+body.sklp-ui .skl-panel:nth-of-type(2n)::after {
+  animation-duration: 12.4s;
+  animation-delay: -2.7s;
+}
+
+body.sklp-ui .skl-app-panel:nth-of-type(3n)::after,
+body.sklp-ui .skl-panel:nth-of-type(3n)::after {
+  animation-duration: 8.6s;
+  animation-delay: -4.1s;
+}
+
+body.sklp-ui .sklp-error-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(2, 8, 10, 0.78);
+  backdrop-filter: blur(3px);
+}
+
+body.sklp-ui .sklp-error-modal {
+  width: min(560px, calc(100vw - 40px));
+  border-radius: 14px;
+  border: 1px solid rgba(56, 243, 221, 0.42);
+  background: linear-gradient(180deg, rgba(8, 28, 30, 0.96), rgba(5, 16, 17, 0.90));
+  box-shadow: var(--sklp-glow-strong), 0 20px 50px rgba(0, 0, 0, 0.66);
+  padding: 16px;
+}
+
+body.sklp-ui .sklp-error-modal h3 {
+  margin: 0 0 12px;
+  font-family: var(--sklp-font-tech);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(210, 255, 246, 0.94);
+}
+
+body.sklp-ui .sklp-error-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid rgba(56, 243, 221, 0.12);
+}
+
+body.sklp-ui .sklp-error-label {
+  font-family: var(--sklp-font-tech);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: rgba(210, 245, 236, 0.68);
+}
+
+body.sklp-ui .sklp-error-value {
+  color: rgba(240, 255, 252, 0.92);
+  font-size: 13px;
+  word-break: break-word;
+}
+
+body.sklp-ui .sklp-error-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+body.sklp-ui .sklp-error-copy-status {
+  margin-top: 8px;
+  font-size: 12px;
+  color: rgba(210, 245, 236, 0.76);
+}
+
+body.sklp-ui .sklp-toast-stack {
+  top: 74px;
+  right: 20px;
+  z-index: 9500;
+}
+
+body.sklp-ui .sklp-toast-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: start;
+}
+
+body.sklp-ui .sklp-toast-text {
+  line-height: 1.35;
+}
+
+body.sklp-ui .sklp-toast-close {
+  border: 1px solid rgba(56, 243, 221, 0.2);
+  border-radius: 8px;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.22);
+  color: rgba(218, 255, 247, 0.92);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+body.sklp-ui .sklp-tutorial-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9600;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(2, 8, 10, 0.7);
+  backdrop-filter: blur(3px);
+}
+
+body.sklp-ui .sklp-tutorial-mask {
+  position: fixed;
+  background: rgba(2, 8, 10, 0.78);
+  pointer-events: none;
+}
+
+body.sklp-ui .sklp-tutorial-mask.strict {
+  pointer-events: auto;
+}
+
+body.sklp-ui .sklp-tutorial-mask.top {
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+body.sklp-ui .sklp-tutorial-mask.left {
+  left: 0;
+}
+
+body.sklp-ui .sklp-tutorial-mask.right {
+  right: 0;
+}
+
+body.sklp-ui .sklp-tutorial-mask.bottom {
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+body.sklp-ui .sklp-tutorial-focus {
+  position: fixed;
+  border: 1px solid rgba(104, 253, 236, 0.88);
+  box-shadow: 0 0 28px rgba(47, 243, 219, 0.38), inset 0 0 18px rgba(53, 231, 209, 0.22);
+  border-radius: 12px;
+  pointer-events: none;
+  animation: sklpTutorialPulse 2s ease-in-out infinite;
+}
+
+@keyframes sklpTutorialPulse {
+  0%, 100% { box-shadow: 0 0 18px rgba(47, 243, 219, 0.28), inset 0 0 12px rgba(53, 231, 209, 0.16); }
+  50% { box-shadow: 0 0 34px rgba(47, 243, 219, 0.5), inset 0 0 18px rgba(53, 231, 209, 0.3); }
+}
+
+body.sklp-ui .sklp-tutorial-modal {
+  position: relative;
+  z-index: 3;
+  width: min(760px, calc(100vw - 36px));
+  border-radius: 14px;
+  border: 1px solid rgba(56, 243, 221, 0.42);
+  background: linear-gradient(180deg, rgba(8, 27, 30, 0.96), rgba(5, 16, 18, 0.92));
+  box-shadow: var(--sklp-glow-strong), 0 22px 48px rgba(0, 0, 0, 0.66);
+  padding: 16px 16px 14px;
+}
+
+body.sklp-ui .sklp-tutorial-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+body.sklp-ui .sklp-tutorial-header h3 {
+  margin: 0;
+  color: rgba(232, 255, 250, 0.96);
+  font-family: var(--sklp-font-tech);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+body.sklp-ui .sklp-tutorial-step {
+  font-family: var(--sklp-font-tech);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(189, 248, 240, 0.78);
+}
+
+body.sklp-ui .sklp-tutorial-body {
+  border-top: 1px solid rgba(56, 243, 221, 0.12);
+  border-bottom: 1px solid rgba(56, 243, 221, 0.12);
+  padding: 14px 0;
+}
+
+body.sklp-ui .sklp-tutorial-body h4 {
+  margin: 0 0 8px;
+  color: rgba(224, 255, 249, 0.94);
+}
+
+body.sklp-ui .sklp-tutorial-body p {
+  margin: 0 0 12px;
+  color: rgba(204, 246, 239, 0.86);
+  line-height: 1.45;
+}
+
+body.sklp-ui .sklp-tutorial-strict-note {
+  margin: 0 0 12px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(81, 248, 227, 0.28);
+  background: rgba(7, 29, 33, 0.64);
+  color: rgba(204, 255, 247, 0.92);
+  font-size: 12px;
+}
+
+body.sklp-ui .sklp-tutorial-actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+body.sklp-ui .sklp-tutorial-actions-right {
+  display: flex;
+  gap: 10px;
+}

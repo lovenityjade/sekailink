@@ -1,0 +1,150 @@
+/* Base + background atmosphere for the UI prototype. */
+html, body {
+  background: var(--sklp-bg-0);
+  color: var(--sklp-text-0);
+  font-family: var(--sklp-font-ui);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Subtle scanlines + noise (readable, not aggressive). */
+.sklp-atmo {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(1300px 900px at 68% 34%, rgba(56, 243, 221, 0.16), transparent 58%),
+    radial-gradient(980px 620px at 22% 70%, rgba(92, 231, 181, 0.13), transparent 62%),
+    radial-gradient(760px 460px at 52% 82%, rgba(56, 243, 221, 0.08), transparent 68%),
+    linear-gradient(180deg, rgba(4, 12, 13, 0.0), rgba(4, 12, 13, 0.46));
+  animation: sklp-atmo-spotlight 22s ease-in-out infinite alternate;
+}
+
+.sklp-atmo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.035) 0px,
+      rgba(255, 255, 255, 0.015) 1px,
+      rgba(0, 0, 0, 0.0) 3px
+    );
+  mix-blend-mode: overlay;
+}
+
+.sklp-atmo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.14;
+  background:
+    radial-gradient(700px 420px at 18% 32%, rgba(56, 243, 221, 0.12), transparent 72%),
+    radial-gradient(680px 420px at 84% 76%, rgba(92, 231, 181, 0.10), transparent 72%),
+    radial-gradient(620px 360px at 56% 45%, rgba(56, 243, 221, 0.08), transparent 74%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.28'/%3E%3C/svg%3E");
+  mix-blend-mode: screen;
+  animation: sklp-atmo-aurora 28s ease-in-out infinite;
+}
+
+/* Scrollbars (subtle, consistent). */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 243, 221, 0.18) rgba(0, 0, 0, 0.22);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.20);
+  border: 1px solid rgba(56, 243, 221, 0.05);
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(56, 243, 221, 0.22), rgba(92, 231, 181, 0.14));
+  border: 1px solid rgba(56, 243, 221, 0.12);
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(56, 243, 221, 0.34), rgba(92, 231, 181, 0.18));
+}
+
+/* Accessible focus, tuned to the theme. */
+:focus-visible {
+  outline: 2px solid rgba(56, 243, 221, 0.85);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px rgba(56, 243, 221, 0.12);
+  border-radius: 10px;
+}
+
+/* Border pulse/sweep for alive panels (subtle by design). */
+@keyframes sklp-border-sweep {
+  0% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  8% {
+    opacity: var(--sklp-border-sweep-opacity);
+  }
+  24% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(140%);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --sklp-border-sweep-duration: 0s;
+    --sklp-border-sweep-opacity: 0;
+  }
+
+  .sklp-atmo {
+    animation: none;
+  }
+}
+
+@keyframes sklp-atmo-spotlight {
+  0% {
+    transform: translate3d(-1.4%, -1.2%, 0) scale(1);
+    filter: brightness(0.96);
+  }
+  50% {
+    transform: translate3d(1.5%, 1.1%, 0) scale(1.026);
+    filter: brightness(1.06);
+  }
+  100% {
+    transform: translate3d(0.9%, -0.6%, 0) scale(1.018);
+    filter: brightness(1.01);
+  }
+}
+
+@keyframes sklp-atmo-aurora {
+  0% {
+    transform: translate3d(-1.2%, 0.8%, 0) scale(1);
+    opacity: 0.12;
+  }
+  45% {
+    transform: translate3d(1.2%, -1%, 0) scale(1.03);
+    opacity: 0.18;
+  }
+  100% {
+    transform: translate3d(0.4%, 0.4%, 0) scale(1.01);
+    opacity: 0.14;
+  }
+}

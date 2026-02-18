@@ -1,0 +1,29 @@
+.skl-settings-page .skl-settings-tabs {
+  margin-top: 10px;
+}
+
+.skl-settings-page .skl-settings-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.skl-settings-page .yaml-dashboard-card {
+  border-radius: 12px;
+}
+
+.skl-settings-page details {
+  border: 1px solid rgba(56, 243, 221, 0.16);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: rgba(8, 22, 20, 0.45);
+}
+
+.skl-settings-page details summary {
+  color: #d7fff5;
+  letter-spacing: 0.01em;
+}
+
+.skl-settings-page textarea.input {
+  resize: vertical;
+}

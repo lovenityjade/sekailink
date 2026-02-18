@@ -1,0 +1,18 @@
+{
+  "game_id": "pokemon_emerald",
+  "display_name": "Pokemon Emerald",
+  "emu": "bizhawk",
+  "lua_connector": "lua/connector.lua",
+  "tracker_pack_uid": "https://github.com/seto10987/Archipelago-Emerald-AP-Tracker",
+  "patcher": "archipelago",
+  "patch_extensions": [".apemerald"],
+  "rom_requirements": {
+    "extensions": [".gba"],
+    "md5": ["605b89b67018abcea91e693a4dd25be3"],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

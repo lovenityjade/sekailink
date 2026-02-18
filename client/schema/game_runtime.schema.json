@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SekaiLink Game Runtime Contract",
+  "type": "object",
+  "required": ["game_id", "display_name", "platform", "driver"],
+  "properties": {
+    "game_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "platform": { "type": "string" },
+    "driver": {
+      "type": "object",
+      "required": ["family"],
+      "properties": {
+        "family": { "type": "string" },
+        "core_id": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "patch_mode": {
+      "type": "string",
+      "enum": ["ap_patch", "external_patcher", "mod_loader", "none"]
+    },
+    "required_assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type"],
+        "properties": {
+          "type": { "type": "string" },
+          "hint": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "launch_steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["action"],
+        "properties": {
+          "action": { "type": "string" },
+          "args": { "type": "object" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "connect_steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["action"],
+        "properties": {
+          "action": { "type": "string" },
+          "args": { "type": "object" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "setup_files": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": false
+}

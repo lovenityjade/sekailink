@@ -1,0 +1,25 @@
+{
+  "game_id": "smw",
+  "display_name": "Super Mario World",
+  "emu": "bizhawk",
+  "ap_client": "sni",
+  "lua_connector": "lua/connector.lua",
+  "tracker_pack_uid": "https://github.com/PoryGone/SMW_AP_Tracker",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apsmw"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".sfc"
+    ],
+    "md5": [
+      "cdd3c8c37322978ca8669b34bc89c804"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

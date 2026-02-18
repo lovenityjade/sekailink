@@ -1,0 +1,110 @@
+/* SekaiLink UI Prototype — tokens tuned to match the provided mockup. */
+:root {
+  /* UI scale (future tuning) */
+  --skl-ui-scale: 1;
+
+  /* Core palette */
+  --sklp-bg-0: #03090a;
+  --sklp-bg-1: #061011;
+  --sklp-bg-2: #08191a;
+  --sklp-panel: rgba(7, 18, 19, 0.66);
+  --sklp-panel-2: rgba(7, 18, 19, 0.82);
+  --sklp-text-0: rgba(240, 255, 252, 0.92);
+  --sklp-text-1: rgba(210, 245, 236, 0.72);
+  --sklp-text-2: rgba(200, 235, 226, 0.55);
+
+  --sklp-accent: #38f3dd; /* neon cyan */
+  --sklp-accent-2: #5ce7b5; /* teal-green */
+  --sklp-accent-dim: rgba(56, 243, 221, 0.45);
+  --sklp-danger: #ff4d4d;
+
+  /* Metallic teal system (default: "Aegis") */
+  --sklp-metal-dark: #062022;
+  --sklp-metal-mid: #0b3b3f;
+  --sklp-metal-lite: #7cefe3;
+  --sklp-metal-silver: #d6eef1;
+  --sklp-metal-sheen: linear-gradient(
+    120deg,
+    rgba(124, 239, 227, 0.16) 0%,
+    rgba(214, 238, 241, 0.18) 34%,
+    rgba(56, 243, 221, 0.14) 62%,
+    rgba(9, 34, 37, 0.12) 100%
+  );
+  --sklp-panel-metal: linear-gradient(
+    165deg,
+    rgba(7, 29, 31, 0.90) 0%,
+    rgba(9, 43, 46, 0.76) 38%,
+    rgba(6, 20, 22, 0.84) 100%
+  );
+
+  /* Borders & glow */
+  --sklp-border: rgba(56, 243, 221, 0.22);
+  --sklp-border-strong: rgba(56, 243, 221, 0.38);
+  --sklp-inner-border: rgba(0, 0, 0, 0.55);
+  --sklp-glow: 0 0 18px rgba(56, 243, 221, 0.18), 0 0 44px rgba(56, 243, 221, 0.09);
+  --sklp-glow-strong: 0 0 22px rgba(56, 243, 221, 0.22), 0 0 62px rgba(56, 243, 221, 0.10);
+  --sklp-shadow: 0 18px 60px rgba(0, 0, 0, 0.64);
+  --sklp-border-sweep-duration: 8.5s;
+  --sklp-border-sweep-opacity: 0.36;
+
+  /* Radius & spacing */
+  --sklp-r-xl: 12px;
+  --sklp-r-lg: 10px;
+  --sklp-r-md: 8px;
+  --sklp-r-sm: 6px;
+  --sklp-pad-3: 22px;
+  --sklp-pad-2: 16px;
+  --sklp-pad-1: 12px;
+  --sklp-pad-0: 8px;
+
+  /* Typography */
+  --sklp-font-ui: var(--font-ui, "Inter", system-ui, sans-serif);
+  --sklp-font-brand: var(--font-brand, "Sora", "Inter", system-ui, sans-serif);
+  --sklp-font-tech: "Orbitron", var(--sklp-font-brand); /* TODO: bundle Orbitron locally (font file not currently present). */
+
+  /* Map to existing client token names so legacy pages/components inherit the prototype palette. */
+  --bg-0: var(--sklp-bg-0);
+  --bg-1: var(--sklp-panel);
+  --bg-2: var(--sklp-panel-2);
+  --text-0: var(--sklp-text-0);
+  --text-1: var(--sklp-text-1);
+  --text-2: var(--sklp-text-2);
+  --accent: var(--sklp-accent);
+  --accent-2: var(--sklp-accent-2);
+  --border: var(--sklp-border);
+  --border-strong: var(--sklp-border-strong);
+  --glow: var(--sklp-glow);
+  --shadow: var(--sklp-shadow);
+}
+
+/* Variant B: "Chrome Teal" (cooler/silver push) */
+body.sklp-ui.sklp-metal-b {
+  --sklp-metal-dark: #072224;
+  --sklp-metal-mid: #10464a;
+  --sklp-metal-lite: #93fff1;
+  --sklp-metal-silver: #e8f4f6;
+  --sklp-accent: #4cf6e3;
+  --sklp-accent-2: #75ecc7;
+  --sklp-panel-metal: linear-gradient(
+    165deg,
+    rgba(8, 30, 32, 0.90) 0%,
+    rgba(13, 50, 54, 0.78) 36%,
+    rgba(7, 22, 24, 0.84) 100%
+  );
+}
+
+/* Variant C: "Deep Teal Alloy" (darker, richer teal) */
+body.sklp-ui.sklp-metal-c {
+  --sklp-metal-dark: #041a1c;
+  --sklp-metal-mid: #0a3337;
+  --sklp-metal-lite: #68e6d8;
+  --sklp-metal-silver: #c8e8eb;
+  --sklp-accent: #31e9d3;
+  --sklp-accent-2: #53ddb2;
+  --sklp-panel-metal: linear-gradient(
+    165deg,
+    rgba(5, 24, 26, 0.92) 0%,
+    rgba(9, 38, 41, 0.78) 40%,
+    rgba(5, 18, 19, 0.86) 100%
+  );
+}

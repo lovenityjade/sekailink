@@ -1,0 +1,24 @@
+{
+  "game_id": "wl4",
+  "display_name": "Wario Land 4",
+  "emu": "bizhawk",
+  "lua_connector": "lua/connector.lua",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apwl4"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".gba"
+    ],
+    "md5": [
+      "5fe47355a33e3fabec2a1607af88a404",
+      "99c8ad779a16be513a9fdff502b6f5c2"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

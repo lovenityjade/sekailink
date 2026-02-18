@@ -1,0 +1,24 @@
+{
+  "game_id": "tloz_oos",
+  "display_name": "The Legend of Zelda - Oracle of Seasons",
+  "emu": "bizhawk",
+  "lua_connector": "lua/connector.lua",
+  "tracker_pack_uid": "https://github.com/OmegaZeron/Oracle-of-Seasons-AP-Poptracker-Pack",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apoos"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".gbc"
+    ],
+    "md5": [
+      "f2dc6c4e093e4f8c6cbea80e8dbd62cb"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

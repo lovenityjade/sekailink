@@ -1,0 +1,74 @@
+{
+  "name": "sekailink-client",
+  "version": "0.0.2-beta.0.26-topaz",
+  "description": "SekaiLink desktop client (Archipelago-focused).",
+  "author": "SekaiLink",
+  "private": true,
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "vite",
+    "dev:ui-prototype": "vite --open /ui-prototype.html",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "electron:dev": "concurrently -k \"vite\" \"wait-on http://localhost:5173 && electron .\"",
+    "electron:dev:ui-prototype": "concurrently -k \"vite\" \"wait-on http://localhost:5173/ui-prototype.html && SEKAILINK_UI_PROTOTYPE=1 electron .\"",
+    "electron:build": "vite build",
+    "electron:pack": "node scripts/prepare-native-deps.mjs && electron-builder --linux",
+    "electron:pack:ui-prototype": "node scripts/prepare-native-deps.mjs && SEKAILINK_UI_PROTOTYPE=1 electron-builder --linux -c electron-builder.ui-prototype.yml",
+    "electron:pack:win": "node scripts/prepare-native-deps.mjs && electron-builder --win nsis",
+    "electron:pack:win:ui-prototype": "node scripts/prepare-native-deps.mjs && SEKAILINK_UI_PROTOTYPE=1 electron-builder --win nsis -c electron-builder.ui-prototype.yml",
+    "headless:smoke": "bash ../../scripts/headless-smoke.sh --wrapper common",
+    "test": "vitest run --config vitest.config.ts",
+    "test:watch": "vitest --config vitest.config.ts",
+    "test:e2e": "PLAYWRIGHT_BROWSERS_PATH=./.playwright-browsers playwright test",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.cjs,.mjs",
+    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx,.cjs,.mjs --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "[ -d .git ] && husky || true"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3",
+    "socket.io-client": "^4.8.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.1",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.2",
+    "@testing-library/user-event": "^14.5.2",
+    "@typescript-eslint/eslint-plugin": "^8.11.0",
+    "@typescript-eslint/parser": "^8.11.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.11.19",
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.1",
+    "concurrently": "^8.2.2",
+    "electron": "^28.2.0",
+    "electron-builder": "^24.9.1",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.11",
+    "husky": "^9.1.7",
+    "jsdom": "^24.0.0",
+    "lint-staged": "^15.2.11",
+    "prettier": "^3.3.3",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.2",
+    "vitest": "^1.5.0",
+    "wait-on": "^7.2.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,cjs,mjs}": [
+      "eslint --fix"
+    ],
+    "*.{json,css,md,html,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}

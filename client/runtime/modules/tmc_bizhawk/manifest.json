@@ -1,0 +1,24 @@
+{
+  "game_id": "tmc",
+  "display_name": "The Minish Cap",
+  "emu": "bizhawk",
+  "lua_connector": "lua/connector.lua",
+  "tracker_pack_uid": "https://github.com/deoxis9001/tmcrando_maptracker_deoxis",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".aptmc"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".gba"
+    ],
+    "md5": [
+      "2af78edbe244b5de44471368ae2b6f0b"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "game_id": "oot",
+  "display_name": "Ocarina of Time",
+  "emu": "bizhawk",
+  "lua_connector": "lua/connector_oot.lua",
+  "tracker_web_url": "https://nightly.track-oot.net/",
+  "tracker_web_title": "Ocarina of Time Web Tracker",
+  "tracker_pack_uid": "",
+  "patcher": "archipelago",
+  "patch_extensions": [".apz5"],
+  "rom_requirements": {
+    "extensions": [".n64", ".z64"],
+    "md5": [
+      "5bd1fe107bf8106b2ab6650abecd54d6",
+      "6697768a7a7df2dd27a692a2638ea90b",
+      "05f0f3ebacbc8df9243b6148ffe4792f"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

@@ -1,0 +1,1 @@
+-- Placeholder. Use Archipelago BizHawk connector for Ocarina of Time.

@@ -1,0 +1,18 @@
+{
+  "game_id": "pokemon_red",
+  "display_name": "Pokemon Red",
+  "emu": "bizhawk",
+  "lua_connector": "lua/connector.lua",
+  "tracker_pack_uid": "https://github.com/palex00/rb_tracker",
+  "patcher": "archipelago",
+  "patch_extensions": [".apred"],
+  "rom_requirements": {
+    "extensions": [".gb"],
+    "md5": ["3d45c1ee9abd5738df46d2bdda8b57dc"],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

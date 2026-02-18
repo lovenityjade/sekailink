@@ -1,0 +1,24 @@
+{
+  "game_id": "metroidfusion",
+  "display_name": "Metroid Fusion",
+  "emu": "bizhawk",
+  "lua_connector": "lua/connector.lua",
+  "tracker_pack_uid": "https://github.com/RunInAWeek/Metroid-Fusion-AP-Tracker",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apmetfus"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".gba"
+    ],
+    "md5": [
+      "af5040fc0f579800151ee2a683e2e5b5"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

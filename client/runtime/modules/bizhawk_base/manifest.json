@@ -1,0 +1,18 @@
+{
+  "game_id": "bizhawk_base",
+  "display_name": "BizHawk Base",
+  "emu": "bizhawk",
+  "lua_connector": "lua/connector.lua",
+  "tracker_pack_uid": "",
+  "patcher": "none",
+  "internal": true,
+  "rom_requirements": {
+    "extensions": [],
+    "md5": [],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

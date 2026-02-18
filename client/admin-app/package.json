@@ -1,0 +1,34 @@
+{
+  "name": "sekailink-admin",
+  "version": "0.0.1-alpha.0",
+  "description": "SekaiLink administrative desktop app.",
+  "author": "SekaiLink",
+  "private": true,
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "vite --port 5174",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --port 5174",
+    "electron:dev": "concurrently -k \"vite --port 5174\" \"wait-on http://localhost:5174 && VITE_DEV_SERVER_URL=http://localhost:5174 electron .\"",
+    "electron:pack": "electron-builder --linux AppImage",
+    "electron:pack:win": "electron-builder --win nsis"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.19",
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "concurrently": "^8.2.2",
+    "electron": "^28.2.0",
+    "electron-builder": "^24.9.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.2"
+  }
+}

@@ -1,0 +1,296 @@
+:root {
+  --bg: #061017;
+  --panel: #0b1b24;
+  --panel-alt: #102632;
+  --text: #e8f2f8;
+  --muted: #8ca5b4;
+  --line: #1f3b4b;
+  --accent: #2dd4bf;
+  --danger: #f87171;
+  --ok: #34d399;
+  --focus: #fbbf24;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  font-family: "Segoe UI", "Noto Sans", sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at 20% 10%, #143447 0%, var(--bg) 35%, #04090e 100%);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.admin-shell {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  border-right: 1px solid var(--line);
+  background: color-mix(in oklab, var(--panel) 82%, black);
+  padding: 1rem;
+}
+
+.sidebar h1 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.sidebar-meta {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.role-pill {
+  display: inline-block;
+  margin-top: 0.3rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+}
+
+.sidebar-nav {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+
+.nav-btn {
+  text-align: left;
+  background: var(--panel-alt);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  padding: 0.62rem 0.75rem;
+  cursor: pointer;
+}
+
+.nav-btn.active {
+  border-color: color-mix(in oklab, var(--accent) 65%, white);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 65%, white);
+}
+
+.main-content {
+  padding: 1rem 1.2rem;
+}
+
+.page-section {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.actions-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  border: 1px solid color-mix(in oklab, var(--accent) 70%, black);
+  background: color-mix(in oklab, var(--accent) 18%, var(--panel));
+  color: var(--text);
+  border-radius: 0.5rem;
+  padding: 0.48rem 0.72rem;
+  cursor: pointer;
+}
+
+.btn.ghost {
+  background: var(--panel-alt);
+  border-color: var(--line);
+}
+
+.btn.danger {
+  border-color: color-mix(in oklab, var(--danger) 70%, black);
+  background: color-mix(in oklab, var(--danger) 17%, var(--panel));
+}
+
+.input {
+  border: 1px solid var(--line);
+  background: var(--panel-alt);
+  color: var(--text);
+  border-radius: 0.5rem;
+  padding: 0.44rem 0.62rem;
+}
+
+.table-wrap,
+.panel-block,
+.metric-card {
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+  background: color-mix(in oklab, var(--panel) 88%, black);
+}
+
+.table-wrap {
+  overflow: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  padding: 0.55rem;
+  vertical-align: top;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.65rem;
+}
+
+.metric-card {
+  padding: 0.75rem;
+}
+
+.metric-card h3 {
+  margin: 0 0 0.4rem;
+}
+
+.metric-card p {
+  margin: 0;
+  font-size: 1.08rem;
+}
+
+.metric-card small {
+  color: var(--muted);
+}
+
+.panel-block {
+  padding: 0.75rem;
+}
+
+.log-viewer,
+.json-viewer {
+  margin: 0;
+  max-height: 360px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  padding: 0.6rem;
+  background: #040d13;
+  color: #d1e9f6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.status-text {
+  color: var(--ok);
+  margin: 0;
+}
+
+.error-text {
+  color: #fecaca;
+  margin: 0;
+}
+
+.auth-screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.auth-card {
+  width: min(560px, 100%);
+  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  padding: 1rem;
+  background: color-mix(in oklab, var(--panel) 90%, black);
+}
+
+.vue-health-grid {
+  display: grid;
+  gap: 0.55rem;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+}
+
+.vue-health-card {
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+  padding: 0.55rem;
+  background: #08141c;
+}
+
+.vue-health-card.ok {
+  border-color: color-mix(in oklab, var(--ok) 55%, var(--line));
+}
+
+.vue-health-card.err {
+  border-color: color-mix(in oklab, var(--danger) 55%, var(--line));
+}
+
+.vue-health-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.vue-pill {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.78rem;
+}
+
+.vue-health-body p {
+  margin: 0.28rem 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.vue-health-body span {
+  color: var(--muted);
+}
+
+.vue-empty {
+  color: var(--muted);
+}
+
+@media (max-width: 980px) {
+  .admin-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "game_id": "ffta",
+  "display_name": "Final Fantasy Tactics Advance",
+  "emu": "bizhawk",
+  "lua_connector": "lua/connector.lua",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apffta"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".gba"
+    ],
+    "md5": [
+      "cd99cdde3d45554c1b36fbeb8863b7bd"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

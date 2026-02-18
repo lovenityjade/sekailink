@@ -1,0 +1,26 @@
+{
+  "game_id": "dkc",
+  "display_name": "Donkey Kong Country",
+  "emu": "bizhawk",
+  "ap_client": "sni",
+  "lua_connector": "lua/connector.lua",
+  "tracker_pack_uid": "https://github.com/pwkfisher/ap-dkc-tracker",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apdkc"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [
+      "30c5f292ff4cbbfcc00fd8fa96c2de3b"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

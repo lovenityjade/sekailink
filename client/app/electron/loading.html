@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Loading...</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      body {
+        margin: 0;
+        font-family: "Lexend Deca", "Segoe UI", system-ui, sans-serif;
+        background: radial-gradient(1000px 600px at 20% 20%, rgba(30, 60, 45, 0.35), rgba(5, 7, 10, 1));
+        color: #e7f7f0;
+        display: grid;
+        place-items: center;
+        height: 100vh;
+      }
+      .panel {
+        display: grid;
+        gap: 16px;
+        text-align: center;
+        background: rgba(6, 12, 10, 0.55);
+        border: 1px solid rgba(92, 231, 181, 0.25);
+        padding: 28px 32px;
+        border-radius: 16px;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+      }
+      .title {
+        font-size: 20px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .subtitle {
+        font-size: 13px;
+        color: rgba(231, 247, 240, 0.7);
+      }
+      .bars {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+      }
+      .bars span {
+        width: 10px;
+        height: 20px;
+        background: rgba(92, 231, 181, 0.75);
+        border-radius: 6px;
+        animation: pulse 1.2s ease-in-out infinite;
+      }
+      .bars span:nth-child(2) { animation-delay: 0.15s; }
+      .bars span:nth-child(3) { animation-delay: 0.3s; }
+      .bars span:nth-child(4) { animation-delay: 0.45s; }
+      @keyframes pulse {
+        0%, 100% { transform: translateY(0); opacity: 0.4; }
+        50% { transform: translateY(-10px); opacity: 1; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="panel">
+      <div class="title">Loading Player Options</div>
+      <div class="bars">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="subtitle">Preparing your YAML editor…</div>
+    </div>
+  </body>
+</html>

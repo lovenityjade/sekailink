@@ -1,0 +1,24 @@
+{
+  "game_id": "ff4fe",
+  "display_name": "ff4fe",
+  "emu": "bizhawk",
+  "ap_client": "sni",
+  "lua_connector": "lua/connector.lua",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apff4fe"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".sfc"
+    ],
+    "md5": [
+      "27d02a4f03e172e029c9b82ac3db79f7"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

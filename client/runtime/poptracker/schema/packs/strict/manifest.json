@@ -1,0 +1,88 @@
+{
+    "$id": "https://poptracker.github.io/schema/packs/strict/manifest.json",
+    "allOf": [
+        {
+            "$ref": "../manifest.json"
+        },
+        {
+            "properties": {
+                "name": true,
+                "package_uid": true,
+                "package_version": true,
+                "platform": true,
+                "versions_url": true,
+                "game_name": true,
+                "author": true,
+                "min_poptracker_version": true,
+                "target_poptracker_version": true,
+                "variants": {
+                    "$comment": "Enforce known flags",
+                    "description": "Variants for the pack. Property keys are the pack variant uids.",
+                    "type": "object",
+                    "patternProperties": {
+                        "^$": {
+                            "description": "A pack variant.",
+                            "type": "object",
+                            "properties": {
+                                "display_name": {
+                                    "description": "Display name of the pack variant.",
+                                    "type": "string"
+                                },
+                                "flags": {
+                                    "description": "Flags for the packs.",
+                                    "type": "array",
+                                    "items": {
+                                        "description": "A flag.",
+                                        "type": "string",
+                                        "enum": [
+                                            "ap",
+                                            "apmanual",
+                                            "aphintgame",
+                                            "hirom",
+                                            "lorom",
+                                            "uat",
+                                            "luaconnector"
+                                        ]
+                                    }
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                                "display_name"
+                            ]
+                        },
+                        "^.+$": {
+                            "description": "A pack variant.",
+                            "type": "object",
+                            "properties": {
+                                "display_name": {
+                                    "description": "Display name of the pack variant.",
+                                    "type": "string"
+                                },
+                                "flags": {
+                                    "description": "Flags for the packs.",
+                                    "type": "array",
+                                    "items": {
+                                        "description": "A flag.",
+                                        "type": "string",
+                                        "enum": [
+                                            "ap",
+                                            "apmanual",
+                                            "aphintgame",
+                                            "hirom",
+                                            "lorom",
+                                            "uat",
+                                            "luaconnector"
+                                        ]
+                                    }
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    }
+                }
+            },
+            "additionalProperties": false
+        }
+    ]
+}

@@ -1,0 +1,26 @@
+{
+  "game_id": "kdl3",
+  "display_name": "Kirby's Dream Land 3",
+  "emu": "bizhawk",
+  "ap_client": "sni",
+  "lua_connector": "lua/connector.lua",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apkdl3"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [
+      "201e7658f6194458a3869dde36bf8ec2",
+      "b2f2d004ea640c3db66df958fce122b2"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

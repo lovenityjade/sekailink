@@ -1,0 +1,27 @@
+{
+  "game_id": "smz3",
+  "display_name": "SMZ3",
+  "emu": "bizhawk",
+  "ap_client": "sni",
+  "lua_connector": "lua/connector.lua",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apsmz3"
+  ],
+  "required_roms": [
+    "alttp",
+    "sm"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

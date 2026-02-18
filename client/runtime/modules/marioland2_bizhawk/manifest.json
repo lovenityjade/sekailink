@@ -1,0 +1,23 @@
+{
+  "game_id": "marioland2",
+  "display_name": "Super Mario Land 2",
+  "emu": "bizhawk",
+  "lua_connector": "lua/connector.lua",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apsml2"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".gb"
+    ],
+    "md5": [
+      "a8413347d5df8c9d14f97f0330d67bce"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "game_id": "oot_soh",
+  "display_name": "Ship of Harkinian",
+  "emu": "soh",
+  "patcher": "none",
+  "required_roms": [],
+  "client_mode": "embedded",
+  "launcher_repo": "https://github.com/HarbourMasters/Archipelago-SoH",
+  "launcher_asset_regex": "Ship\\.of\\.Harkinian\\.Archipelago\\..*\\.linux\\.zip$",
+  "rom_requirements": {
+    "extensions": [],
+    "md5": [],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

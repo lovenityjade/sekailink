@@ -1,0 +1,4138 @@
+[
+  {
+    "game_id": "ANIMAL_WELL",
+    "display_name": "ANIMAL WELL",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "ANIMAL_WELL/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "APQuest",
+    "display_name": "APQuest",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "APQuest/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "A_Hat_in_Time",
+    "display_name": "A Hat in Time",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "A_Hat_in_Time/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "A_Link_Between_Worlds",
+    "display_name": "A Link Between Worlds",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "A_Link_Between_Worlds/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "A_Short_Hike",
+    "display_name": "A Short Hike",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "A_Short_Hike/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Adventure",
+    "display_name": "Adventure",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Adventure/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Against_the_Storm",
+    "display_name": "Against the Storm",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Against_the_Storm/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "An_Untitled_Story",
+    "display_name": "An Untitled Story",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "An_Untitled_Story/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Ape_Escape",
+    "display_name": "Ape Escape",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Ape_Escape/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Aquaria",
+    "display_name": "Aquaria",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Aquaria/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Archipela-Go",
+    "display_name": "Archipela-Go",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Archipela-Go/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Archipelago",
+    "display_name": "Archipelago",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Archipelago/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Balatro",
+    "display_name": "Balatro",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Balatro/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Banjo-Tooie",
+    "display_name": "Banjo-Tooie",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Banjo-Tooie/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Battle_for_Bikini_Bottom",
+    "display_name": "Battle for Bikini Bottom",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Battle_for_Bikini_Bottom/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Blasphemous",
+    "display_name": "Blasphemous",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Blasphemous/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Bomb_Rush_Cyberfunk",
+    "display_name": "Bomb Rush Cyberfunk",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Bomb_Rush_Cyberfunk/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Brotato",
+    "display_name": "Brotato",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Brotato/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Bumper_Stickers",
+    "display_name": "Bumper Stickers",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Bumper_Stickers/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Castlevania_-_Circle_of_the_Moon",
+    "display_name": "Castlevania - Circle of the Moon",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Castlevania_-_Circle_of_the_Moon/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Castlevania_64",
+    "display_name": "Castlevania 64",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Castlevania_64/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Castlevania_Dawn_of_Sorrow",
+    "display_name": "Castlevania Dawn of Sorrow",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Castlevania_Dawn_of_Sorrow/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Cat_Quest",
+    "display_name": "Cat Quest",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Cat_Quest/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Chained_Echoes",
+    "display_name": "Chained Echoes",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Chained_Echoes/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Chatipelago",
+    "display_name": "Chatipelago",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Chatipelago/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "ChecksFinder",
+    "display_name": "ChecksFinder",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "ChecksFinder/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Choo-Choo_Charles",
+    "display_name": "Choo-Choo Charles",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Choo-Choo_Charles/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Civilization_VI",
+    "display_name": "Civilization VI",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Civilization_VI/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "CrossCode",
+    "display_name": "CrossCode",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "CrossCode/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Crystal_Project",
+    "display_name": "Crystal Project",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Crystal_Project/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Cuphead",
+    "display_name": "Cuphead",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Cuphead/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "DLCQuest",
+    "display_name": "DLCQuest",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "DLCQuest/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "DOOM_1993",
+    "display_name": "DOOM 1993",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "DOOM_1993/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "DOOM_II",
+    "display_name": "DOOM II",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "DOOM_II/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "DORONKO_WANKO",
+    "display_name": "DORONKO WANKO",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "DORONKO_WANKO/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "DREDGE",
+    "display_name": "DREDGE",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "DREDGE/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Dark_Souls_II",
+    "display_name": "Dark Souls II",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Dark_Souls_II/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Dark_Souls_III",
+    "display_name": "Dark Souls III",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Dark_Souls_III/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Dark_Souls_Remastered",
+    "display_name": "Dark Souls Remastered",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Dark_Souls_Remastered/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Diddy_Kong_Racing",
+    "display_name": "Diddy Kong Racing",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Diddy_Kong_Racing/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Digimon_World",
+    "display_name": "Digimon World",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Digimon_World/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Donkey_Kong_64",
+    "display_name": "Donkey Kong 64",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Donkey_Kong_64/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Donkey_Kong_Country",
+    "display_name": "Donkey Kong Country",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Donkey_Kong_Country/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Donkey_Kong_Country_2",
+    "display_name": "Donkey Kong Country 2",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Donkey_Kong_Country_2/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Donkey_Kong_Country_3",
+    "display_name": "Donkey Kong Country 3",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Donkey_Kong_Country_3/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Dont_Starve_Together",
+    "display_name": "Dont Starve Together",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Dont_Starve_Together/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "EarthBound",
+    "display_name": "EarthBound",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "EarthBound/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Ender_Lilies",
+    "display_name": "Ender Lilies",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Ender_Lilies/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Factorio",
+    "display_name": "Factorio",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Factorio/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Factorio_-_Space_Age_Without_Space",
+    "display_name": "Factorio - Space Age Without Space",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Factorio_-_Space_Age_Without_Space/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Faxanadu",
+    "display_name": "Faxanadu",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Faxanadu/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Final_Fantasy_IV_Free_Enterprise",
+    "display_name": "Final Fantasy IV Free Enterprise",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Final_Fantasy_IV_Free_Enterprise/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Final_Fantasy_Mystic_Quest",
+    "display_name": "Final Fantasy Mystic Quest",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Final_Fantasy_Mystic_Quest/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Final_Fantasy_Tactics_Advance",
+    "display_name": "Final Fantasy Tactics Advance",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Final_Fantasy_Tactics_Advance/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Final_Fantasy_V_Career_Day",
+    "display_name": "Final Fantasy V Career Day",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Final_Fantasy_V_Career_Day/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Flipwitch_Forbidden_Sex_Hex",
+    "display_name": "Flipwitch Forbidden Sex Hex",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Flipwitch_Forbidden_Sex_Hex/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Getting_Over_It",
+    "display_name": "Getting Over It",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Getting_Over_It/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Golden_Sun_The_Lost_Age",
+    "display_name": "Golden Sun The Lost Age",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Golden_Sun_The_Lost_Age/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "HITMAN_World_of_Assassination",
+    "display_name": "HITMAN World of Assassination",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "HITMAN_World_of_Assassination/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Hatsune_Miku_Project_Diva_Mega_Mix",
+    "display_name": "Hatsune Miku Project Diva Mega Mix",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Hatsune_Miku_Project_Diva_Mega_Mix/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Heretic",
+    "display_name": "Heretic",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Heretic/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Hollow_Knight",
+    "display_name": "Hollow Knight",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Hollow_Knight/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Hunie_Pop",
+    "display_name": "Hunie Pop",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Hunie_Pop/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Hunie_Pop_2",
+    "display_name": "Hunie Pop 2",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Hunie_Pop_2/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Hylics_2",
+    "display_name": "Hylics 2",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Hylics_2/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Inscryption_Beta",
+    "display_name": "Inscryption Beta",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Inscryption_Beta/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Into_the_Breach",
+    "display_name": "Into the Breach",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Into_the_Breach/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Jak_and_Daxter_The_Precursor_Legacy",
+    "display_name": "Jak and Daxter The Precursor Legacy",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Jak_and_Daxter_The_Precursor_Legacy/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Jigsaw",
+    "display_name": "Jigsaw",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Jigsaw/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Kindergarten_2",
+    "display_name": "Kindergarten 2",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Kindergarten_2/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Kingdom_Hearts_2",
+    "display_name": "Kingdom Hearts 2",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Kingdom_Hearts_2/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Kirby_64_-_The_Crystal_Shards",
+    "display_name": "Kirby 64 - The Crystal Shards",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Kirby_64_-_The_Crystal_Shards/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Kirbys_Dream_Land_3",
+    "display_name": "Kirbys Dream Land 3",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Kirbys_Dream_Land_3/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Landstalker_-_The_Treasures_of_King_Nole",
+    "display_name": "Landstalker - The Treasures of King Nole",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Landstalker_-_The_Treasures_of_King_Nole/landstalker_setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Lego_Star_Wars_The_Complete_Saga",
+    "display_name": "Lego Star Wars The Complete Saga",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Lego_Star_Wars_The_Complete_Saga/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Lethal_Company",
+    "display_name": "Lethal Company",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Lethal_Company/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Lingo",
+    "display_name": "Lingo",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Lingo/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Links_Awakening_DX_Beta",
+    "display_name": "Links Awakening DX Beta",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Links_Awakening_DX_Beta/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Lufia_II_Ancient_Cave",
+    "display_name": "Lufia II Ancient Cave",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Lufia_II_Ancient_Cave/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Luigis_Mansion",
+    "display_name": "Luigis Mansion",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Luigis_Mansion/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Lunacid",
+    "display_name": "Lunacid",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Lunacid/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Madou_Monogatari_Hanamaru_Daiyouchienji",
+    "display_name": "Madou Monogatari Hanamaru Daiyouchienji",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Madou_Monogatari_Hanamaru_Daiyouchienji/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Mario_Kart_64",
+    "display_name": "Mario Kart 64",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Mario_Kart_64/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Mario_Kart_Double_Dash",
+    "display_name": "Mario Kart Double Dash",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Mario_Kart_Double_Dash/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Mario__Luigi_Superstar_Saga",
+    "display_name": "Mario  Luigi Superstar Saga",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Mario__Luigi_Superstar_Saga/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "MegaMan_Battle_Network_3",
+    "display_name": "MegaMan Battle Network 3",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "MegaMan_Battle_Network_3/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Mega_Man_2",
+    "display_name": "Mega Man 2",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Mega_Man_2/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Mega_Man_3",
+    "display_name": "Mega Man 3",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Mega_Man_3/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Mega_Man_X3",
+    "display_name": "Mega Man X3",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Mega_Man_X3/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Meritous",
+    "display_name": "Meritous",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Meritous/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Metroid_Prime",
+    "display_name": "Metroid Prime",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Metroid_Prime/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Metroid_Zero_Mission",
+    "display_name": "Metroid Zero Mission",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Metroid_Zero_Mission/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Momodora_Moonlit_Farewell",
+    "display_name": "Momodora Moonlit Farewell",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Momodora_Moonlit_Farewell/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Monster_Sanctuary",
+    "display_name": "Monster Sanctuary",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Monster_Sanctuary/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Muse_Dash",
+    "display_name": "Muse Dash",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Muse_Dash/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Noita",
+    "display_name": "Noita",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Noita/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Ocarina_of_Time",
+    "display_name": "Ocarina of Time",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Ocarina_of_Time/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Old_School_Runescape",
+    "display_name": "Old School Runescape",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Old_School_Runescape/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "OpenRCT2",
+    "display_name": "OpenRCT2",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "OpenRCT2/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Ori_and_the_Blind_Forest",
+    "display_name": "Ori and the Blind Forest",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Ori_and_the_Blind_Forest/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Ori_and_the_Will_of_the_Wisps",
+    "display_name": "Ori and the Will of the Wisps",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Ori_and_the_Will_of_the_Wisps/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Overcooked_2",
+    "display_name": "Overcooked 2",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Overcooked_2/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "PEAK",
+    "display_name": "PEAK",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "PEAK/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Paper_Mario",
+    "display_name": "Paper Mario",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Paper_Mario/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Paper_Mario_The_Thousand-Year_Door",
+    "display_name": "Paper Mario The Thousand-Year Door",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Paper_Mario_The_Thousand-Year_Door/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Path_of_Exile",
+    "display_name": "Path of Exile",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Path_of_Exile/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Peaks_of_Yore",
+    "display_name": "Peaks of Yore",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Peaks_of_Yore/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Phoenotopia_Awakening",
+    "display_name": "Phoenotopia Awakening",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Phoenotopia_Awakening/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Placid_Plastic_Duck_Simulator",
+    "display_name": "Placid Plastic Duck Simulator",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Placid_Plastic_Duck_Simulator/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Pokemon_Crystal",
+    "display_name": "Pokemon Crystal",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Pokemon_Crystal/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Pokemon_Emerald",
+    "display_name": "Pokemon Emerald",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Pokemon_Emerald/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Pokemon_FireRed_and_LeafGreen",
+    "display_name": "Pokemon FireRed and LeafGreen",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Pokemon_FireRed_and_LeafGreen/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Pokemon_Mystery_Dungeon_Explorers_of_Sky",
+    "display_name": "Pokemon Mystery Dungeon Explorers of Sky",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Pokemon_Mystery_Dungeon_Explorers_of_Sky/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Pokemon_Red_and_Blue",
+    "display_name": "Pokemon Red and Blue",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Pokemon_Red_and_Blue/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Powerwash_Simulator",
+    "display_name": "Powerwash Simulator",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Powerwash_Simulator/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Pseudoregalia",
+    "display_name": "Pseudoregalia",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Pseudoregalia/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Quake_1",
+    "display_name": "Quake 1",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Quake_1/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Rabi-Ribi",
+    "display_name": "Rabi-Ribi",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Rabi-Ribi/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Raft",
+    "display_name": "Raft",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Raft/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Ratchet__Clank_2",
+    "display_name": "Ratchet  Clank 2",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Ratchet__Clank_2/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Ratchet__Clank_3",
+    "display_name": "Ratchet  Clank 3",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Ratchet__Clank_3/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Refunct",
+    "display_name": "Refunct",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Refunct/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Resident_Evil_2_Remake",
+    "display_name": "Resident Evil 2 Remake",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Resident_Evil_2_Remake/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Resident_Evil_3_Remake",
+    "display_name": "Resident Evil 3 Remake",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Resident_Evil_3_Remake/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Rift_of_the_Necrodancer",
+    "display_name": "Rift of the Necrodancer",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Rift_of_the_Necrodancer/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Rimworld",
+    "display_name": "Rimworld",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Rimworld/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Risk_of_Rain",
+    "display_name": "Risk of Rain",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Risk_of_Rain/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Risk_of_Rain_2",
+    "display_name": "Risk of Rain 2",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Risk_of_Rain_2/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "SM64_Romhack",
+    "display_name": "SM64 Romhack",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "SM64_Romhack/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "SMW_Spicy_Mycena_Waffles",
+    "display_name": "SMW Spicy Mycena Waffles",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "SMW_Spicy_Mycena_Waffles/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Satisfactory",
+    "display_name": "Satisfactory",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Satisfactory/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Saving_Princess",
+    "display_name": "Saving Princess",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Saving_Princess/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Sea_of_Thieves",
+    "display_name": "Sea of Thieves",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Sea_of_Thieves/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Shivers",
+    "display_name": "Shivers",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Shivers/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Skyward_Sword",
+    "display_name": "Skyward Sword",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Skyward_Sword/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Sly_Cooper_and_the_Thievius_Raccoonus",
+    "display_name": "Sly Cooper and the Thievius Raccoonus",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Sly_Cooper_and_the_Thievius_Raccoonus/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Sonic_Adventure_2_Battle",
+    "display_name": "Sonic Adventure 2 Battle",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Sonic_Adventure_2_Battle/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Sonic_Adventure_DX",
+    "display_name": "Sonic Adventure DX",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Sonic_Adventure_DX/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Sonic_Heroes",
+    "display_name": "Sonic Heroes",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Sonic_Heroes/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Spyro_3",
+    "display_name": "Spyro 3",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Spyro_3/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Star_Fox_64",
+    "display_name": "Star Fox 64",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Star_Fox_64/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Star_Wars_Episode_I_Racer",
+    "display_name": "Star Wars Episode I Racer",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Star_Wars_Episode_I_Racer/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Starcraft_2",
+    "display_name": "Starcraft 2",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Starcraft_2/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Stardew_Valley",
+    "display_name": "Stardew Valley",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Stardew_Valley/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Subnautica",
+    "display_name": "Subnautica",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Subnautica/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Sudoku",
+    "display_name": "Sudoku",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Sudoku/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Super_Mario_64",
+    "display_name": "Super Mario 64",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Super_Mario_64/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Super_Mario_Land_2",
+    "display_name": "Super Mario Land 2",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Super_Mario_Land_2/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Super_Mario_Odyssey",
+    "display_name": "Super Mario Odyssey",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Super_Mario_Odyssey/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Super_Mario_Sunshine",
+    "display_name": "Super Mario Sunshine",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Super_Mario_Sunshine/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Super_Mario_World",
+    "display_name": "Super Mario World",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Super_Mario_World/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Symphony_of_the_Night",
+    "display_name": "Symphony of the Night",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Symphony_of_the_Night/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "TUNIC",
+    "display_name": "TUNIC",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "TUNIC/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Terraria",
+    "display_name": "Terraria",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Terraria/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Tetris_Attack",
+    "display_name": "Tetris Attack",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Tetris_Attack/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "The_Binding_of_Isaac_Repentance",
+    "display_name": "The Binding of Isaac Repentance",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "The_Binding_of_Isaac_Repentance/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "The_Legend_of_Zelda_-_Oracle_of_Ages",
+    "display_name": "The Legend of Zelda - Oracle of Ages",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "The_Legend_of_Zelda_-_Oracle_of_Ages/ooa_setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "The_Legend_of_Zelda_-_Oracle_of_Seasons",
+    "display_name": "The Legend of Zelda - Oracle of Seasons",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "The_Legend_of_Zelda_-_Oracle_of_Seasons/oos_setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "The_Legend_of_Zelda_-_Phantom_Hourglass",
+    "display_name": "The Legend of Zelda - Phantom Hourglass",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "The_Legend_of_Zelda_-_Phantom_Hourglass/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "The_Messenger",
+    "display_name": "The Messenger",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "The_Messenger/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "The_Minish_Cap",
+    "display_name": "The Minish Cap",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "The_Minish_Cap/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "The_Simpsons_Hit_And_Run",
+    "display_name": "The Simpsons Hit And Run",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "The_Simpsons_Hit_And_Run/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "The_Sims_4",
+    "display_name": "The Sims 4",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "The_Sims_4/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "The_Wind_Waker",
+    "display_name": "The Wind Waker",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "The_Wind_Waker/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "The_Witness",
+    "display_name": "The Witness",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "The_Witness/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Timespinner",
+    "display_name": "Timespinner",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Timespinner/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Toontown",
+    "display_name": "Toontown",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Toontown/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Trackmania",
+    "display_name": "Trackmania",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Trackmania/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Twilight_Princess",
+    "display_name": "Twilight Princess",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Twilight_Princess/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Tyrian",
+    "display_name": "Tyrian",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Tyrian/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "UFO_50",
+    "display_name": "UFO 50",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "UFO_50/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "ULTRAKILL",
+    "display_name": "ULTRAKILL",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "ULTRAKILL/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Undertale",
+    "display_name": "Undertale",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Undertale/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "VVVVVV",
+    "display_name": "VVVVVV",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "VVVVVV/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Wario_Land",
+    "display_name": "Wario Land",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Wario_Land/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Wario_Land_4",
+    "display_name": "Wario Land 4",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Wario_Land_4/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Xenoblade_X",
+    "display_name": "Xenoblade X",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Xenoblade_X/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Yacht_Dice",
+    "display_name": "Yacht Dice",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Yacht_Dice/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Yoshis_Island",
+    "display_name": "Yoshis Island",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Yoshis_Island/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Yu-Gi-Oh_2006",
+    "display_name": "Yu-Gi-Oh 2006",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Yu-Gi-Oh_2006/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Yu-Gi-Oh_Dungeon_Dice_Monsters",
+    "display_name": "Yu-Gi-Oh Dungeon Dice Monsters",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Yu-Gi-Oh_Dungeon_Dice_Monsters/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Yu-Gi-Oh_Forbidden_Memories",
+    "display_name": "Yu-Gi-Oh Forbidden Memories",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Yu-Gi-Oh_Forbidden_Memories/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Zelda_II_The_Adventure_of_Link",
+    "display_name": "Zelda II The Adventure of Link",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Zelda_II_The_Adventure_of_Link/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Zillion",
+    "display_name": "Zillion",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Zillion/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "Zork_Grand_Inquisitor",
+    "display_name": "Zork Grand Inquisitor",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "Zork_Grand_Inquisitor/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "gzDoom",
+    "display_name": "gzDoom",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "gzDoom/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "osu",
+    "display_name": "osu",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "osu/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  },
+  {
+    "game_id": "shapez",
+    "display_name": "shapez",
+    "platform": "unknown",
+    "driver": {
+      "family": "unknown",
+      "core_id": ""
+    },
+    "patch_mode": "none",
+    "required_assets": [],
+    "launch_steps": [],
+    "connect_steps": [],
+    "setup_files": [
+      "shapez/setup_en.md"
+    ],
+    "notes": "",
+    "hints": {
+      "emulators": [],
+      "mod_loaders": [],
+      "connect_examples": []
+    }
+  }
+]

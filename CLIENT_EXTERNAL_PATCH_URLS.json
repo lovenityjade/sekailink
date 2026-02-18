@@ -1,0 +1,278 @@
+{
+  "A_Link_Between_Worlds": [
+    "https://github.com/LittleCube-hax/albw-ap-plugin/releases/latest"
+  ],
+  "A_Short_Hike": [
+    "https://github.com/BrandenEK/AShortHike.Modding.Installer",
+    "https://github.com/BrandenEK/AShortHike.Randomizer"
+  ],
+  "Against_the_Storm": [
+    "https://www.overwolf.com/app/thunderstore-thunderstore_mod_manager"
+  ],
+  "Aquaria": [
+    "https://github.com/tioui/Aquaria_Randomizer/releases/latest"
+  ],
+  "Balatro": [
+    "https://github.com/Steamopollys/Steamodded?tab=readme-ov-file#how-to-install-the-alpha",
+    "https://github.com/black-sliver/lua-apclientpp/releases"
+  ],
+  "Battle_for_Bikini_Bottom": [
+    "https://github.com/MultiworldGG/MultiworldGG/blob/main/docs/apworld%20specification.md"
+  ],
+  "Blasphemous": [
+    "https://github.com/BrandenEK/Blasphemous.Modding.Installer",
+    "https://github.com/BrandenEK/Blasphemous.Randomizer.MapTracker",
+    "https://github.com/BrandenEK/Blasphemous.Randomizer.Multiworld"
+  ],
+  "Bomb_Rush_Cyberfunk": [
+    "https://github.com/TRPG0/BRC-ModLocalizer/releases",
+    "https://thunderstore.io/c/bomb-rush-cyberfunk/p/ebkr/r2modman/"
+  ],
+  "Brotato": [
+    "https://github.com/SpenserHaddad/Brotato-ArchipelagoClient/releases/latest"
+  ],
+  "Cat_Quest": [
+    "https://github.com/Nikkilites/CatQuest-Randomizer/releases"
+  ],
+  "Civilization_VI": [
+    "https://github.com/hesto2/civilization_archipelago_mod/releases/latest"
+  ],
+  "CrossCode": [
+    "https://wiki.c2dl.info/CCLoader"
+  ],
+  "Crystal_Project": [
+    "https://github.com/Emerassi/CrystalProjectAPWorld/releases"
+  ],
+  "Cuphead": [
+    "https://github.com/JKLeckr/CupheadArchipelagoMod",
+    "https://github.com/JKLeckr/CupheadArchipelagoMod/releases"
+  ],
+  "Dark_Souls_III": [
+    "https://github.com/nex3/Dark-Souls-III-Archipelago-client/releases/latest",
+    "https://github.com/thefifthmatt/SoulsRandomizers/issues",
+    "https://www.nexusmods.com/darksouls3/mods/484"
+  ],
+  "Donkey_Kong_64": [
+    "https://dk64randomizer.com/wiki/index.html?title=Archipelago#setup-guide"
+  ],
+  "DREDGE": [
+    "https://dredgemods.com/manager/"
+  ],
+  "Ender_Lilies": [
+    "https://github.com/Trexounay/EnderLilies.Randomizer/releases"
+  ],
+  "Factorio_-_Space_Age_Without_Space": [
+    "https://mods.factorio.com/mod/SpaceAgeWithoutSpace",
+    "https://mods.factorio.com/mod/SpaceAgeWithoutSpace/downloads"
+  ],
+  "Flipwitch_Forbidden_Sex_Hex": [
+    "https://github.com/Witchybun/FlipwitchAPClient/releases"
+  ],
+  "gzDoom": [
+    "https://github.com/ToxicFrog/doom-mods/blob/main/gzap/README.md",
+    "https://github.com/ToxicFrog/doom-mods/blob/main/gzap/doc/gameplay.md",
+    "https://github.com/ToxicFrog/doom-mods/blob/main/gzap/doc/support-table.md",
+    "https://github.com/ToxicFrog/doom-mods/releases"
+  ],
+  "Hatsune_Miku_Project_Diva_Mega_Mix": [
+    "https://divamodarchive.com/post/193",
+    "https://divamodarchive.com/post/279",
+    "https://divamodarchive.com/post/371",
+    "https://gamebanana.com/mods/380955",
+    "https://gamebanana.com/mods/388083",
+    "https://gamebanana.com/mods/397158",
+    "https://gamebanana.com/mods/427425",
+    "https://gamebanana.com/mods/449088",
+    "https://gamebanana.com/mods/514140",
+    "https://gamebanana.com/mods/625557",
+    "https://github.com/blueskythlikesclouds/DivaModLoader?tab=readme-ov-file#installation",
+    "https://github.com/nastys/ExPatch/releases/latest"
+  ],
+  "Hollow_Knight": [
+    "https://themulhima.github.io/Lumafly/commands/download/?mods=Archipelago",
+    "https://themulhima.github.io/Lumafly/commands/download/?mods=Archipelago/Archipelago%20Map%20Mod/RecentItemsDisplay/DebugMod/RandoStats/Additional%20Timelines/CompassAlwaysOn/AdditionalMaps/"
+  ],
+  "Hunie_Pop": [
+    "https://github.com/DotsofdarknessArchipelago/HuniePop-Archiepelago-Client/releases"
+  ],
+  "Hunie_Pop_2": [
+    "https://github.com/DotsofdarknessArchipelago/HunniePop2-Archipelago-Client/releases"
+  ],
+  "Inscryption_Beta": [
+    "https://inscryption.thunderstore.io/package/Ballin_Inc/ArchipelagoMod/",
+    "https://inscryption.thunderstore.io/package/ebkr/r2modman/",
+    "https://www.overwolf.com/app/Thunderstore-Thunderstore_Mod_Manager"
+  ],
+  "Into_the_Breach": [
+    "https://github.com/Ishigh1/ITB-randomizer-for-AP/releases",
+    "https://github.com/itb-community/ITB-ModLoader"
+  ],
+  "Jak_and_Daxter_The_Precursor_Legacy": [
+    "https://jakmods.dev/"
+  ],
+  "Kingdom_Hearts_2": [
+    "https://tommadness.github.io/KH2Randomizer/setup/Panacea-ModLoader/"
+  ],
+  "Lethal_Company": [
+    "https://thunderstore.io/c/lethal-company/p/LethalCompanyModding/Yukieji_UnityExplorer/"
+  ],
+  "Lunacid": [
+    "https://github.com/Witchybun/LunacidAPClient/releases/"
+  ],
+  "Metroid_Zero_Mission": [
+    "https://wiki.ootrandomizer.com/index.php?title=BizHawk"
+  ],
+  "Monster_Sanctuary": [
+    "https://github.com/Gtaray/archipelago-monstersanctuary/releases/latest/download/Monster_Sanctuary_Mod.zip"
+  ],
+  "Muse_Dash": [
+    "https://github.com/LavaGang/MelonLoader/releases/latest"
+  ],
+  "Ocarina_of_Time": [
+    "https://wiki.ootrandomizer.com/index.php?title=Bizhawk"
+  ],
+  "OpenRCT2": [
+    "https://openrct2plugins.org/",
+    "https://openrct2plugins.org/plugin/R_kgDOGmXTVQ/rollercoaster-tycoon-randomizer"
+  ],
+  "Ori_and_the_Will_of_the_Wisps": [
+    "https://github.com/ori-community/wotw-rando-client/tree/archipelago"
+  ],
+  "Overcooked_2": [
+    "https://github.com/toasterparty/oc2-modding",
+    "https://github.com/toasterparty/oc2-modding/releases"
+  ],
+  "Paper_Mario": [
+    "https://github.com/JKBSunshine/PMR_APWorld/blob/main/PM%20Sample.yaml",
+    "https://github.com/JKBSunshine/PMR_APWorld/blob/main/docs/PM%20Sample.yaml",
+    "https://github.com/JKBSunshine/PMR_APWorld/blob/main/docs/PMR%20Settings%20String.yaml",
+    "https://github.com/JKBSunshine/PMR_APWorld/blob/main/options.py",
+    "https://github.com/JKBSunshine/PMR_APWorld/releases",
+    "https://github.com/JKBSunshine/PMR_APWorld/tree/main",
+    "https://pm64randomizer.com/"
+  ],
+  "Peaks_of_Yore": [
+    "https://thunderstore.io/package/ebkr/r2modman/"
+  ],
+  "Phoenotopia_Awakening": [
+    "https://github.com/Amphyros/Phoenotopia-Awakening-AP-client",
+    "https://github.com/Amphyros/Phoenotopia-Awakening-AP-client/issues",
+    "https://github.com/Amphyros/Phoenotopia-Awakening-AP-client/releases"
+  ],
+  "Raft": [
+    "https://www.raftmodding.com/loader",
+    "https://www.raftmodding.com/mods/modutils",
+    "https://www.raftmodding.com/mods/raftipelago"
+  ],
+  "Resident_Evil_2_Remake": [
+    "https://github.com/FuzzyGamesOn/RE2R_AP_Client/releases"
+  ],
+  "Resident_Evil_3_Remake": [
+    "https://github.com/TheRealSolidusSnake/RE3R_Non-RTX_AP_Client"
+  ],
+  "Rimworld": [
+    "https://github.com/PhantomOfAres/RimworldArchipelagoClient"
+  ],
+  "Risk_of_Rain_2": [
+    "https://thunderstore.io/package/ebkr/r2modman/"
+  ],
+  "Satisfactory": [
+    "https://docs.ficsit.app/satisfactory-modding/latest/ForUsers/DedicatedServerSetup.html",
+    "https://docs.ficsit.app/satisfactory-modding/latest/ForUsers/SatisfactoryModManager.html",
+    "https://docs.ficsit.app/satisfactory-modding/latest/ForUsers/SatisfactoryModManager.html#_profiles",
+    "https://docs.ficsit.app/satisfactory-modding/latest/ForUsers/SatisfactoryModManager.html#_sharing_profiles",
+    "https://docs.ficsit.app/satisfactory-modding/latest/faq.html",
+    "https://docs.ficsit.app/satisfactory-modding/latest/faq.html#_how_do_i_get_the_experimental_or_early_access_branch_of_the_game",
+    "https://docs.ficsit.app/satisfactory-modding/latest/faq.html#_where_can_i_find_the_games_log_files",
+    "https://ficsit.app/mod/Archipelago",
+    "https://github.com/satisfactorymodding/SatisfactoryModManager/releases/latest/"
+  ],
+  "shapez": [
+    "https://mod.io/g/shapez/m/shapezipelago"
+  ],
+  "Shivers": [
+    "https://github.com/Shivers-Randomizer/Shivers-AP-Tracker/releases/latest",
+    "https://github.com/Shivers-Randomizer/Shivers-Randomizer/releases/latest"
+  ],
+  "Skyward_Sword": [
+    "https://github.com/Battlecats59/SS_APWorld/discussions/24",
+    "https://github.com/Battlecats59/SS_APWorld/issues",
+    "https://github.com/Battlecats59/SS_APWorld/releases",
+    "https://github.com/Battlecats59/SS_APWorld/releases/latest",
+    "https://github.com/Battlecats59/SS_APWorld/releases/tag/DME",
+    "https://robojumper.github.io/SS-Randomizer-Tracker/",
+    "https://robojumper.github.io/SS-Randomizer-Tracker/guide"
+  ],
+  "Sonic_Adventure_2_Battle": [
+    "https://gamebanana.com/mods/381193",
+    "https://github.com/X-Hax/SA-Mod-Manager/releases",
+    "https://github.com/X-Hax/SA-Mod-Manager/tree/master?tab=readme-ov-file"
+  ],
+  "Sonic_Adventure_DX": [
+    "https://chao-island.com/downloads/pc-tools/chao-exporter-importer/",
+    "https://gamebanana.com/tools/15436",
+    "https://github.com/ClassicSpeed/sadx-classic-randomizer/releases"
+  ],
+  "Star_Wars_Episode_I_Racer": [
+    "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases",
+    "https://github.com/wcolding/SWR_AP_Client/releases/tag/v0.6.0"
+  ],
+  "Stardew_Valley": [
+    "https://github.com/agilbert1412/StardewArchipelago/blob/7.x.x/Documentation/Supported%20Mods.md",
+    "https://www.nexusmods.com/stardewvalley",
+    "https://www.nexusmods.com/stardewvalley/mods/2400?tab=files"
+  ],
+  "Subnautica": [
+    "https://github.com/Berserker66/ArchipelagoSubnauticaModSrc/releases"
+  ],
+  "Terraria": [
+    "https://store.steampowered.com/app/1281930/tModLoader/"
+  ],
+  "The_Binding_of_Isaac_Repentance": [
+    "https://github.com/Cyb3RGER/TBoI-AP-Mod/releases",
+    "https://github.com/Zamiell/isaac-mod-config-menu"
+  ],
+  "The_Legend_of_Zelda_-_Phantom_Hourglass": [
+    "https://github.com/carrotinator/Archipelago/blob/main/worlds/tloz_ph/docs/tricks_and_skips.md"
+  ],
+  "The_Messenger": [
+    "https://github.com/alwaysintreble/TheMessengerRandomizerModAP",
+    "https://github.com/alwaysintreble/TheMessengerRandomizerModAP/releases"
+  ],
+  "The_Simpsons_Hit_And_Run": [
+    "https://docs.donutteam.com/docs/lucasmodlauncher/mods/installing-mods",
+    "https://docs.donutteam.com/docs/lucasmodlauncher/setup",
+    "https://github.com/nmize1/AP-SHARRandomizer/releases/latest",
+    "https://modbakery.donutteam.com/releases/view/"
+  ],
+  "The_Sims_4": [
+    "https://github.com/Simsipelago/Sims4ArchipelagoMod/releases/latest"
+  ],
+  "The_Wind_Waker": [
+    "https://github.com/Sage-of-Mirrors/Custom-Wind-Waker-Player-Models"
+  ],
+  "The_Witness": [
+    "https://github.com/NewSoupVi/The-Witness-Randomizer-for-Archipelago/releases/latest"
+  ],
+  "Timespinner": [
+    "https://github.com/Jarno458/TsRandomizer",
+    "https://github.com/Jarno458/TsRandomizer/releases"
+  ],
+  "TUNIC": [
+    "https://github.com/silent-destroyer/tunic-randomizer/releases/latest"
+  ],
+  "Twilight_Princess": [
+    "https://generator.tprandomizer.com/s/aptest",
+    "https://github.com/WritingHusky/Twilight_Princess_apworld/releases/latest",
+    "https://tprandomizer.com/"
+  ],
+  "UFO_50": [
+    "https://github.com/UFO-50-Archipelago/Patch/releases"
+  ],
+  "ULTRAKILL": [
+    "https://github.com/eternalUnion/UKPluginConfigurator"
+  ],
+  "Wario_Land_4": [
+    "https://wiki.ootrandomizer.com/index.php?title=BizHawk"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "game_id": "dkc2",
+  "display_name": "Donkey Kong Country 2",
+  "emu": "bizhawk",
+  "ap_client": "sni",
+  "lua_connector": "lua/connector.lua",
+  "tracker_pack_uid": "https://github.com/pwkfisher/ap-dkc2-tracker",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apdkc2"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [
+      "d323e6bb4ccc85fd7b416f58350bc1a2",
+      "98458530599b9dff8a7414a7f20b777a"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

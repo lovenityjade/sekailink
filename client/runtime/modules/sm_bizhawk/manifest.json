@@ -1,0 +1,24 @@
+{
+  "game_id": "sm",
+  "display_name": "Super Metroid",
+  "emu": "bizhawk",
+  "ap_client": "sni",
+  "lua_connector": "lua/connector.lua",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apsm"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".sfc"
+    ],
+    "md5": [
+      "21f3e98df4780ee1c667b84e57d88675"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

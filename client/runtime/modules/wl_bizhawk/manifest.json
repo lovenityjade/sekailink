@@ -1,0 +1,24 @@
+{
+  "game_id": "wl",
+  "display_name": "Wario Land",
+  "emu": "bizhawk",
+  "lua_connector": "lua/connector.lua",
+  "tracker_pack_uid": "https://github.com/randomcodegen/wl_ap_tracker",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apwl"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".gb"
+    ],
+    "md5": [
+      "d9d957771484ef846d4e8d241f6f2815"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

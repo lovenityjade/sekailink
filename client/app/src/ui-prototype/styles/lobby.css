@@ -1,0 +1,381 @@
+/* Lobby page (existing functional page) restyled to match the UI prototype theme.
+   UI-only changes: keep markup + logic intact. */
+
+body.sklp-ui .skl-lobby-page {
+  padding: 0;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: transparent;
+}
+
+/* Remove global page scrolling; keep scrolling inside panels. */
+body.sklp-ui .skl-lobby-scroll {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  padding-right: 0;
+  gap: 14px;
+  scrollbar-width: auto;
+  scrollbar-color: auto;
+}
+
+body.sklp-ui .skl-lobby-hero {
+  position: relative;
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: var(--sklp-r-xl);
+  border: 1px solid var(--sklp-border);
+  background: var(--sklp-panel-metal);
+  box-shadow: var(--sklp-glow), var(--sklp-shadow);
+  overflow: hidden;
+}
+
+body.sklp-ui .skl-lobby-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: var(--sklp-r-xl);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 2px rgba(56, 243, 221, 0.06);
+}
+
+body.sklp-ui .skl-title {
+  font-family: var(--sklp-font-tech);
+  font-size: 18px;
+  letter-spacing: 0.10em;
+  margin: 2px 0 0;
+  text-transform: uppercase;
+}
+
+body.sklp-ui .skl-lobby-description {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: rgba(210, 245, 236, 0.62);
+  max-width: 72ch;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+body.sklp-ui .skl-lobby-meta {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: rgba(210, 245, 236, 0.60);
+}
+
+/* Main lobby layout: two columns, no global scroll. */
+body.sklp-ui .skl-lobby-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 410px;
+  gap: 14px;
+  align-items: stretch;
+}
+
+@media (max-width: 1200px) {
+  body.sklp-ui .skl-lobby-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Make all lobby "cards" look like prototype panels. */
+body.sklp-ui .skl-card {
+  position: relative;
+  overflow: hidden;
+  padding: 12px 16px 14px 16px;
+  border-radius: var(--sklp-r-xl);
+  border: 1px solid var(--sklp-border);
+  background: var(--sklp-panel-metal);
+  box-shadow: var(--sklp-glow), var(--sklp-shadow);
+  backdrop-filter: none;
+}
+
+body.sklp-ui .skl-card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  padding: 1px;
+  border-radius: var(--sklp-r-xl);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    conic-gradient(
+      from 0deg,
+      rgba(56, 243, 221, 0) 0deg,
+      rgba(56, 243, 221, 0) 220deg,
+      rgba(56, 243, 221, 0.84) 258deg,
+      rgba(92, 231, 181, 0.74) 285deg,
+      rgba(56, 243, 221, 0) 323deg,
+      rgba(56, 243, 221, 0) 360deg
+    );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: sklp-border-orbit 9.6s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(56, 243, 221, 0.52));
+}
+
+body.sklp-ui .skl-card:nth-of-type(2n)::after {
+  animation-duration: 11.8s;
+  animation-delay: -2.3s;
+}
+
+body.sklp-ui .skl-card:nth-of-type(3n)::after {
+  animation-duration: 8.4s;
+  animation-delay: -4.8s;
+}
+
+body.sklp-ui .skl-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+body.sklp-ui .skl-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: var(--sklp-r-xl);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 2px rgba(56, 243, 221, 0.06);
+}
+
+body.sklp-ui .skl-card-header {
+  padding: 14px 16px 10px 16px;
+  margin: -12px -16px 12px -16px;
+  border-bottom: 1px solid rgba(56, 243, 221, 0.12);
+}
+
+body.sklp-ui .skl-card-header h2 {
+  margin: 0;
+  font-family: var(--sklp-font-tech);
+  font-size: 14px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: rgba(210, 255, 246, 0.92);
+}
+
+body.sklp-ui .skl-card-sub {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(210, 245, 236, 0.56);
+}
+
+body.sklp-ui .skl-card-body {
+  padding: 0;
+}
+
+/* Chat: fill available height; internal scrolling for log only. */
+body.sklp-ui .skl-chat-card {
+  height: auto;
+  max-height: none;
+  max-width: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+}
+
+body.sklp-ui .skl-chat-log {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(56, 243, 221, 0.14);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+body.sklp-ui .skl-chat-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+body.sklp-ui .skl-chat-form textarea {
+  border-radius: 12px;
+  border: 1px solid rgba(56, 243, 221, 0.18);
+  background: rgba(0, 0, 0, 0.22);
+  color: rgba(240, 255, 252, 0.92);
+}
+
+body.sklp-ui .skl-chat-form input[type="text"] {
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(56, 243, 221, 0.18);
+  background: rgba(0, 0, 0, 0.22);
+  color: rgba(240, 255, 252, 0.92);
+  font-family: var(--sklp-font-ui);
+}
+
+body.sklp-ui .skl-chat-form input[type="text"]::placeholder {
+  color: rgba(210, 245, 236, 0.48);
+}
+
+body.sklp-ui .skl-chat-form input[type="text"]:focus {
+  outline: 1px solid rgba(56, 243, 221, 0.55);
+  box-shadow: 0 0 0 3px rgba(56, 243, 221, 0.14);
+}
+
+/* Right column: keep everything inside the column; scroll inside the stack. */
+body.sklp-ui .skl-side-stack {
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-right: 0;
+}
+
+body.sklp-ui .skl-side-tabs {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+}
+
+body.sklp-ui .sklp-lobby-tabbar {
+  display: flex;
+  gap: 0;
+  align-items: center;
+  padding: 10px 16px 0 16px;
+  margin: 0 -16px 12px -16px;
+  border-bottom: 1px solid rgba(56, 243, 221, 0.12);
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+body.sklp-ui .sklp-tab-btn {
+  height: 34px;
+  padding: 0 26px;
+  margin-right: -8px;
+  border-radius: 12px 12px 0 0;
+  border: 1px solid rgba(56, 243, 221, 0.24);
+  border-bottom-color: rgba(56, 243, 221, 0.10);
+  background: linear-gradient(180deg, rgba(16, 44, 48, 0.86), rgba(8, 23, 25, 0.74));
+  color: rgba(210, 245, 236, 0.78);
+  font-family: var(--sklp-font-tech);
+  letter-spacing: 0.12em;
+  font-size: 11px;
+  text-transform: uppercase;
+  position: relative;
+  clip-path: polygon(6% 0, 96% 0, 100% 100%, 0 100%);
+  box-shadow: inset 0 1px 0 rgba(222, 247, 243, 0.08);
+  flex: 0 0 auto;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+body.sklp-ui .sklp-tab-btn.active {
+  border-color: rgba(56, 243, 221, 0.52);
+  border-bottom-color: transparent;
+  color: rgba(240, 255, 252, 0.96);
+  background: linear-gradient(180deg, rgba(30, 92, 86, 0.94), rgba(10, 36, 36, 0.84));
+  box-shadow: 0 0 0 1px rgba(56, 243, 221, 0.10), 0 0 18px rgba(56, 243, 221, 0.18);
+  transform: translateY(1px);
+  z-index: 2;
+}
+
+body.sklp-ui .sklp-tab-btn.active::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: -2px;
+  height: 3px;
+  background: rgba(56, 243, 221, 0.85);
+  box-shadow: 0 0 16px rgba(56, 243, 221, 0.22);
+}
+
+body.sklp-ui .sklp-tab-ico {
+  width: 14px;
+  height: 14px;
+  color: rgba(56, 243, 221, 0.82);
+  filter: drop-shadow(0 0 6px rgba(56, 243, 221, 0.30));
+}
+
+body.sklp-ui .sklp-tab-btn.active .sklp-tab-ico {
+  color: rgba(94, 252, 232, 0.96);
+  filter: drop-shadow(0 0 8px rgba(56, 243, 221, 0.46));
+}
+
+body.sklp-ui .sklp-tab-content {
+  min-height: 0;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+/* Right-click context menu overlay (lobby). */
+body.sklp-ui .sklp-context-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(2px);
+}
+
+body.sklp-ui .sklp-context-menu {
+  position: fixed;
+  min-width: 200px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(56, 243, 221, 0.30);
+  background: linear-gradient(180deg, rgba(9, 34, 36, 0.96), rgba(7, 20, 22, 0.82));
+  box-shadow: var(--sklp-glow-strong), 0 18px 44px rgba(0, 0, 0, 0.65);
+}
+
+body.sklp-ui .sklp-context-menu button {
+  width: 100%;
+  justify-content: flex-start;
+  padding: 9px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(56, 243, 221, 0.18);
+  background: rgba(0, 0, 0, 0.12);
+  font-family: var(--sklp-font-tech);
+  letter-spacing: 0.10em;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: rgba(240, 255, 252, 0.90);
+  box-shadow: none;
+}
+
+body.sklp-ui .sklp-context-menu button + button {
+  margin-top: 8px;
+}
+
+body.sklp-ui .sklp-context-menu button:hover {
+  border-color: rgba(56, 243, 221, 0.55);
+  box-shadow: 0 0 0 1px rgba(56, 243, 221, 0.10), 0 0 18px rgba(56, 243, 221, 0.16);
+}
+
+/* Ensure member list becomes scrollable when it grows. */
+body.sklp-ui .skl-member-list {
+  max-height: none;
+  min-height: 0;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+body.sklp-ui .skl-client-log,
+body.sklp-ui .skl-terminal-log {
+  border-radius: 12px;
+  border: 1px solid rgba(56, 243, 221, 0.14);
+  background: rgba(0, 0, 0, 0.18);
+  color: rgba(240, 255, 252, 0.86);
+}

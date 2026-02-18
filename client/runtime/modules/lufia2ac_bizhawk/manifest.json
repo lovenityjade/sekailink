@@ -1,0 +1,25 @@
+{
+  "game_id": "lufia2ac",
+  "display_name": "Lufia II Ancient Cave",
+  "emu": "bizhawk",
+  "ap_client": "sni",
+  "lua_connector": "lua/connector.lua",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apl2ac"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [
+      "6efc477d6203ed2b3b9133c1cd9e9c5d"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

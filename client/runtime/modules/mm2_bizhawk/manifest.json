@@ -1,0 +1,25 @@
+{
+  "game_id": "mm2",
+  "display_name": "Mega Man 2",
+  "emu": "bizhawk",
+  "lua_connector": "lua/connector.lua",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apmm2"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".nes"
+    ],
+    "md5": [
+      "37f2c36ce7592f1e16b3434b3985c497",
+      "0527a0ee512f69e08b8db6dc97964632",
+      "0c78dfe8e90fb8f3eed022ff01126ad3"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

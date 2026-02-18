@@ -1,0 +1,499 @@
+/* ============================================================
+   SekaiLink – Room List Page
+   ============================================================ */
+
+.skl-roomlist-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ── Search + Filters bar ── */
+.skl-roomlist-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(92,231,181,0.12);
+    background: rgba(8, 14, 11, 0.55);
+    position: relative;
+}
+
+.skl-roomlist-bar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid transparent;
+    background: linear-gradient(135deg, rgba(92,231,181,0.3), rgba(200,220,214,0.15), rgba(92,231,181,0.15)) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.skl-roomlist-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    max-width: 420px;
+    color: var(--text-2);
+}
+
+.skl-roomlist-search .input {
+    flex: 1;
+    min-width: 180px;
+}
+
+.skl-roomlist-search svg {
+    flex-shrink: 0;
+    opacity: 0.5;
+}
+
+.skl-roomlist-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.skl-filter-chip {
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.skl-filter-chip.active {
+    background: rgba(92,231,181,0.12);
+    border-color: rgba(92,231,181,0.35);
+    color: var(--accent);
+}
+
+.skl-filter-chip:hover {
+    border-color: var(--border-strong);
+}
+
+/* ── Room Table (list of rows) ── */
+.skl-room-table {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Table header */
+.skl-room-table-header {
+    display: grid;
+    grid-template-columns: minmax(260px, 1.2fr) 110px 110px 110px 140px 120px;
+    gap: 12px;
+    padding: 8px 14px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--text-2);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 6px;
+}
+
+.skl-room-col.actions {
+    text-align: right;
+}
+
+/* Each room as a row */
+.skl-lobby-card {
+    display: grid;
+    grid-template-columns: minmax(260px, 1.2fr) 110px 110px 110px 140px 120px;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(92,231,181,0.12);
+    background: rgba(10, 16, 12, 0.45);
+    backdrop-filter: blur(10px);
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    position: relative;
+}
+
+.skl-lobby-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.skl-lobby-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid transparent;
+    background: linear-gradient(135deg, rgba(92,231,181,0.28), rgba(200,220,214,0.12), rgba(92,231,181,0.15)) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.skl-lobby-card:hover {
+    border-color: var(--border-strong);
+    box-shadow: 0 0 18px rgba(92,231,181,0.14);
+}
+
+.skl-lobby-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.skl-lobby-card h3 {
+    margin: 0;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-ui);
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.skl-room-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.skl-room-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(92,231,181,0.12);
+    border: 1px solid rgba(92,231,181,0.28);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.skl-lobby-private {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgba(92,231,181,0.12);
+    border: 1px solid rgba(92,231,181,0.35);
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.skl-lobby-card p {
+    margin: 0;
+    color: var(--text-2);
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.skl-room-col-value {
+    font-size: 12px;
+    color: var(--text-1);
+    text-align: left;
+}
+
+.skl-room-col-value.dim {
+    color: var(--text-2);
+}
+.skl-lobby-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+    justify-content: flex-end;
+}
+
+.skl-lobby-actions .skl-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: 10px;
+    white-space: nowrap;
+}
+
+.skl-roominfo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px 18px;
+    font-size: 13px;
+    color: var(--text-1);
+}
+
+.skl-roominfo-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: rgba(8, 14, 11, 0.6);
+    border: 1px solid rgba(255,255,255,0.04);
+}
+
+.skl-roominfo-row span:first-child {
+    color: var(--text-2);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 10px;
+}
+
+.skl-room-actions-row {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 16px;
+}
+
+/* ── Empty State ── */
+.skl-room-empty {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 48px 24px;
+    text-align: center;
+}
+
+.skl-room-empty-icon {
+    color: var(--text-2);
+    opacity: 0.4;
+    margin-bottom: 4px;
+}
+
+.skl-room-empty-title {
+    margin: 0;
+    font-size: 18px;
+    font-family: var(--font-brand);
+    color: var(--text-0);
+}
+
+.skl-room-empty-desc {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-2);
+    max-width: 400px;
+}
+
+/* ── Error ── */
+.skl-lobby-error {
+    display: none;
+    font-size: 13px;
+    color: #ffb2b2;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.skl-lobby-error.show {
+    display: block;
+}
+
+/* ── Modal ── */
+.skl-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+
+.skl-modal.open {
+    display: flex;
+}
+
+.skl-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(4, 10, 7, 0.7);
+    backdrop-filter: blur(4px);
+}
+
+.skl-modal-panel {
+    position: relative;
+    width: min(860px, 92vw);
+    max-height: 85vh;
+    overflow-y: auto;
+    background: rgba(8, 18, 12, 0.75);
+    border: 1px solid rgba(92,231,181,0.16);
+    border-radius: 12px;
+    padding: 24px;
+    z-index: 2;
+    box-shadow: 0 30px 60px rgba(4, 10, 7, 0.55);
+}
+
+.skl-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+@media (max-width: 980px) {
+    .skl-room-table-header,
+    .skl-lobby-card {
+        grid-template-columns: minmax(220px, 1fr) 90px 90px 90px 110px 100px;
+    }
+}
+
+@media (max-width: 760px) {
+    .skl-room-table-header {
+        display: none;
+    }
+
+    .skl-lobby-card {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .skl-lobby-actions {
+        justify-content: flex-start;
+    }
+}
+
+.skl-modal-header h3 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.skl-modal-close {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-0);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.skl-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 8px;
+}
+
+/* ── Form ── */
+.skl-lobby-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.skl-lobby-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 10px;
+}
+
+.skl-lobby-form input,
+.skl-lobby-form select {
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(8, 18, 12, 0.7);
+    color: var(--text-0);
+    font-family: var(--font-ui);
+    font-size: 13px;
+}
+
+.skl-lobby-form input:focus,
+.skl-lobby-form select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(92,231,181,0.15);
+}
+
+.skl-lobby-form-rules {
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: rgba(8, 18, 12, 0.45);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.skl-lobby-form-title {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.skl-lobby-grid-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 12px;
+}
+
+.skl-lobby-grid-fields label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-2);
+}
+
+.skl-lobby-plando {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 16px;
+    font-size: 12px;
+    color: var(--text-2);
+}
+
+.skl-lobby-plando span {
+    color: var(--text-0);
+    font-weight: 500;
+}
+
+.skl-lobby-plando label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .skl-lobby-card {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .skl-lobby-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .skl-roomlist-bar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .skl-roomlist-search {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .skl-app-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .skl-app-header .skl-btn {
+        width: 100%;
+    }
+}

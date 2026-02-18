@@ -1,0 +1,19 @@
+{
+  "game_id": "alttp",
+  "display_name": "A Link to the Past",
+  "emu": "bizhawk",
+  "ap_client": "sni",
+  "lua_connector": "lua/connector_alttp.lua",
+  "tracker_pack_uid": "https://github.com/StripesOO7/alttp-ap-poptracker-pack",
+  "patcher": "archipelago",
+  "patch_extensions": [".aplttp", ".apz3"],
+  "rom_requirements": {
+    "extensions": [".sfc", ".smc"],
+    "md5": ["03a63945398191337e896e5771f77173"],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

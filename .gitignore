@@ -1,0 +1,268 @@
+.idea
+.vscode
+
+*_Spoiler.txt
+*.bmbp
+*.apbp
+*.apcivvi
+*.apl2ac
+*.apm3
+*.apmc
+*.apz5
+*.aptloz
+*.aptww
+*.apemerald
+*.aplm
+*.pyc
+*.sfc
+*.z64
+*.n64
+*.nes
+*.smc
+*.sms
+*.gb
+*.gbc
+*.gba
+*.wixobj
+*.lck
+*.db3
+*multidata
+*multisave
+*.archipelago
+*.mwgg
+*.apsave
+*.BIN
+!worlds/ttyd/data/US.bin
+*.puml
+*.iso
+
+setups
+build
+bundle/components.wxs
+dist
+/prof/
+README.html
+.vs/
+EnemizerCLI/
+/Players/*
+!/Players/.gitkeep
+/SNI/
+/sni-*/
+/appimagetool*
+/host.yaml
+/options.yaml
+/config.yaml
+/logs/
+_persistent_storage.yaml
+mystery_result_*.yaml
+*-errors.txt
+success.txt
+output/
+Output Logs/
+/factorio/
+/WebHostLib/static/generated
+/WebHostLib/
+/deploy/
+/freeze_requirements.txt
+/Archipelago.zip
+/MultiworldGG.zip
+/setup.ini
+/installdelete.iss
+/data/user.kv
+/datapackage
+/datapackage_export.json
+/custom_worlds
+/certs
+/temp
+
+# Bundled native libs staged during AppImage packaging (do not commit).
+/client/runtime/_bundled_libs/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*$py.class
+
+# C extensions
+*.dll
+!worlds/bfbb/inc/IP/*.dll
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+installer.log
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# vim editor
+*.swp
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv*
+env/
+venv/
+/venv*/
+ENV/
+env.bak/
+venv.bak/
+*.code-workspace
+shell.nix
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# Cython intermediates
+_speedups.c
+_speedups.cpp
+_speedups.html
+
+# pyenv
+.python-version
+
+#undertale stuff
+/Undertale/
+
+#Path of Exile Generated Files
+poe_access_token.pkl
+poe_settings.pkl
+
+# OS General Files
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+[Dd]esktop.ini
+
+VC_redist.x64.exe
+
+certs/*.pem
+certs/README
+
+gunicorn.conf.py
+selflaunch.yaml
+local_build_win.ps1
+
+# Sprites
+data/sprites/remote/*.zspr
+
+# SMO
+/atmosphere
+
+# gzDoom
+gzdoom/*
+gzdoom/cache/*
+data/gzdoom/cache/*
+data/gzdoom/ipc/*
+data/gzdoom/gzdoom.log
+
+# Workspace artifacts
+sekailink-laptop-pack.zip
+zi5XmaYK/
+release/
+docs/
+venv/
+node_modules/
+client/app/node_modules/
+.claude/
+.run/
+.local/
+
+# Bundled mono runtime is a large binary dependency; keep README in git, but not the payload.
+third_party/mono/sekailink-mono-linux-*/**
+!third_party/mono/sekailink-mono-linux-*/README.txt
+
+# Minecraft
+minecraft_versions.json
+
+# PoE
+lib/poe_client_vendor/*
+
+# Minecraft
+Minecraft Forge server/*
+jdk*/*
+
+# SM64Hacks
+data/sm64hacks/**/*
+
+# Private local secrets (never commit)
+sekailink-client-plan/XX-server-infos.local.md
+sekailink-client-plan/XX-temp-tokens.local.md
+*.secrets.local

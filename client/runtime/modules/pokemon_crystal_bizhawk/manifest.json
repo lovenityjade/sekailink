@@ -1,0 +1,18 @@
+{
+  "game_id": "pokemon_crystal",
+  "display_name": "Pokemon Crystal",
+  "emu": "bizhawk",
+  "lua_connector": "lua/connector.lua",
+  "tracker_pack_uid": "https://github.com/palex00/crystal-ap-tracker",
+  "patcher": "archipelago",
+  "patch_extensions": [".apcrystal"],
+  "rom_requirements": {
+    "extensions": [".gbc"],
+    "md5": ["9f2922b235a5eeb78d65594e82ef5dde", "301899b8087289a6436b0a241fbbb474"],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

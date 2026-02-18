@@ -1,0 +1,25 @@
+{
+  "game_id": "tloz",
+  "display_name": "The Legend of Zelda",
+  "emu": "bizhawk",
+  "lua_connector": "lua/connector.lua",
+  "tracker_pack_uid": "https://github.com/Br00ty/tloz_brooty",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".aptloz"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".nes"
+    ],
+    "md5": [
+      "d9a1631d5c32d35594b9484862a26cba",
+      "337bd6f1a1163df31bf2633665589ab0"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

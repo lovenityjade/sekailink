@@ -1,0 +1,28 @@
+appId: com.sekailink.admin
+productName: SekaiLink Admin
+artifactName: SekaiLink-admin-${version}.${ext}
+
+files:
+  - dist/**
+  - electron/**
+  - public/**
+
+directories:
+  buildResources: build
+  output: release
+
+linux:
+  target:
+    - AppImage
+  category: Utility
+
+win:
+  target:
+    - nsis
+
+publish: []
+
+protocols:
+  name: SekaiLink Admin Auth
+  schemes:
+    - sekailink-admin

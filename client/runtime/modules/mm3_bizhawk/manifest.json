@@ -1,0 +1,25 @@
+{
+  "game_id": "mm3",
+  "display_name": "Mega Man 3",
+  "emu": "bizhawk",
+  "lua_connector": "lua/connector.lua",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apmm3"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".nes"
+    ],
+    "md5": [
+      "5266687de215e790b2008284402f3917",
+      "4a53b6f58067d62c9a43404fe835dd5c",
+      "c50008f1ac86fae8d083232cdd3001a5"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

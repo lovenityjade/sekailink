@@ -1,0 +1,98 @@
+appId: com.sekailink.client
+productName: SekaiLink Client
+artifactName: SekaiLink-client-${version}.${ext}
+
+files:
+  - dist/**
+  - electron/**
+  - public/**
+
+extraResources:
+  # Ship the SekaiLink runtime as real files (not inside app.asar), so Python/BizHawk/PopTracker can access them.
+  - from: ../runtime
+    to: runtime
+  # Ship BizHawk (Linux) alongside the AppImage. The Electron main process resolves this via process.resourcesPath.
+  - from: ../../third_party/emulators/BizHawk-2.10-linux-x64
+    to: third_party/emulators/BizHawk-2.10-linux-x64
+  # Ship BizHawk (Windows x64) for Windows desktop builds.
+  - from: ../../third_party/emulators/BizHawk-2.10-win-x64
+    to: third_party/emulators/BizHawk-2.10-win-x64
+  # Ship bundled Mono runtime(s) (Linux) so BizHawk can run without system package installs.
+  # The Electron main process selects the appropriate folder by arch at runtime.
+  - from: ../../third_party/mono
+    to: third_party/mono
+  # Ship compiled PopTracker build(s). Runtime will prefer this binary when present.
+  - from: ../../third_party/PopTracker/build
+    to: third_party/PopTracker/build
+  # Ship the required subset of Archipelago/MultiworldGG Python sources for patching + clients.
+  # This avoids depending on the repo layout at runtime and keeps these files out of app.asar.
+  - from: ../..
+    to: ap
+    filter:
+      - "*.py"
+      - "requirements.txt"
+  - from: ./build/ap-manifest.json
+    to: ap/manifest.json
+  - from: ./build/ap-Players
+    to: ap/Players
+  - from: ../../data
+    to: ap/data
+  - from: ../../worlds
+    to: ap/worlds
+    filter:
+      - "__init__.py"
+      - "Files.py"
+      - "AutoWorld.py"
+      - "AutoSNIClient.py"
+      - "LauncherComponents.py"
+      - "generic/**"
+      - "_bizhawk/**"
+      - "alttp/**"
+      - "dkc/**"
+      - "dkc2/**"
+      - "dkc3/**"
+      - "earthbound/**"
+      - "ff4fe/**"
+      - "ffta/**"
+      - "kdl3/**"
+      - "lufia2ac/**"
+      - "marioland2/**"
+      - "metroidfusion/**"
+      - "mm2/**"
+      - "mm3/**"
+      - "mzm/**"
+      - "oot/**"
+      - "pokemon_crystal/**"
+      - "pokemon_emerald/**"
+      - "pokemon_frlg/**"
+      - "pokemon_rb/**"
+      - "sm/**"
+      - "smw/**"
+      - "smz3/**"
+      - "tloz/**"
+      - "tloz_oos/**"
+      - "tmc/**"
+      - "wl/**"
+      - "wl4/**"
+      - "zelda2/**"
+
+directories:
+  buildResources: build
+  output: release
+
+linux:
+  target:
+    - AppImage
+  category: Game
+  icon: build/favicon.png
+
+win:
+  target:
+    - nsis
+
+publish: []
+
+protocols:
+  name: SekaiLink Auth
+  schemes:
+    - sekailink

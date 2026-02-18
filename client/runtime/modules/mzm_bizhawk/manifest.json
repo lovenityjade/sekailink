@@ -1,0 +1,25 @@
+{
+  "game_id": "mzm",
+  "display_name": "Metroid Zero Mission",
+  "emu": "bizhawk",
+  "tracker_pack_uid": "https://github.com/ladybunne/MetroidZeroMission_PopTrackerPack",
+  "lua_connector": "lua/connector.lua",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apmzm"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".gba"
+    ],
+    "md5": [
+      "ebbce58109988b6da61ebb06c7a432d5",
+      "e23c14997c2ea4f11e5996908e577125"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}

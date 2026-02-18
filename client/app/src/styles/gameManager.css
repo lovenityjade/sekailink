@@ -1,0 +1,238 @@
+.skl-game-manager {
+    padding: 26px 28px;
+}
+
+.skl-gm-header h1 {
+    margin: 0 0 6px;
+    font-size: 2rem;
+    letter-spacing: 0.02em;
+}
+
+.skl-gm-header p {
+    margin: 0 0 18px;
+    color: #cfe8dd;
+}
+
+.skl-gm-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    padding: 6px;
+    border-radius: 12px;
+    border: 1px solid rgba(89, 245, 208, 0.18);
+    background: linear-gradient(180deg, rgba(7, 19, 19, 0.8), rgba(7, 19, 19, 0.48));
+    box-shadow: inset 0 0 0 1px rgba(89, 245, 208, 0.08), 0 0 20px rgba(31, 163, 140, 0.12);
+}
+
+.skl-gm-tab {
+    padding: 9px 14px;
+    border-radius: 9px;
+    border: 1px solid rgba(89, 245, 208, 0.22);
+    background: linear-gradient(180deg, rgba(8, 28, 28, 0.9), rgba(9, 24, 22, 0.68));
+    color: #d5fdf4;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: border-color 120ms ease, box-shadow 120ms ease, color 120ms ease, background 120ms ease;
+}
+
+.skl-gm-tab.active {
+    background: linear-gradient(180deg, rgba(24, 72, 66, 0.92), rgba(14, 49, 43, 0.82));
+    border-color: rgba(89, 245, 208, 0.7);
+    box-shadow: inset 0 0 10px rgba(89, 245, 208, 0.22), 0 0 14px rgba(33, 185, 158, 0.28);
+    color: #ecfffa;
+}
+
+.skl-gm-tab:hover {
+    border-color: rgba(89, 245, 208, 0.44);
+}
+
+.skl-gm-tab-icon {
+    width: 15px;
+    height: 15px;
+    opacity: 0.9;
+}
+
+.skl-gm-tab.active .skl-gm-tab-icon {
+    opacity: 1;
+}
+
+.skl-gm-panel {
+    display: none;
+}
+
+.skl-gm-panel.active {
+    display: block;
+}
+
+.skl-gm-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.skl-gm-section-header h2 {
+    margin: 0;
+}
+
+.skl-gm-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.skl-gm-select {
+    min-width: 220px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(92, 231, 181, 0.2);
+    background: rgba(8, 18, 13, 0.65);
+    color: #e3fff0;
+}
+
+.skl-gm-editor {
+    position: relative;
+    border-radius: 12px;
+    border: 1px solid rgba(92, 231, 181, 0.2);
+    background: rgba(8, 18, 13, 0.6);
+    min-height: 420px;
+    overflow: hidden;
+}
+
+.skl-gm-editor textarea {
+    font-family: "Courier New", monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    padding: 16px 18px;
+    white-space: pre;
+    tab-size: 2;
+}
+
+.skl-gm-editor textarea {
+    width: 100%;
+    height: 420px;
+    border: none;
+    resize: vertical;
+    background: rgba(8, 18, 13, 0.25);
+    color: #e3fff0;
+    outline: none;
+    overflow: auto;
+}
+
+.yaml-key {
+    color: #9ef3ce;
+}
+
+.yaml-string {
+    color: #ffd9a0;
+}
+
+.yaml-number {
+    color: #92c5ff;
+}
+
+.yaml-boolean {
+    color: #ffb3b3;
+}
+
+.yaml-comment {
+    color: rgba(170, 190, 180, 0.6);
+}
+
+.skl-gm-editor-actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.yaml-badge.ready {
+    background: rgba(92, 231, 181, 0.2);
+    border: 1px solid rgba(92, 231, 181, 0.5);
+    color: #d8ffee;
+}
+
+.yaml-badge.pending {
+    background: rgba(255, 180, 80, 0.18);
+    border: 1px solid rgba(255, 180, 80, 0.35);
+    color: #ffe3b8;
+}
+
+.skl-setup-panel {
+    margin-top: 10px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(92, 231, 181, 0.18);
+    background: rgba(8, 18, 13, 0.45);
+}
+
+.skl-setup-header {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #e3fff0;
+}
+
+.skl-setup-steps {
+    display: grid;
+    gap: 4px;
+    font-size: 0.95rem;
+    color: #cfe8dd;
+}
+
+.skl-setup-steps .ready {
+    color: #b6ffe2;
+}
+
+.skl-setup-steps .missing {
+    color: #f6d7a8;
+}
+
+.skl-setup-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.skl-setup-status {
+    color: #cfe8dd;
+}
+
+.yaml-game-card {
+    position: relative;
+}
+
+.yaml-game-setup {
+    margin-top: 8px;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid rgba(92, 231, 181, 0.25);
+    background: rgba(8, 18, 13, 0.7);
+    color: #e3fff0;
+    font-weight: 600;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+.yaml-game-setup:hover {
+    border-color: rgba(92, 231, 181, 0.5);
+    background: rgba(92, 231, 181, 0.14);
+}
+
+@media (max-width: 900px) {
+    .skl-game-manager {
+        padding: 20px;
+    }
+    .skl-gm-editor textarea {
+        height: 320px;
+    }
+}

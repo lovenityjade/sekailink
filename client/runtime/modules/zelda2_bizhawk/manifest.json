@@ -1,0 +1,23 @@
+{
+  "game_id": "zelda2",
+  "display_name": "Zelda II: The Adventure of Link",
+  "emu": "bizhawk",
+  "lua_connector": "lua/connector.lua",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apz2"
+  ],
+  "rom_requirements": {
+    "extensions": [
+      ".nes"
+    ],
+    "md5": [
+      "88c0493fb1146834836c0ff4f3e06e45"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  }
+}
