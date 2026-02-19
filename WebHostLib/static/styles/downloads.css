@@ -1,0 +1,470 @@
+/* ============================================================
+   SekaiLink – Downloads Page Styles
+   ============================================================ */
+
+/* Import topbar styles from landing */
+.skl-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0 6vw;
+}
+
+.skl-topbar-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 24px;
+    padding: 0 24px;
+    border-radius: 0 0 20px 20px;
+    background: rgba(6, 10, 12, 0.65);
+    border: 1px solid rgba(92,231,181,0.14);
+    border-top: none;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.skl-topbar-brand {
+    font-family: var(--font-brand);
+    letter-spacing: 0.14em;
+    font-size: 20px;
+    color: var(--accent);
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.skl-topbar-links {
+    display: flex;
+    gap: 24px;
+    font-size: 14px;
+    margin-left: auto;
+}
+
+.skl-topbar-links a {
+    color: var(--text-1);
+    transition: color 0.15s ease;
+}
+
+.skl-topbar-links a:hover,
+.skl-topbar-links a.active {
+    color: var(--text-0);
+}
+
+.skl-topbar-actions {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+.skl-topbar-burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    padding: 6px;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.skl-topbar-burger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text-0);
+    border-radius: 2px;
+    transition: transform 0.2s ease;
+}
+
+/* ── Page Layout ── */
+.skl-downloads-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 6vw 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+/* ── Hero ── */
+.skl-downloads-hero {
+    text-align: center;
+    padding: 40px 0 20px;
+}
+
+.skl-downloads-intro {
+    color: var(--text-1);
+    font-size: 18px;
+    margin: 16px 0 0;
+}
+
+/* ── Platform Cards ── */
+.skl-platforms {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.skl-platform-card {
+    padding: 28px;
+}
+
+.skl-platform-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.skl-platform-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: rgba(92,231,181,0.1);
+    border: 1px solid rgba(92,231,181,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+}
+
+.skl-platform-info h2 {
+    font-size: 22px;
+    margin: 0 0 4px;
+    font-family: var(--font-brand);
+}
+
+.skl-platform-version {
+    font-size: 13px;
+    color: var(--accent);
+    font-family: var(--font-mono);
+}
+
+.skl-platform-status {
+    font-size: 13px;
+    color: var(--text-2);
+}
+
+.skl-platform-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.skl-download-options {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.skl-platform-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.skl-platform-details li {
+    font-size: 14px;
+    color: var(--text-1);
+    padding-left: 20px;
+    position: relative;
+}
+
+.skl-platform-details li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+}
+
+.skl-platform-details code {
+    background: rgba(92,231,181,0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+/* Checksum */
+.skl-checksum {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.skl-checksum-label {
+    color: var(--text-2);
+    flex-shrink: 0;
+}
+
+.skl-checksum-value {
+    font-family: var(--font-mono);
+    color: var(--text-1);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.skl-copy-btn {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    padding: 0;
+}
+
+.skl-copy-btn:hover {
+    color: var(--accent);
+    border-color: rgba(92,231,181,0.4);
+}
+
+.skl-copy-btn.copied {
+    background: rgba(92,231,181,0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* TBA Platform */
+.skl-platform-tba {
+    opacity: 0.7;
+}
+
+.skl-tba-note {
+    color: var(--text-2);
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ── Requirements ── */
+.skl-requirements {
+    padding: 28px;
+}
+
+.skl-requirements h2 {
+    font-size: 20px;
+    margin: 0 0 16px;
+    font-family: var(--font-brand);
+}
+
+.skl-req-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.skl-req-list li {
+    font-size: 14px;
+    color: var(--text-1);
+    padding-left: 20px;
+    position: relative;
+}
+
+.skl-req-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+}
+
+/* ── First Launch ── */
+.skl-first-launch {
+    padding: 28px;
+}
+
+.skl-first-launch h2 {
+    font-size: 20px;
+    margin: 0 0 12px;
+    font-family: var(--font-brand);
+}
+
+.skl-first-launch > p {
+    color: var(--text-1);
+    margin: 0 0 16px;
+}
+
+.skl-first-launch-steps {
+    margin: 0 0 20px;
+    padding-left: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.skl-first-launch-steps li {
+    font-size: 14px;
+    color: var(--text-1);
+    line-height: 1.6;
+}
+
+.skl-first-launch-steps code {
+    background: rgba(92,231,181,0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.skl-antivirus-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    background: rgba(255,204,102,0.08);
+    border: 1px solid rgba(255,204,102,0.2);
+    border-radius: 10px;
+}
+
+.skl-antivirus-note svg {
+    flex-shrink: 0;
+    color: var(--warn);
+    margin-top: 2px;
+}
+
+.skl-antivirus-note p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-1);
+    line-height: 1.6;
+}
+
+.skl-antivirus-note a {
+    color: var(--accent);
+}
+
+/* ── Release Notes ── */
+.skl-release-notes {
+    text-align: center;
+}
+
+.skl-release-notes h2 {
+    font-size: 20px;
+    margin: 0 0 8px;
+    font-family: var(--font-brand);
+}
+
+.skl-release-notes p {
+    color: var(--text-1);
+    margin: 0 0 16px;
+    font-size: 14px;
+}
+
+/* ── Footer ── */
+.skl-downloads-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-2);
+}
+
+.skl-footer-brand {
+    font-family: var(--font-brand);
+    letter-spacing: 0.12em;
+    font-size: 14px;
+    color: var(--accent);
+}
+
+.skl-footer-links {
+    display: flex;
+    gap: 18px;
+}
+
+.skl-footer-links a {
+    color: var(--text-2);
+    transition: color 0.15s ease;
+}
+
+.skl-footer-links a:hover {
+    color: var(--text-0);
+}
+
+/* ── Responsive ── */
+@media (max-width: 980px) {
+    .skl-topbar-links {
+        display: none;
+    }
+
+    .skl-topbar-burger {
+        display: flex;
+    }
+
+    .skl-topbar.open .skl-topbar-inner {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 18px 24px;
+        border-radius: 0 0 20px 20px;
+    }
+
+    .skl-topbar.open .skl-topbar-links {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+        padding: 12px 0;
+    }
+}
+
+@media (max-width: 640px) {
+    .skl-downloads-page {
+        padding: 24px 5vw 60px;
+        gap: 36px;
+    }
+
+    .skl-platform-card {
+        padding: 20px;
+    }
+
+    .skl-platform-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .skl-download-options {
+        flex-direction: column;
+    }
+
+    .skl-download-options .skl-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .skl-checksum {
+        flex-wrap: wrap;
+    }
+
+    .skl-checksum-value {
+        width: 100%;
+        order: 3;
+    }
+
+    .skl-downloads-footer {
+        flex-direction: column;
+        text-align: center;
+    }
+}

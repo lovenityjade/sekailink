@@ -1,6 +1,6 @@
 {
   "game_id": "ff4fe",
-  "display_name": "ff4fe",
+  "display_name": "Final Fantasy IV Free Enterprise",
   "emu": "bizhawk",
   "ap_client": "sni",
   "lua_connector": "lua/connector.lua",
@@ -20,5 +20,7 @@
   "features": {
     "autotracking": true,
     "save_required": true
-  }
+  },
+  "tracker_pack_uid": "https://github.com/seto10987/Final-Fantasy-4-Free-Enterprise-AP-Poptracker-Pack/releases/tag/v.0.2.0",
+  "tracker_web_url": ""
 }

@@ -31,12 +31,12 @@ const CreateRoomModal: React.FC<Props> = ({ open, onClose, onCreated }) => {
       collect_mode: "goal",
       remaining_mode: "enabled",
       countdown_mode: "auto",
-      slow_release_timeout: (formData.get("slow_release_timeout") || "1800").toString(),
+      slow_release_timeout: soloMode ? "1800" : (formData.get("slow_release_timeout") || "1800").toString(),
       item_cheat: formData.get("item_cheat") === "1",
       spoiler: (formData.get("spoiler") || "0").toString(),
       hint_cost: (formData.get("hint_cost") || "5").toString(),
       max_players: soloMode ? "1" : (formData.get("max_players") || "50").toString(),
-      server_password: (formData.get("server_password") || "").toString(),
+      server_password: soloMode ? "" : (formData.get("server_password") || "").toString(),
       allow_custom_yamls: formData.get("allow_custom_yamls") !== "0"
     };
 
@@ -102,10 +102,12 @@ const CreateRoomModal: React.FC<Props> = ({ open, onClose, onCreated }) => {
               {soloMode ? "Solo Mode: ON" : "Solo Mode"}
             </button>
           </div>
-          <div className="skl-lobby-form-row">
-            <input type="text" name="name" placeholder="Room name" maxLength={60} className="input" />
-            <input type="text" name="description" placeholder="Short description" maxLength={180} className="input" />
-          </div>
+          {!soloMode && (
+            <div className="skl-lobby-form-row">
+              <input type="text" name="name" placeholder="Room name" maxLength={60} className="input" />
+              <input type="text" name="description" placeholder="Short description" maxLength={180} className="input" />
+            </div>
+          )}
           <div className="skl-lobby-form-rules">
             <div className="skl-lobby-form-title">Room rules</div>
             <div className="skl-lobby-grid-fields">
@@ -133,7 +135,7 @@ const CreateRoomModal: React.FC<Props> = ({ open, onClose, onCreated }) => {
               </label>
               <label>
                 Automatic Slow Release Inactivity Time
-                <select name="slow_release_timeout" defaultValue="1800">
+                <select name="slow_release_timeout" defaultValue="1800" disabled={soloMode}>
                   <option value="900">15m</option>
                   <option value="1800">30m</option>
                   <option value="3600">1h</option>
@@ -171,7 +173,14 @@ const CreateRoomModal: React.FC<Props> = ({ open, onClose, onCreated }) => {
               </label>
               <label>
                 Room Password (Private)
-                <input type="text" name="server_password" placeholder="Leave empty for public room" maxLength={64} className="input" />
+                <input
+                  type="text"
+                  name="server_password"
+                  placeholder="Leave empty for public room"
+                  maxLength={64}
+                  className="input"
+                  disabled={soloMode}
+                />
               </label>
             </div>
           </div>

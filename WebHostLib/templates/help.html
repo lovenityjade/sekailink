@@ -1,0 +1,93 @@
+{% extends 'pageWrapper.html' %}
+{% set show_footer = False %}
+
+{% block head %}
+    <title>Help · SekaiLink</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/help.css") }}" />
+{% endblock %}
+
+{% block body %}
+    <div class="page-bg"></div>
+    <div class="skl-app-shell">
+        {% include 'partials/appSidebar.html' %}
+        <div class="skl-app-main">
+            <main class="skl-help-page">
+        <section class="skl-help-hero">
+            <p class="skl-eyebrow">Help Center</p>
+            <h1 class="skl-title">Using SekaiLink</h1>
+            <p class="skl-help-subtitle">Guides for getting started, playing with others, and troubleshooting common issues.</p>
+        </section>
+
+        <section class="skl-help-grid">
+            <div class="skl-help-card">
+                <h3>Getting Started</h3>
+                <ul>
+                    <li>Downloads are coming soon. See <a href="/downloads">Downloads</a> for status.</li>
+                    <li>Import your ROM or game files into SekaiLink.</li>
+                    <li>Configure your game settings and click Launch.</li>
+                </ul>
+            </div>
+            <div class="skl-help-card">
+                <h3>Solo Play</h3>
+                <ul>
+                    <li>Import a game, configure settings, and generate a seed.</li>
+                    <li>SekaiLink patches, launches the emulator, and connects automatically.</li>
+                    <li>No account or internet connection required for solo play.</li>
+                </ul>
+            </div>
+            <div class="skl-help-card">
+                <h3>Multiplayer Rooms</h3>
+                <ul>
+                    <li>Create or join a room from the Room List.</li>
+                    <li>Each player configures their own game settings.</li>
+                    <li>The host generates when everyone is ready.</li>
+                </ul>
+            </div>
+            <div class="skl-help-card">
+                <h3>Generation</h3>
+                <ul>
+                    <li>Host clicks Generate once everyone is ready.</li>
+                    <li>Generation locks settings until completion.</li>
+                    <li>SekaiLink distributes the results to all players automatically.</li>
+                </ul>
+            </div>
+            <div class="skl-help-card">
+                <h3>Room Management</h3>
+                <ul>
+                    <li>The host can manage players in a room.</li>
+                    <li>Host can transfer room ownership to another player.</li>
+                    <li>Room codes and shareable links make joining straightforward.</li>
+                </ul>
+            </div>
+            <div class="skl-help-card">
+                <h3>Troubleshooting</h3>
+                <ul>
+                    <li>Check the connection status indicators in SekaiLink.</li>
+                    <li>Use the "Copy Debug Info" button to collect diagnostic data.</li>
+                    <li>See the <a href="/docs#troubleshooting">Docs</a> for common issues and solutions.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="skl-help-support">
+            <div class="skl-help-card wide">
+                <h2>Need help?</h2>
+                <p>The fastest way to get support is through the community Discord. You can also file an issue on GitHub for confirmed bugs or feature requests.</p>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+                    <a class="skl-btn primary" href="https://discord.gg/jTaefxAEDW" target="_blank" rel="noopener">Join Discord</a>
+                    <a class="skl-btn ghost" href="https://github.com/lovenityjade/sekailink/issues" target="_blank" rel="noopener">GitHub Issues</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="skl-help-credits">
+            <div class="skl-help-card wide">
+                <h2>Credits</h2>
+                <p>Created by TheLovenityJade and contributors.</p>
+                <p>Powered by <a href="https://archipelago.gg" target="_blank" rel="noopener">Archipelago</a>.</p>
+            </div>
+        </section>
+            </main>
+        </div>
+    </div>
+{% endblock %}

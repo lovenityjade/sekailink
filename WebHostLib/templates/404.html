@@ -1,0 +1,23 @@
+{% extends 'pageWrapper.html' %}
+{% import "macros.html" as macros %}
+{% set show_footer = False %}
+
+{% block head %}
+    <title>Page Not Found (404)</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/404.css") }}" />
+{% endblock %}
+
+{% block body %}
+    <div class="page-bg is-main"></div>
+    <section id="page-not-found">
+        <div class="pnf-card">
+            <div class="pnf-code">404</div>
+            <h1>Page not found</h1>
+            <p>The page you're looking for doesn't exist or moved to a new location.</p>
+            <div class="pnf-actions">
+                <a class="skl-btn primary" href="/">Return home</a>
+                <a class="skl-btn ghost" href="/rooms">Open app</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

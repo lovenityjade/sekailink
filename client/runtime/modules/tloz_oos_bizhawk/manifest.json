@@ -3,7 +3,7 @@
   "display_name": "The Legend of Zelda - Oracle of Seasons",
   "emu": "bizhawk",
   "lua_connector": "lua/connector.lua",
-  "tracker_pack_uid": "https://github.com/OmegaZeron/Oracle-of-Seasons-AP-Poptracker-Pack",
+  "tracker_pack_uid": "https://github.com/seto10987/Oracle-of-Seasons-AP-Poptracker-Pack",
   "patcher": "archipelago",
   "patch_extensions": [
     ".apoos"
@@ -20,5 +20,6 @@
   "features": {
     "autotracking": true,
     "save_required": true
-  }
+  },
+  "tracker_web_url": ""
 }

@@ -1,0 +1,540 @@
+{% extends 'pageWrapper.html' %}
+{% set show_footer = False %}
+{% set body_class = "app-ui" %}
+{% set body_theme = "topaz" %}
+{% set active_page = "yaml" %}
+{% import 'playerOptions/macros.html' as inputs with context %}
+
+{% block head %}
+    <title>{{ world_name }} Options</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/playerOptions/playerOptions.css") }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/playerOptions/playerOptions-sekailink.css") }}" id="skl-po-theme-link" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.css" />
+    <script type="application/ecmascript" src="{{ url_for('static', filename="assets/md5.min.js") }}"></script>
+    <script type="application/ecmascript" src="{{ url_for('static', filename="assets/js-yaml.min.js") }}"></script>
+    <script type="application/ecmascript" src="{{ url_for('static', filename="assets/playerOptions/general.js") }}"></script>
+    <script type="application/ecmascript" src="{{ url_for('static', filename="assets/playerOptions/massSettingHandler.js") }}"></script>
+    <script type="application/ecmascript" src="{{ url_for('static', filename="assets/yamlImport.js") }}"></script>
+    <script type="application/ecmascript" src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
+
+    <noscript>
+        <style>
+            .js-required{
+                display: none !important;
+            }
+        </style>
+    </noscript>
+
+    
+
+{% endblock %}
+
+{% block body %}
+    <div class="page-bg is-purple"></div>
+    <div class="skl-app-shell">
+        {% include 'partials/appSidebar.html' %}
+        <div class="skl-app-main">
+        <div class="skl-app-panel">
+        <div id="player-options" class="markdown" data-game="{{ world_name }}" data-presets="{{ presets }}">
+        <noscript>
+            <div class="js-warning-banner">
+                This page has reduced functionality without JavaScript.
+            </div>
+        </noscript>
+
+        <div id="user-message">{{ message }}</div>
+
+        <div id="player-options-header">
+            <h1 class="po-title-left">{{ world_name }}</h1>
+            <h1 class="po-title-right">Player Options</h1>
+        </div>
+        {% if dashboard_mode %}
+            <p>Choose the options you would like to play with and save your YAML to your SekaiLink account.</p>
+        {% else %}
+            <p>Choose the options you would like to play with! You may generate a single-player game from this page,
+                or download an options file you can use to participate in a multiworld.</p>
+        {% endif %}
+
+        <p>
+            {% if not dashboard_mode %}
+                A more advanced options configuration for all games can be found on the
+                <a href="weighted-options">Weighted options</a> page.
+                <br />
+                A list of all games you have generated can be found on the <a href="/user-content">User Content Page</a>.
+                <br />
+            {% endif %}
+            You may also download the
+            <a href="/static/generated/configs/{{ world_name | get_file_safe_name }}.yaml">template file for this game</a>
+            or <a onclick="loadFileDialog()" id="yamlImport" href="#">click here</a> to import your own yaml.
+        </p>
+
+        <div id="skl-po-modebar" class="skl-po-modebar">
+            <button type="button" class="skl-po-mode-btn" data-mode="simple">Simple (Recommended)</button>
+            <button type="button" class="skl-po-mode-btn" data-mode="advanced">Advanced</button>
+            <button type="button" class="skl-po-mode-btn" id="skl-po-legacy-toggle">Legacy Layout</button>
+        </div>
+        <p class="skl-po-modehint" id="skl-po-modehint">
+            Simple mode shows only the most important settings. Switch to Advanced for full randomizer controls.
+        </p>
+
+        <form id="options-form" method="post" enctype="application/x-www-form-urlencoded" action="{{ form_action or 'generate-yaml' }}">
+            <div id="meta-options">
+                <div>
+                    <label for="player-name">
+                        Player Name: <span class="interactive" data-tooltip="This is the name you use to connect with your game. This is also known as your 'slot name'.">(?)</span>
+                    </label>
+                    <input id="player-name" placeholder="Player" name="name" maxlength="16" />
+                </div>
+        {% if dashboard_mode | default(false) %}
+        <div>
+                    <label for="yaml-name">
+                        YAML Title: <span class="interactive" data-tooltip="A label to identify this YAML in the Game Manager.">(?)</span>
+                    </label>
+                    <input id="yaml-name" placeholder="My YAML" name="yaml-name" value="{{ yaml_title or '' }}" maxlength="48" />
+                </div>
+                {% if yaml_id %}
+                    <input type="hidden" name="yaml-id" value="{{ yaml_id }}" />
+                {% endif %}
+                {% endif %}
+                <div class="js-required">
+                    <label for="game-options-preset">
+                        Options Preset: <span class="interactive" data-tooltip="Select from a list of developer-curated presets (if any) or reset all options to their defaults.">(?)</span>
+                    </label>
+                    <select id="game-options-preset" name="game-options-preset" disabled>
+                        <option value="default">Default</option>
+                        {% for preset_name in world.web.options_presets %}
+                            <option value="{{ preset_name }}">{{ preset_name }}</option>
+                        {% endfor %}
+                        <option value="custom" hidden>Custom</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="option-groups">
+                {% for group_name, group_options in option_groups.items() %}
+                    <details class="group-container" data-group="{{ group_name }}" {% if not start_collapsed[group_name] %}open{% endif %}>
+                        <summary class="h2">{{ group_name }}</summary>
+                        <div class="game-options">
+                        {% if group_name == "Item & Location Options" %}
+                            {# ─── Left half ─── #}
+                            <div class="left">
+                            {% for option_name, option in group_options.items() %}
+                                {% if loop.index <= (loop.length/2)|round(0, "ceil") %}
+                                    {% if issubclass(option, Options.ItemSet) %}
+                                        {% set mass = world.item_names|length > 500 %}
+                                    {% elif issubclass(option, Options.LocationSet) %}
+                                        {% set mass = world.location_names|length > 500 %}
+                                    {% elif issubclass(option, Options.OptionCounter) %}
+                                        {% set mass = option.verify_item_name and (world.item_names|length > 500) or (not option.verify_item_name and (world.location_names|length > 500)) %}
+                                    {% else %}
+                                        {% set mass = false %}
+                                    {% endif %}
+
+                                    {{ inputs.OptionInputDecisionEngine(option_name, option, mass) }}
+                                {% endif %}
+                            {% endfor %}
+                            </div>
+
+                            {# ─── Right half ─── #}
+                            <div class="right">
+                            {% for option_name, option in group_options.items() %}
+                                {% if loop.index > (loop.length/2)|round(0, "ceil") %}
+                                    {% if issubclass(option, Options.ItemSet) %}
+                                        {% set mass = world.item_names|length > 500 %}
+                                    {% elif issubclass(option, Options.LocationSet) %}
+                                        {% set mass = world.location_names|length > 500 %}
+                                    {% elif issubclass(option, Options.OptionCounter) %}
+                                        {% set mass = option.verify_item_name and (world.item_names|length > 500) or (not option.verify_item_name and (world.location_names|length > 500)) %}
+                                    {% else %}
+                                        {% set mass = false %}
+                                    {% endif %}
+
+                                    {{ inputs.OptionInputDecisionEngine(option_name, option, mass) }}
+                                {% endif %}
+                            {% endfor %}
+                            </div>
+
+                        {% else %}
+                            <div class="left">
+                            {% for option_name, option in group_options.items() %}
+                                {% if loop.index <= (loop.length/2)|round(0, "ceil") %}
+                                {{ inputs.OptionInputDecisionEngine(option_name, option) }}
+                                {% endif %}
+                            {% endfor %}
+                            </div>
+                            <div class="right">
+                            {% for option_name, option in group_options.items() %}
+                                {% if loop.index > (loop.length/2)|round(0, "ceil") %}
+                                {{ inputs.OptionInputDecisionEngine(option_name, option) }}
+                                {% endif %}
+                            {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        </div>
+                    </details>
+                {% endfor %}
+            </div>
+
+            <div id="player-options-button-row">
+                {% if dashboard_mode %}
+                    <input type="submit" name="intent-save" value="Save YAML" />
+                {% else %}
+                    <input type="submit" name="intent-export" value="Export Options" />
+                    <input type="submit" name="intent-generate" value="Generate Single-Player Game">
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+        {% if (dashboard_mode | default(false)) and yaml_prefill %}
+        <script>
+            parseYML({{ yaml_prefill | tojson }});
+        </script>
+    {% endif %}
+
+    {% if dashboard_mode | default(false) %}
+        <div class="skl-error-overlay" id="skl-error-overlay" style="display: none;">
+            <div class="skl-error-card" role="dialog" aria-modal="true" aria-labelledby="skl-error-title">
+                <h2 id="skl-error-title">Missing Required Fields</h2>
+                <p id="skl-error-message"></p>
+                <button id="skl-error-close" class="skl-error-close" type="button">Ok</button>
+            </div>
+        </div>    {% endif %}
+        </div>
+        </div>
+    </div>
+
+    <script>
+      /* sekailink-playeroptions-i18n */
+      (function () {
+        const translations = {
+          "fr": {
+            "Player Options": "Options Joueur",
+            "This page has reduced functionality without JavaScript.": "Cette page a des fonctionnalités réduites sans JavaScript.",
+            "Choose the options you would like to play with and save your YAML to your SekaiLink account.": "Choisis les options avec lesquelles tu veux jouer et enregistre ton YAML dans ton compte SekaiLink.",
+            "Choose the options you would like to play with! You may generate a single-player game from this page, or download an options file you can use to participate in a multiworld.": "Choisis les options avec lesquelles tu veux jouer ! Tu peux générer une partie solo depuis cette page, ou télécharger un fichier d'options pour participer à une multiworld.",
+            "A more advanced options configuration for all games can be found on the": "Une configuration d'options plus avancée pour tous les jeux se trouve sur la page",
+            "Weighted options": "Options pondérées",
+            "A list of all games you have generated can be found on the": "La liste de tous les jeux générés se trouve sur la",
+            "User Content Page": "page de contenu utilisateur",
+            "You may also download the": "Tu peux aussi télécharger le",
+            "template file for this game": "fichier modèle pour ce jeu",
+            "click here": "clique ici",
+            "to import your own yaml.": "pour importer ton propre yaml.",
+            "Player Name:": "Nom du joueur :",
+            "YAML Title:": "Titre YAML :",
+            "Options Preset:": "Préréglage d'options :",
+            "Default": "Par défaut",
+            "Custom": "Personnalisé",
+            "No": "Non",
+            "Yes": "Oui",
+            "Save YAML": "Enregistrer YAML",
+            "Export Options": "Exporter les options",
+            "Generate Single-Player Game": "Générer une partie solo",
+            "Missing Required Fields": "Champs requis manquants",
+            "Ok": "OK",
+            "Please fill": "Veuillez remplir",
+            "Player Name": "Nom du joueur",
+            "YAML Title": "Titre YAML",
+            "Player": "Joueur",
+            "My YAML": "Mon YAML",
+            "Custom value...": "Valeur personnalisée...",
+            "Search locations…": "Rechercher des lieux…",
+            "Search items…": "Rechercher des objets…",
+            "Search…": "Rechercher…",
+            "This option needs to be configured manually in the YAML file.": "Cette option doit être configurée manuellement dans le fichier YAML.",
+            "Pick a random value for this option.": "Choisir une valeur aléatoire pour cette option."
+          },
+          "es": {
+            "Player Options": "Opciones de Jugador",
+            "Player Name:": "Nombre del jugador:",
+            "YAML Title:": "Título YAML:",
+            "Options Preset:": "Preajuste de opciones:",
+            "Default": "Predeterminado",
+            "Custom": "Personalizado",
+            "No": "No",
+            "Yes": "Sí",
+            "Save YAML": "Guardar YAML",
+            "Export Options": "Exportar opciones",
+            "Generate Single-Player Game": "Generar partida individual",
+            "Missing Required Fields": "Faltan campos obligatorios",
+            "Ok": "OK",
+            "Please fill": "Completa",
+            "Player Name": "Nombre del jugador",
+            "YAML Title": "Título YAML",
+            "Player": "Jugador",
+            "My YAML": "Mi YAML",
+            "Custom value...": "Valor personalizado...",
+            "Search locations…": "Buscar ubicaciones…",
+            "Search items…": "Buscar objetos…",
+            "Search…": "Buscar…",
+            "This option needs to be configured manually in the YAML file.": "Esta opción debe configurarse manualmente en el archivo YAML.",
+            "Pick a random value for this option.": "Elegir un valor aleatorio para esta opción."
+          },
+          "ja": {
+            "Player Options": "プレイヤーオプション",
+            "Player Name:": "プレイヤー名:",
+            "YAML Title:": "YAMLタイトル:",
+            "Options Preset:": "オプションプリセット:",
+            "Default": "デフォルト",
+            "Custom": "カスタム",
+            "No": "いいえ",
+            "Yes": "はい",
+            "Save YAML": "YAMLを保存",
+            "Export Options": "オプションをエクスポート",
+            "Generate Single-Player Game": "シングルプレイヤーゲームを生成",
+            "Missing Required Fields": "必須項目が不足しています",
+            "Ok": "OK",
+            "Please fill": "入力してください",
+            "Player Name": "プレイヤー名",
+            "YAML Title": "YAMLタイトル",
+            "Player": "プレイヤー",
+            "My YAML": "マイYAML",
+            "Custom value...": "カスタム値...",
+            "Search locations…": "ロケーションを検索…",
+            "Search items…": "アイテムを検索…",
+            "Search…": "検索…",
+            "This option needs to be configured manually in the YAML file.": "このオプションはYAMLファイルで手動設定が必要です。",
+            "Pick a random value for this option.": "このオプションにランダム値を設定します。"
+          },
+          "zh-cn": {
+            "Player Options": "玩家选项",
+            "Player Name:": "玩家名称：",
+            "YAML Title:": "YAML 标题：",
+            "Options Preset:": "选项预设：",
+            "Default": "默认",
+            "Custom": "自定义",
+            "No": "否",
+            "Yes": "是",
+            "Save YAML": "保存 YAML",
+            "Export Options": "导出选项",
+            "Generate Single-Player Game": "生成单人游戏",
+            "Missing Required Fields": "缺少必填字段",
+            "Ok": "确定",
+            "Please fill": "请填写",
+            "Player Name": "玩家名称",
+            "YAML Title": "YAML 标题",
+            "Player": "玩家",
+            "My YAML": "我的 YAML",
+            "Custom value...": "自定义值...",
+            "Search locations…": "搜索地点…",
+            "Search items…": "搜索道具…",
+            "Search…": "搜索…",
+            "This option needs to be configured manually in the YAML file.": "此选项需要在 YAML 文件中手动配置。",
+            "Pick a random value for this option.": "为该选项随机选择一个值。"
+          },
+          "zh-tw": {
+            "Player Options": "玩家選項",
+            "Player Name:": "玩家名稱：",
+            "YAML Title:": "YAML 標題：",
+            "Options Preset:": "選項預設：",
+            "Default": "預設",
+            "Custom": "自訂",
+            "No": "否",
+            "Yes": "是",
+            "Save YAML": "儲存 YAML",
+            "Export Options": "匯出選項",
+            "Generate Single-Player Game": "產生單人遊戲",
+            "Missing Required Fields": "缺少必要欄位",
+            "Ok": "確定",
+            "Please fill": "請填寫",
+            "Player Name": "玩家名稱",
+            "YAML Title": "YAML 標題",
+            "Player": "玩家",
+            "My YAML": "我的 YAML",
+            "Custom value...": "自訂值...",
+            "Search locations…": "搜尋地點…",
+            "Search items…": "搜尋道具…",
+            "Search…": "搜尋…",
+            "This option needs to be configured manually in the YAML file.": "此選項需要在 YAML 檔案中手動設定。",
+            "Pick a random value for this option.": "為此選項隨機選擇一個值。"
+          }
+        };
+
+        const langRaw = (navigator.language || 'en').toLowerCase();
+        const lang = langRaw.startsWith('fr') ? 'fr'
+          : langRaw.startsWith('es') ? 'es'
+          : langRaw.startsWith('ja') ? 'ja'
+          : langRaw.startsWith('zh-cn') || langRaw.startsWith('zh-hans') ? 'zh-cn'
+          : langRaw.startsWith('zh-tw') || langRaw.startsWith('zh-hant') ? 'zh-tw'
+          : 'en';
+
+        const dict = translations[lang] || {};
+        const tr = (v) => dict[v] || v;
+
+        const replaceText = (root) => {
+          const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+          const nodes = [];
+          while (walker.nextNode()) nodes.push(walker.currentNode);
+          nodes.forEach((node) => {
+            const raw = node.nodeValue || '';
+            const trimmed = raw.trim();
+            if (!trimmed) return;
+            const translated = tr(trimmed);
+            if (translated !== trimmed) node.nodeValue = raw.replace(trimmed, translated);
+          });
+        };
+
+        replaceText(document.getElementById('player-options') || document.body);
+
+        document.querySelectorAll('#player-options input, #player-options textarea').forEach((el) => {
+          if (el.placeholder) el.placeholder = tr(el.placeholder);
+        });
+
+        document.querySelectorAll('#player-options option').forEach((opt) => {
+          const txt = (opt.textContent || '').trim();
+          if (txt) opt.textContent = tr(txt);
+        });
+
+        document.querySelectorAll('#player-options input[type=submit]').forEach((btn) => {
+          if (btn.value) btn.value = tr(btn.value);
+        });
+
+        document.querySelectorAll('[data-tooltip]').forEach((el) => {
+          const tip = el.getAttribute('data-tooltip');
+          if (tip) el.setAttribute('data-tooltip', tr(tip));
+        });
+
+        const form = document.getElementById('options-form');
+        const playerName = document.getElementById('player-name');
+        const yamlName = document.getElementById('yaml-name');
+        const overlay = document.getElementById('skl-error-overlay');
+        const messageEl = document.getElementById('skl-error-message');
+        const closeBtn = document.getElementById('skl-error-close');
+        const serverError = {{ error_message | default('', true) | tojson }};
+
+        const showError = (msg) => {
+          if (messageEl) messageEl.textContent = msg;
+          if (overlay) overlay.style.display = 'flex';
+        };
+
+        if (closeBtn) {
+          closeBtn.textContent = tr(closeBtn.textContent.trim());
+          closeBtn.addEventListener('click', () => { if (overlay) overlay.style.display = 'none'; });
+        }
+        if (serverError && String(serverError).trim()) showError(serverError);
+
+        if (form) {
+          form.addEventListener('submit', (e) => {
+            const missing = [];
+            if (playerName && !playerName.value.trim()) missing.push(tr('Player Name'));
+            if (yamlName && !yamlName.value.trim()) missing.push(tr('YAML Title'));
+            if (missing.length) {
+              e.preventDefault();
+              showError(`${tr('Please fill')}: ${missing.join(', ')}.`);
+            }
+          });
+        }
+      })();
+    </script>
+
+
+    <script>
+      /* sekailink-playeroptions-simplifier */
+      (function () {
+        const root = document.getElementById('player-options');
+        if (!root) return;
+
+        const modeButtons = Array.from(document.querySelectorAll('.skl-po-mode-btn[data-mode]'));
+        const legacyBtn = document.getElementById('skl-po-legacy-toggle');
+        const hintEl = document.getElementById('skl-po-modehint');
+        const themeLink = document.getElementById('skl-po-theme-link');
+        const modeKey = 'skl_po_mode_v2';
+        const legacyKey = 'skl_po_legacy_layout_v2';
+
+        const keywords = [
+          'difficulty', 'logic', 'goal', 'progress', 'hint', 'access', 'world',
+          'shuffle', 'mode', 'victory', 'required', 'start', 'health', 'sword',
+          'movement', 'qol', 'quality', 'seed', 'timer', 'item', 'location',
+        ];
+
+        const buildRows = () => {
+          document.querySelectorAll('#option-groups .left, #option-groups .right').forEach((col) => {
+            const children = Array.from(col.children);
+            const frag = document.createDocumentFragment();
+            for (let i = 0; i < children.length; i += 1) {
+              const first = children[i];
+              const second = children[i + 1] || null;
+              if (!first) continue;
+              const row = document.createElement('div');
+              row.className = 'skl-po-row';
+              row.appendChild(first);
+              if (second && !second.classList.contains('skl-po-row')) {
+                row.appendChild(second);
+                i += 1;
+              }
+              const label = row.querySelector('label');
+              const labelText = (label?.textContent || '').toLowerCase();
+              row.dataset.label = labelText;
+              frag.appendChild(row);
+            }
+            col.innerHTML = '';
+            col.appendChild(frag);
+          });
+        };
+
+        const scoreRow = (row) => {
+          const text = row.dataset.label || '';
+          let score = 0;
+          for (const k of keywords) {
+            if (text.includes(k)) score += 1;
+          }
+          return score;
+        };
+
+        const applyMode = (mode) => {
+          const rows = Array.from(document.querySelectorAll('.skl-po-row'));
+          rows.forEach((r) => r.classList.remove('skl-po-hidden'));
+
+          if (mode === 'simple') {
+            const groups = Array.from(document.querySelectorAll('#option-groups details.group-container'));
+            groups.forEach((group) => {
+              const groupRows = Array.from(group.querySelectorAll('.skl-po-row'));
+              const ranked = groupRows
+                .map((r, idx) => ({ r, idx, score: scoreRow(r) }))
+                .sort((a, b) => (b.score - a.score) || (a.idx - b.idx));
+              const keep = new Set(ranked.filter((x, i) => x.score > 0 || i < 8).map((x) => x.r));
+              groupRows.forEach((r) => {
+                if (!keep.has(r)) r.classList.add('skl-po-hidden');
+              });
+            });
+            if (hintEl) hintEl.textContent = 'Simple mode shows only the most important settings. Switch to Advanced for full randomizer controls.';
+          } else {
+            if (hintEl) hintEl.textContent = 'Advanced mode exposes all settings.';
+          }
+
+          modeButtons.forEach((btn) => {
+            btn.classList.toggle('active', btn.dataset.mode === mode);
+          });
+          localStorage.setItem(modeKey, mode);
+        };
+
+        const applyLegacy = (enabled) => {
+          document.body.classList.toggle('skl-po-legacy', enabled);
+          if (themeLink) themeLink.disabled = !!enabled;
+          if (legacyBtn) legacyBtn.classList.toggle('active', !!enabled);
+          localStorage.setItem(legacyKey, enabled ? '1' : '0');
+        };
+
+        buildRows();
+
+        modeButtons.forEach((btn) => {
+          btn.addEventListener('click', () => applyMode(btn.dataset.mode || 'simple'));
+        });
+
+        if (legacyBtn) {
+          legacyBtn.addEventListener('click', () => {
+            const next = !(localStorage.getItem(legacyKey) === '1');
+            applyLegacy(next);
+          });
+        }
+
+        const storedMode = localStorage.getItem(modeKey) || 'simple';
+        const storedLegacy = localStorage.getItem(legacyKey) === '1';
+        applyLegacy(storedLegacy);
+        applyMode(storedMode === 'advanced' ? 'advanced' : 'simple');
+      })();
+    </script>
+
+{% endblock %}

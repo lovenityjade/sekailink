@@ -4,7 +4,7 @@
   "emu": "bizhawk",
   "ap_client": "sni",
   "lua_connector": "lua/connector.lua",
-  "tracker_pack_uid": "https://github.com/PinkSwitch/earthbound_poptracker",
+  "tracker_pack_uid": "https://github.com/PinkSwitch/earthbound_poptracker/releases/tag/ebpoptracker1.0",
   "patcher": "archipelago",
   "patch_extensions": [
     ".apeb"
@@ -23,5 +23,6 @@
   "features": {
     "autotracking": true,
     "save_required": true
-  }
+  },
+  "tracker_web_url": ""
 }

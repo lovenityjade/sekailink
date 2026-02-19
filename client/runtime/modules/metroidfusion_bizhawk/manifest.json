@@ -3,7 +3,7 @@
   "display_name": "Metroid Fusion",
   "emu": "bizhawk",
   "lua_connector": "lua/connector.lua",
-  "tracker_pack_uid": "https://github.com/RunInAWeek/Metroid-Fusion-AP-Tracker",
+  "tracker_pack_uid": "https://github.com/RunInAWeek/Metroid-Fusion-AP-Tracker/releases/tag/v0.5.9",
   "patcher": "archipelago",
   "patch_extensions": [
     ".apmetfus"
@@ -20,5 +20,6 @@
   "features": {
     "autotracking": true,
     "save_required": true
-  }
+  },
+  "tracker_web_url": ""
 }

@@ -21,5 +21,6 @@
   "features": {
     "autotracking": true,
     "save_required": true
-  }
+  },
+  "tracker_web_url": ""
 }

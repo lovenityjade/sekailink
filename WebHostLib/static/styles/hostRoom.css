@@ -1,0 +1,93 @@
+#host-room{
+    width: 100%;
+    margin: 0;
+    background: var(--bg-1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    color: var(--text-0);
+    font-family: var(--font-ui);
+    line-height: 24px;
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 40px rgba(6, 12, 9, 0.4);
+    backdrop-filter: blur(12px);
+}
+
+#host-room div{
+    line-height: 26px;
+}
+
+#host-room a{
+    color: var(--accent);
+}
+
+#host-room input[type=text]{
+    border: 1px solid var(--border);
+    padding: 6px 8px;
+    border-radius: 8px;
+    width: 50%;
+    margin-top: 25px;
+    margin-bottom: 6px;
+    background: rgba(6, 16, 12, 0.65);
+    color: var(--text-0);
+}
+
+#host-room table{
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    background: rgba(6, 16, 12, 0.65);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+#host-room table th{
+    text-align: left;
+    padding: 10px;
+    border: 1px solid var(--border);
+    font-size: 18px;
+    font-family: var(--font-ui);
+    color: var(--text-0);
+}
+
+#host-room table td{
+    border: 1px solid var(--border);
+    text-align: left;
+    padding: 10px;
+}
+
+#host-room #logger{
+    margin-top: 0;
+    padding: 0.5rem 0.25rem;
+    background: rgba(12, 32, 24, 0.85);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text-0);
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.loader{
+  display: inline-block;
+  visibility: hidden;
+  margin-left: 5px;
+  width: 40px;
+  aspect-ratio: 4;
+  --_g: no-repeat radial-gradient(circle closest-side,#fff 90%,#fff0);
+  background:
+    var(--_g) 0    50%,
+    var(--_g) 50%  50%,
+    var(--_g) 100% 50%;
+  background-size: calc(100%/3) 100%;
+  animation: l7 1s infinite linear;
+}
+
+.loader.loading{
+  visibility: visible;
+}
+
+@keyframes l7{
+  33%{background-size:calc(100%/3) 0%  ,calc(100%/3) 100%,calc(100%/3) 100%}
+  50%{background-size:calc(100%/3) 100%,calc(100%/3) 0   ,calc(100%/3) 100%}
+  66%{background-size:calc(100%/3) 100%,calc(100%/3) 100%,calc(100%/3) 0   }
+}

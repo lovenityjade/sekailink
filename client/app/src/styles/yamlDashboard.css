@@ -163,8 +163,9 @@
 }
 
 .yaml-game-thumb {
+    position: relative;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 2 / 3;
     border-radius: 10px;
     overflow: hidden;
     background: rgba(6, 12, 10, 0.6);
@@ -174,18 +175,50 @@
     justify-content: center;
 }
 
+.yaml-tracker-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: 1px solid rgba(130, 250, 223, 0.45);
+    background: rgba(7, 20, 18, 0.85);
+    color: #dffef5;
+    box-shadow: 0 0 12px rgba(36, 181, 156, 0.35);
+    backdrop-filter: blur(4px);
+}
+
+.yaml-tracker-badge.poptracker {
+    border-color: rgba(101, 241, 208, 0.62);
+    color: #d3fff3;
+}
+
+.yaml-tracker-badge.webtracker {
+    border-color: rgba(103, 196, 255, 0.62);
+    color: #d9f1ff;
+    box-shadow: 0 0 12px rgba(73, 154, 255, 0.3);
+}
+
+.yaml-tracker-badge.no-tracker {
+    border-color: rgba(168, 186, 182, 0.55);
+    color: #dce5e2;
+    box-shadow: 0 0 8px rgba(150, 162, 159, 0.2);
+}
+
 .yaml-game-thumb img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.85;
+    opacity: 0.96;
 }
 
 .yaml-game-name {
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    text-align: center;
+    display: none;
 }
 
 .yaml-carousel-shell {
@@ -257,9 +290,10 @@
 }
 
 .yaml-carousel-card {
-    flex: 0 0 clamp(210px, 24vw, 280px);
-    max-width: clamp(210px, 24vw, 280px);
+    flex: 0 0 clamp(180px, 21vw, 240px);
+    max-width: clamp(180px, 21vw, 240px);
     scroll-snap-align: start;
+    padding: 8px;
 }
 
 @media (max-width: 900px) {
@@ -274,7 +308,7 @@
     }
 
     .yaml-carousel-card {
-        flex-basis: clamp(190px, 66vw, 240px);
-        max-width: clamp(190px, 66vw, 240px);
+        flex-basis: clamp(160px, 60vw, 220px);
+        max-width: clamp(160px, 60vw, 220px);
     }
 }

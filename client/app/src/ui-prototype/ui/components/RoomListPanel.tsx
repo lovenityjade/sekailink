@@ -9,6 +9,7 @@ export type RoomListRoom = {
   owner?: string;
   is_private?: boolean;
   member_count?: number;
+  max_players?: number;
   last_activity?: string;
 };
 
@@ -129,7 +130,7 @@ const RoomListPanel: React.FC<Props> = ({
                   </div>
                 </div>
               </div>
-              <div className="sklp-roomcell">{room.member_count ? `${room.member_count}/4` : "0/4"}</div>
+              <div className="sklp-roomcell">{`${room.member_count || 0}/${room.max_players || 50}`}</div>
               <div className="sklp-roomcell dim">{access}</div>
               <div className="sklp-roomcell dim">Auto</div>
               <div className="sklp-roomcell dim">—</div>

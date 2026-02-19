@@ -529,6 +529,20 @@
   background: rgba(0, 0, 0, 0.14);
 }
 
+.sklp-chat-roomtag.channel-tabs {
+  height: auto;
+  padding: 4px;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.sklp-chat-roomtag.channel-tabs .sklp-chip {
+  height: 30px;
+  padding: 0 10px;
+  font-size: 10px;
+}
+
 .sklp-chat-roomname {
   font-family: var(--sklp-font-tech);
   letter-spacing: 0.10em;

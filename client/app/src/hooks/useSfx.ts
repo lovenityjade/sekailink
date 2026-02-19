@@ -8,6 +8,8 @@ interface SfxApi {
   getBaseVolume?: () => number;
   setBaseVolume?: (value: number) => void;
   preload?: () => void;
+  startBgm?: () => void;
+  stopBgm?: () => void;
 }
 
 declare global {

@@ -134,6 +134,19 @@ const PATCHLESS_AUTO_LAUNCH_AP_GAMES = new Set(["ship of harkinian"]);
 const supportsPatchlessAutoLaunch = (apGameName?: string) =>
   Boolean(apGameName && PATCHLESS_AUTO_LAUNCH_AP_GAMES.has(apGameName.trim().toLowerCase()));
 
+const extractRoomIdFromUrl = (roomUrl?: string): string => {
+  const raw = String(roomUrl || "").trim();
+  if (!raw) return "";
+  try {
+    const parsed = new URL(raw, window.location.origin);
+    const parts = parsed.pathname.split("/").filter(Boolean);
+    return parts[parts.length - 1] || "";
+  } catch {
+    const parts = raw.split("?")[0].split("#")[0].split("/").filter(Boolean);
+    return parts[parts.length - 1] || "";
+  }
+};
+
 const LobbyPage: React.FC = () => {
   const { t } = useI18n();
   const { lobbyId } = useParams<{ lobbyId: string }>();
@@ -236,7 +249,7 @@ const LobbyPage: React.FC = () => {
   const [lastMessageId, setLastMessageId] = useState(0);
   const [terminalInput, setTerminalInput] = useState("");
   const [terminalStatus, setTerminalStatus] = useState("");
-  const [terminalLog, setTerminalLog] = useState("Waiting for room…");
+  const [terminalLog, setTerminalLog] = useState("Waiting for AP client logs…");
   const [manualDownload, setManualDownload] = useState<{
     path: string;
     ext?: string;
@@ -281,7 +294,8 @@ const LobbyPage: React.FC = () => {
   const lastToastSoundAtRef = useRef(0);
   const preloadAttemptedRef = useRef<Record<string, boolean>>({});
   const missingYamlPromptedRef = useRef<Record<string, boolean>>({});
-  const defaultLoadedAnnouncedRef = useRef<Record<string, string>>({});
+  const joinedGameNoticeRef = useRef<Record<string, boolean>>({});
+  const lastGenerationStateRef = useRef("");
 
   useEffect(() => {
     if (!toast) return;
@@ -310,6 +324,10 @@ const LobbyPage: React.FC = () => {
       const evt = data as any;
       if (!evt || typeof evt !== "object") return;
       if (evt.event === "status" && typeof evt.status === "string") {
+        setTerminalLog((prev) => {
+          const base = String(prev || "").trim() === "Waiting for room..." ? "" : prev;
+          return `${base}${base ? "\n" : ""}[launch] ${evt.status}`;
+        });
         setLaunchStatus(evt.status);
         setLaunchError(null);
         if (!String(evt.status || "").toLowerCase().includes("downloading")) {
@@ -338,6 +356,7 @@ const LobbyPage: React.FC = () => {
           setLaunchProgress(scaled);
         }
       } else if (evt.event === "ready") {
+        setTerminalLog((prev) => `${prev}${prev ? "\n" : ""}[launch] Ready.`);
         setLaunchStatus("Ready.");
         setManualDownload(null);
         setLaunchModalOpen(false);
@@ -363,6 +382,7 @@ const LobbyPage: React.FC = () => {
         }
       } else if (evt.event === "error") {
         const err = String(evt.error || "Launch failed.");
+        setTerminalLog((prev) => `${prev}${prev ? "\n" : ""}[launch:error] ${err}`);
         setLaunchError(err);
         setLaunchStatus("");
         setLaunchProgress(0);
@@ -559,21 +579,68 @@ const LobbyPage: React.FC = () => {
     }
   }, [lobbyKey]);
 
-  const fetchRoomStatus = useCallback(async (roomUrl?: string) => {
-    if (!roomUrl) return;
-    const parts = roomUrl.split("/").filter(Boolean);
-    const roomId = parts[parts.length - 1];
-    if (!roomId) return;
-    try {
-      const data = await apiJson<RoomStatus>(`/api/room_status/${roomId}`);
-      setRoomStatus(data);
-      if (socketRef.current) {
-        socketRef.current.emit("watch_room", { lobby_id: lobbyKey, room_id: roomId });
+  const fetchRoomStatus = useCallback(async (roomUrl?: string, retries = 1): Promise<RoomStatus | null> => {
+    const roomId = extractRoomIdFromUrl(roomUrl);
+    if (!roomId) return null;
+    for (let attempt = 0; attempt < retries; attempt += 1) {
+      try {
+        const data = await apiJson<RoomStatus>(`/api/room_status/${roomId}`);
+        setRoomStatus(data);
+        if (socketRef.current) {
+          socketRef.current.emit("watch_room", { lobby_id: lobbyKey, room_id: roomId });
+        }
+        return data;
+      } catch {
+        if (attempt < retries - 1) {
+          await new Promise((resolve) => window.setTimeout(resolve, 500));
+        }
       }
-    } catch {
-      // ignore
     }
+    return null;
   }, [lobbyKey]);
+
+  const refreshTrackerStatsFallback = useCallback(async () => {
+    const trackerId = String(roomStatus?.tracker || "").trim();
+    if (!trackerId) return;
+    try {
+      const data = await apiJson<any>(`/api/tracker_view/${trackerId}?_=${Date.now()}`);
+      const checks = Array.isArray(data?.player_checks_done) ? data.player_checks_done : [];
+      const totals = Array.isArray(data?.player_locations_total) ? data.player_locations_total : [];
+      const completed = Array.isArray(data?.completed_worlds) ? data.completed_worlds : [];
+      const playersTotal = Array.isArray(data?.player_names) ? data.player_names.length : totals.length;
+      const checksDone = checks.reduce((sum: number, row: any) => sum + Number(row?.checks_done || 0), 0);
+      const totalLocations = totals.reduce((sum: number, row: any) => sum + Number(row?.total_locations || 0), 0);
+      setTrackerStats({
+        players_total: Number(playersTotal || 0),
+        checks_done: Number(checksDone || 0),
+        total_locations: Number(totalLocations || 0),
+        completed_players: Number(completed.length || 0),
+      });
+    } catch {
+      // fallback only
+    }
+  }, [roomStatus?.tracker]);
+
+  const terminalDisplayLog = useMemo(() => {
+    if (apLogLines.length) {
+      return apLogLines
+        .slice(-500)
+        .map((line) => `[${line.level}] ${line.text}`)
+        .join("\n");
+    }
+    if (apLastError) return `[error] ${apLastError}`;
+    if (launchStatus) return `[launch] ${launchStatus}`;
+    return terminalLog;
+  }, [apLogLines, terminalLog, apLastError, launchStatus]);
+
+  const appendTerminalLine = useCallback((line: string) => {
+    const text = String(line || "").trim();
+    if (!text) return;
+    setTerminalLog((prev) => {
+      const base = String(prev || "").trim() === "Waiting for AP client logs..." ? "" : prev;
+      return `${base}${base ? "\n" : ""}${text}`;
+    });
+  }, []);
 
   useEffect(() => {
     messageIdsRef.current.clear();
@@ -603,9 +670,29 @@ const LobbyPage: React.FC = () => {
     }
     loadMembers();
     loadGeneration();
+    if (generation?.room_url) {
+      fetchRoomStatus(generation.room_url, 1);
+    }
     if (settingsOpen) loadHostStatus();
     loadSocialRelations();
   }, 10000);
+
+  // Fast fallback polling when websocket is unavailable or lagging.
+  useInterval(() => {
+    if (socketStatus === "connected") return;
+    loadMessages();
+    loadMembers();
+    loadGeneration();
+  }, 2500);
+
+  useInterval(() => {
+    void refreshTrackerStatsFallback();
+  }, 1000);
+
+  useInterval(() => {
+    loadMessages();
+    loadGeneration();
+  }, 1500);
 
   useEffect(() => {
     if (generation?.room_url) {
@@ -691,6 +778,16 @@ const LobbyPage: React.FC = () => {
         if (!data?.completed_at && prev?.completed_at) merged.completed_at = prev.completed_at;
         return merged;
       });
+      const nextState = String(data?.status || "").trim().toLowerCase();
+      const prevState = lastGenerationStateRef.current;
+      if (nextState && nextState !== prevState) {
+        if (nextState === "queued") {
+          setMessages((prev) => [...prev, { id: Date.now(), author: "SekaiLink", content: "Generation queued.", created_at: new Date().toISOString() }]);
+        } else if (nextState === "done" || nextState === "completed" || nextState === "success") {
+          setMessages((prev) => [...prev, { id: Date.now(), author: "SekaiLink", content: "Generation complete.", created_at: new Date().toISOString() }]);
+        }
+      }
+      lastGenerationStateRef.current = nextState;
     });
 
     socket.on("lobby_host_changed", (data: { host_name?: string }) => {
@@ -712,13 +809,18 @@ const LobbyPage: React.FC = () => {
     });
 
     socket.on("terminal_output", (data: { text?: string }) => {
-      if (data.text) {
-        setTerminalLog((prev) => `${prev}${data.text}`);
-      }
+      // Room server terminal output intentionally ignored in AP-mirror mode.
+      void data;
     });
 
     socket.on("terminal_ack", (data: { status?: string }) => {
-      setTerminalStatus(data?.status === "sent" ? "Sent" : "");
+      if (data?.status === "sent") {
+        setTerminalStatus("Sent");
+      } else if (data?.status === "denied") {
+        setTerminalStatus("Denied (client auth required)");
+      } else {
+        setTerminalStatus("");
+      }
     });
 
     socket.on("lobby_kicked", (data: { message?: string; redirect_url?: string }) => {
@@ -776,6 +878,7 @@ const LobbyPage: React.FC = () => {
         const msg = typeof data.message === "string" ? data.message : "";
         const lvl = typeof data.level === "string" ? data.level : "info";
         if (msg) {
+          appendTerminalLine(`[${lvl}] ${msg}`);
           setApLogLines((prev) => {
             const next = [...prev, { text: msg, ts: Date.now(), level: lvl }];
             return next.slice(-250);
@@ -790,6 +893,7 @@ const LobbyPage: React.FC = () => {
         }
       } else if (data.event === "error") {
         const msg = typeof data.message === "string" ? data.message : "Unknown error";
+        appendTerminalLine(`[error] ${msg}`);
         setApLastError(msg);
         setApLogLines((prev) => {
           const next = [...prev, { text: msg, ts: Date.now(), level: "error" }];
@@ -802,14 +906,23 @@ const LobbyPage: React.FC = () => {
           setApBizhawkConnected(v);
         }
         if (typeof data.handler === "string") setApHandlerGame(data.handler);
+        appendTerminalLine(
+          `[status] server=${String(data.server || "-")} bizhawk=${String(data.bizhawk || "-")} handler=${String(data.handler || "-")}`
+        );
       } else if (data.event === "status") {
         if (data.server === "connected") setApClientConnected(true);
         if (data.server === "disconnected") setApClientConnected(false);
         if (typeof data.hint_points === "number") setApHintPoints(data.hint_points);
+        if (typeof data.server === "string") appendTerminalLine(`[status] server ${data.server}`);
+        if (typeof data.hint_points === "number") appendTerminalLine(`[status] hint_points=${data.hint_points}`);
       } else if (data.event === "room_info") {
         if (typeof data.hint_cost === "number") setApHintCost(data.hint_cost);
+        appendTerminalLine(
+          `[room] seed=${String(data.seed_name || "-")} hint_cost=${typeof data.hint_cost === "number" ? data.hint_cost : "-"}`
+        );
       } else if (data.event === "print_json") {
         const t = typeof data.text === "string" ? data.text.trim() : "";
+        if (t) appendTerminalLine(`[print] ${t}`);
         if (data.type === "Hint" && t) {
           setHintMessages((prev) => {
             const next = [...prev, { text: t, ts: Date.now() }];
@@ -831,7 +944,7 @@ const LobbyPage: React.FC = () => {
         // ignore
       }
     };
-  }, [sfx]);
+  }, [appendTerminalLine, sfx]);
 
   const sendApSay = async (text: string) => {
     const trimmed = String(text || "").trim();
@@ -913,6 +1026,12 @@ const LobbyPage: React.FC = () => {
     // Lobby chat should follow new messages automatically.
     log.scrollTop = log.scrollHeight;
   }, [messages]);
+
+  useEffect(() => {
+    const el = document.getElementById("lobby-terminal-log");
+    if (!el) return;
+    el.scrollTop = el.scrollHeight;
+  }, [terminalDisplayLog, terminalOpen]);
 
   const onJoinPrivate = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -1040,19 +1159,15 @@ const LobbyPage: React.FC = () => {
     setPreferredYamlId(targetId);
 
     const actor = self?.name || "Player";
-    if (announce === "default") {
-      await postLobbyNotice(`${actor} joined with default game: ${selectedTitle}`);
-    } else {
-      await postLobbyNotice(`${actor} changed active game to: ${selectedTitle}`);
-    }
+    if (announce === "change") await postLobbyNotice(`${actor} changed active game to: ${selectedTitle}`);
     return true;
   }, [controlsLocked, members, me?.discord_id, activeYamls, yamls, removeActiveYaml, addActiveYaml, postLobbyNotice]);
 
   useEffect(() => {
     if (!lobbyKey || !authed || joinRequired || !me?.discord_id) return;
     const self = members.find((member) => member.discord_id === me.discord_id);
-    if (!self) return;
-    if (self.active_yaml_id) return;
+    const selfActiveYamlId = String(self?.active_yaml_id || activeYamls[0]?.id || "").trim();
+    if (selfActiveYamlId) return;
     if (!yamls.length) return;
 
     const attemptKey = `${lobbyKey}:${me.discord_id}`;
@@ -1070,7 +1185,18 @@ const LobbyPage: React.FC = () => {
       setYamlOpen(true);
       showToast("No pre-selected game found. Select a game in this lobby.", "error");
     }
-  }, [lobbyKey, authed, joinRequired, me?.discord_id, members, yamls, controlsLocked, setSingleActiveYaml, showToast]);
+  }, [lobbyKey, authed, joinRequired, me?.discord_id, members, activeYamls, yamls, controlsLocked, setSingleActiveYaml, showToast]);
+
+  useEffect(() => {
+    if (!lobbyKey || !authed || !me?.discord_id) return;
+    const self = members.find((member) => member.discord_id === me.discord_id);
+    const selectedTitle = String(self?.active_yaml_title || activeYamls[0]?.title || "").trim();
+    if (!selectedTitle) return;
+    const key = `${lobbyKey}:${me.discord_id}`;
+    if (joinedGameNoticeRef.current[key]) return;
+    joinedGameNoticeRef.current[key] = true;
+    void postLobbyNotice(`${self?.name || "Player"} joined with: ${selectedTitle}`);
+  }, [lobbyKey, authed, me?.discord_id, members, activeYamls, postLobbyNotice]);
 
   useEffect(() => {
     if (!yamlOpen) return;
@@ -1080,22 +1206,11 @@ const LobbyPage: React.FC = () => {
     setYamlModalSelection(fallback);
   }, [yamlOpen, activeYamls, yamls]);
 
-  useEffect(() => {
-    if (!lobbyKey || !me?.discord_id || !authed || joinRequired) return;
-    const self = members.find((member) => member.discord_id === me.discord_id);
-    if (!self?.active_yaml_id) return;
-    const announceKey = `${lobbyKey}:${me.discord_id}`;
-    const already = defaultLoadedAnnouncedRef.current[announceKey];
-    if (already === self.active_yaml_id) return;
-    defaultLoadedAnnouncedRef.current[announceKey] = self.active_yaml_id;
-    const loadedTitle = self.active_yaml_title || self.active_yaml_id;
-    void postLobbyNotice(`${self.name || "Player"} joined with default game: ${loadedTitle}`);
-  }, [lobbyKey, me?.discord_id, members, authed, joinRequired, postLobbyNotice]);
-
   const toggleReady = async () => {
     if (controlsLocked) return;
     const selfMember = members.find((member) => member.discord_id === me?.discord_id);
-    if (!selfMember?.active_yaml_id) {
+    const hasActiveYaml = Boolean(selfMember?.active_yaml_id || activeYamls[0]?.id);
+    if (!hasActiveYaml) {
       showToast("Select an active game before marking ready.", "error");
       return;
     }
@@ -1103,7 +1218,7 @@ const LobbyPage: React.FC = () => {
       const response = await apiFetch(`/api/lobbies/${lobbyKey}/ready`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ready: !ready })
+        body: JSON.stringify({ ready: !Boolean(selfMember?.ready ?? ready) })
       });
       if (!response.ok) {
         const data = await response.json().catch(() => ({}));
@@ -1125,7 +1240,20 @@ const LobbyPage: React.FC = () => {
         throw new Error(data.error || "Unable to generate.");
       }
       sfx.play("success", 0.35);
-      await loadGeneration();
+      const immediate = await apiJson<GenerationStatus>(`/api/lobbies/${lobbyKey}/generation`).catch(() => null);
+      if (immediate) setGeneration(immediate);
+      let roomUrl = immediate?.room_url || "";
+      if (!roomUrl) {
+        for (let i = 0; i < 18; i += 1) {
+          await new Promise((resolve) => window.setTimeout(resolve, 1000));
+          const next = await apiJson<GenerationStatus>(`/api/lobbies/${lobbyKey}/generation`).catch(() => null);
+          if (next) setGeneration(next);
+          roomUrl = next?.room_url || roomUrl;
+          if (roomUrl) break;
+        }
+      }
+      if (roomUrl) await fetchRoomStatus(roomUrl, 8);
+      else await loadGeneration();
     } catch (err) {
       showToast(err instanceof Error ? err.message : "Unable to generate.", "error");
     }
@@ -1134,14 +1262,21 @@ const LobbyPage: React.FC = () => {
   const sendTerminal = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!terminalInput.trim()) return;
-    const roomUrl = generation?.room_url;
-    if (!roomUrl) return;
-    const parts = roomUrl.split("/").filter(Boolean);
-    const roomId = parts[parts.length - 1];
-    if (!roomId || !socketRef.current) return;
-    socketRef.current.emit("terminal_command", { lobby_id: lobbyKey, room_id: roomId, cmd: terminalInput.trim() });
-    sfx.play("confirm", 0.25);
-    setTerminalInput("");
+    const cmd = terminalInput.trim();
+    try {
+      if (runtime.bizhawkClientSend) {
+        const res = await runtime.bizhawkClientSend({ cmd: "say", text: cmd });
+        if ((res as any)?.ok === false) throw new Error((res as any)?.error || "send_failed");
+        sfx.play("confirm", 0.25);
+        setTerminalStatus("Sent");
+        setTerminalInput("");
+        return;
+      }
+    } catch (err) {
+      setTerminalStatus(err instanceof Error ? err.message : "Send failed");
+      return;
+    }
+    setTerminalStatus("AP client is not ready.");
   };
 
   const updateSettings = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -1382,7 +1517,20 @@ const LobbyPage: React.FC = () => {
 
   const handleLaunch = async (downloadUrls?: string | string[]) => {
     const urls = Array.isArray(downloadUrls) ? downloadUrls : downloadUrls ? [downloadUrls] : [];
-    const serverAddress = roomStatus?.last_port ? `${host}:${roomStatus.last_port}` : "";
+    let resolvedRoom = roomStatus;
+    if (!resolvedRoom?.last_port) {
+      const roomUrl = generation?.room_url;
+      if (roomUrl) {
+        resolvedRoom = await fetchRoomStatus(roomUrl, 10);
+      } else {
+        const latest = await apiJson<GenerationStatus>(`/api/lobbies/${lobbyKey}/generation`).catch(() => null);
+        if (latest?.room_url) {
+          setGeneration((prev) => ({ ...(prev || {}), ...latest }));
+          resolvedRoom = await fetchRoomStatus(latest.room_url, 10);
+        }
+      }
+    }
+    const serverAddress = resolvedRoom?.last_port ? `${host}:${resolvedRoom.last_port}` : "";
     if (!serverAddress) {
       showToast("Room server is not ready yet.", "error");
       return;
@@ -1393,8 +1541,9 @@ const LobbyPage: React.FC = () => {
     }
     const slotId = playersByName.get(selfPlayerName) || playersByName.get(selfPlayerName.toLowerCase());
     const apGameName =
-      (roomStatus?.players || []).find((p: any) => (slotId ? p?.slot === slotId : false) || p?.name === selfPlayerName)?.game ||
+      (resolvedRoom?.players || []).find((p: any) => (slotId ? p?.slot === slotId : false) || p?.name === selfPlayerName)?.game ||
       "";
+    window.SKL_SFX?.stopBgm?.();
 
     if (!urls.length) {
       if (runtime.sessionAutoLaunch && apGameName) {
@@ -1637,6 +1786,7 @@ const LobbyPage: React.FC = () => {
   })();
 
   const selfMember = members.find((member) => member.discord_id === me?.discord_id);
+  const selectedGameLabel = selfMember?.active_yaml_title || activeYamls[0]?.title || "";
   const selfPlayerName = selfMember?.active_yaml_player || selfMember?.name;
   const selfSlotId =
     selfPlayerName
@@ -1660,6 +1810,13 @@ const LobbyPage: React.FC = () => {
             <span className="skl-eyebrow">Lobby</span>
             <h1 className="skl-title">{soloMode ? `${lobby?.name || "Lobby"} · Solo` : (lobby?.name || "Lobby")}</h1>
             <p className="skl-lobby-description">{lobbyDescription || "No description yet."}</p>
+            {selectedGameLabel ? (
+              <div className="skl-selected-game-banner" title={`Selected game: ${selectedGameLabel}`}>
+                Selected game: {selectedGameLabel}
+              </div>
+            ) : (
+              <div className="skl-selected-game-banner missing">No game selected</div>
+            )}
           </div>
           <div className="skl-lobby-meta">
             <div><span>Owner:</span> <span id="lobby-owner-name">{ownerName}</span></div>
@@ -2404,14 +2561,12 @@ const LobbyPage: React.FC = () => {
             </div>
             <button className="skl-btn ghost" type="button" onClick={() => setTerminalOpen(false)}>Close</button>
           </div>
-          <div id="lobby-terminal-log" className="skl-terminal-log">{terminalLog}</div>
-          {canManageLobby && (
-            <form id="lobby-terminal-form" className="skl-terminal-form" onSubmit={sendTerminal}>
-              <input type="text" id="lobby-terminal-input" placeholder="Enter server command" value={terminalInput} onChange={(event) => setTerminalInput(event.target.value)} />
-              <button className="skl-btn ghost" type="submit">Send</button>
-            </form>
-          )}
-          {canManageLobby && <div id="lobby-terminal-status" className="skl-ready-status">{terminalStatus}</div>}
+          <div id="lobby-terminal-log" className="skl-terminal-log">{terminalDisplayLog}</div>
+          <form id="lobby-terminal-form" className="skl-terminal-form" onSubmit={sendTerminal}>
+            <input type="text" id="lobby-terminal-input" placeholder="Enter AP command" value={terminalInput} onChange={(event) => setTerminalInput(event.target.value)} />
+            <button className="skl-btn ghost" type="submit">Send</button>
+          </form>
+          <div id="lobby-terminal-status" className="skl-ready-status">{terminalStatus}</div>
         </div>
       </div>
 

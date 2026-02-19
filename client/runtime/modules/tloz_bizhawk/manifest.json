@@ -3,7 +3,7 @@
   "display_name": "The Legend of Zelda",
   "emu": "bizhawk",
   "lua_connector": "lua/connector.lua",
-  "tracker_pack_uid": "https://github.com/Br00ty/tloz_brooty",
+  "tracker_pack_uid": "https://github.com/Br00ty/tloz_brooty/releases/tag/1.5.5.1",
   "patcher": "archipelago",
   "patch_extensions": [
     ".aptloz"
@@ -21,5 +21,6 @@
   "features": {
     "autotracking": true,
     "save_required": true
-  }
+  },
+  "tracker_web_url": ""
 }

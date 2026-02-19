@@ -2,7 +2,7 @@
   "game_id": "sm64ex",
   "display_name": "Super Mario 64",
   "emu": "sm64ex",
-  "tracker_pack_uid": "https://github.com/RaceProUK/SM64EX-APTracker",
+  "tracker_pack_uid": "https://github.com/ThePhar/APSM64TrackerPack",
   "patcher": "none",
   "rom_requirements": {
     "extensions": [],
@@ -12,5 +12,6 @@
   "features": {
     "autotracking": false,
     "save_required": false
-  }
+  },
+  "tracker_web_url": ""
 }

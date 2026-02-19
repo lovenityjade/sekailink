@@ -1,0 +1,101 @@
+{% extends 'pageWrapper.html' %}
+{% set show_footer = False %}
+
+{% block head %}
+    <title>Loading · SekaiLink</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/boot.css') }}" />
+{% endblock %}
+
+{% block body %}
+    <div class="page-bg"></div>
+    <div class="skl-boot" id="skl-boot-screen">
+        <div class="skl-boot-card">
+            <div class="skl-boot-scanline"></div>
+            <div class="skl-boot-content">
+                <div class="skl-boot-orbit" aria-hidden="true">
+                    <div class="skl-boot-orbit-ring"></div>
+                    <div class="skl-boot-orbit-ring inner"></div>
+                    <div class="skl-boot-orbit-core"></div>
+                    <div class="skl-boot-orbit-dot dot-a"></div>
+                    <div class="skl-boot-orbit-dot dot-b"></div>
+                </div>
+                <div class="skl-boot-logo">SEKAILINK</div>
+                <p class="skl-boot-text">Booting the grid…</p>
+                <div class="skl-boot-status" aria-live="polite">
+                    <span class="skl-boot-status-label">Stabilizing shards</span>
+                    <span class="skl-boot-status-meter"><span class="skl-boot-status-fill"></span></span>
+                </div>
+                <div class="skl-boot-loader">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="skl-boot-version">{{ app_version|default('v0') }}</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const bootVersion = "{{ app_version|default('v0')|e }}";
+        const bootKey = `skl_boot_done_${bootVersion}`;
+        const params = new URLSearchParams(window.location.search);
+        const next = params.get("next") || "/rooms";
+        const statusEl = document.querySelector(".skl-boot-status-label");
+        const meterFill = document.querySelector(".skl-boot-status-fill");
+        const playBootSound = () => {
+            if (window.SKL_SFX && window.SKL_SFX.play) {
+                window.SKL_SFX.play("appopen", 0.25);
+            }
+        };
+        document.addEventListener("click", playBootSound, { once: true });
+        document.addEventListener("keydown", playBootSound, { once: true });
+        const warmupTasks = [
+            {
+                label: "Syncing lobbies",
+                run: () => fetch("/api/lobbies", { credentials: "include" }).catch(() => {})
+            },
+            {
+                label: "Priming rooms",
+                run: () => fetch("/rooms", { credentials: "include" }).catch(() => {})
+            },
+            {
+                label: "Loading interface",
+                run: () => Promise.resolve()
+            }
+        ];
+        const minDelay = {
+            label: "Stabilizing grid",
+            run: () => new Promise((resolve) => setTimeout(resolve, 1200))
+        };
+        const steps = [...warmupTasks, minDelay];
+        let completed = 0;
+
+        const updateProgress = () => {
+            if (!meterFill) return;
+            const pct = Math.min(100, Math.round((completed / steps.length) * 100));
+            meterFill.style.width = `${Math.max(18, pct)}%`;
+        };
+        const setStatus = (label) => {
+            if (statusEl && label) statusEl.textContent = label;
+        };
+
+        updateProgress();
+        setStatus(steps[0]?.label);
+
+        const runStep = (step, index) =>
+            Promise.resolve()
+                .then(step.run)
+                .finally(() => {
+                    completed += 1;
+                    updateProgress();
+                    const nextLabel = steps[index + 1] ? steps[index + 1].label : "Launching";
+                    setStatus(nextLabel);
+                });
+
+        Promise.allSettled(steps.map(runStep)).then(() => {
+            try {
+                window.localStorage.setItem(bootKey, "1");
+            } catch (err) {
+                // ignore storage failures
+            }
+            window.location.href = next;
+        });
+    </script>
+{% endblock %}

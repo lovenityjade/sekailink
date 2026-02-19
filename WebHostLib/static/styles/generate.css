@@ -1,0 +1,72 @@
+#generate-game{
+    width: 100%;
+    min-height: 360px;
+    text-align: left;
+}
+
+#generate-game button{
+    margin-top: 18px;
+    margin-bottom: 18px;
+}
+
+#generate-game-form-wrapper{
+    width: 100%;
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+#generate-game-tables-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.table-wrapper select {
+    width: 200px;
+}
+
+.table-wrapper input:not([type]){
+    width: 200px;
+}
+
+#generate-game-form-wrapper table td{
+    text-align: left;
+    padding-right: 0.5rem;
+    vertical-align: top;
+    width: 230px;
+}
+
+#generate-form-button-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#file-input{
+    display: none;
+}
+
+#upload-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    border: 2px dashed rgba(92, 231, 181, 0.3);
+    border-radius: 14px;
+    margin: 20px 0;
+    transition: all 0.3s ease;
+    margin-bottom: 35px;
+}
+
+#upload-area.drag-over {
+    border-color: rgba(92, 231, 181, 0.8);
+    background-color: rgba(92, 231, 181, 0.08);
+}
+
+#drag-drop-text {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}

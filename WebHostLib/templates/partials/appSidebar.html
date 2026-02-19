@@ -1,0 +1,66 @@
+<aside class="skl-sidebar">
+    <nav class="skl-sidebar-nav">
+        <button class="skl-sidebar-link skl-sidebar-toggle" type="button" data-sidebar-toggle>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/><line x1="19" y1="6" x2="19" y2="18"/></svg>
+            <span class="skl-sidebar-label">Collapse</span>
+        </button>
+        <a class="skl-sidebar-link{% if active_page == 'rooms' %} active{% endif %}" href="/rooms">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <span class="skl-sidebar-label">Room List</span>
+        </a>
+        <a class="skl-sidebar-link{% if active_page == 'yaml' %} active{% endif %}" href="/dashboard/yaml/new">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            <span class="skl-sidebar-label">Game Manager</span>
+        </a>
+        <a class="skl-sidebar-link{% if active_page == 'friends' %} active{% endif %}" href="#" data-friends-open>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            <span class="skl-sidebar-label">Friends</span>
+            <span class="skl-friends-count" id="skl-friends-count">0/0</span>
+            <span class="skl-unread-badge" id="skl-friends-badge"></span>
+        </a>
+        <a class="skl-sidebar-link{% if active_page == 'help' %} active{% endif %}" href="/help">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span class="skl-sidebar-label">Help</span>
+        </a>
+        <button class="skl-sidebar-link" type="button" data-about-open>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="10" x2="12" y2="16"/><circle cx="12" cy="7" r="1"/></svg>
+            <span class="skl-sidebar-label">About</span>
+        </button>
+        <button class="skl-sidebar-link" type="button" data-contribute-open>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 9.4a4.5 4.5 0 00-6.4 0L12 11.8 9.6 9.4a4.5 4.5 0 00-6.4 6.4l2.4 2.4L12 22l6.4-3.8 2.4-2.4a4.5 4.5 0 000-6.4z"/></svg>
+            <span class="skl-sidebar-label">Contribute</span>
+        </button>
+    </nav>
+    <div class="skl-sidebar-divider"></div>
+    <button class="skl-mute-toggle" id="skl-mute-btn" type="button" aria-label="Toggle UI sounds">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/></svg>
+        <span class="skl-sidebar-label" id="skl-mute-label">Sounds on</span>
+    </button>
+    <div class="skl-sidebar-profile">
+        <a class="skl-sidebar-profile-link{% if active_page == 'dashboard' %} active{% endif %}" href="/account" id="skl-profile-link">
+            <div class="skl-sidebar-avatar">
+                {% if session.get("discord_user") and session["discord_user"].avatar_url %}
+                    <img src="{{ session["discord_user"].avatar_url }}" alt="Profile avatar" />
+                {% else %}
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20a8 8 0 0116 0"/></svg>
+                {% endif %}
+            </div>
+            <div class="skl-sidebar-profile-text">
+                <div class="skl-sidebar-profile-name">
+                    {% if session.get("discord_user") %}
+                        {{ session["discord_user"].global_name or session["discord_user"].username }}
+                    {% else %}
+                        Account
+                    {% endif %}
+                </div>
+                <div class="skl-sidebar-profile-status" id="skl-user-status">
+                    <span class="skl-status-dot" id="skl-user-status-dot"></span>
+                    <span id="skl-user-status-text">Online</span>
+                </div>
+            </div>
+        </a>
+        <button class="skl-sidebar-settings" type="button" aria-label="User settings" data-settings-open>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        </button>
+    </div>
+</aside>

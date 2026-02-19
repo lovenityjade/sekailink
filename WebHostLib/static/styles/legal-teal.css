@@ -1,0 +1,117 @@
+.skl-legal-wrap {
+  max-width: 1080px;
+  margin: 108px auto 64px;
+  padding: 0 20px;
+  color: #d9fffb;
+}
+
+.skl-legal-header {
+  background: linear-gradient(145deg, rgba(4, 24, 29, 0.85), rgba(4, 18, 26, 0.88));
+  border: 1px solid rgba(86, 255, 233, 0.38);
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 0 34px rgba(22, 220, 196, 0.18), inset 0 0 26px rgba(13, 106, 102, 0.16);
+}
+
+.skl-legal-header h1 {
+  margin: 0;
+  color: #ecfffc;
+  letter-spacing: 0.04em;
+}
+
+.skl-legal-header p {
+  margin: 6px 0 0;
+  color: #a9e7df;
+}
+
+.skl-legal-lang {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 18px;
+}
+
+.skl-legal-lang-btn {
+  padding: 8px 12px;
+  border-radius: 9px;
+  border: 1px solid rgba(96, 247, 233, 0.35);
+  background: rgba(5, 26, 34, 0.72);
+  color: #b9fdf5;
+  text-decoration: none;
+  transition: all 120ms ease;
+}
+
+.skl-legal-lang-btn:hover {
+  border-color: rgba(105, 253, 238, 0.62);
+  box-shadow: 0 0 16px rgba(42, 255, 221, 0.2);
+}
+
+.skl-legal-lang-btn.is-active {
+  background: linear-gradient(135deg, rgba(22, 96, 105, 0.72), rgba(13, 67, 89, 0.9));
+  border-color: rgba(114, 252, 233, 0.88);
+  color: #effffb;
+}
+
+.skl-legal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.skl-legal-card {
+  background: linear-gradient(150deg, rgba(4, 20, 26, 0.83), rgba(3, 14, 23, 0.9));
+  border: 1px solid rgba(80, 236, 216, 0.3);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: inset 0 0 24px rgba(8, 116, 107, 0.16);
+}
+
+.skl-legal-card h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #e8fffb;
+}
+
+.skl-legal-card p {
+  color: #9fdbd4;
+  margin-bottom: 16px;
+}
+
+.skl-legal-doc-wrap {
+  max-width: 1140px;
+}
+
+.skl-legal-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.skl-legal-markdown {
+  background: linear-gradient(150deg, rgba(5, 20, 25, 0.88), rgba(4, 15, 20, 0.92));
+  border: 1px solid rgba(98, 248, 230, 0.34);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 0 24px rgba(22, 202, 184, 0.13), inset 0 0 18px rgba(8, 94, 89, 0.2);
+}
+
+.skl-legal-markdown h1,
+.skl-legal-markdown h2,
+.skl-legal-markdown h3 {
+  color: #e5fff9;
+}
+
+.skl-legal-markdown p,
+.skl-legal-markdown li {
+  color: #c6f6ee;
+}
+
+.skl-legal-markdown a {
+  color: #69f8ea;
+}
+
+@media (max-width: 920px) {
+  .skl-legal-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,293 @@
+{% extends 'pageWrapper.html' %}
+{% set show_footer = False %}
+
+{% block head %}
+    <title>Documentation · SekaiLink</title>
+    <meta name="description" content="Get started with SekaiLink. Quickstart guide, troubleshooting, FAQ, and help resources.">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/docs.css') }}" />
+{% endblock %}
+
+{% block body %}
+    <div class="page-bg"></div>
+
+    <!-- TOP NAV -->
+    <header class="skl-topbar">
+        <div class="skl-topbar-inner">
+            <a href="/" class="skl-topbar-brand">SEKAILINK</a>
+            <nav class="skl-topbar-links">
+                <a href="/#features">Features</a>
+                <a href="/#how-it-works">How it Works</a>
+                <a href="/downloads">Downloads</a>
+                <a href="/docs" class="active">Docs</a>
+            </nav>
+            <button class="skl-topbar-burger" id="skl-mobile-nav" type="button" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="skl-docs-page">
+        <!-- Sidebar -->
+        <aside class="skl-docs-sidebar">
+            <nav class="skl-docs-nav">
+                <a href="#quickstart" class="skl-docs-nav-item active">Quickstart</a>
+                <a href="#troubleshooting" class="skl-docs-nav-item">Troubleshooting</a>
+                <a href="#logs" class="skl-docs-nav-item">Logs & Debug</a>
+                <a href="#faq" class="skl-docs-nav-item">FAQ</a>
+                <a href="#help" class="skl-docs-nav-item">Getting Help</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="skl-docs-main">
+            <section class="skl-docs-hero">
+                <p class="skl-eyebrow">Documentation</p>
+                <h1 class="skl-title">Get Started with SekaiLink</h1>
+                <p class="skl-docs-intro">Everything you need to set up, troubleshoot, and understand how SekaiLink works.</p>
+            </section>
+
+            <!-- Quickstart -->
+            <section class="skl-docs-section" id="quickstart">
+                <h2>Quickstart</h2>
+                <p class="skl-docs-lead">Your first run in 5 steps.</p>
+
+                <div class="skl-docs-steps">
+                    <div class="skl-docs-step">
+                        <div class="skl-docs-step-num">1</div>
+                        <div class="skl-docs-step-content">
+                            <h3>Download and extract</h3>
+                            <p>Get SekaiLink from the <a href="/downloads">Downloads page</a>. Extract the archive to a folder of your choice.</p>
+                        </div>
+                    </div>
+
+                    <div class="skl-docs-step">
+                        <div class="skl-docs-step-num">2</div>
+                        <div class="skl-docs-step-content">
+                            <h3>Launch SekaiLink</h3>
+                            <p>Run the application and complete initial setup. You'll be asked to choose where to store configuration and downloads.</p>
+                        </div>
+                    </div>
+
+                    <div class="skl-docs-step">
+                        <div class="skl-docs-step-num">3</div>
+                        <div class="skl-docs-step-content">
+                            <h3>Import a ROM</h3>
+                            <p>Click "Add Game," select your ROM file, and let SekaiLink validate it. ROMs need to match expected checksums for supported games.</p>
+                        </div>
+                    </div>
+
+                    <div class="skl-docs-step">
+                        <div class="skl-docs-step-num">4</div>
+                        <div class="skl-docs-step-content">
+                            <h3>Configure your game</h3>
+                            <p>Choose your settings through the visual interface. Start with a preset if you're new to the game's randomizer.</p>
+                        </div>
+                    </div>
+
+                    <div class="skl-docs-step">
+                        <div class="skl-docs-step-num">5</div>
+                        <div class="skl-docs-step-content">
+                            <h3>Generate and Launch</h3>
+                            <p>For solo play, click Generate then Launch. For multiplayer, create or join a room first. SekaiLink handles patching, emulator launch, Archipelago connection, and tracker setup.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skl-docs-callout success">
+                    <p>That's it. You're playing in under a minute.</p>
+                </div>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section class="skl-docs-section" id="troubleshooting">
+                <h2>Troubleshooting</h2>
+                <p class="skl-docs-lead">Something not working? Most issues fall into a few categories.</p>
+
+                <div class="skl-docs-subsection">
+                    <h3>Connection Issues</h3>
+                    <ul>
+                        <li>Is the Archipelago server reachable? Check if the server is online.</li>
+                        <li>Is your slot name correct? Double-check for typos.</li>
+                        <li>Check the connection status indicator in SekaiLink — it shows you exactly what's connected and what isn't.</li>
+                    </ul>
+                </div>
+
+                <div class="skl-docs-subsection">
+                    <h3>Emulator Issues</h3>
+                    <ul>
+                        <li>Is your emulator path configured correctly in SekaiLink settings?</li>
+                        <li>Does the ROM work when opened directly in the emulator?</li>
+                        <li>Some emulators need specific versions — check the game-specific documentation.</li>
+                    </ul>
+                </div>
+
+                <div class="skl-docs-subsection">
+                    <h3>Tracker Issues</h3>
+                    <ul>
+                        <li>PopTracker needs the correct pack for your game.</li>
+                        <li>SekaiLink tries to auto-detect the right pack, but manual selection is available in settings.</li>
+                        <li>Make sure your tracker pack is up to date.</li>
+                    </ul>
+                </div>
+
+                <div class="skl-docs-subsection">
+                    <h3>ROM Issues</h3>
+                    <ul>
+                        <li>Wrong region? Wrong version? SekaiLink validates checksums for known-good ROMs.</li>
+                        <li>Check the error message — it usually tells you what's expected vs. what you provided.</li>
+                        <li>Some games require specific ROM versions (e.g., US 1.0 vs. JP).</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Logs & Debug -->
+            <section class="skl-docs-section" id="logs">
+                <h2>Logs & Debug Info</h2>
+                <p class="skl-docs-lead">When something goes wrong, logs help figure out why.</p>
+
+                <div class="skl-docs-subsection">
+                    <h3>Where to find logs</h3>
+                    <p>Logs are stored locally in the SekaiLink data directory. The exact location depends on the path you chose during first launch.</p>
+                    <p>By default, SekaiLink stores logs in a <code>logs</code> subfolder within its data directory. You can open this folder directly from within SekaiLink's settings.</p>
+                </div>
+
+                <div class="skl-docs-subsection">
+                    <h3>Copy Debug Info</h3>
+                    <p>The easier option: use the "Copy Debug Info" button in SekaiLink settings.</p>
+                    <p>This bundles:</p>
+                    <ul>
+                        <li>Recent log entries</li>
+                        <li>Configuration summary (no sensitive data)</li>
+                        <li>Version info for all components</li>
+                    </ul>
+                    <p>Paste this into Discord when asking for help. It saves everyone time.</p>
+                </div>
+            </section>
+
+            <!-- FAQ -->
+            <section class="skl-docs-section" id="faq">
+                <h2>Frequently Asked Questions</h2>
+
+                <div class="skl-faq-list">
+                    <details class="skl-faq-item">
+                        <summary>Does SekaiLink replace Archipelago?</summary>
+                        <p>No. SekaiLink is a convenience layer that uses Archipelago. You still need Archipelago servers for multiplayer, and SekaiLink respects the existing ecosystem — it doesn't try to replace any of the tools it integrates with.</p>
+                    </details>
+
+                    <details class="skl-faq-item">
+                        <summary>Do I need to install BizHawk separately?</summary>
+                        <p>Currently, yes. SekaiLink can launch BizHawk, but you need to have it installed and tell SekaiLink where it is. Automated download may come in a future version.</p>
+                    </details>
+
+                    <details class="skl-faq-item">
+                        <summary>Can I use a different emulator?</summary>
+                        <p>For some games, yes. SekaiLink supports multiple emulators where Archipelago does. Check the per-game documentation for supported emulators.</p>
+                    </details>
+
+                    <details class="skl-faq-item">
+                        <summary>What if my antivirus flags SekaiLink?</summary>
+                        <p>This happens with unsigned executables. SekaiLink is open-source — you can review the code on GitHub or build from source if you prefer. You can also add an exception in your antivirus for the SekaiLink folder.</p>
+                    </details>
+
+                    <details class="skl-faq-item">
+                        <summary>Is there telemetry?</summary>
+                        <p>No. SekaiLink doesn't phone home. Multiplayer features connect to Archipelago servers, but SekaiLink itself collects nothing about you or your usage.</p>
+                    </details>
+
+                    <details class="skl-faq-item">
+                        <summary>How do I update SekaiLink?</summary>
+                        <p>Download the new version from the Downloads page and replace the old files. Your configuration and game data are stored separately and will persist across updates.</p>
+                    </details>
+
+                    <details class="skl-faq-item">
+                        <summary>Can I contribute to SekaiLink?</summary>
+                        <p>Yes! SekaiLink is open-source. Check the <a href="https://github.com/lovenityjade/sekailink" target="_blank" rel="noopener">GitHub repository</a> for contribution guidelines, open issues, and ways to help.</p>
+                    </details>
+
+                    <details class="skl-faq-item">
+                        <summary>What games are supported?</summary>
+                        <p>SekaiLink supports games that work with Archipelago. See the <a href="/games">full list</a> for supported games and any game-specific requirements.</p>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Getting Help -->
+            <section class="skl-docs-section" id="help">
+                <h2>Getting Help</h2>
+                <p class="skl-docs-lead">Still stuck? Here's how to reach us.</p>
+
+                <div class="skl-help-options">
+                    <a class="skl-help-card glass" href="https://discord.gg/jTaefxAEDW" target="_blank" rel="noopener">
+                        <div class="skl-help-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                        </div>
+                        <h3>Discord</h3>
+                        <p>Fastest way to get help. Paste your debug info, describe what happened, and someone will usually respond quickly.</p>
+                    </a>
+
+                    <a class="skl-help-card glass" href="https://github.com/lovenityjade/sekailink/issues" target="_blank" rel="noopener">
+                        <div class="skl-help-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                        </div>
+                        <h3>GitHub Issues</h3>
+                        <p>Better for confirmed bugs or feature requests. Check existing issues first — someone may have reported the same thing.</p>
+                    </a>
+                </div>
+
+                <div class="skl-docs-callout info">
+                    <p><strong>When asking for help:</strong> Include your debug info (use the Copy Debug Info button), describe what you expected to happen vs. what actually happened, and mention any error messages you saw.</p>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="skl-docs-footer">
+                <div class="skl-footer-left">
+                    <span class="skl-footer-brand">SEKAILINK</span>
+                </div>
+                <div class="skl-footer-links">
+                    <a href="/">Home</a>
+                    <a href="/downloads">Downloads</a>
+                    <a href="https://discord.gg/jTaefxAEDW" target="_blank" rel="noopener">Discord</a>
+                    <a href="https://github.com/lovenityjade/sekailink" target="_blank" rel="noopener">GitHub</a>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+    (function(){
+        // Mobile nav toggle
+        var btn = document.getElementById('skl-mobile-nav');
+        if(btn) {
+            btn.addEventListener('click', function(){
+                btn.closest('.skl-topbar').classList.toggle('open');
+            });
+        }
+
+        // Sidebar scroll spy
+        var sections = document.querySelectorAll('.skl-docs-section');
+        var navItems = document.querySelectorAll('.skl-docs-nav-item');
+
+        function updateActiveNav() {
+            var scrollPos = window.scrollY + 120;
+
+            sections.forEach(function(section) {
+                var top = section.offsetTop;
+                var bottom = top + section.offsetHeight;
+
+                if (scrollPos >= top && scrollPos < bottom) {
+                    navItems.forEach(function(item) {
+                        item.classList.remove('active');
+                        if (item.getAttribute('href') === '#' + section.id) {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveNav);
+        updateActiveNav();
+    })();
+    </script>
+{% endblock %}

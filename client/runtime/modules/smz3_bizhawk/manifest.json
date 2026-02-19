@@ -23,5 +23,7 @@
   "features": {
     "autotracking": true,
     "save_required": true
-  }
+  },
+  "tracker_pack_uid": "https://github.com/Dessyreqt/smz3-ap-tracker/releases/latest",
+  "tracker_web_url": ""
 }

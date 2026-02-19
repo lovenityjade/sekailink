@@ -53,7 +53,17 @@ const ChatroomPanel: React.FC<Props> = ({
   const { t } = useI18n();
   const [chatInput, setChatInput] = useState("");
   const [newMsgs, setNewMsgs] = useState(false);
+  const [channel, setChannel] = useState<"global" | "en" | "fr" | "es" | "ja" | "zh">("global");
+  const [channelMessages, setChannelMessages] = useState<Record<string, ChatMessage[]>>({
+    en: [],
+    fr: [],
+    es: [],
+    ja: [],
+    zh: [],
+    global: [],
+  });
   const chatScrollRef = useRef<HTMLDivElement | null>(null);
+  const visibleMessages = channel === "global" ? messages : (channelMessages[channel] || []);
 
   useEffect(() => {
     const el = chatScrollRef.current;
@@ -64,22 +74,24 @@ const ChatroomPanel: React.FC<Props> = ({
     } else {
       setNewMsgs(true);
     }
-  }, [messages]);
+  }, [visibleMessages]);
 
   const sendMessage = () => {
     const text = chatInput.trim();
     if (!text) return;
-    setMessages((prev) => [
-      ...prev,
-      {
-        id: `me-${Date.now()}`,
-        author: currentUserName || t("proto.you"),
-        content: text,
-        created_at: new Date().toISOString(),
-        kind: "user",
-        avatar_url: currentUserAvatarUrl || undefined,
-      },
-    ]);
+    const nextMsg: ChatMessage = {
+      id: `me-${Date.now()}`,
+      author: currentUserName || t("proto.you"),
+      content: text,
+      created_at: new Date().toISOString(),
+      kind: "user",
+      avatar_url: currentUserAvatarUrl || undefined,
+    };
+    if (channel === "global") {
+      setMessages((prev) => [...prev, nextMsg]);
+    } else {
+      setChannelMessages((prev) => ({ ...prev, [channel]: [...(prev[channel] || []), nextMsg] }));
+    }
     setChatInput("");
     const el = chatScrollRef.current;
     if (el) el.scrollTop = el.scrollHeight;
@@ -106,14 +118,29 @@ const ChatroomPanel: React.FC<Props> = ({
           <span className="sklp-search-ico" aria-hidden="true">⌕</span>
           <input className="sklp-input" type="search" placeholder={t("proto.chatroom.search_global")} />
         </div>
-        <div className="sklp-chat-roomtag">
-          <span className="sklp-roombadge small">#</span>
-          <span className="sklp-chat-roomname">{t("proto.chatroom.global")}</span>
+        <div className="sklp-chat-roomtag channel-tabs">
+          {([
+            { id: "global", label: t("proto.chatroom.global") },
+            { id: "en", label: "EN" },
+            { id: "fr", label: "FR" },
+            { id: "es", label: "ES" },
+            { id: "ja", label: "JA" },
+            { id: "zh", label: "ZH" },
+          ] as const).map((c) => (
+            <button
+              key={c.id}
+              type="button"
+              className={`sklp-chip${channel === c.id ? " active" : ""}`}
+              onClick={() => setChannel(c.id)}
+            >
+              {c.label}
+            </button>
+          ))}
         </div>
       </div>
 
       <div className="sklp-chat-scroll" ref={chatScrollRef}>
-        {messages.map((m) => (
+        {visibleMessages.map((m) => (
           <article key={m.id} className={`sklp-msg${m.kind === "system" ? " sys" : ""}`}>
             <div className="sklp-msg-avatar" aria-hidden="true">
               {resolveAvatar(m) ? (

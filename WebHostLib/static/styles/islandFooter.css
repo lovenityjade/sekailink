@@ -1,0 +1,64 @@
+#island-footer{
+    background: linear-gradient(140deg, rgba(6, 14, 10, 0.9), rgba(10, 24, 18, 0.85));
+    backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 18px;
+    width: calc(100% - 2rem);
+    padding: 22px 1rem;
+    color: #c7e6d8;
+    position: fixed;
+    bottom: 0;
+    border-top: 1px solid rgba(92, 231, 181, 0.16);
+}
+
+#island-footer #links a{
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    color: #c7e6d8;
+}
+
+#island-footer #powered-by{
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #7df0c5;
+}
+
+#island-footer #site-version{
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #cfe8dd;
+}
+@media all and (max-width: 900px) {
+    #island-footer{
+        font-size: 17px;
+        font-size: 2vw;
+    }
+}
+@media all and (max-width: 768px) {
+    #island-footer{
+        font-size: 15px;
+        font-size: 2vw;
+    }
+}
+@media all and (max-width: 650px) {
+    #island-footer{
+        font-size: 13px;
+        font-size: 2vw;
+    }
+}
+@media all and (max-width: 580px) {
+    #island-footer{
+        font-size: 11px;
+        font-size: 2vw;
+    }
+}
+@media all and (max-width: 512px) {
+    #island-footer{
+        font-size: 9px;
+        font-size: 2vw;
+    }
+}

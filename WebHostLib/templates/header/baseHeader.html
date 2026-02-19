@@ -1,0 +1,64 @@
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/themes/base.css") }}" />
+    <script type="application/ecmascript" src="{{ url_for('static', filename="assets/baseHeader.js") }}"></script>
+{% endblock %}
+
+{% block header %}
+    <header id="base-header">
+        <div id="base-header-left">
+            <a href="/" id="site-title">
+                <img class="site-logo-icon" src="/static/static/branding/sekailink-logo-image.png" alt="SekaiLink" />
+                <img class="site-logo-text" src="/static/static/branding/sekailink-logo-text.png" alt="SekaiLink" />
+            </a>
+        </div>
+        <div id="base-header-right">
+            {% if is_admin %}
+                <a class="nav-pill" href="/admin">Admin</a>
+            {% endif %}
+            <a class="nav-pill" href="/help">Help</a>
+            {% if session.get("discord_user") %}
+                <a class="nav-pill" href="#" id="skl-friends-button">
+                    Friends
+                    <span class="skl-unread-badge" id="skl-unread-badge" aria-hidden="true"></span>
+                </a>
+                <span class="discord-user">
+                    {% if session["discord_user"].avatar_url %}
+                        <img class="discord-avatar" src="{{ session["discord_user"].avatar_url }}" alt="Discord avatar" />
+                    {% endif %}
+                    Connected as {{ session["discord_user"].global_name or session["discord_user"].username }}
+                </span>
+                <a class="account-link" href="{{ url_for('account') }}">Account</a>
+                <a class="discord-disconnect" href="{{ url_for('discord_logout') }}">Disconnect</a>
+            {% else %}
+                <a class="discord-connect" href="{{ url_for('auth_page') }}">Sign In</a>
+            {% endif %}
+        </div>
+        <div id="base-header-right-mobile">
+            <a id="base-header-mobile-menu-button" href="#">
+                <img src="/static/static/button-images/hamburger-menu-icon.png" alt="Menu" />
+            </a>
+        </div>
+        <div id="base-header-mobile-menu">
+            {% if is_admin %}
+                <a href="/admin">Admin</a>
+            {% endif %}
+            <a href="/help">Help</a>
+            {% if session.get("discord_user") %}
+                <a href="#" id="skl-friends-button-mobile">
+                    Friends
+                    <span class="skl-unread-badge" id="skl-unread-badge-mobile" aria-hidden="true"></span>
+                </a>
+                <span class="discord-user mobile">
+                    {% if session["discord_user"].avatar_url %}
+                        <img class="discord-avatar" src="{{ session["discord_user"].avatar_url }}" alt="Discord avatar" />
+                    {% endif %}
+                    Connected as {{ session["discord_user"].global_name or session["discord_user"].username }}
+                </span>
+                <a class="account-link mobile" href="{{ url_for('account') }}">Account</a>
+                <a class="discord-disconnect mobile" href="{{ url_for('discord_logout') }}">Disconnect</a>
+            {% else %}
+                <a class="discord-connect mobile" href="{{ url_for('auth_page') }}">Sign In</a>
+            {% endif %}
+        </div>
+    </header>
+{% endblock %}

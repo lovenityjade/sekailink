@@ -259,4 +259,20 @@
     preload();
     setTimeout(() => startBgm(), 1800);
   }, { once: true });
+
+  const onFocus = () => {
+    if (document.visibilityState !== "visible") return;
+    startBgm();
+  };
+  const onBlur = () => {
+    stopBgm();
+  };
+  const onVisibility = () => {
+    if (document.visibilityState === "visible") startBgm();
+    else stopBgm();
+  };
+
+  window.addEventListener("focus", onFocus, { passive: true });
+  window.addEventListener("blur", onBlur, { passive: true });
+  document.addEventListener("visibilitychange", onVisibility);
 })();

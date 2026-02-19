@@ -1,0 +1,31 @@
+{% extends 'pageWrapper.html' %}
+
+{% block head %}
+    {% include 'header/grassHeader.html' %}
+    <title>Client Download</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/markdown.css') }}" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"
+            integrity="sha512-L03kznCrNOfVxOUovR6ESfCz9Gfny7gihUX/huVbQB9zjODtYpxaVtIaAkpetoiyV2eqWbvxMH9fiSv5enX7bw=="
+            crossorigin="anonymous"></script>
+    <style>
+        .download-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 1.5rem; margin-top: 2rem; }
+        @media (min-width: 768px) { .download-grid { grid-template-columns: repeat(3, 1fr); } }
+        .download-card { background: rgba(14, 32, 24, 0.8); border-radius: 0.75rem; border: 1px solid rgba(92, 231, 181, 0.15); box-shadow: 0 18px 30px rgba(6, 14, 10, 0.4); padding: 2rem; text-align: center; backdrop-filter: blur(12px); }
+        .download-icon { width: 48px; height: 48px; margin: 0 auto 1rem; color: #e4f0ea; }
+        .download-title { font-size: 1.25rem; font-weight: 600; color: #e4f0ea; margin-bottom: 1rem; }
+        .download-btn { display: inline-block; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #5ce7b5, #9ef3ce); color: #06110b !important; font-weight: 700; border-radius: 999px; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .download-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 22px rgba(7, 16, 12, 0.4); }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div id="client-wrapper" data-lang="en" class="markdown">
+        <h1 class="hylia-serif site-mt-10 site-mb-6 site-text-3xl site-text-white text-center">
+            Client Download
+        </h1>
+        <h4 class="site-font-semibold">Coming soon.</h4>
+        <p>Downloads for the SekaiLink desktop client will be available here soon.</p>
+    </div>
+{% endblock %}

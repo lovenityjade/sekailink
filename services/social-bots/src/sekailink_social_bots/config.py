@@ -72,7 +72,9 @@ def load_config() -> ServiceConfig:
         discord_guild_id=_as_int(os.getenv("SEKAILINK_DISCORD_GUILD_ID")),
         discord_announce_channel_id=_as_int(os.getenv("SEKAILINK_DISCORD_ANNOUNCE_CHANNEL_ID")),
         discord_faq_channel_id=_as_int(os.getenv("SEKAILINK_DISCORD_FAQ_CHANNEL_ID")),
-        discord_temp_voice_category_id=_as_int(os.getenv("SEKAILINK_DISCORD_TEMP_VOICE_CATEGORY_ID")),
+        discord_temp_voice_category_id=_as_int(
+            os.getenv("SEKAILINK_DISCORD_TEMP_VOICE_CATEGORY_ID", "1456949966789677118")
+        ),
         discord_temp_voice_lobby_channel_id=_as_int(os.getenv("SEKAILINK_DISCORD_TEMP_VOICE_LOBBY_CHANNEL_ID")),
         discord_temp_voice_prefix=os.getenv("SEKAILINK_DISCORD_TEMP_VOICE_PREFIX", "SekaiLink"),
         twitch_enabled=_as_bool(os.getenv("SEKAILINK_TWITCH_ENABLED"), False),

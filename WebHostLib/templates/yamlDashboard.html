@@ -1,0 +1,57 @@
+{% extends 'pageWrapper.html' %}
+{% set show_footer = False %}
+{% set body_class = "app-ui" %}
+{% set body_theme = "purple" %}
+{% set active_page = "yaml" %}
+
+{% block head %}
+    <title>Create a YAML</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/yamlDashboard.css") }}?v=2" />
+{% endblock %}
+
+{% block body %}
+    <div class="page-bg is-purple"></div>
+    <div class="skl-app-shell">
+            {% include 'partials/appSidebar.html' %}
+            <div class="skl-app-main">
+                <div class="yaml-dashboard skl-app-panel">
+                    <div class="yaml-dashboard-card">
+                        <h1>Create a YAML</h1>
+                        <p>Select a game to open the player options editor.</p>
+                        <div class="yaml-search">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="11" cy="11" r="7"></circle>
+                                <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
+                            </svg>
+                            <input id="yaml-game-search" class="input" type="search" placeholder="Search a game..." autocomplete="off" />
+                            <button class="yaml-search-clear" id="yaml-search-clear" type="button" aria-label="Clear search">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="yaml-game-grid" id="yaml-game-grid">
+                            {% for game_name, world in worlds.items() %}
+                                <a class="yaml-game-card" href="/dashboard/yaml/{{ game_name }}/create"
+                                   data-game-name="{{ world.web.display_name | default(game_name) }}"
+                                   data-game-id="{{ game_name }}"
+                                   data-game-label="{{ world.web.display_name | default(game_name) }}">
+                                    <div class="yaml-game-thumb">
+                                        <img src="/assets/img/yaml_placeholder.svg" alt="" />
+                                    </div>
+                                    <div class="yaml-game-name">
+                                        {{ world.web.display_name | default(game_name) }}
+                                    </div>
+                                </a>
+                            {% endfor %}
+                        </div>
+                        <div class="yaml-game-empty" id="yaml-game-empty" hidden>
+                            No games match your search.
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <script src="{{ url_for('static', filename="assets/yamlDashboard.js") }}?v=2"></script>
+{% endblock %}

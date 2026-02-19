@@ -1,0 +1,176 @@
+{% extends 'pageWrapper.html' %}
+{% set show_footer = False %}
+{% set body_class = "app-ui" %}
+{% set active_page = "admin" %}
+
+{% block head %}
+    <title>Admin · SekaiLink</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/admin.css") }}" />
+{% endblock %}
+
+{% block body %}
+    <div class="page-bg"></div>
+    <div class="skl-app-shell">
+        {% include 'partials/appSidebar.html' %}
+        <div class="skl-app-main">
+            <main class="skl-admin-page">
+                <section class="skl-admin-hero">
+                    <p class="skl-eyebrow">Operations</p>
+                    <h1 class="skl-title">Admin Control</h1>
+                    <p class="skl-subtitle">Manage users, permissions, lobbies, room servers, and live logs.</p>
+                    <div class="skl-admin-hero-actions">
+                        <button class="skl-btn primary" type="button" data-admin-open="tickets">Tickets</button>
+                    </div>
+                </section>
+
+                <section class="skl-admin-shell">
+                    <nav class="skl-admin-tabs">
+                        <button class="skl-admin-tab active" data-admin-tab="users">Users</button>
+                        <button class="skl-admin-tab" data-admin-tab="lobbies">Lobbies</button>
+                        <button class="skl-admin-tab" data-admin-tab="rooms">Room servers</button>
+                        <button class="skl-admin-tab" data-admin-tab="logs">Logs</button>
+                        <button class="skl-admin-tab" data-admin-tab="appeals">Appeals</button>
+                        <button class="skl-admin-tab" data-admin-tab="tickets">Tickets</button>
+                        <button class="skl-admin-tab" data-admin-tab="settings">Settings</button>
+                    </nav>
+
+                    <div class="skl-admin-panel active" data-admin-panel="users">
+                        <div class="skl-admin-toolbar">
+                            <input id="admin-user-search" type="search" placeholder="Search users by name, id, or email" />
+                            <button class="skl-btn ghost" id="admin-user-refresh">Refresh</button>
+                        </div>
+                        <div class="skl-admin-table">
+                            <div class="skl-admin-row header">
+                                <span>User</span>
+                                <span>Discord ID</span>
+                                <span>Role</span>
+                                <span>Status</span>
+                                <span>Ban reason</span>
+                                <span>Action</span>
+                            </div>
+                            <div id="admin-users-list" class="skl-admin-rows"></div>
+                        </div>
+                    </div>
+
+                    <div class="skl-admin-panel" data-admin-panel="lobbies">
+                        <div class="skl-admin-toolbar">
+                            <button class="skl-btn ghost" id="admin-lobbies-refresh">Refresh</button>
+                        </div>
+                        <div class="skl-admin-table">
+                            <div class="skl-admin-row header">
+                                <span>Lobby</span>
+                                <span>Owner</span>
+                                <span>Members</span>
+                                <span>Last active</span>
+                                <span>Room</span>
+                                <span>Action</span>
+                            </div>
+                            <div id="admin-lobbies-list" class="skl-admin-rows"></div>
+                        </div>
+                        <div id="admin-lobby-detail" class="skl-admin-detail"></div>
+                    </div>
+
+                    <div class="skl-admin-panel" data-admin-panel="rooms">
+                        <div class="skl-admin-toolbar">
+                            <button class="skl-btn ghost" id="admin-rooms-refresh">Refresh</button>
+                            <button class="skl-btn ghost" id="admin-rooms-purge">Purge rooms</button>
+                        </div>
+                        <div class="skl-admin-table">
+                            <div class="skl-admin-row header">
+                                <span>Room</span>
+                                <span>Owner</span>
+                                <span>Port</span>
+                                <span>Last active</span>
+                                <span>Seed</span>
+                                <span>Status</span>
+                                <span>Action</span>
+                            </div>
+                            <div id="admin-rooms-list" class="skl-admin-rows"></div>
+                        </div>
+                        <div id="admin-room-log" class="skl-admin-log"></div>
+                    </div>
+
+                    <div class="skl-admin-panel" data-admin-panel="logs">
+                        <div class="skl-admin-toolbar">
+                            <button class="skl-btn ghost" id="admin-logs-refresh">Refresh</button>
+                        </div>
+                        <div class="skl-admin-table">
+                            <div class="skl-admin-row header">
+                                <span>Log file</span>
+                                <span>Size</span>
+                                <span>Updated</span>
+                                <span>Action</span>
+                            </div>
+                            <div id="admin-logs-list" class="skl-admin-rows"></div>
+                        </div>
+                        <div id="admin-log-viewer" class="skl-admin-log"></div>
+                    </div>
+
+                    <div class="skl-admin-panel" data-admin-panel="appeals">
+                        <div class="skl-admin-toolbar">
+                            <button class="skl-btn ghost" id="admin-appeals-refresh">Refresh</button>
+                        </div>
+                        <div class="skl-admin-table">
+                            <div class="skl-admin-row header">
+                                <span>User</span>
+                                <span>Created</span>
+                                <span>Status</span>
+                                <span>Message</span>
+                                <span>Action</span>
+                            </div>
+                            <div id="admin-appeals-list" class="skl-admin-rows"></div>
+                        </div>
+                    </div>
+
+                    <div class="skl-admin-panel" data-admin-panel="tickets">
+                        <div class="skl-admin-toolbar">
+                            <button class="skl-btn ghost" type="button">Refresh</button>
+                        </div>
+                        <div class="skl-admin-table">
+                            <div class="skl-admin-row header">
+                                <span>Ticket</span>
+                                <span>User</span>
+                                <span>Subject</span>
+                                <span>Status</span>
+                                <span>Action</span>
+                            </div>
+                            <div class="skl-admin-rows">
+                                <div class="skl-admin-row">
+                                    <span>No tickets yet.</span>
+                                    <span>-</span>
+                                    <span>-</span>
+                                    <span>-</span>
+                                    <span>-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skl-admin-panel" data-admin-panel="settings">
+                        <div class="skl-admin-settings-card">
+                            <h3>Timeout Configuration</h3>
+                            <p class="skl-admin-settings-desc">Control how long lobbies and rooms persist before automatic cleanup.</p>
+                            <form id="admin-timeout-form" class="skl-admin-timeout-form">
+                                <label>
+                                    Lobby Timeout (seconds)
+                                    <input type="number" name="lobby_timeout" value="{{ config.get('LOBBY_TIMEOUT_SECONDS', 21600) }}" min="300" class="input" />
+                                    <span class="skl-admin-hint">Default: 21600 (6 hours). Lobbies are cleaned up after this inactivity period.</span>
+                                </label>
+                                <label>
+                                    Empty Lobby Timeout (seconds)
+                                    <input type="number" name="lobby_empty_timeout" value="{{ config.get('LOBBY_EMPTY_TIMEOUT_SECONDS', 1800) }}" min="60" class="input" />
+                                    <span class="skl-admin-hint">Default: 1800 (30 minutes). Empty lobbies are removed after this period.</span>
+                                </label>
+                                <div class="skl-admin-settings-actions">
+                                    <button class="skl-btn primary" type="submit" disabled>Save Timeouts</button>
+                                    <span class="skl-admin-hint">Backend endpoint not yet wired. Values shown are current config.</span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    <script type="application/ecmascript" src="{{ url_for('static', filename="assets/admin.js") }}"></script>
+{% endblock %}

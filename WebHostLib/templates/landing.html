@@ -1,0 +1,360 @@
+{% extends 'pageWrapper.html' %}
+{% set show_footer = False %}
+
+{% block head %}
+    <title>SekaiLink – Multiworld without setup friction.</title>
+    <meta name="description" content="SekaiLink orchestrates multiworld setup end-to-end: YAML selection, generation, patching, emulator/tracker launch, and room coordination.">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/landing.css') }}" />
+{% endblock %}
+
+{% block body %}
+    <div class="page-bg is-main"></div>
+
+    <!-- TOP NAV -->
+    <header class="skl-topbar">
+        <div class="skl-topbar-inner">
+            <a href="/" class="skl-topbar-brand"><img class="skl-topbar-brand-icon" src="/static/static/branding/sekailink-logo-image.png" alt="SekaiLink" /><img class="skl-topbar-brand-text" src="/static/static/branding/sekailink-logo-text.png" alt="SekaiLink" /></a>
+            <nav class="skl-topbar-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How it Works</a>
+                <a href="#multiplayer">Multiplayer</a>
+                <a href="#supported-games">Games</a>
+                <a href="/downloads">Downloads</a>
+                <a href="/docs">Docs</a>
+                <a href="/auth">Sign In</a>
+            </nav>
+            <button class="skl-topbar-burger" id="skl-mobile-nav" type="button" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="skl-landing">
+
+        <!-- HERO SECTION -->
+        <section class="skl-hero" id="hero">
+            <div class="skl-hero-inner">
+                <div class="skl-hero-copy">
+                    <h1 class="skl-hero-title">Multiworld without setup friction.</h1>
+                    <p class="skl-hero-subtitle">SekaiLink handles generation flow, patch delivery, runtime launch, tracker wiring, and room coordination in one client.</p>
+                    <p class="skl-hero-micro">Open-source core. Solo mode and multiplayer lobbies.</p>
+                    <div class="skl-hero-cta">
+                        <a class="skl-btn primary skl-btn-lg" href="/auth">Sign In</a>
+                        <a class="skl-btn ghost skl-btn-lg" href="/downloads">Downloads</a>
+                    </div>
+                </div>
+                <div class="skl-hero-visual">
+                    <div class="skl-mockup-stack">
+                        <div class="skl-mockup skl-mockup-main">
+                            <div class="skl-mockup-titlebar">
+                                <span class="skl-mockup-dot"></span>
+                                <span class="skl-mockup-dot"></span>
+                                <span class="skl-mockup-dot"></span>
+                                <span class="skl-mockup-app-name">SEKAILINK</span>
+                            </div>
+                            <div class="skl-mockup-content">
+                                <div class="skl-mockup-sidebar">
+                                    <div class="skl-mockup-nav-item active"></div>
+                                    <div class="skl-mockup-nav-item"></div>
+                                    <div class="skl-mockup-nav-item"></div>
+                                </div>
+                                <div class="skl-mockup-body">
+                                    <div class="skl-mockup-header-bar"></div>
+                                    <div class="skl-mockup-row"></div>
+                                    <div class="skl-mockup-row short"></div>
+                                    <div class="skl-mockup-label">READY TO LAUNCH</div>
+                                    <div class="skl-mockup-launch-btn"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skl-mockup skl-mockup-secondary">
+                            <div class="skl-mockup-tracker-badge">TRACKER</div>
+                            <div class="skl-mockup-grid">
+                                <div class="skl-mockup-item"></div>
+                                <div class="skl-mockup-item lit"></div>
+                                <div class="skl-mockup-item"></div>
+                                <div class="skl-mockup-item lit"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHAT SEKAILINK DOES -->
+        <section class="skl-features" id="features">
+            <p class="skl-eyebrow">What SekaiLink Does</p>
+            <h2 class="skl-section-title">One app. Everything connected.</h2>
+            <p class="skl-section-subtitle">SekaiLink is the orchestration layer on top of Archipelago: one UI for player options, lobby flow, generation, launch, social actions, and update-safe runtime handling.</p>
+
+            <div class="skl-feature-grid">
+                <article class="skl-feature-card glass">
+                    <div class="skl-feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    </div>
+                    <h3>Unified Setup</h3>
+                    <p>Configure game options, manage YAMLs, and launch from one place. Advanced YAML editing remains available when needed.</p>
+                </article>
+                <article class="skl-feature-card glass">
+                    <div class="skl-feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    </div>
+                    <h3>Automatic Runtime</h3>
+                    <p>SekaiLink patches, launches emulator + tracker, connects local clients, and keeps runtime modules in sync.</p>
+                </article>
+                <article class="skl-feature-card glass">
+                    <div class="skl-feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3>Room Coordination</h3>
+                    <p>Host or join lobbies, lock generation state, moderate sessions, and keep players synchronized with low interaction overhead.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="skl-steps" id="how-it-works">
+            <p class="skl-eyebrow">How It Works</p>
+            <h2 class="skl-section-title">Four steps. That's it.</h2>
+
+            <div class="skl-steps-grid">
+                <div class="skl-step glass">
+                    <div class="skl-step-number">1</div>
+                    <h3>Import</h3>
+                    <p>Add your ROM or game files. SekaiLink validates them and stores your configuration.</p>
+                </div>
+                <div class="skl-step glass">
+                    <div class="skl-step-number">2</div>
+                    <h3>Configure</h3>
+                    <p>Adjust your settings through a visual interface. Presets available. No YAML required.</p>
+                </div>
+                <div class="skl-step glass">
+                    <div class="skl-step-number">3</div>
+                    <h3>Generate or Join</h3>
+                    <p>Create a new multiworld, or join an existing room with a link.</p>
+                </div>
+                <div class="skl-step glass">
+                    <div class="skl-step-number">4</div>
+                    <h3>Launch</h3>
+                    <p>One click. SekaiLink patches your ROM, launches the emulator, connects to Archipelago, and opens your tracker.</p>
+                </div>
+            </div>
+            <p class="skl-steps-note">Optimized for minimal interaction on desktop, handheld, and HTPC flows.</p>
+        </section>
+
+        <!-- MULTIPLAYER / ROOMS -->
+        <section class="skl-multiplayer" id="multiplayer">
+            <div class="skl-multiplayer-inner">
+                <div class="skl-multiplayer-copy">
+                    <p class="skl-eyebrow">Multiplayer</p>
+                    <h2 class="skl-section-title">Play together without the coordination headache.</h2>
+                    <p>Rooms let you gather players before generation. Everyone configures their own game, the host generates, and SekaiLink distributes the results automatically.</p>
+                    <p class="skl-muted">No more patch juggling, slot confusion, or tracker/connector guesswork.</p>
+                    <ul class="skl-check-list">
+                        <li>Room links, privacy, and password flow</li>
+                        <li>Readiness and active-YAML handling</li>
+                        <li>Automatic patch and runtime launch</li>
+                        <li>Moderation, reports, and social controls</li>
+                    </ul>
+                </div>
+                <div class="skl-multiplayer-visual">
+                    <div class="skl-room-mockup glass">
+                        <div class="skl-room-header">
+                            <span class="skl-room-title">ALttP Rando Night</span>
+                            <span class="skl-room-code">SEKL-4X92</span>
+                        </div>
+                        <div class="skl-room-players">
+                            <div class="skl-room-player ready">
+                                <span class="skl-player-status"></span>
+                                <span class="skl-player-name">Player 1</span>
+                                <span class="skl-player-game">A Link to the Past</span>
+                            </div>
+                            <div class="skl-room-player ready">
+                                <span class="skl-player-status"></span>
+                                <span class="skl-player-name">Player 2</span>
+                                <span class="skl-player-game">Super Metroid</span>
+                            </div>
+                            <div class="skl-room-player">
+                                <span class="skl-player-status"></span>
+                                <span class="skl-player-name">Player 3</span>
+                                <span class="skl-player-game">Configuring...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOLO PLAY -->
+        <section class="skl-solo" id="solo">
+            <div class="skl-solo-inner glass">
+                <div class="skl-solo-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                </div>
+                <div class="skl-solo-copy">
+                    <h2>Solo runs, same simplicity.</h2>
+                    <p>Not every run is multiplayer. SekaiLink works just as well for single-player randomizers — same streamlined setup, same automatic connections, same one-click launch. Useful for practice, testing settings, or just playing at your own pace.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUPPORTED GAMES -->
+        <section class="skl-games" id="supported-games">
+            <p class="skl-eyebrow">Supported Games</p>
+            <h2 class="skl-section-title">Integrated games</h2>
+            <p class="skl-section-subtitle">SekaiLink exposes the currently integrated set directly in client + server, with production boxart and setup flows.</p>
+
+            <div class="skl-games-grid">
+                <div class="skl-game-chip">A Link to the Past</div>
+                <div class="skl-game-chip">A Link Between Worlds</div>
+                <div class="skl-game-chip">Super Metroid</div>
+                <div class="skl-game-chip">SMZ3</div>
+                <div class="skl-game-chip">Ocarina of Time</div>
+                <div class="skl-game-chip">EarthBound</div>
+                <div class="skl-game-chip">Final Fantasy IV FE</div>
+                <div class="skl-game-chip">Metroid Fusion</div>
+                <div class="skl-game-chip">Metroid Zero Mission</div>
+                <div class="skl-game-chip">Pokemon Emerald</div>
+                <div class="skl-game-chip">Super Mario World</div>
+                <div class="skl-game-chip">Yoshi's Island</div>
+                <div class="skl-game-chip more">+more integrated titles</div>
+            </div>
+            <p class="skl-games-note">Check the <a href="/games">full list</a> and per-game setup requirements.</p>
+        </section>
+
+        <!-- STREAMER-FRIENDLY -->
+        <section class="skl-streamer" id="streamers">
+            <div class="skl-streamer-inner">
+                <div class="skl-streamer-visual">
+                    <div class="skl-stream-mockup">
+                        <div class="skl-stream-window game">
+                            <div class="skl-stream-label">Game</div>
+                        </div>
+                        <div class="skl-stream-window tracker">
+                            <div class="skl-stream-label">Tracker</div>
+                        </div>
+                        <div class="skl-stream-window chat">
+                            <div class="skl-stream-label">Chat</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skl-streamer-copy">
+                    <p class="skl-eyebrow">For Streamers</p>
+                    <h2 class="skl-section-title">Built with streams in mind.</h2>
+                    <p>Multiworld streams are fun to watch but painful to set up. SekaiLink reduces your pre-stream prep from 15 minutes of fiddling to one click.</p>
+                    <ul class="skl-check-list">
+                        <li>Window auto-placement (best-effort, customizable)</li>
+                        <li>Clean tracker launch alongside emulator</li>
+                        <li>No pop-ups interrupting your stream</li>
+                        <li>Logs accessible without digging through folders</li>
+                        <li>Stable reconnection if something drops</li>
+                    </ul>
+                    <p class="skl-muted">Less setup stress. More time for your chat.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- STABILITY & DEBUGGING -->
+        <section class="skl-debug" id="debugging">
+            <p class="skl-eyebrow">Stability & Debugging</p>
+            <h2 class="skl-section-title">When something breaks, you'll know why.</h2>
+            <p class="skl-section-subtitle">Randomizer setups have moving parts. Sometimes things fail. SekaiLink doesn't hide that — it gives you visibility.</p>
+
+            <div class="skl-debug-grid">
+                <div class="skl-debug-card glass">
+                    <h3>Centralized Logs</h3>
+                    <p>All components log to one place. No more hunting through five different folders.</p>
+                </div>
+                <div class="skl-debug-card glass">
+                    <h3>Copy Debug Info</h3>
+                    <p>One click to clipboard, ready to paste in Discord. Includes versions, config, and recent errors.</p>
+                </div>
+                <div class="skl-debug-card glass">
+                    <h3>Clear Error Messages</h3>
+                    <p>When something fails, you get a message that points to the actual problem.</p>
+                </div>
+                <div class="skl-debug-card glass">
+                    <h3>Connection Status</h3>
+                    <p>See at a glance if you're connected to Archipelago, the emulator, and the tracker.</p>
+                </div>
+            </div>
+            <p class="skl-debug-note">We can't prevent every issue, but we can make diagnosis faster.</p>
+        </section>
+
+        <!-- COMMUNITY -->
+        <section class="skl-community" id="community">
+            <p class="skl-eyebrow">Community</p>
+            <h2 class="skl-section-title">Part of a larger ecosystem.</h2>
+            <p class="skl-section-subtitle">SekaiLink integrates with tools built by the randomizer community. We don't reinvent — we connect.</p>
+
+            <div class="skl-community-links">
+                <a class="skl-community-link glass" href="https://archipelago.gg" target="_blank" rel="noopener">
+                    <span class="skl-community-name">Archipelago</span>
+                    <span class="skl-community-desc">The multiworld randomizer system</span>
+                </a>
+                <a class="skl-community-link glass" href="https://tasvideos.org/BizHawk" target="_blank" rel="noopener">
+                    <span class="skl-community-name">BizHawk</span>
+                    <span class="skl-community-desc">Multi-system emulator</span>
+                </a>
+                <a class="skl-community-link glass" href="https://poptracker.github.io" target="_blank" rel="noopener">
+                    <span class="skl-community-name">PopTracker</span>
+                    <span class="skl-community-desc">Universal item tracker</span>
+                </a>
+                <a class="skl-community-link glass" href="https://discord.gg/jTaefxAEDW" target="_blank" rel="noopener">
+                    <span class="skl-community-name">Discord</span>
+                    <span class="skl-community-desc">SekaiLink community server</span>
+                </a>
+                <a class="skl-community-link glass" href="https://github.com/lovenityjade/sekailink" target="_blank" rel="noopener">
+                    <span class="skl-community-name">GitHub</span>
+                    <span class="skl-community-desc">Source code & issues</span>
+                </a>
+            </div>
+            <p class="skl-community-note">Questions, bugs, or ideas? The Discord is the fastest way to reach us.</p>
+        </section>
+
+        <!-- CREDITS / ETHICAL POSITIONING -->
+        <section class="skl-credits" id="credits">
+            <div class="skl-credits-inner glass">
+                <h2>Who made this?</h2>
+                <p>SekaiLink is an open-source project maintained by <strong>TheLovenityJade</strong> and a small team of randomizer enthusiasts.</p>
+                <div class="skl-credits-note">
+                    <p>This project exists because of Archipelago and the broader randomizer community. SekaiLink doesn't compete with these tools — it's a convenience layer that depends on them.</p>
+                    <p>We respect the work of emulator developers, tracker maintainers, and Archipelago contributors. SekaiLink is free, open-source, and will stay that way.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FINAL CTA -->
+        <section class="skl-final-cta">
+            <h2>Ready to simplify your setup?</h2>
+            <div class="skl-final-cta-actions">
+                <a class="skl-btn primary skl-btn-lg" href="/downloads">Download SekaiLink</a>
+                <a class="skl-btn ghost skl-btn-lg" href="/docs">Read the Docs</a>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="skl-landing-footer">
+            <div class="skl-footer-left">
+                <span class="skl-footer-brand">SEKAILINK</span>
+                <span class="skl-footer-version">v0.10-beta</span>
+            </div>
+            <div class="skl-footer-center">Powered by <a href="https://archipelago.gg" target="_blank" rel="noopener">Archipelago</a></div>
+            <div class="skl-footer-links">
+                <a href="/sitemap">Site Map</a>
+                <a href="https://github.com/lovenityjade/sekailink" target="_blank" rel="noopener">Source</a>
+                <a href="/legal">Legal</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+    (function(){
+        var btn = document.getElementById('skl-mobile-nav');
+        if(!btn) return;
+        btn.addEventListener('click', function(){
+            btn.closest('.skl-topbar').classList.toggle('open');
+        });
+    })();
+    </script>
+{% endblock %}

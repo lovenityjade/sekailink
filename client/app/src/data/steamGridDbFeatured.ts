@@ -81,10 +81,11 @@ const normalizedNames: Record<string, string> = Object.keys(IMAGE_FILENAMES).red
 }, {} as Record<string, string>);
 
 const toLocalAssetUrl = (filename: string): string => {
-  if (typeof window !== "undefined" && window.location?.protocol === "file:") {
-    return `./assets/boxart/${filename}`;
+  const base = String(import.meta.env.BASE_URL || "/").replace(/\/?$/, "/");
+  if (typeof window !== "undefined" && window.location?.href) {
+    return new URL(`${base}assets/boxart/${filename}`, window.location.href).toString();
   }
-  return `/assets/boxart/${filename}`;
+  return `${base}assets/boxart/${filename}`;
 };
 
 export const lookupFeaturedGridUrl = (key: string): string | undefined => {

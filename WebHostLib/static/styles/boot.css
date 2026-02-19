@@ -1,0 +1,279 @@
+/* ============================================================
+   SekaiLink – Boot / Loading Screen
+   (scanline + shimmer + progress dots — CSS only)
+   ============================================================ */
+
+.skl-boot {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    position: relative;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(92,231,181,0.12), transparent 45%),
+        radial-gradient(circle at 80% 10%, rgba(120,160,255,0.08), transparent 40%),
+        radial-gradient(circle at 70% 80%, rgba(92,231,181,0.08), transparent 45%);
+}
+
+.skl-boot-card {
+    width: min(440px, 92vw);
+    border-radius: 24px;
+    background: var(--bg-1, rgba(10,14,18,0.62));
+    border: 1px solid var(--border, rgba(92,231,181,0.18));
+    box-shadow:
+        var(--shadow, 0 12px 45px rgba(0,0,0,0.55)),
+        0 0 80px rgba(92,231,181,0.06);
+    backdrop-filter: var(--blur, blur(16px));
+    -webkit-backdrop-filter: var(--blur, blur(16px));
+    overflow: hidden;
+    position: relative;
+}
+
+/* ── Scanline sweep ── */
+.skl-boot-scanline {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+    border-radius: inherit;
+}
+
+.skl-boot-scanline::before {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(92,231,181,0.04) 30%,
+        rgba(92,231,181,0.08) 50%,
+        rgba(92,231,181,0.04) 70%,
+        transparent
+    );
+    animation: bootScanline 2.4s ease-in-out infinite;
+}
+
+@keyframes bootScanline {
+    0%   { top: -50%; }
+    100% { top: 150%; }
+}
+
+/* ── Shimmer/glow overlay ── */
+.skl-boot-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(92,231,181,0.05) 35%,
+        rgba(92,231,181,0.09) 50%,
+        rgba(92,231,181,0.05) 65%,
+        transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: bootShimmer 3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes bootShimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ── Content ── */
+.skl-boot-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 48px 32px 40px;
+}
+
+.skl-boot-orbit {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 24px;
+}
+
+.skl-boot-orbit-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(92,231,181,0.25);
+    box-shadow: 0 0 24px rgba(92,231,181,0.12);
+    animation: bootOrbitSpin 7s linear infinite;
+}
+
+.skl-boot-orbit-ring.inner {
+    inset: 18px;
+    border-color: rgba(120,160,255,0.35);
+    animation-duration: 5s;
+    animation-direction: reverse;
+}
+
+.skl-boot-orbit-core {
+    position: absolute;
+    inset: 38px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(92,231,181,0.9), rgba(92,231,181,0.05));
+    box-shadow: 0 0 22px rgba(92,231,181,0.55);
+    animation: bootCorePulse 2.6s ease-in-out infinite;
+}
+
+.skl-boot-orbit-dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(92,231,181,0.9);
+    box-shadow: 0 0 10px rgba(92,231,181,0.6);
+    animation: bootDotSpin 3.5s linear infinite;
+}
+
+.skl-boot-orbit-dot.dot-a {
+    top: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.skl-boot-orbit-dot.dot-b {
+    bottom: 6px;
+    left: 50%;
+    background: rgba(120,160,255,0.8);
+    animation-duration: 4.6s;
+}
+
+@keyframes bootOrbitSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes bootCorePulse {
+    0%, 100% { transform: scale(0.92); opacity: 0.7; }
+    50% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes bootDotSpin {
+    0% { transform: translateX(-50%) rotate(0deg) translateY(-58px); }
+    100% { transform: translateX(-50%) rotate(360deg) translateY(-58px); }
+}
+
+.skl-boot-logo {
+    font-family: var(--font-brand);
+    font-size: 32px;
+    letter-spacing: 0.14em;
+    color: var(--accent, rgb(92,231,181));
+    margin-bottom: 14px;
+    text-shadow: 0 0 20px rgba(92,231,181,0.3);
+}
+
+.skl-boot-text {
+    margin: 0 0 24px;
+    color: var(--text-1, rgba(255,255,255,0.76));
+    font-size: 14px;
+}
+
+.skl-boot-status {
+    display: grid;
+    gap: 10px;
+    justify-items: center;
+    margin-bottom: 16px;
+}
+
+.skl-boot-status-label {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-2, rgba(255,255,255,0.62));
+}
+
+.skl-boot-status-meter {
+    width: min(220px, 60vw);
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.08);
+    overflow: hidden;
+}
+
+.skl-boot-status-fill {
+    display: block;
+    width: 45%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(92,231,181,0.6), rgba(120,160,255,0.8));
+    box-shadow: 0 0 12px rgba(92,231,181,0.35);
+    animation: bootMeter 2.4s ease-in-out infinite;
+}
+
+@keyframes bootMeter {
+    0% { width: 20%; opacity: 0.6; }
+    50% { width: 70%; opacity: 1; }
+    100% { width: 35%; opacity: 0.7; }
+}
+
+/* ── Progress dots ── */
+.skl-boot-loader {
+    display: inline-flex;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.skl-boot-loader span {
+    width: 10px;
+    height: 22px;
+    background: rgba(92,231,181,0.7);
+    border-radius: 6px;
+    animation: bootPulse 1.2s ease-in-out infinite;
+    box-shadow: 0 0 8px rgba(92,231,181,0.25);
+}
+
+.skl-boot-loader span:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.skl-boot-loader span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes bootPulse {
+    0%, 100% {
+        transform: scaleY(0.4);
+        opacity: 0.55;
+    }
+    50% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+
+/* ── Version label ── */
+.skl-boot-version {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-2, rgba(255,255,255,0.58));
+}
+
+/* ── Accessibility: reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+    .skl-boot-scanline::before,
+    .skl-boot-card::after,
+    .skl-boot-loader span,
+    .skl-boot-orbit-ring,
+    .skl-boot-orbit-dot,
+    .skl-boot-orbit-core,
+    .skl-boot-status-fill {
+        animation: none;
+    }
+
+    .skl-boot-loader span {
+        opacity: 0.7;
+    }
+}

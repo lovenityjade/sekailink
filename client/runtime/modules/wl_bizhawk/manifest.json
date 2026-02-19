@@ -3,7 +3,7 @@
   "display_name": "Wario Land",
   "emu": "bizhawk",
   "lua_connector": "lua/connector.lua",
-  "tracker_pack_uid": "https://github.com/randomcodegen/wl_ap_tracker",
+  "tracker_pack_uid": "https://github.com/randomcodegen/wl_ap_tracker/releases/tag/1.1.7",
   "patcher": "archipelago",
   "patch_extensions": [
     ".apwl"
@@ -20,5 +20,6 @@
   "features": {
     "autotracking": true,
     "save_required": true
-  }
+  },
+  "tracker_web_url": ""
 }

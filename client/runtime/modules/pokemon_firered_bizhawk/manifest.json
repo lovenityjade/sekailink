@@ -3,16 +3,27 @@
   "display_name": "Pokemon FireRed",
   "emu": "bizhawk",
   "lua_connector": "lua/connector.lua",
-  "tracker_pack_uid": "https://github.com/vyneras/pokemon-frlg-tracker",
+  "tracker_pack_uid": "https://github.com/vyneras/pokemon-frlg-tracker/releases/tag/4.0.2",
   "patcher": "archipelago",
-  "patch_extensions": [".apfirered"],
+  "patch_extensions": [
+    ".apfirered"
+  ],
   "rom_requirements": {
-    "extensions": [".gba"],
-    "md5": ["e26ee0d44e809351c8ce2d73c7400cdd", "51901a6e40661b3914aa333c802e24e8"],
-    "sha1": ["41cb23d8dccc8ebd7c649cd8fbb58eeace6e2fdc", "dd5945db9b930750cb39d00c84da8571feebf417"]
+    "extensions": [
+      ".gba"
+    ],
+    "md5": [
+      "e26ee0d44e809351c8ce2d73c7400cdd",
+      "51901a6e40661b3914aa333c802e24e8"
+    ],
+    "sha1": [
+      "41cb23d8dccc8ebd7c649cd8fbb58eeace6e2fdc",
+      "dd5945db9b930750cb39d00c84da8571feebf417"
+    ]
   },
   "features": {
     "autotracking": true,
     "save_required": true
-  }
+  },
+  "tracker_web_url": ""
 }

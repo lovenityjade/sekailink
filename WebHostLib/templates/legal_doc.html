@@ -1,0 +1,41 @@
+{% extends "pageWrapper.html" %}
+
+{% block head %}
+<title>{{ title }}</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/landing.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/markdown.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/legal-teal.css') }}" />
+{% endblock %}
+
+{% block body %}
+<div class="page-bg is-main"></div>
+<section class="skl-legal-wrap skl-legal-doc-wrap">
+  <header class="skl-legal-header skl-legal-doc-header">
+    <h1>{{ doc_title }}</h1>
+    <p>SekaiLink legal document</p>
+  </header>
+
+  <nav class="skl-legal-lang" aria-label="Language selector">
+    {% for code, label in lang_labels.items() %}
+      {% if doc_kind == 'privacy' %}
+        <a class="skl-legal-lang-btn {% if code == lang %}is-active{% endif %}" href="{{ url_for('legal_privacy', lang=code) }}">{{ label }}</a>
+      {% else %}
+        <a class="skl-legal-lang-btn {% if code == lang %}is-active{% endif %}" href="{{ url_for('legal_tos', lang=code) }}">{{ label }}</a>
+      {% endif %}
+    {% endfor %}
+  </nav>
+
+  <div class="skl-legal-actions">
+    <a class="skl-btn ghost" href="{{ url_for('legal', lang=lang) }}">Back to Legal Center</a>
+    {% if doc_kind == 'privacy' %}
+      <a class="skl-btn ghost" href="{{ url_for('legal_tos', lang=lang) }}">Terms</a>
+    {% else %}
+      <a class="skl-btn ghost" href="{{ url_for('legal_privacy', lang=lang) }}">Privacy</a>
+    {% endif %}
+  </div>
+
+  <article class="skl-legal-markdown markdown">
+    {{ html_from_markdown | safe }}
+  </article>
+</section>
+{% endblock %}

@@ -22,6 +22,8 @@
   "features": {
     "autotracking": true,
     "save_required": true
-  }
+  },
+  "tracker_web_url": "",
+  "tracker_external_url": "https://github.com/Radagast81/yoshis-island-tracker",
+  "tracker_external_note": "External tracker (non-PopTracker); keep as no tracker for now."
 }
-

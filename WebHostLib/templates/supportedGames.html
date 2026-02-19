@@ -1,0 +1,110 @@
+{% extends 'pageWrapper.html' %}
+{% set show_footer = False %}
+
+{% block head %}
+    <title>Supported Games · SekaiLink</title>
+    <meta name="description" content="Browse the full list of games supported by SekaiLink. Compatibility grows as the Archipelago community adds support.">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/markdown.css") }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/supportedGames.css") }}" />
+    <script type="application/ecmascript" src="{{ url_for('static', filename="assets/supportedGames.js") }}"></script>
+    <noscript>
+    <style>
+        /* always un-collapse all and hide arrow and search bar */
+        .js-only{
+          display: none;
+        }
+
+        #games p.collapsed{
+          display: block;
+        }
+
+        #games h2 .collapse-arrow{
+          display: none;
+        }
+
+        #games .collapse-toggle{
+          cursor: unset;
+        }
+    </style>
+    </noscript>
+{% endblock %}
+
+{% block body %}
+    <div class="page-bg"></div>
+    <div class="skl-app-shell">
+        {% include 'partials/appSidebar.html' %}
+        <div class="skl-app-main">
+            <div class="skl-app-panel">
+                <div id="games" class="markdown">
+        <h1>Supported Games</h1>
+        <p>SekaiLink supports games that are compatible with the Archipelago multiworld system. The list below reflects what is currently included.</p>
+        <p class="author_credit">Many games listed are still in active development and may have varying levels of stability.</p>
+        <p>To play a game that is not listed here, refer to the <a href="/tutorial/Archipelago/setup/en#playing-with-custom-worlds">playing with
+        custom worlds</a> section of the setup guide.</p>
+        <div class="js-only">
+            <label for="game-search">Search for a game:</label><br />
+            <div class="page-controls">
+                <input id="game-search" placeholder="Search by title..." autofocus />
+                <button id="expand-all">Expand All</button>
+                <button id="collapse-all">Collapse All</button>
+            </div>
+            <p><a href="#" id="toggle-nsfw">Show NSFW games</a></p>
+        </div>
+
+        <!-- Favorites Section -->
+        <div id="favorites-section" class="js-only" style="display: none;">
+            <h2>Favorite Games</h2>
+            <div id="favorites-list"></div>
+            <hr class="favorites-divider">
+        </div>
+
+        {% for game_name in worlds | world_list_sorted(worlds=worlds) %}
+        {% set world = worlds[game_name] %}
+        <details data-game="{{ game_name }}" data-display-name="{{ world.web.display_name | default(game_name) }}" {% if world.web.rating == "nsfw" %} data-nsfw="true"{% endif %}>
+            <summary class="h2">
+                {{ world.web.display_name | default(game_name) }}
+                <span class="star-icon" data-game="{{ game_name }}" title="Add to favorites">★</span>
+            </summary>
+            {% set version = get_world_version(world) %}
+            {% set authors = get_world_authors(world) %}
+            {% if version %}
+            <div class="world_version">
+                Version: {{ version }}
+            </div>
+            {% endif %}
+            {% if authors %}
+            <div class="author_credit">
+                Created by: {{ authors }}
+            </div>
+            {% endif %}
+            {{ world.__doc__ | default("No description provided.", true) }}<br />
+            <a href="{{ url_for("game_info", game=game_name, lang="en") }}">Game Page</a>
+            {% if world.web.tutorials %}
+            <span class="link-spacer">|</span>
+            <a href="{{ url_for("tutorial_landing", _anchor=(world.web.display_name | default(game_name) | encodeURIComponent)) }}">Setup Guides</a>
+            {% endif %}
+            {% if game_name != 'Archipelago' and not world.web.disable_wiki_link %}
+            <span class="link-spacer">|</span>
+            <a href="https://archipelago.miraheze.org/wiki/{{ world.web.custom_wiki_link_key if world.web.custom_wiki_link_key else game_name | replace(' ', '_') }}"
+                target="_blank">Wiki</a>
+            {% endif %}
+            {% if world.web.options_page is string %}
+            <span class="link-spacer">|</span>
+            <a href="{{ world.web.options_page }}" target="_blank">Options Page (External Link)</a>
+            {% elif world.web.options_page %}
+            <span class="link-spacer">|</span>
+            <a href="{{ url_for("player_options", game=game_name) }}">Options Page</a>
+            <span class="link-spacer">|</span>
+            <a href="{{ url_for("weighted_options", game=game_name) }}">Advanced Options</a>
+            {% endif %}
+            {% if world.web.bug_report_page %}
+            <span class="link-spacer">|</span>
+            <a href="{{ world.web.bug_report_page }}">Report a Bug</a>
+            {% endif %}
+        </details>
+        {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

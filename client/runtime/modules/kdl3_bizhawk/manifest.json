@@ -22,5 +22,7 @@
   "features": {
     "autotracking": true,
     "save_required": true
-  }
+  },
+  "tracker_pack_uid": "https://github.com/ZobeePlays/Kirbys-Dream-Land-3-Poptracker-Pack",
+  "tracker_web_url": ""
 }

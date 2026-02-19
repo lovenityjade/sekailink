@@ -61,7 +61,18 @@ output/
 Output Logs/
 /factorio/
 /WebHostLib/static/generated
-/WebHostLib/
+/WebHostLib/**/*.bak
+/WebHostLib/**/*.bak-*
+/WebHostLib/**/*.bak_*
+/WebHostLib/**/*.bak.*
+/WebHostLib/generated/
+/WebHostLib/static/client-sync/runtime/
+/WebHostLib/static/styles/**/*.css.map
+/sekailink-docs/
+/sekailink-client-plan/*.local.md
+/sekailink-client-plan/.XX-*
+/sekailink-client-plan/*.swp
+/sekailink-client-plan/XX-temp-tokens.md
 /deploy/
 /freeze_requirements.txt
 /Archipelago.zip
@@ -235,6 +246,8 @@ data/gzdoom/gzdoom.log
 
 # Workspace artifacts
 sekailink-laptop-pack.zip
+sekailink-*.zip
+sekailink-client-plan.zip
 zi5XmaYK/
 release/
 docs/
@@ -244,6 +257,12 @@ client/app/node_modules/
 .claude/
 .run/
 .local/
+user_yamls/
+.pyxbld/
+
+# Keep repository lean (no bundled binary payloads)
+third_party/**
+!third_party/README.md
 
 # Bundled mono runtime is a large binary dependency; keep README in git, but not the payload.
 third_party/mono/sekailink-mono-linux-*/**

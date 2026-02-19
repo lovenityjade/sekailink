@@ -1,0 +1,465 @@
+{% extends 'pageWrapper.html' %}
+{% set show_footer = False %}
+{% set body_class = "app-ui" %}
+{% set active_page = "rooms" %}
+
+{% block head %}
+    <title>{{ lobby.name }} · SekaiLink Lobby</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/lobby.css") }}" />
+{% endblock %}
+
+{% block body %}
+    <div class="page-bg"></div>
+    <div class="skl-app-shell">
+        {% include 'partials/appSidebar.html' %}
+        <div class="skl-app-main">
+            <div class="skl-lobby-scroll">
+                <section class="skl-lobby-page" id="lobby-room"
+                         data-lobby-id="{{ lobby.id|suuid }}"
+                         data-auth="{{ 1 if session.get('discord_user') else 0 }}"
+                         data-active-yaml="{{ active_yaml_id or '' }}"
+                         data-ready="{{ 1 if is_ready else 0 }}"
+                         data-owner="{{ 1 if is_owner else 0 }}"
+                         data-private="{{ 1 if is_private else 0 }}"
+                         data-member="{{ 1 if is_member else 0 }}"
+                         data-allow-custom="{{ 1 if allow_custom_yamls else 0 }}"
+                         data-current-user="{{ current_user_name }}">
+                    <div class="skl-lobby-hero">
+                        <div>
+                            <span class="skl-eyebrow">Lobby</span>
+                            <h1 class="skl-title">{{ lobby.name }}</h1>
+                            <p class="skl-lobby-description">{{ lobby.description or "No description yet." }}</p>
+                        </div>
+                    <div class="skl-lobby-meta">
+                        <div><span>Owner:</span> <span id="lobby-owner-name">{{ lobby_owner }}</span></div>
+                        <div><span>Created:</span> {{ lobby.created_at.strftime("%b %d, %Y") }}</div>
+                        <div class="skl-lobby-actions">
+                            <button class="skl-btn ghost" id="lobby-yaml-open" type="button">Set Active YAML</button>
+                            {% if is_owner %}
+                                <button class="skl-btn ghost" id="lobby-settings-open" type="button">Room Settings</button>
+                            {% endif %}
+                            <button class="skl-btn ghost" id="lobby-terminal-open" type="button">Room Terminal</button>
+                        </div>
+                    </div>
+                </div>
+
+                    {% if is_private and not is_member %}
+                        <div class="skl-card skl-private-lobby">
+                            <div class="skl-card-header">
+                                <h2>Private lobby</h2>
+                                <span class="skl-card-sub">Enter the lobby password to join and chat.</span>
+                            </div>
+                            <form id="lobby-password-form" class="skl-password-form">
+                                <input type="password" id="lobby-password-input" placeholder="Lobby password" maxlength="64" />
+                                <button class="skl-btn primary" type="submit">Join lobby</button>
+                            </form>
+                            {% if not session.get("discord_user") %}
+                                <div class="skl-ready-status">Sign in to join this lobby.</div>
+                            {% endif %}
+                            <div id="lobby-password-status" class="skl-ready-status"></div>
+                        </div>
+                    {% endif %}
+
+                    <div class="skl-lobby-grid">
+                        <div class="skl-card skl-chat-card">
+                            <div class="skl-card-header">
+                                <h2>Chatroom</h2>
+                                <span class="skl-card-sub">Live updates for this lobby.</span>
+                            </div>
+                            <div id="lobby-chat-log" class="skl-chat-log"></div>
+                            <form id="lobby-chat-form" class="skl-chat-form">
+                                <textarea name="message" rows="2" placeholder="Type a message…" maxlength="800"></textarea>
+                                <button class="skl-btn primary" type="submit">Send</button>
+                            </form>
+                            {% if not session.get("discord_user") %}
+                                <div class="skl-chat-hint">Sign in to post messages.</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="skl-side-stack">
+                            <div class="skl-card skl-collapsible">
+                                <div class="skl-card-header skl-card-header-row">
+                                    <div class="skl-card-header-text">
+                                        <h2>Room info</h2>
+                                        <span class="skl-card-sub">Status, links, and live tracker stats.</span>
+                                    </div>
+                                    <button class="skl-card-toggle" type="button" aria-expanded="true" aria-label="Toggle room info">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                                    </button>
+                                </div>
+                                <div class="skl-card-body">
+                                    <div id="lobby-room-info" class="skl-room-info">
+                                        <div class="skl-room-info-row">
+                                            <span class="skl-room-label">Room</span>
+                                            <span id="lobby-room-link" class="skl-room-value">Not generated</span>
+                                        </div>
+                                        <div class="skl-room-info-row">
+                                            <span class="skl-room-label">Seed timer</span>
+                                            <span id="lobby-seed-timer" class="skl-room-value">-</span>
+                                        </div>
+                                        <div class="skl-room-info-row">
+                                            <span class="skl-room-label">Server</span>
+                                            <span id="lobby-room-server" class="skl-room-value">-</span>
+                                        </div>
+                                        <div class="skl-room-info-row">
+                                            <span class="skl-room-label">Seed</span>
+                                            <span id="lobby-seed-link" class="skl-room-value">-</span>
+                                        </div>
+                                        <div class="skl-room-info-row">
+                                            <span class="skl-room-label">Players</span>
+                                            <span id="lobby-room-players" class="skl-room-value">-</span>
+                                        </div>
+                                        <div class="skl-room-info-row">
+                                            <span class="skl-room-label">Checks</span>
+                                            <span id="lobby-room-checks" class="skl-room-value">-</span>
+                                        </div>
+                                        <div class="skl-room-info-row">
+                                            <span class="skl-room-label">Completed</span>
+                                            <span id="lobby-room-complete" class="skl-room-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="skl-card skl-collapsible">
+                                <div class="skl-card-header skl-card-header-row">
+                                    <div class="skl-card-header-text">
+                                        <h2>User list</h2>
+                                        <span class="skl-card-sub">See who is here and their active YAML.</span>
+                                    </div>
+                                    <button class="skl-card-toggle" type="button" aria-expanded="true" aria-label="Toggle user list">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                                    </button>
+                                </div>
+                                <div class="skl-card-body">
+                                    <div id="lobby-members" class="skl-member-list"></div>
+                                    <div id="lobby-members-empty" class="skl-empty-note"></div>
+                                    {% if is_owner %}
+                                        <div class="skl-lobby-generate">
+                                            <div class="skl-generate-status-box" id="lobby-generate-box">
+                                                <span class="skl-generate-label">Generation status</span>
+                                                <span id="lobby-generate-state">Idle</span>
+                                            </div>
+                                            <button class="skl-btn primary" id="lobby-generate" type="button">Generate</button>
+                                            <span id="lobby-generate-status" class="skl-ready-status"></span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="skl-terminal-drawer" id="lobby-terminal-drawer" aria-hidden="true">
+        <div class="skl-terminal-backdrop" data-terminal-close></div>
+        <div class="skl-terminal-panel">
+            <div class="skl-terminal-header">
+                <div>
+                    <p class="skl-eyebrow">Room Terminal</p>
+                    <h2>Live output</h2>
+                </div>
+                <button class="skl-btn ghost" type="button" data-terminal-close>Close</button>
+            </div>
+            <div id="lobby-terminal-log" class="skl-terminal-log">Waiting for room…</div>
+            {% if is_owner %}
+                <form id="lobby-terminal-form" class="skl-terminal-form">
+                    <input type="text" id="lobby-terminal-input" placeholder="Enter server command" />
+                    <button class="skl-btn ghost" type="submit">Send</button>
+                </form>
+                <div id="lobby-terminal-status" class="skl-ready-status"></div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="skl-modal" id="lobby-yaml-modal" aria-hidden="true">
+        <div class="skl-modal-backdrop" data-yaml-close></div>
+        <div class="skl-modal-panel" role="dialog" aria-modal="true" aria-labelledby="lobby-yaml-title">
+            <div class="skl-modal-header">
+                <h3 id="lobby-yaml-title">Active YAML</h3>
+                <button class="skl-modal-close" type="button" data-yaml-close>Close</button>
+            </div>
+            <div class="skl-modal-body">
+                <div class="skl-yaml-select-row">
+                    <select id="lobby-yaml-select" class="skl-yaml-select">
+                        <option value="">Select a YAML</option>
+                        {% for yaml_entry in yaml_entries %}
+                            <option value="{{ yaml_entry.id }}"
+                                    data-title="{{ yaml_entry.title }}"
+                                    data-game="{{ yaml_entry.game }}"
+                                    data-player="{{ yaml_entry.player_name }}"
+                                    data-custom="{{ 1 if yaml_entry.custom else 0 }}">
+                                {{ yaml_entry.title }} · {{ yaml_entry.game or "Unknown game" }}{% if yaml_entry.custom %} (Custom){% endif %}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <button class="skl-btn ghost" id="lobby-yaml-add" type="button">Add</button>
+                </div>
+                <div class="skl-yaml-active-list" id="lobby-yaml-active-list"></div>
+                <div class="skl-ready-row">
+                    <button class="skl-btn primary" id="lobby-ready-toggle" type="button">Ready</button>
+                    <span id="lobby-ready-status" class="skl-ready-status"></span>
+                    <span id="lobby-active-yaml-label" class="skl-ready-status">Active YAML: -</span>
+                </div>
+                <div id="lobby-yaml-status" class="skl-empty-note"></div>
+                {% if not yaml_entries %}
+                    <div class="skl-empty-note">No YAMLs yet. Create one from the Game Manager.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="skl-modal" id="lobby-player-modal" aria-hidden="true">
+        <div class="skl-modal-backdrop" data-player-close></div>
+        <div class="skl-modal-panel" role="dialog" aria-modal="true" aria-labelledby="lobby-player-title">
+            <div class="skl-modal-header">
+                <h3 id="lobby-player-title">Player info</h3>
+                <button class="skl-modal-close" type="button" data-player-close>Close</button>
+            </div>
+            <div class="skl-modal-body">
+                <div class="skl-player-info">
+                    <div class="skl-player-info-row">
+                        <span class="skl-player-info-label">Player</span>
+                        <span id="lobby-player-name" class="skl-player-info-value">-</span>
+                    </div>
+                    <div class="skl-player-info-row">
+                        <span class="skl-player-info-label">Active YAML</span>
+                        <span id="lobby-player-yaml" class="skl-player-info-value">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if is_owner %}
+        <div class="skl-modal" id="lobby-settings-modal" aria-hidden="true">
+            <div class="skl-modal-backdrop" data-settings-close></div>
+            <div class="skl-modal-panel" role="dialog" aria-modal="true" aria-labelledby="lobby-settings-title">
+                <div class="skl-modal-header">
+                    <h3 id="lobby-settings-title">Room Settings</h3>
+                    <button class="skl-modal-close" type="button" data-settings-close>Close</button>
+                </div>
+                <div class="skl-modal-body">
+                    <div class="skl-host-status" id="lobby-host-status">
+                        <div class="skl-host-line">Host status: <span id="lobby-host-presence">Active</span></div>
+                        <div class="skl-host-line">Next host: <span id="lobby-host-candidate">-</span></div>
+                        <div class="skl-host-actions" id="lobby-host-actions" data-owner="{{ 1 if is_owner else 0 }}">
+                            <button class="skl-btn ghost" id="lobby-host-vote" type="button">Vote to assign new host</button>
+                            <span id="lobby-host-vote-status" class="skl-ready-status"></span>
+                        </div>
+                    </div>
+                    <form id="lobby-settings-form" class="skl-settings-form" data-owner="{{ 1 if is_owner else 0 }}">
+                        <div class="skl-settings-grid">
+                            <label>
+                                Release Permission
+                                <select name="release_mode" {% if not is_owner %}disabled{% endif %}>
+                                    <option value="disabled" {% if lobby.release_mode == "disabled" %}selected{% endif %}>Disabled</option>
+                                    <option value="enabled" {% if lobby.release_mode == "enabled" %}selected{% endif %}>Manual !release</option>
+                                    <option value="goal" {% if lobby.release_mode == "goal" %}selected{% endif %}>After goal completion</option>
+                                    <option value="auto" {% if lobby.release_mode == "auto" %}selected{% endif %}>Auto</option>
+                                    <option value="auto-enabled" {% if lobby.release_mode == "auto-enabled" %}selected{% endif %}>Auto + Manual</option>
+                                </select>
+                            </label>
+                            <label>
+                                Collect Permission
+                                <select name="collect_mode" {% if not is_owner %}disabled{% endif %}>
+                                    <option value="disabled" {% if lobby.collect_mode == "disabled" %}selected{% endif %}>Disabled</option>
+                                    <option value="enabled" {% if lobby.collect_mode == "enabled" %}selected{% endif %}>Manual !collect</option>
+                                    <option value="goal" {% if lobby.collect_mode == "goal" %}selected{% endif %}>Allow after goal completion</option>
+                                    <option value="auto" {% if lobby.collect_mode == "auto" %}selected{% endif %}>Auto</option>
+                                    <option value="auto-enabled" {% if lobby.collect_mode == "auto-enabled" %}selected{% endif %}>Auto + Manual</option>
+                                </select>
+                            </label>
+                            <label>
+                                Remaining Permission
+                                <select name="remaining_mode" {% if not is_owner %}disabled{% endif %}>
+                                    <option value="disabled" {% if lobby.remaining_mode == "disabled" %}selected{% endif %}>Disabled</option>
+                                    <option value="enabled" {% if lobby.remaining_mode == "enabled" %}selected{% endif %}>Manual !remaining</option>
+                                    <option value="goal" {% if lobby.remaining_mode == "goal" %}selected{% endif %}>After goal completion</option>
+                                </select>
+                            </label>
+                            <label>
+                                Countdown Permission
+                                <select name="countdown_mode" {% if not is_owner %}disabled{% endif %}>
+                                    <option value="auto" {% if lobby.countdown_mode == "auto" %}selected{% endif %}>Auto (under 30 slots)</option>
+                                    <option value="enabled" {% if lobby.countdown_mode == "enabled" %}selected{% endif %}>Enabled</option>
+                                    <option value="disabled" {% if lobby.countdown_mode == "disabled" %}selected{% endif %}>Disabled</option>
+                                </select>
+                            </label>
+                            <label>
+                                Item Cheat
+                                <select name="item_cheat" {% if not is_owner %}disabled{% endif %}>
+                                    <option value="0" {% if not lobby.item_cheat %}selected{% endif %}>Disabled</option>
+                                    <option value="1" {% if lobby.item_cheat %}selected{% endif %}>Enabled</option>
+                                </select>
+                            </label>
+                            <label>
+                                Spoiler Log
+                                <select name="spoiler" {% if not is_owner %}disabled{% endif %}>
+                                    <option value="0" {% if lobby.spoiler == 0 %}selected{% endif %}>Disabled</option>
+                                    <option value="1" {% if lobby.spoiler == 1 %}selected{% endif %}>Basic</option>
+                                    <option value="2" {% if lobby.spoiler == 2 %}selected{% endif %}>Playthrough</option>
+                                    <option value="3" {% if lobby.spoiler == 3 %}selected{% endif %}>Full</option>
+                                </select>
+                            </label>
+                            <label>
+                                Hint Cost (%)
+                                <input type="number" name="hint_cost" min="0" max="100" value="{{ lobby.hint_cost }}" {% if not is_owner %}disabled{% endif %} />
+                            </label>
+                            <label>
+                                Custom YAMLs
+                                <select name="allow_custom_yamls" {% if not is_owner %}disabled{% endif %}>
+                                    <option value="1" {% if lobby.allow_custom_yamls %}selected{% endif %}>Allowed</option>
+                                    <option value="0" {% if not lobby.allow_custom_yamls %}selected{% endif %}>Blocked</option>
+                                </select>
+                            </label>
+                            <label>
+                                Server Password (Private lobby)
+                                {% if is_owner %}
+                                    <input type="password" name="server_password" placeholder="Leave empty to keep current" maxlength="64" />
+                                {% else %}
+                                    <input type="text" value="{{ 'Set' if lobby.server_password else 'Not set' }}" disabled />
+                                {% endif %}
+                            </label>
+                            {% if is_owner and lobby.server_password %}
+                                <label class="skl-checkbox-row">
+                                    <input type="checkbox" name="clear_password" />
+                                    Clear password (make lobby public)
+                                </label>
+                            {% endif %}
+                        </div>
+                        <div class="skl-settings-plando">
+                            <span>Plando Options</span>
+                            <label>
+                                <input type="checkbox" name="plando_items" {% if lobby.plando_items %}checked{% endif %} {% if not is_owner %}disabled{% endif %} />
+                                Items
+                            </label>
+                            <label>
+                                <input type="checkbox" name="plando_bosses" {% if lobby.plando_bosses %}checked{% endif %} {% if not is_owner %}disabled{% endif %} />
+                                Bosses
+                            </label>
+                            <label>
+                                <input type="checkbox" name="plando_connections" {% if lobby.plando_connections %}checked{% endif %} {% if not is_owner %}disabled{% endif %} />
+                                Connections
+                            </label>
+                            <label>
+                                <input type="checkbox" name="plando_texts" {% if lobby.plando_texts %}checked{% endif %} {% if not is_owner %}disabled{% endif %} />
+                                Text
+                            </label>
+                        </div>
+                        {% if is_owner %}
+                            <div class="skl-settings-actions">
+                                <button class="skl-btn ghost" type="submit">Save settings</button>
+                                <span id="lobby-settings-status" class="skl-ready-status"></span>
+                                <button class="skl-btn ghost" id="lobby-close" type="button">Close lobby</button>
+                            </div>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if is_owner %}
+        <div class="skl-modal" id="lobby-generate-modal" aria-hidden="true">
+            <div class="skl-modal-backdrop" data-modal-close></div>
+            <div class="skl-modal-panel" role="dialog" aria-modal="true" aria-labelledby="lobby-generate-title">
+                <div class="skl-modal-header">
+                    <h3 id="lobby-generate-title">Start generation</h3>
+                    <button class="skl-modal-close" type="button" data-modal-close>Close</button>
+                </div>
+                <p class="skl-modal-body">
+                    This will lock all room settings for this seed and start generation. You will not be able to change
+                    any configuration until the generation fails or completes. Continue?
+                </p>
+                <div class="skl-modal-actions">
+                    <button class="skl-btn ghost" id="lobby-generate-cancel" type="button">Cancel</button>
+                    <button class="skl-btn primary" id="lobby-generate-confirm" type="button">Start generation</button>
+                </div>
+            </div>
+        </div>
+        <div class="skl-modal" id="lobby-close-modal" aria-hidden="true">
+            <div class="skl-modal-backdrop" data-modal-close></div>
+            <div class="skl-modal-panel" role="dialog" aria-modal="true" aria-labelledby="lobby-close-title">
+                <div class="skl-modal-header">
+                    <h3 id="lobby-close-title">Close lobby</h3>
+                    <button class="skl-modal-close" type="button" data-modal-close>Close</button>
+                </div>
+                <p class="skl-modal-body">
+                    Closing the lobby will shut down the room and disconnect everyone. This cannot be undone.
+                </p>
+                <div class="skl-modal-actions">
+                    <button class="skl-btn ghost" id="lobby-close-cancel" type="button">Cancel</button>
+                    <button class="skl-btn primary" id="lobby-close-confirm" type="button">Close lobby</button>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="skl-tracker-drawer" id="tracker-drawer" aria-hidden="true">
+        <div class="skl-tracker-backdrop" data-tracker-close></div>
+        <div class="skl-tracker-panel" role="dialog" aria-modal="true" aria-labelledby="tracker-title">
+            <div class="skl-tracker-header">
+                <div>
+                    <p class="skl-tracker-eyebrow">Live tracker</p>
+                    <h3 id="tracker-title">Tracker</h3>
+                </div>
+                <div class="skl-tracker-actions">
+                    <a class="skl-btn ghost" id="tracker-open-new" target="_blank" rel="noopener">Open in new tab</a>
+                    <button class="skl-btn ghost" type="button" data-tracker-close>Close</button>
+                </div>
+            </div>
+            <div class="skl-tracker-frame">
+                <iframe id="tracker-frame" title="Tracker view" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script type="application/ecmascript" src="{{ url_for('static', filename="assets/lobbyRoom.js") }}"></script>
+    <script>
+    /* === SFX hooks for lobby interactions === */
+    (function(){
+        var sfx = window.SKL_SFX;
+        if (!sfx) return;
+
+        /* Lobby join/leave SFX — fired via custom events from lobbyRoom.js */
+        document.addEventListener('skl:lobby-joined', function(){ sfx.play('join'); });
+        document.addEventListener('skl:lobby-left',   function(){ sfx.play('leave'); });
+
+        /* Ready/Unready toggle */
+        var readyBtn = document.getElementById('lobby-ready-toggle');
+        if (readyBtn) {
+            readyBtn.addEventListener('click', function(){
+                var isReady = readyBtn.dataset.ready === '1';
+                sfx.play(isReady ? 'unready' : 'ready');
+            });
+        }
+
+        /* Generate button */
+        var genBtn = document.getElementById('lobby-generate');
+        if (genBtn) {
+            genBtn.addEventListener('click', function(){ sfx.play('confirm'); });
+        }
+
+        /* Chat send */
+        var chatForm = document.getElementById('lobby-chat-form');
+        if (chatForm) {
+            chatForm.addEventListener('submit', function(){ sfx.play('confirm'); });
+        }
+
+        /* Terminal send */
+        var termForm = document.getElementById('lobby-terminal-form');
+        if (termForm) {
+            termForm.addEventListener('submit', function(){ sfx.play('confirm'); });
+        }
+
+        /* Success/Error SFX — fired via custom events from lobbyRoom.js */
+        document.addEventListener('skl:generation-success', function(){ sfx.play('success'); });
+        document.addEventListener('skl:generation-error',   function(){ sfx.play('error'); });
+
+    })();
+    </script>
+{% endblock %}

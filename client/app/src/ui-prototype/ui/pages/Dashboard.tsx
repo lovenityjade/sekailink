@@ -41,16 +41,15 @@ const DashboardPage: React.FC = () => {
 
   useEffect(() => {
     let cancelled = false;
-    apiJson<LobbyListResponse>("/api/lobbies")
-      .then((data) => {
+    const loadRooms = async () => {
+      try {
+        const data = await apiJson<LobbyListResponse>("/api/lobbies");
         if (cancelled) return;
         const list = (Array.isArray(data?.lobbies) ? data.lobbies : []).filter((room) => !isSoloLobby(room));
         setRooms(list);
         if (!selectedRoomId && list[0]?.id) setSelectedRoomId(list[0].id);
-      })
-      .catch(() => {
+      } catch {
         if (cancelled) return;
-        // Offline / no-backend fallback
         const now = new Date().toISOString();
         const fallback: RoomListRoom[] = [
           { id: "mock-1", name: "ZXCCZZ", owner: "TheLovelyJade", is_private: false, member_count: 1, last_activity: now },
@@ -58,9 +57,13 @@ const DashboardPage: React.FC = () => {
         ];
         setRooms(fallback);
         if (!selectedRoomId) setSelectedRoomId("mock-1");
-      });
+      }
+    };
+    void loadRooms();
+    const roomTimer = window.setInterval(loadRooms, 5000);
     return () => {
       cancelled = true;
+      window.clearInterval(roomTimer);
     };
   }, [selectedRoomId]);
 
@@ -98,7 +101,7 @@ const DashboardPage: React.FC = () => {
     };
 
     void loadOnline();
-    const t = window.setInterval(loadOnline, 15000);
+    const t = window.setInterval(loadOnline, 5000);
     return () => {
       cancelled = true;
       window.clearInterval(t);

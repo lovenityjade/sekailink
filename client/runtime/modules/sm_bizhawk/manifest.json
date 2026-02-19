@@ -20,5 +20,7 @@
   "features": {
     "autotracking": true,
     "save_required": true
-  }
+  },
+  "tracker_pack_uid": "https://github.com/Cyb3RGER/sm_ap_tracker",
+  "tracker_web_url": ""
 }

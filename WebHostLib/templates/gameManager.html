@@ -1,0 +1,147 @@
+{% extends 'pageWrapper.html' %}
+{% set show_footer = False %}
+{% set body_class = "app-ui" %}
+{% set active_page = "yaml" %}
+
+{% block head %}
+    <title>Game Manager · SekaiLink</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/account.css") }}?v=2" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/yamlDashboard.css") }}?v=3" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/gameManager.css") }}?v=1" />
+{% endblock %}
+
+{% block body %}
+    <div class="page-bg"></div>
+    <div class="skl-app-shell">
+        {% include 'partials/appSidebar.html' %}
+        <div class="skl-app-main">
+            <div class="skl-game-manager skl-app-panel">
+                <div class="skl-gm-header">
+                    <h1>Game Manager</h1>
+                    <p>Manage your YAMLs, add new games, or edit advanced YAML settings.</p>
+                </div>
+
+                <div class="skl-gm-tabs" role="tablist">
+                    <button class="skl-gm-tab active" type="button" data-gm-tab="my" role="tab" aria-selected="true">My Games</button>
+                    <button class="skl-gm-tab" type="button" data-gm-tab="add" role="tab" aria-selected="false">Add a Game</button>
+                    <button class="skl-gm-tab" type="button" data-gm-tab="editor" role="tab" aria-selected="false">YAML Editor (Advanced)</button>
+                </div>
+
+                <div class="skl-gm-panel active" data-gm-panel="my" role="tabpanel">
+                    <div class="skl-gm-section-header">
+                        <h2>My Games</h2>
+                        <div class="skl-gm-actions">
+                            <button class="skl-btn ghost" id="yaml-import-button" type="button">Import YAML</button>
+                        </div>
+                    </div>
+                    {% if yamls and yamls|length %}
+                        <div class="yaml-list">
+                            {% for item in yamls %}
+                                <div class="yaml-row">
+                                    <div class="yaml-meta">
+                                        <div class="yaml-title">
+                                            {{ item.title }}
+                                            {% if item.custom %}
+                                                <span class="yaml-badge">Custom</span>
+                                            {% endif %}
+                                        </div>
+                                        <div class="yaml-sub">Game: {{ item.game }} • Player: {{ item.player_name }}</div>
+                                    </div>
+                                    <div class="yaml-actions">
+                                        <a href="/dashboard/yaml/{{ item.game }}/edit/{{ item.id }}">Edit</a>
+                                        <button class="yaml-duplicate" type="button" data-yaml-duplicate="{{ item.id }}">Duplicate</button>
+                                        <a href="/dashboard/yaml/{{ item.id }}/download">Download</a>
+                                        <form method="post" action="/dashboard/yaml/{{ item.id }}/delete" class="yaml-delete-form" data-yaml-id="{{ item.id }}">
+                                            <button type="submit">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p>No YAMLs saved yet.</p>
+                    {% endif %}
+                </div>
+
+                <div class="skl-gm-panel" data-gm-panel="add" role="tabpanel">
+                    <div class="yaml-dashboard">
+                        <div class="yaml-dashboard-card">
+                            <h2>Add a Game</h2>
+                            <p>Select a game to create a new YAML.</p>
+                            <div class="yaml-search">
+                                <div class="yaml-search-icon">🔎</div>
+                                <input id="yaml-game-search" class="input" type="search" placeholder="Search a game..." autocomplete="off" />
+                                <button class="yaml-search-clear" id="yaml-search-clear" type="button" aria-label="Clear search">✕</button>
+                            </div>
+                            <div class="yaml-game-grid" id="yaml-game-grid">
+                                {% for game_name, world in worlds.items() %}
+                                    <a class="yaml-game-card" href="/dashboard/yaml/{{ game_name }}/create"
+                                       data-game-name="{{ (world.web.display_name if world.web else world.game) or game_name }}">
+                                        <div class="yaml-game-thumb">
+                                            <img src="/assets/img/yaml_placeholder.svg" alt="" />
+                                        </div>
+                                        <div class="yaml-game-name">
+                                            {{ (world.web.display_name if world.web else world.game) or game_name }}
+                                        </div>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                            <div class="yaml-game-empty" id="yaml-game-empty" hidden>
+                                No games match your search.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skl-gm-panel" data-gm-panel="editor" role="tabpanel">
+                    <div class="skl-gm-section-header">
+                        <h2>YAML Editor (Advanced)</h2>
+                        <div class="skl-gm-actions">
+                            <select id="gm-yaml-select" class="skl-gm-select">
+                                <option value="">Select a YAML</option>
+                                {% for item in yamls %}
+                                    <option value="{{ item.id }}" data-custom="{{ 1 if item.custom else 0 }}">
+                                        {{ item.title }} · {{ item.game }}{% if item.custom %} (Custom){% endif %}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <button class="skl-btn ghost" id="gm-yaml-load" type="button">Load</button>
+                        </div>
+                    </div>
+                    <div class="skl-gm-editor">
+                        <pre id="gm-yaml-highlight" aria-hidden="true"></pre>
+                        <textarea id="gm-yaml-editor" spellcheck="false" placeholder="Select a YAML to edit..."></textarea>
+                    </div>
+                    <div class="skl-gm-editor-actions">
+                        <button class="skl-btn primary" id="gm-yaml-save" type="button">Save Custom YAML</button>
+                        <span id="gm-yaml-status" class="skl-ready-status"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form id="yaml-import-form" class="yaml-import-form" method="post" action="/dashboard/yaml/import" enctype="multipart/form-data">
+        <input id="yaml-import-input" name="yaml-file" type="file" accept=".yml,.yaml" />
+    </form>
+
+    <div class="skl-modal" id="yaml-custom-modal" aria-hidden="true">
+        <div class="skl-modal-backdrop" data-custom-close></div>
+        <div class="skl-modal-panel" role="dialog" aria-modal="true" aria-labelledby="yaml-custom-title">
+            <div class="skl-modal-header">
+                <h3 id="yaml-custom-title">Save Custom YAML</h3>
+                <button class="skl-modal-close" type="button" data-custom-close>Close</button>
+            </div>
+            <div class="skl-modal-body">
+                <p>Saving this YAML marks it as <strong>Custom</strong>.</p>
+                <p>Custom YAMLs can cause generation errors. Use at your own risk.</p>
+            </div>
+            <div class="skl-modal-actions">
+                <button class="skl-btn ghost" type="button" data-custom-close>Cancel</button>
+                <button class="skl-btn primary" type="button" id="gm-yaml-confirm">Save Custom</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename="assets/gameManager.js") }}?v=1"></script>
+{% endblock %}

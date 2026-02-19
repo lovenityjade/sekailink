@@ -1,0 +1,176 @@
+{% extends 'pageWrapper.html' %}
+{% set show_footer = False %}
+{% set body_class = "app-ui" %}
+{% set active_page = "rooms" %}
+
+{% block head %}
+    <title>Room List · SekaiLink</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/roomList.css') }}" />
+{% endblock %}
+
+{% block body %}
+    <div class="page-bg"></div>
+    <div class="skl-app-shell">
+        {% include 'partials/appSidebar.html' %}
+        <div class="skl-app-main">
+            <div class="skl-roomlist-page">
+                <div class="skl-app-header">
+                    <div>
+                        <p class="skl-eyebrow">Lobbies</p>
+                        <h1 class="skl-app-title">Room List</h1>
+                    </div>
+                    <button class="skl-btn primary" type="button" onclick="document.getElementById('open-lobby-create').click()">Create Room</button>
+                </div>
+
+                <div class="skl-app-panel">
+                    <div class="skl-roomlist-bar">
+                        <div class="skl-roomlist-search">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            <input id="lobby-search" type="search" placeholder="Search by lobby name or host" class="input" />
+                        </div>
+                        <div class="skl-roomlist-filters">
+                            <span class="pill ok skl-filter-chip active" data-filter="all">All</span>
+                            <span class="pill skl-filter-chip" data-filter="open">Open</span>
+                            <span class="pill skl-filter-chip" data-filter="private">Private</span>
+                        </div>
+                    </div>
+
+                    <div class="skl-room-table-header">
+                        <div class="skl-room-col room">Room</div>
+                        <div class="skl-room-col">Players</div>
+                        <div class="skl-room-col">Access</div>
+                        <div class="skl-room-col">Mode</div>
+                        <div class="skl-room-col">Progress</div>
+                        <div class="skl-room-col actions">Actions</div>
+                    </div>
+
+                    <div id="lobby-list" class="skl-room-table"></div>
+
+                    <div id="lobby-empty" class="skl-room-empty">
+                        <div class="skl-room-empty-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                        </div>
+                        <p class="skl-room-empty-title">No rooms yet</p>
+                    </div>
+
+                    <div id="lobby-error" class="skl-lobby-error"></div>
+
+                    <button class="skl-btn primary" id="open-lobby-create" type="button" aria-hidden="true" style="display:none"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Lobby Modal -->
+    <div class="skl-modal" id="lobby-create-modal" aria-hidden="true">
+        <div class="skl-modal-backdrop" data-modal-close></div>
+        <div class="skl-modal-panel" role="dialog" aria-modal="true" aria-labelledby="lobby-create-title">
+            <div class="skl-modal-header">
+                <h3 id="lobby-create-title">Create Room</h3>
+                <button class="skl-modal-close" type="button" data-modal-close>Close</button>
+            </div>
+            <form id="lobby-create-form" class="skl-lobby-form" data-auth="{{ 1 if session.get('discord_user') else 0 }}">
+                <div class="skl-lobby-form-row">
+                    <input type="text" name="name" placeholder="Room name" maxlength="60" class="input" />
+                    <input type="text" name="description" placeholder="Short description" maxlength="180" class="input" />
+                </div>
+                <div class="skl-lobby-form-rules">
+                    <div class="skl-lobby-form-title">Room rules (host.yaml)</div>
+                    <div class="skl-lobby-grid-fields">
+                        <label>
+                            Release Permission
+                            <select name="release_mode">
+                                <option value="disabled">Disabled</option>
+                                <option value="enabled" selected>Manual !release</option>
+                                <option value="goal">After goal completion</option>
+                                <option value="auto">Auto</option>
+                                <option value="auto-enabled">Auto + Manual</option>
+                            </select>
+                        </label>
+                        <label>
+                            Collect Permission
+                            <select name="collect_mode">
+                                <option value="disabled">Disabled</option>
+                                <option value="enabled">Manual !collect</option>
+                                <option value="goal" selected>Allow after goal completion</option>
+                                <option value="auto">Auto</option>
+                                <option value="auto-enabled">Auto + Manual</option>
+                            </select>
+                        </label>
+                        <label>
+                            Remaining Permission
+                            <select name="remaining_mode">
+                                <option value="disabled">Disabled</option>
+                                <option value="enabled" selected>Manual !remaining</option>
+                                <option value="goal">After goal completion</option>
+                            </select>
+                        </label>
+                        <label>
+                            Countdown Permission
+                            <select name="countdown_mode">
+                                <option value="auto" selected>Auto (under 30 slots)</option>
+                                <option value="enabled">Enabled</option>
+                                <option value="disabled">Disabled</option>
+                            </select>
+                        </label>
+                        <label>
+                            Item Cheat
+                            <select name="item_cheat">
+                                <option value="0" selected>Disabled</option>
+                                <option value="1">Enabled</option>
+                            </select>
+                        </label>
+                        <label>
+                            Spoiler Log
+                            <select name="spoiler">
+                                <option value="0" selected>Disabled</option>
+                                <option value="1">Basic</option>
+                                <option value="2">Playthrough</option>
+                                <option value="3">Full</option>
+                            </select>
+                        </label>
+                        <label>
+                            Hint Cost (%)
+                            <input type="number" name="hint_cost" min="0" max="100" value="5" class="input" />
+                        </label>
+                        <label>
+                            Custom YAMLs
+                            <select name="allow_custom_yamls">
+                                <option value="1" selected>Allowed</option>
+                                <option value="0">Blocked</option>
+                            </select>
+                        </label>
+                        <label>
+                            Server Password (Private)
+                            <input type="text" name="server_password" placeholder="Leave empty for public" maxlength="64" class="input" />
+                        </label>
+                    </div>
+                    <div class="skl-lobby-plando">
+                        <span>Plando Options</span>
+                        <label><input type="checkbox" name="plando_items" checked /> Items</label>
+                        <label><input type="checkbox" name="plando_bosses" checked /> Bosses</label>
+                        <label><input type="checkbox" name="plando_connections" checked /> Connections</label>
+                        <label><input type="checkbox" name="plando_texts" checked /> Text</label>
+                    </div>
+                </div>
+                <div class="skl-modal-actions">
+                    <button class="skl-btn primary" type="submit">Create Room</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Room Info Modal -->
+    <div class="skl-modal" id="lobby-info-modal" aria-hidden="true">
+        <div class="skl-modal-backdrop" data-info-close></div>
+        <div class="skl-modal-panel" role="dialog" aria-modal="true" aria-labelledby="lobby-info-title">
+            <div class="skl-modal-header">
+                <h3 id="lobby-info-title">Room info</h3>
+                <button class="skl-modal-close" type="button" data-info-close>Close</button>
+            </div>
+            <div class="skl-roominfo-grid" id="lobby-info-content"></div>
+        </div>
+    </div>
+
+    <script type="application/ecmascript" src="{{ url_for('static', filename='assets/lobbiesLanding.js') }}"></script>
+{% endblock %}

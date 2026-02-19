@@ -1,0 +1,90 @@
+{% extends 'pageWrapper.html' %}
+{% set show_footer = False %}
+
+{% block head %}
+    <title>Updating · SekaiLink</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/electronUpdate.css') }}" />
+{% endblock %}
+
+{% block body %}
+    <div class="page-bg"></div>
+    <div class="skl-update" id="skl-update-screen">
+        <div class="skl-update-card">
+            <div class="skl-update-scanline"></div>
+            <div class="skl-update-content">
+                <div class="skl-update-logo">SEKAILINK</div>
+                <h2 class="skl-update-title" id="skl-update-title">Updating SekaiLink…</h2>
+                <p class="skl-update-subtitle" id="skl-update-subtitle">Downloading the latest version. Please wait.</p>
+
+                <!-- Progress bar -->
+                <div class="skl-update-progress-track">
+                    <div class="skl-update-progress-fill" id="skl-update-progress" style="width:0%"></div>
+                </div>
+                <div class="skl-update-progress-info">
+                    <span class="skl-update-percent" id="skl-update-percent">0%</span>
+                    <span class="skl-update-details" id="skl-update-details">0 MB / 0 MB</span>
+                </div>
+
+                <!-- Changelog -->
+                <div class="skl-update-changelog" id="skl-update-changelog">
+                    <h3 class="skl-update-changelog-title">Changelog</h3>
+                    <div class="skl-update-changelog-body" id="skl-update-changelog-body">
+                        <p>Loading changelog…</p>
+                    </div>
+                </div>
+
+                <!-- Restart button (hidden until done) -->
+                <button class="skl-btn primary skl-update-restart" id="skl-update-restart" style="display:none"
+                        onclick="if(window.SKL_SFX)SKL_SFX.play('success')">
+                    Restart SekaiLink
+                </button>
+            </div>
+        </div>
+        <div class="skl-update-version">SekaiLink v0.01-alpha</div>
+    </div>
+
+    <script>
+    /* Electron Update Screen Controller
+       In production, Electron's IPC would call these methods.
+       This provides the API surface + demo behavior. */
+    (function(){
+        var progress = document.getElementById('skl-update-progress');
+        var percent = document.getElementById('skl-update-percent');
+        var details = document.getElementById('skl-update-details');
+        var title = document.getElementById('skl-update-title');
+        var subtitle = document.getElementById('skl-update-subtitle');
+        var restartBtn = document.getElementById('skl-update-restart');
+        var changelogBody = document.getElementById('skl-update-changelog-body');
+
+        window.SKL_UPDATE = {
+            setProgress: function(pct, downloaded, total) {
+                var p = Math.min(100, Math.max(0, pct));
+                if(progress) progress.style.width = p + '%';
+                if(percent)  percent.textContent = Math.round(p) + '%';
+                if(details)  details.textContent = (downloaded || 0) + ' MB / ' + (total || 0) + ' MB';
+            },
+            setComplete: function() {
+                if(title)     title.textContent = 'Update Ready';
+                if(subtitle)  subtitle.textContent = 'The update has been downloaded. Restart to apply.';
+                if(progress)  progress.style.width = '100%';
+                if(percent)   percent.textContent = '100%';
+                if(restartBtn) restartBtn.style.display = 'inline-flex';
+                if(window.SKL_SFX) SKL_SFX.play('success');
+            },
+            setChangelog: function(html) {
+                if(changelogBody) changelogBody.innerHTML = html;
+            },
+            setError: function(msg) {
+                if(title)    title.textContent = 'Update Error';
+                if(subtitle) subtitle.textContent = msg || 'An error occurred during the update.';
+                if(window.SKL_SFX) SKL_SFX.play('error');
+            }
+        };
+
+        /* Demo: placeholder changelog */
+        if(changelogBody && changelogBody.textContent.includes('Loading')) {
+            changelogBody.innerHTML = '<p><strong>v0.01-alpha</strong> — Initial release</p><ul><li>Room hosting &amp; lobby system</li><li>YAML management</li><li>Friends &amp; DMs</li><li>Live tracker integration</li></ul>';
+        }
+    })();
+    </script>
+{% endblock %}

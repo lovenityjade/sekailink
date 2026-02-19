@@ -1,0 +1,107 @@
+.skl-banned-page {
+    min-height: calc(100vh - 140px);
+    padding: 80px 20px 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at top, rgba(54, 101, 92, 0.35), rgba(10, 14, 16, 0.95) 65%);
+}
+
+.skl-banned-card {
+    width: min(680px, 92vw);
+    padding: 36px;
+    border-radius: 24px;
+    background: rgba(10, 18, 16, 0.88);
+    border: 1px solid rgba(120, 180, 160, 0.35);
+    box-shadow: 0 24px 60px rgba(4, 8, 8, 0.45);
+    backdrop-filter: blur(12px);
+}
+
+.skl-banned-card h1 {
+    margin: 0 0 10px;
+    font-size: clamp(26px, 3vw, 34px);
+    color: #f2f6f4;
+}
+
+.skl-banned-card p {
+    margin: 0 0 18px;
+    color: rgba(228, 240, 235, 0.75);
+    line-height: 1.6;
+}
+
+.skl-banned-reason {
+    padding: 16px 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(165, 92, 92, 0.35);
+    background: rgba(32, 18, 18, 0.65);
+    margin-bottom: 24px;
+}
+
+.skl-banned-reason span {
+    display: block;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(245, 200, 200, 0.7);
+    margin-bottom: 6px;
+}
+
+.skl-banned-reason p {
+    margin: 0;
+    color: rgba(252, 226, 226, 0.9);
+}
+
+.skl-ban-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.skl-ban-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: rgba(228, 240, 235, 0.9);
+    font-weight: 600;
+}
+
+.skl-ban-form textarea {
+    min-height: 140px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(120, 180, 160, 0.35);
+    background: rgba(12, 18, 16, 0.85);
+    color: #e8f5f0;
+    resize: vertical;
+    font-size: 14px;
+}
+
+.skl-ban-form textarea:focus {
+    outline: none;
+    border-color: rgba(92, 231, 181, 0.6);
+    box-shadow: 0 0 0 3px rgba(92, 231, 181, 0.18);
+}
+
+#ban-appeal-status {
+    min-height: 20px;
+    font-size: 13px;
+    color: rgba(220, 235, 230, 0.8);
+}
+
+#ban-appeal-status[data-state="error"] {
+    color: #f2a3a3;
+}
+
+#ban-appeal-status[data-state="success"] {
+    color: #9fe9c8;
+}
+
+@media (max-width: 640px) {
+    .skl-banned-card {
+        padding: 26px 22px;
+    }
+
+    .skl-banned-page {
+        padding: 60px 16px 100px;
+    }
+}

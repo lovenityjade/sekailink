@@ -19,5 +19,7 @@
   "features": {
     "autotracking": true,
     "save_required": true
-  }
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": ""
 }

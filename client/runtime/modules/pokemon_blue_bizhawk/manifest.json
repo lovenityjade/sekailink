@@ -3,16 +3,23 @@
   "display_name": "Pokemon Blue",
   "emu": "bizhawk",
   "lua_connector": "lua/connector.lua",
-  "tracker_pack_uid": "https://github.com/palex00/rb_tracker",
+  "tracker_pack_uid": "https://github.com/coveleski/rb_tracker",
   "patcher": "archipelago",
-  "patch_extensions": [".apblue"],
+  "patch_extensions": [
+    ".apblue"
+  ],
   "rom_requirements": {
-    "extensions": [".gb"],
-    "md5": ["50927e843568814f7ed45ec4f944bd8b"],
+    "extensions": [
+      ".gb"
+    ],
+    "md5": [
+      "50927e843568814f7ed45ec4f944bd8b"
+    ],
     "sha1": []
   },
   "features": {
     "autotracking": true,
     "save_required": true
-  }
+  },
+  "tracker_web_url": ""
 }

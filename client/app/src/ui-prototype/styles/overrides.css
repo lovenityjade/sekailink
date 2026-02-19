@@ -586,13 +586,13 @@ body.sklp-ui .sklp-tutorial-overlay {
   display: grid;
   place-items: center;
   padding: 18px;
-  background: rgba(2, 8, 10, 0.7);
-  backdrop-filter: blur(3px);
+  background: rgba(2, 8, 10, 0.48);
+  backdrop-filter: blur(1px);
 }
 
 body.sklp-ui .sklp-tutorial-mask {
   position: fixed;
-  background: rgba(2, 8, 10, 0.78);
+  background: rgba(2, 8, 10, 0.6);
   pointer-events: none;
 }
 

@@ -1,0 +1,30 @@
+{% extends 'pageWrapper.html' %}
+{% set show_footer = False %}
+
+{% block head %}
+    <title>Banned · SekaiLink</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/banModal.css") }}" />
+{% endblock %}
+
+{% block body %}
+    {% include 'header/oceanIslandHeader.html' %}
+    <section class="skl-banned-page">
+        <div class="skl-banned-card">
+            <h1>Account banned</h1>
+            <p>Your account is currently banned from SekaiLink.</p>
+            <div class="skl-banned-reason">
+                <span>Reason</span>
+                <p>{{ ban_reason or "No reason provided." }}</p>
+            </div>
+            <form id="ban-appeal-form" class="skl-ban-form">
+                <label>
+                    Ban appeal message
+                    <textarea name="message" rows="6" maxlength="2000" placeholder="Explain your situation and why this ban should be lifted."></textarea>
+                </label>
+                <button class="skl-btn primary" type="submit">Submit appeal</button>
+                <span id="ban-appeal-status" class="skl-ready-status"></span>
+            </form>
+        </div>
+    </section>
+    <script type="application/ecmascript" src="{{ url_for('static', filename="assets/banAppeal.js") }}"></script>
+{% endblock %}

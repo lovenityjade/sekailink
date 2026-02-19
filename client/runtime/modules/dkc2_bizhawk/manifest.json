@@ -4,7 +4,7 @@
   "emu": "bizhawk",
   "ap_client": "sni",
   "lua_connector": "lua/connector.lua",
-  "tracker_pack_uid": "https://github.com/pwkfisher/ap-dkc2-tracker",
+  "tracker_pack_uid": "",
   "patcher": "archipelago",
   "patch_extensions": [
     ".apdkc2"
@@ -23,5 +23,6 @@
   "features": {
     "autotracking": true,
     "save_required": true
-  }
+  },
+  "tracker_web_url": ""
 }

@@ -21,5 +21,7 @@
   "features": {
     "autotracking": true,
     "save_required": true
-  }
+  },
+  "tracker_pack_uid": "https://github.com/BrianCumminger/megaman2-ap-poptracker",
+  "tracker_web_url": ""
 }

@@ -1,0 +1,151 @@
+.skl-game-manager {
+    padding: 26px 28px;
+}
+
+.skl-gm-header h1 {
+    margin: 0 0 6px;
+    font-size: 2rem;
+    letter-spacing: 0.02em;
+}
+
+.skl-gm-header p {
+    margin: 0 0 18px;
+    color: #cfe8dd;
+}
+
+.skl-gm-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+}
+
+.skl-gm-tab {
+    padding: 8px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(92, 231, 181, 0.2);
+    background: rgba(8, 18, 13, 0.6);
+    color: #e3fff0;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.skl-gm-tab.active {
+    background: rgba(92, 231, 181, 0.2);
+    border-color: rgba(92, 231, 181, 0.5);
+}
+
+.skl-gm-panel {
+    display: none;
+}
+
+.skl-gm-panel.active {
+    display: block;
+}
+
+.skl-gm-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.skl-gm-section-header h2 {
+    margin: 0;
+}
+
+.skl-gm-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.skl-gm-select {
+    min-width: 220px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(92, 231, 181, 0.2);
+    background: rgba(8, 18, 13, 0.65);
+    color: #e3fff0;
+}
+
+.skl-gm-editor {
+    position: relative;
+    border-radius: 12px;
+    border: 1px solid rgba(92, 231, 181, 0.2);
+    background: rgba(8, 18, 13, 0.6);
+    min-height: 420px;
+    overflow: hidden;
+}
+
+.skl-gm-editor textarea,
+.skl-gm-editor pre {
+    font-family: "Courier New", monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    padding: 16px 18px;
+    white-space: pre;
+    tab-size: 2;
+}
+
+.skl-gm-editor textarea {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 420px;
+    border: none;
+    resize: vertical;
+    background: transparent;
+    color: transparent;
+    caret-color: #e3fff0;
+    outline: none;
+}
+
+.skl-gm-editor pre {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    pointer-events: none;
+    color: #e3fff0;
+    overflow: hidden;
+}
+
+.yaml-key {
+    color: #9ef3ce;
+}
+
+.yaml-string {
+    color: #ffd9a0;
+}
+
+.yaml-number {
+    color: #92c5ff;
+}
+
+.yaml-boolean {
+    color: #ffb3b3;
+}
+
+.yaml-comment {
+    color: rgba(170, 190, 180, 0.6);
+}
+
+.skl-gm-editor-actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+    .skl-game-manager {
+        padding: 20px;
+    }
+    .skl-gm-editor textarea {
+        height: 320px;
+    }
+}

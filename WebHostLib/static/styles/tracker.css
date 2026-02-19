@@ -1,0 +1,282 @@
+#tracker-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+    width: calc(100% - 1rem);
+    color: #e4f0ea;
+}
+
+#tracker-wrapper a {
+    color: #5ce7b5;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#tracker-header-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: center;
+    line-height: 20px;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+#tracker-header-bar .info {
+    color: #cfe8dd;
+    padding: 2px;
+    flex-grow: 1;
+    align-self: center;
+    text-align: justify;
+}
+
+#tracker-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 0.5rem 0.5rem 0.5rem;
+    user-select: none;
+    height: 2rem;
+}
+
+.tracker-navigation-bar {
+    display: flex;
+    background: rgba(12, 28, 21, 0.7);
+    border-radius: 999px;
+    border: 1px solid rgba(92, 231, 181, 0.2);
+    box-shadow: 0 10px 20px rgba(6, 12, 9, 0.35);
+}
+
+.tracker-navigation-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 4px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 999px;
+    text-align: center;
+    font-size: 14px;
+    color: #d4efe3 !important;
+    font-weight: 600;
+}
+
+.tracker-navigation-button:hover {
+    background-color: rgba(92, 231, 181, 0.18) !important;
+}
+
+.tracker-navigation-button.selected {
+    background: linear-gradient(120deg, rgba(92, 231, 181, 0.85), rgba(157, 245, 205, 0.75));
+    color: #06110b !important;
+}
+
+.table-wrapper {
+    overflow-y: auto;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+    resize: vertical;
+}
+
+.table-options {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    color: #cfe8dd;
+}
+
+.table-options label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.table-options input[type="checkbox"] {
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+#search {
+    border: 1px solid rgba(92, 231, 181, 0.2);
+    border-radius: 8px;
+    padding: 6px 8px;
+    background: rgba(8, 20, 14, 0.7);
+    color: #e4f0ea;
+    width: 200px;
+}
+
+div.dataTables_wrapper.no-footer .dataTables_scrollBody {
+    border: none;
+}
+
+table.dataTable {
+    color: #e4f0ea;
+}
+
+table.dataTable thead {
+    font-family: var(--font-ui);
+}
+
+table.dataTable tbody, table.dataTable tfoot {
+    background: rgba(10, 22, 16, 0.85);
+    font-family: var(--font-ui);
+}
+
+table.dataTable tbody tr:hover, table.dataTable tfoot tr:hover {
+    background-color: rgba(92, 231, 181, 0.12);
+}
+
+table.dataTable tbody td, table.dataTable tfoot td {
+    padding: 4px 6px;
+}
+
+table.dataTable, table.dataTable.no-footer {
+    border-left: 1px solid rgba(92, 231, 181, 0.2);
+    width: calc(100% - 2px) !important;
+    font-size: 1rem;
+}
+
+table.dataTable thead th {
+    position: -webkit-sticky;
+    position: sticky;
+    background: rgba(14, 32, 24, 0.85);
+    top: 0;
+}
+
+table.dataTable thead th.upper-row {
+    position: -webkit-sticky;
+    position: sticky;
+    background: rgba(14, 32, 24, 0.85);
+    height: 36px;
+    top: 0;
+}
+
+table.dataTable thead th.lower-row {
+    position: -webkit-sticky;
+    position: sticky;
+    background: rgba(14, 32, 24, 0.85);
+    height: 22px;
+    top: 46px;
+}
+
+table.dataTable tbody td, table.dataTable tfoot td {
+    border: 1px solid rgba(92, 231, 181, 0.15);
+}
+
+table.dataTable tfoot td {
+    font-weight: bold;
+}
+
+div.dataTables_scrollBody {
+    background-color: inherit !important;
+}
+
+table.dataTable .center-column {
+    text-align: center;
+}
+
+img.icon-sprite {
+    height: auto;
+    max-height: 32px;
+    min-height: 14px;
+}
+
+.item-acquired {
+    background-color: rgba(92, 231, 181, 0.18);
+}
+
+@media all and (max-width: 1700px) {
+    table.dataTable thead th.upper-row{
+        position: -webkit-sticky;
+        position: sticky;
+        background: rgba(14, 32, 24, 0.85);
+        height: 27px;
+        top: 0;
+    }
+
+    table.dataTable thead th.lower-row {
+        position: -webkit-sticky;
+        position: sticky;
+        background: rgba(14, 32, 24, 0.85);
+        height: 20px;
+        top: 37px;
+    }
+
+    table.dataTable, table.dataTable.no-footer {
+        font-size: 0.8rem;
+    }
+
+    img.icon-sprite {
+        height: auto;
+        max-height: 24px;
+        min-height: 10px;
+    }
+}
+
+@media all and (max-width: 1400px) {
+    table.dataTable thead th.upper-row{
+        position: -webkit-sticky;
+        position: sticky;
+        background: rgba(14, 32, 24, 0.85);
+        height: 22px;
+        top: 0;
+    }
+
+    table.dataTable thead th.lower-row {
+        position: -webkit-sticky;
+        position: sticky;
+        background: rgba(14, 32, 24, 0.85);
+        height: 19px;
+        top: 32px;
+    }
+
+    table.dataTable, table.dataTable.no-footer {
+        font-size: 0.6rem;
+    }
+
+    img.icon-sprite {
+        height: auto;
+        max-height: 20px;
+        min-height: 10px;
+    }
+}
+#tracker-wrapper,
+#player-tracker-wrapper,
+#player-tracker {
+    border-radius: 12px;
+}
+
+body.tracker-embed {
+    margin: 0;
+    background: url("/assets/img/purple_bg.png") center/cover no-repeat fixed;
+    color: #e4f0ea;
+}
+
+body.tracker-embed::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(900px 480px at 20% 20%, rgba(190,140,255,0.15), transparent 60%),
+        linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.75));
+    pointer-events: none;
+    z-index: 0;
+}
+
+body.tracker-embed #base-header,
+body.tracker-embed #tracker-navigation {
+    display: none !important;
+}
+
+body.tracker-embed #tracker-wrapper,
+body.tracker-embed #player-tracker-wrapper,
+body.tracker-embed #player-tracker {
+    position: relative;
+    z-index: 1;
+    padding: 16px;
+    background: rgba(10, 14, 18, 0.6);
+    border: 1px solid rgba(190,140,255,0.25);
+    box-shadow: 0 20px 50px rgba(4, 6, 10, 0.55);
+    backdrop-filter: blur(12px);
+}

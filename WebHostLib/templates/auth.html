@@ -1,0 +1,71 @@
+{% extends 'pageWrapper.html' %}
+
+{% block head %}
+<title>SekaiLink Sign In</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/landing.css') }}" />
+<style>
+.skl-auth-wrap{max-width:980px;margin:120px auto 80px;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.skl-auth-card{background:rgba(7,19,24,.72);border:1px solid rgba(93,255,225,.35);border-radius:14px;padding:20px;box-shadow:0 0 24px rgba(69,236,219,.15)}
+.skl-auth-card h2{margin:0 0 12px;color:#d7fffa}
+.skl-auth-field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.skl-auth-field input,.skl-auth-field select{background:rgba(10,15,24,.75);border:1px solid rgba(123,102,179,.6);color:#dff; border-radius:8px;padding:10px}
+.skl-auth-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.skl-auth-msg{margin:0 auto 12px;max-width:980px;padding:10px 14px;border-radius:10px}
+.skl-auth-msg.error{background:rgba(145,25,45,.25);border:1px solid rgba(255,92,92,.5);color:#ffd2d2}
+.skl-auth-msg.success{background:rgba(12,97,70,.25);border:1px solid rgba(80,242,185,.55);color:#d8fff2}
+.skl-auth-social{display:grid;gap:10px}
+@media (max-width:900px){.skl-auth-wrap{grid-template-columns:1fr}}
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="page-bg is-main"></div>
+<section class="skl-auth-wrap">
+  <article class="skl-auth-card">
+    <h2>Social Sign In</h2>
+    <p>Use your existing account.</p>
+    <div class="skl-auth-social">
+      <a class="skl-btn primary" href="{{ url_for('discord_login') }}">Continue with Discord</a>
+      <a class="skl-btn ghost" href="{{ url_for('twitch_login') }}">Continue with Twitch</a>
+    </div>
+  </article>
+
+  <article class="skl-auth-card">
+    <h2>Email Sign Up</h2>
+    <form method="post" action="{{ url_for('email_register') }}">
+      <div class="skl-auth-field"><label>Email</label><input type="email" name="email" required /></div>
+      <div class="skl-auth-field"><label>Display Name</label><input type="text" name="display_name" required /></div>
+      <div class="skl-auth-field"><label>Password</label><input type="password" name="password" required /></div>
+      <div class="skl-auth-field">
+        <label>Language</label>
+        <select name="locale">
+          <option value="en" {% if default_locale=='en' %}selected{% endif %}>English</option>
+          <option value="fr" {% if default_locale=='fr' %}selected{% endif %}>Français</option>
+          <option value="es" {% if default_locale=='es' %}selected{% endif %}>Español</option>
+          <option value="ja" {% if default_locale=='ja' %}selected{% endif %}>日本語</option>
+          <option value="zh-CN" {% if default_locale=='zh-CN' %}selected{% endif %}>简体中文</option>
+          <option value="zh-TW" {% if default_locale=='zh-TW' %}selected{% endif %}>繁體中文</option>
+        </select>
+      </div>
+      {% if captcha_site_key %}
+      <div class="cf-turnstile" data-sitekey="{{ captcha_site_key }}"></div>
+      {% else %}
+      <div class="skl-auth-field"><label>Captcha token</label><input type="text" name="captcha_token" placeholder="Server captcha not configured" /></div>
+      {% endif %}
+      <div class="skl-auth-actions"><button class="skl-btn primary" type="submit">Create Account</button></div>
+    </form>
+  </article>
+
+  <article class="skl-auth-card" style="grid-column:1 / -1;">
+    <h2>Email Sign In</h2>
+    <form method="post" action="{{ url_for('email_login') }}">
+      <div class="skl-auth-field"><label>Email</label><input type="email" name="email" required /></div>
+      <div class="skl-auth-field"><label>Password</label><input type="password" name="password" required /></div>
+      <div class="skl-auth-actions"><button class="skl-btn primary" type="submit">Sign In</button></div>
+    </form>
+  </article>
+</section>
+{% if auth_error %}<div class="skl-auth-msg error">{{ auth_error }}</div>{% endif %}
+{% if auth_success %}<div class="skl-auth-msg success">{{ auth_success }}</div>{% endif %}
+{% if captcha_site_key %}<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>{% endif %}
+{% endblock %}

@@ -2720,11 +2720,34 @@ const ensureBizHawkInstalled = async () => {
   if (!app.isPackaged) return { ok: true, baseDir: bundled };
 
   const marker = path.join(dest, process.platform === "win32" ? "EmuHawk.exe" : "EmuHawkMono.sh");
-  if (fs.existsSync(marker)) return { ok: true, baseDir: dest };
+  const stampPath = path.join(dest, ".sekailink-bizhawk-stamp.json");
+  const bundledMarker = path.join(bundled, process.platform === "win32" ? "EmuHawk.exe" : "EmuHawkMono.sh");
+  const bundledMtime = fs.existsSync(bundledMarker) ? Number(fs.statSync(bundledMarker).mtimeMs || 0) : 0;
+  const runtimeVersion = app.getVersion();
+  if (fs.existsSync(marker) && fs.existsSync(stampPath)) {
+    try {
+      const stamp = JSON.parse(fs.readFileSync(stampPath, "utf8"));
+      if (String(stamp?.version || "") === runtimeVersion && Number(stamp?.bundledMtime || 0) === bundledMtime) {
+        return { ok: true, baseDir: dest };
+      }
+      writeLogLine("info", "bizhawk", "runtime stamp changed, refreshing staged BizHawk files");
+    } catch (_err) {
+      writeLogLine("warn", "bizhawk", "invalid BizHawk runtime stamp, restaging");
+    }
+  } else if (fs.existsSync(marker)) {
+    writeLogLine("info", "bizhawk", "staged BizHawk exists without stamp, refreshing once");
+  }
 
   emitSessionEvent({ event: "status", status: "Installing BizHawk runtime (one-time)...", tool: "bizhawk" });
   writeLogLine("info", "bizhawk", `staging runtime to writable dir: ${dest}`);
-  return stageBizHawkToDir(bundled, dest);
+  const staged = stageBizHawkToDir(bundled, dest);
+  if (!staged.ok) return staged;
+  try {
+    fs.writeFileSync(stampPath, JSON.stringify({ version: runtimeVersion, bundledMtime }, null, 2), "utf8");
+  } catch (_err) {
+    // non-fatal
+  }
+  return staged;
 };
 
 const getGamescopePath = () => {

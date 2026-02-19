@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/tooltip.css") }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/globalStyles.css") }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/appShell.css") }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/termsModal.css") }}" />
+    <link rel="prefetch" href="/rooms" />
+    <link rel="prefetch" href="/account" />
+    <link rel="prefetch" href="/supportedgames" />
+    <script type="application/ecmascript" src="{{ url_for('static', filename="assets/sfx.js") }}"></script>
+    {% if session.get("discord_user") %}
+        <script src="https://cdn.socket.io/4.8.1/socket.io.min.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/social.css") }}" />
+    {% endif %}
+    <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.1/dist/cookieconsent.umd.js"></script>
+      <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-39Z35ZSZ55"></script>
+      <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+  
+          gtag('config', 'G-39Z35ZSZ55');
+      </script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.1/dist/cookieconsent.css" />
+    {% block head %}
+        <title>SekaiLink</title>
+    {% endblock %}
+</head>
+<body{% if body_class %} class="{{ body_class }}"{% endif %}{% if body_theme %} data-theme="{{ body_theme }}"{% endif %}>
+    <main>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div>
+                    {% for message in messages | unique %}
+                        <div class="user-message">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block body %}
+        {% endblock %}
+    </main>
+
+    {% if show_footer %}
+        {% include "islandFooter.html" %}
+    {% endif %}
+
+    {% if session.get("discord_user") and not session.get("terms_accepted") %}
+        <div class="skl-terms-overlay" id="skl-terms-overlay">
+            <div class="skl-terms-card" role="dialog" aria-modal="true" aria-labelledby="skl-terms-title">
+                <h2 id="skl-terms-title">SekaiLink Terms of Use</h2>
+                <p>Before continuing, please confirm you agree to these baseline terms:</p>
+                <ul>
+                    <li>SekaiLink does not distribute ROMs, ISOs, or proprietary game files.</li>
+                    <li>Only use game assets you own legally and respect creators' rights.</li>
+                    <li>Be respectful in chat: no harassment, hate speech, or spam.</li>
+                    <li>No sharing personal data, exploits, or illegal content.</li>
+                    <li>Follow staff guidance to keep the community safe.</li>
+                </ul>
+                <div class="skl-terms-actions">
+                    <label for="skl-terms-checkbox">
+                        <input id="skl-terms-checkbox" type="checkbox" />
+                        I agree to the SekaiLink terms and chat rules.
+                    </label>
+                    <button id="skl-terms-accept" class="skl-terms-accept" disabled>Accept & Continue</button>
+                    <span id="skl-terms-error" class="skl-terms-error"></span>
+                </div>
+            </div>
+        </div>
+        <script type="application/ecmascript" src="{{ url_for('static', filename="assets/termsModal.js") }}"></script>
+    {% endif %}
+
+    {% if session.get("discord_user") %}
+        <div id="skl-social-root"
+             data-user-id="{{ session['discord_user'].id }}"
+             data-user-name="{{ session['discord_user'].global_name or session['discord_user'].username }}"
+             data-user-avatar="{{ session['discord_user'].avatar_url or '' }}"></div>
+        <div class="skl-toast-stack" id="skl-toast-stack"></div>
+
+        <div class="skl-social-drawer" id="skl-friends-drawer" aria-hidden="true">
+            <div class="skl-social-backdrop" data-social-close></div>
+            <div class="skl-social-panel">
+                <div class="skl-social-header">
+                    <div>
+                        <p class="skl-social-eyebrow">Friends</p>
+                        <h3>Social</h3>
+                    </div>
+                    <button class="skl-btn ghost" type="button" data-social-close>Close</button>
+                </div>
+                <div class="skl-social-controls">
+                    <label>
+                        Status
+                        <select id="skl-social-status">
+                            <option value="online">Online</option>
+                            <option value="dnd">Non-available</option>
+                            <option value="offline">Offline</option>
+                        </select>
+                    </label>
+                    <label>
+                        Direct messages
+                        <select id="skl-social-dm-policy">
+                            <option value="anyone">Anyone</option>
+                            <option value="friends">Friends only</option>
+                            <option value="none">No one</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="skl-social-section">
+                    <h4>Friends</h4>
+                    <div id="skl-friends-list" class="skl-social-list"></div>
+                </div>
+                <div class="skl-social-section">
+                    <h4>Requests</h4>
+                    <div id="skl-friend-requests" class="skl-social-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="skl-social-drawer" id="skl-pm-drawer" aria-hidden="true">
+            <div class="skl-social-backdrop" data-pm-close></div>
+            <div class="skl-social-panel skl-pm-panel">
+                <div class="skl-social-header">
+                    <div>
+                        <p class="skl-social-eyebrow">Direct message</p>
+                        <h3 id="skl-pm-title">Conversation</h3>
+                    </div>
+                    <button class="skl-btn ghost" type="button" data-pm-close>Close</button>
+                </div>
+                <div class="skl-pm-layout">
+                    <div class="skl-pm-chat">
+                        <div id="skl-pm-messages" class="skl-pm-messages"></div>
+                        <div id="skl-pm-typing" class="skl-pm-typing" aria-live="polite"></div>
+                        <form id="skl-pm-form" class="skl-pm-form">
+                            <input id="skl-pm-input" type="text" placeholder="Write a message" maxlength="2000" />
+                            <button class="skl-btn primary" type="submit">Send</button>
+                        </form>
+                    </div>
+                    <aside class="skl-pm-profile">
+                        <div class="skl-profile-card">
+                            <div class="skl-profile-banner"></div>
+                            <div class="skl-profile-body">
+                                <div class="skl-profile-avatar-wrap">
+                                    <div class="skl-profile-avatar" id="skl-profile-avatar"></div>
+                                    <span class="skl-profile-avatar-status"></span>
+                                </div>
+                                <div class="skl-profile-name" id="skl-profile-name">Select a friend</div>
+                                <div class="skl-profile-handle" id="skl-profile-handle">Ready to chat</div>
+                                <div class="skl-profile-actions">
+                                    <button class="skl-btn primary" type="button">Invite to room</button>
+                                    <button class="skl-btn ghost" type="button">More</button>
+                                </div>
+                                <div class="skl-profile-section">
+                                    <h4>About</h4>
+                                    <p id="skl-profile-about">Start a conversation to see details here.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+
+        <script type="application/ecmascript" src="{{ url_for('static', filename="assets/social.js") }}"></script>
+    {% endif %}
+
+    <div class="skl-modal" id="skl-about-modal" aria-hidden="true">
+        <div class="skl-modal-backdrop" data-about-close></div>
+        <div class="skl-modal-panel" role="dialog" aria-modal="true" aria-labelledby="skl-about-title">
+            <div class="skl-modal-header">
+                <h3 id="skl-about-title">About SekaiLink</h3>
+                <button class="skl-btn ghost" type="button" data-about-close>Close</button>
+            </div>
+            <div class="skl-modal-body">
+                <p><strong>SekaiLink Beta-0.10.0</strong></p>
+                <p>Created by: TheLovenityJade</p>
+                <p>Powered by:</p>
+                <ul>
+                    <li>Archipelago (archipelago.gg)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="skl-modal" id="skl-contribute-modal" aria-hidden="true">
+        <div class="skl-modal-backdrop" data-contribute-close></div>
+        <div class="skl-modal-panel" role="dialog" aria-modal="true" aria-labelledby="skl-contribute-title">
+            <div class="skl-modal-header">
+                <h3 id="skl-contribute-title">Support SekaiLink</h3>
+                <button class="skl-btn ghost" type="button" data-contribute-close>Close</button>
+            </div>
+            <div class="skl-modal-body">
+                <p>Support us on Patreon to help cover server costs and keep SekaiLink running.</p>
+                <p>This is completely optional.</p>
+                <p>Supporter funds are not paid directly to creators.</p>
+                <p>If there is a surplus, a percentage will be donated to Archipelago.</p>
+                <p>Supporters receive a supporter badge.</p>
+            </div>
+            <div class="skl-modal-actions">
+                <button class="skl-btn ghost" type="button" data-contribute-close>Close</button>
+                <button class="skl-btn primary" type="button" id="skl-contribute-accept">Open Patreon</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="skl-modal" id="skl-settings-modal" aria-hidden="true">
+        <div class="skl-modal-backdrop" data-settings-close></div>
+        <div class="skl-modal-panel" role="dialog" aria-modal="true" aria-labelledby="skl-settings-title">
+            <div class="skl-modal-header">
+                <h3 id="skl-settings-title">User Settings</h3>
+                <button class="skl-btn ghost" type="button" data-settings-close>Close</button>
+            </div>
+            <div class="skl-modal-body">
+                <div class="skl-settings-tabs" role="tablist">
+                    <button class="skl-settings-tab active" type="button" data-settings-tab="profile" role="tab" aria-selected="true">Profile Settings</button>
+                    <button class="skl-settings-tab" type="button" data-settings-tab="client" role="tab" aria-selected="false">Client Settings</button>
+                </div>
+                <div class="skl-settings-panel active" data-settings-panel="profile" role="tabpanel">
+                    <p>Manage your account details and game settings here.</p>
+                    <div class="skl-settings-profile">
+                        <div><strong>Display name:</strong> {% if session.get("discord_user") %}{{ session["discord_user"].global_name or session["discord_user"].username }}{% else %}Not connected{% endif %}</div>
+                        <div><strong>Discord ID:</strong> {% if session.get("discord_user") %}{{ session["discord_user"].id }}{% else %}-{% endif %}</div>
+                        <div><strong>Email:</strong> {% if session.get("discord_user") %}{{ session["discord_user"].email or "Not shared" }}{% else %}-{% endif %}</div>
+                    </div>
+                    <button class="skl-btn primary" type="button" onclick="window.location.href='/account'">Open Account</button>
+                    <button class="skl-btn ghost" type="button" id="skl-disconnect-btn">Disconnect Account</button>
+                </div>
+                <div class="skl-settings-panel" data-settings-panel="client" role="tabpanel">
+                    <p>Client settings will be available here later.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script type="module" src="{{ url_for('static', filename="assets/cookieconsent-config.js") }}"></script>
+<script>
+(() => {
+    const bootVersion = "{{ app_version|default('v0')|e }}";
+    const bootKey = `skl_boot_done_${bootVersion}`;
+    const isBoot = window.location.pathname === "/boot";
+    const params = new URLSearchParams(window.location.search);
+    const skipBoot = params.get("skip_boot") === "1";
+    const navEntry = performance.getEntriesByType("navigation")[0];
+    const navType = navEntry ? navEntry.type : "navigate";
+    const hasBoot = window.localStorage.getItem(bootKey) === "1";
+
+    if (!isBoot && !skipBoot && !hasBoot && navType === "navigate") {
+        const next = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+        window.location.replace(`/boot?next=${encodeURIComponent(next)}`);
+        return;
+    }
+
+    if ("serviceWorker" in navigator) {
+        const swUrl = `/static/assets/sw.js?v=${encodeURIComponent(bootVersion)}`;
+        navigator.serviceWorker.register(swUrl);
+    }
+
+    const warmCore = () => {
+        const hint = ["/api/lobbies"];
+        hint.forEach((url) => {
+            fetch(url, { credentials: "include" }).catch(() => {});
+        });
+    };
+    if ("requestIdleCallback" in window) {
+        requestIdleCallback(warmCore, { timeout: 1500 });
+    } else {
+        setTimeout(warmCore, 800);
+    }
+    const aboutModal = document.getElementById("skl-about-modal");
+    const contributeModal = document.getElementById("skl-contribute-modal");
+    const contributeAccept = document.getElementById("skl-contribute-accept");
+    const settingsModal = document.getElementById("skl-settings-modal");
+    const settingsTabs = document.querySelectorAll("[data-settings-tab]");
+    const settingsPanels = document.querySelectorAll("[data-settings-panel]");
+    const PATREON_URL = "https://www.patreon.com/sekailink";
+    const muteBtn = document.getElementById("skl-mute-btn");
+    const muteLabel = document.getElementById("skl-mute-label");
+    const sidebar = document.querySelector(".skl-sidebar");
+    const sidebarToggle = document.querySelector("[data-sidebar-toggle]");
+    const disconnectBtn = document.getElementById("skl-disconnect-btn");
+
+    const openModal = (modal) => {
+        if (!modal) return;
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+    };
+
+    const closeModal = (modal) => {
+        if (!modal) return;
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+    };
+
+    const setSettingsTab = (name) => {
+        settingsTabs.forEach((tab) => {
+            const active = tab.dataset.settingsTab === name;
+            tab.classList.toggle("active", active);
+            tab.setAttribute("aria-selected", active ? "true" : "false");
+        });
+        settingsPanels.forEach((panel) => {
+            panel.classList.toggle("active", panel.dataset.settingsPanel === name);
+        });
+    };
+
+    document.querySelectorAll("[data-about-open]").forEach((btn) => {
+        btn.addEventListener("click", () => openModal(aboutModal));
+    });
+    document.querySelectorAll("[data-about-close]").forEach((btn) => {
+        btn.addEventListener("click", () => closeModal(aboutModal));
+    });
+    document.querySelectorAll("[data-contribute-open]").forEach((btn) => {
+        btn.addEventListener("click", () => openModal(contributeModal));
+    });
+    document.querySelectorAll("[data-contribute-close]").forEach((btn) => {
+        btn.addEventListener("click", () => closeModal(contributeModal));
+    });
+    document.querySelectorAll("[data-settings-open]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+            openModal(settingsModal);
+            setSettingsTab("profile");
+        });
+    });
+    document.querySelectorAll("[data-settings-close]").forEach((btn) => {
+        btn.addEventListener("click", () => closeModal(settingsModal));
+    });
+    settingsTabs.forEach((tab) => {
+        tab.addEventListener("click", () => setSettingsTab(tab.dataset.settingsTab));
+    });
+    if (contributeAccept) {
+        contributeAccept.addEventListener("click", () => {
+            window.open(PATREON_URL, "_blank", "noopener");
+            closeModal(contributeModal);
+        });
+    }
+    if (disconnectBtn) {
+        disconnectBtn.addEventListener("click", () => {
+            window.location.href = "/api/auth/logout";
+        });
+    }
+
+    if (muteBtn && window.SKL_SFX) {
+        const syncMute = () => {
+            const muted = window.SKL_SFX.getMuted();
+            muteBtn.classList.toggle("muted", muted);
+            if (muteLabel) muteLabel.textContent = muted ? "Sounds off" : "Sounds on";
+        };
+        syncMute();
+        muteBtn.addEventListener("click", () => {
+            window.SKL_SFX.toggleMuted();
+            syncMute();
+        });
+    }
+
+    if (sidebar && sidebarToggle) {
+        const storageKey = "skl_sidebar_collapsed";
+        const applySidebarState = (collapsed) => {
+            sidebar.classList.toggle("collapsed", collapsed);
+        };
+        const stored = window.localStorage.getItem(storageKey);
+        if (stored === "1") applySidebarState(true);
+        sidebarToggle.addEventListener("click", () => {
+            const collapsed = !sidebar.classList.contains("collapsed");
+            applySidebarState(collapsed);
+            window.localStorage.setItem(storageKey, collapsed ? "1" : "0");
+        });
+    }
+
+    const statusText = document.getElementById("skl-user-status-text");
+    const statusDot = document.getElementById("skl-user-status-dot");
+    const statusWrap = document.getElementById("skl-user-status");
+    const syncStatus = () => {
+        const online = navigator.onLine;
+        if (statusText) statusText.textContent = online ? "Online" : "Offline";
+        if (statusWrap) statusWrap.classList.toggle("offline", !online);
+        if (statusDot) statusDot.classList.toggle("offline", !online);
+    };
+    if (statusText || statusDot || statusWrap) {
+        syncStatus();
+        window.addEventListener("online", syncStatus);
+        window.addEventListener("offline", syncStatus);
+    }
+
+    const initModalDrag = () => {
+        const panels = document.querySelectorAll(".skl-modal-panel");
+        panels.forEach((panel) => {
+            const header = panel.querySelector(".skl-modal-header");
+            if (!header) return;
+            let isDragging = false;
+            let startX = 0;
+            let startY = 0;
+            let startLeft = 0;
+            let startTop = 0;
+
+            const onPointerMove = (event) => {
+                if (!isDragging) return;
+                const dx = event.clientX - startX;
+                const dy = event.clientY - startY;
+                const rect = panel.getBoundingClientRect();
+                const maxLeft = window.innerWidth - rect.width - 8;
+                const maxTop = window.innerHeight - rect.height - 8;
+                const nextLeft = Math.min(Math.max(8, startLeft + dx), Math.max(8, maxLeft));
+                const nextTop = Math.min(Math.max(8, startTop + dy), Math.max(8, maxTop));
+                panel.style.left = `${nextLeft}px`;
+                panel.style.top = `${nextTop}px`;
+            };
+
+            const onPointerUp = () => {
+                if (!isDragging) return;
+                isDragging = false;
+                panel.classList.remove("dragging");
+                window.removeEventListener("pointermove", onPointerMove);
+                window.removeEventListener("pointerup", onPointerUp);
+            };
+
+            header.addEventListener("pointerdown", (event) => {
+                if (event.button !== 0) return;
+                if (event.target.closest("button, a, input, textarea, select, [data-no-drag]")) return;
+                const rect = panel.getBoundingClientRect();
+                panel.style.position = "fixed";
+                panel.style.left = `${rect.left}px`;
+                panel.style.top = `${rect.top}px`;
+                panel.style.margin = "0";
+                panel.style.transform = "none";
+                isDragging = true;
+                startX = event.clientX;
+                startY = event.clientY;
+                startLeft = rect.left;
+                startTop = rect.top;
+                panel.classList.add("dragging");
+                window.addEventListener("pointermove", onPointerMove);
+                window.addEventListener("pointerup", onPointerUp);
+            });
+        });
+    };
+
+    initModalDrag();
+})();
+</script>
+</body>
+</html>

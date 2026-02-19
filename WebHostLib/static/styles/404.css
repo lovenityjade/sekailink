@@ -1,0 +1,47 @@
+#page-not-found {
+    position: relative;
+    z-index: 1;
+    min-height: calc(100vh - 120px);
+    display: grid;
+    place-items: center;
+    padding: 72px 20px 96px;
+    text-align: center;
+}
+
+.pnf-card {
+    max-width: 560px;
+    padding: 44px 40px;
+    border-radius: 24px;
+    background: rgba(8, 14, 24, 0.68);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(10px);
+}
+
+.pnf-code {
+    font-size: 5rem;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #6cf0c2;
+    text-transform: uppercase;
+}
+
+#page-not-found h1 {
+    margin: 16px 0 10px;
+    font-size: 2rem;
+    color: #ffffff;
+}
+
+#page-not-found p {
+    margin: 0 auto 24px;
+    color: rgba(255, 255, 255, 0.78);
+    max-width: 420px;
+}
+
+.pnf-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}

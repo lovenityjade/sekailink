@@ -365,6 +365,30 @@ body.app-ui .skl-app-main {
     max-width: 640px;
 }
 
+.skl-selected-game-banner {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 10px;
+    padding: 7px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(89, 245, 208, 0.38);
+    background: linear-gradient(180deg, rgba(9, 33, 30, 0.88), rgba(8, 22, 20, 0.74));
+    box-shadow: inset 0 0 0 1px rgba(89, 245, 208, 0.1), 0 0 14px rgba(31, 163, 140, 0.2);
+    color: #dcfff4;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+    max-width: min(560px, 92vw);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.skl-selected-game-banner.missing {
+    border-color: rgba(255, 184, 120, 0.35);
+    box-shadow: inset 0 0 0 1px rgba(255, 184, 120, 0.1), 0 0 14px rgba(255, 184, 120, 0.14);
+    color: rgba(255, 226, 196, 0.95);
+}
+
 .skl-lobby-meta {
     display: flex;
     flex-direction: column;

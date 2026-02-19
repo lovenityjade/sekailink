@@ -1,0 +1,268 @@
+{% extends 'pageWrapper.html' %}
+{% set show_footer = False %}
+{% set body_class = "app-ui" %}
+{% set active_page = "dashboard" %}
+
+{% block head %}
+    <title>SekaiLink Account</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="styles/account.css") }}" />
+{% endblock %}
+
+{% block body %}
+    <div class="page-bg"></div>
+    <div class="skl-app-shell">
+        {% include 'partials/appSidebar.html' %}
+        <div class="skl-app-main">
+            <div class="dashboard">
+                <section class="dashboard-hero">
+                    <div class="dashboard-hero-card">
+                        <div class="dashboard-title">
+                            <span>Account</span>
+                            <h1>SekaiLink Account</h1>
+                        </div>
+                        {% if user %}
+                            <div class="dashboard-profile">
+                                {% if user and (user.custom_avatar_url or session["discord_user"].avatar_url) %}
+                                    <img class="account-avatar" src="{{ user and (user.custom_avatar_url or session["discord_user"].avatar_url) }}" alt="Discord avatar" />
+                                {% endif %}
+                                <div>
+                                    <div class="account-name">{{ user.global_name or user.username }}</div>
+                                    <div class="account-id">Discord ID: {{ user.discord_id }}</div>
+                                    {% if user.email %}
+                                        <div class="account-email">{{ user.email }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="dashboard-hero-meta">
+                        <div class="dashboard-stat">
+                            <span class="stat-label">Terms Version</span>
+                            <span class="stat-value">{{ terms_version }}</span>
+                        </div>
+                        <div class="dashboard-stat">
+                            <span class="stat-label">Status</span>
+                            {% if user and user.terms_accepted and user.terms_version == terms_version %}
+                                <span class="stat-value ok">Active</span>
+                            {% else %}
+                                <span class="stat-value warn">Action Required</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </section>
+
+                <section class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>Terms & Community</h3>
+                        {% if user and user.terms_accepted and user.terms_version == terms_version %}
+                            <p>Status: Accepted ({{ user.terms_version }})</p>
+                            <p>Accepted at: {{ user.terms_accepted_at }}</p>
+                        {% else %}
+                            <p>Action required: Please accept the latest terms ({{ terms_version }}).</p>
+                            <button class="account-accept" id="account-accept">Accept Updated Terms</button>
+                            <span class="account-error" id="account-error"></span>
+                        {% endif %}
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Identity</h3>
+                        {% if user %}
+                            <p>Username: {{ user.username }}</p>
+                            <p>Global Name: {{ user.global_name }}</p>
+                            {% if user.email %}
+                                <p>Email: {{ user.email }}</p>
+                            {% else %}
+                                <p>Email: Not shared</p>
+                            {% endif %}
+                        {% else %}
+                            <p>No account data available.</p>
+                        {% endif %}
+                    </div>
+                    <div class="dashboard-card full">
+                        <h3>Profile Settings</h3>
+                        <form id="profile-settings-form" class="profile-form" enctype="multipart/form-data">
+                            <label class="account-select">
+                                Avatar (png/jpg/webp/gif)
+                                <input type="file" name="avatar" accept="image/png,image/jpeg,image/webp,image/gif" />
+                            </label>
+                            <label class="account-select">
+                                Bio
+                                <textarea name="bio" rows="4" maxlength="1200" placeholder="Tell people about your randomizer style...">{{ profile.bio }}</textarea>
+                            </label>
+                            <label class="account-select">
+                                Badges (comma separated)
+                                <input type="text" name="badges" value="{{ profile.badges }}" placeholder="host, racer, helper" />
+                            </label>
+                            <button type="submit" class="account-accept">Save Profile</button>
+                            <span class="account-status" id="profile-settings-status"></span>
+                        </form>
+
+                        <hr class="profile-sep" />
+
+                        <h3>Password</h3>
+                        <form id="password-settings-form" class="profile-form">
+                            <label class="account-select">
+                                Current password
+                                <input type="password" name="current_password" {% if not profile.has_password %}placeholder="Leave empty (first password setup)"{% endif %} />
+                            </label>
+                            <label class="account-select">
+                                New password
+                                <input type="password" name="new_password" required />
+                            </label>
+                            <button type="submit" class="account-accept">Update Password</button>
+                            <span class="account-status" id="password-settings-status"></span>
+                        </form>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Social Settings</h3>
+                        <p>Control your online status and who can message you.</p>
+                        <label class="account-select">
+                            Status
+                            <select id="social-status-select">
+                                <option value="online" {% if user and user.presence_status == "online" %}selected{% endif %}>Online</option>
+                                <option value="dnd" {% if user and user.presence_status == "dnd" %}selected{% endif %}>Non-available</option>
+                                <option value="offline" {% if user and user.presence_status == "offline" %}selected{% endif %}>Offline</option>
+                            </select>
+                        </label>
+                        <label class="account-select">
+                            Direct messages
+                            <select id="social-dm-policy-select">
+                                <option value="anyone" {% if user and user.dm_policy == "anyone" %}selected{% endif %}>Anyone</option>
+                                <option value="friends" {% if user and user.dm_policy == "friends" %}selected{% endif %}>Friends only</option>
+                                <option value="none" {% if user and user.dm_policy == "none" %}selected{% endif %}>No one</option>
+                            </select>
+                        </label>
+                        <span class="account-status" id="social-settings-status"></span>
+                    </div>
+                    <div class="dashboard-card full">
+                        <div class="yaml-header">
+                            <h3>Game Manager</h3>
+                            <div class="yaml-header-actions">
+                                <a class="yaml-create" href="/dashboard/yaml/new">Open Game Manager</a>
+                                <button class="yaml-import" id="yaml-import-button" type="button">Import YAML</button>
+                            </div>
+                        </div>
+                        {% if yamls and yamls|length %}
+                            <div class="yaml-list">
+                                {% for item in yamls %}
+                                    <div class="yaml-row">
+                                        <div class="yaml-meta">
+                                            <div class="yaml-title">
+                                                {{ item.title }}
+                                                {% if item.custom %}
+                                                    <span class="yaml-badge">Custom</span>
+                                                {% endif %}
+                                            </div>
+                                            <div class="yaml-sub">Game: {{ item.game }} • Player: {{ item.player_name }}</div>
+                                        </div>
+                                        <div class="yaml-actions">
+                                            <a href="/dashboard/yaml/{{ item.game }}/edit/{{ item.id }}">Edit</a>
+                                            <a href="/dashboard/yaml/{{ item.id }}/download">Download</a>
+                                            <form method="post" action="/dashboard/yaml/{{ item.id }}/delete" class="yaml-delete-form" data-yaml-id="{{ item.id }}">
+                                                <button type="submit">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p>No YAMLs saved yet.</p>
+                        {% endif %}
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <form id="yaml-import-form" class="yaml-import-form" method="post" action="/dashboard/yaml/import" enctype="multipart/form-data">
+        <input id="yaml-import-input" name="yaml-file" type="file" accept=".yml,.yaml" />
+    </form>
+
+    <script>
+        const acceptBtn = document.getElementById("account-accept");
+        if (acceptBtn) {
+            const error = document.getElementById("account-error");
+            acceptBtn.addEventListener("click", async () => {
+                acceptBtn.disabled = true;
+                error.textContent = "";
+                try {
+                    const res = await fetch("/api/auth/terms", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ accept: true }),
+                    });
+                    if (!res.ok) {
+                        throw new Error("Terms acceptance failed.");
+                    }
+                    window.location.reload();
+                } catch (err) {
+                    error.textContent = "Unable to save your acceptance. Please try again.";
+                    acceptBtn.disabled = false;
+                }
+            });
+        }
+        const importBtn = document.getElementById("yaml-import-button");
+        const importInput = document.getElementById("yaml-import-input");
+        const importForm = document.getElementById("yaml-import-form");
+        if (importBtn && importInput && importForm) {
+            importBtn.addEventListener("click", () => importInput.click());
+            importInput.addEventListener("change", () => {
+                if (importInput.files.length) {
+                    importForm.submit();
+                }
+            });
+        }
+        document.addEventListener("submit", async (event) => {
+            const form = event.target.closest(".yaml-delete-form");
+            if (!form) return;
+            event.preventDefault();
+            const yamlId = form.dataset.yamlId;
+            if (!yamlId) return;
+            try {
+                const res = await fetch(`/api/yamls/${encodeURIComponent(yamlId)}/delete`, { method: "POST" });
+                if (!res.ok) throw new Error("Delete failed.");
+                const row = form.closest(".yaml-row");
+                if (row) row.remove();
+            } catch (err) {
+                alert("Unable to delete YAML. Please try again.");
+            }
+        });
+
+        const profileForm = document.getElementById("profile-settings-form");
+        const profileStatus = document.getElementById("profile-settings-status");
+        if (profileForm) {
+            profileForm.addEventListener("submit", async (event) => {
+                event.preventDefault();
+                profileStatus.textContent = "Saving...";
+                const fd = new FormData(profileForm);
+                try {
+                    const res = await fetch("/api/account/profile", { method: "POST", body: fd });
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.error || "Profile update failed.");
+                    profileStatus.textContent = "Profile updated.";
+                    setTimeout(() => window.location.reload(), 500);
+                } catch (err) {
+                    profileStatus.textContent = err.message || "Profile update failed.";
+                }
+            });
+        }
+
+        const passwordForm = document.getElementById("password-settings-form");
+        const passwordStatus = document.getElementById("password-settings-status");
+        if (passwordForm) {
+            passwordForm.addEventListener("submit", async (event) => {
+                event.preventDefault();
+                passwordStatus.textContent = "Saving...";
+                const fd = new FormData(passwordForm);
+                try {
+                    const res = await fetch("/api/account/password", { method: "POST", body: fd });
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.error || "Password update failed.");
+                    passwordStatus.textContent = "Password updated.";
+                    passwordForm.reset();
+                } catch (err) {
+                    passwordStatus.textContent = err.message || "Password update failed.";
+                }
+            });
+        }
+    </script>
+{% endblock %}

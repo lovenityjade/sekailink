@@ -3,16 +3,27 @@
   "display_name": "Pokemon LeafGreen",
   "emu": "bizhawk",
   "lua_connector": "lua/connector.lua",
-  "tracker_pack_uid": "https://github.com/vyneras/pokemon-frlg-tracker",
+  "tracker_pack_uid": "https://github.com/vyneras/pokemon-frlg-tracker/releases/tag/4.0.2",
   "patcher": "archipelago",
-  "patch_extensions": [".apleafgreen"],
+  "patch_extensions": [
+    ".apleafgreen"
+  ],
   "rom_requirements": {
-    "extensions": [".gba"],
-    "md5": ["612ca9473451fa42b51d1711031ed5f6", "9d33a02159e018d09073e700e1fd10fd"],
-    "sha1": ["574fa542ffebb14be69902d1d36f1ec0a4afd71e", "7862c67bdecbe21d1d69ce082ce34327e1c6ed5e"]
+    "extensions": [
+      ".gba"
+    ],
+    "md5": [
+      "612ca9473451fa42b51d1711031ed5f6",
+      "9d33a02159e018d09073e700e1fd10fd"
+    ],
+    "sha1": [
+      "574fa542ffebb14be69902d1d36f1ec0a4afd71e",
+      "7862c67bdecbe21d1d69ce082ce34327e1c6ed5e"
+    ]
   },
   "features": {
     "autotracking": true,
     "save_required": true
-  }
+  },
+  "tracker_web_url": ""
 }

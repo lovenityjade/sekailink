@@ -88,6 +88,11 @@
     flex-wrap: wrap;
 }
 
+.skl-editor-lang-toggle {
+    display: inline-flex;
+    gap: 8px;
+}
+
 .skl-gm-select {
     min-width: 220px;
     padding: 8px 10px;
@@ -106,24 +111,32 @@
     overflow: hidden;
 }
 
-.skl-gm-editor textarea {
-    font-family: "Courier New", monospace;
-    font-size: 0.95rem;
+.skl-gm-code-editor {
+    width: 100%;
+    min-height: 420px;
+    max-height: 70vh;
+    overflow: auto;
     line-height: 1.5;
-    padding: 16px 18px;
-    white-space: pre;
     tab-size: 2;
 }
 
-.skl-gm-editor textarea {
-    width: 100%;
-    height: 420px;
-    border: none;
-    resize: vertical;
-    background: rgba(8, 18, 13, 0.25);
-    color: #e3fff0;
+.skl-gm-editor-preview,
+.skl-gm-editor-input {
+    min-height: 420px;
+    white-space: pre;
+}
+
+.skl-gm-editor-input {
     outline: none;
-    overflow: auto;
+    border: none;
+    background: transparent;
+    color: #e3fff0;
+    width: 100%;
+}
+
+.skl-gm-editor-preview {
+    margin: 0;
+    pointer-events: none;
 }
 
 .yaml-key {
@@ -144,6 +157,55 @@
 
 .yaml-comment {
     color: rgba(170, 190, 180, 0.6);
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: rgba(170, 190, 180, 0.66);
+}
+
+.token.punctuation {
+    color: rgba(206, 246, 236, 0.78);
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+    color: #8cf7d3;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+    color: #ffd7a0;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+    color: #9ed8ff;
+}
+
+.token.keyword,
+.token.atrule,
+.token.attr-value {
+    color: #9bb6ff;
+}
+
+.token.function,
+.token.class-name {
+    color: #f7d47c;
 }
 
 .skl-gm-editor-actions {

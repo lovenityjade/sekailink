@@ -3,7 +3,7 @@
   "display_name": "The Minish Cap",
   "emu": "bizhawk",
   "lua_connector": "lua/connector.lua",
-  "tracker_pack_uid": "https://github.com/deoxis9001/tmcrando_maptracker_deoxis",
+  "tracker_pack_uid": "https://github.com/deoxis9001/tmcrando_maptracker_deoxis/releases/tag/stable_v1.0.0.50",
   "patcher": "archipelago",
   "patch_extensions": [
     ".aptmc"
@@ -20,5 +20,6 @@
   "features": {
     "autotracking": true,
     "save_required": true
-  }
+  },
+  "tracker_web_url": ""
 }

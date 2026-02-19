@@ -1,5 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import Editor from "react-simple-code-editor";
+import Prism from "prismjs";
+import "prismjs/components/prism-yaml";
+import "prismjs/components/prism-lua";
 import { apiFetch, apiJson } from "../services/api";
 import gameRegistry from "../data/games.generated.json";
 import { runtime } from "../services/runtime";
@@ -32,11 +36,30 @@ type RuntimeModuleInfo = {
   manifest: Record<string, any>;
 };
 
+type TrackerBadge = {
+  label: "Poptracker" | "Webtracker" | "No Tracker";
+  className: "poptracker" | "webtracker" | "no-tracker";
+};
+
+const normalizeTrackerKey = (value: unknown) =>
+  String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+
+const TRACKER_BADGE_OVERRIDES: Record<string, TrackerBadge> = {
+  a_link_between_worlds: { label: "Poptracker", className: "poptracker" },
+  pokemon_red_and_blue: { label: "Poptracker", className: "poptracker" },
+  pokemon_firered_and_leafgreen: { label: "Poptracker", className: "poptracker" },
+};
+
 const GameManagerPage: React.FC = () => {
   const { t } = useI18n();
   const [activeTab, setActiveTab] = useState<"my" | "add" | "editor">("my");
   const [yamls, setYamls] = useState<YamlEntry[]>([]);
   const [yamlContent, setYamlContent] = useState("");
+  const [editorLang, setEditorLang] = useState<"yaml" | "lua">("yaml");
   const [yamlStatus, setYamlStatus] = useState("");
   const [yamlSelect, setYamlSelect] = useState("");
   const [importedName, setImportedName] = useState("");
@@ -183,20 +206,56 @@ const GameManagerPage: React.FC = () => {
   }, [search, filteredGames.length, updateCarouselState]);
 
   const placeholderBoxArtUrl = useMemo(() => {
-    if (typeof window !== "undefined" && window.location?.protocol === "file:") {
-      return "./assets/img/yaml_placeholder.svg";
+    const base = String(import.meta.env.BASE_URL || "/").replace(/\/?$/, "/");
+    if (typeof window !== "undefined" && window.location?.href) {
+      return new URL(`${base}assets/img/yaml_placeholder.svg`, window.location.href).toString();
     }
-    return "/assets/img/yaml_placeholder.svg";
+    return `${base}assets/img/yaml_placeholder.svg`;
   }, []);
 
   const getBoxArtUrl = useCallback((game: GameEntry) => {
     return (
-      gameBoxArtById[game.game_id] ||
       lookupFeaturedGridUrl(game.display_name) ||
       lookupFeaturedGridUrl(game.game_id) ||
+      gameBoxArtById[game.game_id] ||
       placeholderBoxArtUrl
     );
   }, [gameBoxArtById, placeholderBoxArtUrl]);
+
+  const trackerBadgeByKey = useMemo(() => {
+    const map: Record<string, TrackerBadge> = {};
+
+    for (const mod of runtimeModules) {
+      const manifest = mod?.manifest || {};
+      const gameId = normalizeTrackerKey(manifest.game_id);
+      const display = normalizeTrackerKey(manifest.display_name);
+      const trackerPack = String(manifest.tracker_pack_uid || "").trim();
+      const trackerWeb = String(manifest.tracker_web_url || "").trim();
+      const badge: TrackerBadge = trackerWeb
+        ? { label: "Webtracker", className: "webtracker" }
+          : trackerPack
+          ? { label: "Poptracker", className: "poptracker" }
+          : { label: "No Tracker", className: "no-tracker" };
+      if (gameId) map[gameId] = badge;
+      if (display) map[display] = badge;
+    }
+    for (const [key, badge] of Object.entries(TRACKER_BADGE_OVERRIDES)) {
+      if (!map[key]) map[key] = badge;
+    }
+    return map;
+  }, [runtimeModules]);
+
+  const getTrackerBadge = useCallback((game: GameEntry): TrackerBadge => {
+    const normalizedId = normalizeTrackerKey(game.game_id);
+    const normalizedName = normalizeTrackerKey(game.display_name);
+    return (
+      trackerBadgeByKey[normalizedId] ||
+      trackerBadgeByKey[normalizedName] || {
+        label: "No Tracker",
+        className: "no-tracker",
+      }
+    );
+  }, [trackerBadgeByKey]);
 
   const loadYaml = async (yamlId = yamlSelect) => {
     if (!yamlId) {
@@ -557,27 +616,36 @@ const GameManagerPage: React.FC = () => {
                       </svg>
                     </button>
                     <div className="yaml-carousel-track" ref={carouselRef}>
-                      {filteredGames.map((game) => (
-                        <a
-                          className="yaml-game-card yaml-carousel-card"
-                          key={game.game_id}
-                          href={`#/player-options/${encodeURIComponent(game.game_id)}/create`}
-                          onClick={(event) => {
-                            event.preventDefault();
-                            navigate(`/player-options/${encodeURIComponent(game.game_id)}/create`);
-                          }}
-                          data-game-name={game.display_name}
-                        >
-                          <div className="yaml-game-thumb">
-                            <img
-                              src={getBoxArtUrl(game)}
-                              alt=""
-                              loading="lazy"
-                            />
-                          </div>
-                          <div className="yaml-game-name">{game.display_name}</div>
-                        </a>
-                      ))}
+                      {filteredGames.map((game) => {
+                        const trackerBadge = getTrackerBadge(game);
+                        return (
+                          <a
+                            className="yaml-game-card yaml-carousel-card"
+                            key={game.game_id}
+                            href={`#/player-options/${encodeURIComponent(game.game_id)}/create`}
+                            onClick={(event) => {
+                              event.preventDefault();
+                              navigate(`/player-options/${encodeURIComponent(game.game_id)}/create`);
+                            }}
+                            data-game-name={game.display_name}
+                          >
+                            <div className="yaml-game-thumb">
+                              <span className={`yaml-tracker-badge ${trackerBadge.className}`}>{trackerBadge.label}</span>
+                              <img
+                                src={getBoxArtUrl(game)}
+                                alt=""
+                                loading="lazy"
+                                onError={(event) => {
+                                  const target = event.currentTarget;
+                                  if (target.dataset.fallbackApplied === "1") return;
+                                  target.dataset.fallbackApplied = "1";
+                                  target.src = placeholderBoxArtUrl;
+                                }}
+                              />
+                            </div>
+                          </a>
+                        );
+                      })}
                     </div>
                     <button
                       type="button"
@@ -594,154 +662,6 @@ const GameManagerPage: React.FC = () => {
                   <div className="yaml-game-empty" id="yaml-game-empty" hidden={filteredGames.length > 0}>
                     {!gamesLoaded ? "Loading games..." : "No games match your search (or this game is not supported yet)."}
                   </div>
-                  {runtimeModules.length > 0 && (
-                    <div className="skl-setup-panel" style={{ marginTop: 16 }}>
-                      <div className="skl-setup-header">Auto-Launch Setup (Runtime Modules)</div>
-                      <div className="skl-setup-actions" style={{ marginTop: 10 }}>
-                        <button
-                          type="button"
-                          onClick={async () => {
-                            setSetupStatus("");
-                            const picked = await runtime.pickFolder?.({ title: "Select ROM folder to scan" });
-                            if (!picked || (picked as any).canceled || !(picked as any).path) return;
-                            setSetupBusy(true);
-                            try {
-                              const res = await runtime.romsScan?.((picked as any).path);
-                              await refreshSetupConfig();
-                              const count = Array.isArray((res as any)?.results) ? (res as any).results.length : 0;
-                              setSetupStatus(count ? `Imported ${count} ROM(s).` : "No recognized ROMs found in that folder.");
-                            } catch (err) {
-                              setSetupStatus(err instanceof Error ? err.message : "ROM scan failed.");
-                            } finally {
-                              setSetupBusy(false);
-                            }
-                          }}
-                          disabled={setupBusy}
-                        >
-                          Scan ROM Folder
-                        </button>
-                      </div>
-                      <div className="skl-setup-steps">
-                        {runtimeModules.filter((mod) => !(mod.manifest as any)?.internal).map((mod) => {
-                          const flags = getRuntimeSetupFlags(mod);
-                          const name = String(mod.manifest?.display_name || mod.moduleId);
-                          return (
-                            <div key={mod.moduleId} className={flags.ready ? "ready" : "missing"} style={{ display: "flex", gap: 12, alignItems: "center", justifyContent: "space-between" }}>
-                              <div>
-                                <strong>{name}</strong> <span style={{ opacity: 0.7 }}>({mod.moduleId})</span>
-                                <div style={{ fontSize: 12, opacity: 0.8 }}>
-                                  ROM: {flags.romReady ? "Ready" : "Missing"} · Tracker: {flags.trackerNeeded ? (flags.trackerReady ? "Installed" : "Missing") : "Optional"}
-                                </div>
-                              </div>
-                              <button
-                                type="button"
-                                className="skl-btn ghost"
-                                onClick={() => {
-                                  setSetupStatus("");
-                                  setRuntimeSetupModuleId(mod.moduleId);
-                                }}
-                              >
-                                Setup
-                              </button>
-                            </div>
-                          );
-                        })}
-                      </div>
-                      {runtimeSetupModuleId && (
-                        <div className="skl-setup-panel" style={{ marginTop: 16 }}>
-                          <div className="skl-setup-header">
-                            Setup: {String(runtimeModules.find((m) => m.moduleId === runtimeSetupModuleId)?.manifest?.display_name || runtimeSetupModuleId)}
-                          </div>
-                          {(() => {
-                            const mod = runtimeModules.find((m) => m.moduleId === runtimeSetupModuleId);
-                            const manifest = (mod?.manifest || {}) as any;
-                            const flags = mod ? getRuntimeSetupFlags(mod) : { requiredRomIds: [], romReady: false, trackerNeeded: false, trackerReady: false, ready: false };
-                            const exts = normalizeExtensions(manifest?.rom_requirements?.extensions);
-                            const gameId = String(manifest?.game_id || "");
-                            const trackerSource = String(manifest?.tracker_pack_uid || "");
-                            return (
-                              <>
-                                <div className="skl-setup-steps">
-                                  {flags.requiredRomIds.map((romId: string, idx: number) => (
-                                    <div key={romId} className={setupConfig.roms[romId] ? "ready" : "missing"}>
-                                      {idx + 1}. Import ROM ({romId}) — {setupConfig.roms[romId] ? "Ready" : "Missing"}
-                                    </div>
-                                  ))}
-	                                  {flags.trackerNeeded && (
-	                                    <div className={setupConfig.trackerPacks[gameId] ? "ready" : "missing"}>
-	                                      {flags.requiredRomIds.length + 1}. Install Tracker Pack — {setupConfig.trackerPacks[gameId] ? "Installed" : "Missing"}
-	                                    </div>
-	                                  )}
-	                                  {flags.trackerNeeded && setupConfig.trackerPacks[gameId] && (
-	                                    <div className="ready">
-	                                      {flags.requiredRomIds.length + 2}. Tracker Layout — {setupConfig.trackerVariants[gameId] ? setupConfig.trackerVariants[gameId] : "Default"}
-	                                    </div>
-	                                  )}
-	                                </div>
-	                                <div className="skl-setup-actions">
-                                  {flags.requiredRomIds.map((romId: string) => (
-                                    <button
-                                      key={romId}
-                                      type="button"
-                                      onClick={() => importRom(`Select ROM for ${romId}`, exts.length ? exts : ["rom"])}
-                                      disabled={setupBusy}
-                                    >
-                                      Import ROM ({romId})
-                                    </button>
-                                  ))}
-	                                  {flags.trackerNeeded && trackerSource && (
-	                                    <button
-	                                      type="button"
-	                                      onClick={() => installTrackerPack(gameId, trackerSource)}
-	                                      disabled={setupBusy}
-	                                    >
-	                                      Install Tracker Pack
-	                                    </button>
-	                                  )}
-	                                  {flags.trackerNeeded && setupConfig.trackerPacks[gameId] && (
-	                                    <>
-	                                      {!variantsByGameId[gameId] && (
-	                                        <button type="button" onClick={() => loadPackVariants(gameId)} disabled={setupBusy}>
-	                                          Load Layout Options
-	                                        </button>
-	                                      )}
-                                      {variantsByGameId[gameId] && (
-                                        <label style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
-                                          Layout
-                                          <select
-                                            value={setupConfig.trackerVariants[gameId] || ""}
-                                            onChange={async (event) => {
-                                              const value = event.target.value || "";
-                                              await runtime.trackerSetVariant?.(gameId, value);
-                                              await refreshSetupConfig();
-                                            }}
-                                            disabled={setupBusy}
-                                          >
-                                            <option value="">Default</option>
-                                            {variantsByGameId[gameId]
-                                              .filter((v) => v.id && v.id !== "default")
-                                              .map((v) => (
-                                                <option key={v.id} value={v.id}>
-                                                  {v.name} ({v.id})
-                                                </option>
-                                              ))}
-                                          </select>
-                                        </label>
-                                      )}
-                                    </>
-                                  )}
-	                                  <button type="button" className="skl-btn ghost" onClick={() => setRuntimeSetupModuleId(null)}>
-	                                    Close
-	                                  </button>
-                                  {setupStatus && <span className="skl-setup-status">{setupStatus}</span>}
-                                </div>
-                              </>
-                            );
-                          })()}
-                        </div>
-                      )}
-                    </div>
-                  )}
                   </div>
                 </div>
               </div>
@@ -750,6 +670,22 @@ const GameManagerPage: React.FC = () => {
         <div className="skl-gm-section-header">
           <h2>{t("gm.editor")}</h2>
           <div className="skl-gm-actions">
+            <div className="skl-editor-lang-toggle" role="group" aria-label="Editor language">
+              <button
+                type="button"
+                className={`skl-btn ghost${editorLang === "yaml" ? " active" : ""}`}
+                onClick={() => setEditorLang("yaml")}
+              >
+                YAML
+              </button>
+              <button
+                type="button"
+                className={`skl-btn ghost${editorLang === "lua" ? " active" : ""}`}
+                onClick={() => setEditorLang("lua")}
+              >
+                Lua
+              </button>
+            </div>
             <label className="skl-btn ghost">
               {t("gm.import_yaml")}
               <input type="file" accept=".yml,.yaml" style={{ display: "none" }} onChange={onImportYaml} />
@@ -767,13 +703,23 @@ const GameManagerPage: React.FC = () => {
         </div>
         {importedName && <div className="skl-ready-status">Imported: {importedName}</div>}
         <div className="skl-gm-editor">
-          <textarea
-            id="gm-yaml-editor"
-            spellCheck={false}
-            placeholder="Select a YAML to edit..."
+          <Editor
             value={yamlContent}
-            onChange={(event) => setYamlContent(event.target.value)}
-          ></textarea>
+            onValueChange={(code) => setYamlContent(code)}
+            highlight={(code) =>
+              Prism.highlight(
+                code,
+                editorLang === "lua" ? Prism.languages.lua : Prism.languages.yaml,
+                editorLang
+              )
+            }
+            padding={16}
+            textareaId="gm-yaml-editor"
+            textareaClassName="skl-gm-editor-input"
+            preClassName="skl-gm-editor-preview"
+            className="skl-gm-code-editor"
+            style={{ fontFamily: "\"JetBrains Mono\", \"Fira Code\", \"Consolas\", monospace", fontSize: 14 }}
+          />
         </div>
         <div className="skl-gm-editor-actions">
           <button className="skl-btn primary" id="gm-yaml-save" type="button" onClick={() => setCustomModalOpen(true)}>
