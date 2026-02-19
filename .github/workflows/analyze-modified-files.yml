@@ -1,12 +1,7 @@
 name: Analyze modified files
 
 on:
-  pull_request:
-    paths:
-      - "**.py"
-  push:
-    paths:
-      - "**.py"
+  workflow_dispatch:
 
 env:
   BASE: ${{ github.event.pull_request.base.sha }}
