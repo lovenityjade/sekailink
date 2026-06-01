@@ -1,0 +1,53 @@
+appId: com.sekailink.client
+productName: SekaiLink Client
+artifactName: SekaiLink-client-${version}.${ext}
+
+files:
+  - dist/**
+  - electron/**
+  - public/**
+
+extraResources:
+  # Ship the SekaiLink runtime as real files (not inside app.asar), so Python/BizHawk/PopTracker can access them.
+  - from: ../runtime
+    to: runtime
+  # Ship BizHawk (Linux) alongside the AppImage. The Electron main process resolves this via process.resourcesPath.
+  - from: ../../third_party/emulators/BizHawk-2.10-linux-x64
+    to: third_party/emulators/BizHawk-2.10-linux-x64
+  # Ship BizHawk (Windows x64) for Windows desktop builds.
+  - from: ../../third_party/emulators/BizHawk-2.10-win-x64
+    to: third_party/emulators/BizHawk-2.10-win-x64
+  # Ship bundled Mono runtime(s) (Linux) so BizHawk can run without system package installs.
+  # The Electron main process selects the appropriate folder by arch at runtime.
+  - from: ../../third_party/mono
+    to: third_party/mono
+  # Ship compiled PopTracker build(s). Runtime will prefer this binary when present.
+  - from: ../../third_party/PopTracker/build
+    to: third_party/PopTracker/build
+  # Ship local FF4FE generator source for portable patching (Windows/Linux).
+  - from: ../../third_party/FreeEnterprise4
+    to: third_party/FreeEnterprise4
+  # AP/MWGG patcher sources are staged into ../runtime/ap by
+  # scripts/stage-ap-runtime.mjs and ride along with the runtime bundle above.
+
+directories:
+  buildResources: build
+  output: release
+
+linux:
+  target:
+    - AppImage
+  category: Game
+  icon: build/favicon.png
+
+win:
+  target:
+    - nsis
+  icon: build/favicon.ico
+
+publish: []
+
+protocols:
+  name: SekaiLink Auth
+  schemes:
+    - sekailink

@@ -1,0 +1,218 @@
+{
+  "contract_id": "alttp-slot-data-complete-v1",
+  "linkedworld_id": "alttp",
+  "status": "repo-owned-normalized-slot-data",
+  "source_refs": [
+    "sekaiemu/worlds/alttp/Options.py",
+    "presets/alttp.ap-defaults.core.json"
+  ],
+  "consumers": {
+    "tracker": "settings panels and tester-visible seed context",
+    "link_room": "session diagnostics where room metadata is mirrored",
+    "sekaiemu": "runtime packaging defaults when available through room metadata"
+  },
+  "panels": [
+    {
+      "panel_id": "settings_core",
+      "label": "Core Settings",
+      "fields": [
+        {
+          "slot_data_key": "goal",
+          "label": "Goal",
+          "source_option": "Goal",
+          "default_value": "ganon"
+        },
+        {
+          "slot_data_key": "mode",
+          "label": "Mode",
+          "source_option": "Mode",
+          "default_value": "open"
+        },
+        {
+          "slot_data_key": "entrance_shuffle",
+          "label": "Entrance Shuffle",
+          "source_option": "EntranceShuffle",
+          "default_value": "vanilla"
+        },
+        {
+          "slot_data_key": "item_pool",
+          "label": "Item Pool",
+          "source_option": "ItemPool",
+          "default_value": "normal"
+        },
+        {
+          "slot_data_key": "item_functionality",
+          "label": "Item Functionality",
+          "source_option": "ItemFunctionality",
+          "default_value": "normal"
+        },
+        {
+          "slot_data_key": "progressive",
+          "label": "Progressive Items",
+          "source_option": "Progressive"
+        }
+      ]
+    },
+    {
+      "panel_id": "settings_logic",
+      "label": "Logic And Access",
+      "fields": [
+        {
+          "slot_data_key": "glitches_required",
+          "label": "Glitches Required",
+          "source_option": "GlitchesRequired"
+        },
+        {
+          "slot_data_key": "dark_room_logic",
+          "label": "Dark Room Logic",
+          "source_option": "DarkRoomLogic",
+          "default_value": "lamp"
+        },
+        {
+          "slot_data_key": "open_pyramid",
+          "label": "Open Pyramid Hole",
+          "source_option": "OpenPyramid",
+          "default_value": "goal"
+        },
+        {
+          "slot_data_key": "swordless",
+          "label": "Swordless",
+          "source_option": "Swordless"
+        },
+        {
+          "slot_data_key": "retro_bow",
+          "label": "Retro Bow",
+          "source_option": "RetroBow"
+        },
+        {
+          "slot_data_key": "retro_caves",
+          "label": "Retro Caves",
+          "source_option": "RetroCaves"
+        },
+        {
+          "slot_data_key": "allow_collect",
+          "label": "Allow Collection Of Checks For Other Players",
+          "source_option": "AllowCollect"
+        }
+      ]
+    },
+    {
+      "panel_id": "settings_dungeons",
+      "label": "Dungeon Rules",
+      "fields": [
+        {
+          "slot_data_key": "big_key_shuffle",
+          "label": "Big Key Shuffle",
+          "source_option": "big_key_shuffle"
+        },
+        {
+          "slot_data_key": "small_key_shuffle",
+          "label": "Small Key Shuffle",
+          "source_option": "small_key_shuffle"
+        },
+        {
+          "slot_data_key": "key_drop_shuffle",
+          "label": "Key Drop Shuffle",
+          "source_option": "key_drop_shuffle"
+        },
+        {
+          "slot_data_key": "compass_shuffle",
+          "label": "Compass Shuffle",
+          "source_option": "compass_shuffle"
+        },
+        {
+          "slot_data_key": "map_shuffle",
+          "label": "Map Shuffle",
+          "source_option": "map_shuffle"
+        },
+        {
+          "slot_data_key": "dungeon_counters",
+          "label": "Dungeon Counters",
+          "source_option": "DungeonCounters",
+          "default_value": "pickup"
+        },
+        {
+          "slot_data_key": "boss_shuffle",
+          "label": "Boss Shuffle",
+          "source_option": "LTTPBosses"
+        },
+        {
+          "slot_data_key": "crystals_needed_for_gt",
+          "label": "Crystals For GT",
+          "source_option": "CrystalsTower"
+        },
+        {
+          "slot_data_key": "crystals_needed_for_ganon",
+          "label": "Crystals For Ganon",
+          "source_option": "CrystalsGanon"
+        }
+      ]
+    },
+    {
+      "panel_id": "settings_world",
+      "label": "World And Economy",
+      "fields": [
+        {
+          "slot_data_key": "shop_item_slots",
+          "label": "Available Shop Slots",
+          "source_option": "ShopItemSlots"
+        },
+        {
+          "slot_data_key": "randomize_shop_inventories",
+          "label": "Randomize Shop Inventories",
+          "source_option": "RandomizeShopInventories"
+        },
+        {
+          "slot_data_key": "shuffle_shop_inventories",
+          "label": "Shuffle Shop Inventories",
+          "source_option": "ShuffleShopInventories"
+        },
+        {
+          "slot_data_key": "randomize_shop_prices",
+          "label": "Randomize Shop Prices",
+          "source_option": "RandomizeShopPrices"
+        },
+        {
+          "slot_data_key": "randomize_cost_types",
+          "label": "Randomize Cost Types",
+          "source_option": "RandomizeCostTypes"
+        },
+        {
+          "slot_data_key": "shop_price_modifier",
+          "label": "Shop Price Modifier",
+          "source_option": "ShopPriceModifier"
+        },
+        {
+          "slot_data_key": "shuffle_capacity_upgrades",
+          "label": "Shuffle Capacity Upgrades",
+          "source_option": "ShuffleCapacityUpgrades"
+        },
+        {
+          "slot_data_key": "shuffle_prizes",
+          "label": "Shuffle Prizes",
+          "source_option": "ShufflePrizes"
+        },
+        {
+          "slot_data_key": "misery_mire_medallion",
+          "label": "Misery Mire Medallion",
+          "source_option": "MiseryMireMedallion"
+        },
+        {
+          "slot_data_key": "turtle_rock_medallion",
+          "label": "Turtle Rock Medallion",
+          "source_option": "TurtleRockMedallion"
+        },
+        {
+          "slot_data_key": "timer",
+          "label": "Timer",
+          "source_option": "Timer"
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "This file normalizes tracker-visible slot_data keys and labels for tester-facing rendering.",
+    "Not every source option must be visible at all times; these are the fields most relevant to run-time tracker context.",
+    "The normalization lives in the linkedworld module even when a runtime or room consumer renders it differently."
+  ]
+}

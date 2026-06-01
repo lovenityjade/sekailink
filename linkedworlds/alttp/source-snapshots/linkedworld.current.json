@@ -1,0 +1,24 @@
+{
+  "linkedworld_id": "alttp",
+  "display_name": "A Link to the Past",
+  "version": "0.1.0",
+  "runner": "snes",
+  "system": "snes",
+  "module_id": "alttp_bizhawk",
+  "game_id": "alttp",
+  "game_name": "A Link to the Past",
+  "handler": "alttp",
+  "native_yaml": true,
+  "rom_name_hints": [
+    "A Link to the Past",
+    "Zelda",
+    "Kamigami no Triforce"
+  ],
+  "rom_md5s": [
+    "03a63945398191337e896e5771f77173"
+  ],
+  "default_tracker_variant": "Map Tracker - AP",
+  "tracker_pack_uid": "https://github.com/StripesOO7/alttp-ap-poptracker-pack",
+  "default_yaml": "config/default.yaml",
+  "default_tracker_pack": "tracker/default.zip"
+}

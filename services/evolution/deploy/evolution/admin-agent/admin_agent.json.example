@@ -1,0 +1,23 @@
+{
+  "http_port": 19091,
+  "admin_token": "replace-evolution-admin-token",
+  "services": [
+    {
+      "name": "apache2",
+      "state_file": "",
+      "log_file": "/var/log/apache2/sekailink.com-error.log",
+      "systemd_unit": "apache2.service"
+    },
+    {
+      "name": "postfix",
+      "state_file": "",
+      "log_file": "/opt/sekailink/evolution/admin-agent/data/postfix_tail.log",
+      "systemd_unit": "postfix.service"
+    },
+    {
+      "name": "postfix-queue",
+      "state_file": "/opt/sekailink/evolution/admin-agent/data/postfix_queue_state.json",
+      "log_file": ""
+    }
+  ]
+}

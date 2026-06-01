@@ -1,0 +1,35 @@
+{
+  "game_id": "earthbound",
+  "display_name": "EarthBound",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apeb"
+  ],
+  "patch_world_module": "worlds.earthbound",
+  "required_roms": [
+    "earthbound"
+  ],
+  "client_mode": "embedded",
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "snes",
+    "profile": "profiles/earthbound-starter.profile",
+    "ap_game": "EarthBound"
+  },
+  "tracker_pack_uid": "https://github.com/PinkSwitch/earthbound_poptracker/releases/tag/ebpoptracker1.0",
+  "tracker_asset_regex": "\\.zip$",
+  "default_tracker_variant": "Map Tracker",
+  "tracker_web_url": ""
+}

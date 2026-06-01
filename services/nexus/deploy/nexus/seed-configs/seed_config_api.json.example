@@ -1,0 +1,15 @@
+{
+  "http_port": 19106,
+  "listen_host": "127.0.0.1",
+  "admin_token": "CHANGE_ME_ADMIN_TOKEN",
+  "user_token": "CHANGE_ME_USER_TOKEN",
+  "state_path": "/opt/sekailink/nexus/seed-configs/state/seed_config_api_state.json",
+  "mysql": {
+    "enabled": true,
+    "host": "127.0.0.1",
+    "port": 3306,
+    "database": "sekailink_seed_configs",
+    "user": "sekailink_seed_configs",
+    "password": "CHANGE_ME_DB_PASSWORD"
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "metadata_id": "alttp-autotabbing-hints-v1",
+  "linkedworld_id": "alttp",
+  "status": "repo-owned-autotabbing-data-hints",
+  "purpose": "Declare data-only tab selection hints for tracker consumers. These hints do not execute PopTracker Lua and do not alter runtime contracts.",
+  "source_refs": [
+    "manifest.json",
+    "location-groups.complete.json",
+    "item-slots.complete.json",
+    "slot-data.complete.json",
+    "tracker-flow.v1.json"
+  ],
+  "default_policy": {
+    "initial_tab_id": "light-world",
+    "item_event_tab_id": "items",
+    "settings_event_tab_id": "items",
+    "unknown_event_tab_id": "light-world",
+    "priority_order": [
+      "explicit_location_group",
+      "item_slot",
+      "settings_panel",
+      "fallback"
+    ]
+  },
+  "location_group_hints": [
+    {
+      "group_id": "light_world_surface",
+      "tab_id": "light-world"
+    },
+    {
+      "group_id": "dark_world_surface",
+      "tab_id": "dark-world"
+    },
+    {
+      "group_id": "world_npc_checks",
+      "tab_id": "light-world"
+    },
+    {
+      "group_id": "misc_checks",
+      "tab_id": "light-world"
+    },
+    {
+      "group_id": "shop_checks",
+      "tab_id": "light-world"
+    },
+    {
+      "group_id": "light_world_caves",
+      "tab_id": "light-world"
+    },
+    {
+      "group_id": "mountain_caves",
+      "tab_id": "mountain"
+    },
+    {
+      "group_id": "dark_world_caves",
+      "tab_id": "dark-world"
+    },
+    {
+      "group_id": "hyrule_castle_and_escape",
+      "tab_id": "escape"
+    },
+    {
+      "group_id": "eastern_palace",
+      "tab_id": "eastern"
+    },
+    {
+      "group_id": "desert_palace",
+      "tab_id": "desert"
+    },
+    {
+      "group_id": "tower_of_hera",
+      "tab_id": "hera"
+    },
+    {
+      "group_id": "palace_of_darkness",
+      "tab_id": "pod"
+    },
+    {
+      "group_id": "swamp_palace",
+      "tab_id": "swamp"
+    },
+    {
+      "group_id": "skull_woods",
+      "tab_id": "skull"
+    },
+    {
+      "group_id": "thieves_town",
+      "tab_id": "thieves"
+    },
+    {
+      "group_id": "ice_palace",
+      "tab_id": "ice"
+    },
+    {
+      "group_id": "misery_mire",
+      "tab_id": "mire"
+    },
+    {
+      "group_id": "turtle_rock",
+      "tab_id": "turtle"
+    },
+    {
+      "group_id": "ganons_tower",
+      "tab_id": "gt"
+    }
+  ],
+  "item_group_hints": [
+    {
+      "group_id": "combat",
+      "tab_id": "items"
+    },
+    {
+      "group_id": "mobility",
+      "tab_id": "items"
+    },
+    {
+      "group_id": "utility",
+      "tab_id": "items"
+    },
+    {
+      "group_id": "magic",
+      "tab_id": "items"
+    },
+    {
+      "group_id": "dungeon_items",
+      "tab_id": "items"
+    },
+    {
+      "group_id": "goal_progress",
+      "tab_id": "items"
+    },
+    {
+      "group_id": "resources",
+      "tab_id": "items"
+    },
+    {
+      "group_id": "consumables",
+      "tab_id": "items"
+    },
+    {
+      "group_id": "filler_traps",
+      "tab_id": "items"
+    }
+  ],
+  "settings_panel_hints": [
+    {
+      "panel_id": "settings_core",
+      "tab_id": "items"
+    },
+    {
+      "panel_id": "settings_logic",
+      "tab_id": "items"
+    },
+    {
+      "panel_id": "settings_dungeons",
+      "tab_id": "items"
+    },
+    {
+      "panel_id": "settings_world",
+      "tab_id": "items"
+    }
+  ],
+  "deltas": {
+    "location_group_hints": 20,
+    "item_group_hints": 9,
+    "settings_panel_hints": 4,
+    "total_hints": 33
+  }
+}

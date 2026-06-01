@@ -1,0 +1,56 @@
+# Build output
+build/
+build-*/
+cmake-build-*/
+dist/
+out/
+release/
+coverage/
+.cache/
+.vite/
+
+# JavaScript dependencies
+node_modules/
+
+# Runtime/user data
+logs/
+tmp/
+saves/
+roms/
+patched/
+downloads/
+generated/
+*.log
+*.sqlite
+*.sqlite3
+*.db
+*.zip.bak-*
+
+# Local configuration and secrets
+.env
+.env.*
+*.local
+*.local.*
+XX-server-infos.local.md
+local-*.json
+local-*.yaml
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Common ROM formats
+*.sfc
+*.smc
+*.z64
+*.n64
+*.gb
+*.gbc
+*.gba
+*.nes
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo

@@ -1,0 +1,37 @@
+{
+  "http_port": 19091,
+  "listen_host": "127.0.0.1",
+  "admin_token": "replace-nexus-admin-token",
+  "services": [
+    {
+      "name": "room-query",
+      "state_file": "/opt/sekailink/nexus/api-gateway/data/nexus_room_query_state.json",
+      "log_file": "",
+      "systemd_unit": "sekailink-nexus-room-query.service"
+    },
+    {
+      "name": "identity",
+      "state_file": "/opt/sekailink/nexus/auth/data/identity_service_state.json",
+      "log_file": "",
+      "systemd_unit": "sekailink-nexus-identity.service"
+    },
+    {
+      "name": "mariadb",
+      "state_file": "",
+      "log_file": "/var/log/mariadb/mariadb.log",
+      "systemd_unit": "mariadb.service"
+    },
+    {
+      "name": "lobby-admin",
+      "state_file": "/opt/sekailink/nexus/lobby-admin/data/lobby_admin_state.json",
+      "log_file": "",
+      "systemd_unit": "sekailink-nexus-lobby-admin.service"
+    },
+    {
+      "name": "link-lobby-runtime-tunnel",
+      "state_file": "",
+      "log_file": "",
+      "systemd_unit": "sekailink-link-lobby-runtime-tunnel.service"
+    }
+  ]
+}

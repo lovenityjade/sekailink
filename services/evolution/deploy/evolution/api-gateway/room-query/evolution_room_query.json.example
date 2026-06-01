@@ -1,0 +1,7 @@
+{
+  "http_port": 19094,
+  "auth_token": "replace-evolution-query-token",
+  "projection_backend": "sqlite",
+  "projection_target": "/opt/sekailink/evolution/api-gateway/data/room_projection.sqlite3",
+  "state_path": "/opt/sekailink/evolution/api-gateway/data/evolution_room_query_state.json"
+}

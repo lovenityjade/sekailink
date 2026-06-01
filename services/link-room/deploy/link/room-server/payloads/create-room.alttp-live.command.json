@@ -1,0 +1,15 @@
+{
+  "cmd": "create_room",
+  "room_id": "alttp-live-1",
+  "room_type": "live",
+  "game": "A Link to the Past",
+  "team_id": 0,
+  "slot_id": 1,
+  "slot_name": "Link",
+  "slot_alias": "ALTTP Link",
+  "seed_name": "alttp-live-seed-1",
+  "seed_id": "seed-live-1",
+  "seed_hash": "BOW-MOON-MAP",
+  "tracker_pack": "alttp-pack",
+  "tracker_variant": "Map Tracker - AP"
+}

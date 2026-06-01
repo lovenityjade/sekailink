@@ -1,0 +1,596 @@
+{
+  "surface_id": "alttp-complete-run-surface-v1",
+  "linkedworld_id": "alttp",
+  "status": "repo-owned-full-run-target-materialized-in-bundle",
+  "purpose": "Normalize the tracker-facing checks, items, maps, and settings surface needed for a coherent ALTTP run without copying third-party tracker sources.",
+  "source_refs": [
+    "sekaiemu/worlds/alttp/__init__.py",
+    "sekaiemu/worlds/alttp/Client.py",
+    "sekaiemu/worlds/alttp/Items.py",
+    "sekaiemu/worlds/alttp/Options.py",
+    "bridge/sklmi.phase1.json",
+    "tracker/runtime-bindings.phase1.json"
+  ],
+  "normalized_refs": {
+    "location_groups_ref": "location-groups.complete.json",
+    "item_slots_ref": "item-slots.complete.json",
+    "dungeon_progress_ref": "dungeon-progress.complete.json",
+    "room_metadata_ref": "room-metadata.complete.json",
+    "slot_data_ref": "slot-data.complete.json",
+    "tracker_flow_ref": "tracker-flow.v1.json",
+    "item_icon_metadata_ref": "item-icon-metadata.json",
+    "map_pin_metadata_ref": "map-pin-metadata.json",
+    "settings_metadata_ref": "settings-metadata.json",
+    "autotabbing_hints_ref": "autotabbing-hints.json"
+  },
+  "tracker_metadata_layers": [
+    {
+      "layer_id": "items_icons",
+      "ref": "item-icon-metadata.json",
+      "declared_bindings": 38
+    },
+    {
+      "layer_id": "maps_pins",
+      "ref": "map-pin-metadata.json",
+      "declared_maps": 10,
+      "declared_pin_layers": 20,
+      "semantic_pins_projected": 286
+    },
+    {
+      "layer_id": "settings",
+      "ref": "settings-metadata.json",
+      "declared_fields": 33
+    },
+    {
+      "layer_id": "autotabbing",
+      "ref": "autotabbing-hints.json",
+      "declared_hints": 33
+    }
+  ],
+  "presentation": {
+    "mode": "side-by-side",
+    "left_panel": "game",
+    "right_panel": "tracker",
+    "default_tab_id": "light-world",
+    "default_map_id": "light_world",
+    "tab_order": [
+      "items",
+      "light-world",
+      "dark-world",
+      "mountain",
+      "escape",
+      "eastern",
+      "desert",
+      "hera",
+      "pod",
+      "swamp",
+      "skull",
+      "thieves",
+      "ice",
+      "mire",
+      "turtle",
+      "gt"
+    ]
+  },
+  "progression_panels": [
+    {
+      "panel_id": "dungeon_rewards",
+      "label": "Dungeon Rewards",
+      "source_ref": "dungeon-progress.complete.json",
+      "slot_ids": [
+        "eastern_reward",
+        "desert_reward",
+        "hera_reward",
+        "pod_reward",
+        "swamp_reward",
+        "skull_reward",
+        "thieves_reward",
+        "ice_reward",
+        "mire_reward",
+        "turtle_reward"
+      ]
+    },
+    {
+      "panel_id": "goal_progress",
+      "label": "Goal Progress",
+      "source_ref": "dungeon-progress.complete.json",
+      "slot_ids": [
+        "goal_mode",
+        "gt_requirement",
+        "ganon_requirement",
+        "mire_medallion",
+        "turtle_medallion",
+        "prize_shuffle",
+        "aga1_progress",
+        "aga2_progress",
+        "triforce_pieces_required",
+        "triforce_pieces_available"
+      ]
+    }
+  ],
+  "metadata_panels": [
+    {
+      "panel_id": "session",
+      "label": "Session",
+      "keys": [
+        "slot_name",
+        "player_alias",
+        "seed_id",
+        "seed_hash",
+        "tracker_pack",
+        "tracker_variant"
+      ]
+    },
+    {
+      "panel_id": "tracker",
+      "label": "Tracker",
+      "keys": [
+        "active_tab_id",
+        "active_map_id",
+        "presentation_mode",
+        "checked_count",
+        "missing_count",
+        "received_count"
+      ]
+    },
+    {
+      "panel_id": "settings_core",
+      "label": "Core Settings",
+      "keys": [
+        "slot_data.goal",
+        "slot_data.mode",
+        "slot_data.entrance_shuffle",
+        "slot_data.item_pool",
+        "slot_data.item_functionality",
+        "slot_data.progressive"
+      ]
+    },
+    {
+      "panel_id": "settings_logic",
+      "label": "Logic And Access",
+      "keys": [
+        "slot_data.glitches_required",
+        "slot_data.dark_room_logic",
+        "slot_data.open_pyramid",
+        "slot_data.swordless",
+        "slot_data.retro_bow",
+        "slot_data.retro_caves",
+        "slot_data.allow_collect"
+      ]
+    },
+    {
+      "panel_id": "settings_dungeons",
+      "label": "Dungeon Rules",
+      "keys": [
+        "slot_data.big_key_shuffle",
+        "slot_data.small_key_shuffle",
+        "slot_data.key_drop_shuffle",
+        "slot_data.compass_shuffle",
+        "slot_data.map_shuffle",
+        "slot_data.dungeon_counters",
+        "slot_data.boss_shuffle",
+        "slot_data.crystals_needed_for_gt",
+        "slot_data.crystals_needed_for_ganon"
+      ]
+    },
+    {
+      "panel_id": "settings_world",
+      "label": "World And Economy",
+      "keys": [
+        "slot_data.shop_item_slots",
+        "slot_data.randomize_shop_inventories",
+        "slot_data.shuffle_shop_inventories",
+        "slot_data.randomize_shop_prices",
+        "slot_data.randomize_cost_types",
+        "slot_data.shop_price_modifier",
+        "slot_data.shuffle_capacity_upgrades",
+        "slot_data.shuffle_prizes",
+        "slot_data.misery_mire_medallion",
+        "slot_data.turtle_rock_medallion"
+      ]
+    }
+  ],
+  "normalized_item_slots": [
+    {
+      "slot_id": "bow",
+      "source_examples": [
+        "Bow",
+        "Progressive Bow",
+        "Silver Bow"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "sword",
+      "source_examples": [
+        "Fighter Sword",
+        "Master Sword",
+        "Progressive Sword"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "shield",
+      "source_examples": [
+        "Blue Shield",
+        "Progressive Shield",
+        "Mirror Shield"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "mail",
+      "source_examples": [
+        "Blue Mail",
+        "Red Mail"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "boomerang",
+      "source_examples": [
+        "Blue Boomerang",
+        "Red Boomerang"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "hookshot",
+      "source_examples": [
+        "Hookshot"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "hammer",
+      "source_examples": [
+        "Hammer"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "lamp",
+      "source_examples": [
+        "Lamp"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "fire_rod",
+      "source_examples": [
+        "Fire Rod"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "ice_rod",
+      "source_examples": [
+        "Ice Rod"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "somaria",
+      "source_examples": [
+        "Cane of Somaria"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "byrna",
+      "source_examples": [
+        "Cane of Byrna"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "cape",
+      "source_examples": [
+        "Cape"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "book",
+      "source_examples": [
+        "Book of Mudora"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "bottle",
+      "source_examples": [
+        "Bottle",
+        "Bottle (Fairy)",
+        "Bottle (Blue Potion)"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "flute",
+      "source_examples": [
+        "Flute",
+        "Activated Flute"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "shovel",
+      "source_examples": [
+        "Shovel"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "mushroom",
+      "source_examples": [
+        "Mushroom"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "powder",
+      "source_examples": [
+        "Magic Powder"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "boots",
+      "source_examples": [
+        "Pegasus Boots"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "glove",
+      "source_examples": [
+        "Power Glove",
+        "Progressive Glove",
+        "Titans Mitts"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "flippers",
+      "source_examples": [
+        "Flippers"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "moon_pearl",
+      "source_examples": [
+        "Moon Pearl"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "magic_mirror",
+      "source_examples": [
+        "Magic Mirror"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "medallions",
+      "source_examples": [
+        "Bombos",
+        "Ether",
+        "Quake"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "dungeon_items",
+      "source_examples": [
+        "Small Key (...)",
+        "Big Key (...)",
+        "Compass (...)",
+        "Map (...)"
+      ],
+      "preferred_panel": "items"
+    },
+    {
+      "slot_id": "goal_items",
+      "source_examples": [
+        "Green Pendant",
+        "Crystal 1",
+        "Triforce Piece"
+      ],
+      "preferred_panel": "items"
+    }
+  ],
+  "check_domains": [
+    {
+      "domain_id": "underworld",
+      "source_ref": "sekaiemu/worlds/alttp/Client.py:53",
+      "description": "Dungeon and cave chest, pot, key-drop, and boss checks tracked from room-memory state."
+    },
+    {
+      "domain_id": "overworld",
+      "source_ref": "sekaiemu/worlds/alttp/Client.py:307",
+      "description": "Screen-based surface checks such as ledges, pedestal, island, and digging-game style spots."
+    },
+    {
+      "domain_id": "npc",
+      "source_ref": "sekaiemu/worlds/alttp/Client.py:291",
+      "description": "NPC and tablet-style checks driven by dedicated flags."
+    },
+    {
+      "domain_id": "misc",
+      "source_ref": "sekaiemu/worlds/alttp/Client.py:322",
+      "description": "Special event-style checks like Bottle Merchant, Hobo, Purple Chest, and Link's Uncle."
+    },
+    {
+      "domain_id": "shop",
+      "source_ref": "sekaiemu/worlds/alttp/Client.py:47",
+      "description": "Shop-slot checks reflected through the ALTTP shop buffer."
+    }
+  ],
+  "check_groups": [
+    {
+      "group_id": "light_world_surface",
+      "source_examples": [
+        "Flute Spot",
+        "Sunken Treasure",
+        "Zora's Ledge",
+        "Lake Hylia Island",
+        "Maze Race",
+        "Desert Ledge",
+        "Master Sword Pedestal",
+        "Spectacle Rock"
+      ],
+      "preferred_tab": "light-world"
+    },
+    {
+      "group_id": "dark_world_surface",
+      "source_examples": [
+        "Pyramid",
+        "Digging Game",
+        "Bumper Cave Ledge",
+        "Floating Island"
+      ],
+      "preferred_tab": "dark-world"
+    },
+    {
+      "group_id": "world_npc_checks",
+      "source_examples": [
+        "Mushroom",
+        "King Zora",
+        "Sahasrahla",
+        "Blacksmith",
+        "Magic Bat",
+        "Sick Kid",
+        "Library",
+        "Potion Shop",
+        "Old Man",
+        "Ether Tablet",
+        "Catfish",
+        "Stumpy",
+        "Bombos Tablet"
+      ],
+      "preferred_tab": "light-world"
+    },
+    {
+      "group_id": "misc_checks",
+      "source_examples": [
+        "Bottle Merchant",
+        "Purple Chest",
+        "Link's Uncle",
+        "Hobo"
+      ],
+      "preferred_tab": "light-world"
+    },
+    {
+      "group_id": "hyrule_castle_and_escape",
+      "source_group_name": "Hyrule Castle",
+      "preferred_tab": "escape"
+    },
+    {
+      "group_id": "eastern_palace",
+      "source_group_name": "Eastern Palace",
+      "preferred_tab": "eastern"
+    },
+    {
+      "group_id": "desert_palace",
+      "source_group_name": "Desert Palace",
+      "preferred_tab": "desert"
+    },
+    {
+      "group_id": "tower_of_hera",
+      "source_group_name": "Tower of Hera",
+      "preferred_tab": "hera"
+    },
+    {
+      "group_id": "castle_tower",
+      "source_group_name": "Castle Tower",
+      "preferred_tab": "escape"
+    },
+    {
+      "group_id": "palace_of_darkness",
+      "source_group_name": "Palace of Darkness",
+      "preferred_tab": "pod"
+    },
+    {
+      "group_id": "swamp_palace",
+      "source_group_name": "Swamp Palace",
+      "preferred_tab": "swamp"
+    },
+    {
+      "group_id": "skull_woods",
+      "source_group_name": "Skull Woods",
+      "preferred_tab": "skull"
+    },
+    {
+      "group_id": "thieves_town",
+      "source_group_name": "Thieves' Town",
+      "preferred_tab": "thieves"
+    },
+    {
+      "group_id": "ice_palace",
+      "source_group_name": "Ice Palace",
+      "preferred_tab": "ice"
+    },
+    {
+      "group_id": "misery_mire",
+      "source_group_name": "Misery Mire",
+      "preferred_tab": "mire"
+    },
+    {
+      "group_id": "turtle_rock",
+      "source_group_name": "Turtle Rock",
+      "preferred_tab": "turtle"
+    },
+    {
+      "group_id": "ganons_tower",
+      "source_group_name": "Ganons Tower",
+      "preferred_tab": "gt"
+    },
+    {
+      "group_id": "ganons_tower_climb",
+      "source_group_name": "Ganons Tower Climb",
+      "preferred_tab": "gt"
+    },
+    {
+      "group_id": "light_world_caves",
+      "source_examples": [
+        "Blind's Hideout",
+        "Kakariko Well",
+        "Mini Moldorm Cave"
+      ],
+      "preferred_tab": "light-world"
+    },
+    {
+      "group_id": "mountain_caves",
+      "source_examples": [
+        "Paradox Cave",
+        "Hookshot Cave"
+      ],
+      "preferred_tab": "mountain"
+    },
+    {
+      "group_id": "dark_world_caves",
+      "source_examples": [
+        "Hype Cave"
+      ],
+      "preferred_tab": "dark-world"
+    }
+  ],
+  "bridge_alignment": {
+    "active_runtime_bridge_ref": "bridge/sklmi.phase1.json",
+    "active_binding_ref": "tracker/runtime-bindings.phase1.json",
+    "covered_location_checks": 286,
+    "covered_item_actions": 145,
+    "covered_location_group_assignments": 286,
+    "covered_item_slot_assignments": 145,
+    "location_group_ref": "location-groups.complete.json",
+    "item_slot_ref": "item-slots.complete.json",
+    "implication": "The active runtime bridge now covers the full ALTTP client-read check surface plus explicit shop slots and all int-coded receive items; tracker location groups and item slots now assign each active bridge check/action exactly once. Dungeon prizes, crystal families, and broader live proof still remain outside this file."
+  },
+  "limits": [
+    "This file defines the target surface, not proof that every check already emits in live runtime.",
+    "Zone bindings and node ids remain clean-room semantics rather than imported third-party identifiers.",
+    "The repo-owned bundle remains a packaging baseline, not a claim of byte-for-byte compatibility with external tracker packs."
+  ]
+}

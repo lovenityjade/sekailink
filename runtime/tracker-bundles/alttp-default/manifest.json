@@ -1,0 +1,244 @@
+{
+  "tracker_contract_version": "1",
+  "linkedworld_id": "alttp",
+  "display_name": "A Link to the Past",
+  "default_view_id": "main",
+  "default_tab_id": "items",
+  "default_map_id": "hc_escape",
+  "views": [
+    {
+      "id": "main",
+      "label": "Main",
+      "tabs": [
+        "items",
+        "castle",
+        "eastern",
+        "desert"
+      ]
+    }
+  ],
+  "tabs": [
+    {
+      "id": "items",
+      "label": "Items",
+      "view": "main"
+    },
+    {
+      "id": "castle",
+      "label": "Escape",
+      "view": "main",
+      "map": "hc_escape"
+    },
+    {
+      "id": "eastern",
+      "label": "Eastern",
+      "view": "main",
+      "map": "eastern_palace"
+    },
+    {
+      "id": "desert",
+      "label": "Desert",
+      "view": "main",
+      "map": "desert_palace"
+    }
+  ],
+  "maps": [
+    {
+      "id": "hc_escape",
+      "label": "Hyrule Castle Escape",
+      "image": "maps/hc_escape.ppm"
+    },
+    {
+      "id": "eastern_palace",
+      "label": "Eastern Palace",
+      "image": "maps/eastern_palace.ppm"
+    },
+    {
+      "id": "desert_palace",
+      "label": "Desert Palace",
+      "image": "maps/desert_palace.ppm"
+    }
+  ],
+  "info_panels": [
+    {
+      "id": "session",
+      "label": "Session",
+      "fields": [
+        {
+          "id": "slot",
+          "label": "Slot",
+          "source": "session",
+          "key": "slot_id",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "slot_name",
+          "label": "Slot Name",
+          "source": "snapshot",
+          "key": "slot_name",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "player_alias",
+          "label": "Alias",
+          "source": "snapshot",
+          "key": "player_alias",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "seed",
+          "label": "Seed",
+          "source": "session",
+          "key": "seed_id",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "world",
+          "label": "World",
+          "source": "session",
+          "key": "world_instance_id",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "seed_hash",
+          "label": "Hash",
+          "source": "seed_metadata",
+          "key": "seed_hash",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "tracker_pack",
+          "label": "Pack",
+          "source": "seed_metadata",
+          "key": "tracker_pack",
+          "fallback": "alttp-default"
+        },
+        {
+          "id": "tracker_variant",
+          "label": "Variant",
+          "source": "seed_metadata",
+          "key": "tracker_variant",
+          "fallback": "side-by-side"
+        },
+        {
+          "id": "room_id",
+          "label": "Room",
+          "source": "snapshot",
+          "key": "room_id",
+          "fallback": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "id": "tracker",
+      "label": "Tracker",
+      "fields": [
+        {
+          "id": "active_map",
+          "label": "Map",
+          "source": "session",
+          "key": "active_map_id",
+          "fallback": "hc_escape"
+        },
+        {
+          "id": "active_tab",
+          "label": "Tab",
+          "source": "session",
+          "key": "active_tab_id",
+          "fallback": "items"
+        },
+        {
+          "id": "display_mode",
+          "label": "Display",
+          "source": "session",
+          "key": "display_mode",
+          "fallback": "split-screen"
+        },
+        {
+          "id": "auto_follow",
+          "label": "Follow",
+          "source": "session",
+          "key": "auto_follow_map",
+          "fallback": "ON"
+        }
+      ]
+    },
+    {
+      "id": "settings",
+      "label": "Seed Settings",
+      "fields": [
+        {
+          "id": "mode",
+          "label": "Mode",
+          "source": "seed_metadata",
+          "key": "slot_data.mode",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "goal",
+          "label": "Goal",
+          "source": "seed_metadata",
+          "key": "slot_data.goal",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "difficulty",
+          "label": "Difficulty",
+          "source": "seed_metadata",
+          "key": "slot_data.difficulty",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "weapons",
+          "label": "Weapons",
+          "source": "seed_metadata",
+          "key": "slot_data.weapons",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "slot_data_name",
+          "label": "Slot Data Name",
+          "source": "seed_metadata",
+          "key": "slot_data.name",
+          "fallback": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "id": "progress",
+      "label": "Progress",
+      "fields": [
+        {
+          "id": "checked",
+          "label": "Checked",
+          "source": "session",
+          "key": "checked_count",
+          "fallback": "0"
+        },
+        {
+          "id": "missing",
+          "label": "Missing",
+          "source": "session",
+          "key": "missing_count",
+          "fallback": "0"
+        },
+        {
+          "id": "received",
+          "label": "Received",
+          "source": "session",
+          "key": "received_count",
+          "fallback": "0"
+        },
+        {
+          "id": "local_received",
+          "label": "Local Itm",
+          "source": "session",
+          "key": "local_received_count",
+          "fallback": "0"
+        }
+      ]
+    }
+  ],
+  "zone_bindings": {},
+  "seed_option_bindings": []
+}

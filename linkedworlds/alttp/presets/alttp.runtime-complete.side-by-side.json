@@ -1,0 +1,94 @@
+{
+  "preset_id": "alttp.runtime-complete.side-by-side",
+  "linkedworld_id": "alttp",
+  "label": "ALTTP runtime complete side by side",
+  "status": "canonical-complete-run-target",
+  "scope": {
+    "covers": "complete-run tracker surface, metadata visibility, dungeon progress, and goal-facing presentation",
+    "omits": "host-specific rendering implementation details and unproven live tracker node ids"
+  },
+  "runtime": {
+    "presentation_mode": "side-by-side",
+    "left_panel": "game",
+    "right_panel": "tracker",
+    "tracker_variant": "Map Tracker - AP",
+    "tracker_pack_path": "tracker/default.zip",
+    "yaml_path": "config/default.yaml",
+    "tracker_surface_ref": "tracker/default.bundle/surface.complete.json",
+    "tracker_flow_ref": "tracker/default.bundle/tracker-flow.v1.json",
+    "location_groups_ref": "tracker/location-groups.complete.json",
+    "item_slots_ref": "tracker/item-slots.complete.json",
+    "dungeon_progress_ref": "tracker/dungeon-progress.complete.json",
+    "room_metadata_ref": "metadata/room-metadata.complete.json",
+    "slot_data_ref": "metadata/slot-data.complete.json",
+    "bridge_ref": "bridge/sklmi.phase1.json",
+    "tracker_focus": [
+      "items",
+      "world_maps",
+      "dungeon_maps",
+      "dungeon_rewards",
+      "goal_progress",
+      "seed_settings"
+    ]
+  },
+  "room_metadata": {
+    "required": [
+      "seed_id",
+      "seed_hash",
+      "slot_name",
+      "player_alias",
+      "tracker_pack",
+      "tracker_variant",
+      "slot_data"
+    ],
+    "recommended_optional": [
+      "slot_id",
+      "world_id",
+      "world_instance_id",
+      "room_id",
+      "goal",
+      "mode",
+      "entrance_shuffle",
+      "item_pool",
+      "item_functionality"
+    ],
+    "slot_data_recommended_visible_fields": [
+      "goal",
+      "mode",
+      "entrance_shuffle",
+      "item_pool",
+      "item_functionality",
+      "glitches_required",
+      "dark_room_logic",
+      "open_pyramid",
+      "big_key_shuffle",
+      "small_key_shuffle",
+      "key_drop_shuffle",
+      "compass_shuffle",
+      "map_shuffle",
+      "dungeon_counters",
+      "boss_shuffle",
+      "crystals_needed_for_gt",
+      "crystals_needed_for_ganon",
+      "misery_mire_medallion",
+      "turtle_rock_medallion",
+      "shuffle_prizes",
+      "triforce_pieces_required",
+      "triforce_pieces_available",
+      "progressive",
+      "swordless",
+      "retro_bow",
+      "retro_caves",
+      "allow_collect"
+    ]
+  },
+  "coverage_expectations": {
+    "declared_check_count": 54,
+    "declared_action_count": 35,
+    "surface_target": "boss, rewards, prizes, crystals, and goal families visible even where live proof is still pending"
+  },
+  "notes": [
+    "This preset is the linkedworld-side complete-run target.",
+    "It advances the module surface beyond the test starter preset without claiming that every live bridge family is already proven."
+  ]
+}

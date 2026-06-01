@@ -1,0 +1,18 @@
+{
+  "http_port": 19091,
+  "admin_token": "replace-worlds-admin-token",
+  "services": [
+    {
+      "name": "generation-server",
+      "state_file": "/opt/sekailink/worlds/generation-server/data/generation_server_state.json",
+      "log_file": "/var/log/syslog",
+      "systemd_unit": "sekailink-generation-server.service"
+    },
+    {
+      "name": "smart-server",
+      "state_file": "",
+      "log_file": "/var/log/syslog",
+      "systemd_unit": "sekailink-smart.service"
+    }
+  ]
+}

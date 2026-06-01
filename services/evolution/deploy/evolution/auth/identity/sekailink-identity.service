@@ -1,0 +1,15 @@
+[Unit]
+Description=SekaiLink Native Identity Service
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/sekailink/evolution/auth
+ExecStart=/opt/sekailink/evolution/auth/bin/sekailink_identity_service --config /opt/sekailink/evolution/auth/config/identity_service.json
+Restart=always
+RestartSec=2
+User=www-data
+Group=www-data
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,84 @@
+.skl-terms-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(6, 10, 8, 0.75);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+}
+
+.skl-terms-card {
+    width: min(720px, calc(100% - 32px));
+    background: linear-gradient(140deg, rgba(10, 24, 18, 0.9), rgba(6, 14, 10, 0.92));
+    border: 1px solid rgba(92, 231, 181, 0.2);
+    border-radius: 20px;
+    padding: 28px;
+    color: #e4f0ea;
+    box-shadow: 0 30px 60px rgba(6, 10, 8, 0.6);
+}
+
+.skl-terms-card h2 {
+    font-family: var(--font-brand);
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.skl-terms-card p {
+    color: #cfe8dd;
+    line-height: 1.6;
+}
+
+.skl-terms-card ul {
+    margin: 16px 0 0;
+    padding-left: 18px;
+    color: #cfe8dd;
+}
+
+.skl-terms-card li {
+    margin-bottom: 8px;
+}
+
+.skl-terms-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.skl-terms-actions label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #cfe8dd;
+}
+
+.skl-terms-actions input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+}
+
+.skl-terms-accept {
+    border: none;
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: linear-gradient(130deg, #5ce7b5, #9ef3ce);
+    color: #06110b;
+    cursor: pointer;
+}
+
+.skl-terms-accept[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.skl-terms-error {
+    color: #ff9fa3;
+    font-size: 0.85rem;
+}

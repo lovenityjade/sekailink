@@ -1,0 +1,26 @@
+{
+  "ok": true,
+  "schema": "sekailink.incremental-client-files.v1",
+  "version": "alttp-linkedworld-default-2026.06.01-bff7a80d",
+  "updated_at": "2026-06-01T19:04:51Z",
+  "base_url": "https://sekailink.com/runtime-packs/poptracker/alttp/",
+  "prune": true,
+  "metadata": {
+    "kind": "tracker-pack",
+    "module_id": "alttp",
+    "game_id": "alttp",
+    "source_repo": "https://github.com/StripesOO7/alttp-ap-poptracker-pack",
+    "source_commit": "bff7a80d7cfb53de5c5b49923ddedb3344108b96",
+    "source_package_version": "0.5.0-alpha",
+    "bundle_id": "sekailink.cleanroom.alttp.default"
+  },
+  "files": [
+    {
+      "path": "runtime/tracker-bundles/alttp-linkedworld-default.zip",
+      "url": "https://sekailink.com/runtime-packs/poptracker/alttp/alttp-linkedworld-default.zip",
+      "sha256": "6ed6d6be8044c098be8c2b67beb3d18d7911c8a430a7d117713ce9284c92c2e5",
+      "size": 71916634,
+      "kind": "tracker-pack-archive"
+    }
+  ]
+}

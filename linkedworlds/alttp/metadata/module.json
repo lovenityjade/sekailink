@@ -1,0 +1,48 @@
+{
+  "linkedworld_id": "alttp",
+  "display_name": "A Link to the Past",
+  "game_name": "A Link to the Past",
+  "game_id": "alttp",
+  "family_system_id": "snes",
+  "source_status": "extracted-from-monorepo-active-sources",
+  "canonical_status": "repo-owned-metadata-baseline",
+  "canonical_notes": [
+    "This file is the clean-room metadata baseline for ALTTP.",
+    "ALTTP game-specific linkedworld content is owned by this repo even when some contracts use SKLMI-compatible transport shapes.",
+    "Tracker, patching, and preset details remain versioned in their dedicated directories.",
+    "Snapshot files under source-snapshots remain informational only."
+  ],
+  "rom_name_hints": [
+    "A Link to the Past",
+    "Zelda",
+    "Kamigami no Triforce"
+  ],
+  "rom_md5s": [
+    "03a63945398191337e896e5771f77173"
+  ],
+  "tracker_pack_uid": "https://github.com/StripesOO7/alttp-ap-poptracker-pack",
+  "default_tracker_variant": "Map Tracker - AP",
+  "tracker_surface_refs": {
+    "bundle_manifest": "tracker/default.bundle/manifest.json",
+    "surface_inventory": "tracker/default.bundle/surface.complete.json",
+    "location_groups": "tracker/location-groups.complete.json",
+    "item_slots": "tracker/item-slots.complete.json"
+  },
+  "room_metadata_refs": {
+    "room_metadata_contract": "metadata/room-metadata.complete.json",
+    "slot_data_contract": "metadata/slot-data.complete.json"
+  },
+  "bridge_profile": {
+    "current": "linkedworld-memory-contract",
+    "path": "bridge/sklmi.phase1.json",
+    "status": "linkedworld-owned-content-on-legacy-sklmi-path"
+  },
+  "ownership_boundaries": {
+    "repo_scope": "sekailink-linkedworld-alttp only",
+    "upstream_source_of_extraction": [
+      "sekaiemu/client/linkedworlds/alttp/",
+      "sekaiemu/worlds/alttp/",
+      "sklmi/manifests/alttp.phase1.json"
+    ]
+  }
+}

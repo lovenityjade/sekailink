@@ -1,0 +1,10 @@
+# Opens the Link's House chest from the savestate produced by
+# alttp-enter-links-house.input.
+#
+# The route steps around the table, faces the chest, and presses A long enough
+# for the game to trigger the real chest-open memory transition.
+1..70 RIGHT
+71..125 DOWN
+126..310 RIGHT
+311..350 UP
+351..420 A

@@ -1,0 +1,12 @@
+{
+  "cmd": "enqueue_received_item",
+  "room_id": "alttp-live-1",
+  "item": {
+    "item_id": 1001,
+    "item_name": "Hookshot",
+    "location_id": 60001,
+    "sender_slot": 2,
+    "sender_alias": "Zelda",
+    "flags": 0
+  }
+}

@@ -1,0 +1,39 @@
+appId: com.sekailink.ui-prototype
+productName: sekailink-UI-prototype
+executableName: sekailink-ui-prototype
+artifactName: sekailink-UI-prototype-${version}.${ext}
+
+files:
+  - dist/**
+  - electron/**
+  - public/**
+
+extraResources:
+  - from: ../runtime
+    to: runtime
+  - from: ../../third_party/emulators/BizHawk-2.10-linux-x64
+    to: third_party/emulators/BizHawk-2.10-linux-x64
+  - from: ../../third_party/emulators/BizHawk-2.10-win-x64
+    to: third_party/emulators/BizHawk-2.10-win-x64
+  - from: ../../third_party/mono
+    to: third_party/mono
+  - from: ../../third_party/PopTracker/build
+    to: third_party/PopTracker/build
+  # AP/MWGG patcher sources are staged into ../runtime/ap by
+  # scripts/stage-ap-runtime.mjs and ride along with the runtime bundle above.
+
+directories:
+  buildResources: build
+  output: release
+
+linux:
+  target:
+    - AppImage
+  category: Game
+  icon: build/favicon.png
+
+win:
+  target:
+    - nsis
+
+publish: []

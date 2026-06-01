@@ -1,0 +1,808 @@
+{
+  "schema_version": "sekailink-item-pool-v1",
+  "game_key": "alttp",
+  "option_profile": "open-no-glitches-normal",
+  "status": "materialized-compact-counted",
+  "total_count": 153,
+  "count_semantics": "Each entry contributes count copies to the generated ALTTP normal item pool.",
+  "profile_assumptions": {
+    "goal": "ganon",
+    "mode": "open",
+    "glitches_required": "no_glitches",
+    "item_pool": "normal",
+    "item_functionality": "normal",
+    "progressive": "on",
+    "swordless": false,
+    "retro_bow": false,
+    "timer": "none",
+    "small_key_shuffle": "original_dungeon",
+    "entrance_shuffle": "vanilla"
+  },
+  "provenance": {
+    "status": "repo-owned-clean-room-data-translation",
+    "count_basis": [
+      "sekaiemu/worlds/alttp/ItemPool.py normal difficulty item names and counts",
+      "third-party/upstream/archipelago/worlds/alttp/ItemPool.py normal difficulty as local behavioral reference",
+      "third-party/upstream/multiworldgg/worlds/alttp/ItemPool.py normal difficulty as local behavioral reference",
+      "tracker/item-slots.complete.json item_id, event_key, and tracker slot normalization",
+      "presets/alttp.ap-defaults.core.json default option profile"
+    ],
+    "limits": [
+      "This is declarative data, not copied Archipelago executable code.",
+      "Bottle variants are compacted to the generic Bottle identity for deterministic LinkedWorld data; runtime builders may later expand variants from a repo-owned bottle policy.",
+      "Dungeon items, shops, universal-key mode, triforce hunt, timer clocks, beemizer, custom pools, and entrance/dungeon shuffle variants are intentionally out of scope for this normal compact pool.",
+      "This file proves a complete compact 153-item normal pool only; native ALTTP solve/place remains gated until Worlds consumes logic and placement surfaces."
+    ]
+  },
+  "items": [
+    {
+      "id": "alttp.item.progressive_sword",
+      "item_id": 94,
+      "semantic_id": "item.progressive_sword",
+      "name": "Progressive Sword",
+      "event_key": "item.progressive_sword",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "sword",
+      "count": 4
+    },
+    {
+      "id": "alttp.item.progressive_bow",
+      "item_id": 100,
+      "semantic_id": "item.progressive_bow",
+      "name": "Progressive Bow",
+      "event_key": "item.progressive_bow",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "bow",
+      "count": 2
+    },
+    {
+      "id": "alttp.item.progressive_glove",
+      "item_id": 97,
+      "semantic_id": "item.progressive_glove",
+      "name": "Progressive Glove",
+      "event_key": "item.progressive_glove",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "glove",
+      "count": 2
+    },
+    {
+      "id": "alttp.item.progressive_shield",
+      "item_id": 95,
+      "semantic_id": "item.progressive_shield",
+      "name": "Progressive Shield",
+      "event_key": "item.progressive_shield",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "shield",
+      "count": 3
+    },
+    {
+      "id": "alttp.item.progressive_mail",
+      "item_id": 96,
+      "semantic_id": "item.progressive_mail",
+      "name": "Progressive Mail",
+      "event_key": "item.progressive_mail",
+      "classification": "useful",
+      "advancement": false,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "mail",
+      "count": 2
+    },
+    {
+      "id": "alttp.item.bombos",
+      "item_id": 15,
+      "semantic_id": "item.bombos",
+      "name": "Bombos",
+      "event_key": "item.bombos",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "medallions",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.ether",
+      "item_id": 16,
+      "semantic_id": "item.ether",
+      "name": "Ether",
+      "event_key": "item.ether",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "medallions",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.quake",
+      "item_id": 17,
+      "semantic_id": "item.quake",
+      "name": "Quake",
+      "event_key": "item.quake",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "medallions",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.book_of_mudora",
+      "item_id": 29,
+      "semantic_id": "item.book_of_mudora",
+      "name": "Book of Mudora",
+      "event_key": "item.book_of_mudora",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "book",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.cane_of_somaria",
+      "item_id": 21,
+      "semantic_id": "item.cane_of_somaria",
+      "name": "Cane of Somaria",
+      "event_key": "item.cane_of_somaria",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "somaria",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.cane_of_byrna",
+      "item_id": 24,
+      "semantic_id": "item.cane_of_byrna",
+      "name": "Cane of Byrna",
+      "event_key": "item.cane_of_byrna",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "byrna",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.fire_rod",
+      "item_id": 7,
+      "semantic_id": "item.fire_rod",
+      "name": "Fire Rod",
+      "event_key": "item.fire_rod",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "fire_rod",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.ice_rod",
+      "item_id": 8,
+      "semantic_id": "item.ice_rod",
+      "name": "Ice Rod",
+      "event_key": "item.ice_rod",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "ice_rod",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.flippers",
+      "item_id": 30,
+      "semantic_id": "item.flippers",
+      "name": "Flippers",
+      "event_key": "item.flippers",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "flippers",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.flute",
+      "item_id": 20,
+      "semantic_id": "item.flute",
+      "name": "Flute",
+      "event_key": "item.flute",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "flute",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.hammer",
+      "item_id": 9,
+      "semantic_id": "item.hammer",
+      "name": "Hammer",
+      "event_key": "item.hammer",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "hammer",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.hookshot",
+      "item_id": 10,
+      "semantic_id": "item.hookshot",
+      "name": "Hookshot",
+      "event_key": "item.hookshot",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "hookshot",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.lamp",
+      "item_id": 18,
+      "semantic_id": "item.lamp",
+      "name": "Lamp",
+      "event_key": "item.lamp",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "lamp",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.cape",
+      "item_id": 25,
+      "semantic_id": "item.cape",
+      "name": "Cape",
+      "event_key": "item.cape",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "cape",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.magic_powder",
+      "item_id": 13,
+      "semantic_id": "item.magic_powder",
+      "name": "Magic Powder",
+      "event_key": "item.magic_powder",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "powder",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.mushroom",
+      "item_id": 41,
+      "semantic_id": "item.mushroom",
+      "name": "Mushroom",
+      "event_key": "item.mushroom",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "mushroom",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.pegasus_boots",
+      "item_id": 75,
+      "semantic_id": "item.pegasus_boots",
+      "name": "Pegasus Boots",
+      "event_key": "item.pegasus_boots",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "boots",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.shovel",
+      "item_id": 19,
+      "semantic_id": "item.shovel",
+      "name": "Shovel",
+      "event_key": "item.shovel",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "shovel",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.bug_catching_net",
+      "item_id": 33,
+      "semantic_id": "item.bug_catching_net",
+      "name": "Bug Catching Net",
+      "event_key": "item.bug_catching_net",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "rng_and_misc",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.blue_boomerang",
+      "item_id": 12,
+      "semantic_id": "item.blue_boomerang",
+      "name": "Blue Boomerang",
+      "event_key": "item.blue_boomerang",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "boomerang",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.red_boomerang",
+      "item_id": 42,
+      "semantic_id": "item.red_boomerang",
+      "name": "Red Boomerang",
+      "event_key": "item.red_boomerang",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "boomerang",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.magic_mirror",
+      "item_id": 26,
+      "semantic_id": "item.magic_mirror",
+      "name": "Magic Mirror",
+      "event_key": "item.magic_mirror",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "magic_mirror",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.moon_pearl",
+      "item_id": 31,
+      "semantic_id": "item.moon_pearl",
+      "name": "Moon Pearl",
+      "event_key": "item.moon_pearl",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "moon_pearl",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.magic_upgrade_half",
+      "item_id": 78,
+      "semantic_id": "item.magic_upgrade_half",
+      "name": "Magic Upgrade (1/2)",
+      "event_key": "item.magic_upgrade_half",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "magic_upgrades",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.bottle",
+      "item_id": 22,
+      "semantic_id": "item.bottle",
+      "name": "Bottle",
+      "event_key": "item.bottle",
+      "classification": "progression",
+      "advancement": true,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "bottle",
+      "count": 4
+    },
+    {
+      "id": "alttp.item.boss_heart_container",
+      "item_id": 62,
+      "semantic_id": "item.boss_heart_container",
+      "name": "Boss Heart Container",
+      "event_key": "item.boss_heart_container",
+      "classification": "useful",
+      "advancement": false,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "health_pickups",
+      "count": 10
+    },
+    {
+      "id": "alttp.item.sanctuary_heart_container",
+      "item_id": 63,
+      "semantic_id": "item.sanctuary_heart_container",
+      "name": "Sanctuary Heart Container",
+      "event_key": "item.sanctuary_heart_container",
+      "classification": "useful",
+      "advancement": false,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "health_pickups",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.piece_of_heart",
+      "item_id": 23,
+      "semantic_id": "item.piece_of_heart",
+      "name": "Piece of Heart",
+      "event_key": "item.piece_of_heart",
+      "classification": "useful",
+      "advancement": false,
+      "pool_role": "main_pool",
+      "tracker_slot_id": "health_pickups",
+      "count": 24
+    },
+    {
+      "id": "alttp.item.single_arrow",
+      "item_id": 67,
+      "semantic_id": "item.single_arrow",
+      "name": "Single Arrow",
+      "event_key": "item.single_arrow",
+      "classification": "resource",
+      "advancement": false,
+      "pool_role": "filler",
+      "tracker_slot_id": "arrows",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.arrows_10",
+      "item_id": 68,
+      "semantic_id": "item.arrows_10",
+      "name": "Arrows (10)",
+      "event_key": "item.arrows_10",
+      "classification": "resource",
+      "advancement": false,
+      "pool_role": "filler",
+      "tracker_slot_id": "arrows",
+      "count": 12
+    },
+    {
+      "id": "alttp.item.bombs_3",
+      "item_id": 40,
+      "semantic_id": "item.bombs_3",
+      "name": "Bombs (3)",
+      "event_key": "item.bombs_3",
+      "classification": "resource",
+      "advancement": false,
+      "pool_role": "filler",
+      "tracker_slot_id": "bombs",
+      "count": 16
+    },
+    {
+      "id": "alttp.item.bombs_10",
+      "item_id": 49,
+      "semantic_id": "item.bombs_10",
+      "name": "Bombs (10)",
+      "event_key": "item.bombs_10",
+      "classification": "resource",
+      "advancement": false,
+      "pool_role": "filler",
+      "tracker_slot_id": "bombs",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.rupee_1",
+      "item_id": 52,
+      "semantic_id": "item.rupee_1",
+      "name": "Rupee (1)",
+      "event_key": "item.rupee_1",
+      "classification": "resource",
+      "advancement": false,
+      "pool_role": "filler",
+      "tracker_slot_id": "rupees",
+      "count": 2
+    },
+    {
+      "id": "alttp.item.rupees_5",
+      "item_id": 53,
+      "semantic_id": "item.rupees_5",
+      "name": "Rupees (5)",
+      "event_key": "item.rupees_5",
+      "classification": "resource",
+      "advancement": false,
+      "pool_role": "filler",
+      "tracker_slot_id": "rupees",
+      "count": 4
+    },
+    {
+      "id": "alttp.item.rupees_20",
+      "item_id": 54,
+      "semantic_id": "item.rupees_20",
+      "name": "Rupees (20)",
+      "event_key": "item.rupees_20",
+      "classification": "resource",
+      "advancement": false,
+      "pool_role": "filler",
+      "tracker_slot_id": "rupees",
+      "count": 28
+    },
+    {
+      "id": "alttp.item.rupees_50",
+      "item_id": 65,
+      "semantic_id": "item.rupees_50",
+      "name": "Rupees (50)",
+      "event_key": "item.rupees_50",
+      "classification": "resource",
+      "advancement": false,
+      "pool_role": "filler",
+      "tracker_slot_id": "rupees",
+      "count": 7
+    },
+    {
+      "id": "alttp.item.rupees_100",
+      "item_id": 64,
+      "semantic_id": "item.rupees_100",
+      "name": "Rupees (100)",
+      "event_key": "item.rupees_100",
+      "classification": "resource",
+      "advancement": false,
+      "pool_role": "filler",
+      "tracker_slot_id": "rupees",
+      "count": 1
+    },
+    {
+      "id": "alttp.item.rupees_300",
+      "item_id": 70,
+      "semantic_id": "item.rupees_300",
+      "name": "Rupees (300)",
+      "event_key": "item.rupees_300",
+      "classification": "resource",
+      "advancement": false,
+      "pool_role": "filler",
+      "tracker_slot_id": "rupees",
+      "count": 5
+    }
+  ],
+  "item_shape": {
+    "id": "string stable across LinkedWorld versions",
+    "item_id": "integer when upstream/AP-compatible identity exists",
+    "semantic_id": "game-owned stable semantic key",
+    "name": "human-readable item name",
+    "event_key": "runtime/tracker delivery event key",
+    "classification": "progression|useful|filler|trap|resource|dungeon",
+    "advancement": "boolean",
+    "pool_role": "main_pool|filler|preplaced|reward|shop|excluded",
+    "tracker_slot_id": "optional tracker slot metadata",
+    "count": "number of copies contributed by this compact entry"
+  },
+  "validation": {
+    "count_expression": "sum(items[].count)",
+    "expected_total": 153,
+    "normal_main_pool_identity_status": "complete-compact-for-profile",
+    "logic_effect_coverage_ref": {
+      "file": "generation/logic.open-no-glitches.v1.json",
+      "path": "$.item_effects",
+      "status": "expanded-monotonic-effects-not-authorizing"
+    }
+  },
+  "dungeon_key_policy": {
+    "contract_version": "sekailink-generic-dungeon-key-policy-v1",
+    "status": "consumed-authorizing-by-generic-native-probe",
+    "scope": "LinkedWorld-owned generic dungeon key policy contract for the normal profile. This does not contribute items to the main normal pool; native key policy surface authorization is probe-backed while global placement remains gated.",
+    "profile_assumptions_ref": "$.profile_assumptions",
+    "key_pool_roles": {
+      "main_pool": {
+        "role": "normal_item_pool",
+        "counted_by": "$.validation.count_expression",
+        "allows_dungeon_keys": false,
+        "expected_count": 153
+      },
+      "separate_key_pool": {
+        "role": "dungeon_key_pool",
+        "counted_by": "$.dungeon_key_policy.validation.separate_key_pool_count_expression",
+        "allows_main_pool_items": false,
+        "expected_count": 3,
+        "consumed_by_linkedworld": true,
+        "consumed_by_worlds": false
+      }
+    },
+    "main_pool_policy": {
+      "big_keys_in_main_pool": false,
+      "small_keys_in_main_pool": false,
+      "reason": "The normal profile declares small_key_shuffle=original_dungeon; dungeon keys are intentionally excluded from the 153-item main pool until a consumed dungeon-key model exists."
+    },
+    "key_rule_templates": [
+      {
+        "template_id": "key_rule_template.small_key_original_dungeon",
+        "rule_id_pattern": "rule.dungeon.small_key_original_dungeon:{dungeon_id}:{required_count}",
+        "key_kind": "small_key",
+        "profile_binding": "small_key_shuffle=original_dungeon",
+        "pool_role": "local_dungeon_state",
+        "fact_id_pattern": "predicate.dungeon.small_key_count_at_least:{dungeon_id}:{required_count}",
+        "adds_items_to_main_pool": false,
+        "adds_items_to_separate_key_pool": false,
+        "authorizes_native_placement": true,
+        "consumption_status": "consumed-authorizing-by-generic-native-probe"
+      },
+      {
+        "template_id": "key_rule_template.big_key_separate_pool",
+        "rule_id_pattern": "rule.dungeon.big_key_separate_pool:{dungeon_id}:{location_id}",
+        "key_kind": "big_key",
+        "profile_binding": "big_keys_in_main_pool=false",
+        "pool_role": "separate_key_pool",
+        "fact_id_pattern": "item.big_key_{dungeon_id}",
+        "declared_instance_count": 3,
+        "declared_instances_ref": "$.dungeon_key_policy.separate_key_pool.items",
+        "adds_items_to_main_pool": false,
+        "authorizes_native_placement": true,
+        "consumption_status": "consumed-authorizing-by-generic-native-probe"
+      },
+      {
+        "template_id": "key_rule_template.big_key_self_lock_blocked",
+        "rule_id_pattern": "rule.dungeon.big_key_self_lock_blocked:{dungeon_id}:{location_id}",
+        "key_kind": "big_key",
+        "pool_role": "separate_key_pool",
+        "blocked_policy_ref": "$.dungeon_key_policy.blocked_self_lock_policy",
+        "blocked_binding_ref": "$.dungeon_key_policy.location_bindings",
+        "authorizes_native_placement": true,
+        "consumption_status": "consumed-authorizing-by-generic-native-probe"
+      }
+    ],
+    "separate_key_pool": {
+      "status": "consumed-authorizing-by-generic-native-probe",
+      "pool_role": "dungeon_key_pool",
+      "contributes_to_total_count": false,
+      "consumed_by_linkedworld": true,
+      "consumed_by_worlds": false,
+      "items": [
+        {
+          "semantic_id": "item.big_key_desert_palace",
+          "name": "Big Key (Desert Palace)",
+          "classification": "dungeon",
+          "advancement": true,
+          "pool_role": "dungeon_key_pool",
+          "dungeon_id": "desert_palace",
+          "key_kind": "big_key",
+          "count": 1
+        },
+        {
+          "semantic_id": "item.big_key_swamp_palace",
+          "name": "Big Key (Swamp Palace)",
+          "classification": "dungeon",
+          "advancement": true,
+          "pool_role": "dungeon_key_pool",
+          "dungeon_id": "swamp_palace",
+          "key_kind": "big_key",
+          "count": 1
+        },
+        {
+          "semantic_id": "item.big_key_skull_woods",
+          "name": "Big Key (Skull Woods)",
+          "classification": "dungeon",
+          "advancement": true,
+          "pool_role": "dungeon_key_pool",
+          "dungeon_id": "skull_woods",
+          "key_kind": "big_key",
+          "count": 1
+        }
+      ]
+    },
+    "blocked_self_lock_policy": {
+      "status": "consumed-as-non-authorizing-self-lock-blocker",
+      "policy": "A key from separate_key_pool must not be placed in a location whose requires_fact needs that same key until Worlds consumes generic key reachability, inventory grants, and self-lock prevention.",
+      "blocked_location_role": "big_key_locked_chest",
+      "blocked_key_role": "dungeon_big_key",
+      "authorizes_placement_filter": false
+    },
+    "required_facts": [
+      {
+        "fact_id": "item.big_key_desert_palace",
+        "role": "dungeon_big_key",
+        "provided_by": "$.dungeon_key_policy.separate_key_pool.items[semantic_id=item.big_key_desert_palace]",
+        "consumption_status": "consumed-as-non-authorizing-key-fact"
+      },
+      {
+        "fact_id": "item.big_key_swamp_palace",
+        "role": "dungeon_big_key",
+        "provided_by": "$.dungeon_key_policy.separate_key_pool.items[semantic_id=item.big_key_swamp_palace]",
+        "consumption_status": "consumed-as-non-authorizing-key-fact"
+      },
+      {
+        "fact_id": "item.big_key_skull_woods",
+        "role": "dungeon_big_key",
+        "provided_by": "$.dungeon_key_policy.separate_key_pool.items[semantic_id=item.big_key_skull_woods]",
+        "consumption_status": "consumed-as-non-authorizing-key-fact"
+      },
+      {
+        "fact_id": "cap.can_use_bombs",
+        "role": "secondary_location_requirement",
+        "provided_by": "generation/logic.open-no-glitches.v1.json $.item_effects",
+        "used_by_location_id": 59800,
+        "consumption_status": "consumed-as-non-authorizing-secondary-fact"
+      }
+    ],
+    "location_bindings": [
+      {
+        "location_id": 59791,
+        "location_name": "Desert Palace - Big Chest",
+        "location_role": "big_key_locked_chest",
+        "dungeon_id": "desert_palace",
+        "requires_fact": "item.big_key_desert_palace",
+        "key_pool_ref": "$.dungeon_key_policy.separate_key_pool.items[semantic_id=item.big_key_desert_palace]",
+        "self_lock_blocked": true
+      },
+      {
+        "location_id": 59785,
+        "location_name": "Swamp Palace - Big Chest",
+        "location_role": "big_key_locked_chest",
+        "dungeon_id": "swamp_palace",
+        "requires_fact": "item.big_key_swamp_palace",
+        "key_pool_ref": "$.dungeon_key_policy.separate_key_pool.items[semantic_id=item.big_key_swamp_palace]",
+        "self_lock_blocked": true
+      },
+      {
+        "location_id": 59800,
+        "location_name": "Skull Woods - Big Chest",
+        "location_role": "big_key_locked_chest",
+        "dungeon_id": "skull_woods",
+        "requires_fact": "item.big_key_skull_woods",
+        "secondary_requires_fact": "cap.can_use_bombs",
+        "key_pool_ref": "$.dungeon_key_policy.separate_key_pool.items[semantic_id=item.big_key_skull_woods]",
+        "self_lock_blocked": true
+      }
+    ],
+    "blocked_rule_bindings_ref": "$.dungeon_key_policy.location_bindings",
+    "native_authorization_proofs": {
+      "status": "generic-native-probe-passed-authorizing",
+      "fact_graph_id": "fact_graph.alttp.open_no_glitches.normal.v1",
+      "probe_id": "probe.alttp.open_no_glitches.dungeon_key_policy.native_authorization.v1",
+      "probe_contract_ref": "generation/logic.open-no-glitches.v1.json $.native_probe_contract_index.probe_contracts[surface_id=dungeon_key_policy.native_authorization]",
+      "produced_facts_ref": "generation/logic.open-no-glitches.v1.json $.native_probe_contract_index.probe_contracts[surface_id=dungeon_key_policy.native_authorization].produced_facts",
+      "consumed_facts_ref": "generation/logic.open-no-glitches.v1.json $.native_probe_contract_index.probe_contracts[surface_id=dungeon_key_policy.native_authorization].consumed_facts",
+      "separate_key_pool_data_consumed": true,
+      "separate_key_pool_count": 3,
+      "main_pool_count_unchanged": true,
+      "self_lock_binding_data_complete": true,
+      "native_self_lock_enforcement": true,
+      "small_key_section_requirement_count": 9,
+      "native_inventory_grant_consumption": true,
+      "native_probe_pass_count": 1,
+      "proofs": [
+        { "proof_id": "separate_key_pool_count_matches_declared_items", "status": "satisfied", "native_authorizes": true },
+        { "proof_id": "separate_key_pool_excluded_from_main_pool", "status": "satisfied", "native_authorizes": true },
+        { "proof_id": "blocked_big_chest_bindings_have_matching_key_items", "status": "satisfied-for-3-bindings", "native_authorizes": true },
+        { "proof_id": "native_separate_key_pool_fill_order", "status": "satisfied-by-generic-native-probe", "native_authorizes": true },
+        { "proof_id": "native_self_lock_enforcement", "status": "satisfied-by-generic-native-probe", "native_authorizes": true },
+        { "proof_id": "small_key_section_requirements", "status": "satisfied-by-generic-native-probe", "native_authorizes": true }
+      ]
+    },
+    "native_authorization_decision": {
+      "status": "authorized-by-generic-native-probe",
+      "criteria_met": true,
+      "set_authorizes_true": true,
+      "evaluated_surface": "dungeon_key_policy.native_authorization_proofs",
+      "probe_id": "probe.alttp.open_no_glitches.dungeon_key_policy.native_authorization.v1",
+      "native_probe_pass_count": 1,
+      "blocking_reasons": [],
+      "required_before_true": []
+    },
+    "missing_for_worlds_generic_consumption": [
+      "consume key_pool_roles without ALTTP-specific hardcoded item names",
+      "derive inventory facts from separate_key_pool item grants",
+      "apply blocked_self_lock_policy as a generic placement constraint",
+      "bind location requirements to generic location ids and dungeon ids",
+      "consume key_rule_templates for small keys, big keys, and self-lock prevention without adding dungeon keys to the main pool",
+      "prove separate_key_pool items remain outside the 153-item main pool",
+      "prove native placement keeps gates closed until dungeon traversal and key reachability are consumed"
+    ],
+    "validation": {
+      "separate_key_pool_count_expression": "sum(dungeon_key_policy.separate_key_pool.items[].count)",
+      "expected_separate_key_pool_count": 3,
+      "key_rule_template_count_expression": "length(dungeon_key_policy.key_rule_templates)",
+      "expected_key_rule_template_count": 3,
+      "blocked_big_chest_count_expression": "length(dungeon_key_policy.location_bindings[] | select(.self_lock_blocked == true))",
+      "expected_blocked_big_chest_count": 3
+    },
+    "authorizes": {
+      "main_pool_count": false,
+      "native_location_reachability": true,
+      "native_logic_solve": true,
+      "native_placement": true
+    }
+  },
+  "notes": [
+    "This is the compact normal ALTTP pool for the open/no-glitches/default-progressive profile.",
+    "Dungeon big keys required by declared big-chest rules live in dungeon_key_policy.separate_key_pool as consumed non-authorizing policy data; they do not alter total_count.",
+    "Tracker item slots are identity metadata, not the pool by themselves; this file adds generation counts.",
+    "Worlds must still keep ALTTP native solve/place gated until the C++ placer consumes the logic and placement surfaces."
+  ]
+}

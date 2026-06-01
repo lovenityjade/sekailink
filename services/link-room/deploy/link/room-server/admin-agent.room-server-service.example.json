@@ -1,0 +1,6 @@
+{
+  "name": "room-server",
+  "state_file": "/opt/sekailink/link/room-server/runtime/room_server_state.json",
+  "log_file": "/opt/sekailink/link/logs/room-server/service.log",
+  "systemd_unit": "sekailink-room-server.service"
+}

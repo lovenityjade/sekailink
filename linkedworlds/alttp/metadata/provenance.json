@@ -1,0 +1,43 @@
+{
+  "module_id": "sekailink-linkedworld-alttp",
+  "snapshot_date": "2026-05-05",
+  "provenance_status": "manual-clean-room-recovery",
+  "canonical_vs_snapshot": {
+    "canonical": [
+      "manifest/",
+      "metadata/",
+      "bridge/",
+      "tracker/",
+      "patch/",
+      "presets/",
+      "docs/"
+    ],
+    "snapshot_only": [
+      "source-snapshots/"
+    ]
+  },
+  "upstream_roots": [
+    {
+      "path": "sekaiemu/client/linkedworlds/alttp/",
+      "role": "linkedworld runtime and source metadata"
+    },
+    {
+      "path": "sekaiemu/worlds/alttp/",
+      "role": "world generation, patching, options, and ROM validation"
+    },
+    {
+      "path": "sklmi/manifests/alttp.phase1.json",
+      "role": "phase 1 memory bridge source snapshot"
+    },
+    {
+      "path": "sklmi/tests/sklmi_alttp_golden_main.cpp",
+      "role": "bridge verification reference"
+    }
+  ],
+  "notes": [
+    "This repo intentionally avoids inventing missing contracts as executable code.",
+    "Unknown values stay pending until extracted from upstream sources.",
+    "Bridge phase 1 is retained as a transitional canonical artifact for this recovery stage.",
+    "Tracker and metadata normalization files are repo-owned translations of upstream knowledge rather than copied upstream source blobs."
+  ]
+}

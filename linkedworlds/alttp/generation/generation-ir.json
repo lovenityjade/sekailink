@@ -1,0 +1,130 @@
+{
+  "schema_version": "sekailink-generation-ir-v1",
+  "linkedworld_id": "alttp",
+  "game_key": "alttp",
+  "version": "0.1.1-dev",
+  "status": "native-generation-authorized-for-default-normal",
+  "capabilities": {
+    "can_validate_options": true,
+    "can_build_item_pool": true,
+    "can_solve_logic": true,
+    "can_place_items": true,
+    "can_native_generate": true,
+    "can_emit_patch": true,
+    "can_emit_room_contract": true,
+    "external_tools_required": [],
+    "unsupported_options": [],
+    "option_scoped_unsupported_options": [
+      {
+        "option_family": "enemizer",
+        "scope": "non_default_profiles_only",
+        "blocks_default_normal_profile": false,
+        "status": "disabled_until_native_port",
+        "reason": "External Enemizer-dependent options are not part of the default open/no-glitches normal profile authorized by the native probe contract index."
+      }
+    ]
+  },
+  "native_generation_authorization": {
+    "status": "authorized-by-linkedworld-native-probe-contracts",
+    "profile": "open-no-glitches-normal",
+    "fact_graph_id": "fact_graph.alttp.open_no_glitches.normal.v1",
+    "authorization_basis": "Default-normal native generation is authorized only by the five passing native_probe_contract_index contracts plus the consumed required surfaces below. Reachability fact materialization is a packaging/runtime fact-graph contract, not an independent solve/place proof.",
+    "item_pool_count": 153,
+    "fillable_location_count": 153,
+    "native_probe_contract_index_ref": {
+      "file": "generation/logic.open-no-glitches.v1.json",
+      "path": "$.native_probe_contract_index"
+    },
+    "reachability_fact_materialization_ref": {
+      "file": "generation/logic.open-no-glitches.v1.json",
+      "path": "$.region_graph.native_reachability_fact_materialization",
+      "status": "declares-starting-facts-and-edge-derived-region-location-facts"
+    },
+    "required_surface_status": {
+      "logic_rules_authorizing": true,
+      "region_graph_authorizing": true,
+      "region_graph_edge_blockers_consumed": true,
+      "location_refinements_authorizing": true,
+      "location_rule_segmentation_authorizing": true,
+      "dungeon_key_policy_authorizing": true,
+      "placement_rules_authorizing": true
+    },
+    "probe_summary": {
+      "native_probe_contract_count": 5,
+      "pass_count": 5,
+      "fail_count": 0
+    },
+    "manifest_projection": {
+      "manifest_ref": "manifest/manifest.json",
+      "status": "generation-ir-authorizes-default-normal-without-editing-manifest-owned-files",
+      "canonical_generation_ir_ref": "generation/generation-ir.json"
+    }
+  },
+  "options": {
+    "defaults_ref": "presets/alttp.ap-defaults.core.json",
+    "legacy_yaml_reference": "config/default.yaml",
+    "source": "nexus.config_version_id"
+  },
+  "logic": {
+    "completion": {
+      "type": "linkedworld_rule_ref",
+      "rule_ref": "tracker/default.bundle/surface.complete.json",
+      "note": "ALTTP native default/normal solve and placement surfaces are authorized by LinkedWorld native probe contracts; completion remains tracker-surface referenced."
+    },
+    "goals": [
+      {
+        "id": "goal.ganon",
+        "name": "Defeat Ganon",
+        "option_key": "goal",
+        "option_value": "ganon"
+      },
+      {
+        "id": "goal.triforce_hunt",
+        "name": "Triforce Hunt",
+        "option_key": "goal",
+        "option_value": "triforce_hunt"
+      }
+    ],
+    "solver_status": "native-probe-authorized"
+  },
+  "catalog": {
+    "locations_ref": "tracker/location-groups.complete.json",
+    "locations_shape": "location_groups",
+    "items_ref": "tracker/item-slots.complete.json",
+    "items_shape": "item_slots",
+    "item_pool_ref": "generation/item-pool.normal.v1.json",
+    "item_pool_shape": "item_pool",
+    "logic_rules_ref": "generation/logic.open-no-glitches.v1.json",
+    "logic_rules_shape": "region_rule_graph",
+    "placement_rules_ref": "generation/placement.open-no-glitches.v1.json",
+    "placement_rules_shape": "placement_constraints",
+    "tracker_surface_ref": "tracker/default.bundle/surface.complete.json",
+    "room_metadata_ref": "metadata/room-metadata.complete.json",
+    "slot_data_ref": "metadata/slot-data.complete.json"
+  },
+  "patch": {
+    "type": "apdelta",
+    "manifest_ref": "patch/patch.manifest.json",
+    "patch_file_extension": ".aplttp",
+    "base_rom_md5s": [
+      "03a63945398191337e896e5771f77173"
+    ],
+    "host": "sekaiemu",
+    "external_enemizer_policy": "option-scoped-disabled; does-not-block-default-normal-native-generation"
+  },
+  "runtime": {
+    "host": "sekaiemu",
+    "memory_interface": "sklmi",
+    "bridge_ref": "bridge/sklmi.phase1.json",
+    "bridge_manifest_ref": "bridge/bridge.manifest.json",
+    "tracker_bundle_ref": "tracker/default.zip",
+    "tracker_manifest_ref": "tracker/tracker.manifest.json",
+    "tracker_bindings_ref": "tracker/runtime-bindings.phase1.json"
+  },
+  "notes": [
+    "This IR is generic data owned by the ALTTP LinkedWorld repo; Worlds must not hardcode ALTTP behavior.",
+    "The catalog can already be consumed by Worlds through file refs.",
+    "Native default/normal generation is authorized by the passed LinkedWorld native probe contract index.",
+    "Enemizer-dependent options remain option-scoped unsupported and do not block the default open/no-glitches normal profile."
+  ]
+}

@@ -1,0 +1,2070 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&display=swap");
+
+@property --sklp-border-angle {
+  syntax: "<angle>";
+  initial-value: 90deg;
+  inherits: true;
+}
+
+:root {
+  --sklp-font-ui: "Rajdhani", "Space Grotesk", "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  --sklp-font-brand: "Rajdhani", "Space Grotesk", "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  --sklp-font-tech: "Share Tech Mono", "Orbitron", "Space Grotesk", system-ui, monospace;
+
+  --sklp-bevel-cut: 18px;
+  --sklp-bevel-cut-sm: 11px;
+  --sklp-panel-bg:
+    linear-gradient(180deg, rgba(8, 24, 26, 0.94), rgba(5, 16, 17, 0.88)),
+    radial-gradient(circle at top left, rgba(0, 255, 200, 0.11), transparent 36%),
+    radial-gradient(circle at bottom right, rgba(0, 221, 179, 0.08), transparent 38%);
+  --sklp-card-bg:
+    linear-gradient(180deg, rgba(10, 30, 33, 0.92), rgba(6, 19, 21, 0.84)),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.05), transparent 34%);
+  --sklp-line-soft: rgba(0, 255, 200, 0.12);
+  --sklp-line-strong: rgba(0, 255, 200, 0.32);
+  --sklp-sheen:
+    linear-gradient(115deg, transparent 16%, rgba(255, 255, 255, 0.11) 28%, rgba(0, 255, 200, 0.15) 36%, transparent 52%);
+  --sklp-title-shadow: 0 0 16px rgba(0, 255, 200, 0.18), 0 10px 22px rgba(0, 0, 0, 0.38);
+  --sklp-stars-small:
+    radial-gradient(circle, rgba(198, 255, 248, 0.22) 0.7px, transparent 1.35px);
+  --sklp-stars-medium:
+    radial-gradient(circle, rgba(0, 255, 200, 0.16) 1px, transparent 1.8px);
+  --sklp-stars-large:
+    radial-gradient(circle, rgba(86, 228, 214, 0.12) 1.35px, transparent 2.1px);
+  --sklp-border-angle: 90deg;
+  --sklp-border-glow:
+    conic-gradient(
+      from var(--sklp-border-angle),
+      rgba(0, 255, 200, 0.18),
+      rgba(0, 255, 200, 0.96) 0.08turn,
+      rgba(224, 255, 251, 0.92) 0.14turn,
+      rgba(0, 221, 179, 0.3) 0.22turn,
+      rgba(0, 255, 200, 0.12) 0.34turn,
+      rgba(0, 255, 200, 0.76) 0.5turn,
+      rgba(224, 255, 251, 0.9) 0.64turn,
+      rgba(0, 255, 200, 0.28) 0.78turn,
+      rgba(0, 255, 200, 0.18) 1turn
+    );
+  --sklp-button-border-glow:
+    conic-gradient(
+      from var(--sklp-border-angle),
+      rgba(0, 255, 200, 0.08),
+      rgba(0, 255, 200, 0.92) 0.12turn,
+      rgba(224, 255, 251, 0.92) 0.18turn,
+      rgba(0, 255, 200, 0.12) 0.28turn,
+      rgba(0, 221, 179, 0.8) 0.5turn,
+      rgba(224, 255, 251, 0.88) 0.68turn,
+      rgba(0, 255, 200, 0.14) 0.8turn,
+      rgba(0, 255, 200, 0.08) 1turn
+    );
+}
+
+body.sklp-ui {
+  letter-spacing: 0.01em;
+  background:
+    radial-gradient(circle at top, rgba(22, 79, 79, 0.17), transparent 36%),
+    radial-gradient(circle at 82% 14%, rgba(29, 113, 96, 0.14), transparent 28%),
+    linear-gradient(180deg, #020607 0%, #061011 44%, #030809 100%);
+}
+
+body.sklp-ui::before,
+body.sklp-ui::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body.sklp-ui::before {
+  opacity: 0.22;
+  background:
+    linear-gradient(transparent 97%, rgba(0, 255, 200, 0.055) 100%),
+    linear-gradient(90deg, transparent 97%, rgba(0, 255, 200, 0.045) 100%);
+  background-size: 100% 6px, 6px 100%;
+  mix-blend-mode: screen;
+}
+
+body.sklp-ui::after {
+  opacity: 0.16;
+  background:
+    radial-gradient(720px 420px at 12% 14%, rgba(0, 221, 179, 0.16), transparent 70%),
+    radial-gradient(900px 560px at 82% 80%, rgba(0, 255, 200, 0.11), transparent 68%);
+  animation: sklp-body-shift 24s ease-in-out infinite alternate;
+}
+
+.sklp-gridfield,
+.sklp-energy-lines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.sklp-gridfield {
+  opacity: 0.18;
+  background:
+    linear-gradient(180deg, rgba(0, 255, 200, 0.08), transparent 18%),
+    radial-gradient(circle at center, rgba(0, 255, 200, 0.06), transparent 58%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.4), #000 22%, #000 72%, rgba(0, 0, 0, 0.2));
+}
+
+.sklp-energy-lines::before,
+.sklp-energy-lines::after {
+  content: "";
+  position: absolute;
+  inset: auto;
+  width: 42vw;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 200, 0.45), transparent);
+  filter: blur(0.3px) drop-shadow(0 0 10px rgba(0, 255, 200, 0.42));
+  animation: sklp-energy-sweep 15s linear infinite;
+}
+
+.sklp-energy-lines::before {
+  top: 18%;
+  left: -10%;
+}
+
+.sklp-energy-lines::after {
+  bottom: 12%;
+  right: -10%;
+  animation-duration: 19s;
+  animation-direction: reverse;
+}
+
+body.sklp-ui .sklp-topbar {
+  height: 58px;
+  padding: 0 20px;
+  background:
+    linear-gradient(180deg, rgba(5, 13, 14, 0.96), rgba(5, 13, 14, 0.6)),
+    linear-gradient(90deg, rgba(0, 255, 200, 0.06), transparent 20%, transparent 80%, rgba(0, 255, 200, 0.06));
+  backdrop-filter: blur(16px);
+}
+
+body.sklp-ui .sklp-topbar::before {
+  content: "";
+  position: absolute;
+  inset: auto 20px 0 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 200, 0.28), transparent);
+}
+
+body.sklp-ui .sklp-topbar-left,
+body.sklp-ui .sklp-topbar-right {
+  min-width: 0;
+}
+
+body.sklp-ui .sklp-topbar-title-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+body.sklp-ui .sklp-topbar-mark {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(0, 255, 200, 0.24));
+}
+
+body.sklp-ui .sklp-topbar-title-group {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+}
+
+body.sklp-ui .sklp-topbar-wordmark {
+  height: 15px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(0, 255, 200, 0.18));
+}
+
+body.sklp-ui .sklp-topbar-subtitle {
+  font-family: var(--sklp-font-tech);
+  font-size: 9px;
+  letter-spacing: 0.24em;
+  color: rgba(200, 243, 236, 0.56);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+body.sklp-ui .skl-app-shell {
+  grid-template-columns: 252px minmax(720px, 1fr);
+  gap: 18px;
+  padding: 76px 18px 18px 18px;
+}
+
+body.sklp-ui .skl-sidebar,
+body.sklp-ui .sklp-main-frame,
+body.sklp-ui .sklp-panel,
+body.sklp-ui .skl-app-panel,
+body.sklp-ui .skl-panel,
+body.sklp-ui .skl-roomlist-page .skl-app-panel,
+body.sklp-ui .skl-modal-panel,
+body.sklp-ui .sklp-settings-modal,
+body.sklp-ui .sklp-notify-panel,
+body.sklp-ui .skl-tracker-panel {
+  clip-path: polygon(
+    var(--sklp-bevel-cut) 0,
+    100% 0,
+    100% calc(100% - var(--sklp-bevel-cut)),
+    calc(100% - var(--sklp-bevel-cut)) 100%,
+    0 100%,
+    0 var(--sklp-bevel-cut)
+  );
+  border-radius: 0;
+}
+
+body.sklp-ui .skl-sidebar,
+body.sklp-ui .sklp-main-frame {
+  position: relative;
+  overflow: hidden;
+  background: var(--sklp-panel-bg);
+  border: 1px solid var(--sklp-line-soft);
+  box-shadow: var(--sklp-shadow), 0 0 0 1px rgba(0, 255, 200, 0.05), 0 0 26px rgba(0, 255, 200, 0.08);
+  backdrop-filter: blur(14px);
+}
+
+body.sklp-ui .skl-sidebar::before,
+body.sklp-ui .sklp-main-frame::before,
+body.sklp-ui .sklp-panel::before,
+body.sklp-ui .skl-app-panel::before,
+body.sklp-ui .skl-panel::before,
+body.sklp-ui .skl-modal-panel::before,
+body.sklp-ui .sklp-settings-modal::before,
+body.sklp-ui .sklp-notify-panel::before,
+body.sklp-ui .skl-tracker-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--sklp-sheen);
+  opacity: 0.7;
+}
+
+body.sklp-ui .skl-sidebar::after,
+body.sklp-ui .sklp-main-frame::after,
+body.sklp-ui .sklp-panel::after,
+body.sklp-ui .skl-app-panel::after,
+body.sklp-ui .skl-panel::after,
+body.sklp-ui .skl-modal-panel::after,
+body.sklp-ui .sklp-settings-modal::after,
+body.sklp-ui .sklp-notify-panel::after,
+body.sklp-ui .skl-tracker-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(120deg, transparent 15%, rgba(0, 255, 200, 0.36) 25%, rgba(255, 255, 255, 0.08) 29%, transparent 38%);
+  transform: translateX(-140%);
+  animation: sklp-panel-shine 11s linear infinite;
+  opacity: 0;
+}
+
+body.sklp-ui .sklp-main-frame::after {
+  animation-duration: 13s;
+}
+
+body.sklp-ui .sklp-panel:nth-of-type(2n)::after {
+  animation-duration: 14.2s;
+  animation-delay: -4.1s;
+}
+
+body.sklp-ui .sklp-panel:nth-of-type(3n)::after {
+  animation-duration: 10.6s;
+  animation-delay: -7.2s;
+}
+
+body.sklp-ui .sklp-main-frame {
+  height: 100%;
+  padding: 16px;
+}
+
+body.sklp-ui .sklp-main-corners {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+body.sklp-ui .sklp-main-corners::before,
+body.sklp-ui .sklp-main-corners::after {
+  content: "";
+  position: absolute;
+  width: 76px;
+  height: 76px;
+  border: 1px solid rgba(0, 255, 200, 0.3);
+  opacity: 0.75;
+}
+
+body.sklp-ui .sklp-main-corners::before {
+  top: 10px;
+  left: 10px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+body.sklp-ui .sklp-main-corners::after {
+  right: 10px;
+  bottom: 10px;
+  border-left: 0;
+  border-top: 0;
+}
+
+body.sklp-ui .sklp-route-stage {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  animation: sklp-route-enter 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+body.sklp-ui .sklp-title,
+body.sklp-ui .skl-sidebar-label,
+body.sklp-ui .sklp-friends-title,
+body.sklp-ui .sklp-panel-head .sklp-title,
+body.sklp-ui .skl-modal-header h3,
+body.sklp-ui h1,
+body.sklp-ui h2,
+body.sklp-ui h3 {
+  text-shadow: var(--sklp-title-shadow);
+}
+
+body.sklp-ui .sklp-title,
+body.sklp-ui .skl-sidebar-label,
+body.sklp-ui .sklp-friends-title {
+  letter-spacing: 0.14em;
+}
+
+body.sklp-ui .skl-sidebar {
+  width: 252px;
+  min-width: 252px;
+}
+
+body.sklp-ui .skl-sidebar-nav {
+  padding: 12px 10px 10px;
+}
+
+body.sklp-ui .skl-sidebar-link,
+body.sklp-ui .skl-sidebar-link-static {
+  position: relative;
+  min-height: 48px;
+  margin-bottom: 8px;
+  border: 1px solid transparent;
+  background: linear-gradient(180deg, rgba(11, 32, 35, 0.72), rgba(6, 17, 19, 0.66));
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+body.sklp-ui .skl-sidebar-link:hover,
+body.sklp-ui .skl-sidebar-link-static:hover {
+  transform: translateX(4px);
+  border-color: rgba(0, 255, 200, 0.28);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25), 0 0 18px rgba(0, 255, 200, 0.12);
+}
+
+body.sklp-ui .skl-sidebar-link.active,
+body.sklp-ui .skl-sidebar-link[aria-current="page"] {
+  border-color: rgba(0, 255, 200, 0.42);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28), 0 0 24px rgba(0, 255, 200, 0.18);
+}
+
+body.sklp-ui .sklp-friends-block {
+  margin-top: 10px;
+  background: linear-gradient(180deg, rgba(4, 13, 14, 0.44), rgba(3, 9, 11, 0.18));
+}
+
+body.sklp-ui .sklp-friends-search,
+body.sklp-ui .sklp-status-menu,
+body.sklp-ui .sklp-friend-card,
+body.sklp-ui .sklp-head-menu,
+body.sklp-ui .sklp-topbar-menu {
+  backdrop-filter: blur(18px);
+}
+
+body.sklp-ui .sklp-dashboard {
+  gap: 18px;
+  height: 100%;
+}
+
+body.sklp-ui .sklp-main,
+body.sklp-ui .sklp-right {
+  gap: 18px;
+}
+
+body.sklp-ui .sklp-right {
+  grid-template-rows: 320px 1fr;
+}
+
+body.sklp-ui .sklp-panel,
+body.sklp-ui .skl-panel {
+  background: var(--sklp-card-bg);
+  border: 1px solid var(--sklp-line-soft);
+}
+
+body.sklp-ui .skl-app-panel {
+  background: rgba(13, 17, 23, 0.60);
+  border: 1px solid rgba(0, 255, 200, 0.12);
+}
+
+body.sklp-ui .sklp-panel-head,
+body.sklp-ui .skl-panel-head,
+body.sklp-ui .skl-card-header,
+body.sklp-ui .skl-modal-header {
+  background:
+    linear-gradient(180deg, rgba(9, 26, 28, 0.88), rgba(5, 15, 17, 0.58)),
+    linear-gradient(90deg, rgba(0, 255, 200, 0.04), transparent 22%, transparent 78%, rgba(0, 255, 200, 0.05));
+}
+
+body.sklp-ui .sklp-subtitle,
+body.sklp-ui .skl-section-subtitle,
+body.sklp-ui .skl-muted,
+body.sklp-ui .sklp-gm-sub {
+  color: rgba(198, 235, 228, 0.56);
+}
+
+body.sklp-ui .skl-btn,
+body.sklp-ui button.skl-btn,
+body.sklp-ui .yaml-carousel-nav,
+body.sklp-ui .sklp-edit,
+body.sklp-ui .sklp-head-menu-trigger,
+body.sklp-ui .sklp-toast-close,
+body.sklp-ui .sklp-friends-add,
+body.sklp-ui .sklp-notify-markall {
+  position: relative;
+  border: 1px solid rgba(0, 255, 200, 0.2);
+  background:
+    linear-gradient(180deg, rgba(14, 41, 44, 0.86), rgba(6, 18, 19, 0.82)),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 34%);
+  color: rgba(238, 255, 251, 0.96);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24), 0 0 0 1px rgba(0, 255, 200, 0.05);
+  transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease, filter 150ms ease;
+}
+
+body.sklp-ui .skl-btn:hover,
+body.sklp-ui button.skl-btn:hover,
+body.sklp-ui .yaml-carousel-nav:hover,
+body.sklp-ui .sklp-edit:hover,
+body.sklp-ui .sklp-head-menu-trigger:hover,
+body.sklp-ui .sklp-friends-add:hover,
+body.sklp-ui .sklp-notify-markall:hover {
+  transform: translateY(-1px);
+  border-color: rgba(0, 255, 200, 0.38);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28), 0 0 24px rgba(0, 255, 200, 0.14);
+}
+
+body.sklp-ui .skl-btn:active,
+body.sklp-ui button.skl-btn:active,
+body.sklp-ui .yaml-carousel-nav:active,
+body.sklp-ui .sklp-edit:active {
+  transform: translateY(0);
+  filter: brightness(0.96);
+}
+
+body.sklp-ui .skl-btn.ghost {
+  background:
+    linear-gradient(180deg, rgba(11, 29, 32, 0.64), rgba(5, 15, 17, 0.64)),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.05), transparent 30%);
+}
+
+body.sklp-ui input,
+body.sklp-ui select,
+body.sklp-ui textarea,
+body.sklp-ui .input,
+body.sklp-ui .skl-gm-select,
+body.sklp-ui .skl-input,
+body.sklp-ui .skl-textarea {
+  border: 1px solid rgba(0, 255, 200, 0.16);
+  background:
+    linear-gradient(180deg, rgba(4, 13, 14, 0.9), rgba(6, 17, 18, 0.84)),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.04), transparent 40%);
+  color: rgba(239, 255, 251, 0.94);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), inset 0 0 0 1px rgba(0, 255, 200, 0.03);
+}
+
+body.sklp-ui input::placeholder,
+body.sklp-ui textarea::placeholder {
+  color: rgba(196, 234, 226, 0.42);
+}
+
+body.sklp-ui .yaml-dashboard-card,
+body.sklp-ui .skl-gm-card,
+body.sklp-ui .sklp-gm-row,
+body.sklp-ui .sklp-chat-message,
+body.sklp-ui .skl-room-card,
+body.sklp-ui .skl-player-card,
+body.sklp-ui .skl-settings-card,
+body.sklp-ui .skl-account-card,
+body.sklp-ui .skl-help-card {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(11, 31, 34, 0.74), rgba(6, 18, 19, 0.68)),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.05), transparent 35%);
+  border: 1px solid rgba(0, 255, 200, 0.12);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+}
+
+body.sklp-ui .yaml-carousel-shell {
+  position: relative;
+  padding: 10px 54px;
+}
+
+body.sklp-ui .yaml-carousel-track {
+  gap: 18px;
+  padding: 6px 4px 18px;
+  scroll-padding: 12px;
+}
+
+body.sklp-ui .yaml-carousel-card {
+  position: relative;
+  min-width: 250px;
+  border: 1px solid rgba(0, 255, 200, 0.16);
+  background:
+    linear-gradient(180deg, rgba(9, 25, 27, 0.92), rgba(6, 17, 18, 0.8));
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.32), 0 0 20px rgba(0, 255, 200, 0.07);
+  overflow: hidden;
+  transform: translateZ(0);
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+  clip-path: polygon(
+    16px 0,
+    100% 0,
+    100% calc(100% - 16px),
+    calc(100% - 16px) 100%,
+    0 100%,
+    0 16px
+  );
+}
+
+body.sklp-ui .yaml-carousel-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(130deg, transparent 26%, rgba(255, 255, 255, 0.08) 34%, rgba(0, 255, 200, 0.11) 40%, transparent 52%);
+  transform: translateX(-135%);
+  transition: transform 420ms ease;
+}
+
+body.sklp-ui .yaml-carousel-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  border-color: rgba(0, 255, 200, 0.32);
+  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.36), 0 0 30px rgba(0, 255, 200, 0.12);
+  filter: brightness(1.04);
+}
+
+body.sklp-ui .yaml-carousel-card:hover::before {
+  transform: translateX(135%);
+}
+
+body.sklp-ui .yaml-game-thumb {
+  position: relative;
+  aspect-ratio: 3 / 4.2;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.44));
+}
+
+body.sklp-ui .yaml-game-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 280ms ease, filter 280ms ease;
+}
+
+body.sklp-ui .yaml-carousel-card:hover .yaml-game-thumb img {
+  transform: scale(1.035);
+  filter: saturate(1.06) contrast(1.03);
+}
+
+body.sklp-ui .yaml-tracker-badge,
+body.sklp-ui .yaml-link-verified-badge {
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.24);
+}
+
+body.sklp-ui .sklp-notify-fab {
+  min-height: 44px;
+  border: 1px solid rgba(0, 255, 200, 0.18);
+  background:
+    linear-gradient(180deg, rgba(12, 34, 36, 0.86), rgba(6, 18, 20, 0.82)),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 34%);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.32), 0 0 22px rgba(0, 255, 200, 0.1);
+}
+
+body.sklp-ui .sklp-notify-panel {
+  overflow: hidden;
+  border: 1px solid rgba(0, 255, 200, 0.16);
+  background:
+    linear-gradient(180deg, rgba(8, 24, 26, 0.96), rgba(5, 15, 16, 0.9)),
+    radial-gradient(circle at top right, rgba(0, 255, 200, 0.09), transparent 34%);
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.54), 0 0 24px rgba(0, 255, 200, 0.1);
+}
+
+body.sklp-ui .sklp-toast-stack {
+  gap: 12px;
+  right: 22px;
+  bottom: 18px;
+}
+
+body.sklp-ui .skl-toast {
+  min-width: 320px;
+  max-width: 520px;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(180deg, rgba(9, 25, 27, 0.95), rgba(5, 16, 17, 0.88)),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.06), transparent 35%),
+    var(--sklp-border-glow);
+  background-origin: border-box;
+  background-clip: padding-box, padding-box, border-box;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.36), 0 0 20px rgba(0, 255, 200, 0.1);
+  backdrop-filter: blur(16px);
+  animation:
+    sklp-toast-in 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    sklp-border-rotate 8.2s linear infinite;
+}
+
+body.sklp-ui .skl-toast.success {
+  border-color: rgba(0, 221, 179, 0.28);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.36), 0 0 22px rgba(0, 221, 179, 0.16);
+}
+
+body.sklp-ui .skl-toast.error {
+  border-color: rgba(255, 118, 118, 0.3);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.36), 0 0 22px rgba(255, 118, 118, 0.16);
+}
+
+body.sklp-ui .skl-modal {
+  backdrop-filter: blur(2px);
+}
+
+body.sklp-ui .skl-modal-backdrop {
+  background:
+    radial-gradient(circle at top, rgba(0, 255, 200, 0.07), transparent 36%),
+    rgba(2, 6, 7, 0.68);
+  animation: sklp-modal-fade 220ms ease;
+}
+
+body.sklp-ui .skl-modal-panel,
+body.sklp-ui .sklp-settings-modal,
+body.sklp-ui .skl-update-notes-panel,
+body.sklp-ui .skl-generation-modal-panel,
+body.sklp-ui .skl-launch-modal-panel {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(180deg, rgba(10, 28, 30, 0.97), rgba(5, 15, 17, 0.92)),
+    radial-gradient(circle at top left, rgba(0, 255, 200, 0.09), transparent 35%),
+    var(--sklp-border-glow);
+  background-origin: border-box;
+  background-clip: padding-box, padding-box, border-box;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.52), 0 0 34px rgba(0, 255, 200, 0.12);
+  animation:
+    sklp-modal-rise 280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    sklp-border-rotate 8.8s linear infinite;
+}
+
+body.sklp-ui .skl-modal-actions,
+body.sklp-ui .sklp-settings-modal-head {
+  border-top: 1px solid rgba(0, 255, 200, 0.1);
+}
+
+body.sklp-ui .skl-chat-log,
+body.sklp-ui .sklp-chat-scroll,
+body.sklp-ui .skl-roomlist,
+body.sklp-ui .sklp-gm-list,
+body.sklp-ui .sklp-users-list,
+body.sklp-ui .sklp-notify-list,
+body.sklp-ui .sklp-notify-detail,
+body.sklp-ui .yaml-carousel-track {
+  scroll-behavior: smooth;
+}
+
+body.sklp-ui .sklp-gm-row {
+  padding: 14px 16px;
+  margin: 10px 12px;
+  clip-path: polygon(
+    12px 0,
+    100% 0,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    0 100%,
+    0 12px
+  );
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+body.sklp-ui .sklp-gm-row:hover {
+  transform: translateX(4px);
+  border-color: rgba(0, 255, 200, 0.22);
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.22), 0 0 18px rgba(0, 255, 200, 0.08);
+}
+
+body.sklp-ui .sklp-gm-name,
+body.sklp-ui .yaml-dashboard-card h2,
+body.sklp-ui .skl-gm-section-header h2 {
+  font-family: var(--sklp-font-brand);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+body.sklp-ui .yaml-dashboard-card,
+body.sklp-ui .skl-gm-section-header,
+body.sklp-ui .skl-page-header,
+body.sklp-ui .skl-settings-section,
+body.sklp-ui .skl-account-section {
+  border-color: rgba(0, 255, 200, 0.14);
+}
+
+body.sklp-ui .yaml-search {
+  backdrop-filter: blur(10px);
+}
+
+body.sklp-ui .yaml-carousel-nav {
+  width: 38px;
+  height: 54px;
+  border-radius: 0;
+  clip-path: polygon(
+    12px 0,
+    100% 0,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    0 100%,
+    0 12px
+  );
+}
+
+body.sklp-ui .yaml-carousel-nav:disabled {
+  opacity: 0.38;
+  box-shadow: none;
+}
+
+body.sklp-ui .sklp-settings-overlay {
+  background: rgba(2, 6, 7, 0.52);
+  backdrop-filter: blur(5px);
+}
+
+body.sklp-ui .skl-sidebar-profile,
+body.sklp-ui .sklp-friends-toolbar,
+body.sklp-ui .sklp-panel-head,
+body.sklp-ui .sklp-notify-head {
+  position: relative;
+}
+
+body.sklp-ui .skl-sidebar-profile::after,
+body.sklp-ui .sklp-friends-toolbar::after,
+body.sklp-ui .sklp-panel-head::after,
+body.sklp-ui .sklp-notify-head::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 200, 0.18), transparent);
+}
+
+body.sklp-ui .skl-app-header,
+body.sklp-ui .skl-page-header,
+body.sklp-ui .dashboard-hero,
+body.sklp-ui .skl-gm-section-header,
+body.sklp-ui .po-mode-bar,
+body.sklp-ui .skl-roomlist-bar,
+body.sklp-ui .yaml-header,
+body.sklp-ui .skl-terminal-header {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(10, 28, 31, 0.9), rgba(7, 19, 21, 0.78)),
+    linear-gradient(90deg, rgba(0, 255, 200, 0.08), transparent 30%, transparent 70%, rgba(0, 255, 200, 0.08));
+  border: 1px solid rgba(0, 255, 200, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 14px 30px rgba(0, 0, 0, 0.2);
+}
+
+body.sklp-ui .dashboard-hero,
+body.sklp-ui .dashboard-card,
+body.sklp-ui .skl-lobby-card,
+body.sklp-ui .yaml-row,
+body.sklp-ui .options-group,
+body.sklp-ui .skl-room-table-header,
+body.sklp-ui .skl-room-empty,
+body.sklp-ui .skl-loading-block,
+body.sklp-ui .skl-roominfo-row,
+body.sklp-ui .option-container,
+body.sklp-ui .manual-container {
+  position: relative;
+  background: var(--sklp-card-bg);
+  border: 1px solid rgba(0, 255, 200, 0.12);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+}
+
+body.sklp-ui .dashboard-card,
+body.sklp-ui .yaml-row,
+body.sklp-ui .options-group,
+body.sklp-ui .manual-container,
+body.sklp-ui .option-container,
+body.sklp-ui .skl-room-table-header,
+body.sklp-ui .skl-room-empty,
+body.sklp-ui .skl-loading-block {
+  clip-path: polygon(
+    var(--sklp-bevel-cut-sm) 0,
+    100% 0,
+    100% calc(100% - var(--sklp-bevel-cut-sm)),
+    calc(100% - var(--sklp-bevel-cut-sm)) 100%,
+    0 100%,
+    0 var(--sklp-bevel-cut-sm)
+  );
+}
+
+body.sklp-ui .skl-app-title,
+body.sklp-ui .po-title-left,
+body.sklp-ui .po-title-right,
+body.sklp-ui .dashboard-title h1,
+body.sklp-ui .yaml-dashboard-card h2,
+body.sklp-ui .skl-gm-section-header h2 {
+  font-family: var(--sklp-font-tech);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body.sklp-ui .skl-eyebrow,
+body.sklp-ui .dashboard-title span,
+body.sklp-ui .stat-label,
+body.sklp-ui .yaml-sub,
+body.sklp-ui .skl-room-col,
+body.sklp-ui .skl-room-col-value.dim {
+  font-family: var(--sklp-font-tech);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(200, 243, 236, 0.68);
+}
+
+body.sklp-ui .skl-btn,
+body.sklp-ui button,
+body.sklp-ui .yaml-create,
+body.sklp-ui .yaml-import,
+body.sklp-ui .po-mode-btn,
+body.sklp-ui .load-more {
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease,
+    color 180ms ease;
+}
+
+body.sklp-ui .skl-btn:hover,
+body.sklp-ui button:hover,
+body.sklp-ui .yaml-create:hover,
+body.sklp-ui .yaml-import:hover,
+body.sklp-ui .po-mode-btn:hover,
+body.sklp-ui .load-more:hover {
+  transform: translateY(-1px);
+}
+
+body.sklp-ui input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+body.sklp-ui select,
+body.sklp-ui textarea,
+body.sklp-ui .multi-search,
+body.sklp-ui .skl-gm-select {
+  min-height: 44px;
+  border: 1px solid rgba(0, 255, 200, 0.16);
+  background:
+    linear-gradient(180deg, rgba(7, 17, 19, 0.96), rgba(8, 22, 24, 0.88));
+  color: rgba(238, 252, 249, 0.94);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 0 1px rgba(0, 255, 200, 0.03);
+}
+
+body.sklp-ui input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus,
+body.sklp-ui select:focus,
+body.sklp-ui textarea:focus,
+body.sklp-ui .multi-search:focus,
+body.sklp-ui .skl-gm-select:focus {
+  outline: none;
+  border-color: rgba(0, 221, 179, 0.44);
+  box-shadow: 0 0 0 1px rgba(0, 221, 179, 0.18), 0 0 22px rgba(0, 255, 200, 0.14);
+}
+
+body.sklp-ui .dashboard {
+  display: grid;
+  gap: 18px;
+}
+
+body.sklp-ui .dashboard-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.75fr);
+  gap: 16px;
+  padding: 18px;
+}
+
+body.sklp-ui .dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+body.sklp-ui .dashboard-card {
+  padding: 18px;
+  overflow: hidden;
+}
+
+body.sklp-ui .dashboard-card.full {
+  grid-column: 1 / -1;
+}
+
+body.sklp-ui .yaml-row,
+body.sklp-ui .skl-lobby-card,
+body.sklp-ui .skl-room-table-header {
+  padding: 14px 16px;
+}
+
+body.sklp-ui .yaml-row:hover,
+body.sklp-ui .skl-lobby-card:hover,
+body.sklp-ui .options-group:hover {
+  border-color: rgba(0, 255, 200, 0.22);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.22), 0 0 18px rgba(0, 255, 200, 0.08);
+}
+
+body.sklp-ui .skl-room-table {
+  display: grid;
+  gap: 12px;
+}
+
+body.sklp-ui .skl-lobby-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+body.sklp-ui .skl-room-avatar,
+body.sklp-ui .account-avatar {
+  box-shadow: 0 0 0 1px rgba(0, 255, 200, 0.16), 0 0 18px rgba(0, 255, 200, 0.14);
+}
+
+body.sklp-ui .skl-modal.open .skl-modal-backdrop {
+  animation: sklp-modal-fade 200ms ease forwards;
+}
+
+body.sklp-ui .skl-modal.open .skl-modal-panel {
+  animation: sklp-modal-rise 240ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+body.sklp-ui .skl-toast {
+  border: 1px solid rgba(0, 255, 200, 0.18);
+  background:
+    linear-gradient(180deg, rgba(10, 28, 31, 0.95), rgba(7, 18, 20, 0.92));
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28), 0 0 18px rgba(0, 255, 200, 0.1);
+}
+
+body.sklp-ui .skl-toast.success {
+  border-color: rgba(0, 221, 179, 0.28);
+}
+
+body.sklp-ui .skl-toast.error {
+  border-color: rgba(255, 129, 129, 0.28);
+}
+
+body.sklp-ui .skl-player-options-page .skl-app-panel {
+  padding: 18px;
+}
+
+body.sklp-ui .po-mode-bar {
+  display: inline-flex;
+  gap: 8px;
+  padding: 8px;
+  margin: 0 0 18px;
+}
+
+body.sklp-ui .po-mode-btn {
+  min-width: 148px;
+  min-height: 42px;
+  border: 1px solid rgba(0, 255, 200, 0.16);
+  background: linear-gradient(180deg, rgba(10, 28, 31, 0.66), rgba(7, 18, 20, 0.56));
+  font-family: var(--sklp-font-tech);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body.sklp-ui .po-mode-btn.is-active {
+  border-color: rgba(0, 221, 179, 0.42);
+  box-shadow: 0 0 0 1px rgba(0, 221, 179, 0.16), 0 0 22px rgba(0, 255, 200, 0.14);
+}
+
+body.sklp-ui .game-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+body.sklp-ui .game-options-column {
+  display: grid;
+  gap: 16px;
+}
+
+body.sklp-ui .options-group {
+  padding: 16px;
+}
+
+body.sklp-ui .group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 255, 200, 0.12);
+  font-family: var(--sklp-font-tech);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body.sklp-ui .option-grid,
+body.sklp-ui .skl-lobby-grid-fields {
+  display: grid;
+  gap: 14px;
+}
+
+body.sklp-ui .option-row,
+body.sklp-ui .skl-roominfo-row {
+  display: grid;
+  gap: 8px;
+}
+
+body.sklp-ui .option-row {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0, 255, 200, 0.08);
+}
+
+body.sklp-ui .option-row:last-child {
+  border-bottom: 0;
+}
+
+body.sklp-ui .option-container,
+body.sklp-ui .manual-container,
+body.sklp-ui .multi-list {
+  padding: 12px;
+}
+
+body.sklp-ui .option-entry {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 6px;
+  border-radius: 10px;
+}
+
+body.sklp-ui .option-entry:hover {
+  background: rgba(0, 255, 200, 0.06);
+}
+
+body.sklp-ui .skl-roomlist-page,
+body.sklp-ui .skl-player-options-page,
+body.sklp-ui .dashboard,
+body.sklp-ui .skl-gm-page,
+body.sklp-ui .skl-lobby-page,
+body.sklp-ui .settings-page {
+  display: grid;
+  gap: 18px;
+}
+
+body.sklp-ui .skl-ready-status,
+body.sklp-ui #user-message.show,
+body.sklp-ui .account-status,
+body.sklp-ui .account-error,
+body.sklp-ui .skl-lobby-error.show {
+  padding: 10px 14px;
+  border: 1px solid rgba(0, 255, 200, 0.14);
+  background: linear-gradient(180deg, rgba(8, 21, 23, 0.88), rgba(7, 18, 20, 0.72));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+body.sklp-ui .skl-roominfo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+body.sklp-ui .skl-roominfo-row {
+  padding: 12px 14px;
+}
+
+body.sklp-ui .skl-roominfo-row span:first-child {
+  font-family: var(--sklp-font-tech);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(200, 243, 236, 0.64);
+}
+
+body.sklp-ui .skl-lobby-form,
+body.sklp-ui .skl-lobby-form-rules {
+  display: grid;
+  gap: 16px;
+}
+
+body.sklp-ui .skl-lobby-grid-fields {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+body.sklp-ui .skl-lobby-plando {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  align-items: center;
+  padding-top: 8px;
+}
+
+body.sklp-ui .skl-lobby-plando > span {
+  width: 100%;
+  font-family: var(--sklp-font-tech);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body.sklp-ui .settings-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+body.sklp-ui .settings-tabs button,
+body.sklp-ui .settings-tab {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(0, 255, 200, 0.16);
+  background: linear-gradient(180deg, rgba(10, 28, 31, 0.66), rgba(7, 18, 20, 0.56));
+  font-family: var(--sklp-font-tech);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+body.sklp-ui .settings-tabs button.active,
+body.sklp-ui .settings-tab.active {
+  border-color: rgba(0, 221, 179, 0.4);
+  box-shadow: 0 0 0 1px rgba(0, 221, 179, 0.14), 0 0 20px rgba(0, 255, 200, 0.1);
+}
+
+body.sklp-ui .skl-settings-section,
+body.sklp-ui .skl-account-section,
+body.sklp-ui .dashboard-card,
+body.sklp-ui .skl-app-panel {
+  overflow: hidden;
+}
+
+body.sklp-ui .skl-settings-section h2,
+body.sklp-ui .skl-settings-section h3,
+body.sklp-ui .dashboard-card h3,
+body.sklp-ui .yaml-title,
+body.sklp-ui .skl-room-empty-title {
+  font-family: var(--sklp-font-brand);
+  font-weight: 600;
+}
+
+body.sklp-ui .skl-loading-title {
+  font-family: var(--sklp-font-tech);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body.sklp-ui .skl-loading-bars {
+  overflow: hidden;
+  border-radius: 999px;
+}
+
+body.sklp-ui .skl-auth-actions {
+  gap: 16px;
+  margin-top: 8px;
+}
+
+body.sklp-ui .skl-auth-actions .skl-btn {
+  min-width: 180px;
+  min-height: 50px;
+  padding-inline: 22px;
+}
+
+body.sklp-ui .skl-discord-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+body.sklp-ui .skl-discord-btn-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(238, 252, 249, 0.92);
+  filter: drop-shadow(0 0 8px rgba(0, 255, 200, 0.18));
+}
+
+body.sklp-ui .skl-discord-btn-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Desktop-native correction pass */
+body.sklp-ui {
+  --sklp-panel-radius: 18px;
+  --sklp-panel-radius-sm: 14px;
+}
+
+body.sklp-ui .skl-app-shell {
+  grid-template-columns: 244px minmax(0, 1fr);
+  gap: 14px;
+  padding: 68px 14px 14px 14px;
+}
+
+body.sklp-ui .sklp-topbar {
+  height: 52px;
+}
+
+body.sklp-ui .skl-sidebar,
+body.sklp-ui .sklp-main-frame,
+body.sklp-ui .sklp-panel,
+body.sklp-ui .skl-app-panel,
+body.sklp-ui .skl-panel,
+body.sklp-ui .skl-roomlist-page .skl-app-panel,
+body.sklp-ui .skl-modal-panel,
+body.sklp-ui .sklp-settings-modal,
+body.sklp-ui .sklp-notify-panel,
+body.sklp-ui .skl-tracker-panel,
+body.sklp-ui .dashboard-card,
+body.sklp-ui .yaml-row,
+body.sklp-ui .options-group,
+body.sklp-ui .manual-container,
+body.sklp-ui .option-container,
+body.sklp-ui .skl-room-table-header,
+body.sklp-ui .skl-room-empty,
+body.sklp-ui .skl-loading-block,
+body.sklp-ui .yaml-carousel-card,
+body.sklp-ui .sklp-gm-row,
+body.sklp-ui .skl-lobby-card,
+body.sklp-ui .dashboard-hero,
+body.sklp-ui .skl-app-header,
+body.sklp-ui .skl-page-header,
+body.sklp-ui .skl-gm-section-header,
+body.sklp-ui .po-mode-bar,
+body.sklp-ui .skl-roomlist-bar,
+body.sklp-ui .yaml-header,
+body.sklp-ui .skl-terminal-header {
+  position: relative;
+  clip-path: none !important;
+  border-radius: var(--sklp-panel-radius);
+}
+
+body.sklp-ui .dashboard-card,
+body.sklp-ui .yaml-row,
+body.sklp-ui .options-group,
+body.sklp-ui .manual-container,
+body.sklp-ui .option-container,
+body.sklp-ui .skl-room-table-header,
+body.sklp-ui .skl-room-empty,
+body.sklp-ui .skl-loading-block,
+body.sklp-ui .yaml-carousel-card,
+body.sklp-ui .sklp-gm-row {
+  border-radius: var(--sklp-panel-radius-sm);
+}
+
+body.sklp-ui .skl-sidebar,
+body.sklp-ui .sklp-main-frame,
+body.sklp-ui .sklp-panel,
+body.sklp-ui .skl-app-panel,
+body.sklp-ui .skl-panel,
+body.sklp-ui .skl-modal-panel,
+body.sklp-ui .sklp-settings-modal,
+body.sklp-ui .sklp-notify-panel,
+body.sklp-ui .skl-tracker-panel {
+  border-color: rgba(0, 255, 200, 0.2);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.025),
+    0 0 0 1px rgba(0, 255, 200, 0.06),
+    0 24px 54px rgba(0, 0, 0, 0.34),
+    0 0 28px rgba(0, 255, 200, 0.08);
+  animation:
+    sklp-border-breathe 6.5s ease-in-out infinite,
+    sklp-border-rotate 8.8s linear infinite;
+}
+
+body.sklp-ui .skl-sidebar::before,
+body.sklp-ui .sklp-main-frame::before,
+body.sklp-ui .sklp-panel::before,
+body.sklp-ui .skl-app-panel::before,
+body.sklp-ui .skl-panel::before,
+body.sklp-ui .skl-modal-panel::before,
+body.sklp-ui .sklp-settings-modal::before,
+body.sklp-ui .sklp-notify-panel::before,
+body.sklp-ui .skl-tracker-panel::before {
+  inset: 1px;
+  border-radius: inherit;
+  opacity: 0.42;
+}
+
+body.sklp-ui .skl-sidebar::after,
+body.sklp-ui .sklp-main-frame::after,
+body.sklp-ui .sklp-panel::after,
+body.sklp-ui .skl-app-panel::after,
+body.sklp-ui .skl-panel::after,
+body.sklp-ui .skl-modal-panel::after,
+body.sklp-ui .sklp-settings-modal::after,
+body.sklp-ui .sklp-notify-panel::after,
+body.sklp-ui .skl-tracker-panel::after {
+  inset: -40% -30%;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(0, 255, 200, 0.18), transparent 14%),
+    linear-gradient(115deg, transparent 32%, rgba(0, 255, 200, 0.24) 44%, rgba(255, 255, 255, 0.08) 49%, transparent 58%);
+  animation: sklp-edge-glide 9.2s linear infinite;
+  opacity: 0.2;
+  mix-blend-mode: screen;
+}
+
+body.sklp-ui .sklp-main-frame {
+  padding: 12px;
+}
+
+body.sklp-ui .sklp-main-corners::before,
+body.sklp-ui .sklp-main-corners::after {
+  width: 56px;
+  height: 56px;
+  border-color: rgba(0, 255, 200, 0.4);
+  filter: drop-shadow(0 0 10px rgba(0, 255, 200, 0.18));
+}
+
+body.sklp-ui .dashboard,
+body.sklp-ui .skl-roomlist-page,
+body.sklp-ui .skl-player-options-page,
+body.sklp-ui .skl-gm-page,
+body.sklp-ui .settings-page,
+body.sklp-ui .skl-lobby-page {
+  gap: 14px;
+}
+
+body.sklp-ui .dashboard-hero,
+body.sklp-ui .skl-app-header,
+body.sklp-ui .skl-page-header,
+body.sklp-ui .skl-gm-section-header,
+body.sklp-ui .skl-roomlist-bar,
+body.sklp-ui .yaml-header {
+  padding: 14px 16px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 16px 32px rgba(0, 0, 0, 0.24);
+}
+
+body.sklp-ui .dashboard-hero {
+  grid-template-columns: minmax(0, 1fr) 280px;
+}
+
+body.sklp-ui .dashboard-card,
+body.sklp-ui .yaml-row,
+body.sklp-ui .options-group,
+body.sklp-ui .skl-lobby-card {
+  padding: 14px 16px;
+}
+
+body.sklp-ui .skl-app-title,
+body.sklp-ui .po-title-left,
+body.sklp-ui .po-title-right,
+body.sklp-ui .dashboard-title h1,
+body.sklp-ui .yaml-dashboard-card h2,
+body.sklp-ui .skl-gm-section-header h2 {
+  font-size: clamp(1.1rem, 1rem + 0.7vw, 1.65rem);
+  line-height: 1.04;
+  letter-spacing: 0.06em;
+}
+
+body.sklp-ui .skl-eyebrow,
+body.sklp-ui .dashboard-title span,
+body.sklp-ui .stat-label,
+body.sklp-ui .yaml-sub,
+body.sklp-ui .skl-room-col,
+body.sklp-ui .skl-room-col-value.dim {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+body.sklp-ui .skl-btn,
+body.sklp-ui button.skl-btn,
+body.sklp-ui .yaml-carousel-nav,
+body.sklp-ui .sklp-edit,
+body.sklp-ui .sklp-head-menu-trigger,
+body.sklp-ui .sklp-friends-add,
+body.sklp-ui .sklp-notify-markall,
+body.sklp-ui .po-mode-btn,
+body.sklp-ui .settings-tabs button,
+body.sklp-ui .settings-tab {
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+body.sklp-ui .skl-btn,
+body.sklp-ui button.skl-btn,
+body.sklp-ui .yaml-carousel-nav,
+body.sklp-ui .sklp-edit,
+body.sklp-ui .sklp-head-menu-trigger,
+body.sklp-ui .sklp-friends-add,
+body.sklp-ui .sklp-notify-markall {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(180deg, rgba(14, 38, 41, 0.92), rgba(7, 18, 20, 0.92)),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.06), transparent 36%),
+    var(--sklp-button-border-glow);
+  background-origin: border-box;
+  background-clip: padding-box, padding-box, border-box;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 12px 24px rgba(0, 0, 0, 0.24),
+    0 0 18px rgba(0, 255, 200, 0.08);
+  animation: sklp-border-rotate 4.2s linear infinite;
+}
+
+body.sklp-ui .skl-btn::after,
+body.sklp-ui button.skl-btn::after,
+body.sklp-ui .yaml-carousel-nav::after,
+body.sklp-ui .sklp-edit::after,
+body.sklp-ui .sklp-head-menu-trigger::after,
+body.sklp-ui .sklp-friends-add::after,
+body.sklp-ui .sklp-notify-markall::after,
+body.sklp-ui .po-mode-btn::after,
+body.sklp-ui .settings-tabs button::after,
+body.sklp-ui .settings-tab::after {
+  display: none;
+}
+
+body.sklp-ui .skl-btn.primary,
+body.sklp-ui button.skl-btn.primary {
+  border-color: rgba(0, 255, 200, 0.28);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 14px 28px rgba(0, 0, 0, 0.26),
+    0 0 24px rgba(0, 255, 200, 0.12);
+}
+
+body.sklp-ui .skl-btn:hover,
+body.sklp-ui button.skl-btn:hover,
+body.sklp-ui .yaml-carousel-nav:hover,
+body.sklp-ui .sklp-edit:hover {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 18px 30px rgba(0, 0, 0, 0.28),
+    0 0 28px rgba(0, 255, 200, 0.18);
+  animation-duration: 2.8s;
+}
+
+body.sklp-ui .skl-btn:hover::after,
+body.sklp-ui button.skl-btn:hover::after,
+body.sklp-ui .yaml-carousel-nav:hover::after,
+body.sklp-ui .sklp-edit:hover::after,
+body.sklp-ui .sklp-head-menu-trigger:hover::after,
+body.sklp-ui .sklp-friends-add:hover::after,
+body.sklp-ui .sklp-notify-markall:hover::after,
+body.sklp-ui .po-mode-btn:hover::after,
+body.sklp-ui .settings-tabs button:hover::after,
+body.sklp-ui .settings-tab:hover::after {
+  display: none;
+}
+
+body.sklp-ui .yaml-carousel-shell {
+  padding: 6px 46px 2px;
+}
+
+body.sklp-ui .yaml-carousel-track {
+  gap: 14px;
+}
+
+body.sklp-ui .yaml-carousel-card {
+  min-width: 236px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 18px 34px rgba(0, 0, 0, 0.32),
+    0 0 18px rgba(0, 255, 200, 0.06);
+}
+
+body.sklp-ui .yaml-carousel-card:hover {
+  transform: translateY(-3px) scale(1.008);
+}
+
+body.sklp-ui .po-mode-bar,
+body.sklp-ui .settings-tabs {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+body.sklp-ui .game-options {
+  gap: 14px;
+}
+
+body.sklp-ui .options-group {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+body.sklp-ui .group-header {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+body.sklp-ui input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+body.sklp-ui select,
+body.sklp-ui textarea,
+body.sklp-ui .multi-search,
+body.sklp-ui .skl-gm-select {
+  border-radius: 12px;
+}
+
+body.sklp-ui .skl-room-table {
+  gap: 10px;
+}
+
+body.sklp-ui .skl-roominfo-grid {
+  gap: 8px;
+}
+
+body.sklp-ui .skl-toast,
+body.sklp-ui .skl-modal-panel {
+  border-radius: 16px;
+}
+
+@keyframes sklp-route-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.992);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes sklp-edge-glide {
+  0% {
+    transform: translateX(-18%) translateY(0%);
+    opacity: 0.06;
+  }
+  18% {
+    opacity: 0.22;
+  }
+  50% {
+    transform: translateX(18%) translateY(-2%);
+    opacity: 0.18;
+  }
+  100% {
+    transform: translateX(26%) translateY(0%);
+    opacity: 0.05;
+  }
+}
+
+@keyframes sklp-border-breathe {
+  0%, 100% {
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.025),
+      0 0 0 1px rgba(0, 255, 200, 0.06),
+      0 24px 54px rgba(0, 0, 0, 0.34),
+      0 0 24px rgba(0, 255, 200, 0.06);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+      0 0 0 1px rgba(0, 255, 200, 0.1),
+      0 24px 54px rgba(0, 0, 0, 0.34),
+      0 0 36px rgba(0, 255, 200, 0.12);
+  }
+}
+
+/* Regression fixes after live visual review */
+body.sklp-ui .sklp-main-corners {
+  display: none;
+}
+
+body.sklp-ui .skl-app-panel,
+body.sklp-ui .sklp-panel,
+body.sklp-ui .skl-app-header,
+body.sklp-ui .skl-page-header,
+body.sklp-ui .skl-gm-section-header,
+body.sklp-ui .yaml-header,
+body.sklp-ui .skl-roomlist-bar,
+body.sklp-ui .sklp-panel-head,
+body.sklp-ui .sklp-gm,
+body.sklp-ui .sklp-main-frame,
+body.sklp-ui .sklp-route-stage {
+  overflow: visible;
+}
+
+body.sklp-ui .skl-app-panel,
+body.sklp-ui .sklp-panel,
+body.sklp-ui .sklp-main-frame {
+  isolation: isolate;
+}
+
+body.sklp-ui .sklp-head-menu-wrap,
+body.sklp-ui .sklp-topbar-left {
+  position: relative;
+  z-index: 120;
+}
+
+body.sklp-ui .sklp-head-menu,
+body.sklp-ui .sklp-topbar-menu {
+  z-index: 180;
+  min-width: 220px;
+  border-radius: 14px;
+}
+
+body.sklp-ui .sklp-head-menu button,
+body.sklp-ui .sklp-topbar-menu button {
+  min-height: 40px;
+}
+
+body.sklp-ui .skl-toast-stack,
+body.sklp-ui .sklp-toast-stack {
+  justify-items: end;
+  align-content: start;
+  width: auto;
+  max-width: min(420px, calc(100vw - 28px));
+  pointer-events: none;
+}
+
+body.sklp-ui .skl-toast {
+  width: fit-content;
+  min-width: 240px;
+  max-width: min(420px, calc(100vw - 32px));
+  justify-self: end;
+}
+
+body.sklp-ui .sklp-toast-row {
+  align-items: start;
+}
+
+body.sklp-ui .skl-roomlist-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+}
+
+body.sklp-ui .skl-roomlist-search {
+  min-width: 0;
+  max-width: none;
+  width: 100%;
+}
+
+body.sklp-ui .skl-roomlist-search .input,
+body.sklp-ui .skl-roomlist-search input,
+body.sklp-ui .yaml-search,
+body.sklp-ui .multi-search {
+  width: 100%;
+  min-width: 0;
+}
+
+body.sklp-ui .skl-roomlist-filters {
+  justify-content: flex-end;
+}
+
+body.sklp-ui select,
+body.sklp-ui .skl-gm-select,
+body.sklp-ui .skl-yaml-select,
+body.sklp-ui #player-options .select-container select,
+body.sklp-ui #player-options .text-choice-container .text-choice-wrapper select,
+body.sklp-ui #player-options #meta-options select {
+  min-height: 38px;
+  height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+body.sklp-ui .skl-modal-panel,
+body.sklp-ui .sklp-settings-modal,
+body.sklp-ui .skl-generation-modal-panel,
+body.sklp-ui .skl-launch-modal-panel {
+  width: min(720px, 92vw);
+  max-height: 78vh;
+  padding: 18px 20px;
+}
+
+body.sklp-ui .skl-modal-header {
+  margin-bottom: 10px;
+}
+
+body.sklp-ui .skl-modal-actions {
+  margin-top: 14px;
+  padding-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+body.sklp-ui .skl-yaml-select-row,
+body.sklp-ui .skl-ready-row,
+body.sklp-ui .skl-profile-actions {
+  align-items: center;
+}
+
+body.sklp-ui .skl-yaml-card,
+body.sklp-ui .skl-yaml-active-row,
+body.sklp-ui .skl-profile-card,
+body.sklp-ui .skl-room-info {
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+body.sklp-ui .skl-profile-avatar {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+body.sklp-ui .skl-profile-avatar-fallback {
+  font-family: var(--sklp-font-tech);
+  font-size: 24px;
+  font-weight: 700;
+  color: rgba(239, 255, 251, 0.92);
+}
+
+body.sklp-ui .skl-profile-handle {
+  display: none;
+}
+
+body.sklp-ui .skl-room-info,
+body.sklp-ui .skl-roominfo-grid,
+body.sklp-ui .skl-roominfo-row {
+  height: auto;
+  min-height: 0;
+}
+
+body.sklp-ui .skl-room-info {
+  margin-bottom: 8px;
+}
+
+body.sklp-ui .skl-sidebar,
+body.sklp-ui .sklp-main-frame,
+body.sklp-ui .sklp-panel,
+body.sklp-ui .skl-app-panel,
+body.sklp-ui .skl-panel,
+body.sklp-ui .sklp-notify-panel,
+body.sklp-ui .skl-tracker-panel,
+body.sklp-ui .dashboard-card,
+body.sklp-ui .yaml-row,
+body.sklp-ui .options-group,
+body.sklp-ui .manual-container,
+body.sklp-ui .option-container,
+body.sklp-ui .skl-room-table-header,
+body.sklp-ui .skl-room-empty,
+body.sklp-ui .skl-loading-block,
+body.sklp-ui .yaml-carousel-card,
+body.sklp-ui .sklp-gm-row,
+body.sklp-ui .skl-lobby-card,
+body.sklp-ui .dashboard-hero,
+body.sklp-ui .skl-app-header,
+body.sklp-ui .skl-page-header,
+body.sklp-ui .skl-gm-section-header,
+body.sklp-ui .po-mode-bar,
+body.sklp-ui .skl-roomlist-bar,
+body.sklp-ui .yaml-header,
+body.sklp-ui .skl-terminal-header,
+body.sklp-ui .yaml-dashboard-card,
+body.sklp-ui .skl-gm-card,
+body.sklp-ui .sklp-chat-message,
+body.sklp-ui .skl-room-card,
+body.sklp-ui .skl-player-card,
+body.sklp-ui .skl-settings-card,
+body.sklp-ui .skl-account-card,
+body.sklp-ui .skl-help-card {
+  border: 1px solid transparent;
+  background-image:
+    linear-gradient(180deg, rgba(7, 20, 22, 0.95), rgba(4, 11, 13, 0.9)),
+    radial-gradient(circle at 14% 18%, rgba(0, 255, 200, 0.08), transparent 32%),
+    radial-gradient(circle at 86% 88%, rgba(0, 221, 179, 0.06), transparent 36%),
+    var(--sklp-stars-small),
+    var(--sklp-stars-medium),
+    var(--sklp-stars-large),
+    var(--sklp-border-glow);
+  background-size:
+    auto,
+    auto,
+    auto,
+    158px 158px,
+    238px 238px,
+    326px 326px,
+    auto;
+  background-position:
+    0 0,
+    0 0,
+    0 0,
+    0 0,
+    74px 112px,
+    148px 56px,
+    0 0;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat, repeat, repeat, no-repeat;
+  background-origin: border-box;
+  background-clip: padding-box, padding-box, padding-box, padding-box, padding-box, padding-box, border-box;
+}
+
+body.sklp-ui .skl-sidebar,
+body.sklp-ui .sklp-main-frame,
+body.sklp-ui .sklp-panel,
+body.sklp-ui .skl-app-panel,
+body.sklp-ui .skl-panel,
+body.sklp-ui .sklp-notify-panel,
+body.sklp-ui .skl-tracker-panel {
+  animation:
+    sklp-border-breathe 6.5s ease-in-out infinite,
+    sklp-panel-stars-drift 140s linear infinite,
+    sklp-border-rotate 8.5s linear infinite;
+}
+
+body.sklp-ui .dashboard-card,
+body.sklp-ui .yaml-row,
+body.sklp-ui .options-group,
+body.sklp-ui .manual-container,
+body.sklp-ui .option-container,
+body.sklp-ui .skl-room-table-header,
+body.sklp-ui .skl-room-empty,
+body.sklp-ui .skl-loading-block,
+body.sklp-ui .yaml-carousel-card,
+body.sklp-ui .sklp-gm-row,
+body.sklp-ui .skl-lobby-card,
+body.sklp-ui .dashboard-hero,
+body.sklp-ui .skl-app-header,
+body.sklp-ui .skl-page-header,
+body.sklp-ui .skl-gm-section-header,
+body.sklp-ui .po-mode-bar,
+body.sklp-ui .skl-roomlist-bar,
+body.sklp-ui .yaml-header,
+body.sklp-ui .skl-terminal-header,
+body.sklp-ui .yaml-dashboard-card,
+body.sklp-ui .skl-gm-card,
+body.sklp-ui .sklp-chat-message,
+body.sklp-ui .skl-room-card,
+body.sklp-ui .skl-player-card,
+body.sklp-ui .skl-settings-card,
+body.sklp-ui .skl-account-card,
+body.sklp-ui .skl-help-card {
+  animation:
+    sklp-panel-stars-drift 160s linear infinite,
+    sklp-border-rotate 10s linear infinite;
+}
+
+@keyframes sklp-panel-shine {
+  0% {
+    transform: translateX(-140%);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.2;
+  }
+  14% {
+    opacity: 0.56;
+  }
+  21% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(160%);
+    opacity: 0;
+  }
+}
+
+@keyframes sklp-panel-stars-drift {
+  0% {
+    background-position:
+      0 0,
+      0 0,
+      0 0,
+      0 0,
+      74px 112px,
+      148px 56px,
+      0 0;
+  }
+  100% {
+    background-position:
+      0 0,
+      0 0,
+      0 0,
+      0 -200px,
+      74px -260px,
+      148px -320px,
+      0 0;
+  }
+}
+
+@keyframes sklp-border-rotate {
+  to {
+    --sklp-border-angle: 450deg;
+  }
+}
+
+@keyframes sklp-button-border-trace {
+  0% {
+    background-position:
+      100% 0,
+      100% 100%,
+      -100% 100%,
+      0 -100%;
+  }
+  100% {
+    background-position:
+      -100% 0,
+      100% -100%,
+      100% 100%,
+      0 100%;
+  }
+}
+
+@keyframes sklp-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes sklp-modal-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes sklp-modal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes sklp-body-shift {
+  from {
+    transform: translate3d(-0.8%, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(0.8%, -0.6%, 0) scale(1.03);
+  }
+}
+
+@keyframes sklp-energy-sweep {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.18;
+  }
+  30% {
+    opacity: 0.4;
+  }
+  58% {
+    opacity: 0.16;
+  }
+  100% {
+    transform: translateX(140%);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.sklp-ui::after,
+  .sklp-gridfield,
+  .sklp-energy-lines::before,
+  .sklp-energy-lines::after,
+  body.sklp-ui .skl-sidebar::after,
+  body.sklp-ui .sklp-main-frame::after,
+  body.sklp-ui .sklp-panel::after,
+  body.sklp-ui .skl-app-panel::after,
+  body.sklp-ui .skl-panel::after,
+  body.sklp-ui .skl-modal-panel::after,
+  body.sklp-ui .sklp-route-stage,
+  body.sklp-ui .skl-toast,
+  body.sklp-ui .skl-modal-backdrop,
+  body.sklp-ui .skl-modal-panel,
+  body.sklp-ui .sklp-settings-modal {
+    animation: none !important;
+  }
+
+  body.sklp-ui .skl-sidebar,
+  body.sklp-ui .sklp-main-frame,
+  body.sklp-ui .sklp-panel,
+  body.sklp-ui .skl-app-panel,
+  body.sklp-ui .skl-panel,
+  body.sklp-ui .sklp-notify-panel,
+  body.sklp-ui .skl-tracker-panel,
+  body.sklp-ui .dashboard-card,
+  body.sklp-ui .yaml-row,
+  body.sklp-ui .options-group,
+  body.sklp-ui .manual-container,
+  body.sklp-ui .option-container,
+  body.sklp-ui .skl-room-table-header,
+  body.sklp-ui .skl-room-empty,
+  body.sklp-ui .skl-loading-block,
+  body.sklp-ui .yaml-carousel-card,
+  body.sklp-ui .sklp-gm-row,
+  body.sklp-ui .skl-lobby-card,
+  body.sklp-ui .dashboard-hero,
+  body.sklp-ui .skl-app-header,
+  body.sklp-ui .skl-page-header,
+  body.sklp-ui .skl-gm-section-header,
+  body.sklp-ui .po-mode-bar,
+  body.sklp-ui .skl-roomlist-bar,
+  body.sklp-ui .yaml-header,
+  body.sklp-ui .skl-terminal-header,
+  body.sklp-ui .yaml-dashboard-card,
+  body.sklp-ui .skl-gm-card,
+  body.sklp-ui .sklp-chat-message,
+  body.sklp-ui .skl-room-card,
+  body.sklp-ui .skl-player-card,
+  body.sklp-ui .skl-settings-card,
+  body.sklp-ui .skl-account-card,
+  body.sklp-ui .skl-help-card {
+    animation: none !important;
+  }
+
+  body.sklp-ui .yaml-carousel-card,
+  body.sklp-ui .yaml-game-thumb img,
+  body.sklp-ui .skl-sidebar-link,
+  body.sklp-ui .sklp-gm-row,
+  body.sklp-ui .skl-btn,
+  body.sklp-ui button.skl-btn {
+    transition: none !important;
+  }
+}
+
+@media (max-width: 1400px) {
+  body.sklp-ui .sklp-dashboard {
+    grid-template-columns: minmax(0, 1fr) 400px;
+  }
+
+  body.sklp-ui .dashboard-hero,
+  body.sklp-ui .game-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1160px) {
+  body.sklp-ui .skl-app-shell {
+    grid-template-columns: 230px minmax(0, 1fr);
+  }
+
+  body.sklp-ui .sklp-dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  body.sklp-ui .sklp-right {
+    grid-template-rows: 280px minmax(320px, 1fr);
+  }
+
+  body.sklp-ui .dashboard-grid,
+  body.sklp-ui .skl-roominfo-grid,
+  body.sklp-ui .skl-lobby-grid-fields {
+    grid-template-columns: 1fr;
+  }
+}

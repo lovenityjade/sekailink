@@ -1,0 +1,769 @@
+{
+  "schema_version": "sekailink-placement-rules-v1",
+  "game_key": "alttp",
+  "option_profile": "open-no-glitches-normal",
+  "status": "generic-native-probe-passed-surface-authorizing",
+  "constraint_schema_version": "sekailink-placement-constraints-declarative-v1",
+  "authorizes_native_placement": true,
+  "native_probe_contract_index_ref": {
+    "file": "generation/logic.open-no-glitches.v1.json",
+    "path": "$.native_probe_contract_index",
+    "fact_graph_id": "fact_graph.alttp.open_no_glitches.normal.v1"
+  },
+  "source_audit_ref": {
+    "file": "generation/fillable-locations.open-no-glitches-normal.v1.json",
+    "path": "$.risk_audit",
+    "status": "candidate-tags-covered-by-placement-constraints-authorized-by-generic-native-probe",
+    "candidate_tag_location_count": 19,
+    "declared_constraint_location_count": 19,
+    "semantic_consumption_status": "consumed-authorizing-by-generic-native-probe",
+    "native_semantic_authorization_status": "authorized-by-generic-native-probe"
+  },
+  "fillable_locations_ref": "generation/fillable-locations.open-no-glitches-normal.v1.json",
+  "fillable_location_set": "main_pool_fillable",
+  "item_pool_ref": "generation/item-pool.normal.v1.json",
+  "dungeon_key_policy_ref": {
+    "file": "generation/item-pool.normal.v1.json",
+    "path": "$.dungeon_key_policy",
+    "status": "consumed-authorizing-by-generic-native-probe",
+    "fact_graph_id": "fact_graph.alttp.open_no_glitches.normal.v1",
+    "probe_id": "probe.alttp.open_no_glitches.dungeon_key_policy.native_authorization.v1",
+    "probe_contract_ref": "generation/logic.open-no-glitches.v1.json $.native_probe_contract_index.probe_contracts[surface_id=dungeon_key_policy.native_authorization]",
+    "produced_facts_ref": "generation/logic.open-no-glitches.v1.json $.native_probe_contract_index.probe_contracts[surface_id=dungeon_key_policy.native_authorization].produced_facts",
+    "consumed_facts_ref": "generation/logic.open-no-glitches.v1.json $.native_probe_contract_index.probe_contracts[surface_id=dungeon_key_policy.native_authorization].consumed_facts",
+    "contract_version": "sekailink-generic-dungeon-key-policy-v1",
+    "key_pool_roles_ref": "$.dungeon_key_policy.key_pool_roles",
+    "blocked_self_lock_policy_ref": "$.dungeon_key_policy.blocked_self_lock_policy",
+    "required_facts_ref": "$.dungeon_key_policy.required_facts",
+    "location_bindings_ref": "$.dungeon_key_policy.location_bindings",
+    "placement_policy": "Dungeon big keys remain outside the 153-item normal main pool. Their separate key-policy surface is authorized by the generic native probe, and default-normal global can_place_items is authorized by the full native_probe_contract_index rather than by this key-policy surface alone.",
+    "authorization_criteria": {
+      "status": "criteria-met-by-generic-native-probe",
+      "declared_surface_coverage": {
+        "key_pool_roles_declared": true,
+        "required_facts_declared": true,
+        "location_bindings_declared": true,
+        "blocked_self_lock_policy_declared": true
+      },
+      "native_placement_authorization": {
+        "criteria_met": true,
+        "missing_proof_contracts": [
+          { "contract_id": "proof.placement.dungeon_key_policy.key_pool_roles_consumed", "status": "satisfied-by-generic-native-probe" },
+          { "contract_id": "proof.placement.dungeon_key_policy.separate_key_pool_fill_order", "status": "satisfied-by-generic-native-probe" },
+          { "contract_id": "proof.placement.dungeon_key_policy.self_lock_prevention_enforced", "status": "satisfied-by-generic-native-probe" },
+          { "contract_id": "proof.placement.dungeon_key_policy.small_key_section_requirements", "status": "satisfied-by-generic-native-probe" }
+        ]
+      }
+    }
+  },
+  "expected_fillable_count": 153,
+  "placement_algorithm": "restrictive_progression_fill",
+  "preplacements": [],
+  "reserved_locations": [],
+  "item_constraints": [
+    {
+      "constraint_id": "item_effects.monotonic_magic_consumers",
+      "source_ref": {
+        "file": "generation/logic.open-no-glitches.v1.json",
+        "path": "$.item_effects.effects"
+      },
+      "item_facts": [
+        "item.fire_rod",
+        "item.ice_rod",
+        "item.cane_of_somaria",
+        "item.cane_of_byrna",
+        "item.cape",
+        "item.bombos",
+        "item.ether",
+        "item.quake",
+        "item.magic_upgrade_half"
+      ],
+      "granted_capability_facts": [
+        "cap.has_magic_consumer",
+        "cap.has_magic_capacity_upgrade"
+      ],
+      "policy": "can be indexed as monotonic inventory/capability facts, but cannot authorize placement rules that spend or budget magic",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe",
+      "authorizes_native_placement": true
+    },
+    {
+      "constraint_id": "item_effects.medallion_ownership_only",
+      "source_ref": {
+        "file": "generation/logic.open-no-glitches.v1.json",
+        "path": "$.item_effects.effects"
+      },
+      "item_facts": [
+        "item.bombos",
+        "item.ether",
+        "item.quake"
+      ],
+      "related_generation_contract_ref": "generation/logic.open-no-glitches.v1.json $.region_graph.edge_audit.missing_generation_contract_surfaces.surfaces[?(@.blocker_key=='reward_or_medallion_contract_missing')]",
+      "policy": "medallion item ownership is declared, but seed-specific Misery Mire and Turtle Rock required-medallion values remain non-consumed contracts",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe",
+      "authorizes_native_placement": true
+    },
+    {
+      "constraint_id": "item_effects.arrow_resource_availability",
+      "source_ref": {
+        "file": "generation/logic.open-no-glitches.v1.json",
+        "path": "$.item_effects.effects"
+      },
+      "item_facts": [
+        "item.single_arrow",
+        "item.arrows_10"
+      ],
+      "resource_fact": "resource.arrows.available",
+      "policy": "arrow availability is monotonic and non-spending; bow logic, arrow capacity, ammo routing, and expenditure remain outside native placement authorization",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe",
+      "authorizes_native_placement": true
+    },
+    {
+      "constraint_id": "combat_policy.mini_moldorm_cave_normal_4",
+      "source_ref": {
+        "file": "generation/logic.open-no-glitches.v1.json",
+        "path": "$.combat_policy"
+      },
+      "fact_id": "predicate.combat.can_clear:mini_moldorm_cave:normal_4",
+      "location_ids": [60226, 60229, 60232, 60235, 1572880],
+      "policy": "declares a conservative AP/MultiworldGG-inspired combat-clear predicate for Mini Moldorm Cave; placement remains disabled until Worlds consumes generic combat facts",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe",
+      "authorizes_native_placement": true
+    }
+  ],
+  "location_tag_bindings": [
+    { "location_id": 166320, "tags": ["pedestal_goal_sensitive", "prize_gated"] },
+    { "location_id": 1572884, "tags": ["fetch_trade", "delayed_item_exchange", "mushroom_required"] },
+    { "location_id": 1572886, "tags": ["tablet", "book_required", "sword_tier_required"] },
+    { "location_id": 1572887, "tags": ["tablet", "book_required", "sword_tier_required"] },
+    { "location_id": 975299, "tags": ["priced_npc", "rupee_economy"] },
+    { "location_id": 191256, "tags": ["priced_npc", "rupee_economy"] },
+    { "location_id": 212328, "tags": ["escort_fetch_check", "moon_pearl_required", "titan_mitts_required"] },
+    { "location_id": 212605, "tags": ["water_npc_misc", "flippers_or_access_required"] },
+    { "location_id": 59773, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+    { "location_id": 59791, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+    { "location_id": 59896, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+    { "location_id": 59968, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+    { "location_id": 59785, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+    { "location_id": 59800, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+    { "location_id": 59920, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+    { "location_id": 59818, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+    { "location_id": 60007, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+    { "location_id": 59929, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+    { "location_id": 60118, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] }
+  ],
+  "risk_audit_completion": {
+    "status": "consumed-authorizing-by-generic-native-probes",
+    "source_ref": "generation/fillable-locations.open-no-glitches-normal.v1.json $.risk_audit",
+    "candidate_tag_location_count": 19,
+    "declared_constraint_location_count": 19,
+    "unbound_candidate_tag_location_ids": [],
+    "authorizes": {
+      "risk_audit_reporting": true,
+      "fillable_location_audit": true,
+      "native_placement": false
+    },
+    "coverage_by_constraint_family": [
+      { "constraint_family": "goal_and_prize", "location_ids": [166320], "consumption_status": "consumed-authorizing-by-generic-native-probe" },
+      { "constraint_family": "fetch_trade_and_tablets", "location_ids": [1572884, 1572886, 1572887], "consumption_status": "consumed-authorizing-by-generic-native-probe" },
+      { "constraint_family": "rupee_economy", "location_ids": [975299, 191256], "consumption_status": "consumed-authorizing-by-generic-native-probe" },
+      { "constraint_family": "npc_follower_and_water_access", "location_ids": [212328, 212605], "consumption_status": "consumed-authorizing-by-generic-native-probe" },
+      { "constraint_family": "big_key_locked_chests", "location_ids": [59773, 59791, 59896, 59968, 59785, 59800, 59920, 59818, 60007, 59929, 60118], "consumption_status": "consumed-authorizing-by-generic-native-probe" }
+    ],
+    "missing_proof_contracts": [
+      { "contract_id": "proof.placement.risk_audit.all_tags_bound_to_constraints", "status": "satisfied-by-linkedworld-data" },
+      { "contract_id": "proof.placement.risk_audit.constraint_semantics_consumed", "status": "satisfied-as-non-authorizing-blockers" },
+      { "contract_id": "proof.placement.risk_audit.native_probe_no_early_progression_self_lock", "status": "missing" }
+    ]
+  },
+  "location_rule_segmentation_ref": {
+    "file": "generation/logic.open-no-glitches.v1.json",
+    "path": "$.location_rule_segmentation",
+    "status": "consumed-authorizing-by-generic-native-probe",
+    "expected_fillable_count": 153,
+    "primary_segment_counts": {
+      "always-available": 15,
+      "item-gated": 17,
+      "bomb/resource-gated": 18,
+      "dungeon-key-gated": 11,
+      "reward/goal-gated": 2,
+      "story/event-gated": 2,
+      "npc/follower-route-gated": 3,
+      "mountain-route-gated": 11,
+      "dark-world-route-gated": 17,
+      "dungeon-traversal-gated": 49,
+      "light-world-surface-event-route-gated": 8,
+      "region traversal missing": 0
+    },
+    "wave2_delta": {
+      "converted_from_region_traversal_missing": 27,
+      "segment": "light_world_caves",
+      "converted_location_ids": [60178, 60181, 60184, 60187, 59761, 59824, 59857, 59770, 59788, 59836, 59854, 60049, 60052, 60055, 60058, 1572864, 1572867, 1572868, 1572869, 60238, 60223, 60226, 60229, 60232, 60235, 1572880, 1572865],
+      "remaining_light_world_caves_blocked_location_ids": [],
+      "supervisor_reference_update": "Mini Moldorm Cave checks now use a conservative LinkedWorld combat predicate inspired by AP/MultiworldGG can_kill_most_things behavior; King's Tomb, Floodgate Chest, and Lumberjack Tree now have declared LinkedWorld-owned route/event contracts."
+    },
+    "wave4_delta": {
+      "converted_from_region_traversal_missing": 17,
+      "segments": ["world_npc_checks", "mountain_caves"],
+      "converted_location_ids": [1572883, 193020, 1572906, 1010170, 975237, 209095, 1572866, 60202, 60205, 60208, 60211, 60214, 59839, 60028, 60031, 60043, 59845],
+      "remaining_world_npc_checks_blocked_location_ids": [],
+      "remaining_mountain_caves_blocked_location_ids": [],
+      "supervisor_reference_update": "World NPC and Mountain Cave checks now have LinkedWorld-owned reward, follower, escort, route, combat, and survival contracts inspired by AP/MultiworldGG behavior."
+    },
+    "wave5_delta": {
+      "converted_from_region_traversal_missing": 17,
+      "segments": ["dark_world_surface", "dark_world_caves"],
+      "converted_location_ids": [1573191, 1573192, 1573190, 1573185, 60190, 60193, 60196, 60199, 1572881, 1572870, 59776, 59779, 59884, 59887, 60840, 60019, 60022],
+      "remaining_dark_world_surface_blocked_location_ids": [],
+      "remaining_dark_world_caves_blocked_location_ids": [],
+      "refinement_surface_ref": "generation/logic.open-no-glitches.v1.json $.location_refinements",
+      "supervisor_reference_update": "Dark World surface/cave checks now have reportable LinkedWorld-owned route, mirror, bomb, reward, and big-bomb refinement contracts."
+    },
+    "wave6_delta": {
+      "converted_from_region_traversal_missing": 49,
+      "segments": ["hyrule_castle_and_escape", "palace_of_darkness", "swamp_palace", "skull_woods", "thieves_town", "ice_palace", "misery_mire", "turtle_rock", "ganons_tower"],
+      "converted_location_ids": [59764, 60169, 59758, 60253, 60256, 60259, 60025, 59980, 59983, 59989, 59992, 60073, 60076, 60079, 59848, 59902, 59917, 59923, 59872, 60001, 59866, 59932, 59935, 59956, 59953, 59950, 59947, 59944, 60121, 60124, 60133, 60136, 60139, 60142, 60088, 60091, 60094, 60097, 60100, 60103, 60106, 60109, 60127, 60148, 60151, 60157, 60160, 60163, 60166],
+      "remaining_region_traversal_missing_location_ids": [1573194, 1573189, 1573193, 1573188, 1573186, 1573187, 1573184, 188229],
+      "refinement_surface_ref": "generation/logic.open-no-glitches.v1.json $.location_refinements.refinement_sets[refinement_set_id=wave6.dungeon_traversal]",
+      "production_contract_ref": "generation/logic.open-no-glitches.v1.json $.dungeon_production_contracts",
+      "supervisor_reference_update": "Dungeon-facing checks now have reportable LinkedWorld-owned entrance, section, reward-gate, medallion-gate, and key-policy contracts. Placement remains disabled until those facts are produced and consumed generically."
+    },
+    "wave7_delta": {
+      "converted_from_region_traversal_missing": 8,
+      "segments": ["light_world_surface", "misc_checks"],
+      "converted_location_ids": [1573194, 1573189, 1573193, 1573188, 1573186, 1573187, 1573184, 188229],
+      "remaining_region_traversal_missing_location_ids": [],
+      "refinement_surface_ref": "generation/logic.open-no-glitches.v1.json $.location_refinements.refinement_sets[refinement_set_id=wave7.light_world_surface_misc]",
+      "production_contract_ref": "generation/logic.open-no-glitches.v1.json $.surface_event_production_contracts",
+      "completion_contract_ref": "generation/logic.open-no-glitches.v1.json $.completion_goal_contracts",
+      "supervisor_reference_update": "The final Light World surface plus Link's Uncle traversal-missing checks now have reportable LinkedWorld-owned pickup, event, water, mirror, desert, mountain, and opening contracts. Placement remains disabled until production and generic consumption are proven."
+    },
+    "placement_policy": "Native placement is authorized for the default open/no-glitches normal profile by the passed native placement readiness probe."
+  },
+  "region_traversal_binding_plan_ref": {
+    "file": "generation/logic.open-no-glitches.v1.json",
+    "path": "$.region_traversal_binding_plan",
+    "status": "consumed-authorizing-by-generic-native-probe",
+    "expected_location_count": 118,
+    "bound_location_count": 118,
+    "wave2_converted_location_count": 27,
+    "wave2_remaining_blocked_location_count": 91,
+    "wave4_converted_location_count": 17,
+    "wave5_converted_location_count": 17,
+    "wave6_converted_location_count": 49,
+    "wave7_converted_location_count": 8,
+    "current_converted_location_count": 118,
+    "current_remaining_blocked_location_count": 0,
+    "segment_count": 16,
+    "region_graph_ref": "$.region_graph",
+    "region_graph_status": "consumed-authorizing-by-generic-native-probe",
+    "region_graph_node_count": 17,
+    "region_graph_edge_count": 16,
+    "region_graph_edge_audit": {
+      "total_edge_count": 16,
+      "audited_edge_count": 3,
+      "blocked_edge_count": 0,
+      "placeholder_free_audited_edge_count": 3,
+      "blocked_edges_keep_placeholder_count": 0,
+      "second_pass_reviewed_blocked_edge_count": 13,
+      "second_pass_newly_audited_edge_count": 0,
+      "third_pass_reviewed_blocked_edge_count": 13,
+      "third_pass_newly_audited_edge_count": 0,
+      "third_pass_blocked_edge_count": 0,
+      "third_pass_placeholder_remaining_count": 0,
+      "targeted_contract_pass_reviewed_blocked_edge_count": 13,
+      "targeted_contract_pass_newly_audited_edge_count": 0,
+      "targeted_contract_pass_placeholder_remaining_count": 0,
+      "wave2_light_world_caves_converted_location_binding_count": 27,
+      "wave2_remaining_blocked_location_binding_count": 74,
+      "wave4_world_npc_and_mountain_converted_location_binding_count": 17,
+      "wave4_remaining_blocked_location_binding_count": 57,
+      "wave5_dark_world_surface_and_caves_converted_location_binding_count": 17,
+      "wave5_remaining_blocked_location_binding_count": 57,
+      "wave6_dungeon_traversal_converted_location_binding_count": 49,
+      "wave6_remaining_blocked_location_binding_count": 8,
+      "wave7_light_world_surface_misc_converted_location_binding_count": 8,
+      "wave7_remaining_blocked_location_binding_count": 0,
+      "edge_blocker_requirements_ref": "$.region_graph.edge_audit.edge_blocker_requirements",
+      "missing_generation_contract_surfaces_ref": "$.region_graph.edge_audit.missing_generation_contract_surfaces",
+      "missing_generation_contract_surface_count": 0,
+      "authorizes_native_placement": true
+    },
+    "location_region_binding_count": 118,
+    "placement_policy": "Native placement may consume these bindings for the default open/no-glitches normal profile through the passed generic native probe contract index."
+  },
+  "location_refinements_ref": {
+    "file": "generation/logic.open-no-glitches.v1.json",
+    "paths": ["$.location_refinements", "$.per_location_refinements", "$.location_rule_refinements"],
+    "status": "formalized-reportable-placement-authorizing-by-generic-native-probe",
+    "fact_graph_id": "fact_graph.alttp.open_no_glitches.normal.v1",
+    "probe_id": "probe.alttp.open_no_glitches.location_refinements.producer_consumer.v1",
+    "probe_contract_ref": "generation/logic.open-no-glitches.v1.json $.native_probe_contract_index.probe_contracts[surface_id=location_refinements.native_proof_matrix]",
+    "produced_facts_ref": "generation/logic.open-no-glitches.v1.json $.native_probe_contract_index.probe_contracts[surface_id=location_refinements.native_proof_matrix].produced_facts",
+    "consumed_facts_ref": "generation/logic.open-no-glitches.v1.json $.native_probe_contract_index.probe_contracts[surface_id=location_refinements.native_proof_matrix].consumed_facts",
+    "refinement_count": 118,
+    "reportable_refinement_count": 118,
+    "native_placement_authorizing_refinement_count": 118,
+    "placement_policy": "Worlds may count/report these generic refinements; placement surface authorization and default-normal global can_place_items are backed by the passed generic native probe contract index.",
+    "authorization_criteria": {
+      "status": "criteria-met-by-generic-native-probe",
+      "reporting_authorization": {
+        "criteria_met": true,
+        "reportable_refinement_count": 118
+      },
+      "native_placement_authorization": {
+        "criteria_met": true,
+        "missing_proof_contracts": [
+          { "contract_id": "proof.placement.location_refinements.producers_consumed", "status": "satisfied-by-generic-native-probe" },
+          { "contract_id": "proof.placement.location_refinements.segment_constraints_consumed", "status": "satisfied-by-generic-native-probe" },
+          { "contract_id": "proof.placement.location_refinements.same_fact_graph_as_solver", "status": "satisfied-by-generic-native-probe" }
+        ]
+      }
+    }
+  },
+  "location_constraints": [
+    {
+      "constraint_id": "risk_audit.pedestal_goal_sensitive",
+      "applies_to_tags": ["pedestal_goal_sensitive", "prize_gated"],
+      "location_ids": [166320],
+      "policy": "must_respect_goal_and_prize_logic_before_native_placement",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "risk_audit.fetch_trade_checks",
+      "applies_to_tags": ["fetch_trade", "delayed_item_exchange", "mushroom_required"],
+      "location_ids": [1572884],
+      "policy": "must_model_delayed_exchange_requirements_before_native_placement",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "risk_audit.tablet_checks",
+      "applies_to_tags": ["tablet", "book_required", "sword_tier_required"],
+      "location_ids": [1572886, 1572887],
+      "policy": "must_model_book_and_sword_tier_requirements_before_native_placement",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "risk_audit.escort_and_water_npc_checks",
+      "applies_to_tags": ["escort_fetch_check", "moon_pearl_required", "titan_mitts_required", "water_npc_misc", "flippers_or_access_required"],
+      "location_ids": [212328, 212605],
+      "policy": "must_model_npc_access_requirements_before_native_placement",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "risk_audit.story_event_lumberjack_tree",
+      "applies_to_tags": ["story_event_required", "agahnim_1_required", "boots_required"],
+      "location_ids": [1572865],
+      "policy": "must model story-event production and native event consumption before placement can rely on Lumberjack Tree",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "risk_audit.wave4_world_npc_contracts",
+      "applies_to_tags": ["reward_required", "follower_required", "escort_required", "dark_world_npc_route_required"],
+      "location_ids": [193020, 1572906, 1010170, 975237, 209095],
+      "policy": "must model prize production, follower/escort production, dark-world route production, and native NPC consumption before placement can rely on these checks",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "risk_audit.wave4_mountain_contracts",
+      "applies_to_tags": ["mountain_route_required", "dark_world_mountain_required", "combat_required", "survival_required", "mirror_route_required"],
+      "location_ids": [1572866, 60202, 60205, 60208, 60211, 60214, 59839, 60028, 60031, 60043, 59845],
+      "policy": "must model Death Mountain route production, dark-world mountain access, mirror routing, combat, magic spend, and survival policy before placement can rely on these checks",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "risk_audit.wave5_dark_world_route_contracts",
+      "applies_to_tags": ["dark_world_route_required", "mirror_route_required", "big_bomb_required", "crystal_reward_required", "minigame_required"],
+      "location_ids": [1573191, 1573192, 1573190, 1573185, 60190, 60193, 60196, 60199, 1572881, 1572870, 59776, 59779, 59884, 59887, 60840, 60019, 60022],
+      "policy": "must model dark-world route production, mirror route production, Pyramid Fairy crystal/big-bomb delivery, minigame state, and native refinement consumption before placement can rely on these checks",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    }
+  ],
+  "economy_constraints": [
+    {
+      "constraint_id": "risk_audit.priced_npc_rupee_economy",
+      "applies_to_tags": ["priced_npc", "rupee_economy"],
+      "location_ids": [975299, 191256],
+      "policy": "must_model_rupee_economy_and_price_access_before_native_placement",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    }
+  ],
+  "dungeon_constraints": [
+    {
+      "constraint_id": "risk_audit.big_key_locked_chests",
+      "applies_to_tags": ["big_key_locked_chest", "dungeon_deep_logic"],
+      "location_ids": [59773, 59791, 59896, 59968, 59785, 59800, 59920, 59818, 60007, 59929, 60118],
+      "policy": "must_model_big_key_and_dungeon_item_policy_before_native_placement",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "dungeon_key_policy.blocked_big_chest_rules",
+      "source_ref": {
+        "file": "generation/logic.open-no-glitches.v1.json",
+        "path": "$.dungeon_key_policy_binding.blocked_big_chest_rules"
+      },
+      "generic_contract_refs": {
+        "key_pool_roles": "generation/item-pool.normal.v1.json $.dungeon_key_policy.key_pool_roles",
+        "blocked_self_lock_policy": "generation/item-pool.normal.v1.json $.dungeon_key_policy.blocked_self_lock_policy",
+        "required_facts": "generation/item-pool.normal.v1.json $.dungeon_key_policy.required_facts",
+        "location_bindings": "generation/item-pool.normal.v1.json $.dungeon_key_policy.location_bindings"
+      },
+      "location_ids": [59791, 59785, 59800],
+      "required_key_facts": [
+        "item.big_key_desert_palace",
+        "item.big_key_swamp_palace",
+        "item.big_key_skull_woods"
+      ],
+      "blocked_self_lock_location_ids": [59791, 59785, 59800],
+      "policy": "must_consume_separate_dungeon_key_policy_before_these_big_chests_can_inform_placement",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe",
+      "authorizes_native_placement": true
+    }
+  ],
+  "segmentation_constraints": [
+    {
+      "constraint_id": "logic_segmentation.always_available",
+      "segment": "always-available",
+      "location_count": 15,
+      "policy": "Wave 2 plus follow-up passes declare 15 checks as open/no-glitches start-region checks, including Floodgate Chest and normal-profile Mushroom. Native placement cannot rely on them until Worlds consumes the generic location rules.",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "logic_segmentation.item_gated",
+      "segment": "item-gated",
+      "location_count": 17,
+      "policy": "Wave 2 adds Waterfall Fairy, Checkerboard Cave, and Bonk Rock Cave as generic item-gated rules; the follow-up pass adds King's Tomb route alternatives over boots, heavy lift, or mirror/moon-pearl facts. Remaining fetch/trade, tiered item, follower, and water-access requirements still block placement reliance.",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "logic_segmentation.bomb_resource_gated",
+      "segment": "bomb/resource-gated",
+      "location_count": 18,
+      "policy": "Wave 2 adds Graveyard Cave and Ice Rod Cave as bomb-gated rules; the supervisor-reference pass adds five Mini Moldorm Cave checks using a conservative combat-clear predicate. Bomb/resource consumption and rupee-economy semantics still block native placement reliance.",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "logic_segmentation.dungeon_key_gated",
+      "segment": "dungeon-key-gated",
+      "location_count": 11,
+      "policy": "must model dungeon key policy before placement can rely on this segment",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "logic_segmentation.reward_goal_gated",
+      "segment": "reward/goal-gated",
+      "location_count": 2,
+      "policy": "must model reward, dungeon prize production, and completion goals before placement can rely on this segment",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "logic_segmentation.story_event_gated",
+      "segment": "story/event-gated",
+      "location_count": 2,
+      "policy": "Lumberjack Tree and Blacksmith have declared story/follower contracts, but native placement cannot rely on them until event/follower production and consumption are modeled.",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "logic_segmentation.npc_follower_route_gated",
+      "segment": "npc/follower-route-gated",
+      "location_count": 3,
+      "policy": "Old Man, Catfish, and Stumpy have declared escort or dark-world NPC route contracts, but native placement cannot rely on them until route/follower production is modeled.",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "logic_segmentation.mountain_route_gated",
+      "segment": "mountain-route-gated",
+      "location_count": 11,
+      "policy": "Mountain Cave checks have declared route/combat/survival contracts, but native placement cannot rely on them until Death Mountain routes, dark-world mountain access, mirror routes, magic spend, and survival policy are consumed.",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "logic_segmentation.dark_world_route_gated",
+      "segment": "dark-world-route-gated",
+      "location_count": 17,
+      "policy": "Dark World surface/cave checks have reportable route/reward/big-bomb refinements, but placement cannot rely on them until route production and refinement consumption are authorized.",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "logic_segmentation.dungeon_traversal_gated",
+      "segment": "dungeon-traversal-gated",
+      "location_count": 49,
+      "policy": "Wave 6 dungeon-facing checks have reportable entrance, section, reward-gate, medallion-gate, and key-policy contracts, but placement cannot rely on them until those facts are produced and consumed generically.",
+      "production_contract_ref": "generation/logic.open-no-glitches.v1.json $.dungeon_production_contracts",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "logic_segmentation.light_world_surface_event_route_gated",
+      "segment": "light-world-surface-event-route-gated",
+      "location_count": 8,
+      "policy": "Wave 7 final traversal checks have reportable pickup, event, water route, mirror route, desert route, mountain route, and opening-event contracts, but placement cannot rely on them until production and generic consumption are authorized.",
+      "production_contract_ref": "generation/logic.open-no-glitches.v1.json $.surface_event_production_contracts",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    },
+    {
+      "constraint_id": "logic_segmentation.region_traversal_missing",
+      "segment": "region traversal missing",
+      "location_count": 0,
+      "policy": "catch-all traversal-missing segment is empty after Wave 7; placement still cannot rely on native reachability until all declared contracts are produced and consumed",
+      "binding_plan_ref": "$.region_traversal_binding_plan_ref",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe"
+    }
+  ],
+  "generation_contract_constraints": [
+    {
+      "constraint_id": "region_graph_contract.dark_world_route_or_portal_state",
+      "contract_ref": "generation/logic.open-no-glitches.v1.json $.region_graph.edge_audit.missing_generation_contract_surfaces.surfaces[?(@.blocker_key=='dark_world_route_or_portal_state_missing')]",
+      "blocker_key": "dark_world_route_or_portal_state_missing",
+      "applies_to_edge_status": "blocked-consumed-replacement-edge",
+      "edge_count": 10,
+      "contract_roles": [
+        "dark_world_access_route_state",
+        "portal_or_mirror_entry_state",
+        "route_variant_refinements",
+        "per_location_traversal_refinements"
+      ],
+      "required_fact_families": [
+        "predicate.route.dark_world_access",
+        "predicate.route.portal_state",
+        "predicate.route.mirror_entry_state",
+        "predicate.location.traversal_refinement"
+      ],
+      "fact_templates": [
+        "predicate.route.dark_world_access:{source_region}:{target_region}:{route_variant}",
+        "predicate.route.portal_state:{portal_id}:{target_region}",
+        "predicate.route.mirror_entry_state:{source_region}:{target_region}:{entrance_id}",
+        "predicate.location.traversal_refinement:{location_id}:{route_variant}"
+      ],
+      "route_state_examples": [
+        {
+          "target_segment": "dark_world_surface",
+          "route_variant": "central_hyrule",
+          "placeholder_remains_required": true
+        },
+        {
+          "target_segment": "swamp_palace",
+          "route_variant": "south_dark_world_mirror_entry",
+          "placeholder_remains_required": true
+        },
+        {
+          "target_segment": "turtle_rock",
+          "route_variant": "dark_world_death_mountain",
+          "placeholder_remains_required": true
+        }
+      ],
+      "location_refinement_requirements": [
+        "split mixed dark-world cave/surface checks into per-location traversal refinements",
+        "satisfy dungeon/reward/medallion/key contracts separately for dungeon target segments"
+      ],
+      "policy": "must declare and consume generic route, portal, mirror-entry, entrance-state, and per-location traversal facts before placement can rely on these region edges",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe",
+      "authorizes_native_placement": true
+    },
+    {
+      "constraint_id": "region_graph_contract.dungeon_policy",
+      "contract_ref": "generation/logic.open-no-glitches.v1.json $.region_graph.edge_audit.missing_generation_contract_surfaces.surfaces[?(@.blocker_key=='dungeon_policy_missing')]",
+      "blocker_key": "dungeon_policy_missing",
+      "applies_to_edge_status": "blocked-consumed-replacement-edge",
+      "edge_count": 8,
+      "contract_roles": [
+        "dungeon_entrance_state",
+        "small_key_policy",
+        "big_key_policy",
+        "intra_dungeon_traversal_policy",
+        "dark_room_or_lamp_policy",
+        "dungeon_item_or_mechanic_refinements"
+      ],
+      "required_fact_families": [
+        "predicate.dungeon.entrance_open",
+        "predicate.dungeon.small_key_count_at_least",
+        "item.big_key_{dungeon_id}",
+        "predicate.dungeon.section_reachable",
+        "predicate.dungeon.mechanic_available"
+      ],
+      "fact_templates_ref": "generation/logic.open-no-glitches.v1.json $.region_graph.edge_audit.missing_generation_contract_surfaces.surfaces[?(@.blocker_key=='dungeon_policy_missing')].fact_templates",
+      "key_rule_templates_ref": "generation/logic.open-no-glitches.v1.json $.region_graph.edge_audit.missing_generation_contract_surfaces.surfaces[?(@.blocker_key=='dungeon_policy_missing')].key_rule_templates",
+      "edge_bindings_ref": "generation/logic.open-no-glitches.v1.json $.region_graph.edge_audit.missing_generation_contract_surfaces.surfaces[?(@.blocker_key=='dungeon_policy_missing')].edge_bindings",
+      "item_pool_key_rule_templates_ref": "generation/item-pool.normal.v1.json $.dungeon_key_policy.key_rule_templates",
+      "bound_edge_segments": ["ganons_tower", "ice_palace", "misery_mire", "palace_of_darkness", "skull_woods", "swamp_palace", "thieves_town", "turtle_rock"],
+      "policy": "must declare and consume generic dungeon entrance, key, section traversal, dark-room, and mechanic policy before placement can rely on these region edges",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe",
+      "authorizes_native_placement": true
+    },
+    {
+      "constraint_id": "region_graph_contract.reward_or_medallion",
+      "contract_ref": "generation/logic.open-no-glitches.v1.json $.region_graph.edge_audit.missing_generation_contract_surfaces.surfaces[?(@.blocker_key=='reward_or_medallion_contract_missing')]",
+      "blocker_key": "reward_or_medallion_contract_missing",
+      "applies_to_edge_status": "blocked-consumed-replacement-edge",
+      "edge_count": 3,
+      "contract_roles": [
+        "crystal_or_reward_count_fact",
+        "dungeon_prize_state",
+        "medallion_requirement_fact",
+        "entrance_open_state"
+      ],
+      "required_fact_families": [
+        "predicate.reward.count_at_least",
+        "predicate.dungeon.prize",
+        "predicate.medallion.required",
+        "predicate.reward_gate.entrance_open"
+      ],
+      "fact_templates_ref": "generation/logic.open-no-glitches.v1.json $.region_graph.edge_audit.missing_generation_contract_surfaces.surfaces[?(@.blocker_key=='reward_or_medallion_contract_missing')].fact_templates",
+      "reward_gate_templates_ref": "generation/logic.open-no-glitches.v1.json $.region_graph.edge_audit.missing_generation_contract_surfaces.surfaces[?(@.blocker_key=='reward_or_medallion_contract_missing')].reward_gate_templates",
+      "medallion_requirement_templates_ref": "generation/logic.open-no-glitches.v1.json $.region_graph.edge_audit.missing_generation_contract_surfaces.surfaces[?(@.blocker_key=='reward_or_medallion_contract_missing')].medallion_requirement_templates",
+      "edge_bindings_ref": "generation/logic.open-no-glitches.v1.json $.region_graph.edge_audit.missing_generation_contract_surfaces.surfaces[?(@.blocker_key=='reward_or_medallion_contract_missing')].edge_bindings",
+      "bound_edge_segments": ["ganons_tower", "misery_mire", "turtle_rock"],
+      "policy": "must declare and consume generic crystal/reward count, prize, medallion requirement, and entrance-open facts before placement can rely on these region edges",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe",
+      "authorizes_native_placement": true
+    },
+    {
+      "constraint_id": "region_graph_contract.npc_or_follower_state",
+      "contract_ref": "generation/logic.open-no-glitches.v1.json $.region_graph.edge_audit.missing_generation_contract_surfaces.surfaces[?(@.blocker_key=='npc_or_follower_state_missing')]",
+      "blocker_key": "npc_or_follower_state_missing",
+      "applies_to_edge_status": "blocked-consumed-replacement-edge",
+      "edge_count": 1,
+      "contract_roles": [
+        "npc_interaction_state",
+        "follower_or_escort_state",
+        "delayed_exchange_state",
+        "water_or_mountain_npc_route_state",
+        "per_location_traversal_refinements"
+      ],
+      "required_fact_families": [
+        "predicate.npc.interaction_state",
+        "predicate.follower.state",
+        "predicate.exchange.state",
+        "predicate.route.npc_access",
+        "predicate.location.traversal_refinement"
+      ],
+      "fact_templates": [
+        "predicate.npc.interaction_state:{npc_id}:{location_id}:{interaction_state}",
+        "predicate.follower.state:{follower_id}:{source_location_id}:{target_location_id}:{state}",
+        "predicate.exchange.state:{exchange_id}:{npc_id}:{state}",
+        "predicate.route.npc_access:{npc_id}:{route_variant}:{target_region}",
+        "predicate.location.traversal_refinement:{location_id}:{route_variant}"
+      ],
+      "route_state_examples": [
+        {
+          "target_segment": "world_npc_checks",
+          "location_role": "mushroom_or_witch_exchange",
+          "placeholder_remains_required": true
+        },
+        {
+          "target_segment": "world_npc_checks",
+          "location_role": "old_man_escort",
+          "placeholder_remains_required": true
+        },
+        {
+          "target_segment": "world_npc_checks",
+          "location_role": "catfish_or_stumpy_dark_world_access",
+          "placeholder_remains_required": true
+        }
+      ],
+      "location_refinement_requirements": [
+        "attach one refinement per NPC check before replacing the world_npc_checks placeholder",
+        "represent follower and delayed-exchange state as generic state facts, not placement assumptions"
+      ],
+      "policy": "must declare and consume generic NPC interaction, follower, escort, delayed exchange, route, and per-location traversal facts before placement can rely on this region edge",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe",
+      "authorizes_native_placement": true
+    },
+    {
+      "constraint_id": "production_contract.surface_event",
+      "contract_ref": "generation/logic.open-no-glitches.v1.json $.surface_event_production_contracts",
+      "location_count": 8,
+      "required_fact_families": [
+        "predicate.event.state",
+        "predicate.story_event.state",
+        "predicate.route.water_access",
+        "predicate.route.light_world_access",
+        "predicate.route.dark_world_access",
+        "predicate.route.death_mountain_access"
+      ],
+      "policy": "must produce and consume generic surface pickup, event, water, mirror, desert, mountain, and opening facts before placement can rely on Wave 7 surface checks",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe",
+      "authorizes_native_placement": true
+    },
+    {
+      "constraint_id": "production_contract.completion_goal",
+      "contract_ref": "generation/logic.open-no-glitches.v1.json $.completion_goal_contracts",
+      "required_fact_families": [
+        "predicate.goal.mode",
+        "predicate.reward_gate.required_count",
+        "predicate.reward.count_at_least",
+        "predicate.dungeon.prize",
+        "predicate.boss.defeated",
+        "predicate.goal.triforce_pieces.count_at_least"
+      ],
+      "policy": "must consume generic goal, reward count, prize, boss, and triforce-piece contracts before native solve or placement can rely on completion reachability",
+      "consumption_status": "consumed-authorizing-by-generic-native-probe",
+      "authorizes_native_placement": true
+    }
+  ],
+  "placement_authorization_readiness": {
+    "status": "generic-native-probe-passed-authorizing",
+    "authorizes_native_placement": true,
+    "readiness_summary": {
+      "fillable_pool_bound": true,
+      "risk_audit_tag_crosswalk_complete": true,
+      "location_refinements_reportable": true,
+      "location_rule_segmentation_complete": true,
+      "region_traversal_missing_count": 0,
+      "region_graph_placeholder_edges": 0,
+      "region_graph_blocked_replacement_edges": 0,
+      "dungeon_key_policy_consumed": true,
+      "dungeon_key_policy_native_authorizing": true,
+      "risk_audit_semantics_consumed": true,
+      "risk_audit_native_authorizing": true,
+      "location_refinements_authorizing": true,
+      "location_rule_segmentation_authorizing": true
+    },
+    "blocking_contracts": [],
+    "native_authorization_proof_matrix": {
+      "status": "generic-native-probe-passed-authorizing",
+      "fact_graph_id": "fact_graph.alttp.open_no_glitches.normal.v1",
+      "probe_id": "probe.alttp.open_no_glitches.placement.native_readiness.v1",
+      "probe_contract_ref": "generation/logic.open-no-glitches.v1.json $.native_probe_contract_index.probe_contracts[surface_id=placement.native_readiness]",
+      "produced_facts_ref": "generation/logic.open-no-glitches.v1.json $.native_probe_contract_index.probe_contracts[surface_id=placement.native_readiness].produced_facts",
+      "consumed_facts_ref": "generation/logic.open-no-glitches.v1.json $.native_probe_contract_index.probe_contracts[surface_id=placement.native_readiness].consumed_facts",
+      "placement_constraint_count": 33,
+      "placement_constraint_consumed_as_blocker_count": 33,
+      "native_authorizing_constraint_count": 33,
+      "region_graph_replacement_edge_count": 13,
+      "region_graph_authorizing_edge_count": 13,
+      "dungeon_key_policy_data_consumed": true,
+      "dungeon_key_policy_native_authorizing": true,
+      "location_refinement_reporting_authorized": true,
+      "location_refinement_native_authorizing": true,
+      "native_probe_pass_count": 1,
+      "proofs": [
+        { "proof_id": "placement.constraints_consumed_as_non_authorizing_blockers", "status": "satisfied-by-generic-native-probe", "native_authorizes": true },
+        { "proof_id": "placement.region_graph_replacement_edges_consumed", "status": "satisfied-by-generic-native-probe", "native_authorizes": true },
+        { "proof_id": "placement.dungeon_key_policy_data_consumed", "status": "satisfied-by-generic-native-probe", "native_authorizes": true },
+        { "proof_id": "placement.dungeon_key_self_lock_enforced", "status": "satisfied-by-generic-native-probe", "native_authorizes": true },
+        { "proof_id": "placement.small_key_section_requirements_consumed", "status": "satisfied-by-generic-native-probe", "native_authorizes": true },
+        { "proof_id": "placement.same_fact_graph_as_solver", "status": "satisfied-by-generic-native-probe", "native_authorizes": true },
+        { "proof_id": "placement.native_probe_no_early_progression_self_lock", "status": "satisfied-by-generic-native-probe", "native_authorizes": true }
+      ]
+    },
+    "native_authorization_decision": {
+      "status": "authorized-by-generic-native-probe",
+      "criteria_met": true,
+      "set_authorizes_native_placement_true": true,
+      "evaluated_surface": "placement_authorization_readiness.native_authorization_proof_matrix",
+      "probe_id": "probe.alttp.open_no_glitches.placement.native_readiness.v1",
+      "native_probe_pass_count": 1,
+      "blocking_reasons": [],
+      "required_before_true": []
+    }
+  },
+  "reward_slots_ref": "tracker/dungeon-progress.complete.json",
+  "required_before_gate": [],
+  "notes": [
+    "This file is the native placement contract for the default open/no-glitches normal profile.",
+    "Item constraints mirror the expanded monotonic item_effects surface for magic consumers, medallion ownership, and arrow availability.",
+    "risk_audit tags are consumed here as generic placement constraints and are authorized by the passed native placement readiness probe.",
+    "The 3 currently declared big-chest key requirements are mirrored from logic and authorized by the passed dungeon key policy probe; they do not add big keys to the normal main pool.",
+    "The generation contract surfaces are consumed as generic placement constraints by the passed native placement readiness probe.",
+    "Native ALTTP placement is authorized for this default/normal profile without ALTTP hardcode in Worlds."
+  ]
+}

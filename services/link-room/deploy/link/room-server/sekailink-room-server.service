@@ -1,0 +1,33 @@
+[Unit]
+Description=SekaiLink Room Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=sekailink
+Group=sekailink
+PermissionsStartOnly=true
+WorkingDirectory=/opt/sekailink/link/room-server
+EnvironmentFile=/opt/sekailink/link/room-server/config/room_server.env
+ExecStartPre=/usr/bin/test -x /opt/sekailink/link/room-server/bin/sekailink_room_server_service
+ExecStartPre=/usr/bin/test -f /opt/sekailink/link/room-server/config/room_server.json
+ExecStartPre=/usr/bin/install -d -o sekailink -g sekailink -m 0750 /opt/sekailink/link/room-server/runtime
+ExecStartPre=/usr/bin/install -d -o sekailink -g sekailink -m 0750 /opt/sekailink/link/room-server/data/audit
+ExecStartPre=/usr/bin/install -d -o sekailink -g sekailink -m 0750 /opt/sekailink/link/room-server/data/projection
+ExecStartPre=/usr/bin/install -d -o sekailink -g sekailink -m 0750 /opt/sekailink/link/logs/room-server
+ExecStart=/opt/sekailink/link/room-server/bin/sekailink_room_server_service --config /opt/sekailink/link/room-server/config/room_server.json --state-file /opt/sekailink/link/room-server/runtime/room_server_state.json
+Restart=always
+RestartSec=2
+TimeoutStopSec=20
+KillSignal=SIGTERM
+NoNewPrivileges=true
+PrivateTmp=true
+SyslogIdentifier=sekailink-room-server
+ProtectSystem=strict
+ReadWritePaths=/opt/sekailink/link/room-server /opt/sekailink/link/logs/room-server
+StandardOutput=append:/opt/sekailink/link/logs/room-server/service.log
+StandardError=append:/opt/sekailink/link/logs/room-server/service.log
+
+[Install]
+WantedBy=multi-user.target

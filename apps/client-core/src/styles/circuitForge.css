@@ -1,0 +1,189 @@
+/* ============================================================
+   Circuit Forge Design System — SekaiLink Client
+   ============================================================ */
+
+/* ---- Tailwind base ---- */
+@import "tailwindcss";
+
+/* ---- Theme tokens (Tailwind v4 @theme) ---- */
+@theme inline {
+  --color-teal: #00ffc8;
+  --color-teal-dim: #0a3a30;
+  --color-teal-muted: #7ab8a8;
+  --color-void: #050508;
+  --color-gunmetal: #0d1117;
+  --color-gunmetal-light: #151b24;
+  --color-magenta: #ff0066;
+  --color-phosphor: #c8ffe0;
+  --color-amber: #ffb347;
+
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-body: 'Rajdhani', sans-serif;
+  --font-code: 'Fira Code', monospace;
+  --font-display: 'Orbitron', sans-serif;
+}
+
+/* ---- Scrollbar ---- */
+.cf-scrollbar::-webkit-scrollbar,
+body.sklp-ui ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.cf-scrollbar::-webkit-scrollbar-track,
+body.sklp-ui ::-webkit-scrollbar-track {
+  background: #050508;
+}
+.cf-scrollbar::-webkit-scrollbar-thumb,
+body.sklp-ui ::-webkit-scrollbar-thumb {
+  background: #0a3a30;
+  border-radius: 0;
+}
+.cf-scrollbar::-webkit-scrollbar-thumb:hover,
+body.sklp-ui ::-webkit-scrollbar-thumb:hover {
+  background: #00ffc8;
+}
+
+/* ---- Chamfered panel clip-paths ---- */
+.panel-chamfer {
+  clip-path: polygon(
+    12px 0, calc(100% - 12px) 0,
+    100% 12px, 100% calc(100% - 12px),
+    calc(100% - 12px) 100%, 12px 100%,
+    0 calc(100% - 12px), 0 12px
+  );
+}
+.panel-chamfer-sm {
+  clip-path: polygon(
+    8px 0, calc(100% - 8px) 0,
+    100% 8px, 100% calc(100% - 8px),
+    calc(100% - 8px) 100%, 8px 100%,
+    0 calc(100% - 8px), 0 8px
+  );
+}
+
+/* ---- Glow border ---- */
+.glow-border {
+  position: relative;
+}
+.glow-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  background: linear-gradient(135deg, #00ffc8 0%, transparent 40%, transparent 60%, #00ffc8 100%);
+  clip-path: inherit;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+.glow-border:hover::before {
+  opacity: 1;
+}
+
+/* ---- Power indicator dots ---- */
+.power-dot {
+  width: 6px;
+  height: 6px;
+  background: #00ffc8;
+  box-shadow: 0 0 6px #00ffc8, 0 0 12px #00ffc880;
+  animation: power-pulse 2s ease-in-out infinite;
+}
+
+@keyframes power-pulse {
+  0%, 100% { opacity: 0.6; box-shadow: 0 0 6px #00ffc8, 0 0 12px #00ffc880; }
+  50% { opacity: 1; box-shadow: 0 0 8px #00ffc8, 0 0 20px #00ffc880; }
+}
+
+/* ---- Circuit trace animation ---- */
+@keyframes trace-flow {
+  0% { stroke-dashoffset: 20; }
+  100% { stroke-dashoffset: 0; }
+}
+.circuit-trace {
+  stroke-dasharray: 4 4;
+  animation: trace-flow 1.5s linear infinite;
+}
+
+/* ---- Scanline hover ---- */
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+.scan-hover {
+  position: relative;
+}
+.scan-hover:hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 0%, #00ffc810 50%, transparent 100%);
+  animation: scanline 0.6s ease-out;
+  pointer-events: none;
+}
+
+/* ---- Status glow ---- */
+.status-online { color: #00ffc8; text-shadow: 0 0 8px #00ffc880; }
+.status-offline { color: #3a5a50; }
+
+/* ---- Font utilities ---- */
+.font-header {
+  font-family: 'Share Tech Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.font-display { font-family: 'Orbitron', sans-serif; }
+.font-code { font-family: 'Fira Code', monospace; }
+
+/* ---- Teal glow text ---- */
+.text-glow { text-shadow: 0 0 10px #00ffc880, 0 0 20px #00ffc840; }
+
+/* ---- Background drift ---- */
+@keyframes bg-drift {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+/* ---- Message entrance ---- */
+@keyframes msg-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.msg-animate { animation: msg-enter 0.3s ease-out forwards; }
+
+/* ---- Panel entrance ---- */
+@keyframes panel-reveal {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+.panel-animate { animation: panel-reveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* ---- Button charge effect ---- */
+.btn-charge {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+.btn-charge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #00ffc820 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.btn-charge:hover::before { opacity: 1; }
+.btn-charge:hover { box-shadow: 0 0 15px #00ffc840, inset 0 0 15px #00ffc810; }
+.btn-charge:active { transform: scale(0.97); }
+
+/* ---- Sidebar: strip inherited button chrome ---- */
+body.sklp-ui aside button {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  animation: none !important;
+}

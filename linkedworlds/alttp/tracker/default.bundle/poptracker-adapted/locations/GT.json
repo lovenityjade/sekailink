@@ -1,0 +1,771 @@
+[
+    {
+        "name": "Ganon's Tower Bottom Left",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "access_rules": [
+            "^$CanReach|gt_entrance_inside"
+        ],
+        "children": [
+            {
+                "name": "Bob's Torch",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_bobs_torch"
+                ],
+                "sections": [
+                    {
+                        "name": "Bob's Torch",
+                        "access_rules": [
+                            "^$CanReach|GT - Bob's Torch"
+                        ],
+                        "capture_item": true
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 370,
+                        "y": 220,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "DMs Room",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_dm_room"
+                ]
+            },
+            {
+                "name": "DMs Room Top Right",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_dm_room"
+                ],
+                "sections": [
+                    {
+                        "name": "DMs Room Top Right",
+                        "access_rules": [
+                            "^$CanReach|GT - DM Room Top Right"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 114,
+                        "y": 17,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "DMs Room Bottom Right",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_dm_room"
+                ],
+                "sections": [
+                    {
+                        "name": "DMs Room Bottom Right",
+                        "access_rules": [
+                            "^$CanReach|GT - DM Room Bottom Right"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 114,
+                        "y": 33,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "DMs Room Top Left",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_dm_room"
+                ],
+                "sections": [
+                    {
+                        "name": "DMs Room Top Left",
+                        "access_rules": [
+                            "^$CanReach|GT - DM Room Top Left"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 77,
+                        "y": 17,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "DMs Room Bottom Left",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_dm_room"
+                ],
+                "sections": [
+                    {
+                        "name": "DMs Room Bottom Left",
+                        "access_rules": [
+                            "^$CanReach|GT - DM Room Bottom Left"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 77,
+                        "y": 33,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Map Chest",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_map_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Map Chest",
+                        "access_rules": [
+                            "^$CanReach|GT - Map Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 162,
+                        "y": 160,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Double Switch Pot Key",
+                "visibility_rules": ["key_drop_shuffle"],
+                "access_rules": [
+                    "^$CanReach|gt_bottom_double_switch_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Double Switch Pot Key",
+                        "access_rules": [
+                            "^$CanReach|GT - Double Switch Pot Key"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 114,
+                        "y": 240,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Conveyor Cross Pot Key",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_conveyor_cross_room"
+                ],
+                "visibility_rules": ["key_drop_shuffle"],
+                "sections": [
+                    {
+                        "name": "Conveyor Cross Pot Key",
+                        "access_rules": [
+                            "^$CanReach|GT - Conveyor Cross Key Drop"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 178,
+                        "y": 113,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Firesnake Room",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_firesnake_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Firesnake Room",
+                        "access_rules": [
+                            "^$CanReach|GT - Firesnake Room"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 93,
+                        "y": 287,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Randomizer Room",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_randomizer_room"
+                ]
+            },
+            {
+                "name": "Randomizer Room Bottom Left",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_randomizer_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Randomizer Room Bottom Left",
+                        "access_rules": [
+                            "^$CanReach|GT - Randomizer Room Bottom Left"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 25,
+                        "y": 299,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Randomizer Room Bottom Right",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_randomizer_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Randomizer Room Bottom Right",
+                        "access_rules": [
+                            "^$CanReach|GT - Randomizer Room Bottom Right"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 38,
+                        "y": 299,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Randomizer Room Top Left",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_randomizer_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Randomizer Room Top Left",
+                        "access_rules": [
+                            "^$CanReach|GT - Randomizer Room Top Left"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 25,
+                        "y": 287,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Randomizer Room Top Right",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_randomizer_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Randomizer Room Top Right",
+                        "access_rules": [
+                            "^$CanReach|GT - Randomizer Room Top Right"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 38,
+                        "y": 287,
+                        "size": 6
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Ganon's Tower Bottom Right",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "access_rules": [
+            "^$CanReach|gt_entrance_inside"
+        ],
+        "children": [
+            {
+                "name": "Hope Room Left",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_hope_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Hope Room Left",
+                        "access_rules": [
+                            "^$CanReach|GT - Hope Room Left"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 408,
+                        "y": 208,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Hope Room Right",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_hope_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Hope Room Right",
+                        "access_rules": [
+                            "^$CanReach|GT - Hope Room Right"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 445,
+                        "y": 208,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Tile Room",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_tile_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Tile Room",
+                        "access_rules": [
+                            "^$CanReach|GT - Tile Room Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 557,
+                        "y": 142,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Compass Room",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_compass_room"
+                ]
+            },
+            {
+                "name": "Compass Chest",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_compass_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Compass Chest",
+                        "access_rules": [
+                            "^$CanReach|GT - Compass Room Top Left"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 550,
+                        "y": 280,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Compass Room Top Right",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_compass_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Compass Room Top Right",
+                        "access_rules": [
+                            "^$CanReach|GT - Compass Room Top Right"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 562,
+                        "y": 280,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Compass Room Bottom Left",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_compass_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Compass Room Bottom Left",
+                        "access_rules": [
+                            "^$CanReach|GT - Compass Room Bottom Left"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 550,
+                        "y": 295,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Compass Room Bottom Right",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_compass_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Compass Room Bottom Right",
+                        "access_rules": [
+                            "^$CanReach|GT - Compass Room Bottom Right"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 562,
+                        "y": 295,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Conveyor Star Pits Pot Key",
+                "visibility_rules": ["key_drop_shuffle"],
+                "access_rules": [
+                    "^$CanReach|gt_bottom_conveyor_star_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Conveyor Star Pits Pot Key",
+                        "access_rules": [
+                            "^$CanReach|GT - Conveyor Star Key Drop"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 585,
+                        "y": 335,
+                        "size": 6
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Ganon's Tower Bottom Refight",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "access_rules": [
+            "^$CanReach|gt_bottom_above_ice_fight"
+        ],
+        "children": [
+            {
+                "name": "Big Chest",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_big_chest_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Big Chest",
+                        "access_rules": [
+                            "^$CanReach|GT - Big Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 363,
+                        "y": 285,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Bob's Chest",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_above_ice_fight"
+                ],
+                "sections": [
+                    {
+                        "name": "Bob's Chest",
+                        "access_rules": [
+                            "^$CanReach|GT - Bob's Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 445,
+                        "y": 300,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Big Key Room Left",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_big_key_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Big Key Room Left",
+                        "access_rules": [
+                            "^$CanReach|GT - Big Key Room Left"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 288,
+                        "y": 272,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Big Key Room Right",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_big_key_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Big Key Room Right",
+                        "access_rules": [
+                            "^$CanReach|GT - Big Key Room Right"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 300,
+                        "y": 272,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Big Key Chest",
+                "access_rules": [
+                    "^$CanReach|gt_bottom_big_key_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Big Key Chest",
+                        "access_rules": [
+                            "^$CanReach|GT - Big Key Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Bottom",
+                        "x": 293,
+                        "y": 280,
+                        "size": 6
+                    }
+                ]
+            }
+     
+        ]
+    },
+    {
+        "name": "Ganon's Tower Top",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "access_rules": [
+            "^$CanReach|gt_top_entrance"
+        ],
+        "children": [
+            {
+                "name": "Mini Helmasaur Key Drop",
+                "visibility_rules": ["key_drop_shuffle"],
+                "access_rules": [
+                    "^$CanReach|gt_top_mini_helmasaur_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Mini Helmasaur Key Drop",
+                        "access_rules": [
+                            "^$CanReach|GT - Mini Helmasaur Key Drop"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Top",
+                        "x": 288,
+                        "y": 34,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Mini Helmasaur Room Left",
+                "access_rules": [
+                    "^$CanReach|gt_top_mini_helmasaur_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Mini Helmasaur Room Left",
+                        "access_rules": [
+                            "^$CanReach|GT - Mini Helmasaur Left"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Top",
+                        "x": 270,
+                        "y": 17,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Mini Helmasaur Room Right",
+                "access_rules": [
+                    "^$CanReach|gt_top_mini_helmasaur_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Mini Helmasaur Room Right",
+                        "access_rules": [
+                            "^$CanReach|GT - Mini Helmasaur Right"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Top",
+                        "x": 305,
+                        "y": 17,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Pre-Moldorm Chest",
+                "access_rules": [
+                    "^$CanReach|gt_top_pre_moldorm_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Pre-Moldorm Chest",
+                        "access_rules": [
+                            "^$CanReach|GT - Pre Moldorm Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Top",
+                        "x": 222,
+                        "y": 97,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Validation Chest",
+                "access_rules": [
+                    "^$CanReach|gt_top_validation"
+                ],
+                "sections": [
+                    {
+                        "name": "Validation Chest",
+                        "access_rules": [
+                            "^$CanReach|GT - Validation Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Top",
+                        "x": 265,
+                        "y": 222,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Agahnim 2",
+                "access_rules": [
+                    "^$CanReach|gt_top_aga2"
+                ],
+                "sections": [
+                    {
+                        "name": "Agahnim 2",
+                        "access_rules": [
+                            "^$CanReach|GT - Aga2"
+                        ],
+                        "hosted_item": "aga2"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "GT_Top",
+                        "x": 32,
+                        "y": 100,
+                        "size": 6
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -1,0 +1,168 @@
+{
+  "linkedworld_id": "alttp",
+  "status": "clean-room-default-bundle-materialized-external-compatibility-pending",
+  "source_of_truth": "tracker/",
+  "source_snapshot_metadata": {
+    "tracker_pack_uid": "https://github.com/StripesOO7/alttp-ap-poptracker-pack",
+    "default_tracker_variant": "Map Tracker - AP",
+    "origin": "source-snapshots/linkedworld.current.json",
+    "live_runtime_reference": "sekaiemu/client/linkedworlds/alttp/linkedworld.json"
+  },
+  "pack_contract": {
+    "source_kind": "external-pack-referenced-plus-clean-room-materialization",
+    "tracker_pack_uid": "https://github.com/StripesOO7/alttp-ap-poptracker-pack",
+    "default_tracker_variant": "Map Tracker - AP",
+    "default_tracker_pack_path": "tracker/default.zip",
+    "default_yaml_path": "config/default.yaml",
+    "asset_status": "pinned-poptracker-static-assets-included",
+    "version_pin": "bff7a80d7cfb53de5c5b49923ddedb3344108b96",
+    "runtime_materialization": {
+      "required_files": [
+        "tracker/default.zip",
+        "config/default.yaml"
+      ],
+      "notes": "The clean-room repo now materializes a repo-owned baseline and includes pinned PopTracker static assets/data under tracker/default.bundle/poptracker-adapted/ with license and provenance."
+    }
+  },
+  "clean_room_materialization": {
+    "bundle_source_manifest": "tracker/default.bundle/manifest.json",
+    "surface_inventory_ref": "tracker/default.bundle/surface.complete.json",
+    "location_groups_ref": "tracker/default.bundle/location-groups.complete.json",
+    "item_slots_ref": "tracker/default.bundle/item-slots.complete.json",
+    "dungeon_progress_ref": "tracker/default.bundle/dungeon-progress.complete.json",
+    "room_metadata_ref": "tracker/default.bundle/room-metadata.complete.json",
+    "slot_data_ref": "tracker/default.bundle/slot-data.complete.json",
+    "tracker_flow_ref": "tracker/default.bundle/tracker-flow.v1.json",
+    "item_icon_metadata_ref": "tracker/default.bundle/item-icon-metadata.json",
+    "map_pin_metadata_ref": "tracker/default.bundle/map-pin-metadata.json",
+    "settings_metadata_ref": "tracker/default.bundle/settings-metadata.json",
+    "autotabbing_hints_ref": "tracker/default.bundle/autotabbing-hints.json",
+    "poptracker_adaptation_ref": "tracker/default.bundle/poptracker-adapted/sekailink-adaptation.json",
+    "bundle_archive_path": "tracker/default.zip",
+    "yaml_path": "config/default.yaml",
+    "art_origin": "pinned-poptracker-static-assets-plus-sekailink-metadata",
+    "runtime_claim": "coherent-run-complete-surface-baseline-not-third-party-equivalent"
+  },
+  "embedded_assets": [
+    "tracker/default.bundle/manifest.json",
+    "tracker/default.bundle/surface.complete.json",
+    "tracker/default.bundle/location-groups.complete.json",
+    "tracker/default.bundle/item-slots.complete.json",
+    "tracker/default.bundle/dungeon-progress.complete.json",
+    "tracker/default.bundle/room-metadata.complete.json",
+    "tracker/default.bundle/slot-data.complete.json",
+    "tracker/default.bundle/tracker-flow.v1.json",
+    "tracker/default.bundle/item-icon-metadata.json",
+    "tracker/default.bundle/map-pin-metadata.json",
+    "tracker/default.bundle/settings-metadata.json",
+    "tracker/default.bundle/autotabbing-hints.json",
+    "tracker/default.bundle/poptracker-adapted/sekailink-adaptation.json",
+    "tracker/default.zip",
+    "config/default.yaml"
+  ],
+  "runtime_layout": {
+    "layout_id": "side-by-side-map-items",
+    "presentation_mode": "side-by-side",
+    "left_panel": "game",
+    "right_panel": "tracker",
+    "tracker_sections": [
+      "map",
+      "inventory",
+      "status"
+    ],
+    "notes": [
+      "The runtime should keep the game image unstretched and dedicate a separate tracker surface.",
+      "This contract is semantic-first and does not lock a specific pixel-perfect UI implementation."
+    ]
+  },
+  "surface_inventory_status": {
+    "target": "run-complete-tracker-surface",
+    "inventory_ref": "tracker/default.bundle/surface.complete.json",
+    "live_bridge_gap_visible": true
+  },
+  "tracker_variants": [
+    {
+      "variant_id": "map-tracker-ap",
+      "display_name": "Map Tracker - AP",
+      "default_for_repo": true,
+      "required_capabilities": [
+        "map-surface",
+        "item-inventory",
+        "room-seed-metadata"
+      ]
+    }
+  ],
+  "runtime_metadata_contract": {
+    "required_room_metadata": [
+      "seed_id",
+      "seed_hash",
+      "slot_name",
+      "player_alias",
+      "tracker_pack",
+      "tracker_variant",
+      "slot_data"
+    ],
+    "optional_room_metadata": [
+      "goal",
+      "mode",
+      "entrance_shuffle",
+      "item_pool",
+      "item_functionality"
+    ]
+  },
+  "canonical_bindings": {
+    "binding_manifest": "tracker/runtime-bindings.phase1.json",
+    "bridge_ref": "bridge/sklmi.phase1.json",
+    "status": "runtime-surface-expanded-canonical"
+  },
+  "bindings": {
+    "bridge_ref": "bridge/sklmi.phase1.json",
+    "status": "runtime-surface-expanded",
+    "covered_location_checks": 286,
+    "covered_item_actions": 145
+  },
+  "bridge_surface": {
+    "location_events": [
+      {
+        "event_key": "0xEA79",
+        "location_name": "Sanctuary"
+      },
+      {
+        "event_key": "0x180150",
+        "location_name": "Eastern Palace - Boss"
+      },
+      {
+        "event_key": "0x180153",
+        "location_name": "Palace of Darkness - Boss"
+      },
+      {
+        "event_key": "0x400016",
+        "location_name": "Kakariko Shop Left"
+      }
+    ],
+    "item_events": [
+      {
+        "event_key": "item.hookshot",
+        "item_name": "Hookshot"
+      },
+      {
+        "event_key": "item.progressive_sword",
+        "item_name": "Progressive Sword"
+      },
+      {
+        "event_key": "item.small_key_palace_of_darkness",
+        "item_name": "Small Key (Palace of Darkness)"
+      },
+      {
+        "event_key": "item.map_ganons_tower",
+        "item_name": "Map (Ganons Tower)"
+      }
+    ]
+  },
+  "open_questions": [
+    "Which clean-room tracker node ids should become canonical when pack import is finalized?",
+    "How should crystal, pendant, and dungeon-prize state be projected declaratively without changing the generic schema?",
+    "Do we want to declare the one reserved ALTTP shop buffer slot explicitly in documentation, or simply keep it unnamed?",
+    "Should placeholder semantic pin placement remain grid-based, or should a clean-room coordinate pass become the next tracker-owned data artifact?"
+  ]
+}

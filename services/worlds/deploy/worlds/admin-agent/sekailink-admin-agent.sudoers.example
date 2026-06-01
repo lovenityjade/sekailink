@@ -1,0 +1,1 @@
+sekailink ALL=(root) NOPASSWD: /usr/bin/systemctl start sekailink-generation-server.service, /usr/bin/systemctl stop sekailink-generation-server.service, /usr/bin/systemctl restart sekailink-generation-server.service, /usr/bin/systemctl start sekailink-smart.service, /usr/bin/systemctl stop sekailink-smart.service, /usr/bin/systemctl restart sekailink-smart.service

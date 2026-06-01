@@ -1,0 +1,114 @@
+{
+  "contract_id": "alttp-room-metadata-complete-v1",
+  "linkedworld_id": "alttp",
+  "status": "repo-owned-normalized-room-metadata",
+  "source_refs": [
+    "manifest/manifest.json",
+    "tracker/tracker.manifest.json",
+    "presets/alttp.runtime-test.side-by-side.json",
+    "sklmi/docs/ALTTP_RUNTIME_RECIPE.md"
+  ],
+  "consumers": {
+    "tracker": "session and seed identity display",
+    "link_room": "room/session metadata and event context",
+    "sklmi": "metadata persistence and propagation, not business ownership"
+  },
+  "required_keys": [
+    {
+      "key": "seed_id",
+      "label": "Seed"
+    },
+    {
+      "key": "seed_hash",
+      "label": "Seed Hash"
+    },
+    {
+      "key": "slot_name",
+      "label": "Slot Name"
+    },
+    {
+      "key": "player_alias",
+      "label": "Player Alias"
+    },
+    {
+      "key": "tracker_pack",
+      "label": "Tracker Pack"
+    },
+    {
+      "key": "tracker_variant",
+      "label": "Tracker Variant"
+    },
+    {
+      "key": "slot_data",
+      "label": "Slot Data"
+    }
+  ],
+  "recommended_optional_keys": [
+    {
+      "key": "slot_id",
+      "label": "Slot Id"
+    },
+    {
+      "key": "world_id",
+      "label": "World Id"
+    },
+    {
+      "key": "world_instance_id",
+      "label": "World Instance Id"
+    },
+    {
+      "key": "room_id",
+      "label": "Room Id"
+    },
+    {
+      "key": "goal",
+      "label": "Goal"
+    },
+    {
+      "key": "mode",
+      "label": "Mode"
+    },
+    {
+      "key": "entrance_shuffle",
+      "label": "Entrance Shuffle"
+    },
+    {
+      "key": "item_pool",
+      "label": "Item Pool"
+    },
+    {
+      "key": "item_functionality",
+      "label": "Item Functionality"
+    }
+  ],
+  "tracker_panels": [
+    {
+      "panel_id": "session",
+      "keys": [
+        "slot_name",
+        "player_alias",
+        "seed_id",
+        "seed_hash",
+        "tracker_pack",
+        "tracker_variant"
+      ]
+    },
+    {
+      "panel_id": "runtime_context",
+      "keys": [
+        "slot_id",
+        "world_id",
+        "world_instance_id",
+        "room_id"
+      ]
+    }
+  ],
+  "fallback_policy": {
+    "preferred_source": "room.state",
+    "temporary_fallback": "trace.jsonl",
+    "notes": [
+      "trace.jsonl is an acceptable test-phase fallback only when room.state is still sparse.",
+      "The durable target remains a rich room.state contract."
+    ]
+  }
+}

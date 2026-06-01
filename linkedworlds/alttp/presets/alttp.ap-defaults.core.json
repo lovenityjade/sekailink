@@ -1,0 +1,38 @@
+{
+  "preset_id": "alttp.ap-defaults.core",
+  "linkedworld_id": "alttp",
+  "label": "ALTTP AP defaults core",
+  "status": "canonical-minimal",
+  "origin": {
+    "type": "upstream-explicit-default-extraction",
+    "sources": [
+      "sekaiemu/worlds/alttp/Options.py",
+      "sekaiemu/worlds/alttp/__init__.py"
+    ]
+  },
+  "scope": {
+    "covers": "generator-core-and-runtime-relevant-explicit-defaults",
+    "omits": "options without an explicit default redeclared in this repo"
+  },
+  "options": {
+    "goal": "ganon",
+    "mode": "open",
+    "dark_room_logic": "lamp",
+    "open_pyramid": "goal",
+    "triforce_pieces_mode": "available",
+    "triforce_pieces_percentage": 150,
+    "triforce_pieces_required": 20,
+    "triforce_pieces_available": 30,
+    "triforce_pieces_extra": 10,
+    "entrance_shuffle": "vanilla",
+    "item_pool": "normal",
+    "item_functionality": "normal",
+    "enemy_health": "default",
+    "enemy_damage": "default",
+    "dungeon_counters": "pickup"
+  },
+  "notes": [
+    "This preset is intentionally narrow: it serializes only explicit defaults confirmed in Options.py.",
+    "The preset is suitable as a canonical starting point for SekaiLink-side tooling without pretending to cover every ALTTP option."
+  ]
+}

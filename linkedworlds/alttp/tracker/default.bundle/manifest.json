@@ -1,0 +1,578 @@
+{
+  "tracker_contract_version": "1",
+  "linkedworld_id": "alttp",
+  "display_name": "A Link to the Past",
+  "bundle_id": "sekailink.cleanroom.alttp.default",
+  "bundle_status": "clean-room-owned-run-complete-surface-materialized",
+  "default_view_id": "main",
+  "default_tab_id": "light-world",
+  "default_map_id": "light_world",
+  "surface_inventory_ref": "surface.complete.json",
+  "location_groups_ref": "location-groups.complete.json",
+  "item_slots_ref": "item-slots.complete.json",
+  "dungeon_progress_ref": "dungeon-progress.complete.json",
+  "room_metadata_ref": "room-metadata.complete.json",
+  "slot_data_ref": "slot-data.complete.json",
+  "tracker_flow_ref": "tracker-flow.v1.json",
+  "item_icon_metadata_ref": "item-icon-metadata.json",
+  "map_pin_metadata_ref": "map-pin-metadata.json",
+  "settings_metadata_ref": "settings-metadata.json",
+  "autotabbing_hints_ref": "autotabbing-hints.json",
+  "poptracker_adaptation_ref": "poptracker-adapted/sekailink-adaptation.json",
+  "notes": [
+    "This bundle is repo-owned and intentionally clean-room.",
+    "It materializes a first complete-run tracker surface without copying third-party tracker runtime code.",
+    "Licensed static assets and JSON data from the pinned PopTracker pack are included under poptracker-adapted/ with provenance and license.",
+    "It embeds repo-owned location groups, item slots, dungeon progress, room metadata, and data-driven tracker flow instructions directly in the bundle archive.",
+    "Item icons, map pins, settings rendering, and autotabbing hints are declared as data-only metadata for Sekaiemu consumption."
+  ],
+  "views": [
+    {
+      "id": "main",
+      "label": "Main",
+      "tabs": [
+        "items",
+        "light-world",
+        "dark-world",
+        "mountain",
+        "escape",
+        "eastern",
+        "desert",
+        "hera",
+        "pod",
+        "swamp",
+        "skull",
+        "thieves",
+        "ice",
+        "mire",
+        "turtle",
+        "gt"
+      ]
+    }
+  ],
+  "tabs": [
+    {
+      "id": "items",
+      "label": "Items",
+      "view": "main"
+    },
+    {
+      "id": "light-world",
+      "label": "Light",
+      "view": "main",
+      "map": "light_world"
+    },
+    {
+      "id": "dark-world",
+      "label": "Dark",
+      "view": "main",
+      "map": "dark_world"
+    },
+    {
+      "id": "mountain",
+      "label": "Mountain",
+      "view": "main",
+      "map": "death_mountain"
+    },
+    {
+      "id": "escape",
+      "label": "Escape",
+      "view": "main",
+      "map": "hc_escape"
+    },
+    {
+      "id": "eastern",
+      "label": "Eastern",
+      "view": "main",
+      "map": "eastern_palace"
+    },
+    {
+      "id": "desert",
+      "label": "Desert",
+      "view": "main",
+      "map": "desert_palace"
+    },
+    {
+      "id": "hera",
+      "label": "Hera",
+      "view": "main",
+      "map": "tower_of_hera"
+    },
+    {
+      "id": "pod",
+      "label": "PoD",
+      "view": "main",
+      "map": "dark_dungeons"
+    },
+    {
+      "id": "swamp",
+      "label": "Swamp",
+      "view": "main",
+      "map": "dark_dungeons"
+    },
+    {
+      "id": "skull",
+      "label": "Skull",
+      "view": "main",
+      "map": "dark_dungeons"
+    },
+    {
+      "id": "thieves",
+      "label": "Thieves",
+      "view": "main",
+      "map": "dark_dungeons"
+    },
+    {
+      "id": "ice",
+      "label": "Ice",
+      "view": "main",
+      "map": "ice_mire"
+    },
+    {
+      "id": "mire",
+      "label": "Mire",
+      "view": "main",
+      "map": "ice_mire"
+    },
+    {
+      "id": "turtle",
+      "label": "Turtle",
+      "view": "main",
+      "map": "turtle_gt"
+    },
+    {
+      "id": "gt",
+      "label": "GT",
+      "view": "main",
+      "map": "turtle_gt"
+    }
+  ],
+  "maps": [
+    {
+      "id": "light_world",
+      "label": "Light World",
+      "poptracker_map_name": "Lightworld",
+      "image": "maps/light_world.ppm",
+      "art_origin": "repo-owned-placeholder"
+    },
+    {
+      "id": "dark_world",
+      "label": "Dark World",
+      "poptracker_map_name": "Darkworld",
+      "image": "maps/dark_world.ppm",
+      "art_origin": "repo-owned-placeholder"
+    },
+    {
+      "id": "death_mountain",
+      "label": "Death Mountain",
+      "poptracker_map_name": "light_death_mountain",
+      "image": "maps/death_mountain.ppm",
+      "menu_parent": "overworld",
+      "menu_depth": 1,
+      "art_origin": "repo-owned-placeholder"
+    },
+    {
+      "id": "hc_escape",
+      "label": "Hyrule Castle Escape",
+      "poptracker_map_name": "CE",
+      "image": "maps/hc_escape.ppm",
+      "art_origin": "repo-owned-placeholder"
+    },
+    {
+      "id": "eastern_palace",
+      "label": "Eastern Palace",
+      "poptracker_map_name": "EP",
+      "image": "maps/eastern_palace.ppm",
+      "art_origin": "repo-owned-placeholder"
+    },
+    {
+      "id": "desert_palace",
+      "label": "Desert Palace",
+      "poptracker_map_name": "DP",
+      "image": "maps/desert_palace.ppm",
+      "art_origin": "repo-owned-placeholder"
+    },
+    {
+      "id": "tower_of_hera",
+      "label": "Tower of Hera",
+      "poptracker_map_name": "ToH",
+      "image": "maps/tower_of_hera.ppm",
+      "art_origin": "repo-owned-placeholder"
+    },
+    {
+      "id": "dark_dungeons",
+      "label": "Dark World Dungeons",
+      "image": "maps/dark_dungeons.ppm",
+      "menu_parent": "dungeons",
+      "menu_depth": 1,
+      "menu_children": [
+        {
+          "label": "Palace of Darkness",
+          "map": "dark_dungeons",
+          "tab": "pod"
+        },
+        {
+          "label": "Swamp Palace",
+          "map": "dark_dungeons",
+          "tab": "swamp"
+        },
+        {
+          "label": "Skull Woods",
+          "map": "dark_dungeons",
+          "tab": "skull"
+        },
+        {
+          "label": "Thieves Town",
+          "map": "dark_dungeons",
+          "tab": "thieves"
+        }
+      ],
+      "art_origin": "repo-owned-placeholder"
+    },
+    {
+      "id": "ice_mire",
+      "label": "Ice And Mire",
+      "image": "maps/ice_mire.ppm",
+      "menu_parent": "dungeons",
+      "menu_depth": 1,
+      "menu_children": [
+        {
+          "label": "Ice Palace",
+          "map": "ice_mire",
+          "tab": "ice"
+        },
+        {
+          "label": "Misery Mire",
+          "map": "ice_mire",
+          "tab": "mire"
+        }
+      ],
+      "art_origin": "repo-owned-placeholder"
+    },
+    {
+      "id": "turtle_gt",
+      "label": "Turtle Rock And Ganon's Tower",
+      "image": "maps/turtle_gt.ppm",
+      "menu_parent": "dungeons",
+      "menu_depth": 1,
+      "menu_children": [
+        {
+          "label": "Turtle Rock",
+          "map": "turtle_gt",
+          "tab": "turtle"
+        },
+        {
+          "label": "Ganon's Tower",
+          "map": "turtle_gt",
+          "tab": "gt"
+        }
+      ],
+      "art_origin": "repo-owned-placeholder"
+    }
+  ],
+  "info_panels": [
+    {
+      "id": "session",
+      "label": "Session",
+      "fields": [
+        {
+          "id": "slot_name",
+          "label": "Slot Name",
+          "source": "seed_metadata",
+          "key": "slot_name",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "player_alias",
+          "label": "Alias",
+          "source": "seed_metadata",
+          "key": "player_alias",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "seed_id",
+          "label": "Seed",
+          "source": "seed_metadata",
+          "key": "seed_id",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "seed_hash",
+          "label": "Hash",
+          "source": "seed_metadata",
+          "key": "seed_hash",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "tracker_pack",
+          "label": "Pack",
+          "source": "seed_metadata",
+          "key": "tracker_pack",
+          "fallback": "tracker/default.zip"
+        },
+        {
+          "id": "tracker_variant",
+          "label": "Variant",
+          "source": "seed_metadata",
+          "key": "tracker_variant",
+          "fallback": "Map Tracker - AP"
+        }
+      ]
+    },
+    {
+      "id": "tracker",
+      "label": "Tracker",
+      "fields": [
+        {
+          "id": "active_tab",
+          "label": "Tab",
+          "source": "session",
+          "key": "active_tab_id",
+          "fallback": "light-world"
+        },
+        {
+          "id": "active_map",
+          "label": "Map",
+          "source": "session",
+          "key": "active_map_id",
+          "fallback": "light_world"
+        },
+        {
+          "id": "presentation_mode",
+          "label": "Mode",
+          "source": "session",
+          "key": "presentation_mode",
+          "fallback": "side-by-side"
+        }
+      ]
+    },
+    {
+      "id": "settings_core",
+      "label": "Core",
+      "fields": [
+        {
+          "id": "mode",
+          "label": "Mode",
+          "source": "seed_metadata",
+          "key": "slot_data.mode",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "goal",
+          "label": "Goal",
+          "source": "seed_metadata",
+          "key": "slot_data.goal",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "entrance_shuffle",
+          "label": "Shuffle",
+          "source": "seed_metadata",
+          "key": "slot_data.entrance_shuffle",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "item_pool",
+          "label": "Pool",
+          "source": "seed_metadata",
+          "key": "slot_data.item_pool",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "item_functionality",
+          "label": "Func",
+          "source": "seed_metadata",
+          "key": "slot_data.item_functionality",
+          "fallback": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "id": "settings_dungeons",
+      "label": "Dungeons",
+      "fields": [
+        {
+          "id": "big_key_shuffle",
+          "label": "Big Key",
+          "source": "seed_metadata",
+          "key": "slot_data.big_key_shuffle",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "small_key_shuffle",
+          "label": "Small Key",
+          "source": "seed_metadata",
+          "key": "slot_data.small_key_shuffle",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "compass_shuffle",
+          "label": "Compass",
+          "source": "seed_metadata",
+          "key": "slot_data.compass_shuffle",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "map_shuffle",
+          "label": "Map",
+          "source": "seed_metadata",
+          "key": "slot_data.map_shuffle",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "dungeon_counters",
+          "label": "Counters",
+          "source": "seed_metadata",
+          "key": "slot_data.dungeon_counters",
+          "fallback": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "id": "settings_world",
+      "label": "World",
+      "fields": [
+        {
+          "id": "dark_room_logic",
+          "label": "Dark",
+          "source": "seed_metadata",
+          "key": "slot_data.dark_room_logic",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "open_pyramid",
+          "label": "Pyramid",
+          "source": "seed_metadata",
+          "key": "slot_data.open_pyramid",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "swordless",
+          "label": "Swordless",
+          "source": "seed_metadata",
+          "key": "slot_data.swordless",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "retro_bow",
+          "label": "Retro Bow",
+          "source": "seed_metadata",
+          "key": "slot_data.retro_bow",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "retro_caves",
+          "label": "Retro Caves",
+          "source": "seed_metadata",
+          "key": "slot_data.retro_caves",
+          "fallback": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "id": "progress",
+      "label": "Progress",
+      "fields": [
+        {
+          "id": "checked_count",
+          "label": "Checked",
+          "source": "session",
+          "key": "checked_count",
+          "fallback": "0"
+        },
+        {
+          "id": "missing_count",
+          "label": "Missing",
+          "source": "session",
+          "key": "missing_count",
+          "fallback": "0"
+        },
+        {
+          "id": "received_count",
+          "label": "Received",
+          "source": "session",
+          "key": "received_count",
+          "fallback": "0"
+        }
+      ]
+    },
+    {
+      "id": "goals",
+      "label": "Goals",
+      "fields": [
+        {
+          "id": "crystals_needed_for_gt",
+          "label": "GT",
+          "source": "seed_metadata",
+          "key": "slot_data.crystals_needed_for_gt",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "crystals_needed_for_ganon",
+          "label": "Ganon",
+          "source": "seed_metadata",
+          "key": "slot_data.crystals_needed_for_ganon",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "misery_mire_medallion",
+          "label": "Mire",
+          "source": "seed_metadata",
+          "key": "slot_data.misery_mire_medallion",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "turtle_rock_medallion",
+          "label": "Turtle",
+          "source": "seed_metadata",
+          "key": "slot_data.turtle_rock_medallion",
+          "fallback": "UNKNOWN"
+        },
+        {
+          "id": "shuffle_prizes",
+          "label": "Prizes",
+          "source": "seed_metadata",
+          "key": "slot_data.shuffle_prizes",
+          "fallback": "UNKNOWN"
+        }
+      ]
+    }
+  ],
+  "normalized_item_slots_ref": "item-slots.complete.json",
+  "check_groups_ref": "location-groups.complete.json",
+  "dungeon_progress_ref_explicit": "dungeon-progress.complete.json",
+  "tracker_flow_ref_explicit": "tracker-flow.v1.json",
+  "zone_bindings": {},
+  "seed_option_bindings": [
+    {
+      "panel_id": "settings_core",
+      "keys": [
+        "goal",
+        "mode",
+        "entrance_shuffle",
+        "item_pool",
+        "item_functionality"
+      ]
+    },
+    {
+      "panel_id": "settings_dungeons",
+      "keys": [
+        "big_key_shuffle",
+        "small_key_shuffle",
+        "compass_shuffle",
+        "map_shuffle",
+        "dungeon_counters"
+      ]
+    },
+    {
+      "panel_id": "settings_world",
+      "keys": [
+        "dark_room_logic",
+        "open_pyramid",
+        "swordless",
+        "retro_bow",
+        "retro_caves"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1888 @@
+[
+    {
+        "name": "Darkworld Left",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "children": [
+            {
+                "name": "Dark Lumberjack Shop",
+                "access_rules":[
+                    "^$CanReach|dark_lumpberjacks_shop_inside"
+                ],
+                // "visibility_rules": ["shop_sanity"],
+                "sections": [
+                    {
+                        "name": "Shop Left Item",
+                        "clear_as_group": false,
+                        "visibility_rules": [
+                            "^$ShopSlotHelper|4194313|1"
+                        ]
+                    },
+                    {
+                        "name": "Shop Center Item",
+                        "clear_as_group": false,
+                        "visibility_rules": [
+                            "^$ShopSlotHelper|4194314|2"
+                        ]
+                    },
+                    {
+                        "name": "Shop Right Item",
+                        "clear_as_group": false,
+                        "visibility_rules": [
+                            "^$ShopSlotHelper|4194315|3"
+                        ]
+                    },
+                    {
+                        "name": "Shop Default-Inventory",
+                        "hosted_item": "default_shop_item_1, default_shop_item_2, default_shop_item_3",
+                        "clear_as_group": false
+                        // "visibility_rules": [
+                        //     "shop_sanity"
+                        // ]
+                    },
+                    {
+                        "name": "Shop Cost-Type",
+                        "hosted_item": "default_shop_price_1, default_shop_price_2, default_shop_price_3",
+                        "clear_as_group": false
+                        // "visibility_rules": [
+                        //     "shop_sanity"
+                        // ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 670,
+                        "y": 105,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 580,
+                        "y": 55,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 580,
+                        "y": 55,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Bumper Cave",
+                "access_rules": [
+                ],
+                "visibility_rules": ["$OpenOrStandard"],
+                "sections": [
+                    {
+                        "name": "Bumper Cave Item",
+                        "access_rules":[
+                            "^$CanReach|Bumper Cave Item"
+                        ],
+                        "capture_item": true
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 670,
+                        "y": 295,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_er",
+                        "x": 670,
+                        "y": 295,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Red Shield Shop",
+                "access_rules":[
+                    "^$CanReach|red_shield_shop_inside"
+                ],
+                // "visibility_rules": ["shop_sanity"],
+                "sections": [
+                    {
+                        "name": "Shop Left Item",
+                        "clear_as_group": false,
+                        "visibility_rules": [
+                            "^$ShopSlotHelper|4194307|1"
+                        ]
+                    },
+                    {
+                        "name": "Shop Center Item",
+                        "clear_as_group": false,
+                        "visibility_rules": [
+                            "^$ShopSlotHelper|4194308|2"
+                        ]
+                    },
+                    {
+                        "name": "Shop Right Item",
+                        "clear_as_group": false,
+                        "visibility_rules": [
+                            "^$ShopSlotHelper|4194309|3"
+                        ]
+                    },
+                    {
+                        "name": "Shop Default-Inventory",
+                        "hosted_item": "default_shop_item_4, default_shop_item_5, default_shop_item_6",
+                        "clear_as_group": false
+                        // "visibility_rules": [
+                        //     "shop_sanity"
+                        // ]
+                    },
+                    {
+                        "name": "Shop Cost-Type",
+                        "hosted_item": "default_shop_price_4, default_shop_price_5, default_shop_price_6",
+                        "clear_as_group": false
+                        // "visibility_rules": [
+                        //     "shop_sanity"
+                        // ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 660,
+                        "y": 915,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 485,
+                        "y": 610,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 485,
+                        "y": 610,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Chest Game (Money Making Game)",
+                "access_rules":[
+                    "^$CanReach|chest_game_inside"
+                ],
+                "sections": [
+                    {
+                        "name": "Chest Game",
+                        "access_rules":[
+                            "^$CanReach|Chest Game Item"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 95,
+                        "y": 925,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 60,
+                        "y": 610,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 60,
+                        "y": 610,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Breadsmiths",
+                "access_rules":[
+                    "^$CanReach|helpless_frog"
+                ],
+                "sections": [
+                    {
+                        "name": "Rescue Dwarf",
+                        "access_rules":[
+                            "^$CanReach|Rescue Dwarf"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Lightworld",
+                        "x": 600,
+                        "y": 1050,
+                        "size": 32
+                    },
+                    {
+                        "map": "lightworld_caves_er",
+                        "x": 710,
+                        "y": 800,
+                        "size": 32
+                    },
+                    {
+                        "map": "lightworld_caves_reduced_er",
+                        "x": 710,
+                        "y": 800,
+                        "size": 32
+                    },
+                    {
+                        "map": "Darkworld",
+                        "x": 300,
+                        "y": 1330,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_er",
+                        "x": 300,
+                        "y": 1330,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Dark Kakariko Shop",
+                // "visibility_rules": ["shop_sanity"],
+                "access_rules": [
+                    "^$CanReach|dark_village_shop_inside"
+                ],
+                "sections": [
+                    {
+                        "name": "Shop Left Item",
+                        "clear_as_group": false,
+                        "visibility_rules": [
+                            "^$ShopSlotHelper|4194316|1"
+                        ]
+                    },
+                    {
+                        "name": "Shop Center Item",
+                        "clear_as_group": false,
+                        "visibility_rules": [
+                            "^$ShopSlotHelper|4194317|2"
+                        ]
+                    },
+                    {
+                        "name": "Shop Right Item",
+                        "clear_as_group": false,
+                        "visibility_rules": [
+                            "^$ShopSlotHelper|4194318|3"
+                        ]
+                    },
+                    {
+                        "name": "Shop Default-Inventory",
+                        "hosted_item": "default_shop_item_7, default_shop_item_8, default_shop_item_9",
+                        "clear_as_group": false
+                        // "visibility_rules": [
+                        //     "shop_sanity"
+                        // ]
+                    },
+                    {
+                        "name": "Shop Cost-Type",
+                        "hosted_item": "default_shop_price_7, default_shop_price_8, default_shop_price_9",
+                        "clear_as_group": false
+                        // "visibility_rules": [
+                        //     "shop_sanity"
+                        // ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 400,
+                        "y": 1060,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 320,
+                        "y": 730,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 320,
+                        "y": 730,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "C-Shaped House",
+                "access_rules": [
+                    "^$CanReach|C-Shaped House"
+                ],
+                "sections": [
+                    {
+                        "name": "C-Shaped House"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 410,
+                        "y": 960,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 320,
+                        "y": 590,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 320,
+                        "y": 590,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Activate Flute",
+                "access_rules":[
+                    "^$CanReach|inverted_activate_flute"
+                ],
+                "visibility_rules": ["flute, inverted"],
+                "sections": [
+                    {
+                        "name": "Hyrule Hymn o7",
+                        "hosted_item": "flute_active"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 321,
+                        "y": 963,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_er",
+                        "x": 321,
+                        "y": 963,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Brewery (Glory Hole)",
+                "access_rules": [
+                    "^$CanReach|brewery_inside"
+                ],
+                "sections": [
+                    {
+                        "name": "Brewery",
+                        "access_rules":[
+                            "^$CanReach|Brewery Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 215,
+                        "y": 1165,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 190,
+                        "y": 850,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 190,
+                        "y": 850,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Peg Cave",
+                "access_rules": [
+                    // "hammer, titans",
+                    // "inverted, @Lightworld, hammer, mirror"
+                ],
+                "sections": [
+                    {
+                        "name": "Peg Cave",
+                        "access_rules":[
+                            "^$CanReach|Peg-Cave Item"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 625,
+                        "y": 1205,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 480,
+                        "y": 850,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 480,
+                        "y": 850,
+                        "size": 32
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Darkworld Bottom",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "children": [
+            {
+                "name": "Link's House",
+                "access_rules": [
+                    "^$CanReach|dark_spawn_links_house"
+                ],
+                "visibility_rules": ["inverted"],
+                "sections": [
+                    {
+                        "name": "Chest",
+                        "access_rules":[
+                            "^$CanReach|Link's House Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 1095,
+                        "y": 1385,
+                        "size": 32
+                    },
+                    {
+                        "map": "lightworld_caves_er",
+                        "x": 955,
+                        "y": 1335,
+                        "size": 32
+                    },
+                    {
+                        "map": "lightworld_caves_reduced_er",
+                        "x": 955,
+                        "y": 1335,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Purple Chest Return",
+                "access_rules":[
+                    "^$CanReach|hammer_peg_field"
+                ],
+                "sections": [
+                    {
+                        "name": "Purple Chest Return",
+                        "access_rules": [
+                            "^$CanReach|Purple Chest Return"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Lightworld",
+                        "x": 690,
+                        "y": 1800,
+                        "size": 32
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x": 690,
+                        "y": 1800,
+                        "size": 32
+                    },
+                    {
+                        "map": "Darkworld",
+                        "x": 610,
+                        "y": 1050,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_er",
+                        "x": 610,
+                        "y": 1050,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Digging Game",
+                "access_rules":[
+                    "^$CanReach|south_of_village_of_the_outcast"
+                ],
+                "sections": [
+                    {
+                        "name": "Digging Game",
+                        "access_rules":[
+                            "^$CanReach|Digging Game"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 110,
+                        "y": 1385,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_er",
+                        "x": 110,
+                        "y": 1385,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Stumpy",
+                "access_rules":[
+                    "^$CanReach|stumpy"
+                ],
+                "sections": [
+                    {
+                        "name": "Stumpy",
+                        "access_rules":[
+                            "^$CanReach|Stumpy"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 615,
+                        "y": 1365,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_er",
+                        "x": 615,
+                        "y": 1365,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Hype Cave",
+                "access_rules": [
+                    "^$CanReach|hype_cave_inside"
+                ],
+                "sections": [
+                    {
+                        "name": "Hype",
+                        "access_rules":[
+                            "^$CanReach|Hype Cave_Generous Guy, [^$CanReach|hype_cave_back]"
+                        ],
+                        "item_count": 5,
+                        "clear_as_group": false
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 1195,
+                        "y": 1555,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 905,
+                        "y": 1145,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 905,
+                        "y": 1145,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Dark Lake Hylia Shop",
+                "access_rules":[
+                    "^$CanReach|dark_lake_shop_inside"
+                ],
+                // "visibility_rules": ["shop_sanity"],
+                "sections": [
+                    {
+                        "name": "Shop Left Item",
+                        "clear_as_group": false,
+                        "visibility_rules": [
+                            "^$ShopSlotHelper|4194310|1"
+                        ]
+                    },
+                    {
+                        "name": "Shop Center Item",
+                        "clear_as_group": false,
+                        "visibility_rules": [
+                            "^$ShopSlotHelper|4194311|2"
+                        ]
+                    },
+                    {
+                        "name": "Shop Right Item",
+                        "clear_as_group": false,
+                        "visibility_rules": [
+                            "^$ShopSlotHelper|4194312|3"
+                        ]
+                    },
+                    {
+                        "name": "Shop Default-Inventory",
+                        "hosted_item": "default_shop_item_10, default_shop_item_11, default_shop_item_12",
+                        "clear_as_group": false
+                        // "visibility_rules": [
+                        //     "shop_sanity"
+                        // ]
+                    },
+                    {
+                        "name": "Shop Cost-Type",
+                        "hosted_item": "default_shop_price_10, default_shop_price_11, default_shop_price_12",
+                        "clear_as_group": false
+                        // "visibility_rules": [
+                        //     "shop_sanity"
+                        // ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 1295,
+                        "y": 1600,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 1035,
+                        "y": 1145,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 1035,
+                        "y": 1145,
+                        "size": 32
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Darkworld Right",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "children": [
+            {
+                "name": "Pyramid Ledge",
+                "access_rules":[
+                    "^$CanReach|pyramid_area"
+                ],
+                "sections": [
+                    {
+                        "name": "Pyramid Ledge Item",
+                        "access_rules":[
+                            "^$CanReach|Pyramid Item"
+                        ],
+                        "capture_item": true
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 1160,
+                        "y": 910,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_er",
+                        "x": 1160,
+                        "y": 910,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Big Bomb Fairy",
+                "access_rules": [
+                    "^$CanReach|pyramid_area"
+                ],
+                "sections": [
+                    {
+                        "name": "Boom",
+                        "access_rules":[
+                            "^$CanReach|pyramid_fairy_cave_inside"
+                        ],
+                        "clear_as_group": false,
+                        "item_count": 2
+                    },
+                    {
+                        "name": "Bottle refill",
+                        "access_rules": [
+                            "^$CanReach|pyramid_fairy_cave_inside"
+                        ],
+                        "hosted_item": "fairy_bottle2",
+                        "clear_as_group": false
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 935,
+                        "y": 965,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 905,
+                        "y": 830,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 905,
+                        "y": 830,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Dark Potion Shop",
+                "access_rules": [
+                    "^$CanReach|dark_potion_shop_inside"
+                ],
+                // "visibility_rules": ["shop_sanity"],
+                "sections": [
+                    {
+                        "name": "Shop Left Item",
+                        "clear_as_group": false,
+                        "visibility_rules": [
+                            "^$ShopSlotHelper|4194319|1"
+                        ]
+                    },
+                    {
+                        "name": "Shop Center Item",
+                        "clear_as_group": false,
+                        "visibility_rules": [
+                            "^$ShopSlotHelper|4194320|2"
+                        ]
+                    },
+                    {
+                        "name": "Shop Right Item",
+                        "clear_as_group": false,
+                        "visibility_rules": [
+                            "^$ShopSlotHelper|4194321|3"
+                        ]
+                    },
+                    {
+                        "name": "Shop Default-Inventory",
+                        "hosted_item": "default_shop_item_13, default_shop_item_14, default_shop_item_15",
+                        "clear_as_group": false
+                        // "visibility_rules": [
+                        //     "shop_sanity"
+                        // ]
+                    },
+                    {
+                        "name": "Shop Cost-Type",
+                        "hosted_item": "default_shop_price_13, default_shop_price_14, default_shop_price_15",
+                        "clear_as_group": false
+                        // "visibility_rules": [
+                        //     "shop_sanity"
+                        // ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 1605,
+                        "y": 670,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 1360,
+                        "y": 505,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 1360,
+                        "y": 505,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Catfish",
+                "access_rules": [
+                    "^$CanReach|catfish_area"
+                ],
+                "sections": [
+                    {
+                        "name": "Catfish Item",
+                        "access_rules":[
+                            "^$CanReach|Catfish Item"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 1795,
+                        "y": 340,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_er",
+                        "x": 1795,
+                        "y": 340,
+                        "size": 32
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Darkworld Swamp",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "access_rules": [
+            // "^$CanReach|mire_area"
+        ],
+        "children": [
+            {
+                "name": "Mire Shed",
+                "access_rules": [
+                    "^$CanReach|Mire Shed Left"
+                ],
+                "sections": [
+                    {
+                        "name": "Shed",
+                        "access_rules":[
+                            "^$CanReach|Mire Shed Left"
+                        ],
+                        "clear_as_group": false,
+                        "item_count": 2
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 75,
+                        "y": 1600,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 65,
+                        "y": 1130,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 65,
+                        "y": 1130,
+                        "size": 32
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Dark Death Mountain Left",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "children": [
+            {
+                "name": "Spike Cave",
+                "access_rules":[
+                    "^$CanReach|spike_cave_inside"
+                ],
+                "sections": [
+                    {
+                        "name": "Spike Cave Chest",
+                        "access_rules":[
+                            "^$CanReach|Spike Cave Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 1145,
+                        "y": 280,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 840,
+                        "y": 290,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 840,
+                        "y": 290,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Rescue Old Man",
+                "access_rules": [
+                    "^$CanReach|Old Man Item"
+                ],
+                "visibility_rules": ["inverted"],
+                "sections": [
+                    {
+                        "name": "Rescue Old Man",
+                        "access_rules":[
+                            "^$CanReach|Old Man Item"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 713,
+                        "y": 352,
+                        "size": 32
+                    },
+                    {
+                        "map": "Lightworld",
+                        "x": 895,
+                        "y": 460,
+                        "size": 32
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x": 900,
+                        "y": 410,
+                        "size": 32
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Dark Death Mountain Right",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "children": [
+            {
+                "name": "Dark Death Mountain Shop",
+                "access_rules":[
+                    "^$CanReach|dark_death_mountain_shop_inside"
+                ],
+                // "visibility_rules": ["shop_sanity"],
+                "sections": [
+                    {
+                        "name": "Shop Left Item",
+                        "clear_as_group": false,
+                        "visibility_rules": [
+                            "^$ShopSlotHelper|4194304|1"
+                        ]
+                    },
+                    {
+                        "name": "Shop Center Item",
+                        "clear_as_group": false,
+                        "visibility_rules": [
+                            "^$ShopSlotHelper|4194305|2"
+                        ]
+                    },
+                    {
+                        "name": "Shop Right Item",
+                        "clear_as_group": false,
+                        "visibility_rules": [
+                            "^$ShopSlotHelper|4194306|3"
+                        ]
+                    },
+                    {
+                        "name": "Shop Default-Inventory",
+                        "hosted_item": "default_shop_item_16, default_shop_item_17, default_shop_item_18",
+                        "clear_as_group": false
+                        // "visibility_rules": [
+                        //     "shop_sanity"
+                        // ]
+                    },
+                    {
+                        "name": "Shop Cost-Type",
+                        "hosted_item": "default_shop_price_16, default_shop_price_17, default_shop_price_18",
+                        "clear_as_group": false
+                        // "visibility_rules": [
+                        //     "shop_sanity"
+                        // ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 1715,
+                        "y": 290,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 1360,
+                        "y": 375,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 1360,
+                        "y": 375,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Hookshot Cave",
+                "access_rules":[
+                    "^$CanReach|hookshot_cave_inside"
+                ],
+                "sections": [
+                    {
+                        "name": "Bottom Right Chest",
+                        "access_rules":[
+                            "^$CanReach|Hookshot Cave Item Bottom Right"
+                        ]
+                    },
+                    {
+                        "name": "remaining Hookshot Chests",
+                        "clear_as_group": false,
+                        "access_rules":[
+                            "^$CanReach|Hookshot Cave Item Top Right",
+                            "^$CanReach|Hookshot Cave Item Top Left",
+                            "^$CanReach|Hookshot Cave Item Bottom Left"
+                        ],
+                        "item_count": 3
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 1660,
+                        "y": 125,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 1125,
+                        "y": 95,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 1125,
+                        "y": 95,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Superbunny Cave",
+                "access_rules":[
+                    "^$CanReach|superbunny_cave_top_inside"
+                ],
+                "sections": [
+                    {
+                        "name": "Superbunny Chest",
+                        "access_rules":[
+                            "^$CanReach|superbunny_cave_top_inside"
+                        ],
+                        "clear_as_group": false,
+                        "item_count": 2
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 1725,
+                        "y": 125,
+                        "size": 32
+                    },
+                    {
+                        "map": "Darkworld",
+                        "x": 1680,
+                        "y": 290,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 1270,
+                        "y": 360,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 1270,
+                        "y": 360,
+                        "size": 32
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "PoD",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "^$CanReach|pod_entrance_inside"
+        ],
+        "children": [
+            {
+                "name": "Palace of Darkness",
+                "item_count": 15,
+                "sections": [
+                    {
+                        "name": "Dungeon Chest" ,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Palace of Darkness/Shooter Room/Shooter Room|@Palace of Darkness/The Arena Bridge/Bridge|@Palace of Darkness/Stalfos Basement/Stalfos Basement|@Palace of Darkness/Big Key Chest/Big Key Chest|@Palace of Darkness/The Arena Ledge/Ledge|@Palace of Darkness/Map Chest/Map Chest|@Palace of Darkness/Compass Chest/Compass Chest|@Palace of Darkness/Dark Basement Left/Dark Basement Left|@Palace of Darkness/Dark Basement Right/Dark Basement Right|@Palace of Darkness/Dark Maze Top/Dark Maze Top|@Palace of Darkness/Dark Maze Bottom/Dark Maze Bottom|@Palace of Darkness/Big Chest/Big Chest|@Palace of Darkness/Harmless Hellway/Harmless Hellway"
+                        ],
+                        "clear_as_group": false,
+                        "item_count": 13
+                    },
+                    {
+                        "name": "Boss Item" ,
+                        "clear_as_group": false,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Palace of Darkness/Boss/Boss Item"
+                        ],
+                        "item_count": 1,
+                        "hosted_item": "pod_boss, palaceofdarkness"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 1925,
+                        "y": 800,
+                        "size": 44
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 1490,
+                        "y": 540,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 1490,
+                        "y": 540,
+                        "size": 32
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "TR",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "overlay_background": "#000000",
+        "children": [
+            {
+                "name": "Turtle Rock Front",
+                "access_rules": [
+                    "^$CanReach|tr_main_entrance_inside",
+                    "^$CanReach|tr_laser_entrance_inside"
+                ],
+                "item_count": 5,
+                "sections": [
+                    {
+                        "name": "Dungeon Chest" ,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Turtle Rock Front/Compass Chest/Compass Chest|@Turtle Rock Front/Map Chest/Map Chest|@Turtle Rock Front/Roller Room Right/Roller Room Right|@Turtle Rock Front/Chain Chomps/Chain Chomps|@Turtle Rock Front/Big Key Chest/Big Key Chest"
+                        ],
+                        "clear_as_group": false,
+                        "item_count": 5
+                    },
+                    {
+                        "name": "Key Drops",
+                        "item_count": 2,
+                        "clear_as_group": false,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Turtle Rock Front/Pokey 1 Key Drop/Pokey 1 Key Drop|@Turtle Rock Front/Pokey 2 Key Drop/Pokey 2 Key Drop"
+                        ],
+                        "visibility_rules": ["key_drop_shuffle"]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 1887,
+                        "y": 163,
+                        "size": 44
+                    },
+                    {
+                        "map": "Darkworld",
+                        "x": 1597,
+                        "y": 178,
+                        "size": 44
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 1490,
+                        "y": 190,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 1490,
+                        "y": 190,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Turtle Rock Back",
+                "access_rules": [
+                    "^$CanReach|tr_big_chest_entrance_inside",
+                    "^$CanReach|tr_eye_bridge_entrance_inside"
+                ],
+                "item_count": 8,
+                "sections": [
+                    {
+                        "name": "Dungeon Chest",
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Turtle Rock Back/Big Chest/Big Chest|@Turtle Rock Back/Crystalroller Room/Crystalroller Room|@Turtle Rock Back/Eye Bridge Bottom Left/Eye Bridge Bottom Left|@Turtle Rock Back/Eye Bridge Bottom Right/Eye Bridge Bottom Right|@Turtle Rock Back/Eye Bridge Top Left/Eye Bridge Top Left|@Turtle Rock Back/Eye Bridge Top Right/Eye Bridge Top Right"
+                        ],
+                        "clear_as_group": false,
+                        "item_count": 6
+                    },
+                    {
+                        "name": "Boss Item",
+                        "clear_as_group": false,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Turtle Rock Back/Boss/Boss Item"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 1692,
+                        "y": 181,
+                        "size": 44
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 1230,
+                        "y": 180,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 1230,
+                        "y": 180,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 1135,
+                        "y": 320,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 1135,
+                        "y": 320,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Turtle Rock Eye Bridge Entrance",
+                "access_rules": [
+                    "^$CanReach|tr_eye_bridge_entrance_inside"
+                ],
+                "visibility_rules": ["inverted"],
+                "item_count": 1,
+                "sections": [
+                    {}
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 1645,
+                        "y": 233,
+                        "size": 44
+                    // },
+                    // {
+                    //     "map": "darkworld_caves_er",
+                    //     "x": 1645,
+                    //     "y": 233,
+                    //     "size": 44
+                    // },
+                    // {
+                    //     "map": "darkworld_caves_reduced_er",
+                    //     "x": 1645,
+                    //     "y": 233,
+                    //     "size": 44
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "SW",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "overlay_background": "#000000",
+        "children": [
+            {
+                "name": "Skull Woods Front",
+                "access_rules": [
+                    "^$CanReach|sw_gibdo_entrance_inside",
+                    "^$CanReach|sw_big_chest_entrance_inside",
+                    "^$CanReach|sw_pot_circle_drop_inside",
+                    "^$CanReach|sw_bottom_left_drop_inside",
+                    "^$CanReach|sw_pinball_drop_inside",
+                    "^$CanReach|sw_west_lobby_entrance_inside",
+                    "^$CanReach|sw_north_drop_inside"
+                ],
+                "item_count": 6,
+                "sections": [
+                    {
+                        "name": "Dungeon Chest" ,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Skull Woods Front/Compass Chest/Compass Chest|@Skull Woods Front/Map Chest/Map Chest|@Skull Woods Front/Big Chest/Big Chest|@Skull Woods Front/Pot Prison/Pot Prison|@Skull Woods Front/Pinball Room/Pinball Room|@Skull Woods Front/Big Key Chest/Big Key Chest"
+                        ],
+                        "clear_as_group": false,
+                        "item_count": 6
+                    },
+                    {
+                        "name": "Key Drops",
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Skull Woods Front/West Lobby Pot Key/West Lobby Pot Key"
+                        ],
+                        "item_count": 1,
+                        "clear_as_group": false,
+                        "visibility_rules": ["key_drop_shuffle"]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 365,
+                        "y": 295,
+                        "size": 44
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 420,
+                        "y": 185,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 420,
+                        "y": 185,
+                        "size": 32
+                    }
+                ]
+            },
+            {
+                "name": "Skull Woods Back",
+                "access_rules": [
+                    "^$CanReach|sw_back_entrance_inside"
+                ],
+                "item_count": 3,
+                "sections": [
+                    {
+                        "name": "Dungeon Chest" ,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Skull Woods Back/Bridge Room/Bridge Room"
+                        ],
+                        "clear_as_group": false,
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Key Drops",
+                        "item_count": 1,
+                        "clear_as_group": false,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Skull Woods Back/Spike Corner Key Drop/Spike Corner Key Drop"
+                        ],
+                        "visibility_rules": ["key_drop_shuffle"]
+                    },
+                    {
+                        "name": "Boss Item" ,
+                        "clear_as_group": false,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Skull Woods Back/Boss/Boss Item"
+                        ],
+                        "item_count": 1,
+                        "hosted_item": "sw_boss, skullwoods"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 80,
+                        "y": 100,
+                        "size": 44
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 35,
+                        "y": 160,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 35,
+                        "y": 160,
+                        "size": 32
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "MM",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "^$CanReach|mm_entrance_inside"
+        ],
+        "children": [
+            {
+                "name": "Misery Mire",
+                "item_count": 9,
+                "sections": [
+                    {
+                        "name": "Dungeon Chest" ,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Misery Mire/Big Chest/Big Chest|@Misery Mire/Map Chest/Map Chest|@Misery Mire/Main Lobby/Main Lobby|@Misery Mire/Bridge Chest/Bridge Chest|@Misery Mire/Spike Chest/Spike Chest|@Misery Mire/Compass Chest/Compass Chest|@Misery Mire/Big Key Chest/Big Key Chest"
+                        ],
+                        "clear_as_group": false,
+                        "item_count": 7
+                    },
+                    {
+                        "name": "Key Drops",
+                        "item_count": 3,
+                        "clear_as_group": false,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Misery Mire/Spikes Pot Key/Spikes Pot Key|@Misery Mire/Fishbone Pot Key/Fishbone Pot Key|@Misery Mire/Conveyor Crystal Key Drop/Conveyor Crystal Key Drop"
+                        ],
+                        "visibility_rules": ["key_drop_shuffle"]
+                    },
+                    {
+                        "name": "Boss Item" ,
+                        "clear_as_group": false,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Misery Mire/Boss/Boss Item"
+                        ],
+                        "item_count": 1,
+                        "hosted_item": "mm_boss, miserymire"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 147,
+                        "y": 1615,
+                        "size": 44
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 220,
+                        "y": 1170,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 220,
+                        "y": 1170,
+                        "size": 32
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "SP",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "^$CanReach|sp_entrance_inside"
+        ],
+        "children": [
+            {
+                "name": "Swamp Palace",
+                "access_rules": [
+                    "flippers"
+                ],
+                "item_count": 11,
+                "sections": [
+                    {
+                        "name": "Dungeon Chest",
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Swamp Palace/Entrance/Entrance|@Swamp Palace/Map Chest/Map Chest|@Swamp Palace/Big Chest/Big Chest|@Swamp Palace/Compass Chest/Compass Chest|@Swamp Palace/Big Key Chest/Big Key Chest|@Swamp Palace/West Chest/West Chest|@Swamp Palace/Flooded Room Left/Flooded Room Left|@Swamp Palace/Flooded Room Right/Flooded Room Right|@Swamp Palace/Waterfall Room/Waterfall Room"
+                        ],
+                        "clear_as_group": false,
+                        "item_count": 9
+                    },
+                    {
+                        "name": "Key Drops",
+                        "item_count": 5,
+                        "clear_as_group": false,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Swamp Palace/Pot Row Pot Key/Pot Row Pot Key|@Swamp Palace/Trench 1 Pot Key/Trench 1 Pot Key|@Swamp Palace/Hookshot Pot Key/Hookshot Pot Key|@Swamp Palace/Trench 2 Pot Key/Trench 2 Pot Key|@Swamp Palace/Waterway Pot Key/Waterway Pot Key"
+                        ],
+                        "visibility_rules": ["key_drop_shuffle"]
+                    },
+                    {
+                        "name": "Boss Item" ,
+                        "clear_as_group": false,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Swamp Palace/Boss/Boss Item"
+                        ],
+                        "item_count": 1,
+                        "hosted_item": "sp_boss, swamppalace"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 940,
+                        "y": 1880,
+                        "size": 44
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 620,
+                        "y": 1285,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 620,
+                        "y": 1285,
+                        "size": 32
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "IP",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "^$CanReach|ip_entrance_inside"
+        ],
+        "children": [
+            {
+                "name": "Ice Palace",
+                "item_count": 9,
+                "sections": [
+                    {
+                        "name": "Dungeon Chest" ,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Ice Palace/Compass Chest/Compass Chest|@Ice Palace/Freezor Chest/Freezor Chest|@Ice Palace/Big Chest/Big Chest|@Ice Palace/Iced T Room/Iced T Room|@Ice Palace/Spike Room/Spike Room|@Ice Palace/Big Key Chest/Big Key Chest|@Ice Palace/Map Chest/Map Chest"
+                        ],
+                        "clear_as_group": false,
+                        "item_count": 7
+                    },
+                    {
+                        "name": "Key Drops",
+                        "item_count": 4,
+                        "clear_as_group": false,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Ice Palace/Jelly Key Drop/Jelly Key Drop|@Ice Palace/Conveyor Key Drop/Conveyor Key Drop|@Ice Palace/Hammer Block Key Drop/Hammer Block Key Drop|@Ice Palace/Many Pots Pot Key/Many Pots Pot Key"
+                        ],
+                        "visibility_rules": ["key_drop_shuffle"]
+                    },
+                    {
+                        "name": "Boss Item" ,
+                        "clear_as_group": false,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Ice Palace/Boss/Boss Item"
+                        ],
+                        "item_count": 1,
+                        "hosted_item": "ip_boss, icepalace"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 1600,
+                        "y": 1730,
+                        "size": 44
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 1200,
+                        "y": 1280,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 1200,
+                        "y": 1280,
+                        "size": 32
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "TT",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "^$CanReach|tt_entrance_inside"
+        ],
+        "children": [
+            {
+                "name": "Thieves Town",
+                "item_count": 8,
+                "sections": [
+                    {
+                        "name": "Front",
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Thieves Town Front/Big Key Chest/Big Key Chest|@Thieves Town Front/Map Chest/Map Chest|@Thieves Town Front/Compass Chest/Compass Chest|@Thieves Town Front/Ambush Chest/Ambush Chest"
+                        ],
+                        "clear_as_group": false,
+                        "item_count": 4
+                    },
+                    {
+                        "name": "Back",
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Thieves Town Back/Attic/Attic|@Thieves Town Back/Big Chest/Big Chest|@Thieves Town Back/Blind's Cell/Blind's Cell"
+                        ],
+                        "clear_as_group": false,
+                        "item_count": 3
+                    },
+                    {
+                        "name": "Key Drops",
+                        "item_count": 2,
+                        "clear_as_group": false,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Thieves Town Back/Hallway Pot Key/Hallway Pot Key|@Thieves Town Back/Spike Switch Pot Key/Spike Switch Pot Key"
+                        ],
+                        "visibility_rules": ["key_drop_shuffle"]
+                    },
+                    {
+                        "name": "Boss Item",
+                        "clear_as_group": false,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Thieves Town Back/Boss/Boss Item"
+                        ],
+                        "item_count": 1,
+                        "hosted_item": "tt_boss, thievestown"
+                    },
+                    {
+                        "name": "Hyrule Hymn o7",
+                        "hosted_item": "flute_active",
+                        "visibility_rules": ["flute, inverted"]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 250,
+                        "y": 975,
+                        "size": 44
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 190,
+                        "y": 590,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 190,
+                        "y": 590,
+                        "size": 32
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "GT",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "^$CanReach|gt_entrance_inside"
+        ],
+        "visibility_rules": ["$OpenOrStandard"],
+        "children": [
+            {
+                "name": "Ganon's Tower",
+                "sections": [
+                    {
+                        "name": "Leftside",
+                        "clear_as_group": false,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Ganon's Tower Bottom Left/Bob's Torch/Bob's Torch|@Ganon's Tower Bottom Left/DMs Room Top Left/DMs Room Top Left|@Ganon's Tower Bottom Left/DMs Room Top Right/DMs Room Top Right|@Ganon's Tower Bottom Left/DMs Room Bottom Left/DMs Room Bottom Left|@Ganon's Tower Bottom Left/DMs Room Bottom Right/DMs Room Bottom Right|@Ganon's Tower Bottom Left/Map Chest/Map Chest|@Ganon's Tower Bottom Left/Firesnake Room/Firesnake Room|@Ganon's Tower Bottom Left/Randomizer Room Top Left/Randomizer Room Top Left|@Ganon's Tower Bottom Left/Randomizer Room Top Right/Randomizer Room Top Right|@Ganon's Tower Bottom Left/Randomizer Room Bottom Left/Randomizer Room Bottom Left|@Ganon's Tower Bottom Left/Randomizer Room Bottom Right/Randomizer Room Bottom Right"
+                        ],
+                        "item_count": 11
+                    },
+                    {
+                        "name": "Rightside",
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Ganon's Tower Bottom Right/Hope Room Left/Hope Room Left|@Ganon's Tower Bottom Right/Hope Room Right/Hope Room Right|@Ganon's Tower Bottom Right/Tile Room/Tile Room|@Ganon's Tower Bottom Right/Compass Chest/Compass Chest|@Ganon's Tower Bottom Right/Compass Room Top Right/Compass Room Top Right|@Ganon's Tower Bottom Right/Compass Room Bottom Left/Compass Room Bottom Left|@Ganon's Tower Bottom Right/Compass Room Bottom Right/Compass Room Bottom Right"
+                        ],
+                        "clear_as_group": false,
+                        "item_count": 7
+                    },
+                    {
+                        "name": "Big Chest + Ice refight",
+                        "clear_as_group": false,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Ganon's Tower Bottom Refight/Bob's Chest/Bob's Chest|@Ganon's Tower Bottom Refight/Big Chest/Big Chest|@Ganon's Tower Bottom Refight/Big Key Room Left/Big Key Room Left|@Ganon's Tower Bottom Refight/Big Key Room Right/Big Key Room Right|@Ganon's Tower Bottom Refight/Big Key Chest/Big Key Chest"
+                        ],
+                        "item_count": 5,
+                        "hosted_item": "gt_ice"
+                    },
+                    {
+                        "name": "GT Top + Lanmo refight",
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Ganon's Tower Top/Mini Helmasaur Room Left/Mini Helmasaur Room Left|@Ganon's Tower Top/Mini Helmasaur Room Right/Mini Helmasaur Room Right|@Ganon's Tower Top/Pre-Moldorm Chest/Pre-Moldorm Chest"
+                        ],
+                        "clear_as_group": false,
+                        "item_count": 3,
+                        "hosted_item": "gt_lanmo"
+                    },
+                    {
+                        "name": "GT Top Moldorm refight",
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Ganon's Tower Top/Validation Chest/Validation Chest"
+                        ],
+                        "clear_as_group": false,
+                        "item_count": 1,
+                        "hosted_item": "gt_boss"
+                    },
+                    {
+                        "name": "Key Drops",
+                        "item_count": 4,
+                        "clear_as_group": false,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Ganon's Tower Bottom Left/Conveyor Cross Pot Key/Conveyor Cross Pot Key|@Ganon's Tower Bottom Left/Double Switch Pot Key/Double Switch Pot Key|@Ganon's Tower Bottom Right/Conveyor Star Pits Pot Key/Conveyor Star Pits Pot Key|@Ganon's Tower Top/Mini Helmasaur Key Drop/Mini Helmasaur Key Drop"
+                        ],
+                        "visibility_rules": ["key_drop_shuffle"]
+                    },
+                    {
+                        "name": "GT Top Agahnim 2",
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Ganon's Tower Top/Agahnim 2/Agahnim 2"
+                        ],
+                        "clear_as_group": false,
+                        "hosted_item": "aga2"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 1130,
+                        "y": 35,
+                        "size": 44
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x": 845,
+                        "y": 115,
+                        "size": 32
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x": 845,
+                        "y": 115,
+                        "size": 32
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "AT-inverted",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "^$CanReach|at_entrance_inside"
+        ],
+        "visibility_rules": ["inverted"],
+        "children": [
+            {
+                "name": "Agahnim's Tower",
+                "item_count": 3,
+                "sections": [
+                    {
+                        "name": "Front",
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Agahnim's Tower/Front/Front"
+                        ]
+                    },
+                    {
+                        "name": "Maze Chest",
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Agahnim's Tower/Maze Chest/Maze Chest"
+                        ]
+                    },
+                    {
+                        "name": "Key Drops",
+                        "item_count": 2,
+                        "clear_as_group": false,
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Agahnim's Tower/Dark Archer Key Drop/Dark Archer Key Drop|@Agahnim's Tower/Circle of Pots Key Drop/Circle of Pots Key Drop"
+                        ],
+                        "visibility_rules": ["key_drop_shuffle"]
+                    },
+                    {
+                        "name": "Agahnim 1",
+                        "access_rules": [
+                            "^$OWDungeonChecks|@Agahnim's Tower/Agahnim 1/Agahnim 1"
+                        ],
+                        "hosted_item": "aga1"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Darkworld",
+                        "x": 1130,
+                        "y": 40,
+                        "size": 44
+                    },
+                    {
+                        "map": "lightworld_caves_er",
+                        "x": 1060,
+                        "y": 845,
+                        "size": 32
+                    },
+                    {
+                        "map": "lightworld_caves_reduced_er",
+                        "x": 1060,
+                        "y": 845,
+                        "size": 32
+                    }
+                ]
+            }
+        ]
+    }
+]

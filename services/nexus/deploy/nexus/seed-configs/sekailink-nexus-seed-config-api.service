@@ -1,0 +1,20 @@
+[Unit]
+Description=SekaiLink Nexus Seed Config API
+After=network-online.target mariadb.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=sekailink
+Group=sekailink
+ExecStart=/opt/sekailink/nexus/seed-configs/bin/sekailink_seed_config_api_service --config /opt/sekailink/nexus/seed-configs/config/seed_config_api.json
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/sekailink/nexus/seed-configs/state /srv/nexus-data
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,22 @@
+[Unit]
+Description=SekaiLink Nexus Room Query Service
+After=network-online.target mariadb.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=sekailink
+Group=sekailink
+WorkingDirectory=/opt/sekailink/nexus/api-gateway
+ExecStart=/opt/sekailink/nexus/api-gateway/bin/sekailink_evolution_room_query_service \
+  --config /opt/sekailink/nexus/api-gateway/config/nexus_room_query.json
+Restart=always
+RestartSec=2
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/sekailink/nexus/api-gateway
+
+[Install]
+WantedBy=multi-user.target

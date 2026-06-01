@@ -1,0 +1,280 @@
+{
+  "linkedworld_id": "alttp",
+  "status": "baseline-extracted-from-upstream",
+  "source_of_truth": "patch/",
+  "upstream_sources": [
+    "sekaiemu/worlds/alttp/Rom.py",
+    "sekaiemu/worlds/alttp/Options.py",
+    "sekaiemu/worlds/alttp/__init__.py"
+  ],
+  "patch": {
+    "schema_version": "sekailink-patch-contract-v1",
+    "mode": "artifact",
+    "artifact_kind": "apdelta",
+    "artifact_extension": ".aplttp",
+    "behavioral_reference": {
+      "priority": [
+        "Archipelago APDeltaPatch",
+        "MultiworldGG APDeltaPatch"
+      ],
+      "translation_policy": "preserve package/runtime semantics without copying upstream implementation code",
+      "python_required_for_final_native_generation": false
+    },
+    "per_slot": true,
+    "requires_base_asset": true,
+    "base_asset": {
+      "setting_key": "lttp_options.rom_file",
+      "copy_to": "Zelda no Densetsu - Kamigami no Triforce (Japan).sfc",
+      "validation": {
+        "hash_algorithm": "md5",
+        "accepted_hashes": [
+          "03a63945398191337e896e5771f77173"
+        ],
+        "required_release": "Japan 1.0",
+        "source": "LTTPJPN10HASH / LttPDeltaPatch.hash"
+      }
+    },
+    "emission": {
+      "package_directory": "patches/",
+      "package_filename_template": "slot-{slot_id}.aplttp",
+      "slot_manifest_field": "patch_artifact",
+      "patch_contract_ref_required": true,
+      "patch_contract_directory": "patch_contracts/",
+      "patch_contract_filename_template": "slot-{slot_id}.patch.contract.json"
+    },
+    "apply_host": {
+      "host": "sekaiemu",
+      "runtime": "sekaiemu",
+      "materialization": "client_or_runtime_applies_patch_before_launch",
+      "accepted_input_extensions": [
+        ".aplttp"
+      ],
+      "base_rom_argument": "--base-rom",
+      "patch_argument": "--patch",
+      "expected_output_extension": ".sfc",
+      "expected_output_directory": "patched/",
+      "output_filename_template": "{patch_stem}.sfc"
+    },
+    "runtime_metadata": {
+      "game": "A Link to the Past",
+      "server_field": "server",
+      "player_field": "player",
+      "player_name_field": "player_name",
+      "required_in_slot_contract": true
+    },
+    "procedure_contract": {
+      "kind": "native-equivalent",
+      "reference_operation": "apply_bsdiff4",
+      "reference_payload": "delta.bsdiff4",
+      "accepted_container_manifest_fields": [
+        "compatible_version",
+        "game",
+        "server",
+        "player",
+        "player_name",
+        "patch_file_ending",
+        "base_checksum",
+        "result_file_ending",
+        "procedure"
+      ],
+      "fail_closed_on_unknown_procedure": true,
+      "fail_closed_on_base_checksum_mismatch": true
+    },
+    "native_patcher_acceptance": {
+      "spec_ref": "clean-room/repos/sekailink-worlds/docs/ALTTP_NATIVE_PATCHER_ACCEPTANCE.md",
+      "package_verifier_ref": "clean-room/repos/sekailink-worlds/docs/PACKAGE_VERIFIER_REQUIREMENTS.md",
+      "artifact_placeholder_allowed_during_generation": true,
+      "artifact_bytes_required_before_materialization": true,
+      "artifact_state_contract": {
+        "placeholder": {
+          "state": "placeholder",
+          "artifact_bytes_present": false,
+          "runtime_patcher_allowed": false,
+          "verifier_error_if_runtime_requested": "patch_artifact_missing"
+        },
+        "materialized": {
+          "state": "materialized",
+          "artifact_bytes_present": true,
+          "runtime_patcher_allowed": true,
+          "hash_algorithm": "sha256",
+          "hash_source": "raw artifact bytes",
+          "hash_entry_required": true
+        }
+      },
+      "artifact_hashing": {
+        "contract_hash_required": true,
+        "artifact_hash_required_when_materialized": true,
+        "hash_algorithm": "sha256",
+        "artifact_hash_source": "raw .aplttp bytes",
+        "contract_hash_source": "canonical patch contract JSON bytes"
+      },
+      "required_package_inputs": [
+        "seed_manifest.json",
+        "slot_manifest.{slot_id}.json",
+        "patch_contracts/slot-{slot_id}.patch.contract.json"
+      ],
+      "required_before_materialization": [
+        "seed_manifest.json",
+        "slot_manifest.{slot_id}.json",
+        "patch_contracts/slot-{slot_id}.patch.contract.json",
+        "patches/slot-{slot_id}.aplttp"
+      ],
+      "expected_container_member": "delta.bsdiff4",
+      "expected_container_manifest": "archipelago.json",
+      "failure_policy": "fail_closed_explicit_error"
+    },
+    "server_dispatch": {
+      "enabled": false,
+      "reason": "ALTTP requires a local artifact patch flow for Sekaiemu; server-port dispatch is not this LinkedWorld's launch mode."
+    },
+    "server_port_policy": {
+      "supported_modes_for_this_linkedworld": [
+        "artifact"
+      ],
+      "notes": "ALTTP is an artifact patch game. Server-port/no-patch modes such as none, server_dispatch, and contract_only are valid generic Worlds modes, but not this LinkedWorld's launch policy."
+    }
+  },
+  "patch_contract": {
+    "type": "apdelta",
+    "implementation_class": "LttPDeltaPatch",
+    "patch_file_extension": ".aplttp",
+    "procedure": [
+      "resolve base ROM from lttp_options.rom_file via get_base_rom_path()",
+      "load LocalRom and apply patch_base_rom() using data/basepatch.bsdiff4",
+      "run patch_rom() with the generated multiworld state",
+      "run patch_enemizer() only when ALTTPWorld.use_enemizer is true",
+      "run patch_race_rom() only when multiworld.is_race is true",
+      "apply_rom_settings() for cosmetics and runtime toggles",
+      "write a temporary .sfc, emit a .aplttp delta with LttPDeltaPatch, then delete the temporary ROM"
+    ],
+    "asset_validation": "get_base_rom_bytes() verifies the Japan 1.0 base ROM MD5 before patch emission",
+    "base_rom_setting_key": "lttp_options.rom_file",
+    "base_rom_copy_to": "Zelda no Densetsu - Kamigami no Triforce (Japan).sfc",
+    "base_patch_cache": "user_path/basepatch.sfc",
+    "base_patch_delta": "worlds/alttp/data/basepatch.bsdiff4",
+    "source_data_provider": "get_base_rom_bytes()",
+    "optional_pipeline_stages": [
+      {
+        "stage": "patch_enemizer",
+        "enabled_when": "boss_shuffle or enemy_shuffle or enemy_health != default or enemy_damage != default or pot_shuffle or bush_shuffle or killable_thieves"
+      },
+      {
+        "stage": "patch_race_rom",
+        "enabled_when": "multiworld.is_race"
+      }
+    ]
+  },
+  "rom_validation": {
+    "rom_name_hints": [
+      "A Link to the Past",
+      "Zelda",
+      "Kamigami no Triforce"
+    ],
+    "rom_md5s": [
+      "03a63945398191337e896e5771f77173"
+    ],
+    "required_release": "Japan 1.0",
+    "md5_source": "LTTPJPN10HASH / LttPDeltaPatch.hash",
+    "status": "verified-from-upstream-code"
+  },
+  "launch_contract": {
+    "launchable_by": "sekaiemu",
+    "requires_patch_artifact": true,
+    "requires_base_rom": true,
+    "server_dispatch": false,
+    "input_contract": {
+      "patch_artifact_extension": ".aplttp",
+      "patch_container_expected_fields": [
+        "compatible_version",
+        "game",
+        "server",
+        "player",
+        "player_name",
+        "patch_file_ending",
+        "base_checksum",
+        "result_file_ending",
+        "procedure"
+      ],
+      "base_rom_extension_hints": [
+        ".sfc",
+        ".smc"
+      ],
+      "base_rom_hash_algorithm": "md5",
+      "base_rom_accepted_hashes": [
+        "03a63945398191337e896e5771f77173"
+      ]
+    },
+    "argv_contract": [
+      {
+        "arg": "--patch",
+        "value": "{slot.patch_artifact}"
+      },
+      {
+        "arg": "--base-rom",
+        "value": "{runtime_input.base_rom_file}"
+      }
+    ],
+    "output_naming": {
+      "materialized_rom_directory": "patched/",
+      "materialized_rom_filename_template": "{patch_stem}.sfc",
+      "materialized_rom_extension": ".sfc",
+      "slot_artifact_filename_template": "slot-{slot_id}.aplttp",
+      "slot_contract_filename_template": "slot-{slot_id}.patch.contract.json"
+    },
+    "failure_modes": {
+      "missing_artifact": "patch_artifact_missing",
+      "artifact_hash_mismatch": "patch_artifact_hash_mismatch",
+      "missing_base_rom": "base_rom_missing",
+      "base_rom_hash_mismatch": "base_rom_checksum_mismatch",
+      "unsupported_procedure": "patch_procedure_unsupported",
+      "missing_delta_payload": "patch_payload_missing",
+      "apply_failed": "patch_apply_failed"
+    }
+  },
+  "runtime_dependencies": {
+    "native_final_path_python_required": false,
+    "required_python_modules": [
+      "bsdiff4"
+    ],
+    "optional_python_modules": [
+      "xxtea"
+    ],
+    "optional_external_tools": [
+      {
+        "name": "EnemizerCLI",
+        "minimum_version": "7.1.0",
+        "required_when_stage_enabled": "patch_enemizer"
+      }
+    ]
+  },
+  "output_contract": {
+    "runtime_host": "sekaiemu",
+    "intermediate_rom_extension": ".sfc",
+    "final_patch_extension": ".aplttp",
+    "final_patch_type": "APDeltaPatch-compatible artifact",
+    "generic_patch_mode": "artifact",
+    "patch_contract_schema": "sekailink-patch-contract-v1"
+  },
+  "cosmetic_stage": {
+    "function": "apply_rom_settings",
+    "applied_after_gameplay_patch": true,
+    "categories": [
+      "palettes",
+      "heartbeep",
+      "heartcolor",
+      "quickswap",
+      "menuspeed",
+      "music",
+      "sprite",
+      "reduceflashing",
+      "triforcehud",
+      "deathlink",
+      "allowcollect"
+    ]
+  },
+  "notes": [
+    "The patch flow here is extracted from code paths already referenced by this repo; no new launcher contract is invented.",
+    "This manifest documents the canonical ALTTP patch surface without copying upstream implementation code into this repo.",
+    "A full asset vendoring strategy for basepatch payloads remains outside this clean-room repo."
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "linkedworld_id": "alttp",
+  "status": "baseline-default-preset-declared",
+  "source_of_truth": "presets/",
+  "default_preset": "alttp.ap-defaults.core",
+  "presets": [
+    {
+      "preset_id": "alttp.ap-defaults.core",
+      "path": "presets/alttp.ap-defaults.core.json",
+      "label": "ALTTP AP defaults core",
+      "scope": "generator-core",
+      "default_for_repo": true,
+      "extraction_mode": "explicit-defaults-from-Options.py-only"
+    },
+    {
+      "preset_id": "alttp.runtime-test.side-by-side",
+      "path": "presets/alttp.runtime-test.side-by-side.json",
+      "label": "ALTTP runtime test side by side",
+      "scope": "runtime-test",
+      "default_for_runtime_test": true,
+      "extraction_mode": "clean-room-runtime-contract"
+    },
+    {
+      "preset_id": "alttp.runtime-complete.side-by-side",
+      "path": "presets/alttp.runtime-complete.side-by-side.json",
+      "label": "ALTTP runtime complete side by side",
+      "scope": "runtime-complete",
+      "default_for_complete_run_target": true,
+      "extraction_mode": "clean-room-linkedworld-complete-surface"
+    }
+  ],
+  "upstream_options_source": [
+    "sekaiemu/worlds/alttp/Options.py",
+    "sekaiemu/worlds/alttp/__init__.py"
+  ],
+  "notes": [
+    "The initial repo-owned preset is deliberately minimal and only freezes explicit defaults extracted from upstream sources.",
+    "Additional presets should prefer separate files over embedding large option blobs directly in this manifest.",
+    "Runtime-facing presets belong here when they stabilize the linkedworld contract without inventing new gameplay logic.",
+    "The side-by-side runtime presets also act as the canonical pointer layer toward normalized tracker and metadata mappings."
+  ]
+}

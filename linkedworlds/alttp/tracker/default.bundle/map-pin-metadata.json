@@ -1,0 +1,261 @@
+{
+  "metadata_id": "alttp-map-pin-metadata-v1",
+  "linkedworld_id": "alttp",
+  "status": "repo-owned-semantic-pin-bindings-with-placeholder-placement",
+  "purpose": "Declare map, tab, pin-layer, and location-to-pin metadata for LinkedWorld/Sekaiemu tracker rendering without copying PopTracker runtime code or Lua.",
+  "source_refs": [
+    "manifest.json",
+    "location-groups.complete.json",
+    "surface.complete.json"
+  ],
+  "asset_policy": {
+    "current_map_asset_status": "repo-owned-placeholder-ppm",
+    "current_pin_asset_status": "missing-real-assets",
+    "missing_source": "Real PopTracker-style ALTTP map art and pin sprites are not present locally. Historical reference UID remains https://github.com/StripesOO7/alttp-ap-poptracker-pack, but this repo currently ships only clean-room placeholder maps.",
+    "placement_policy": "Pin coordinates are intentionally semantic placeholders. Consumers should use group_id, preferred_tab, and map_id as stable bindings until a clean-room or licensed coordinate pass lands."
+  },
+  "map_metadata": [
+    {
+      "map_id": "light_world",
+      "tab_ids": [
+        "light-world"
+      ],
+      "image": "maps/light_world.ppm",
+      "image_status": "repo-owned-placeholder"
+    },
+    {
+      "map_id": "dark_world",
+      "tab_ids": [
+        "dark-world"
+      ],
+      "image": "maps/dark_world.ppm",
+      "image_status": "repo-owned-placeholder"
+    },
+    {
+      "map_id": "death_mountain",
+      "tab_ids": [
+        "mountain"
+      ],
+      "image": "maps/death_mountain.ppm",
+      "image_status": "repo-owned-placeholder"
+    },
+    {
+      "map_id": "hc_escape",
+      "tab_ids": [
+        "escape"
+      ],
+      "image": "maps/hc_escape.ppm",
+      "image_status": "repo-owned-placeholder"
+    },
+    {
+      "map_id": "eastern_palace",
+      "tab_ids": [
+        "eastern"
+      ],
+      "image": "maps/eastern_palace.ppm",
+      "image_status": "repo-owned-placeholder"
+    },
+    {
+      "map_id": "desert_palace",
+      "tab_ids": [
+        "desert"
+      ],
+      "image": "maps/desert_palace.ppm",
+      "image_status": "repo-owned-placeholder"
+    },
+    {
+      "map_id": "tower_of_hera",
+      "tab_ids": [
+        "hera"
+      ],
+      "image": "maps/tower_of_hera.ppm",
+      "image_status": "repo-owned-placeholder"
+    },
+    {
+      "map_id": "dark_dungeons",
+      "tab_ids": [
+        "pod",
+        "swamp",
+        "skull",
+        "thieves"
+      ],
+      "image": "maps/dark_dungeons.ppm",
+      "image_status": "repo-owned-placeholder"
+    },
+    {
+      "map_id": "ice_mire",
+      "tab_ids": [
+        "ice",
+        "mire"
+      ],
+      "image": "maps/ice_mire.ppm",
+      "image_status": "repo-owned-placeholder"
+    },
+    {
+      "map_id": "turtle_gt",
+      "tab_ids": [
+        "turtle",
+        "gt"
+      ],
+      "image": "maps/turtle_gt.ppm",
+      "image_status": "repo-owned-placeholder"
+    }
+  ],
+  "pin_layers": [
+    {
+      "group_id": "light_world_surface",
+      "preferred_tab": "light-world",
+      "map_id": "light_world",
+      "pin_count": 8,
+      "pin_kind": "overworld-check"
+    },
+    {
+      "group_id": "dark_world_surface",
+      "preferred_tab": "dark-world",
+      "map_id": "dark_world",
+      "pin_count": 4,
+      "pin_kind": "overworld-check"
+    },
+    {
+      "group_id": "world_npc_checks",
+      "preferred_tab": "light-world",
+      "map_id": "light_world",
+      "pin_count": 13,
+      "pin_kind": "npc-check"
+    },
+    {
+      "group_id": "misc_checks",
+      "preferred_tab": "light-world",
+      "map_id": "light_world",
+      "pin_count": 4,
+      "pin_kind": "event-check"
+    },
+    {
+      "group_id": "shop_checks",
+      "preferred_tab": "light-world",
+      "map_id": "light_world",
+      "pin_count": 37,
+      "pin_kind": "shop-slot"
+    },
+    {
+      "group_id": "light_world_caves",
+      "preferred_tab": "light-world",
+      "map_id": "light_world",
+      "pin_count": 34,
+      "pin_kind": "cave-check"
+    },
+    {
+      "group_id": "mountain_caves",
+      "preferred_tab": "mountain",
+      "map_id": "death_mountain",
+      "pin_count": 17,
+      "pin_kind": "cave-check"
+    },
+    {
+      "group_id": "dark_world_caves",
+      "preferred_tab": "dark-world",
+      "map_id": "dark_world",
+      "pin_count": 13,
+      "pin_kind": "cave-check"
+    },
+    {
+      "group_id": "hyrule_castle_and_escape",
+      "preferred_tab": "escape",
+      "map_id": "hc_escape",
+      "pin_count": 16,
+      "pin_kind": "dungeon-check"
+    },
+    {
+      "group_id": "eastern_palace",
+      "preferred_tab": "eastern",
+      "map_id": "eastern_palace",
+      "pin_count": 8,
+      "pin_kind": "dungeon-check"
+    },
+    {
+      "group_id": "desert_palace",
+      "preferred_tab": "desert",
+      "map_id": "desert_palace",
+      "pin_count": 9,
+      "pin_kind": "dungeon-check"
+    },
+    {
+      "group_id": "tower_of_hera",
+      "preferred_tab": "hera",
+      "map_id": "tower_of_hera",
+      "pin_count": 6,
+      "pin_kind": "dungeon-check"
+    },
+    {
+      "group_id": "palace_of_darkness",
+      "preferred_tab": "pod",
+      "map_id": "dark_dungeons",
+      "pin_count": 14,
+      "pin_kind": "dungeon-check"
+    },
+    {
+      "group_id": "swamp_palace",
+      "preferred_tab": "swamp",
+      "map_id": "dark_dungeons",
+      "pin_count": 15,
+      "pin_kind": "dungeon-check"
+    },
+    {
+      "group_id": "skull_woods",
+      "preferred_tab": "skull",
+      "map_id": "dark_dungeons",
+      "pin_count": 10,
+      "pin_kind": "dungeon-check"
+    },
+    {
+      "group_id": "thieves_town",
+      "preferred_tab": "thieves",
+      "map_id": "dark_dungeons",
+      "pin_count": 10,
+      "pin_kind": "dungeon-check"
+    },
+    {
+      "group_id": "ice_palace",
+      "preferred_tab": "ice",
+      "map_id": "ice_mire",
+      "pin_count": 12,
+      "pin_kind": "dungeon-check"
+    },
+    {
+      "group_id": "misery_mire",
+      "preferred_tab": "mire",
+      "map_id": "ice_mire",
+      "pin_count": 11,
+      "pin_kind": "dungeon-check"
+    },
+    {
+      "group_id": "turtle_rock",
+      "preferred_tab": "turtle",
+      "map_id": "turtle_gt",
+      "pin_count": 14,
+      "pin_kind": "dungeon-check"
+    },
+    {
+      "group_id": "ganons_tower",
+      "preferred_tab": "gt",
+      "map_id": "turtle_gt",
+      "pin_count": 31,
+      "pin_kind": "dungeon-check"
+    }
+  ],
+  "pin_projection": {
+    "semantic_pin_source": "location-groups.complete.json groups[].locations[]",
+    "pin_id_template": "pin.{group_id}.{location_id}",
+    "event_key_source": "locations[].event_key",
+    "checked_state_source": "location_checked event matching event_key",
+    "placement_strategy": "stable-grid-placeholder-by-group-index",
+    "coordinate_space": "normalized-0-to-1",
+    "coordinate_status": "placeholder-pending-clean-room-coordinate-pass"
+  },
+  "deltas": {
+    "maps_declared": 10,
+    "pin_layers": 20,
+    "semantic_pins_projected": 286,
+    "real_pin_assets_present": 0
+  }
+}

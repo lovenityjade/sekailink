@@ -1,0 +1,13 @@
+{
+  "tcp_port": 19093,
+  "auth_token": "replace-generation-token",
+  "state_path": "/opt/sekailink/worlds/generation-server/data/generation_server_state.json",
+  "command_template": [
+    "/opt/sekailink/worlds/generation-server/runtime/python/bin/python3",
+    "/opt/sekailink/worlds/generation-server/runtime/Generate.py",
+    "--yaml",
+    "{yaml_path}",
+    "--outputpath",
+    "{output_dir}"
+  ]
+}

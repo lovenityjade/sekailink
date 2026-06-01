@@ -1,0 +1,7 @@
+[Unit]
+Description=SekaiLink Postfix Tail Snapshot
+After=postfix.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/sekailink/evolution/admin-agent/bin/update-postfix-tail.sh /var/log/mail.log /opt/sekailink/evolution/admin-agent/data/postfix_tail.log

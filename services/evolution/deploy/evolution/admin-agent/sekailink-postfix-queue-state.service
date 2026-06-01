@@ -1,0 +1,9 @@
+[Unit]
+Description=SekaiLink Postfix Queue Snapshot
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/sekailink/evolution/admin-agent/bin/update-postfix-queue-state.sh \
+  /opt/sekailink/evolution/admin-agent/data/postfix_queue_state.json
+
