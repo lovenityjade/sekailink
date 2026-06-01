@@ -13,6 +13,17 @@ using namespace sekailink::sklmi;
 
 namespace {
 
+fs::path CanonicalBundlePath() {
+    if (const char* canonical_root = std::getenv("SEKAILINK_CANONICAL_ROOT");
+        canonical_root != nullptr && canonical_root[0] != '\0') {
+        return fs::path(canonical_root) / "linkedworlds/alttp/tracker/default.bundle";
+    }
+
+    fs::path source_path = fs::path(__FILE__).lexically_normal();
+    fs::path repo_root = source_path.parent_path().parent_path().parent_path().parent_path();
+    return repo_root / "linkedworlds/alttp/tracker/default.bundle";
+}
+
 std::string Slurp(const fs::path& path) {
     std::ifstream input(path, std::ios::binary);
     return std::string((std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
@@ -83,11 +94,7 @@ std::vector<TrackerPackItemMappingDefinition> DungeonPackItemMappings(const Trac
 }  // namespace
 
 int main() {
-    const char* canonical_root = std::getenv("SEKAILINK_CANONICAL_ROOT");
-    const fs::path bundle_path =
-        canonical_root != nullptr
-            ? fs::path(canonical_root) / "linkedworlds/alttp/tracker/default.bundle"
-            : fs::path("linkedworlds/alttp/tracker/default.bundle");
+    const fs::path bundle_path = CanonicalBundlePath();
     if (!fs::exists(bundle_path / "manifest.json")) {
         std::cerr << "tracker_bundle_missing\n";
         return EXIT_FAILURE;

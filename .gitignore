@@ -26,6 +26,11 @@ generated/
 *.db
 *.zip.bak-*
 
+# Golden-test fixtures kept intentionally.
+!apps/saves/
+!apps/saves/**
+!apps/saves/**/bridge/outbox.log
+
 # Local configuration and secrets
 .env
 .env.*

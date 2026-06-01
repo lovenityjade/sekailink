@@ -1,0 +1,16 @@
+bridge_started|game=A Link to the Past|profile=/home/thelovenityjade/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/profiles/alttp-starter.profile
+inject|item|0xC|player=0|progress=1|ALTTP live Blue Boomerang
+inject|item|0x44|player=0|progress=1|ALTTP live 10 arrows
+inject|item|0x31|player=0|progress=2|ALTTP live 10 bombs
+inject|item|0x34|player=0|progress=3|ALTTP live rupee 1/10
+inject|item|0x34|player=0|progress=4|ALTTP live rupee 2/10
+inject|item|0x34|player=0|progress=5|ALTTP live rupee 3/10
+inject|item|0x34|player=0|progress=6|ALTTP live rupee 4/10
+inject|item|0x34|player=0|progress=7|ALTTP live rupee 5/10
+inject|item|0x34|player=0|progress=8|ALTTP live rupee 6/10
+inject|item|0x34|player=0|progress=9|ALTTP live rupee 7/10
+inject|item|0x34|player=0|progress=10|ALTTP live rupee 8/10
+inject|item|0x34|player=0|progress=11|ALTTP live rupee 9/10
+inject|item|0x34|player=0|progress=12|ALTTP live rupee 10/10
+inject|item|0xC|player=0|progress=13|ALTTP hot injection retest
+inject|item|0xA|player=0|progress=14|ALTTP hot Hookshot test
