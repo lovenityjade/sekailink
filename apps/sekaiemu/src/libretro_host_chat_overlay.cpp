@@ -1,10 +1,13 @@
 #include "libretro_host_internal.hpp"
 
 #include "libretro_tracker_presentation.hpp"
+#include "tracker_overlay_render_state.hpp"
 
 #include <SDL.h>
 
 #include <algorithm>
+#include <optional>
+#include <vector>
 
 namespace sekaiemu::spike {
 namespace {
@@ -31,6 +34,48 @@ ChatOverlayGeometry ResolveChatOverlayGeometry(TrackerDisplayMode mode, const Vi
   return ChatOverlayGeometry{width, height, static_cast<int>(width), static_cast<int>(height)};
 }
 
+std::string ResolveLocalChatAuthor(const TrackerRuntime& runtime, std::string_view fallback_slot_name) {
+  auto author = SnapshotDisplayPlayerName(runtime, fallback_slot_name);
+  return author.empty() ? std::string{"ME"} : author;
+}
+
+std::vector<std::string> JsonStringArray(const nlohmann::json& root, std::string_view key) {
+  const auto found = root.find(std::string(key));
+  if (found == root.end() || !found->is_array()) {
+    return {};
+  }
+  std::vector<std::string> values;
+  values.reserve(found->size());
+  for (const auto& value : *found) {
+    if (value.is_string()) {
+      values.push_back(value.get<std::string>());
+    }
+  }
+  return values;
+}
+
+bool StartsWithSlashCommand(std::string_view text) {
+  return !text.empty() && text.front() == '/';
+}
+
+std::optional<std::string> ValidateAllowedChatCommand(std::string_view text) {
+  if (!StartsWithSlashCommand(text)) {
+    return std::nullopt;
+  }
+  if (text == "/collect" || text == "/remaining") {
+    return std::nullopt;
+  }
+  constexpr std::string_view hint_prefix = "/hint ";
+  if (text.size() > hint_prefix.size() &&
+      text.substr(0, hint_prefix.size()) == hint_prefix) {
+    return std::nullopt;
+  }
+  if (text == "/hint") {
+    return "Usage: /hint <itemname>";
+  }
+  return "Unknown command. Available: /hint <itemname>, /collect, /remaining";
+}
+
 }  // namespace
 
 void LibretroHost::Impl::RefreshChatOverlayFromSnapshot() {
@@ -44,6 +89,12 @@ void LibretroHost::Impl::RefreshChatOverlayFromSnapshot() {
   chat_snapshot_mutation_serial_ = mutation_serial;
   const auto& snapshot = tracker_runtime_.AuthoritativeState().snapshot;
   const auto messages = snapshot.find("chat_messages");
+  if (const auto commands = JsonStringArray(snapshot, "chat_commands"); !commands.empty()) {
+    chat_overlay_.SetCommandSuggestions(commands);
+  }
+  if (const auto items = JsonStringArray(snapshot, "hint_item_names"); !items.empty()) {
+    chat_overlay_.SetItemNameSuggestions(items);
+  }
   if (messages == snapshot.end() || !messages->is_array()) {
     return;
   }
@@ -54,6 +105,7 @@ void LibretroHost::Impl::RefreshChatOverlayFromSnapshot() {
     chat_overlay_.AddExternalMessage(message.value("id", 0ULL),
                                      message.value("author", "ROOM"),
                                      message.value("text", ""),
+                                     message.value("kind", "chat"),
                                      frame_counter);
   }
 }
@@ -152,9 +204,17 @@ void LibretroHost::Impl::CancelChatInput() {
 }
 
 void LibretroHost::Impl::SubmitChatInput() {
-  auto submitted = chat_overlay_.Submit(frame_counter, options.ap_slot_name.empty() ? "ME" : options.ap_slot_name);
+  const auto pending_text = std::string(chat_overlay_.InputText());
+  const auto command_error = ValidateAllowedChatCommand(pending_text);
+  auto submitted = chat_overlay_.Submit(frame_counter,
+                                        ResolveLocalChatAuthor(tracker_runtime_, options.ap_slot_name),
+                                        !command_error.has_value());
   chat_ignore_open_key_text_ = false;
   SDL_StopTextInput();
+  if (command_error.has_value()) {
+    chat_overlay_.AddMessage("SYSTEM", *command_error, frame_counter);
+    return;
+  }
   if (!submitted.has_value()) {
     return;
   }
@@ -168,6 +228,10 @@ void LibretroHost::Impl::SubmitChatInput() {
 
 void LibretroHost::Impl::BackspaceChatInput() {
   chat_overlay_.Backspace();
+}
+
+void LibretroHost::Impl::AutocompleteChatInput() {
+  chat_overlay_.ApplyAutocomplete();
 }
 
 void LibretroHost::Impl::AppendChatInput(std::string_view text) {

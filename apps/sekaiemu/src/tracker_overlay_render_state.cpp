@@ -11,6 +11,23 @@ namespace sekaiemu::spike {
 using namespace tracker_overlay_state_detail;
 using namespace tracker_overlay_snapshot_detail;
 
+namespace {
+
+bool JsonHasAnyKey(const nlohmann::json& root,
+                   std::initializer_list<const char*> keys) {
+  if (!root.is_object()) {
+    return false;
+  }
+  for (const char* key : keys) {
+    if (root.contains(key)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+}  // namespace
+
 std::vector<BundlePinSegmentRenderMetadata> ParsePinSegments(const nlohmann::json& entry,
                                                              std::string_view fallback_color) {
   std::vector<BundlePinSegmentRenderMetadata> segments;
@@ -36,6 +53,26 @@ std::vector<BundlePinSegmentRenderMetadata> ParsePinSegments(const nlohmann::jso
                       segment.color == "black";
     segment.mixed = JsonBoolAtAnyKey(segment_entry, {"mixed"}, false) ||
                     (segment.checked_count > 0 && segment.total_count > segment.checked_count);
+    if (const auto checks = segment_entry.find("checks"); checks != segment_entry.end() && checks->is_array()) {
+      for (const auto& check_entry : *checks) {
+        if (!check_entry.is_object()) {
+          continue;
+        }
+        BundlePinSegmentRenderMetadata::Check check;
+        check.location_id = JsonStringAtAnyKey(check_entry, {"location_id", "locationId", "id"});
+        if (check.location_id.empty()) {
+          if (const auto numeric_id = JsonNumberAtAnyKey(check_entry, {"location_id", "locationId", "id"});
+              numeric_id.has_value()) {
+            check.location_id = std::to_string(static_cast<std::uint64_t>(*numeric_id));
+          }
+        }
+        check.label = JsonStringAtAnyKey(check_entry, {"label", "name", "title"});
+        check.checked = JsonBoolAtAnyKey(check_entry, {"checked", "cleared"}, false);
+        if (!check.location_id.empty()) {
+          segment.checks.push_back(std::move(check));
+        }
+      }
+    }
     if (segment.total_count <= 0) {
       segment.total_count = 1;
     }
@@ -105,9 +142,10 @@ std::vector<BundleItemRenderMetadata> BuildBundleItems(const TrackerRuntime& run
                                            "stage", "level", "value"},
                                    0);
       item.count = JsonIntAtAnyKey(entry, {"count", "amount", "qty"}, 0);
-      item.acquired = JsonBoolAtAnyKey(entry, {"acquired", "active", "owned", "checked"}, false) ||
-                      item.stage > 0 || item.count > 0;
-      item.has_explicit_state = true;
+      item.has_explicit_state = JsonHasAnyKey(entry, {"acquired", "active", "owned", "checked"});
+      item.acquired = item.has_explicit_state
+                          ? JsonBoolAtAnyKey(entry, {"acquired", "active", "owned", "checked"}, false)
+                          : (item.stage > 0 || item.count > 0);
       if (const auto it = bindings_by_slot.find(item.id); it != bindings_by_slot.end()) {
         if (item.icon.empty() && bundle != nullptr) {
           item.icon = ResolveSemanticItemIcon(*bundle, it->second.icon_key, item.stage);
@@ -190,6 +228,7 @@ std::vector<BundlePinRenderMetadata> BuildBundlePins(const TrackerRuntime& runti
       pin.location_id = JsonStringAtAnyKey(entry, {"location_id", "locationId", "check_id",
                                                    "checkId", "canonical_location_id",
                                                    "canonicalLocationId"});
+      pin.group_id = JsonStringAtAnyKey(entry, {"group_id", "groupId"});
       pin.map_id = JsonStringAtAnyKey(entry, {"map_id", "mapId", "map"});
       pin.pack_map = JsonStringAtAnyKey(entry, {"pack_map", "packMap", "poptracker_map", "poptrackerMap"});
       pin.map_asset = JsonStringAtAnyKey(entry, {"map_asset", "mapAsset", "image", "map_image", "mapImage"});
@@ -201,6 +240,7 @@ std::vector<BundlePinRenderMetadata> BuildBundlePins(const TrackerRuntime& runti
                     pin.color == "black";
       pin.has_explicit_checked = entry.contains("checked") || entry.contains("cleared") ||
                                  entry.contains("acquired") || !pin.color.empty();
+      pin.size = JsonNumberAtAnyKey(entry, {"size", "radius", "pin_size", "pinSize"}).value_or(0.0);
       const auto x = JsonNumberAtAnyKey(entry, {"x", "left", "map_x", "mapX"});
       const auto y = JsonNumberAtAnyKey(entry, {"y", "top", "map_y", "mapY"});
       pin.has_position = x.has_value() && y.has_value();
@@ -266,10 +306,12 @@ std::vector<BundlePinRenderMetadata> BuildBundlePins(const TrackerRuntime& runti
     pin.location_id = JsonStringAtAnyKey(entry, {"location_id", "locationId", "check_id",
                                                  "checkId", "canonical_location_id",
                                                  "canonicalLocationId"});
+    pin.group_id = JsonStringAtAnyKey(entry, {"group_id", "groupId"});
     pin.map_id = JsonStringAtAnyKey(entry, {"map_id", "mapId", "map"});
     pin.pack_map = JsonStringAtAnyKey(entry, {"pack_map", "packMap", "poptracker_map", "poptrackerMap"});
     pin.map_asset = JsonStringAtAnyKey(entry, {"map_asset", "mapAsset", "image", "map_image", "mapImage"});
     pin.label = JsonStringAtAnyKey(entry, {"label", "name", "title"});
+    pin.size = JsonNumberAtAnyKey(entry, {"size", "radius", "pin_size", "pinSize"}).value_or(0.0);
     const auto x = JsonNumberAtAnyKey(entry, {"x", "left", "map_x", "mapX"});
     const auto y = JsonNumberAtAnyKey(entry, {"y", "top", "map_y", "mapY"});
     pin.has_position = x.has_value() && y.has_value();

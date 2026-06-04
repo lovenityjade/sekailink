@@ -8,6 +8,7 @@ release/
 coverage/
 .cache/
 .vite/
+/apps/runtime/
 
 # JavaScript dependencies
 node_modules/

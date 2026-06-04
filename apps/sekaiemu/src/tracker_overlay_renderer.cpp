@@ -6,6 +6,7 @@
 #include "tracker_overlay_style.hpp"
 #include "tracker_map_context_menu.hpp"
 #include "tracker_pack_layout_renderer.hpp"
+#include "tracker_pin_context_menu.hpp"
 
 #include <algorithm>
 #include <cstdint>
@@ -122,6 +123,67 @@ void DrawMapContextMenu(OverlayCanvas& canvas,
   }
 }
 
+void DrawPinContextMenu(OverlayCanvas& canvas,
+                        const UiPalette& palette,
+                        const TrackerRuntime& runtime,
+                        const TrackerResolvedViewState& resolved,
+                        const TrackerPanelLayout& layout,
+                        int body_y) {
+  if (!runtime.UiState().pin_context_menu_visible) {
+    return;
+  }
+  const auto entries = BuildTrackerPinContextMenuEntries(runtime, resolved);
+  if (entries.empty()) {
+    return;
+  }
+  const auto metrics = BuildTrackerPinContextMenuMetrics(runtime, resolved, layout, body_y);
+  const auto selected = runtime.UiState().pin_context_menu_selected_index;
+
+  canvas.FillRect(metrics.x, metrics.y, metrics.width, metrics.height, UiColor{8, 12, 20, 242});
+  canvas.DrawRect(metrics.x, metrics.y, metrics.width, metrics.height, palette.accent_soft);
+
+  for (int row = 0; row < metrics.rows; ++row) {
+    const bool active = static_cast<std::size_t>(row) == selected;
+    const int y = metrics.y + 4 + row * metrics.row_height;
+    const auto& entry = entries[static_cast<std::size_t>(row)];
+    canvas.FillRect(metrics.x + 4,
+                    y,
+                    metrics.width - 8,
+                    metrics.row_height - 2,
+                    active ? palette.accent : UiColor{20, 28, 42, 230});
+    const UiColor state_color = entry.checked ? UiColor{108, 118, 132, 255}
+                                              : PinFillColor(entry.color, false);
+    canvas.DrawRect(metrics.x + 8, y + 4, 9, 9, UiColor{0, 0, 0, 255});
+    canvas.FillRect(metrics.x + 9, y + 5, 7, 7, state_color);
+    canvas.DrawText(metrics.x + 22,
+                    y + 5,
+                    TruncateText(entry.label.empty() ? entry.location_id : entry.label,
+                                 static_cast<std::size_t>(std::max(8, (metrics.width - 34) / 6))),
+                    active ? palette.panel_background : palette.text_primary,
+                    1);
+  }
+}
+
+void DrawHoverTooltip(OverlayCanvas& canvas,
+                      const UiPalette& palette,
+                      const TrackerRuntime& runtime,
+                      const TrackerPanelLayout& layout) {
+  const auto& ui = runtime.UiState();
+  if (!ui.hover_tooltip_visible || ui.hover_tooltip_text.empty() ||
+      ui.map_context_menu_visible || ui.pin_context_menu_visible) {
+    return;
+  }
+  const int text_width =
+      static_cast<int>(std::min<std::size_t>(ui.hover_tooltip_text.size(), 36)) * 6;
+  const int width = std::clamp(text_width + 14, 72, std::max(72, layout.width - 18));
+  const int height = 20;
+  const int x = std::clamp(ui.hover_tooltip_x + 12, layout.x + 4, layout.x + layout.width - width - 4);
+  const int y = std::clamp(ui.hover_tooltip_y + 12, layout.y + 4, layout.y + layout.height - height - 4);
+  canvas.FillRect(x, y, width, height, UiColor{0, 0, 0, 220});
+  canvas.DrawRect(x, y, width, height, palette.accent_soft);
+  canvas.DrawText(x + 7, y + 6, TruncateText(ui.hover_tooltip_text, 36), palette.text_primary, 1);
+}
+
 }  // namespace
 
 void RenderTrackerPanel(OverlayCanvas& canvas,
@@ -203,12 +265,16 @@ void RenderTrackerPanel(OverlayCanvas& canvas,
   if (compact || body_width < 320 || body_height < 180) {
     DrawCompactBody(canvas, palette, runtime, resolved, body_x, body_y, body_width, body_height);
     DrawMapContextMenu(canvas, palette, runtime, resolved, layout, body_y);
+    DrawPinContextMenu(canvas, palette, runtime, resolved, layout, body_y);
+    DrawHoverTooltip(canvas, palette, runtime, layout);
     return;
   }
 
   if (RenderPackDrivenTrackerBody(
           canvas, runtime, resolved, body_x, body_y, body_width, body_height, asset_resolver)) {
     DrawMapContextMenu(canvas, palette, runtime, resolved, layout, body_y);
+    DrawPinContextMenu(canvas, palette, runtime, resolved, layout, body_y);
+    DrawHoverTooltip(canvas, palette, runtime, layout);
     return;
   }
 
@@ -240,6 +306,8 @@ void RenderTrackerPanel(OverlayCanvas& canvas,
   side_y += info_height + gap;
   DrawRecentEvents(canvas, palette, runtime, resolved, side_x, side_y, side_width, recent_height);
   DrawMapContextMenu(canvas, palette, runtime, resolved, layout, body_y);
+  DrawPinContextMenu(canvas, palette, runtime, resolved, layout, body_y);
+  DrawHoverTooltip(canvas, palette, runtime, layout);
 }
 
 }  // namespace sekaiemu::spike

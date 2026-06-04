@@ -733,6 +733,7 @@ export default function LobbyRoomPage({
         fetchRoomStatus,
         loadLatestGeneration,
         playerName: selfLaunch.playerName || currentUser.username,
+        playerAlias: currentUser.username,
         apGameName: selfLaunch.apGameName,
         playersByName,
         lobbyId,

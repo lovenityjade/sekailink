@@ -2003,6 +2003,7 @@ const LobbyPage: React.FC = () => {
       fetchRoomStatus,
       loadLatestGeneration: () => loadGeneration(),
       playerName: selfPlayerName,
+      playerAlias: me?.global_name || me?.username || selfPlayerName,
       apGameName: selfApGameName,
       playersByName,
       password: lobbyPassword,

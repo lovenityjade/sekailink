@@ -36,6 +36,7 @@ struct RuntimeOptions {
     std::string ap_path = "/";
     std::string ap_game;
     std::string ap_slot_name;
+    std::string player_alias;
     std::string ap_password;
     std::string ap_uuid = "sekailink-sklmi";
     std::vector<std::string> ap_tags = {"AP", "SekaiLink", "SKLMI"};

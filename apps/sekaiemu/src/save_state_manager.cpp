@@ -233,11 +233,15 @@ bool SaveStateManager::FlushPendingBatterySave(const CoreApi& core, std::string&
     return false;
   }
 
+  if (battery_shadow_.size() != size || !std::equal(battery_shadow_.begin(), battery_shadow_.end(), data)) {
+    battery_shadow_.assign(data, data + size);
+    battery_dirty_ = true;
+  }
+
   if (!battery_dirty_) {
     return false;
   }
 
-  battery_shadow_.assign(data, data + size);
   if (!SaveBatteryBytes(battery_shadow_.data(), battery_shadow_.size(), error)) {
     return false;
   }

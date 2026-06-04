@@ -60,6 +60,15 @@ bool LoadGameContentSession(const LoadGameContentContext& context, std::string& 
   }
 
   context.save_state_manager->Initialize(context.options->save_directory, context.options->game_path);
+  std::string battery_error;
+  if (context.save_state_manager->LoadBattery(*context.core, battery_error)) {
+    std::cerr << "[sekaiemu] battery loaded at boot: "
+              << context.save_state_manager->BatteryPath() << "\n";
+  } else if (!battery_error.empty() &&
+             battery_error != "No battery save file exists yet." &&
+             battery_error != "No battery save memory is available.") {
+    std::cerr << "[sekaiemu] battery boot load skipped: " << battery_error << "\n";
+  }
 
   if (!context.options->probe_only) {
     if (!context.audio_output->Initialize(context.av_info->timing.sample_rate,

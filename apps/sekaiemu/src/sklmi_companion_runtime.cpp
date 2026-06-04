@@ -106,6 +106,10 @@ bool SklmiCompanionRuntime::Start(const SklmiCompanionOptions& options,
           "--ap-tags",
           ap_tags_text,
       };
+      if (!options.player_alias.empty()) {
+        arguments.push_back("--player-alias");
+        arguments.push_back(options.player_alias);
+      }
       if (!options.tracker_pack_path.empty()) {
         arguments.push_back("--tracker-pack");
         arguments.push_back(options.tracker_pack_path.string());

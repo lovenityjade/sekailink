@@ -196,6 +196,10 @@ RuntimeParseResult ParseRuntimeOptions(const std::vector<std::string>& args) {
             if (!RequireValue(args, i, &value, &result.error)) return result;
             options.ap_slot_name = value;
             ++i;
+        } else if (arg == "--player-alias") {
+            if (!RequireValue(args, i, &value, &result.error)) return result;
+            options.player_alias = value;
+            ++i;
         } else if (arg == "--ap-password") {
             if (!RequireValue(args, i, &value, &result.error)) return result;
             options.ap_password = value;
@@ -351,6 +355,7 @@ std::string RuntimeUsage() {
         << "[--ap-path <path>] "
         << "[--ap-game <game>] "
         << "[--ap-slot-name <slot>] "
+        << "[--player-alias <name>] "
         << "[--ap-password <password>] "
         << "[--ap-uuid <uuid>] "
         << "[--ap-tags AP,SekaiLink,SKLMI] "

@@ -418,7 +418,7 @@ int main(int argc, char** argv) {
         !Contains(snapshot, "\"slot_id\":\"Demo Slot\"") ||
         !Contains(snapshot, "\"seed\":\"Demo Seed\"") ||
         !Contains(snapshot, "\"seed_id\":\"Demo Seed\"") ||
-        !Contains(snapshot, "\"active_tab\":\"items\"") ||
+        !Contains(snapshot, "\"active_tab\":\"world-tab\"") ||
         !Contains(snapshot, "\"active_map\":\"world\"") ||
         !Contains(snapshot, "\"slot_data\":{\"goal\":\"demo\"}") ||
         !Contains(snapshot, "\"pack_maps\":[{\"name\":\"overworld\",\"image\":\"maps/overworld.png\"}]") ||

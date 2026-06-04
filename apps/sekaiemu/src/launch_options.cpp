@@ -40,11 +40,11 @@ std::string BuildUsageText(const std::string& executable_name) {
   text
       << "Usage:\n"
       << "  " << executable_name
-      << " [--probe-only] [--profile <profile.txt>] [--system-dir <dir>] [--save-dir <dir>] [--log-dir <dir>] [--memory-socket <path>] [--sklmi-runtime <path>] [--sklmi-manifest-dir <dir>] [--ap-host <host>] [--ap-port <port>] [--ap-path <path>] [--ap-game <game>] [--ap-slot-name <slot>] [--ap-password <password>] [--ap-uuid <uuid>] [--ap-tags <tags>] [--tracker-required] [--tracker-pack <path>] [--tracker-variant <name>] [--tracker-snapshot <path>] [--tracker-command-log <path>] [--tracker-assets-root <path>] [--tracker-bundle <path>] [--tracker-state <path>] [--chat-inbox <path>] [--chat-outbox <path>] [--input-script <path>] [--input-script-quit-after-end] [--load-state-on-start] [--save-state-at-frame <frame>] [--quit-after-frame <frame>] [--dump-frame-at-frame <frame>] [--dump-frame-path <path.ppm>] <core.so> <game.rom>\n"
+      << " [--probe-only] [--profile <profile.txt>] [--system-dir <dir>] [--save-dir <dir>] [--log-dir <dir>] [--memory-socket <path>] [--sklmi-runtime <path>] [--sklmi-manifest-dir <dir>] [--ap-host <host>] [--ap-port <port>] [--ap-path <path>] [--ap-game <game>] [--ap-slot-name <slot>] [--player-alias <name>] [--ap-password <password>] [--ap-uuid <uuid>] [--ap-tags <tags>] [--tracker-required] [--tracker-pack <path>] [--tracker-variant <name>] [--tracker-snapshot <path>] [--tracker-command-log <path>] [--tracker-assets-root <path>] [--tracker-bundle <path>] [--tracker-state <path>] [--chat-inbox <path>] [--chat-outbox <path>] [--input-script <path>] [--input-script-quit-after-end] [--load-state-on-start] [--save-state-at-frame <frame>] [--quit-after-frame <frame>] [--dump-frame-at-frame <frame>] [--dump-frame-path <path.ppm>] <core.so> <game.rom>\n"
       << "  " << executable_name
-      << " [--probe-only] --core <core.so> --game <game.rom> [--system-dir <dir>] [--save-dir <dir>] [--profile <profile.txt>] [--log-dir <dir>] [--memory-socket <path>] [--sklmi-runtime <path>] [--sklmi-manifest-dir <dir>] [--ap-host <host>] [--ap-port <port>] [--ap-path <path>] [--ap-game <game>] [--ap-slot-name <slot>] [--ap-password <password>] [--ap-uuid <uuid>] [--ap-tags <tags>] [--tracker-required] [--tracker-pack <path>] [--tracker-variant <name>] [--tracker-snapshot <path>] [--tracker-command-log <path>] [--tracker-assets-root <path>] [--tracker-bundle <path>] [--tracker-state <path>] [--chat-inbox <path>] [--chat-outbox <path>] [--input-script <path>] [--input-script-quit-after-end] [--load-state-on-start] [--save-state-at-frame <frame>] [--quit-after-frame <frame>] [--dump-frame-at-frame <frame>] [--dump-frame-path <path.ppm>]\n"
+      << " [--probe-only] --core <core.so> --game <game.rom> [--system-dir <dir>] [--save-dir <dir>] [--profile <profile.txt>] [--log-dir <dir>] [--memory-socket <path>] [--sklmi-runtime <path>] [--sklmi-manifest-dir <dir>] [--ap-host <host>] [--ap-port <port>] [--ap-path <path>] [--ap-game <game>] [--ap-slot-name <slot>] [--player-alias <name>] [--ap-password <password>] [--ap-uuid <uuid>] [--ap-tags <tags>] [--tracker-required] [--tracker-pack <path>] [--tracker-variant <name>] [--tracker-snapshot <path>] [--tracker-command-log <path>] [--tracker-assets-root <path>] [--tracker-bundle <path>] [--tracker-state <path>] [--chat-inbox <path>] [--chat-outbox <path>] [--input-script <path>] [--input-script-quit-after-end] [--load-state-on-start] [--save-state-at-frame <frame>] [--quit-after-frame <frame>] [--dump-frame-at-frame <frame>] [--dump-frame-path <path.ppm>]\n"
       << "  " << executable_name
-      << " [--probe-only] --core <core.so> --patch <patch.aplttp> --base-rom <rom.sfc> [--system-dir <dir>] [--save-dir <dir>] [--profile <profile.txt>] [--log-dir <dir>] [--memory-socket <path>] [--sklmi-runtime <path>] [--sklmi-manifest-dir <dir>] [--ap-host <host>] [--ap-port <port>] [--ap-path <path>] [--ap-game <game>] [--ap-slot-name <slot>] [--ap-password <password>] [--ap-uuid <uuid>] [--ap-tags <tags>] [--tracker-required] [--tracker-pack <path>] [--tracker-variant <name>] [--tracker-snapshot <path>] [--tracker-command-log <path>] [--tracker-assets-root <path>] [--tracker-bundle <path>] [--tracker-state <path>] [--chat-inbox <path>] [--chat-outbox <path>] [--input-script <path>] [--input-script-quit-after-end] [--load-state-on-start] [--save-state-at-frame <frame>] [--quit-after-frame <frame>] [--dump-frame-at-frame <frame>] [--dump-frame-path <path.ppm>]\n\n"
+      << " [--probe-only] --core <core.so> --patch <patch.aplttp> --base-rom <rom.sfc> [--system-dir <dir>] [--save-dir <dir>] [--profile <profile.txt>] [--log-dir <dir>] [--memory-socket <path>] [--sklmi-runtime <path>] [--sklmi-manifest-dir <dir>] [--ap-host <host>] [--ap-port <port>] [--ap-path <path>] [--ap-game <game>] [--ap-slot-name <slot>] [--player-alias <name>] [--ap-password <password>] [--ap-uuid <uuid>] [--ap-tags <tags>] [--tracker-required] [--tracker-pack <path>] [--tracker-variant <name>] [--tracker-snapshot <path>] [--tracker-command-log <path>] [--tracker-assets-root <path>] [--tracker-bundle <path>] [--tracker-state <path>] [--chat-inbox <path>] [--chat-outbox <path>] [--input-script <path>] [--input-script-quit-after-end] [--load-state-on-start] [--save-state-at-frame <frame>] [--quit-after-frame <frame>] [--dump-frame-at-frame <frame>] [--dump-frame-path <path.ppm>]\n\n"
       << "Examples:\n"
       << "  " << executable_name << " ./bsnes_mercury_libretro.so ./EarthBound.sfc ./system ./saves\n"
       << "  " << executable_name << " --probe-only ./mgba_libretro.so ./Pokemon.gba ./system ./saves\n"
@@ -92,7 +92,7 @@ CliParseResult ParseLaunchArgs(const std::vector<std::string>& args,
         argument == "--sklmi-manifest-dir" || argument == "--ap-host" ||
         argument == "--ap-port" || argument == "--ap-path" || argument == "--ap-game" ||
         argument == "--ap-slot-name" || argument == "--ap-password" || argument == "--ap-uuid" ||
-        argument == "--ap-tags" || argument == "--tracker-pack" ||
+        argument == "--player-alias" || argument == "--ap-tags" || argument == "--tracker-pack" ||
         argument == "--tracker-variant" || argument == "--tracker-snapshot" ||
         argument == "--tracker-command-log" || argument == "--tracker-assets-root" ||
         argument == "--tracker-bundle" ||
@@ -142,6 +142,8 @@ CliParseResult ParseLaunchArgs(const std::vector<std::string>& args,
         result.request.ap_game = value;
       } else if (argument == "--ap-slot-name") {
         result.request.ap_slot_name = value;
+      } else if (argument == "--player-alias") {
+        result.request.player_alias = value;
       } else if (argument == "--ap-password") {
         result.request.ap_password = value;
       } else if (argument == "--ap-uuid") {
@@ -250,6 +252,7 @@ HostOptions BuildHostOptions(const LaunchRequest& request) {
       .ap_path = request.ap_path,
       .ap_game = request.ap_game,
       .ap_slot_name = request.ap_slot_name,
+      .player_alias = request.player_alias,
       .ap_password = request.ap_password,
       .ap_uuid = request.ap_uuid,
       .ap_tags = request.ap_tags,

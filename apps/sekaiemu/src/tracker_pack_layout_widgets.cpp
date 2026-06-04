@@ -51,6 +51,22 @@ bool PinChecked(const BundlePinRenderMetadata& pin,
   return pin.has_explicit_checked ? pin.checked : checked_ids.contains(state_id);
 }
 
+bool ShouldDrawCountBadge(std::string_view code,
+                          const PackVisualDefinition* definition,
+                          const PackVisualState& state) {
+  if (state.count <= 1 && state.stage <= 1) {
+    return false;
+  }
+  std::string token = CanonicalToken(code);
+  if (definition != nullptr) {
+    token += CanonicalToken(definition->primary_code);
+    token += CanonicalToken(definition->label);
+  }
+  return token.find("smallkey") != std::string::npos ||
+         token.find("bigkey") != std::string::npos ||
+         token.find("keydrop") != std::string::npos;
+}
+
 }  // namespace
 
 void DrawFrame(OverlayCanvas& canvas, const UiPalette& palette, const Rect& rect, std::string_view title) {
@@ -163,7 +179,7 @@ void DrawPackItemCell(OverlayCanvas& canvas,
                     text_scale);
   }
 
-  if ((state.count > 1 || state.stage > 1) && rect.width >= 14 && rect.height >= 12) {
+  if (ShouldDrawCountBadge(code, definition, state) && rect.width >= 14 && rect.height >= 12) {
     const auto badge_text = std::to_string(std::max(state.count, state.stage));
     int badge_scale = text_scale;
     int badge_width = static_cast<int>(badge_text.size()) * 6 * badge_scale + 4;

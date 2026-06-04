@@ -33,6 +33,12 @@ struct BundleItemRenderMetadata {
 };
 
 struct BundlePinSegmentRenderMetadata {
+  struct Check {
+    std::string location_id;
+    std::string label;
+    bool checked = false;
+  };
+
   std::string section_id;
   std::string label;
   std::string color;
@@ -40,16 +46,19 @@ struct BundlePinSegmentRenderMetadata {
   std::int64_t total_count = 0;
   bool checked = false;
   bool mixed = false;
+  std::vector<Check> checks;
 };
 
 struct BundlePinRenderMetadata {
   std::string id;
   std::string location_id;
+  std::string group_id;
   std::string map_id;
   std::string pack_map;
   std::string map_asset;
   std::string label;
   std::string color;
+  double size = 0.0;
   double x = 0.0;
   double y = 0.0;
   bool has_position = false;
@@ -78,6 +87,8 @@ std::vector<BundleItemRenderMetadata> BuildBundleItems(const TrackerRuntime& run
 std::vector<BundlePinRenderMetadata> BuildBundlePins(const TrackerRuntime& runtime,
                                                      const TrackerResolvedViewState& resolved);
 std::string SnapshotStringAt(const TrackerRuntime& runtime, std::string_view path);
+std::string SnapshotDisplayPlayerName(const TrackerRuntime& runtime, std::string_view fallback = {});
+std::string SnapshotDisplayPlayerContext(const TrackerRuntime& runtime, std::string_view fallback = {});
 std::size_t SnapshotArraySize(const nlohmann::json& snapshot,
                               std::initializer_list<const char*> keys);
 std::vector<RecentRenderRow> BuildRecentRows(const TrackerRuntime& runtime,

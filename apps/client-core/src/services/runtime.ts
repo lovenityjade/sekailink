@@ -76,6 +76,7 @@ export type SessionAutoLaunchOptions = {
   downloadUrl: string;
   serverAddress: string;
   slot: string;
+  playerAlias?: string;
   password?: string;
   apGameName?: string;
   forceTrackerVariantPrompt?: boolean;

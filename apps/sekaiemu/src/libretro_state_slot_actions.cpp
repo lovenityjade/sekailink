@@ -1,5 +1,7 @@
 #include "libretro_state_slot_actions.hpp"
 
+#include "tracker_overlay_render_state.hpp"
+
 #include <algorithm>
 #include <chrono>
 #include <ctime>
@@ -100,6 +102,13 @@ nlohmann::json BuildStateSlotMetadata(const TrackerRuntime& tracker_runtime,
            {"seed_name", JsonStringAt(snapshot, "seed_name")},
            {"slot_id", state.slot_id},
            {"slot_name", JsonStringAt(snapshot, "slot_name")},
+           {"username", SnapshotStringAt(tracker_runtime, "username").empty()
+                            ? SnapshotStringAt(tracker_runtime, "room_metadata.username")
+                            : SnapshotStringAt(tracker_runtime, "username")},
+           {"player_alias", SnapshotStringAt(tracker_runtime, "player_alias").empty()
+                                ? SnapshotStringAt(tracker_runtime, "room_metadata.player_alias")
+                                : SnapshotStringAt(tracker_runtime, "player_alias")},
+           {"player_display_name", SnapshotDisplayPlayerName(tracker_runtime)},
            {"room_name", JsonStringAt(snapshot, "room_name")},
            {"game", JsonStringAt(snapshot, "game")},
            {"checked_locations", checked},

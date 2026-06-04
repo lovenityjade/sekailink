@@ -15,6 +15,7 @@ export type SessionLaunchRequest = {
   downloadUrl?: string;
   serverAddress: string;
   slot: string;
+  playerAlias?: string;
   password?: string;
   apGameName?: string;
   forceTrackerVariantPrompt?: boolean;
@@ -83,6 +84,7 @@ export const executeSessionLaunch = async (request: SessionLaunchRequest): Promi
     downloadUrl: String(request.downloadUrl || "").trim(),
     serverAddress: request.serverAddress,
     slot: request.slot,
+    playerAlias: request.playerAlias,
     password: request.password,
     apGameName: request.apGameName,
     forceTrackerVariantPrompt: request.forceTrackerVariantPrompt === true,

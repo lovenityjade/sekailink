@@ -148,7 +148,16 @@ bool OfflineRoomClient::load_state(std::string* error) {
                 return part;
             }();
             item.ap_item_id = detail::parse_u64(raw_ap_item_id).value_or(0);
-            std::getline(fields, item.item_name, '|');
+            std::string rest;
+            std::getline(fields, rest);
+            const auto player_separator = rest.find('|');
+            if (player_separator != std::string::npos) {
+                const auto player_text = rest.substr(0, player_separator);
+                item.ap_player_id = detail::parse_u64(player_text).value_or(0);
+                item.item_name = rest.substr(player_separator + 1);
+            } else {
+                item.item_name = rest;
+            }
             if (kind == "pending") {
                 pending_items_[item.item_id] = std::move(item);
             } else {
@@ -190,16 +199,22 @@ bool OfflineRoomClient::save_state(std::string* error) const {
                << detail::state_file_escape(item.event_key) << "|"
                << detail::state_file_escape(item.mapped_value) << "|"
                << item.value_u64 << "|"
-               << item.ap_item_id << "|"
-               << detail::state_file_escape(item.item_name) << "\n";
+               << item.ap_item_id << "|";
+        if (item.ap_player_id != 0) {
+            output << item.ap_player_id << "|";
+        }
+        output << detail::state_file_escape(item.item_name) << "\n";
     }
     for (const auto& [id, item] : consumed_items_) {
         output << "consumed|" << detail::state_file_escape(id) << "|"
                << detail::state_file_escape(item.event_key) << "|"
                << detail::state_file_escape(item.mapped_value) << "|"
                << item.value_u64 << "|"
-               << item.ap_item_id << "|"
-               << detail::state_file_escape(item.item_name) << "\n";
+               << item.ap_item_id << "|";
+        if (item.ap_player_id != 0) {
+            output << item.ap_player_id << "|";
+        }
+        output << detail::state_file_escape(item.item_name) << "\n";
     }
     return true;
 }
@@ -332,6 +347,7 @@ std::vector<RoomItem> GameServerRoomClient::poll_pending_items(std::string* erro
         const auto delivery_id = detail::extract_uint_field(block, "delivery_id");
         const auto ap_item_id = detail::extract_uint_field(block, "item_id").value_or(0);
         const auto item_name = detail::extract_string_field(block, "item_name").value_or("");
+        const auto sender_slot = detail::extract_uint_field(block, "sender_slot").value_or(0);
         const auto event_key = detail::extract_string_field(block, "event_key")
                                    .value_or(detail::extract_string_field(block, "tracker_semantic_id").value_or(""));
         const auto mapped_value = detail::extract_string_field(block, "mapped_value").value_or("");
@@ -341,6 +357,7 @@ std::vector<RoomItem> GameServerRoomClient::poll_pending_items(std::string* erro
         RoomItem item;
         item.item_id = "delivery:" + std::to_string(*delivery_id);
         item.ap_item_id = ap_item_id;
+        item.ap_player_id = sender_slot;
         item.item_name = item_name;
         item.event_key = event_key;
         item.mapped_value = mapped_value;

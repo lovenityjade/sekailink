@@ -148,6 +148,17 @@ struct TrackerUiState {
   int map_context_menu_y = 0;
   std::size_t map_context_menu_selected_index = 0;
   std::string map_context_menu_expanded_map_id;
+  std::string previous_map_id;
+  std::string previous_tab_id;
+  bool pin_context_menu_visible = false;
+  int pin_context_menu_x = 0;
+  int pin_context_menu_y = 0;
+  std::size_t pin_context_menu_selected_index = 0;
+  std::string pin_context_menu_pin_id;
+  bool hover_tooltip_visible = false;
+  int hover_tooltip_x = 0;
+  int hover_tooltip_y = 0;
+  std::string hover_tooltip_text;
   double zoom = 1.0;
   double pan_x = 0.0;
   double pan_y = 0.0;
@@ -201,6 +212,11 @@ class TrackerRuntime {
   void CloseMapContextMenu();
   void SetMapContextMenuSelectedIndex(std::size_t selected_index);
   void SetMapContextMenuExpandedMapId(std::string map_id);
+  void OpenPinContextMenuAt(std::string pin_id, int x, int y);
+  void ClosePinContextMenu();
+  void SetPinContextMenuSelectedIndex(std::size_t selected_index);
+  void SetHoverTooltip(std::string text, int x, int y);
+  void ClearHoverTooltip();
   void Tick(double dt);
 
   const TrackerBundle* Bundle() const { return bundle_ ? &*bundle_ : nullptr; }

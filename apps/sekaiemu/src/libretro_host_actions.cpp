@@ -11,6 +11,7 @@
 #include "tracker_overlay_renderer.hpp"
 
 #include <algorithm>
+#include <iostream>
 #include <optional>
 #include <string_view>
 #include <utility>
@@ -62,6 +63,10 @@ TrackerInteractionGeometry BuildTrackerInteractionGeometry(const TrackerRuntime&
       result.layout.y = static_cast<int>(result.overlay_height) - result.layout.height - 12;
       break;
     case TrackerDisplayMode::ToggleScreen:
+      result.overlay_width = game_width * 3u;
+      result.overlay_height = game_height * 3u;
+      result.window_width = result.overlay_width;
+      result.window_height = result.overlay_height;
       result.layout =
           TrackerPanelLayout{0, 0, static_cast<int>(result.overlay_width), static_cast<int>(result.overlay_height)};
       break;
@@ -189,6 +194,16 @@ void LibretroHost::Impl::SaveTrackerState(const char* reason) {
                           reason);
 }
 
+void LibretroHost::Impl::ToggleFullscreen() {
+  if (!video_backend) {
+    return;
+  }
+  std::string error;
+  if (!video_backend->ToggleFullscreen(error)) {
+    std::cerr << "[sekaiemu] fullscreen toggle failed: " << error << "\n";
+  }
+}
+
 void LibretroHost::Impl::CycleTrackerDisplayMode() {
   const bool changed = sekaiemu::spike::CycleTrackerDisplayMode(
       tracker_active_,
@@ -278,6 +293,20 @@ bool LibretroHost::Impl::ActivateTrackerMapMenu() {
     tracker_dirty_ = true;
     return true;
   }
+  if (entry.kind == TrackerMapContextMenuEntryKind::PreviousMap) {
+    tracker_runtime_.SetManualMap(entry.map_id);
+    if (!entry.tab_id.empty()) {
+      tracker_runtime_.SetActiveTab(entry.tab_id);
+    }
+    nlohmann::json command{{"cmd", "tracker.set_map"}, {"map", entry.map_id}};
+    if (!entry.tab_id.empty()) {
+      command["tab"] = entry.tab_id;
+    }
+    EmitTrackerCommand(std::move(command));
+    tracker_runtime_.CloseMapContextMenu();
+    tracker_dirty_ = true;
+    return true;
+  }
   if (entry.expandable) {
     const auto& current_expanded = tracker_runtime_.UiState().map_context_menu_expanded_map_id;
     tracker_runtime_.SetMapContextMenuExpandedMapId(current_expanded == entry.map_id ? std::string{} : entry.map_id);
@@ -292,10 +321,10 @@ bool LibretroHost::Impl::ActivateTrackerMapMenu() {
   }
   if (!entry.map_id.empty()) {
     const auto tab_id = !entry.tab_id.empty() ? entry.tab_id : FindVisibleTabForMap(resolved, entry.map_id);
+    tracker_runtime_.SetManualMap(entry.map_id);
     if (!tab_id.empty()) {
       tracker_runtime_.SetActiveTab(tab_id);
     }
-    tracker_runtime_.SetManualMap(entry.map_id);
     nlohmann::json command{{"cmd", "tracker.set_map"}, {"map", entry.map_id}};
     if (!tab_id.empty()) {
       command["tab"] = tab_id;

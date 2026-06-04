@@ -145,6 +145,11 @@ TrackerPersistedState TrackerRuntime::BuildPersistedState() const {
   state.world_instance_id = authoritative_state_.world_instance_id;
   state.local_overrides = local_override_state_;
   state.ui_state = ui_state_;
+  state.ui_state.map_context_menu_visible = false;
+  state.ui_state.pin_context_menu_visible = false;
+  state.ui_state.pin_context_menu_pin_id.clear();
+  state.ui_state.hover_tooltip_visible = false;
+  state.ui_state.hover_tooltip_text.clear();
   state.cached_seed_metadata = authoritative_state_.seed_metadata;
   state.cached_server_snapshot = authoritative_state_.snapshot;
   state.cached_observed_state = observed_state_.runtime_context;

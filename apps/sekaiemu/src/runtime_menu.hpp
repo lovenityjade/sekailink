@@ -89,6 +89,7 @@ class RuntimeMenu {
 
   void Toggle();
   void Open();
+  void OpenShortcutHelp();
   void Close();
   bool Visible() const { return visible_; }
   RuntimeSettingsMode SettingsMode() const { return settings_mode_; }

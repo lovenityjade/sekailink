@@ -46,6 +46,12 @@ void RenderTrackerOverlayMode(TrackerRuntime& tracker_runtime,
       break;
     case TrackerDisplayMode::ToggleScreen:
       compact = false;
+      width = game_width * 3u;
+      height = game_height * 3u;
+      game_area_width = static_cast<int>(width);
+      game_area_height = static_cast<int>(height);
+      canvas = OverlayCanvas(width, height);
+      canvas.Clear({0, 0, 0, 0});
       layout.x = 0;
       layout.y = 0;
       layout.width = static_cast<int>(width);

@@ -70,6 +70,8 @@ struct PackVisualDefinition {
 
 struct PackVisualState {
   bool acquired = false;
+  bool composite_left = false;
+  bool composite_right = false;
   int stage = 0;
   int count = 0;
   std::string label;

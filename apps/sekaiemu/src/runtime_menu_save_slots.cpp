@@ -42,6 +42,16 @@ std::string JsonStringAt(const nlohmann::json& root, std::string_view key) {
   return {};
 }
 
+std::string FirstJsonStringAt(const nlohmann::json& root, std::initializer_list<const char*> keys) {
+  for (const char* key : keys) {
+    auto value = JsonStringAt(root, key);
+    if (!value.empty()) {
+      return value;
+    }
+  }
+  return {};
+}
+
 bool ReadToken(const std::vector<std::uint8_t>& bytes, std::size_t& offset, std::string& token) {
   token.clear();
   while (offset < bytes.size()) {
@@ -128,7 +138,8 @@ void LoadMetadata(const SaveStateManager& save_state_manager, SaveStateSlotMenuI
       const auto seed = JsonStringAt(*sync, "seed_name").empty()
                             ? JsonStringAt(*sync, "seed_id")
                             : JsonStringAt(*sync, "seed_name");
-      const auto player = JsonStringAt(*sync, "slot_name");
+      const auto player =
+          FirstJsonStringAt(*sync, {"player_display_name", "username", "player_alias", "slot_name"});
       slot.detail = player.empty() ? seed : player + (seed.empty() ? "" : " / " + seed);
     }
   } catch (const std::exception&) {

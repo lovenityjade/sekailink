@@ -51,6 +51,15 @@ std::string EventToJson(const Event& event) {
     if (event.canonical_id != 0) {
         out << ",\"canonical_id\":" << event.canonical_id;
     }
+    if (!event.tab_id.empty()) {
+        out << ",\"tab_id\":\"" << EscapeJson(event.tab_id) << "\"";
+    }
+    if (!event.map_id.empty()) {
+        out << ",\"map_id\":\"" << EscapeJson(event.map_id) << "\"";
+    }
+    if (!event.zone_id.empty()) {
+        out << ",\"zone_id\":\"" << EscapeJson(event.zone_id) << "\"";
+    }
     out << "}";
     return out.str();
 }

@@ -28,6 +28,7 @@ struct UiPalette {
 std::string DisplayModeLabel(TrackerDisplayMode mode, bool compact);
 std::string BadgeText(const std::string& label, const std::string& fallback);
 UiColor ParseHexColor(std::string_view value, UiColor fallback);
+UiColor PinFillColor(std::string_view color, bool checked);
 
 void DrawSectionBox(OverlayCanvas& canvas,
                     const UiPalette& palette,

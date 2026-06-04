@@ -187,6 +187,69 @@ std::string SnapshotStringAt(const TrackerRuntime& runtime, std::string_view pat
   return MetadataStringAt(runtime.AuthoritativeState().snapshot, path);
 }
 
+std::string SnapshotDisplayPlayerName(const TrackerRuntime& runtime, std::string_view fallback) {
+  for (const char* path : {"username",
+                           "player_display_name",
+                           "player_alias",
+                           "room_metadata.username",
+                           "room_metadata.player_display_name",
+                           "room_metadata.player_alias",
+                           "room_metadata.slot_alias",
+                           "slot_name",
+                           "room_metadata.slot_name"}) {
+    auto value = SnapshotStringAt(runtime, path);
+    if (!value.empty()) {
+      return value;
+    }
+  }
+  if (!fallback.empty()) {
+    return std::string(fallback);
+  }
+  const auto& authoritative = runtime.AuthoritativeState();
+  return authoritative.slot_id.empty() ? std::string{} : authoritative.slot_id;
+}
+
+std::string SnapshotDisplayPlayerContext(const TrackerRuntime& runtime, std::string_view fallback) {
+  auto player = SnapshotDisplayPlayerName(runtime, fallback);
+  if (player.empty()) {
+    return {};
+  }
+
+  std::string game;
+  for (const char* path : {"game", "game_name", "room_metadata.game", "room_metadata.game_name"}) {
+    game = SnapshotStringAt(runtime, path);
+    if (!game.empty()) {
+      break;
+    }
+  }
+
+  std::string instance;
+  for (const char* path : {"game_inc",
+                           "game_instance",
+                           "seed_instance",
+                           "seed_index",
+                           "room_metadata.game_inc",
+                           "room_metadata.game_instance",
+                           "room_metadata.seed_instance",
+                           "room_metadata.seed_index"}) {
+    instance = SnapshotStringAt(runtime, path);
+    if (!instance.empty() && instance != "0" && instance != "1") {
+      break;
+    }
+    instance.clear();
+  }
+
+  if (game.empty()) {
+    return player;
+  }
+  player += " (" + game;
+  if (!instance.empty()) {
+    player += " {" + instance + "}";
+  }
+  player += ")";
+  return player;
+}
+
 std::size_t SnapshotArraySize(const nlohmann::json& snapshot,
                               std::initializer_list<const char*> keys) {
   for (const char* key : keys) {
@@ -357,18 +420,14 @@ std::string FormatPercent(std::size_t value, std::size_t maximum) {
 std::string BuildSessionHeadline(const TrackerRuntime& runtime,
                                  const TrackerResolvedViewState& resolved) {
   const auto& authoritative = runtime.AuthoritativeState();
-  const std::string slot_name = SnapshotStringAt(runtime, "slot_name");
-  const std::string player_alias = SnapshotStringAt(runtime, "player_alias");
+  const std::string player_name = SnapshotDisplayPlayerName(runtime);
   const std::string room_id = SnapshotStringAt(runtime, "room_id");
 
   std::vector<std::string> parts;
-  if (!slot_name.empty()) {
-    parts.push_back(slot_name);
+  if (!player_name.empty()) {
+    parts.push_back(player_name);
   } else if (!authoritative.slot_id.empty()) {
     parts.push_back(authoritative.slot_id);
-  }
-  if (!player_alias.empty()) {
-    parts.push_back(player_alias);
   }
   if (!room_id.empty()) {
     parts.push_back(room_id);
@@ -394,19 +453,15 @@ std::vector<std::string> BuildMetadataChips(const TrackerRuntime& runtime,
                                             const TrackerResolvedViewState& resolved) {
   const auto& authoritative = runtime.AuthoritativeState();
   const auto& seed_metadata = resolved.seed_metadata;
-  const std::string player_alias = SnapshotStringAt(runtime, "player_alias");
-  const std::string slot_name = SnapshotStringAt(runtime, "slot_name");
+  const std::string player_name = SnapshotDisplayPlayerName(runtime);
   const std::string room_id = SnapshotStringAt(runtime, "room_id");
 
   std::vector<std::string> chips;
   if (const auto connected = SnapshotConnectionState(runtime); connected.has_value()) {
     chips.push_back(*connected ? "LINK ON" : "LINK OFF");
   }
-  if (!slot_name.empty()) {
-    chips.push_back("NAME " + TruncateText(slot_name, 12));
-  }
-  if (!player_alias.empty()) {
-    chips.push_back("ALIAS " + TruncateText(player_alias, 12));
+  if (!player_name.empty()) {
+    chips.push_back("USER " + TruncateText(player_name, 12));
   }
   if (!room_id.empty()) {
     chips.push_back("ROOM " + TruncateText(room_id, 12));

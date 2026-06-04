@@ -13,6 +13,8 @@ constexpr std::size_t kMaxStoredMessages = 64;
 constexpr std::size_t kMaxExternalMessageIds = 256;
 constexpr std::size_t kMaxVisibleLines = 8;
 constexpr std::size_t kMaxInputChars = 160;
+constexpr std::size_t kMaxAuthorChars = 48;
+constexpr std::size_t kMaxSuggestionLines = 5;
 
 std::uint8_t AlphaForAge(std::uint64_t age) {
   if (age >= kMessageTtlFrames) {
@@ -29,6 +31,59 @@ std::string Trim(std::string value) {
     value.pop_back();
   }
   return value;
+}
+
+std::string ToLowerAscii(std::string_view text) {
+  std::string out;
+  out.reserve(text.size());
+  for (unsigned char ch : text) {
+    out.push_back(static_cast<char>(std::tolower(ch)));
+  }
+  return out;
+}
+
+bool StartsWith(std::string_view text, std::string_view prefix) {
+  return text.size() >= prefix.size() && text.substr(0, prefix.size()) == prefix;
+}
+
+std::string CleanSuggestion(std::string_view text, std::size_t max_size) {
+  std::string out;
+  out.reserve(std::min(max_size, text.size()));
+  for (unsigned char ch : text) {
+    if (ch == '\r' || ch == '\n' || ch == '\0') {
+      continue;
+    }
+    if (ch < 32 || ch > 126) {
+      out.push_back('?');
+    } else {
+      out.push_back(static_cast<char>(ch));
+    }
+    if (out.size() >= max_size) {
+      break;
+    }
+  }
+  return Trim(std::move(out));
+}
+
+std::vector<std::string> UniqueCleanSuggestions(std::vector<std::string> values,
+                                                std::size_t max_value_size,
+                                                std::size_t max_count) {
+  std::vector<std::string> out;
+  out.reserve(std::min(values.size(), max_count));
+  for (const auto& value : values) {
+    auto clean = CleanSuggestion(value, max_value_size);
+    if (clean.empty()) {
+      continue;
+    }
+    if (std::find(out.begin(), out.end(), clean) != out.end()) {
+      continue;
+    }
+    out.push_back(std::move(clean));
+    if (out.size() >= max_count) {
+      break;
+    }
+  }
+  return out;
 }
 
 std::vector<std::string> WrapText(std::string_view text, std::size_t max_chars) {
@@ -77,6 +132,16 @@ std::vector<std::string> WrapText(std::string_view text, std::size_t max_chars) 
     lines.emplace_back();
   }
   return lines;
+}
+
+std::string TruncateText(std::string_view text, std::size_t max_chars) {
+  if (text.size() <= max_chars) {
+    return std::string(text);
+  }
+  if (max_chars <= 1) {
+    return std::string(text.substr(0, max_chars));
+  }
+  return std::string(text.substr(0, max_chars - 1)) + "~";
 }
 
 void DrawShadowedText(OverlayCanvas& canvas,
@@ -186,7 +251,45 @@ void RuntimeChatOverlay::Backspace() {
   dirty_ = true;
 }
 
-std::optional<std::string> RuntimeChatOverlay::Submit(std::uint64_t frame, std::string_view author) {
+bool RuntimeChatOverlay::ApplyAutocomplete() {
+  if (!typing_) {
+    return false;
+  }
+  const auto suggestions = BuildInputSuggestions();
+  if (suggestions.empty()) {
+    return false;
+  }
+  const auto& suggestion = suggestions.front();
+  if (StartsWith(input_, "/hint ")) {
+    input_ = "/hint " + suggestion;
+  } else if (suggestion == "/hint <itemname>") {
+    input_ = "/hint ";
+  } else {
+    input_ = suggestion;
+    if (input_ == "/hint") {
+      input_ += ' ';
+    }
+  }
+  dirty_ = true;
+  return true;
+}
+
+void RuntimeChatOverlay::SetCommandSuggestions(std::vector<std::string> commands) {
+  command_suggestions_ = UniqueCleanSuggestions(std::move(commands), 64, 16);
+  if (command_suggestions_.empty()) {
+    command_suggestions_ = {"/hint <itemname>", "/collect", "/remaining"};
+  }
+  dirty_ = true;
+}
+
+void RuntimeChatOverlay::SetItemNameSuggestions(std::vector<std::string> item_names) {
+  item_name_suggestions_ = UniqueCleanSuggestions(std::move(item_names), 96, 512);
+  dirty_ = true;
+}
+
+std::optional<std::string> RuntimeChatOverlay::Submit(std::uint64_t frame,
+                                                      std::string_view author,
+                                                      bool echo) {
   if (!typing_) {
     return std::nullopt;
   }
@@ -197,10 +300,12 @@ std::optional<std::string> RuntimeChatOverlay::Submit(std::uint64_t frame, std::
   if (text.empty()) {
     return std::nullopt;
   }
-  last_submitted_author_ = Sanitize(author.empty() ? "ME" : author, 24);
+  last_submitted_author_ = Sanitize(author.empty() ? "ME" : author, kMaxAuthorChars);
   last_submitted_text_ = Sanitize(text, 400);
   last_submit_frame_ = frame;
-  AddMessage(last_submitted_author_, last_submitted_text_, frame);
+  if (echo) {
+    AddMessage(last_submitted_author_, last_submitted_text_, frame);
+  }
   return text;
 }
 
@@ -209,7 +314,7 @@ void RuntimeChatOverlay::AddMessage(std::string_view author, std::string_view te
   if (clean_text.empty()) {
     return;
   }
-  messages_.push_back(Message{Sanitize(author.empty() ? "ME" : author, 24), clean_text, frame});
+  messages_.push_back(Message{Sanitize(author.empty() ? "ME" : author, kMaxAuthorChars), clean_text, frame});
   while (messages_.size() > kMaxStoredMessages) {
     messages_.erase(messages_.begin());
   }
@@ -219,6 +324,7 @@ void RuntimeChatOverlay::AddMessage(std::string_view author, std::string_view te
 void RuntimeChatOverlay::AddExternalMessage(std::uint64_t id,
                                             std::string_view author,
                                             std::string_view text,
+                                            std::string_view kind,
                                             std::uint64_t frame) {
   if (id != 0) {
     if (external_message_ids_.find(id) != external_message_ids_.end()) {
@@ -231,18 +337,56 @@ void RuntimeChatOverlay::AddExternalMessage(std::uint64_t id,
       external_message_order_.pop_front();
     }
   }
-  const auto clean_author = Sanitize(author.empty() ? "ROOM" : author, 24);
+  const auto clean_author = Sanitize(author.empty() ? "ROOM" : author, kMaxAuthorChars);
   const auto clean_text = Sanitize(text, 400);
   if (clean_text.empty()) {
     return;
   }
+  const bool system_like = kind == "system" || kind == "connection" || kind == "defeat";
   const bool likely_echo = frame >= last_submit_frame_ &&
                            frame - last_submit_frame_ < 60 * 10 &&
+                           !system_like &&
                            clean_text == last_submitted_text_;
   if (likely_echo) {
     return;
   }
   AddMessage(clean_author, clean_text, frame);
+}
+
+std::vector<std::string> RuntimeChatOverlay::BuildInputSuggestions() const {
+  if (input_.empty() || input_.front() != '/') {
+    return {};
+  }
+  std::vector<std::string> suggestions;
+  const auto commands = command_suggestions_.empty()
+                            ? std::vector<std::string>{"/hint <itemname>", "/collect", "/remaining"}
+                            : command_suggestions_;
+  if (StartsWith(input_, "/hint ")) {
+    const auto raw_query = input_.substr(6);
+    const auto query = ToLowerAscii(raw_query);
+    for (const auto& item : item_name_suggestions_) {
+      const auto lowered = ToLowerAscii(item);
+      if (query.empty() || lowered.find(query) != std::string::npos) {
+        suggestions.push_back(item);
+      }
+      if (suggestions.size() >= kMaxSuggestionLines) {
+        break;
+      }
+    }
+    return suggestions;
+  }
+
+  const auto query = ToLowerAscii(input_);
+  for (const auto& command : commands) {
+    const auto lowered = ToLowerAscii(command);
+    if (query == "/" || lowered.find(query) == 0) {
+      suggestions.push_back(command);
+    }
+    if (suggestions.size() >= kMaxSuggestionLines) {
+      break;
+    }
+  }
+  return suggestions;
 }
 
 void RuntimeChatOverlay::Render(OverlayCanvas& canvas,
@@ -257,7 +401,7 @@ void RuntimeChatOverlay::Render(OverlayCanvas& canvas,
   const int margin = std::max(8, game_area_width / 80);
   const int line_height = 8 * scale + 3;
   const int input_height = typing_ ? line_height + 9 : 0;
-  const int max_width = std::max(180, std::min(game_area_width - margin * 2, game_area_width * 58 / 100));
+  const int max_width = std::max(180, std::min(game_area_width - margin * 2, game_area_width * 74 / 100));
   const std::size_t max_chars = static_cast<std::size_t>(std::max(12, (max_width - 14) / (6 * scale)));
 
   struct RenderLine {
@@ -283,6 +427,7 @@ void RuntimeChatOverlay::Render(OverlayCanvas& canvas,
   const int line_count = static_cast<int>(lines.size());
   int bottom = std::max(margin + input_height, game_area_height - margin);
   if (typing_) {
+    const auto suggestions = BuildInputSuggestions();
     const int input_y = bottom - input_height + 2;
     canvas.FillRect(margin, input_y, max_width, input_height - 2, UiColor{0, 0, 0, 185});
     canvas.DrawRect(margin, input_y, max_width, input_height - 2, UiColor{190, 205, 230, 210});
@@ -293,6 +438,23 @@ void RuntimeChatOverlay::Render(OverlayCanvas& canvas,
                      prompt.size() > max_chars ? prompt.substr(prompt.size() - max_chars) : prompt,
                      UiColor{245, 245, 245, 255},
                      scale);
+    if (!suggestions.empty()) {
+      const int suggestion_height =
+          static_cast<int>(suggestions.size()) * line_height + 8;
+      const int suggestion_y = std::max(margin, input_y - suggestion_height - 4);
+      canvas.FillRect(margin, suggestion_y, max_width, suggestion_height, UiColor{0, 0, 0, 205});
+      canvas.DrawRect(margin, suggestion_y, max_width, suggestion_height, UiColor{120, 225, 210, 220});
+      int suggestion_line_y = suggestion_y + 5;
+      for (const auto& suggestion : suggestions) {
+        DrawShadowedText(canvas,
+                         margin + 8,
+                         suggestion_line_y,
+                         TruncateText(suggestion, max_chars),
+                         UiColor{210, 255, 248, 245},
+                         scale);
+        suggestion_line_y += line_height;
+      }
+    }
     bottom = input_y - 3;
   }
 

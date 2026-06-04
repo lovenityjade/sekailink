@@ -67,6 +67,15 @@ void PumpRuntimeEvents(RuntimeLoopContext& context) {
         }
         break;
       case SDL_KEYDOWN:
+        if (event.key.repeat == 0 &&
+            (event.key.keysym.scancode == SDL_SCANCODE_F12 ||
+             (event.key.keysym.scancode == SDL_SCANCODE_RETURN &&
+              (event.key.keysym.mod & KMOD_ALT) != 0))) {
+          if (context.on_toggle_fullscreen) {
+            context.on_toggle_fullscreen();
+          }
+          break;
+        }
         if (context.chat_typing_active && context.chat_typing_active()) {
           if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
             if (context.on_cancel_chat_input) {
@@ -80,6 +89,10 @@ void PumpRuntimeEvents(RuntimeLoopContext& context) {
           } else if (event.key.keysym.scancode == SDL_SCANCODE_BACKSPACE) {
             if (context.on_backspace_chat_input) {
               context.on_backspace_chat_input();
+            }
+          } else if (event.key.keysym.scancode == SDL_SCANCODE_TAB) {
+            if (event.key.repeat == 0 && context.on_autocomplete_chat_input) {
+              context.on_autocomplete_chat_input();
             }
           } else if (event.key.keysym.scancode == SDL_SCANCODE_V &&
                      (event.key.keysym.mod & KMOD_CTRL) != 0) {
@@ -104,17 +117,25 @@ void PumpRuntimeEvents(RuntimeLoopContext& context) {
           break;
         }
         if (context.runtime_menu->Visible()) {
-          const auto action =
-              context.runtime_menu->HandleKey(event.key.keysym.scancode,
-                                             *context.core_option_manager,
-                                             *context.input_state);
-          context.on_apply_menu_action(action);
-          context.on_menu_visibility_changed(context.runtime_menu->Visible());
+          if (event.key.repeat == 0 && event.key.keysym.scancode == SDL_SCANCODE_F1) {
+            context.runtime_menu->OpenShortcutHelp();
+            context.on_menu_visibility_changed(true);
+          } else {
+            const auto action =
+                context.runtime_menu->HandleKey(event.key.keysym.scancode,
+                                               *context.core_option_manager,
+                                               *context.input_state);
+            context.on_apply_menu_action(action);
+            context.on_menu_visibility_changed(context.runtime_menu->Visible());
+          }
         } else if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
           context.runtime_menu->Open();
           context.on_menu_visibility_changed(true);
         } else if (event.key.keysym.scancode == SDL_SCANCODE_F1) {
-          context.on_reset_core();
+          if (event.key.repeat == 0) {
+            context.runtime_menu->OpenShortcutHelp();
+            context.on_menu_visibility_changed(true);
+          }
         } else if (event.key.keysym.scancode == SDL_SCANCODE_F2) {
           context.on_save_battery();
         } else if (event.key.keysym.scancode == SDL_SCANCODE_F3) {
@@ -156,9 +177,27 @@ void PumpRuntimeEvents(RuntimeLoopContext& context) {
         }
         break;
       case SDL_MOUSEBUTTONDOWN:
+        if (!context.runtime_menu->Visible() && context.tracker_map_menu_visible &&
+            context.tracker_map_menu_visible()) {
+          if (event.button.button == SDL_BUTTON_LEFT) {
+            if (context.on_activate_tracker_map_menu_at &&
+                context.on_activate_tracker_map_menu_at(event.button.x, event.button.y)) {
+              break;
+            }
+            if (!context.on_activate_tracker_map_menu_at && context.on_activate_tracker_map_menu &&
+                context.on_activate_tracker_map_menu()) {
+              break;
+            }
+          } else if (event.button.button == SDL_BUTTON_RIGHT) {
+            if (context.on_open_tracker_map_menu_at &&
+                context.on_open_tracker_map_menu_at(event.button.x, event.button.y)) {
+              break;
+            }
+          }
+        }
         if (!context.runtime_menu->Visible() && event.button.button == SDL_BUTTON_RIGHT) {
-          if (context.on_open_tracker_map_menu_at) {
-            context.on_open_tracker_map_menu_at(event.button.x, event.button.y);
+          if (context.on_open_tracker_map_menu_at &&
+              context.on_open_tracker_map_menu_at(event.button.x, event.button.y)) {
             break;
           }
           if (context.on_open_tracker_map_menu) {
@@ -166,15 +205,13 @@ void PumpRuntimeEvents(RuntimeLoopContext& context) {
             break;
           }
         }
-        if (!context.runtime_menu->Visible() && event.button.button == SDL_BUTTON_LEFT) {
-          if (context.on_activate_tracker_map_menu_at &&
-              context.on_activate_tracker_map_menu_at(event.button.x, event.button.y)) {
-            break;
-          }
-          if (!context.on_activate_tracker_map_menu_at && context.on_activate_tracker_map_menu &&
-              context.on_activate_tracker_map_menu()) {
-            break;
-          }
+        if (!context.runtime_menu->Visible() &&
+            event.button.button == SDL_BUTTON_LEFT &&
+            context.on_click_tracker_at &&
+            context.on_click_tracker_at(event.button.x,
+                                        event.button.y,
+                                        "left")) {
+          break;
         }
         break;
       case SDL_MOUSEWHEEL:
@@ -188,6 +225,10 @@ void PumpRuntimeEvents(RuntimeLoopContext& context) {
         if (!context.runtime_menu->Visible() && context.tracker_map_menu_visible &&
             context.tracker_map_menu_visible() && context.on_hover_tracker_map_menu_at &&
             context.on_hover_tracker_map_menu_at(event.motion.x, event.motion.y)) {
+          break;
+        }
+        if (!context.runtime_menu->Visible() && context.on_hover_tracker_at &&
+            context.on_hover_tracker_at(event.motion.x, event.motion.y)) {
           break;
         }
         break;

@@ -283,10 +283,10 @@ int ResolveMapCoordinate(double coordinate,
                          int target_size,
                          unsigned source_size) {
   double normalized = coordinate;
-  if (coordinate > 1.0 && coordinate <= 100.0) {
-    normalized = coordinate / 100.0;
-  } else if (coordinate > 100.0 && source_size > 0) {
+  if (coordinate > 1.0 && source_size > 0) {
     normalized = coordinate / static_cast<double>(source_size);
+  } else if (coordinate > 1.0 && coordinate <= 100.0) {
+    normalized = coordinate / 100.0;
   }
   normalized = std::clamp(normalized, 0.0, 1.0);
   return target_origin + static_cast<int>(std::round(normalized * static_cast<double>(std::max(0, target_size - 1))));

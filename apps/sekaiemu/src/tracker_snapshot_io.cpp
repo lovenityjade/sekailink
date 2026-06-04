@@ -113,7 +113,6 @@ bool AppendTrackerCommand(const std::filesystem::path& path,
     return false;
   }
   output << command.dump() << '\n';
-  output.flush();
   if (!output) {
     error = "tracker_command_write_failed:" + path.string();
     return false;

@@ -43,11 +43,14 @@ struct RuntimeLoopContext {
   std::function<void()> on_toggle_tracker_screen;
   std::function<void()> on_cycle_tracker_tab;
   std::function<void()> on_toggle_tracker_auto_follow;
+  std::function<void()> on_toggle_fullscreen;
   std::function<void()> on_open_tracker_map_menu;
   std::function<bool(int, int)> on_open_tracker_map_menu_at;
   std::function<bool()> on_activate_tracker_map_menu;
   std::function<bool(int, int)> on_activate_tracker_map_menu_at;
   std::function<bool(int, int)> on_hover_tracker_map_menu_at;
+  std::function<bool(int, int, std::string_view)> on_click_tracker_at;
+  std::function<bool(int, int)> on_hover_tracker_at;
   std::function<void(int)> on_step_tracker_map_menu;
   std::function<void()> on_close_tracker_map_menu;
   std::function<bool()> tracker_map_menu_visible;
@@ -57,6 +60,7 @@ struct RuntimeLoopContext {
   std::function<void()> on_cancel_chat_input;
   std::function<void()> on_submit_chat_input;
   std::function<void()> on_backspace_chat_input;
+  std::function<void()> on_autocomplete_chat_input;
   std::function<void(std::string_view)> on_append_chat_input;
   std::function<void()> on_present_frame;
   std::function<void()> on_update_menu_overlay;

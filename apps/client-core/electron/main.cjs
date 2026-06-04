@@ -21,6 +21,7 @@ const {
 
 const isDev = !app.isPackaged;
 const devServerUrl = process.env.VITE_DEV_SERVER_URL || "http://localhost:5173";
+const shouldOpenDevTools = process.env.SEKAILINK_OPEN_DEVTOOLS === "1";
 
 const firstExistingDir = (...candidates) => {
   for (const candidate of candidates) {
@@ -3920,6 +3921,7 @@ const tryLaunchSekaiemu = async (options = {}) => {
   const apAddress = parseArchipelagoAddress(options.serverAddress);
   const apGame = String(sekaiemu.ap_game || manifest.ap_game || manifest.display_name || "").trim();
   const apSlot = String(options.slot || "").trim();
+  const playerAlias = String(options.playerAlias || "").trim();
   const trackerRequired = Boolean(sklmiRuntime && sklmiManifestDir && profilePath);
   if (trackerRequired) args.push("--tracker-required");
   if (apAddress?.host && apAddress.port && apGame && apSlot) {
@@ -3932,6 +3934,7 @@ const tryLaunchSekaiemu = async (options = {}) => {
       "--ap-uuid", `sekailink-${safeModuleId}`
     );
     if (options.password) args.push("--ap-password", String(options.password));
+    if (playerAlias) args.push("--player-alias", playerAlias);
     args.push("--ap-tags", "AP,SekaiLink,SKLMI");
   }
   const trackerPack = resolveSekaiemuTrackerPackPath(manifest, roots);
@@ -4028,6 +4031,7 @@ const launchGameRuntimeForModule = async (options = {}) => {
       manifest,
       serverAddress: options.serverAddress,
       slot: options.slot,
+      playerAlias: options.playerAlias,
       password: options.password,
       chatBridge: options.chatBridge,
       apiBaseUrl: options.apiBaseUrl,
@@ -6449,6 +6453,7 @@ const autoLaunchFromPatchUrl = async (options = {}) => {
   const downloadUrl = String(options.downloadUrl || "").trim();
   const serverAddress = options.serverAddress;
   const slot = options.slot;
+  const playerAlias = options.playerAlias;
   const password = options.password;
   const apGameName = options.apGameName;
   const forceTrackerVariantPrompt = options.forceTrackerVariantPrompt === true;
@@ -6490,6 +6495,7 @@ const autoLaunchFromPatchUrl = async (options = {}) => {
       manifest,
       serverAddress,
       slot,
+      playerAlias,
       password,
       chatBridge,
       apiBaseUrl,
@@ -6833,6 +6839,7 @@ const autoLaunchFromPatchUrl = async (options = {}) => {
     reusedPatchedRom,
     serverAddress,
     slot,
+    playerAlias,
     password,
     chatBridge,
     apiBaseUrl,
@@ -6848,6 +6855,7 @@ const autoLaunchFromPatchUrl = async (options = {}) => {
     manifest,
     serverAddress,
     slot,
+    playerAlias: options.playerAlias,
     password,
   });
 
@@ -7086,7 +7094,7 @@ const createWindow = () => {
     const currentUrl = mainWindow.webContents.getURL();
     if (currentUrl.startsWith("file:") && currentUrl.endsWith("loading.html")) return;
     mainTargetLoaded = true;
-    if (isDev) mainWindow.webContents.openDevTools({ mode: "detach" });
+    if (shouldOpenDevTools) mainWindow.webContents.openDevTools({ mode: "detach" });
     deliverPendingAuthUrl();
   });
   mainWindow.loadFile(loadingPath);

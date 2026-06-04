@@ -21,6 +21,7 @@
 #include "sklmi_bridge_registry.hpp"
 #include "sklmi_companion_runtime.hpp"
 #include "tracker_asset_resolver.hpp"
+#include "tracker_pack_layout_interaction.hpp"
 #include "tracker_runtime.hpp"
 #include "tracker_snapshot_io.hpp"
 #include "tracker_window_presenter.hpp"
@@ -117,11 +118,14 @@ struct LibretroHost::Impl {
   void ToggleTrackerScreen();
   void CycleTrackerTab();
   void ToggleTrackerAutoFollow();
+  void ToggleFullscreen();
   void OpenTrackerMapMenu();
   bool OpenTrackerMapMenuAt(int mouse_x, int mouse_y);
   bool ActivateTrackerMapMenu();
   bool ActivateTrackerMapMenuAt(int mouse_x, int mouse_y);
   bool HoverTrackerMapMenuAt(int mouse_x, int mouse_y);
+  bool ClickTrackerAt(int mouse_x, int mouse_y, std::string_view button);
+  bool HoverTrackerAt(int mouse_x, int mouse_y);
   void StepTrackerMapMenu(int delta);
   void CloseTrackerMapMenu();
   void EmitTrackerCommand(nlohmann::json command);
@@ -131,6 +135,7 @@ struct LibretroHost::Impl {
   void CancelChatInput();
   void SubmitChatInput();
   void BackspaceChatInput();
+  void AutocompleteChatInput();
   void AppendChatInput(std::string_view text);
   void RefreshChatOverlayFromSnapshot();
   void LoadBatteryNow();
@@ -143,7 +148,7 @@ struct LibretroHost::Impl {
 
   static constexpr std::uint64_t kTrackerAutosaveFrameInterval = 30 * 60;
   static constexpr std::uint64_t kTrackerPollFrameInterval = 30;
-  static constexpr std::uint64_t kTrackerSnapshotPollFrameInterval = 10;
+  static constexpr std::uint64_t kTrackerSnapshotPollFrameInterval = 30;
   static constexpr std::uint64_t kTrackerRenderFrameInterval = 30;
   static constexpr std::uint64_t kChatRenderFrameInterval = 30;
 
@@ -166,6 +171,14 @@ struct LibretroHost::Impl {
   std::uint64_t tracker_last_poll_frame_ = 0;
   std::uint64_t tracker_last_render_frame_ = 0;
   std::uint64_t tracker_last_render_mutation_serial_ = 0;
+  std::uint64_t tracker_hit_cache_mutation_serial_ = 0;
+  unsigned tracker_hit_cache_overlay_width_ = 0;
+  unsigned tracker_hit_cache_overlay_height_ = 0;
+  unsigned tracker_hit_cache_window_width_ = 0;
+  unsigned tracker_hit_cache_window_height_ = 0;
+  TrackerPanelLayout tracker_hit_cache_layout_;
+  bool tracker_hit_cache_compact_ = false;
+  std::vector<TrackerPackHitTarget> tracker_hit_targets_;
   std::unordered_map<std::string, std::string> tracker_item_label_by_key_;
   bool tracker_active_ = false;
   bool tracker_dirty_ = false;

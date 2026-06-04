@@ -40,6 +40,7 @@ type RoomSessionLaunchOptions<TGeneration extends RoomServerGeneration> = {
   fetchRoomStatus: (roomUrl?: string, retries?: number) => Promise<RoomServerStatus | null>;
   loadLatestGeneration: () => Promise<TGeneration | null>;
   playerName?: string;
+  playerAlias?: string;
   apGameName?: string;
   playersByName: Map<string, number>;
   password?: string;
@@ -59,6 +60,7 @@ export const executeRoomSessionLaunch = async <TGeneration extends RoomServerGen
   fetchRoomStatus,
   loadLatestGeneration,
   playerName,
+  playerAlias,
   apGameName: preferredApGameName,
   playersByName,
   password,
@@ -101,6 +103,7 @@ export const executeRoomSessionLaunch = async <TGeneration extends RoomServerGen
       downloadUrl,
       serverAddress: roomLaunchContext.serverAddress,
       slot,
+      playerAlias,
       password,
       apGameName,
       forceTrackerVariantPrompt,

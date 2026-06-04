@@ -1,11 +1,13 @@
 #include "api_internal.hpp"
 
+#include <algorithm>
 #include <chrono>
 #include <cctype>
 #include <regex>
 #include <sstream>
 #include <thread>
 #include <utility>
+#include <vector>
 
 namespace sekailink::sklmi {
 namespace {
@@ -59,6 +61,38 @@ std::string BuildDataPackageRequestPacket(const std::string& game) {
     out << EscapeJson(game);
     out << "\",\"Archipelago\"]}]";
     return out.str();
+}
+
+std::string BuildStringArrayJson(std::vector<std::string> values, std::size_t limit) {
+    values.erase(std::remove_if(values.begin(), values.end(), [](const auto& value) {
+                     return value.empty();
+                 }),
+                 values.end());
+    std::sort(values.begin(), values.end());
+    values.erase(std::unique(values.begin(), values.end()), values.end());
+    if (values.size() > limit) {
+        values.resize(limit);
+    }
+    std::ostringstream out;
+    out << "[";
+    for (std::size_t index = 0; index < values.size(); ++index) {
+        if (index != 0) out << ",";
+        out << "\"" << EscapeJson(values[index]) << "\"";
+    }
+    out << "]";
+    return out.str();
+}
+
+std::vector<std::string> ItemNamesFromIdMap(const std::unordered_map<std::uint64_t, std::string>& names) {
+    std::vector<std::string> values;
+    values.reserve(names.size());
+    for (const auto& [id, name] : names) {
+        (void)id;
+        if (!name.empty()) {
+            values.push_back(name);
+        }
+    }
+    return values;
 }
 
 std::string FirstCommand(const std::string& packet) {
@@ -184,6 +218,53 @@ std::string TrimChatText(std::string text) {
     return text;
 }
 
+std::string LocalDisplayName(const ArchipelagoConnectOptions& options) {
+    auto alias = TrimChatText(options.player_alias);
+    return alias.empty() ? options.slot_name : alias;
+}
+
+std::string StripArchipelagoClientDetails(std::string text) {
+    static const std::regex client_with_tags(R"(\s*Client\([^)]+\),?\s*\[[^\]]*\]\.?\s*)");
+    static const std::regex client_only(R"(\s*Client\([^)]+\)\.?\s*)");
+    text = std::regex_replace(text, client_with_tags, " ");
+    text = std::regex_replace(text, client_only, " ");
+    return TrimChatText(std::move(text));
+}
+
+std::string SekaiLinkifyConnectionText(std::string text, std::string_view print_type) {
+    text = StripArchipelagoClientDetails(std::move(text));
+    const bool is_join = print_type == "Join";
+    const bool is_part = print_type == "Part";
+    if (!is_join && !is_part) {
+        return text;
+    }
+
+    std::smatch match;
+    if (is_join) {
+        static const std::regex joined_with_game(
+            R"(^(.+?)\s+\(Team\s+#?\d+\)\s+playing\s+.+?\s+has\s+joined\.?$)",
+            std::regex_constants::icase);
+        static const std::regex joined_plain(R"(^(.+?)\s+has\s+joined\.?$)", std::regex_constants::icase);
+        if (std::regex_match(text, match, joined_with_game) || std::regex_match(text, match, joined_plain)) {
+            auto name = TrimChatText(match[1].str());
+            return name.empty() ? "A player connected." : name + " connected.";
+        }
+        return text.empty() ? "A player connected." : text;
+    }
+
+    static const std::regex left_with_team(
+        R"(^(.+?)\s+\(Team\s+#?\d+\).*?(?:has\s+left|has\s+disconnected|left|disconnected).*$)",
+        std::regex_constants::icase);
+    static const std::regex left_plain(
+        R"(^(.+?)\s+(?:has\s+left|has\s+disconnected|left|disconnected).*$)",
+        std::regex_constants::icase);
+    if (std::regex_match(text, match, left_with_team) || std::regex_match(text, match, left_plain)) {
+        auto name = TrimChatText(match[1].str());
+        return name.empty() ? "A player disconnected." : name + " disconnected.";
+    }
+    return text.empty() ? "A player disconnected." : text;
+}
+
 std::string PrintJsonTokenText(const std::string& block,
                                const std::unordered_map<std::uint64_t, std::string>& item_names,
                                const std::unordered_map<std::uint64_t, std::string>& location_names,
@@ -262,6 +343,7 @@ std::optional<RoomChatMessage> MakeLogMessageFromPrintJson(
         message.id = id;
         message.author = author.empty() ? "ROOM" : std::move(author);
         message.text = std::move(text);
+        message.kind = "chat";
         return message;
     }
 
@@ -287,6 +369,29 @@ std::optional<RoomChatMessage> MakeLogMessageFromPrintJson(
         message.id = id;
         message.author = author.empty() ? "ROOM" : author;
         message.text = std::move(text);
+        message.kind = "chat";
+        return message;
+    }
+
+    if (print_type == "Join" || print_type == "Part" || print_type == "CommandResult" ||
+        print_type == "Hint" || print_type == "ServerChat") {
+        auto text = PrintJsonPlainText(packet, item_names, location_names, player_names, local_slot, local_slot_name);
+        text = SekaiLinkifyConnectionText(std::move(text), print_type);
+        if (text.empty()) {
+            if (print_type == "Join") {
+                text = "A player connected.";
+            } else if (print_type == "Part") {
+                text = "A player disconnected.";
+            }
+        }
+        if (text.empty()) {
+            return std::nullopt;
+        }
+        RoomChatMessage message;
+        message.id = id;
+        message.author = "SYSTEM";
+        message.text = std::move(text);
+        message.kind = (print_type == "Join" || print_type == "Part") ? "connection" : "system";
         return message;
     }
 
@@ -295,6 +400,7 @@ std::optional<RoomChatMessage> MakeLogMessageFromPrintJson(
     }
 
     auto text = PrintJsonPlainText(packet, item_names, location_names, player_names, local_slot, local_slot_name);
+    text = StripArchipelagoClientDetails(std::move(text));
     if (text.empty()) {
         return std::nullopt;
     }
@@ -302,6 +408,29 @@ std::optional<RoomChatMessage> MakeLogMessageFromPrintJson(
     message.id = id;
     message.author = "ITEM";
     message.text = std::move(text);
+    message.kind = "item";
+    return message;
+}
+
+std::optional<RoomChatMessage> MakeDefeatMessageFromBounce(const std::string& packet,
+                                                           std::uint64_t id,
+                                                           std::string_view local_slot_name) {
+    if (packet.find("DeathLink") == std::string::npos) {
+        return std::nullopt;
+    }
+    auto source = detail::extract_string_field(packet, "source").value_or(std::string(local_slot_name));
+    if (source.empty()) {
+        source = "A player";
+    }
+    auto cause = detail::extract_string_field(packet, "cause").value_or("");
+    RoomChatMessage message;
+    message.id = id;
+    message.author = "SYSTEM";
+    message.text = source + " was defeated.";
+    if (!cause.empty()) {
+        message.text += " " + cause;
+    }
+    message.kind = "defeat";
     return message;
 }
 
@@ -357,9 +486,16 @@ std::unordered_map<std::string, std::string> ArchipelagoRoomClient::metadata_sna
     metadata["connected"] = connected_ ? "1" : "0";
     metadata["game"] = options_.game;
     metadata["slot_name"] = options_.slot_name;
+    if (!options_.player_alias.empty()) {
+        metadata["player_alias"] = options_.player_alias;
+        metadata["player_display_name"] = options_.player_alias;
+    }
     metadata["team"] = std::to_string(team_);
     metadata["slot"] = std::to_string(slot_);
     metadata["received_index"] = std::to_string(received_index_);
+    if (!item_id_to_name_.empty()) {
+        metadata["hint_item_names"] = BuildStringArrayJson(ItemNamesFromIdMap(item_id_to_name_), 512);
+    }
     return metadata;
 }
 
@@ -474,8 +610,9 @@ bool ArchipelagoRoomClient::process_packet(std::string_view packet_view, std::st
                 }
             }
         }
-        if (slot_ != 0 && !options_.slot_name.empty()) {
-            player_id_to_name_[slot_] = options_.slot_name;
+        const auto local_display_name = LocalDisplayName(options_);
+        if (slot_ != 0 && !local_display_name.empty()) {
+            player_id_to_name_[slot_] = local_display_name;
         }
         if (const auto block = detail::extract_object_field_block(command_packet, "slot_data"); block.has_value()) {
             metadata_["slot_data"] = *block;
@@ -512,7 +649,16 @@ bool ArchipelagoRoomClient::process_packet(std::string_view packet_view, std::st
                                                        location_id_to_name_,
                                                        player_id_to_name_,
                                                        slot_,
-                                                       options_.slot_name);
+                                                       LocalDisplayName(options_));
+            message.has_value()) {
+            pending_chat_.push_back(std::move(*message));
+        }
+        return true;
+    }
+    if (cmd == "Bounced") {
+        if (auto message = MakeDefeatMessageFromBounce(command_packet,
+                                                       ++chat_message_counter_,
+                                                       LocalDisplayName(options_));
             message.has_value()) {
             pending_chat_.push_back(std::move(*message));
         }

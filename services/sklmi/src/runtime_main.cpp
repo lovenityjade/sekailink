@@ -16,6 +16,7 @@ namespace sekailink::sklmi {
 namespace {
 
 std::atomic<bool> g_stop_requested{false};
+constexpr std::uint64_t kTrackerPublishIntervalMs = 250;
 
 void HandleSignal(int) {
     g_stop_requested.store(true);
@@ -112,6 +113,9 @@ std::string DescribeRoomClient(const RuntimeOptions& options) {
             << " ap_path=" << options.ap_path
             << " ap_game=" << options.ap_game
             << " ap_slot_name=" << options.ap_slot_name;
+        if (!options.player_alias.empty()) {
+            out << " player_alias=" << options.player_alias;
+        }
         return out.str();
     }
     out << " host=" << options.room_host
@@ -198,7 +202,8 @@ int main(int argc, char** argv) {
                  .command_log_path = options.tracker_command_log_path,
                  .room_state_path = options.room_state_path,
                  .assets_root = options.tracker_assets_root,
-                 .tracker_variant = options.tracker_variant},
+                 .tracker_variant = options.tracker_variant,
+                 .initial_player_alias = options.player_alias},
                 &tracker_error)) {
             std::cerr << "tracker_init_failed:" << tracker_error << "\n";
             return 1;
@@ -240,6 +245,7 @@ int main(int argc, char** argv) {
         ArchipelagoConnectOptions connect_options;
         connect_options.game = options.ap_game;
         connect_options.slot_name = options.ap_slot_name;
+        connect_options.player_alias = options.player_alias;
         connect_options.password = options.ap_password;
         connect_options.uuid = options.ap_uuid;
         connect_options.tags = options.ap_tags;
@@ -263,11 +269,37 @@ int main(int argc, char** argv) {
     }
     sink.trace({LogLevel::info, "sklmi_runtime", "room_client_ready", DescribeRoomClient(options), 0, 0});
 
-    if (tracker_runtime != nullptr) {
+    std::uint64_t next_tracker_publish_ms = 0;
+    auto publish_tracker = [&](std::uint64_t monotonic_ms, bool force) -> bool {
+        if (tracker_runtime == nullptr) {
+            return true;
+        }
+        const bool command_changed = tracker_runtime->PollCommands();
+        if (command_changed) {
+            std::string tracker_error;
+            if (!tracker_runtime->PublishSnapshotFastIfChanged(&tracker_error)) {
+                std::cerr << "tracker_snapshot_failed:" << tracker_error << "\n";
+                return false;
+            }
+            next_tracker_publish_ms = monotonic_ms + kTrackerPublishIntervalMs;
+            if (!force) {
+                return true;
+            }
+        }
+        if (!force && monotonic_ms < next_tracker_publish_ms) {
+            return true;
+        }
         std::string tracker_error;
-        tracker_runtime->PollCommands();
         if (!tracker_runtime->PublishSnapshotIfChanged(&tracker_error)) {
             std::cerr << "tracker_snapshot_failed:" << tracker_error << "\n";
+            return false;
+        }
+        next_tracker_publish_ms = monotonic_ms + kTrackerPublishIntervalMs;
+        return true;
+    };
+
+    if (tracker_runtime != nullptr) {
+        if (!publish_tracker(0, true)) {
             return 1;
         }
         sink.trace({LogLevel::info, "sklmi_runtime", "tracker_initial_snapshot", "published_before_room_session", 0, 0});
@@ -298,10 +330,7 @@ int main(int argc, char** argv) {
         return 1;
     }
     if (tracker_runtime != nullptr) {
-        std::string tracker_error;
-        tracker_runtime->PollCommands();
-        if (!tracker_runtime->PublishSnapshotIfChanged(&tracker_error)) {
-            std::cerr << "tracker_snapshot_failed:" << tracker_error << "\n";
+        if (!publish_tracker(0, true)) {
             return 1;
         }
     }
@@ -321,11 +350,8 @@ int main(int argc, char** argv) {
             return 1;
         }
         if (tracker_runtime != nullptr) {
-            std::string tracker_error;
-            tracker_runtime->PollCommands();
-            if (!tracker_runtime->PublishSnapshotIfChanged(&tracker_error)) {
+            if (!publish_tracker(monotonic_ms, false)) {
                 session.stop();
-                std::cerr << "tracker_snapshot_failed:" << tracker_error << "\n";
                 return 1;
             }
         }
@@ -334,6 +360,16 @@ int main(int argc, char** argv) {
             break;
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(options.tick_ms));
+    }
+
+    if (tracker_runtime != nullptr) {
+        const auto final_now = std::chrono::steady_clock::now();
+        const auto final_monotonic_ms = static_cast<std::uint64_t>(
+            std::chrono::duration_cast<std::chrono::milliseconds>(final_now - start).count());
+        if (!publish_tracker(final_monotonic_ms, true)) {
+            session.stop();
+            return 1;
+        }
     }
 
     const auto stop_status = session.stop();

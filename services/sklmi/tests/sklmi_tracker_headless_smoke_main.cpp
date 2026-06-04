@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <filesystem>
 #include <fstream>
+#include <initializer_list>
 #include <iostream>
 #include <string>
 
@@ -17,6 +18,11 @@ void WriteText(const fs::path& path, const std::string& text) {
     output << text;
 }
 
+void AppendText(const fs::path& path, const std::string& text) {
+    std::ofstream output(path, std::ios::binary | std::ios::app);
+    output << text;
+}
+
 std::string Slurp(const fs::path& path) {
     std::ifstream input(path, std::ios::binary);
     return std::string((std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
@@ -24,6 +30,18 @@ std::string Slurp(const fs::path& path) {
 
 bool Contains(const std::string& text, const std::string& needle) {
     return text.find(needle) != std::string::npos;
+}
+
+bool ContainsOrdered(const std::string& text, std::initializer_list<std::string> needles) {
+    std::size_t position = 0;
+    for (const auto& needle : needles) {
+        const auto found = text.find(needle, position);
+        if (found == std::string::npos) {
+            return false;
+        }
+        position = found + needle.size();
+    }
+    return true;
 }
 
 std::string ShellQuote(const std::string& value) {
@@ -70,16 +88,18 @@ int main() {
   "default_map_id": "world",
   "tabs": [
     {"id": "items", "label": "Items"},
-    {"id": "world-tab", "label": "World", "map_id": "world"}
+    {"id": "world-tab", "label": "World", "map_id": "world"},
+    {"id": "dungeon-tab", "label": "Dungeon", "map_id": "dungeon"}
   ],
   "maps": [
-    {"id": "world", "label": "World Map"}
+    {"id": "world", "label": "World Map"},
+    {"id": "dungeon", "label": "Dungeon Map"}
   ]
 })JSON");
 
     WriteText(root / "bundle" / "surface.complete.json", R"JSON({
   "presentation": {
-    "tab_order": ["items", "world-tab"]
+    "tab_order": ["items", "world-tab", "dungeon-tab"]
   }
 })JSON");
 
@@ -200,9 +220,51 @@ int main() {
     runtime.ApplyEvent({EventType::item_received, "item.bombs", "Bomb Upgrade", "", "", "", 2});
     runtime.ApplyEvent({EventType::location_checked, "loc.village.1", "Village Chest 1", "", "", "", 1001});
 
+    if (!runtime.PublishSnapshotIfChanged(&error)) {
+        std::cerr << "tracker_autotab_publish_failed:" << error << "\n";
+        return EXIT_FAILURE;
+    }
+    const auto autotab_snapshot = Slurp(root / "tracker.snapshot.json");
+    if (!Contains(autotab_snapshot, "\"active_map\":\"world\"") ||
+        !Contains(autotab_snapshot, "\"active_tab\":\"world-tab\"") ||
+        !Contains(autotab_snapshot, "\"auto_follow_map\":true") ||
+        !Contains(autotab_snapshot, "\"pack_layouts\":[") ||
+        !Contains(autotab_snapshot, "\"file\":\"tracker.json\"") ||
+        !Contains(autotab_snapshot, "\"layout_ids\":[\"tracker_default\"]")) {
+        std::cerr << "tracker_location_autotab_failed\n";
+        return EXIT_FAILURE;
+    }
+    const auto logic_runs_after_autotab_publish = Slurp(logic_runs_path);
+    if (logic_runs_after_autotab_publish != "run\n") {
+        std::cerr << "tracker_autotab_logic_runner_invalid\n";
+        return EXIT_FAILURE;
+    }
+
+    Event context_map;
+    context_map.type = EventType::map_changed;
+    context_map.key = "room.two";
+    context_map.value = "Room Two";
+    context_map.tab_id = "dungeon-tab";
+    context_map.map_id = "dungeon";
+    runtime.ApplyEvent(context_map);
+    if (!runtime.PublishSnapshotIfChanged(&error)) {
+        std::cerr << "tracker_context_map_publish_failed:" << error << "\n";
+        return EXIT_FAILURE;
+    }
+    const auto context_map_snapshot = Slurp(root / "tracker.snapshot.json");
+    if (!Contains(context_map_snapshot, "\"active_map\":\"dungeon\"") ||
+        !Contains(context_map_snapshot, "\"active_tab\":\"dungeon-tab\"") ||
+        !Contains(context_map_snapshot, "\"auto_follow_map\":true")) {
+        std::cerr << "tracker_context_map_event_failed\n";
+        return EXIT_FAILURE;
+    }
+
     WriteText(root / "tracker.commands.jsonl",
               "{\"cmd\":\"tracker.click_item\",\"code\":\"sword\",\"button\":\"left\"}\n"
-              "{\"cmd\":\"tracker.click_pin\",\"location_id\":1002,\"button\":\"left\"}\n");
+              "{\"cmd\":\"tracker.set_map\",\"map\":\"dungeon\",\"tab\":\"dungeon-tab\"}\n"
+              "{\"cmd\":\"tracker.click_pin\",\"location_id\":1002,\"button\":\"left\"}\n"
+              "{\"cmd\":\"tracker.click_pin\",\"location\":\"loc.village.2\",\"button\":\"right\"}\n"
+              "{\"cmd\":\"tracker.click_pin\",\"location\":\"loc.village.2\",\"button\":\"left\"}\n");
     runtime.PollCommands();
     if (!runtime.PublishSnapshotIfChanged(&error)) {
         std::cerr << "tracker_publish_failed:" << error << "\n";
@@ -215,15 +277,14 @@ int main() {
         !Contains(snapshot, "\"assets_root\":\"") ||
         !Contains(snapshot, "\"slot\":\"Demo Slot\"") ||
         !Contains(snapshot, "\"seed\":\"Seed-001\"") ||
-	        !Contains(snapshot, "\"active_tab\":\"items\"") ||
+	        !Contains(snapshot, "\"active_map\":\"dungeon\"") ||
+	        !Contains(snapshot, "\"active_tab\":\"dungeon-tab\"") ||
+	        !Contains(snapshot, "\"auto_follow_map\":false") ||
 	        !Contains(snapshot, "\"chat_messages\":[{\"id\":7,\"author\":\"Jade\",\"text\":\"hello sync\"}]") ||
 	        !Contains(snapshot, "\"slot_data\":{\"goal\":\"demo\",\"difficulty\":\"normal\"}") ||
         !Contains(snapshot, "\"tracker_pack\":\"demo-pack\"") ||
-        !Contains(snapshot, "\"maps\":[{\"id\":\"world\",\"label\":\"World Map\",\"image\":\"\",\"art_origin\":\"\"}]") ||
+        !Contains(snapshot, "\"maps\":[{\"id\":\"world\",\"label\":\"World Map\",\"image\":\"\",\"art_origin\":\"\"},{\"id\":\"dungeon\",\"label\":\"Dungeon Map\",\"image\":\"\",\"art_origin\":\"\"}]") ||
         !Contains(snapshot, "\"pack_maps\":[{\"name\":\"overworld\",\"image\":\"maps/overworld.png\"}]") ||
-        !Contains(snapshot, "\"pack_layouts\":[") ||
-        !Contains(snapshot, "\"file\":\"tracker.json\"") ||
-        !Contains(snapshot, "\"layout_ids\":[\"tracker_default\"]") ||
         !Contains(snapshot, "\"item_icon_groups\":[{\"group_id\":\"combat\",\"default_palette\":\"red-gold\"},{\"group_id\":\"resources\",\"default_palette\":\"amber\"}]") ||
         !Contains(snapshot, "\"id\":\"sword\"") ||
         !Contains(snapshot, "\"icon_key\":\"item.sword\"") ||
@@ -247,7 +308,7 @@ int main() {
         return EXIT_FAILURE;
     }
     const auto logic_runs_after_first_publish = Slurp(logic_runs_path);
-    if (logic_runs_after_first_publish != "run\n" ||
+    if (logic_runs_after_first_publish == logic_runs_after_autotab_publish ||
         !Contains(Slurp(root / "tracker.logic.log"), "logic-noise-marker")) {
         std::cerr << "tracker_logic_runner_log_invalid\n";
         return EXIT_FAILURE;
@@ -258,6 +319,44 @@ int main() {
     }
     if (Slurp(logic_runs_path) != logic_runs_after_first_publish) {
         std::cerr << "tracker_logic_runner_not_cached\n";
+        return EXIT_FAILURE;
+    }
+    AppendText(root / "tracker.commands.jsonl",
+               "{\"cmd\":\"tracker.click_item\",\"code\":\"sword\",\"button\":\"right\"}\n");
+    if (!runtime.PollCommands()) {
+        std::cerr << "tracker_fast_click_not_detected\n";
+        return EXIT_FAILURE;
+    }
+    if (!runtime.PublishSnapshotFastIfChanged(&error)) {
+        std::cerr << "tracker_fast_publish_failed:" << error << "\n";
+        return EXIT_FAILURE;
+    }
+    if (Slurp(logic_runs_path) != logic_runs_after_first_publish) {
+        std::cerr << "tracker_fast_publish_ran_logic\n";
+        return EXIT_FAILURE;
+    }
+    const auto fast_snapshot = Slurp(root / "tracker.snapshot.json");
+    if (!ContainsOrdered(fast_snapshot, {"\"id\":\"sword\"", "\"stage\":1"})) {
+        std::cerr << "tracker_fast_click_snapshot_invalid\n";
+        return EXIT_FAILURE;
+    }
+    AppendText(root / "tracker.commands.jsonl",
+               "{\"cmd\":\"tracker.click_item\",\"code\":\"sword\",\"button\":\"left\"}\n");
+    if (!runtime.PollCommands() || !runtime.PublishSnapshotFastIfChanged(&error)) {
+        std::cerr << "tracker_fast_click_restore_failed\n";
+        return EXIT_FAILURE;
+    }
+    AppendText(root / "tracker.commands.jsonl",
+               "{\"cmd\":\"tracker.set_auto_follow\",\"enabled\":true}\n");
+    if (!runtime.PollCommands() || !runtime.PublishSnapshotFastIfChanged(&error)) {
+        std::cerr << "tracker_auto_follow_restore_failed\n";
+        return EXIT_FAILURE;
+    }
+    const auto auto_follow_snapshot = Slurp(root / "tracker.snapshot.json");
+    if (!Contains(auto_follow_snapshot, "\"active_map\":\"world\"") ||
+        !Contains(auto_follow_snapshot, "\"active_tab\":\"world-tab\"") ||
+        !Contains(auto_follow_snapshot, "\"auto_follow_map\":true")) {
+        std::cerr << "tracker_auto_follow_restore_snapshot_invalid\n";
         return EXIT_FAILURE;
     }
 
@@ -282,7 +381,7 @@ int main() {
         return EXIT_FAILURE;
     }
     zipped_runtime.ApplyEvent({EventType::item_received, "ap:0:1:1001:1", "Progressive Sword", "", "", "", 1});
-    zipped_runtime.ApplyEvent({EventType::item_received, "ap:0:1:1002:2", "Progressive Sword", "", "", "", 1});
+    zipped_runtime.ApplyEvent({EventType::item_received, "ap:1:1:1002:2", "Progressive Sword", "", "", "", 1});
     if (!zipped_runtime.PublishSnapshotIfChanged(&error)) {
         std::cerr << "tracker_zip_publish_failed:" << error << "\n";
         return EXIT_FAILURE;
@@ -319,6 +418,7 @@ int main() {
         std::cerr << "tracker_restore_init_failed:" << error << "\n";
         return EXIT_FAILURE;
     }
+    restored_runtime.PollCommands();
     if (!restored_runtime.PublishSnapshotIfChanged(&error)) {
         std::cerr << "tracker_restore_publish_failed:" << error << "\n";
         return EXIT_FAILURE;

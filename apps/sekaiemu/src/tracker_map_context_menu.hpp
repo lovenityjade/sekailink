@@ -12,6 +12,7 @@ namespace sekaiemu::spike {
 
 enum class TrackerMapContextMenuEntryKind {
   ActualMap,
+  PreviousMap,
   Map,
   Child,
 };

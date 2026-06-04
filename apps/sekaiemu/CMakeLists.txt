@@ -40,6 +40,7 @@ set(SEKAIEMU_TRACKER_RENDER_SOURCES
   src/tracker_pack_layout_engine.cpp
   src/tracker_pack_layout_json.cpp
   src/tracker_pack_layout_resolution.cpp
+  src/tracker_pack_layout_interaction.cpp
   src/tracker_pack_layout_renderer.cpp
   src/tracker_pack_layout_visual_state.cpp
   src/tracker_pack_layout_widgets.cpp
@@ -47,6 +48,7 @@ set(SEKAIEMU_TRACKER_RENDER_SOURCES
   src/tracker_overlay_detail_sections.cpp
   src/tracker_overlay_json.cpp
   src/tracker_map_context_menu.cpp
+  src/tracker_pin_context_menu.cpp
   src/tracker_overlay_map_sections.cpp
   src/tracker_overlay_pack_metadata.cpp
   src/tracker_overlay_render_state.cpp
@@ -84,6 +86,7 @@ add_executable(sekaiemu_libretro_spike
   src/libretro_host_actions.cpp
   src/libretro_host_callbacks.cpp
   src/libretro_host_chat_overlay.cpp
+  src/libretro_host_tracker_interactions.cpp
   src/libretro_host_frontend_settings.cpp
   src/libretro_host_lifecycle.cpp
   src/libretro_core_loader.cpp

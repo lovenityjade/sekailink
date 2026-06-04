@@ -23,7 +23,10 @@ bool CodeAcquiredFromMappings(const PackStateContext& context, std::string_view 
       if (const auto snapshot_it = context.snapshot_items_by_id.find(slot_it->second);
           snapshot_it != context.snapshot_items_by_id.end()) {
         const auto& item = snapshot_it->second;
-        if (item.acquired || item.stage > 0 || item.count > 0) {
+        const bool active = item.has_explicit_state
+                                ? item.acquired
+                                : (item.acquired || item.stage > 0 || item.count > 0);
+        if (active) {
           if (item.count > 0) {
             total += static_cast<int>(item.count);
           } else if (item.stage > 0) {
@@ -155,6 +158,17 @@ PackVisualState ResolvePackVisualState(const PackStateContext& context,
     state.label = definition_ptr->label;
   }
 
+  if (definition_ptr != nullptr && definition_ptr->type == "composite_toggle") {
+    const auto left = ResolvePackVisualState(context, definition_ptr->item_left, visiting);
+    const auto right = ResolvePackVisualState(context, definition_ptr->item_right, visiting);
+    state.composite_left = left.acquired;
+    state.composite_right = right.acquired;
+    state.acquired = state.composite_left || state.composite_right;
+    state.count = (state.composite_left ? 1 : 0) + (state.composite_right ? 1 : 0);
+    unwind();
+    return state;
+  }
+
   if (const auto snapshot_it = context.snapshot_items_by_id.find(code_key);
       snapshot_it != context.snapshot_items_by_id.end()) {
     const auto& item = snapshot_it->second;
@@ -199,14 +213,6 @@ PackVisualState ResolvePackVisualState(const PackStateContext& context,
         unwind();
         return state;
       }
-    }
-    if (definition.type == "composite_toggle") {
-      const auto left = ResolvePackVisualState(context, definition.item_left, visiting);
-      const auto right = ResolvePackVisualState(context, definition.item_right, visiting);
-      state.acquired = left.acquired || right.acquired;
-      state.count = (left.acquired ? 1 : 0) + (right.acquired ? 1 : 0);
-      unwind();
-      return state;
     }
     int mapped_count = 0;
     state.acquired = CodeAcquiredFromMappings(context, code, &mapped_count);
@@ -258,7 +264,7 @@ PackVisualState ResolvePackVisualState(const PackStateContext& context,
 
 VisualAssetSelection SelectVisualAsset(const PackVisualDefinition& definition, const PackVisualState& state) {
   if (definition.type == "composite_toggle") {
-    if (state.count >= 2) {
+    if (state.composite_left && state.composite_right) {
       if (!definition.composite_both_image.empty()) {
         return {definition.composite_both_image, definition.composite_both_mods};
       }
@@ -266,12 +272,20 @@ VisualAssetSelection SelectVisualAsset(const PackVisualDefinition& definition, c
         return {definition.stages[3], definition.stage_mods.size() >= 4 ? definition.stage_mods[3] : std::string{}};
       }
     }
-    if (state.count == 1) {
+    if (state.composite_left) {
       if (!definition.composite_left_image.empty()) {
         return {definition.composite_left_image, definition.composite_left_mods};
       }
-      if (definition.stages.size() >= 3) {
+      if (definition.stages.size() >= 2) {
         return {definition.stages[1], definition.stage_mods.size() >= 2 ? definition.stage_mods[1] : std::string{}};
+      }
+    }
+    if (state.composite_right) {
+      if (!definition.composite_right_image.empty()) {
+        return {definition.composite_right_image, definition.composite_right_mods};
+      }
+      if (definition.stages.size() >= 3) {
+        return {definition.stages[2], definition.stage_mods.size() >= 3 ? definition.stage_mods[2] : std::string{}};
       }
     }
     if (!definition.composite_none_image.empty()) {

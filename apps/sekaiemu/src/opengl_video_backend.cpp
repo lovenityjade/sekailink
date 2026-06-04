@@ -219,6 +219,24 @@ void OpenGlVideoBackend::SetTrackerSidebarLayout(bool enabled,
   frame_ready_ = true;
 }
 
+bool OpenGlVideoBackend::ToggleFullscreen(std::string& error) {
+  if (!window_) {
+    error = "OpenGL window is not initialized.";
+    return false;
+  }
+  const Uint32 flag = fullscreen_ ? 0u : SDL_WINDOW_FULLSCREEN_DESKTOP;
+  if (SDL_SetWindowFullscreen(window_, flag) != 0) {
+    error = std::string("SDL_SetWindowFullscreen failed: ") + SDL_GetError();
+    return false;
+  }
+  fullscreen_ = !fullscreen_;
+  if (!fullscreen_) {
+    ApplyWindowSizing(geometry_);
+  }
+  frame_ready_ = true;
+  return true;
+}
+
 void OpenGlVideoBackend::Present() {
   if (!window_ || !gl_context_ || (!frame_ready_ && !overlay_ready_)) {
     return;
@@ -378,6 +396,9 @@ uintptr_t OpenGlVideoBackend::CurrentFramebuffer() const {
 
 void OpenGlVideoBackend::ApplyWindowSizing(const VideoGeometry& geometry) {
   if (!window_) {
+    return;
+  }
+  if (fullscreen_) {
     return;
   }
 

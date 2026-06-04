@@ -20,6 +20,7 @@ struct TrackerHeadlessRuntimeConfig {
     std::filesystem::path room_state_path;
     std::filesystem::path assets_root;
     std::string tracker_variant;
+    std::string initial_player_alias;
     std::function<bool(std::string_view, std::string*)> send_chat_message;
 };
 
@@ -148,6 +149,11 @@ struct TrackerPackItemMappingDefinition {
     std::string behavior;
 };
 
+struct TrackerAutoTabTarget {
+    std::string tab_id;
+    std::string map_id;
+};
+
 struct TrackerDetailedPinDefinition {
     std::string pin_id;
     std::string group_id;
@@ -183,6 +189,9 @@ struct TrackerBundleModel {
     std::vector<std::string> supported_pack_maps;
     std::vector<TrackerPackItemMappingDefinition> pack_item_mappings;
     std::vector<TrackerDetailedPinDefinition> detailed_pins;
+    std::unordered_map<std::string, std::string> location_group_tab_hints;
+    std::unordered_map<std::string, std::string> tab_map_hints;
+    std::unordered_map<std::string, TrackerAutoTabTarget> zone_tab_hints;
     bool has_pack_location_mapping = false;
 };
 
@@ -191,6 +200,14 @@ struct TrackerItemSlotState {
     std::uint64_t count = 0;
     bool owned = false;
     std::unordered_set<std::string> owned_sources;
+};
+
+struct TrackerReceivedItemEvent {
+    std::string delivery_id;
+    std::uint64_t index = 0;
+    std::uint64_t item_id = 0;
+    std::uint64_t player_number = 0;
+    std::string item_name;
 };
 
 struct TrackerLogicGroupState {
@@ -217,12 +234,15 @@ struct TrackerHeadlessRuntimeState {
     std::uint64_t revision = 0;
     std::unordered_map<std::string, TrackerItemSlotState> item_slots;
     std::unordered_map<std::string, TrackerItemSlotState> pack_code_states;
+    std::unordered_map<std::string, TrackerItemSlotState> logic_item_slots;
+    std::unordered_map<std::string, TrackerItemSlotState> logic_pack_code_states;
     std::unordered_map<std::string, TrackerLogicGroupState> logic_groups;
     std::unordered_map<std::string, TrackerLogicGroupState> pack_location_states;
     std::unordered_map<std::string, TrackerLogicGroupState> pack_section_states;
     std::vector<TrackerDetailedPinDefinition> runtime_detailed_pins;
     std::unordered_set<std::uint64_t> checked_locations;
     std::unordered_set<std::string> received_delivery_ids;
+    std::vector<TrackerReceivedItemEvent> received_item_events;
     std::string last_received_label;
     std::string last_check_label;
     bool logic_ready = false;
@@ -233,8 +253,9 @@ class TrackerHeadlessRuntime {
     bool Initialize(const TrackerHeadlessRuntimeConfig& config, std::string* error);
 
     void ApplyEvent(const Event& event);
-    void PollCommands();
+    bool PollCommands();
     bool PublishSnapshotIfChanged(std::string* error);
+    bool PublishSnapshotFastIfChanged(std::string* error);
     void SetChatMessageSender(std::function<bool(std::string_view, std::string*)> sender);
 
     const TrackerBundleModel& bundle() const { return bundle_; }
@@ -246,12 +267,15 @@ class TrackerHeadlessRuntime {
     void ApplyRoomItemIdentity(const TrackerItemIdentity& identity, std::string delivery_id);
     bool ApplyPackItemMapping(const TrackerItemIdentity& identity);
     void ApplyLocationCheck(std::uint64_t canonical_id, std::string_view event_key, std::string_view value);
-    void ApplyCommandLine(const std::string& line);
-    void ApplyClickItemCommand(std::string_view slot_id, std::string_view button);
-    void ApplyClickPinCommand(std::string_view location_or_group_id, std::string_view button);
+    bool ApplyMapChangedEvent(const Event& event);
+    bool ApplyCommandLine(const std::string& line);
+    bool ApplyClickItemCommand(std::string_view slot_id, std::string_view button);
+    bool ApplyClickPinCommand(std::string_view location_or_group_id, std::string_view button);
+    bool ApplyAutoTabForLocation(std::uint64_t canonical_id, std::string_view event_key);
+    bool SetAutoFollowMap(bool enabled);
     std::string ResolveActiveMapId() const;
     std::filesystem::path AutosavePath() const;
-    void LoadAutosaveState();
+    bool LoadAutosaveState();
     bool SaveAutosaveState(std::string* error);
     bool ResolveBundlePath(std::string* error);
     bool EvaluatePackLogic(std::string* error);
@@ -267,6 +291,7 @@ class TrackerHeadlessRuntime {
     std::string last_logic_state_text_;
     bool logic_state_cached_ = false;
     bool autosave_dirty_ = false;
+    bool static_snapshot_payload_published_ = false;
 };
 
 class TrackerForwardingEventSink final : public EventSink {

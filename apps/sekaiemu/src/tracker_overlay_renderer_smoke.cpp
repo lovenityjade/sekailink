@@ -3,6 +3,7 @@
 #include "tracker_pack_layout_renderer.hpp"
 #include "tracker_overlay_render_state.hpp"
 #include "tracker_overlay_renderer.hpp"
+#include "tracker_overlay_style.hpp"
 #include "tracker_runtime.hpp"
 
 #include <filesystem>
@@ -204,6 +205,13 @@ int main() {
       !ShouldSuppressPackLayoutNode({{"type", "map"}, {"maps", nlohmann::json::array({"er_legend"})}}) ||
       ShouldSuppressPackLayoutNode({{"type", "group"}, {"header", "Items"}})) {
     std::cerr << "tracker_overlay_renderer_pack_layout_suppression_failed\n";
+    return 1;
+  }
+  if (ResolveMapCoordinate(55.0, 0, 2007, 2007) != 55 ||
+      ResolveMapCoordinate(45.0, 0, 2007, 2007) != 45 ||
+      ResolveMapCoordinate(0.55, 0, 2007, 2007) != 1103 ||
+      ResolveMapCoordinate(55.0, 0, 201, 0) != 110) {
+    std::cerr << "tracker_overlay_renderer_coordinate_mode_failed\n";
     return 1;
   }
 

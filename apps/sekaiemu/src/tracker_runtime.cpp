@@ -58,6 +58,11 @@ void TrackerRuntime::SetActiveTab(std::string tab_id) {
 }
 
 void TrackerRuntime::SetManualMap(std::string map_id) {
+  const auto previous_map_id = ResolvedMapId();
+  if (!previous_map_id.empty()) {
+    ui_state_.previous_map_id = previous_map_id;
+    ui_state_.previous_tab_id = ui_state_.active_tab_id;
+  }
   local_override_state_.manual_map_id = std::move(map_id);
   local_override_state_.auto_follow_map = false;
   EnsureSelectionConsistency();
@@ -103,6 +108,7 @@ void TrackerRuntime::OpenMapContextMenuAt(int x, int y) {
   ui_state_.map_context_menu_y = y;
   ui_state_.map_context_menu_selected_index = 0;
   ui_state_.map_context_menu_expanded_map_id.clear();
+  ui_state_.pin_context_menu_visible = false;
   BumpMutationSerial();
 }
 
@@ -128,6 +134,60 @@ void TrackerRuntime::SetMapContextMenuExpandedMapId(std::string map_id) {
     return;
   }
   ui_state_.map_context_menu_expanded_map_id = std::move(map_id);
+  BumpMutationSerial();
+}
+
+void TrackerRuntime::OpenPinContextMenuAt(std::string pin_id, int x, int y) {
+  ui_state_.pin_context_menu_visible = true;
+  ui_state_.pin_context_menu_pin_id = std::move(pin_id);
+  ui_state_.pin_context_menu_x = x;
+  ui_state_.pin_context_menu_y = y;
+  ui_state_.pin_context_menu_selected_index = 0;
+  ui_state_.map_context_menu_visible = false;
+  ui_state_.map_context_menu_expanded_map_id.clear();
+  ClearHoverTooltip();
+  BumpMutationSerial();
+}
+
+void TrackerRuntime::ClosePinContextMenu() {
+  if (!ui_state_.pin_context_menu_visible) {
+    return;
+  }
+  ui_state_.pin_context_menu_visible = false;
+  ui_state_.pin_context_menu_pin_id.clear();
+  BumpMutationSerial();
+}
+
+void TrackerRuntime::SetPinContextMenuSelectedIndex(std::size_t selected_index) {
+  if (ui_state_.pin_context_menu_selected_index == selected_index) {
+    return;
+  }
+  ui_state_.pin_context_menu_selected_index = selected_index;
+  BumpMutationSerial();
+}
+
+void TrackerRuntime::SetHoverTooltip(std::string text, int x, int y) {
+  if (text.empty()) {
+    ClearHoverTooltip();
+    return;
+  }
+  if (ui_state_.hover_tooltip_visible && ui_state_.hover_tooltip_text == text &&
+      ui_state_.hover_tooltip_x == x && ui_state_.hover_tooltip_y == y) {
+    return;
+  }
+  ui_state_.hover_tooltip_visible = true;
+  ui_state_.hover_tooltip_text = std::move(text);
+  ui_state_.hover_tooltip_x = x;
+  ui_state_.hover_tooltip_y = y;
+  BumpMutationSerial();
+}
+
+void TrackerRuntime::ClearHoverTooltip() {
+  if (!ui_state_.hover_tooltip_visible && ui_state_.hover_tooltip_text.empty()) {
+    return;
+  }
+  ui_state_.hover_tooltip_visible = false;
+  ui_state_.hover_tooltip_text.clear();
   BumpMutationSerial();
 }
 

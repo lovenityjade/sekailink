@@ -125,6 +125,24 @@ Event make_watch_event(const BridgeManifest& manifest, const WatchRule& rule, st
     return event;
 }
 
+Event make_context_event(const BridgeManifest& manifest,
+                         const ContextWatchRule& rule,
+                         const ContextValueMapping& mapping,
+                         std::uint64_t current) {
+    Event event;
+    event.type = rule.event_type;
+    event.key = mapping.event_key.empty() ? rule.context_key : mapping.event_key;
+    event.value = mapping.mapped_value.empty() ? std::to_string(current) : mapping.mapped_value;
+    event.driver_instance_id = manifest.driver_instance_id;
+    event.linkedworld_id = manifest.linkedworld_id;
+    event.core_profile = manifest.core_profile.name;
+    event.canonical_id = current;
+    event.tab_id = mapping.tab_id;
+    event.map_id = mapping.map_id;
+    event.zone_id = mapping.zone_id;
+    return event;
+}
+
 Event make_injection_event(const BridgeManifest& manifest, const InjectRule& rule, std::uint64_t value) {
     Event event;
     event.type = EventType::item_received;

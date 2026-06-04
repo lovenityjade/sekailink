@@ -90,7 +90,8 @@ std::string BuildRoomChatMessagesJson(const std::vector<RoomChatMessage>& messag
         out << "{"
             << "\"id\":" << messages[index].id << ","
             << "\"author\":\"" << detail::escape_json(messages[index].author) << "\","
-            << "\"text\":\"" << detail::escape_json(messages[index].text) << "\""
+            << "\"text\":\"" << detail::escape_json(messages[index].text) << "\","
+            << "\"kind\":\"" << detail::escape_json(messages[index].kind.empty() ? "chat" : messages[index].kind) << "\""
             << "}";
     }
     out << "]";
@@ -180,6 +181,7 @@ Event MakeRoomItemTrackerEvent(const RoomItem& item,
         std::string(linkedworld_id),
         std::string(core_profile),
         item.ap_item_id != 0 ? item.ap_item_id : fallback_canonical_id,
+        item.ap_player_id,
     };
 }
 
@@ -286,6 +288,35 @@ std::optional<std::uint64_t> ReadUnsignedFromSnapshot(const std::vector<ReadSnap
     return std::nullopt;
 }
 
+bool ContextMappingMatches(const ContextValueMapping& mapping, std::uint64_t current) {
+    if (mapping.min_value.has_value() || mapping.max_value.has_value()) {
+        if (mapping.min_value.has_value() && current < *mapping.min_value) {
+            return false;
+        }
+        if (mapping.max_value.has_value() && current > *mapping.max_value) {
+            return false;
+        }
+        return true;
+    }
+    return mapping.value == current;
+}
+
+const ContextValueMapping* FindContextMapping(const ContextWatchRule& rule, std::uint64_t current) {
+    for (const auto& mapping : rule.values) {
+        if (ContextMappingMatches(mapping, current)) {
+            return &mapping;
+        }
+    }
+    return nullptr;
+}
+
+std::string ContextWatchStateKey(const ContextWatchRule& rule) {
+    if (!rule.context_key.empty()) {
+        return rule.context_key;
+    }
+    return rule.domain_id + ":" + std::to_string(rule.address) + ":" + std::to_string(rule.size);
+}
+
 bool IsTickDue(std::uint64_t tick_index, std::uint64_t last_tick, std::uint64_t interval) {
     return last_tick == 0 || tick_index <= last_tick || tick_index - last_tick >= interval;
 }
@@ -375,6 +406,14 @@ RuntimeStatus ManifestBridgeSession::start(MemoryProvider& provider, EventSink& 
             return {RuntimeConnectionState::error, "invalid_check_rule"};
         }
     }
+    for (const auto& rule : manifest_.context_watches) {
+        if (!provider.has_domain(rule.domain_id) ||
+            !provider.is_address_valid(rule.domain_id, rule.address, static_cast<std::size_t>(rule.size))) {
+            connected_ = false;
+            sink.trace({LogLevel::error, manifest_.bridge_id, "start", "invalid_context_rule_domain_or_address", 0, 0});
+            return {RuntimeConnectionState::error, "invalid_context_rule"};
+        }
+    }
     for (const auto& rule : manifest_.injections) {
         if (!rule.writes.empty()) {
             for (const auto& step : rule.writes) {
@@ -426,6 +465,27 @@ RuntimeStatus ManifestBridgeSession::tick(const TickContext& context) {
         }
     }
 
+    for (const auto& rule : manifest_.context_watches) {
+        const auto current = detail::read_unsigned_from_provider(*provider_,
+                                                                 rule.domain_id,
+                                                                 rule.address,
+                                                                 static_cast<std::size_t>(rule.size));
+        if (!current.has_value()) {
+            continue;
+        }
+        const auto state_key = ContextWatchStateKey(rule);
+        const auto seen = context_values_.find(state_key);
+        if (seen != context_values_.end() && seen->second == *current) {
+            continue;
+        }
+        context_values_[state_key] = *current;
+        const auto* mapping = FindContextMapping(rule, *current);
+        if (mapping == nullptr) {
+            continue;
+        }
+        sink_->emit(detail::make_context_event(manifest_, rule, *mapping, *current));
+    }
+
     for (const auto& rule : manifest_.injections) {
         if (rule.room_controlled) continue;
         const auto event_key = detail::default_injection_event_key(rule);
@@ -457,6 +517,7 @@ RuntimeStatus ManifestBridgeSession::tick(const TickContext& context) {
 
 RuntimeStatus ManifestBridgeSession::reset() {
     emitted_checks_.clear();
+    context_values_.clear();
     injected_items_.clear();
     last_tick_ms_ = 0;
     if (sink_ != nullptr) {
@@ -484,6 +545,7 @@ bool ManifestBridgeSession::load_state(const std::filesystem::path& path) {
     std::ifstream input(path);
     if (!input) return false;
     emitted_checks_.clear();
+    context_values_.clear();
     injected_items_.clear();
     std::string line;
     while (std::getline(input, line)) {

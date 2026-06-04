@@ -1,6 +1,7 @@
 #include "bridge_terminal_presenter.hpp"
 
 #include "overlay_canvas.hpp"
+#include "tracker_overlay_render_state.hpp"
 #include "tracker_runtime.hpp"
 
 #include <SDL.h>
@@ -224,9 +225,9 @@ void BridgeTerminalPresenter::Render(const BridgeRuntimeStatus& bridge_status,
                   1);
 
   const int info_y = 68;
-  const std::string player = SnapshotOrMeta(snapshot, "slot_name").empty()
-                                 ? bridge_status.ap_slot_name
-                                 : SnapshotOrMeta(snapshot, "slot_name");
+  const std::string player = tracker_runtime != nullptr
+                                 ? SnapshotDisplayPlayerName(*tracker_runtime, bridge_status.ap_slot_name)
+                                 : bridge_status.ap_slot_name;
   const std::string game = SnapshotOrMeta(snapshot, "game").empty()
                                ? bridge_status.game_name
                                : SnapshotOrMeta(snapshot, "game");

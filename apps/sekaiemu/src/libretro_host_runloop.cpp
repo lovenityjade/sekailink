@@ -62,11 +62,16 @@ int LibretroHost::Impl::Run() {
       .on_toggle_tracker_screen = [this]() { ToggleTrackerScreen(); },
       .on_cycle_tracker_tab = [this]() { CycleTrackerTab(); },
       .on_toggle_tracker_auto_follow = [this]() { ToggleTrackerAutoFollow(); },
+      .on_toggle_fullscreen = [this]() { ToggleFullscreen(); },
       .on_open_tracker_map_menu = [this]() { OpenTrackerMapMenu(); },
       .on_open_tracker_map_menu_at = [this](int x, int y) { return OpenTrackerMapMenuAt(x, y); },
       .on_activate_tracker_map_menu = [this]() { return ActivateTrackerMapMenu(); },
       .on_activate_tracker_map_menu_at = [this](int x, int y) { return ActivateTrackerMapMenuAt(x, y); },
       .on_hover_tracker_map_menu_at = [this](int x, int y) { return HoverTrackerMapMenuAt(x, y); },
+      .on_click_tracker_at = [this](int x, int y, std::string_view button) {
+        return ClickTrackerAt(x, y, button);
+      },
+      .on_hover_tracker_at = [this](int x, int y) { return HoverTrackerAt(x, y); },
       .on_step_tracker_map_menu = [this](int delta) { StepTrackerMapMenu(delta); },
       .on_close_tracker_map_menu = [this]() { CloseTrackerMapMenu(); },
       .tracker_map_menu_visible = [this]() { return tracker_runtime_.UiState().map_context_menu_visible; },
@@ -76,6 +81,7 @@ int LibretroHost::Impl::Run() {
       .on_cancel_chat_input = [this]() { CancelChatInput(); },
       .on_submit_chat_input = [this]() { SubmitChatInput(); },
       .on_backspace_chat_input = [this]() { BackspaceChatInput(); },
+      .on_autocomplete_chat_input = [this]() { AutocompleteChatInput(); },
       .on_append_chat_input = [this](std::string_view text) { AppendChatInput(text); },
       .on_present_frame = [this]() { PresentFrame(); },
       .on_update_menu_overlay = [this]() { UpdateMenuOverlay(); },
@@ -195,7 +201,7 @@ void LibretroHost::Impl::TickCoreChatBridge() {
   }
   core_chat_bridge_.Tick(frame_counter);
   for (const auto& message : core_chat_bridge_.DrainIncoming()) {
-    chat_overlay_.AddExternalMessage(message.id, message.author, message.text, frame_counter);
+    chat_overlay_.AddExternalMessage(message.id, message.author, message.text, message.kind, frame_counter);
   }
 }
 

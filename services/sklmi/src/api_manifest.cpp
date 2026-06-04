@@ -112,6 +112,37 @@ std::optional<BridgeManifest> parse_bridge_manifest_text(const std::string& text
         manifest.checks.push_back(rule);
     }
 
+    for (const auto& block : detail::extract_object_blocks(parse_source, "context_watches")) {
+        ContextWatchRule rule;
+        rule.domain_id = detail::extract_string_field(block, "domain_id").value_or("");
+        rule.address = detail::extract_uint_field(block, "address").value_or(0);
+        rule.size = detail::extract_uint_field(block, "size").value_or(1);
+        rule.context_key = detail::extract_string_field(block, "context_key").value_or("");
+        if (const auto event_type = detail::extract_string_field(block, "event_type")) {
+            const auto parsed = parse_event_type(*event_type);
+            if (!parsed.has_value()) {
+                if (error) *error = "manifest_context_invalid_event_type";
+                return std::nullopt;
+            }
+            rule.event_type = *parsed;
+        } else {
+            rule.event_type = EventType::map_changed;
+        }
+        for (const auto& value_block : detail::extract_object_blocks(block, "values")) {
+            ContextValueMapping mapping;
+            mapping.value = detail::extract_uint_field(value_block, "value").value_or(0);
+            mapping.min_value = detail::extract_uint_field(value_block, "min_value");
+            mapping.max_value = detail::extract_uint_field(value_block, "max_value");
+            mapping.event_key = detail::extract_string_field(value_block, "event_key").value_or("");
+            mapping.mapped_value = detail::extract_string_field(value_block, "mapped_value").value_or("");
+            mapping.tab_id = detail::extract_string_field(value_block, "tab_id").value_or("");
+            mapping.map_id = detail::extract_string_field(value_block, "map_id").value_or("");
+            mapping.zone_id = detail::extract_string_field(value_block, "zone_id").value_or("");
+            rule.values.push_back(std::move(mapping));
+        }
+        manifest.context_watches.push_back(std::move(rule));
+    }
+
     auto injection_blocks = detail::extract_object_blocks(parse_source, "injections");
     const auto action_blocks = detail::extract_object_blocks(parse_source, "actions");
     injection_blocks.insert(injection_blocks.end(), action_blocks.begin(), action_blocks.end());
@@ -201,6 +232,43 @@ bool validate_bridge_manifest(const BridgeManifest& manifest, std::string* error
         if (rule.event_type == EventType::location_checked && rule.location_id == 0 && rule.location_name.empty()) {
             if (error) *error = "manifest_location_check_missing_canonical_identity";
             return false;
+        }
+    }
+
+    for (const auto& rule : manifest.context_watches) {
+        if (rule.domain_id.empty()) {
+            if (error) *error = "manifest_context_missing_domain_id";
+            return false;
+        }
+        if (!domain_declared(manifest.core_profile, rule.domain_id)) {
+            if (error) *error = "manifest_context_unknown_domain";
+            return false;
+        }
+        if (rule.size == 0 || rule.size > 8) {
+            if (error) *error = "manifest_context_invalid_size";
+            return false;
+        }
+        if (rule.context_key.empty()) {
+            if (error) *error = "manifest_context_missing_key";
+            return false;
+        }
+        if (rule.event_type != EventType::map_changed) {
+            if (error) *error = "manifest_context_invalid_event_type";
+            return false;
+        }
+        if (rule.values.empty()) {
+            if (error) *error = "manifest_context_missing_values";
+            return false;
+        }
+        for (const auto& mapping : rule.values) {
+            if (mapping.min_value.has_value() && mapping.max_value.has_value() && *mapping.min_value > *mapping.max_value) {
+                if (error) *error = "manifest_context_invalid_range";
+                return false;
+            }
+            if (mapping.tab_id.empty() && mapping.map_id.empty() && mapping.zone_id.empty()) {
+                if (error) *error = "manifest_context_missing_target";
+                return false;
+            }
         }
     }
 

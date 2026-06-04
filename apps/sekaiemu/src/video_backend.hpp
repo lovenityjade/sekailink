@@ -51,6 +51,7 @@ class VideoBackend {
   virtual void SetTrackerSidebarLayout(bool enabled,
                                        unsigned sidebar_width,
                                        const VideoGeometry& geometry) = 0;
+  virtual bool ToggleFullscreen(std::string& error) = 0;
   virtual void Present() = 0;
   virtual void Shutdown() = 0;
 

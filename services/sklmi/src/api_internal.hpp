@@ -24,6 +24,10 @@ std::string default_injection_event_key(const InjectRule& rule);
 std::string default_injection_value(const InjectRule& rule, std::uint64_t value);
 
 Event make_watch_event(const BridgeManifest& manifest, const WatchRule& rule, std::uint64_t current);
+Event make_context_event(const BridgeManifest& manifest,
+                         const ContextWatchRule& rule,
+                         const ContextValueMapping& mapping,
+                         std::uint64_t current);
 Event make_injection_event(const BridgeManifest& manifest, const InjectRule& rule, std::uint64_t value);
 
 std::optional<std::string> extract_string_field(const std::string& text, const std::string& key);

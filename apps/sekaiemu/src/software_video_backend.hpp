@@ -35,6 +35,7 @@ class SoftwareVideoBackend final : public VideoBackend {
   void SetTrackerSidebarLayout(bool enabled,
                                unsigned sidebar_width,
                                const VideoGeometry& geometry) override;
+  bool ToggleFullscreen(std::string& error) override;
   void Present() override;
   void Shutdown() override;
 
@@ -69,6 +70,7 @@ class SoftwareVideoBackend final : public VideoBackend {
   bool menu_visible_ = false;
   bool tracker_sidebar_enabled_ = false;
   unsigned tracker_sidebar_width_ = 0;
+  bool fullscreen_ = false;
 };
 
 }  // namespace sekaiemu::spike

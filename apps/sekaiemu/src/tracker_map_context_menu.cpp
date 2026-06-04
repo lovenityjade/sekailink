@@ -20,19 +20,6 @@ std::string JsonStringAtAnyKey(const nlohmann::json& root,
   return {};
 }
 
-const nlohmann::json* MapChildren(const nlohmann::json& map) {
-  if (!map.is_object()) {
-    return nullptr;
-  }
-  for (const char* key : {"menu_children", "menuChildren", "children"}) {
-    const auto found = map.find(key);
-    if (found != map.end() && found->is_array()) {
-      return &*found;
-    }
-  }
-  return nullptr;
-}
-
 std::string LabelOrId(const nlohmann::json& value) {
   auto label = JsonStringAtAnyKey(value, {"label", "name", "title"});
   if (!label.empty()) {
@@ -40,13 +27,6 @@ std::string LabelOrId(const nlohmann::json& value) {
   }
   label = JsonStringAtAnyKey(value, {"id", "map_id", "mapId", "tab", "tab_id", "tabId"});
   return label.empty() ? "MAP" : label;
-}
-
-int EntryDepth(const nlohmann::json& value, int fallback) {
-  if (!value.is_object()) {
-    return fallback;
-  }
-  return std::clamp(value.value("menu_depth", value.value("menuDepth", fallback)), 0, 4);
 }
 
 int ClampMenuCoordinate(int value, int low, int high) {
@@ -65,12 +45,52 @@ bool HasVisibleMap(const TrackerResolvedViewState& resolved, std::string_view ma
   });
 }
 
-bool HasVisibleTab(const TrackerResolvedViewState& resolved, std::string_view tab_id) {
-  if (tab_id.empty()) {
-    return true;
+std::size_t VisibleMapIndex(const TrackerResolvedViewState& resolved, std::string_view map_id) {
+  for (std::size_t index = 0; index < resolved.visible_maps.size(); ++index) {
+    const auto& map = resolved.visible_maps[index];
+    if (map.is_object() && map.value("id", std::string{}) == map_id) {
+      return index;
+    }
   }
-  return std::any_of(resolved.visible_tabs.begin(), resolved.visible_tabs.end(), [&](const auto& tab) {
-    return tab.is_object() && tab.value("id", std::string{}) == tab_id;
+  return 0;
+}
+
+bool MapHasDrawableSurface(const TrackerResolvedViewState& resolved, std::string_view map_id) {
+  if (map_id.empty()) {
+    return false;
+  }
+  for (const auto& map : resolved.visible_maps) {
+    if (!map.is_object() || map.value("id", std::string{}) != map_id) {
+      continue;
+    }
+    return !JsonStringAtAnyKey(map, {"image"}).empty() ||
+           map.value("image_loaded", false);
+  }
+  return false;
+}
+
+std::string LabelForMapOrTab(const TrackerResolvedViewState& resolved,
+                             std::string_view map_id,
+                             std::string_view tab_id) {
+  for (const auto& map : resolved.visible_maps) {
+    if (map.is_object() && map.value("id", std::string{}) == map_id) {
+      return LabelOrId(map);
+    }
+  }
+  if (!tab_id.empty()) {
+    for (const auto& tab : resolved.visible_tabs) {
+      if (tab.is_object() && tab.value("id", std::string{}) == tab_id) {
+        return LabelOrId(tab);
+      }
+    }
+  }
+  return {};
+}
+
+bool EntriesContainMap(const std::vector<TrackerMapContextMenuEntry>& entries,
+                       std::string_view map_id) {
+  return std::any_of(entries.begin(), entries.end(), [&](const auto& entry) {
+    return entry.map_id == map_id;
   });
 }
 
@@ -85,56 +105,38 @@ std::vector<TrackerMapContextMenuEntry> BuildTrackerMapContextMenuEntries(
       .label = "ACTUAL MAP",
   });
 
-  const auto& expanded_map_id = runtime.UiState().map_context_menu_expanded_map_id;
-  for (std::size_t map_index = 0; map_index < resolved.visible_maps.size(); ++map_index) {
-    const auto& map = resolved.visible_maps[map_index];
-    if (!map.is_object()) {
+  const auto& ui = runtime.UiState();
+  if (HasVisibleMap(resolved, ui.previous_map_id) &&
+      MapHasDrawableSurface(resolved, ui.previous_map_id)) {
+    auto label = LabelForMapOrTab(resolved, ui.previous_map_id, ui.previous_tab_id);
+    entries.push_back(TrackerMapContextMenuEntry{
+        .kind = TrackerMapContextMenuEntryKind::PreviousMap,
+        .label = label.empty() ? "PREVIOUS MAP" : "BACK: " + label,
+        .map_id = ui.previous_map_id,
+        .tab_id = ui.previous_tab_id,
+    });
+  }
+
+  for (const auto& tab : resolved.visible_tabs) {
+    if (!tab.is_object()) {
       continue;
     }
-    const auto map_id = JsonStringAtAnyKey(map, {"id", "map_id", "mapId"});
-    const auto* children = MapChildren(map);
-    std::vector<TrackerMapContextMenuEntry> child_entries;
-    if (children != nullptr) {
-      for (std::size_t child_index = 0; child_index < children->size(); ++child_index) {
-        const auto& child = (*children)[child_index];
-        if (!child.is_object()) {
-          continue;
-        }
-        auto child_map_id = JsonStringAtAnyKey(child, {"map", "map_id", "mapId"});
-        if (child_map_id.empty()) {
-          child_map_id = map_id;
-        }
-        const auto child_tab_id = JsonStringAtAnyKey(child, {"tab", "tab_id", "tabId"});
-        if (!HasVisibleMap(resolved, child_map_id) || !HasVisibleTab(resolved, child_tab_id)) {
-          continue;
-        }
-        child_entries.push_back(TrackerMapContextMenuEntry{
-            .kind = TrackerMapContextMenuEntryKind::Child,
-            .map_index = map_index,
-            .child_index = child_index,
-            .label = LabelOrId(child),
-            .map_id = child_map_id,
-            .tab_id = child_tab_id,
-            .depth = EntryDepth(child, EntryDepth(map, 0) + 1),
-        });
-      }
+    const auto tab_id = JsonStringAtAnyKey(tab, {"id", "tab", "tab_id", "tabId"});
+    const auto map_id = JsonStringAtAnyKey(tab, {"map_id", "mapId", "map"});
+    if (!HasVisibleMap(resolved, map_id) || !MapHasDrawableSurface(resolved, map_id)) {
+      continue;
     }
-    const bool expandable = !child_entries.empty();
-    const bool expanded = expandable && map_id == expanded_map_id;
+    if (EntriesContainMap(entries, map_id)) {
+      continue;
+    }
+    auto label = LabelForMapOrTab(resolved, map_id, tab_id);
     entries.push_back(TrackerMapContextMenuEntry{
         .kind = TrackerMapContextMenuEntryKind::Map,
-        .map_index = map_index,
-        .label = LabelOrId(map),
+        .map_index = VisibleMapIndex(resolved, map_id),
+        .label = label.empty() ? LabelOrId(tab) : label,
         .map_id = map_id,
-        .depth = EntryDepth(map, 0),
-        .expandable = expandable,
-        .expanded = expanded,
+        .tab_id = tab_id,
     });
-
-    if (!expanded) {
-      continue;
-    }
-    entries.insert(entries.end(), child_entries.begin(), child_entries.end());
   }
   return entries;
 }

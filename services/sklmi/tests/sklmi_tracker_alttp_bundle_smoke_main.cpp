@@ -33,6 +33,17 @@ bool Contains(const std::string& text, const std::string& needle) {
     return text.find(needle) != std::string::npos;
 }
 
+bool SnapshotItemAcquired(const std::string& snapshot, const std::string& id) {
+    const auto needle = "\"id\":\"" + id + "\"";
+    const auto start = snapshot.find(needle);
+    if (start == std::string::npos) {
+        return false;
+    }
+    const auto next_item = snapshot.find("\"id\":\"", start + needle.size());
+    const auto end = next_item == std::string::npos ? snapshot.size() : next_item;
+    return Contains(snapshot.substr(start, end - start), "\"acquired\":true");
+}
+
 std::size_t CountOccurrences(const std::string& text, const std::string& needle) {
     if (needle.empty()) return 0;
     std::size_t count = 0;
@@ -100,6 +111,51 @@ int main() {
         return EXIT_FAILURE;
     }
 
+    const auto initial_root = fs::temp_directory_path() / "sklmi-tracker-alttp-initial-bundle";
+    std::error_code initial_ec;
+    fs::remove_all(initial_root, initial_ec);
+    fs::create_directories(initial_root);
+    WriteText(initial_root / "room.state",
+              "meta|slot_id|Jade-ALTTP\n"
+              "meta|seed_id|seed-alttp-001\n"
+              "meta|tracker_pack|alttp-ap-tracker\n"
+              "meta|tracker_variant|Map Tracker - AP\n"
+              "meta|slot_data|{\"goal\":\"ganon\",\"mode\":\"open\",\"big_key_shuffle\":2,"
+              "\"small_key_shuffle\":2,\"compass_shuffle\":2,\"map_shuffle\":2,"
+              "\"key_drop_shuffle\":1}\n");
+    TrackerHeadlessRuntime initial_runtime;
+    std::string initial_error;
+    if (!initial_runtime.Initialize(
+            {.bundle_path = bundle_path,
+             .snapshot_path = initial_root / "tracker.snapshot.json",
+             .command_log_path = initial_root / "tracker.commands.jsonl",
+             .room_state_path = initial_root / "room.state",
+             .tracker_variant = "Map Tracker - AP"},
+            &initial_error)) {
+        std::cerr << "tracker_initial_init_failed:" << initial_error << "\n";
+        return EXIT_FAILURE;
+    }
+    if (!initial_runtime.PublishSnapshotIfChanged(&initial_error)) {
+        std::cerr << "tracker_initial_publish_failed:" << initial_error << "\n";
+        return EXIT_FAILURE;
+    }
+    const auto initial_snapshot = Slurp(initial_root / "tracker.snapshot.json");
+    if (!ContainsOrdered(initial_snapshot, {"\"id\":\"bow\"", "\"count\":30", "\"acquired\":false"})) {
+        std::cerr << "tracker_initial_bow_arrows_active\n";
+        return EXIT_FAILURE;
+    }
+    if (Contains(initial_snapshot, "\"id\":\"smallkeys_setting\"") ||
+        Contains(initial_snapshot, "\"id\":\"bigkeys_setting\"") ||
+        Contains(initial_snapshot, "\"id\":\"key_drop_shuffle\"")) {
+        std::cerr << "tracker_initial_settings_exported_as_items\n";
+        return EXIT_FAILURE;
+    }
+    if (SnapshotItemAcquired(initial_snapshot, "ip_smallkey_drop") ||
+        SnapshotItemAcquired(initial_snapshot, "sp_smallkey_drop")) {
+        std::cerr << "tracker_initial_key_drop_active\n";
+        return EXIT_FAILURE;
+    }
+
     const auto root = fs::temp_directory_path() / "sklmi-tracker-alttp-bundle";
     std::error_code ec;
     fs::remove_all(root, ec);
@@ -109,7 +165,9 @@ int main() {
               "meta|seed_id|seed-alttp-001\n"
               "meta|tracker_pack|alttp-ap-tracker\n"
               "meta|tracker_variant|Map Tracker - AP\n"
-              "meta|slot_data|{\"goal\":\"ganon\",\"mode\":\"open\"}\n");
+              "meta|slot_data|{\"goal\":\"ganon\",\"mode\":\"open\",\"big_key_shuffle\":2,"
+              "\"small_key_shuffle\":2,\"compass_shuffle\":2,\"map_shuffle\":2,"
+              "\"key_drop_shuffle\":1}\n");
 
     TrackerHeadlessRuntime runtime;
     std::string error;
@@ -138,10 +196,11 @@ int main() {
         std::cerr << "tracker_alttp_dungeon_item_mapping_incomplete\n";
         return EXIT_FAILURE;
     }
-    std::uint64_t pack_delivery_index = 0;
+    std::uint64_t pack_delivery_index = 3;
     for (const auto& mapping : dungeon_item_mappings) {
         runtime.ApplyEvent({EventType::item_received,
-                            "ap:pack-dungeon:" + std::to_string(pack_delivery_index++),
+                            "ap:" + std::to_string(pack_delivery_index++) + ":" +
+                                std::to_string(mapping.item_id) + ":0:1",
                             "Dungeon Pack Item",
                             "",
                             "",
@@ -153,6 +212,7 @@ int main() {
 
     AppendText(root / "tracker.commands.jsonl",
                "{\"cmd\":\"tracker.click_item\",\"code\":\"sword\",\"button\":\"left\"}\n"
+               "{\"cmd\":\"tracker.click_item\",\"code\":\"hookshot\",\"button\":\"left\"}\n"
                "{\"cmd\":\"tracker.click_pin\",\"group_id\":\"light_world_caves\",\"button\":\"left\"}\n");
     runtime.PollCommands();
 
@@ -165,7 +225,8 @@ int main() {
     if (!Contains(snapshot, "\"game\":\"A Link to the Past\"") ||
         !Contains(snapshot, "\"slot\":\"Jade-ALTTP\"") ||
         !Contains(snapshot, "\"seed\":\"seed-alttp-001\"") ||
-        !Contains(snapshot, "\"slot_data\":{\"goal\":\"ganon\",\"mode\":\"open\"}") ||
+        !Contains(snapshot, "\"slot_data\":{") ||
+        !Contains(snapshot, "\"key_drop_shuffle\":1") ||
         !Contains(snapshot, "\"maps\":[") ||
         !Contains(snapshot, "\"pack_maps\":[") ||
         !Contains(snapshot, "\"pack_layouts\":[") ||
@@ -241,7 +302,7 @@ int main() {
     }
     if (!Contains(snapshot, "\"pack_location_id\":\"Lightworld/Kakariko Well\"") ||
         !Contains(snapshot, "\"pack_location_id\":\"Eastern Palace/Big Key Chest\"") ||
-        Contains(snapshot, "\"pack_location_id\":\"Darkworld Bottom/Link's House\"")) {
+        !Contains(snapshot, "\"pack_location_id\":\"Darkworld Bottom/Link's House\"")) {
         std::cerr << "tracker_alttp_pack_location_pin_state_invalid\n";
         return EXIT_FAILURE;
     }
@@ -280,24 +341,25 @@ int main() {
     }
     const auto logic_result = Slurp(root / "tracker.logic.result");
     if (!Contains(logic_result, "pack_location|Lightworld/Kakariko Well|green|") ||
-        !Contains(logic_result, "pack_location|Darkworld Bottom/Link's House|hidden|")) {
+        !Contains(logic_result, "pack_location|Darkworld Bottom/Link's House|red|") ||
+        !Contains(logic_result, "section|HC/Hyrule Castle/Key Drops|green|") ||
+        !Contains(logic_result, "section|HC/Hyrule Castle/Boomerang Chest|green|")) {
         std::cerr << "tracker_alttp_pack_location_logic_invalid\n";
         return EXIT_FAILURE;
     }
-    const auto logic_state = Slurp(root / "tracker.logic.state");
     for (const auto& mapping : dungeon_item_mappings) {
         const bool counter = IsPackCounterBehavior(mapping.behavior);
         for (const auto& code : mapping.codes) {
             if (!IsDungeonPackCode(code)) continue;
             if (counter) {
                 if (!ContainsOrdered(snapshot, {"\"id\":\"" + code + "\"", "\"count\":1", "\"acquired\":true"}) ||
-                    !Contains(logic_state, "slot|" + code + "|1|0|1\n")) {
+                    !Contains(logic_result, "item_state|" + code + "|0|0|1\n")) {
                     std::cerr << "tracker_alttp_pack_code_counter_invalid:" << code << "\n";
                     return EXIT_FAILURE;
                 }
             } else {
-                if (!ContainsOrdered(snapshot, {"\"id\":\"" + code + "\"", "\"stage\":1", "\"acquired\":true"}) ||
-                    !Contains(logic_state, "slot|" + code + "|1|1|0\n")) {
+                if (!ContainsOrdered(snapshot, {"\"id\":\"" + code + "\"", "\"acquired\":true"}) ||
+                    !Contains(logic_result, "item_state|" + code + "|1|0|0\n")) {
                     std::cerr << "tracker_alttp_pack_code_toggle_invalid:" << code << "\n";
                     return EXIT_FAILURE;
                 }

@@ -221,6 +221,17 @@ void MergeObjectIfMissing(nlohmann::json& destination, const nlohmann::json& sou
   }
 }
 
+void MergeStaticSnapshotPayload(nlohmann::json& destination, const nlohmann::json& previous) {
+  if (!destination.is_object() || !previous.is_object()) {
+    return;
+  }
+  for (const char* key : {"pack_layouts", "pack_item_visuals"}) {
+    if (!destination.contains(key) && previous.contains(key)) {
+      destination[key] = previous.at(key);
+    }
+  }
+}
+
 nlohmann::json ExtractSeedMetadata(const nlohmann::json& snapshot) {
   nlohmann::json metadata = nlohmann::json::object();
   if (const auto* seed = JsonValueAtAnyPath(snapshot, {"seed_metadata", "seedMetadata"});
@@ -275,7 +286,8 @@ nlohmann::json NormalizeServerSnapshot(const nlohmann::json& snapshot) {
 }  // namespace
 
 void TrackerRuntime::ApplyServerSnapshot(const nlohmann::json& snapshot) {
-  const auto normalized_snapshot = NormalizeServerSnapshot(snapshot);
+  auto normalized_snapshot = NormalizeServerSnapshot(snapshot);
+  MergeStaticSnapshotPayload(normalized_snapshot, authoritative_state_.snapshot);
   authoritative_state_.snapshot = normalized_snapshot;
   authoritative_state_.world_instance_id =
       JsonStringAtAnyPath(normalized_snapshot, {"world_instance_id", "worldInstanceId"});

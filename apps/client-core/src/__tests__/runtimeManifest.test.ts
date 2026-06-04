@@ -6,7 +6,7 @@ import { gameSetupRegistry } from "../data/gameSetup";
 import { deriveRuntimeSetupFlags } from "../services/launchReadiness";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const runtimeRoot = path.resolve(__dirname, "../../../runtime");
+const runtimeRoot = path.resolve(__dirname, "../../../../runtime");
 const electronMainPath = path.resolve(__dirname, "../../electron/main.cjs");
 const electronBuilderPath = path.resolve(__dirname, "../../electron-builder.yml");
 

@@ -99,6 +99,15 @@ void RuntimeMenu::Toggle() {
 
 void RuntimeMenu::Open() { visible_ = true; }
 
+void RuntimeMenu::OpenShortcutHelp() {
+  visible_ = true;
+  page_ = Page::InputSettings;
+  controls_page_mode_ = RuntimeControlsPageMode::Sekaiemu;
+  main_slot_mode_ = MainSlotMode::None;
+  selected_index_ = 0;
+  scroll_offset_ = 0;
+}
+
 void RuntimeMenu::Close() {
   visible_ = false;
   main_slot_mode_ = MainSlotMode::None;

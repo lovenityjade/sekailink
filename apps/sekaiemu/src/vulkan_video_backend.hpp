@@ -35,6 +35,7 @@ class VulkanVideoBackend final : public VideoBackend {
   void SetTrackerSidebarLayout(bool enabled,
                                unsigned sidebar_width,
                                const VideoGeometry& geometry) override;
+  bool ToggleFullscreen(std::string& error) override;
   void Present() override;
   void Shutdown() override;
 

@@ -83,6 +83,10 @@ struct Event {
     std::string linkedworld_id;
     std::string core_profile;
     std::uint64_t canonical_id = 0;
+    std::uint64_t player_number = 0;
+    std::string tab_id;
+    std::string map_id;
+    std::string zone_id;
 };
 
 enum class CompareOp {
@@ -161,11 +165,13 @@ struct RoomChatMessage {
     std::uint64_t id = 0;
     std::string author;
     std::string text;
+    std::string kind;
 };
 
 struct ArchipelagoConnectOptions {
     std::string game;
     std::string slot_name;
+    std::string player_alias;
     std::string password;
     std::string uuid;
     std::uint64_t version_major = 0;
@@ -272,6 +278,26 @@ struct WatchRule {
     std::string location_name;
 };
 
+struct ContextValueMapping {
+    std::uint64_t value = 0;
+    std::optional<std::uint64_t> min_value;
+    std::optional<std::uint64_t> max_value;
+    std::string event_key;
+    std::string mapped_value;
+    std::string tab_id;
+    std::string map_id;
+    std::string zone_id;
+};
+
+struct ContextWatchRule {
+    std::string domain_id;
+    std::uint64_t address = 0;
+    std::uint64_t size = 1;
+    std::string context_key;
+    EventType event_type = EventType::map_changed;
+    std::vector<ContextValueMapping> values;
+};
+
 struct InjectRule {
     struct WriteStep {
         std::string domain_id;
@@ -311,6 +337,7 @@ struct BridgeManifest {
     std::string state_file;
     std::uint64_t poll_interval_ms = 16;
     std::vector<WatchRule> checks;
+    std::vector<ContextWatchRule> context_watches;
     std::vector<InjectRule> injections;
 };
 
@@ -522,6 +549,7 @@ class ManifestBridgeSession final : public BridgeSession {
     EventSink* sink_ = nullptr;
     bool connected_ = false;
     std::unordered_map<std::string, bool> emitted_checks_;
+    std::unordered_map<std::string, std::uint64_t> context_values_;
     std::unordered_map<std::string, bool> injected_items_;
     std::uint64_t last_tick_ms_ = 0;
 };

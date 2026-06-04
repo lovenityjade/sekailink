@@ -198,6 +198,23 @@ void SoftwareVideoBackend::SetTrackerSidebarLayout(bool enabled,
   ApplyWindowSizing(geometry_);
 }
 
+bool SoftwareVideoBackend::ToggleFullscreen(std::string& error) {
+  if (!window_) {
+    error = "Software video window is not initialized.";
+    return false;
+  }
+  const Uint32 flag = fullscreen_ ? 0u : SDL_WINDOW_FULLSCREEN_DESKTOP;
+  if (SDL_SetWindowFullscreen(window_, flag) != 0) {
+    error = std::string("SDL_SetWindowFullscreen failed: ") + SDL_GetError();
+    return false;
+  }
+  fullscreen_ = !fullscreen_;
+  if (!fullscreen_) {
+    ApplyWindowSizing(geometry_);
+  }
+  return true;
+}
+
 void SoftwareVideoBackend::Present() {
   if (!renderer_ || !texture_) {
     return;
@@ -290,6 +307,9 @@ int SoftwareVideoBackend::ScaledDimension(unsigned size) const {
 
 void SoftwareVideoBackend::ApplyWindowSizing(const VideoGeometry& geometry) {
   if (!window_) {
+    return;
+  }
+  if (fullscreen_) {
     return;
   }
 

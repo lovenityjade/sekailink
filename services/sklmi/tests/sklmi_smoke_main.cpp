@@ -47,8 +47,8 @@ int main() {
     },
     "state_file": "bridge.state",
     "poll_interval_ms": 33,
-    "checks": [
-      {
+	    "checks": [
+	      {
         "domain_id": "WRAM",
         "address": 4,
         "size": 1,
@@ -66,10 +66,29 @@ int main() {
         "operand_u64": 4,
         "event_type": "map_changed",
         "event_key": "map.onett",
-        "mapped_value": "Onett"
-      }
-    ],
-    "actions": [
+	        "mapped_value": "Onett"
+	      }
+	    ],
+	    "context_watches": [
+	      {
+	        "domain_id": "WRAM",
+	        "address": 10,
+	        "size": 1,
+	        "context_key": "smoke.room",
+	        "event_type": "map_changed",
+	        "values": [
+	          {
+	            "value": 2,
+	            "event_key": "room.two",
+	            "mapped_value": "Room Two",
+	            "tab_id": "dungeon",
+	            "map_id": "dungeon_map",
+	            "zone_id": "room_two"
+	          }
+	        ]
+	      }
+	    ],
+	    "actions": [
       {
         "domain_id": "WRAM",
         "address": 8,
@@ -89,18 +108,22 @@ int main() {
         std::cerr << "manifest_load_failed:" << manifest_error << "\n";
         return EXIT_FAILURE;
     }
-    if (manifest->linkedworld_id != "earthbound" || manifest->checks.size() != 2 || manifest->injections.size() != 1) {
-        std::cerr << "manifest_invalid\n";
-        return EXIT_FAILURE;
-    }
-    if (manifest->contract_version != "1.0" || manifest->core_profile.name != "snes_v1" ||
-        manifest->driver_instance_id != "driver-smoke-1" ||
-        manifest->checks[0].compare != CompareOp::greater_or_equal || manifest->checks[1].event_type != EventType::map_changed ||
-        manifest->checks[0].event_key != "42001" || manifest->checks[0].mapped_value != "Onett - Test" ||
-        manifest->injections[0].event_key != "1337" || manifest->injections[0].mapped_value != "Cookie") {
-        std::cerr << "manifest_rule_decode_failed\n";
-        return EXIT_FAILURE;
-    }
+	    if (manifest->linkedworld_id != "earthbound" || manifest->checks.size() != 2 ||
+	        manifest->context_watches.size() != 1 || manifest->injections.size() != 1) {
+	        std::cerr << "manifest_invalid\n";
+	        return EXIT_FAILURE;
+	    }
+	    if (manifest->contract_version != "1.0" || manifest->core_profile.name != "snes_v1" ||
+	        manifest->driver_instance_id != "driver-smoke-1" ||
+	        manifest->checks[0].compare != CompareOp::greater_or_equal || manifest->checks[1].event_type != EventType::map_changed ||
+	        manifest->checks[0].event_key != "42001" || manifest->checks[0].mapped_value != "Onett - Test" ||
+	        manifest->context_watches[0].context_key != "smoke.room" ||
+	        manifest->context_watches[0].values[0].tab_id != "dungeon" ||
+	        manifest->context_watches[0].values[0].map_id != "dungeon_map" ||
+	        manifest->injections[0].event_key != "1337" || manifest->injections[0].mapped_value != "Cookie") {
+	        std::cerr << "manifest_rule_decode_failed\n";
+	        return EXIT_FAILURE;
+	    }
 
     VectorEventSink sink;
     BasicRuntimeSession session(provider, sink, std::make_unique<ManifestBridgeSession>(*manifest), state_path);
@@ -111,8 +134,9 @@ int main() {
         return EXIT_FAILURE;
     }
 
-    bytes[6] = std::byte{0x04};
-    if (!provider.set_domain_bytes("WRAM", bytes)) {
+	    bytes[6] = std::byte{0x04};
+	    bytes[10] = std::byte{0x02};
+	    if (!provider.set_domain_bytes("WRAM", bytes)) {
         std::cerr << "state_set_failed\n";
         return EXIT_FAILURE;
     }
@@ -136,9 +160,10 @@ int main() {
     }
 
     bool saw_check = false;
-    bool saw_item = false;
-    bool saw_map = false;
-    bool saw_reset = false;
+	    bool saw_item = false;
+	    bool saw_map = false;
+	    bool saw_context_map = false;
+	    bool saw_reset = false;
     for (const auto& event : sink.events()) {
         if (event.type == EventType::location_checked && event.key == "42001" && event.value == "Onett - Test" &&
             event.driver_instance_id == "driver-smoke-1" && event.linkedworld_id == "earthbound" &&
@@ -150,13 +175,18 @@ int main() {
             event.core_profile == "snes_v1" && event.canonical_id == 1337) {
             saw_item = true;
         }
-        if (event.type == EventType::map_changed && event.value == "Onett") saw_map = true;
-    }
+	        if (event.type == EventType::map_changed && event.value == "Onett") saw_map = true;
+	        if (event.type == EventType::map_changed && event.key == "room.two" &&
+	            event.value == "Room Two" && event.tab_id == "dungeon" &&
+	            event.map_id == "dungeon_map" && event.zone_id == "room_two") {
+	            saw_context_map = true;
+	        }
+	    }
 
-    if (!saw_check || !saw_item || !saw_map) {
-        std::cerr << "missing_expected_events\n";
-        return EXIT_FAILURE;
-    }
+	    if (!saw_check || !saw_item || !saw_map || !saw_context_map) {
+	        std::cerr << "missing_expected_events\n";
+	        return EXIT_FAILURE;
+	    }
     if (!std::filesystem::exists(state_path)) {
         std::cerr << "state_file_missing\n";
         return EXIT_FAILURE;

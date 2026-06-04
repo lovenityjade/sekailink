@@ -73,6 +73,25 @@ int main() {
     std::cerr << "save_state_manager_battery_not_saved\n";
     return 1;
   }
+
+  g_battery = {{0x00, 0x00, 0x00, 0x00}};
+  if (!manager.LoadBattery(core, error) || g_battery[0] != 0x99) {
+    std::cerr << "save_state_manager_battery_not_loaded:" << error << "\n";
+    return 1;
+  }
+
+  manager.RefreshBatteryTracking(core);
+  g_battery[1] = 0x77;
+  if (!manager.FlushPendingBatterySave(core, error)) {
+    std::cerr << "save_state_manager_shutdown_flush_missed_change:" << error << "\n";
+    return 1;
+  }
+  g_battery = {{0x00, 0x00, 0x00, 0x00}};
+  if (!manager.LoadBattery(core, error) || g_battery[1] != 0x77) {
+    std::cerr << "save_state_manager_shutdown_flush_not_persisted:" << error << "\n";
+    return 1;
+  }
+
   if (manager.StatePath(0) != manager.StatePath() ||
       manager.StatePath(1).filename().string().find(".slot1.state") == std::string::npos) {
     std::cerr << "save_state_manager_slot_paths_failed\n";

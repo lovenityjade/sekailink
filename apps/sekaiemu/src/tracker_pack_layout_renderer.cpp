@@ -66,6 +66,24 @@ std::optional<nlohmann::json> BuildPlayerFocusedRoot(const PackLayoutDocument& d
   };
 }
 
+bool ShouldShareItemGridRowOrigin(const nlohmann::json& rows, int max_columns) {
+  if (!rows.is_array()) {
+    return false;
+  }
+  int array_rows = 0;
+  int full_rows = 0;
+  for (const auto& row : rows) {
+    if (!row.is_array()) {
+      continue;
+    }
+    ++array_rows;
+    if (static_cast<int>(row.size()) == max_columns) {
+      ++full_rows;
+    }
+  }
+  return (max_columns >= 10 || array_rows >= 7) && full_rows * 2 >= array_rows;
+}
+
 void RenderNode(OverlayCanvas& canvas,
                 const UiPalette& palette,
                 const PackStateContext& context,
@@ -263,6 +281,7 @@ void RenderNode(OverlayCanvas& canvas,
                              content_height,
                              center_small_vertical_slack ? std::string_view{"center"}
                                                          : std::string_view{grid_v_alignment});
+    const bool shared_row_origin = ShouldShareItemGridRowOrigin(rows, max_columns);
     for (std::size_t row_index = 0; row_index < rows.size(); ++row_index) {
       const auto& row = rows[row_index];
       if (!row.is_array()) {
@@ -271,7 +290,12 @@ void RenderNode(OverlayCanvas& canvas,
       const int row_columns = static_cast<int>(row.size());
       const int row_width = cell_width * row_columns + gap_x * std::max(0, row_columns - 1);
       const int row_origin_x =
-          ResolveAlignedOrigin(grid_origin_x, content_width, row_width, JsonStringFlexible(node, "item_h_alignment"));
+          shared_row_origin
+              ? grid_origin_x
+              : ResolveAlignedOrigin(grid_origin_x,
+                                     content_width,
+                                     row_width,
+                                     JsonStringFlexible(node, "item_h_alignment"));
       for (std::size_t col_index = 0; col_index < row.size(); ++col_index) {
         if (!row[col_index].is_string()) {
           continue;

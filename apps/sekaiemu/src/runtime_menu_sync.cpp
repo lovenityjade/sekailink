@@ -1,5 +1,7 @@
 #include "runtime_menu_sync.hpp"
 
+#include "tracker_overlay_render_state.hpp"
+
 #include <algorithm>
 #include <exception>
 #include <string>
@@ -192,14 +194,13 @@ void DrawRuntimeMenuSyncInfoPage(OverlayCanvas& canvas,
   if (sync_id.empty()) {
     sync_id = SnapshotOrMeta(snapshot, "seed");
   }
-  std::string slot_name = SnapshotOrMeta(snapshot, "slot_name");
-  if (slot_name.empty()) {
-    slot_name = bridge_status.ap_slot_name;
-  }
+  std::string player = tracker_runtime != nullptr
+                           ? SnapshotDisplayPlayerName(*tracker_runtime, bridge_status.ap_slot_name)
+                           : bridge_status.ap_slot_name;
 
   draw("SYNC STATUS", connected ? "CONNECTED" : "WAITING", connected ? ok : warning);
   draw("ROOM", endpoint, neutral);
-  draw("PLAYER", slot_name, neutral);
+  draw("PLAYER", player, neutral);
   draw("SLOT", SnapshotOrMeta(snapshot, "slot"), neutral);
   draw("TEAM", SnapshotOrMeta(snapshot, "team"), neutral);
   draw("GAME", SnapshotOrMeta(snapshot, "game"), neutral);

@@ -10,6 +10,1635 @@
     "module": "sekaiemu",
     "state_file": "alttp.phase1.bridge.state",
     "poll_interval_ms": 16,
+    "context_watches": [
+          {
+                "domain_id": "system_ram",
+                "address": 160,
+                "size": 2,
+                "context_key": "alttp_dungeon_room",
+                "event_type": "map_changed",
+                "values": [
+                      {
+                            "value": 1,
+                            "event_key": "hyrule_castle",
+                            "mapped_value": "Hyrule Castle",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "hyrule_castle"
+                      },
+                      {
+                            "value": 2,
+                            "event_key": "castle_escape",
+                            "mapped_value": "Castle Escape",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "castle_escape"
+                      },
+                      {
+                            "value": 4,
+                            "event_key": "turtle_rock",
+                            "mapped_value": "Turtle Rock",
+                            "tab_id": "turtle",
+                            "map_id": "turtle_gt",
+                            "zone_id": "turtle_rock"
+                      },
+                      {
+                            "value": 6,
+                            "event_key": "swamp_palace",
+                            "mapped_value": "Swamp Palace",
+                            "tab_id": "swamp",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "swamp_palace"
+                      },
+                      {
+                            "value": 7,
+                            "event_key": "tower_of_hera",
+                            "mapped_value": "Tower of Hera",
+                            "tab_id": "hera",
+                            "map_id": "tower_of_hera",
+                            "zone_id": "tower_of_hera"
+                      },
+                      {
+                            "value": 9,
+                            "event_key": "palace_of_darkness",
+                            "mapped_value": "Palace of Darkness",
+                            "tab_id": "pod",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "palace_of_darkness"
+                      },
+                      {
+                            "value": 10,
+                            "event_key": "palace_of_darkness",
+                            "mapped_value": "Palace of Darkness",
+                            "tab_id": "pod",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "palace_of_darkness"
+                      },
+                      {
+                            "value": 11,
+                            "event_key": "palace_of_darkness",
+                            "mapped_value": "Palace of Darkness",
+                            "tab_id": "pod",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "palace_of_darkness"
+                      },
+                      {
+                            "value": 12,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Bottom",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 13,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Top",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 14,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 17,
+                            "event_key": "castle_escape",
+                            "mapped_value": "Castle Escape",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "castle_escape"
+                      },
+                      {
+                            "value": 18,
+                            "event_key": "castle_escape",
+                            "mapped_value": "Castle Escape",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "castle_escape"
+                      },
+                      {
+                            "value": 19,
+                            "event_key": "turtle_rock",
+                            "mapped_value": "Turtle Rock",
+                            "tab_id": "turtle",
+                            "map_id": "turtle_gt",
+                            "zone_id": "turtle_rock"
+                      },
+                      {
+                            "value": 20,
+                            "event_key": "turtle_rock",
+                            "mapped_value": "Turtle Rock",
+                            "tab_id": "turtle",
+                            "map_id": "turtle_gt",
+                            "zone_id": "turtle_rock"
+                      },
+                      {
+                            "value": 21,
+                            "event_key": "turtle_rock",
+                            "mapped_value": "Turtle Rock",
+                            "tab_id": "turtle",
+                            "map_id": "turtle_gt",
+                            "zone_id": "turtle_rock"
+                      },
+                      {
+                            "value": 22,
+                            "event_key": "swamp_palace",
+                            "mapped_value": "Swamp Palace",
+                            "tab_id": "swamp",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "swamp_palace"
+                      },
+                      {
+                            "value": 23,
+                            "event_key": "tower_of_hera",
+                            "mapped_value": "Tower of Hera",
+                            "tab_id": "hera",
+                            "map_id": "tower_of_hera",
+                            "zone_id": "tower_of_hera"
+                      },
+                      {
+                            "value": 25,
+                            "event_key": "palace_of_darkness",
+                            "mapped_value": "Palace of Darkness",
+                            "tab_id": "pod",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "palace_of_darkness"
+                      },
+                      {
+                            "value": 26,
+                            "event_key": "palace_of_darkness",
+                            "mapped_value": "Palace of Darkness",
+                            "tab_id": "pod",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "palace_of_darkness"
+                      },
+                      {
+                            "value": 27,
+                            "event_key": "palace_of_darkness",
+                            "mapped_value": "Palace of Darkness",
+                            "tab_id": "pod",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "palace_of_darkness"
+                      },
+                      {
+                            "value": 28,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Bottom",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 29,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Top",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 30,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 31,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 32,
+                            "event_key": "agahnim_tower",
+                            "mapped_value": "Agahnim's Tower",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "agahnim_tower"
+                      },
+                      {
+                            "value": 33,
+                            "event_key": "castle_escape",
+                            "mapped_value": "Castle Escape",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "castle_escape"
+                      },
+                      {
+                            "value": 34,
+                            "event_key": "castle_escape",
+                            "mapped_value": "Castle Escape",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "castle_escape"
+                      },
+                      {
+                            "value": 35,
+                            "event_key": "turtle_rock",
+                            "mapped_value": "Turtle Rock",
+                            "tab_id": "turtle",
+                            "map_id": "turtle_gt",
+                            "zone_id": "turtle_rock"
+                      },
+                      {
+                            "value": 36,
+                            "event_key": "turtle_rock",
+                            "mapped_value": "Turtle Rock",
+                            "tab_id": "turtle",
+                            "map_id": "turtle_gt",
+                            "zone_id": "turtle_rock"
+                      },
+                      {
+                            "value": 38,
+                            "event_key": "swamp_palace",
+                            "mapped_value": "Swamp Palace",
+                            "tab_id": "swamp",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "swamp_palace"
+                      },
+                      {
+                            "value": 39,
+                            "event_key": "tower_of_hera",
+                            "mapped_value": "Tower of Hera",
+                            "tab_id": "hera",
+                            "map_id": "tower_of_hera",
+                            "zone_id": "tower_of_hera"
+                      },
+                      {
+                            "value": 40,
+                            "event_key": "swamp_palace",
+                            "mapped_value": "Swamp Palace",
+                            "tab_id": "swamp",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "swamp_palace"
+                      },
+                      {
+                            "value": 41,
+                            "event_key": "skull_woods",
+                            "mapped_value": "Skull Woods",
+                            "tab_id": "skull",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "skull_woods"
+                      },
+                      {
+                            "value": 42,
+                            "event_key": "palace_of_darkness",
+                            "mapped_value": "Palace of Darkness",
+                            "tab_id": "pod",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "palace_of_darkness"
+                      },
+                      {
+                            "value": 43,
+                            "event_key": "palace_of_darkness",
+                            "mapped_value": "Palace of Darkness",
+                            "tab_id": "pod",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "palace_of_darkness"
+                      },
+                      {
+                            "value": 46,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 48,
+                            "event_key": "agahnim_tower",
+                            "mapped_value": "Agahnim's Tower",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "agahnim_tower"
+                      },
+                      {
+                            "value": 49,
+                            "event_key": "tower_of_hera",
+                            "mapped_value": "Tower of Hera",
+                            "tab_id": "hera",
+                            "map_id": "tower_of_hera",
+                            "zone_id": "tower_of_hera"
+                      },
+                      {
+                            "value": 50,
+                            "event_key": "castle_escape",
+                            "mapped_value": "Castle Escape",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "castle_escape"
+                      },
+                      {
+                            "value": 51,
+                            "event_key": "desert_palace",
+                            "mapped_value": "Desert Palace",
+                            "tab_id": "desert",
+                            "map_id": "desert_palace",
+                            "zone_id": "desert_palace"
+                      },
+                      {
+                            "value": 52,
+                            "event_key": "swamp_palace",
+                            "mapped_value": "Swamp Palace",
+                            "tab_id": "swamp",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "swamp_palace"
+                      },
+                      {
+                            "value": 53,
+                            "event_key": "swamp_palace",
+                            "mapped_value": "Swamp Palace",
+                            "tab_id": "swamp",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "swamp_palace"
+                      },
+                      {
+                            "value": 54,
+                            "event_key": "swamp_palace",
+                            "mapped_value": "Swamp Palace",
+                            "tab_id": "swamp",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "swamp_palace"
+                      },
+                      {
+                            "value": 55,
+                            "event_key": "swamp_palace",
+                            "mapped_value": "Swamp Palace",
+                            "tab_id": "swamp",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "swamp_palace"
+                      },
+                      {
+                            "value": 56,
+                            "event_key": "swamp_palace",
+                            "mapped_value": "Swamp Palace",
+                            "tab_id": "swamp",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "swamp_palace"
+                      },
+                      {
+                            "value": 57,
+                            "event_key": "skull_woods",
+                            "mapped_value": "Skull Woods",
+                            "tab_id": "skull",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "skull_woods"
+                      },
+                      {
+                            "value": 58,
+                            "event_key": "palace_of_darkness",
+                            "mapped_value": "Palace of Darkness",
+                            "tab_id": "pod",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "palace_of_darkness"
+                      },
+                      {
+                            "value": 59,
+                            "event_key": "palace_of_darkness",
+                            "mapped_value": "Palace of Darkness",
+                            "tab_id": "pod",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "palace_of_darkness"
+                      },
+                      {
+                            "value": 61,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Top",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 62,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 63,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 64,
+                            "event_key": "agahnim_tower",
+                            "mapped_value": "Agahnim's Tower",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "agahnim_tower"
+                      },
+                      {
+                            "value": 65,
+                            "event_key": "castle_escape",
+                            "mapped_value": "Castle Escape",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "castle_escape"
+                      },
+                      {
+                            "value": 66,
+                            "event_key": "castle_escape",
+                            "mapped_value": "Castle Escape",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "castle_escape"
+                      },
+                      {
+                            "value": 67,
+                            "event_key": "desert_palace",
+                            "mapped_value": "Desert Palace",
+                            "tab_id": "desert",
+                            "map_id": "desert_palace",
+                            "zone_id": "desert_palace"
+                      },
+                      {
+                            "value": 68,
+                            "event_key": "thieves_town",
+                            "mapped_value": "Thieves Town",
+                            "tab_id": "thieves",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "thieves_town"
+                      },
+                      {
+                            "value": 69,
+                            "event_key": "thieves_town",
+                            "mapped_value": "Thieves Town",
+                            "tab_id": "thieves",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "thieves_town"
+                      },
+                      {
+                            "value": 70,
+                            "event_key": "swamp_palace",
+                            "mapped_value": "Swamp Palace",
+                            "tab_id": "swamp",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "swamp_palace"
+                      },
+                      {
+                            "value": 73,
+                            "event_key": "skull_woods",
+                            "mapped_value": "Skull Woods",
+                            "tab_id": "skull",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "skull_woods"
+                      },
+                      {
+                            "value": 74,
+                            "event_key": "palace_of_darkness",
+                            "mapped_value": "Palace of Darkness",
+                            "tab_id": "pod",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "palace_of_darkness"
+                      },
+                      {
+                            "value": 75,
+                            "event_key": "palace_of_darkness",
+                            "mapped_value": "Palace of Darkness",
+                            "tab_id": "pod",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "palace_of_darkness"
+                      },
+                      {
+                            "value": 76,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Top",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 77,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Top",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 78,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 79,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 80,
+                            "event_key": "hyrule_castle",
+                            "mapped_value": "Hyrule Castle",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "hyrule_castle"
+                      },
+                      {
+                            "value": 81,
+                            "event_key": "hyrule_castle",
+                            "mapped_value": "Hyrule Castle",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "hyrule_castle"
+                      },
+                      {
+                            "value": 82,
+                            "event_key": "hyrule_castle",
+                            "mapped_value": "Hyrule Castle",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "hyrule_castle"
+                      },
+                      {
+                            "value": 83,
+                            "event_key": "desert_palace",
+                            "mapped_value": "Desert Palace",
+                            "tab_id": "desert",
+                            "map_id": "desert_palace",
+                            "zone_id": "desert_palace"
+                      },
+                      {
+                            "value": 84,
+                            "event_key": "swamp_palace",
+                            "mapped_value": "Swamp Palace",
+                            "tab_id": "swamp",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "swamp_palace"
+                      },
+                      {
+                            "value": 86,
+                            "event_key": "skull_woods",
+                            "mapped_value": "Skull Woods",
+                            "tab_id": "skull",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "skull_woods"
+                      },
+                      {
+                            "value": 87,
+                            "event_key": "skull_woods",
+                            "mapped_value": "Skull Woods",
+                            "tab_id": "skull",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "skull_woods"
+                      },
+                      {
+                            "value": 88,
+                            "event_key": "skull_woods",
+                            "mapped_value": "Skull Woods",
+                            "tab_id": "skull",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "skull_woods"
+                      },
+                      {
+                            "value": 89,
+                            "event_key": "skull_woods",
+                            "mapped_value": "Skull Woods",
+                            "tab_id": "skull",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "skull_woods"
+                      },
+                      {
+                            "value": 90,
+                            "event_key": "palace_of_darkness",
+                            "mapped_value": "Palace of Darkness",
+                            "tab_id": "pod",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "palace_of_darkness"
+                      },
+                      {
+                            "value": 91,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Top",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 92,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Top",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 93,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Top",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 94,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 95,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 96,
+                            "event_key": "hyrule_castle",
+                            "mapped_value": "Hyrule Castle",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "hyrule_castle"
+                      },
+                      {
+                            "value": 97,
+                            "event_key": "hyrule_castle",
+                            "mapped_value": "Hyrule Castle",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "hyrule_castle"
+                      },
+                      {
+                            "value": 98,
+                            "event_key": "hyrule_castle",
+                            "mapped_value": "Hyrule Castle",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "hyrule_castle"
+                      },
+                      {
+                            "value": 99,
+                            "event_key": "desert_palace",
+                            "mapped_value": "Desert Palace",
+                            "tab_id": "desert",
+                            "map_id": "desert_palace",
+                            "zone_id": "desert_palace"
+                      },
+                      {
+                            "value": 100,
+                            "event_key": "thieves_town",
+                            "mapped_value": "Thieves Town",
+                            "tab_id": "thieves",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "thieves_town"
+                      },
+                      {
+                            "value": 101,
+                            "event_key": "thieves_town",
+                            "mapped_value": "Thieves Town",
+                            "tab_id": "thieves",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "thieves_town"
+                      },
+                      {
+                            "value": 102,
+                            "event_key": "swamp_palace",
+                            "mapped_value": "Swamp Palace",
+                            "tab_id": "swamp",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "swamp_palace"
+                      },
+                      {
+                            "value": 103,
+                            "event_key": "skull_woods",
+                            "mapped_value": "Skull Woods",
+                            "tab_id": "skull",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "skull_woods"
+                      },
+                      {
+                            "value": 104,
+                            "event_key": "skull_woods",
+                            "mapped_value": "Skull Woods",
+                            "tab_id": "skull",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "skull_woods"
+                      },
+                      {
+                            "value": 106,
+                            "event_key": "palace_of_darkness",
+                            "mapped_value": "Palace of Darkness",
+                            "tab_id": "pod",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "palace_of_darkness"
+                      },
+                      {
+                            "value": 107,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Top",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 108,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Top",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 109,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Top",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 110,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 112,
+                            "event_key": "hyrule_castle",
+                            "mapped_value": "Hyrule Castle",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "hyrule_castle"
+                      },
+                      {
+                            "value": 113,
+                            "event_key": "hyrule_castle",
+                            "mapped_value": "Hyrule Castle",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "hyrule_castle"
+                      },
+                      {
+                            "value": 114,
+                            "event_key": "hyrule_castle",
+                            "mapped_value": "Hyrule Castle",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "hyrule_castle"
+                      },
+                      {
+                            "value": 115,
+                            "event_key": "desert_palace",
+                            "mapped_value": "Desert Palace",
+                            "tab_id": "desert",
+                            "map_id": "desert_palace",
+                            "zone_id": "desert_palace"
+                      },
+                      {
+                            "value": 116,
+                            "event_key": "desert_palace",
+                            "mapped_value": "Desert Palace",
+                            "tab_id": "desert",
+                            "map_id": "desert_palace",
+                            "zone_id": "desert_palace"
+                      },
+                      {
+                            "value": 117,
+                            "event_key": "desert_palace",
+                            "mapped_value": "Desert Palace",
+                            "tab_id": "desert",
+                            "map_id": "desert_palace",
+                            "zone_id": "desert_palace"
+                      },
+                      {
+                            "value": 118,
+                            "event_key": "swamp_palace",
+                            "mapped_value": "Swamp Palace",
+                            "tab_id": "swamp",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "swamp_palace"
+                      },
+                      {
+                            "value": 119,
+                            "event_key": "tower_of_hera",
+                            "mapped_value": "Tower of Hera",
+                            "tab_id": "hera",
+                            "map_id": "tower_of_hera",
+                            "zone_id": "tower_of_hera"
+                      },
+                      {
+                            "value": 123,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Bottom",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 124,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Bottom",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 125,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Bottom",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 126,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 127,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 128,
+                            "event_key": "hyrule_castle",
+                            "mapped_value": "Hyrule Castle",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "hyrule_castle"
+                      },
+                      {
+                            "value": 129,
+                            "event_key": "hyrule_castle",
+                            "mapped_value": "Hyrule Castle",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "hyrule_castle"
+                      },
+                      {
+                            "value": 130,
+                            "event_key": "hyrule_castle",
+                            "mapped_value": "Hyrule Castle",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "hyrule_castle"
+                      },
+                      {
+                            "value": 131,
+                            "event_key": "desert_palace",
+                            "mapped_value": "Desert Palace",
+                            "tab_id": "desert",
+                            "map_id": "desert_palace",
+                            "zone_id": "desert_palace"
+                      },
+                      {
+                            "value": 132,
+                            "event_key": "desert_palace",
+                            "mapped_value": "Desert Palace",
+                            "tab_id": "desert",
+                            "map_id": "desert_palace",
+                            "zone_id": "desert_palace"
+                      },
+                      {
+                            "value": 133,
+                            "event_key": "desert_palace",
+                            "mapped_value": "Desert Palace",
+                            "tab_id": "desert",
+                            "map_id": "desert_palace",
+                            "zone_id": "desert_palace"
+                      },
+                      {
+                            "value": 135,
+                            "event_key": "tower_of_hera",
+                            "mapped_value": "Tower of Hera",
+                            "tab_id": "hera",
+                            "map_id": "tower_of_hera",
+                            "zone_id": "tower_of_hera"
+                      },
+                      {
+                            "value": 137,
+                            "event_key": "eastern_palace",
+                            "mapped_value": "Eastern Palace",
+                            "tab_id": "eastern",
+                            "map_id": "eastern_palace",
+                            "zone_id": "eastern_palace"
+                      },
+                      {
+                            "value": 139,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Bottom",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 140,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Bottom",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 141,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Bottom",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 142,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 144,
+                            "event_key": "misery_mire",
+                            "mapped_value": "Misery Mire",
+                            "tab_id": "mire",
+                            "map_id": "ice_mire",
+                            "zone_id": "misery_mire"
+                      },
+                      {
+                            "value": 145,
+                            "event_key": "misery_mire",
+                            "mapped_value": "Misery Mire",
+                            "tab_id": "mire",
+                            "map_id": "ice_mire",
+                            "zone_id": "misery_mire"
+                      },
+                      {
+                            "value": 146,
+                            "event_key": "misery_mire",
+                            "mapped_value": "Misery Mire",
+                            "tab_id": "mire",
+                            "map_id": "ice_mire",
+                            "zone_id": "misery_mire"
+                      },
+                      {
+                            "value": 147,
+                            "event_key": "misery_mire",
+                            "mapped_value": "Misery Mire",
+                            "tab_id": "mire",
+                            "map_id": "ice_mire",
+                            "zone_id": "misery_mire"
+                      },
+                      {
+                            "value": 149,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Top",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 150,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Top",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 151,
+                            "event_key": "misery_mire",
+                            "mapped_value": "Misery Mire",
+                            "tab_id": "mire",
+                            "map_id": "ice_mire",
+                            "zone_id": "misery_mire"
+                      },
+                      {
+                            "value": 152,
+                            "event_key": "misery_mire",
+                            "mapped_value": "Misery Mire",
+                            "tab_id": "mire",
+                            "map_id": "ice_mire",
+                            "zone_id": "misery_mire"
+                      },
+                      {
+                            "value": 153,
+                            "event_key": "eastern_palace",
+                            "mapped_value": "Eastern Palace",
+                            "tab_id": "eastern",
+                            "map_id": "eastern_palace",
+                            "zone_id": "eastern_palace"
+                      },
+                      {
+                            "value": 155,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Bottom",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 156,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Bottom",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 157,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Bottom",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 158,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 159,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 160,
+                            "event_key": "misery_mire",
+                            "mapped_value": "Misery Mire",
+                            "tab_id": "mire",
+                            "map_id": "ice_mire",
+                            "zone_id": "misery_mire"
+                      },
+                      {
+                            "value": 161,
+                            "event_key": "misery_mire",
+                            "mapped_value": "Misery Mire",
+                            "tab_id": "mire",
+                            "map_id": "ice_mire",
+                            "zone_id": "misery_mire"
+                      },
+                      {
+                            "value": 162,
+                            "event_key": "misery_mire",
+                            "mapped_value": "Misery Mire",
+                            "tab_id": "mire",
+                            "map_id": "ice_mire",
+                            "zone_id": "misery_mire"
+                      },
+                      {
+                            "value": 163,
+                            "event_key": "misery_mire",
+                            "mapped_value": "Misery Mire",
+                            "tab_id": "mire",
+                            "map_id": "ice_mire",
+                            "zone_id": "misery_mire"
+                      },
+                      {
+                            "value": 164,
+                            "event_key": "turtle_rock",
+                            "mapped_value": "Turtle Rock",
+                            "tab_id": "turtle",
+                            "map_id": "turtle_gt",
+                            "zone_id": "turtle_rock"
+                      },
+                      {
+                            "value": 165,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Top",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 166,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Top",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 167,
+                            "event_key": "ganons_tower",
+                            "mapped_value": "Ganon's Tower - Top",
+                            "tab_id": "gt",
+                            "map_id": "turtle_gt",
+                            "zone_id": "ganons_tower"
+                      },
+                      {
+                            "value": 168,
+                            "event_key": "eastern_palace",
+                            "mapped_value": "Eastern Palace",
+                            "tab_id": "eastern",
+                            "map_id": "eastern_palace",
+                            "zone_id": "eastern_palace"
+                      },
+                      {
+                            "value": 169,
+                            "event_key": "eastern_palace",
+                            "mapped_value": "Eastern Palace",
+                            "tab_id": "eastern",
+                            "map_id": "eastern_palace",
+                            "zone_id": "eastern_palace"
+                      },
+                      {
+                            "value": 170,
+                            "event_key": "eastern_palace",
+                            "mapped_value": "Eastern Palace",
+                            "tab_id": "eastern",
+                            "map_id": "eastern_palace",
+                            "zone_id": "eastern_palace"
+                      },
+                      {
+                            "value": 171,
+                            "event_key": "thieves_town",
+                            "mapped_value": "Thieves Town",
+                            "tab_id": "thieves",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "thieves_town"
+                      },
+                      {
+                            "value": 172,
+                            "event_key": "thieves_town",
+                            "mapped_value": "Thieves Town",
+                            "tab_id": "thieves",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "thieves_town"
+                      },
+                      {
+                            "value": 174,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 175,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 176,
+                            "event_key": "agahnim_tower",
+                            "mapped_value": "Agahnim's Tower",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "agahnim_tower"
+                      },
+                      {
+                            "value": 177,
+                            "event_key": "misery_mire",
+                            "mapped_value": "Misery Mire",
+                            "tab_id": "mire",
+                            "map_id": "ice_mire",
+                            "zone_id": "misery_mire"
+                      },
+                      {
+                            "value": 178,
+                            "event_key": "misery_mire",
+                            "mapped_value": "Misery Mire",
+                            "tab_id": "mire",
+                            "map_id": "ice_mire",
+                            "zone_id": "misery_mire"
+                      },
+                      {
+                            "value": 179,
+                            "event_key": "misery_mire",
+                            "mapped_value": "Misery Mire",
+                            "tab_id": "mire",
+                            "map_id": "ice_mire",
+                            "zone_id": "misery_mire"
+                      },
+                      {
+                            "value": 180,
+                            "event_key": "turtle_rock",
+                            "mapped_value": "Turtle Rock",
+                            "tab_id": "turtle",
+                            "map_id": "turtle_gt",
+                            "zone_id": "turtle_rock"
+                      },
+                      {
+                            "value": 181,
+                            "event_key": "turtle_rock",
+                            "mapped_value": "Turtle Rock",
+                            "tab_id": "turtle",
+                            "map_id": "turtle_gt",
+                            "zone_id": "turtle_rock"
+                      },
+                      {
+                            "value": 182,
+                            "event_key": "turtle_rock",
+                            "mapped_value": "Turtle Rock",
+                            "tab_id": "turtle",
+                            "map_id": "turtle_gt",
+                            "zone_id": "turtle_rock"
+                      },
+                      {
+                            "value": 183,
+                            "event_key": "turtle_rock",
+                            "mapped_value": "Turtle Rock",
+                            "tab_id": "turtle",
+                            "map_id": "turtle_gt",
+                            "zone_id": "turtle_rock"
+                      },
+                      {
+                            "value": 184,
+                            "event_key": "eastern_palace",
+                            "mapped_value": "Eastern Palace",
+                            "tab_id": "eastern",
+                            "map_id": "eastern_palace",
+                            "zone_id": "eastern_palace"
+                      },
+                      {
+                            "value": 185,
+                            "event_key": "eastern_palace",
+                            "mapped_value": "Eastern Palace",
+                            "tab_id": "eastern",
+                            "map_id": "eastern_palace",
+                            "zone_id": "eastern_palace"
+                      },
+                      {
+                            "value": 186,
+                            "event_key": "eastern_palace",
+                            "mapped_value": "Eastern Palace",
+                            "tab_id": "eastern",
+                            "map_id": "eastern_palace",
+                            "zone_id": "eastern_palace"
+                      },
+                      {
+                            "value": 187,
+                            "event_key": "thieves_town",
+                            "mapped_value": "Thieves Town",
+                            "tab_id": "thieves",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "thieves_town"
+                      },
+                      {
+                            "value": 188,
+                            "event_key": "thieves_town",
+                            "mapped_value": "Thieves Town",
+                            "tab_id": "thieves",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "thieves_town"
+                      },
+                      {
+                            "value": 190,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 191,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 192,
+                            "event_key": "agahnim_tower",
+                            "mapped_value": "Agahnim's Tower",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "agahnim_tower"
+                      },
+                      {
+                            "value": 193,
+                            "event_key": "misery_mire",
+                            "mapped_value": "Misery Mire",
+                            "tab_id": "mire",
+                            "map_id": "ice_mire",
+                            "zone_id": "misery_mire"
+                      },
+                      {
+                            "value": 194,
+                            "event_key": "misery_mire",
+                            "mapped_value": "Misery Mire",
+                            "tab_id": "mire",
+                            "map_id": "ice_mire",
+                            "zone_id": "misery_mire"
+                      },
+                      {
+                            "value": 195,
+                            "event_key": "misery_mire",
+                            "mapped_value": "Misery Mire",
+                            "tab_id": "mire",
+                            "map_id": "ice_mire",
+                            "zone_id": "misery_mire"
+                      },
+                      {
+                            "value": 196,
+                            "event_key": "turtle_rock",
+                            "mapped_value": "Turtle Rock",
+                            "tab_id": "turtle",
+                            "map_id": "turtle_gt",
+                            "zone_id": "turtle_rock"
+                      },
+                      {
+                            "value": 197,
+                            "event_key": "turtle_rock",
+                            "mapped_value": "Turtle Rock",
+                            "tab_id": "turtle",
+                            "map_id": "turtle_gt",
+                            "zone_id": "turtle_rock"
+                      },
+                      {
+                            "value": 198,
+                            "event_key": "turtle_rock",
+                            "mapped_value": "Turtle Rock",
+                            "tab_id": "turtle",
+                            "map_id": "turtle_gt",
+                            "zone_id": "turtle_rock"
+                      },
+                      {
+                            "value": 199,
+                            "event_key": "turtle_rock",
+                            "mapped_value": "Turtle Rock",
+                            "tab_id": "turtle",
+                            "map_id": "turtle_gt",
+                            "zone_id": "turtle_rock"
+                      },
+                      {
+                            "value": 200,
+                            "event_key": "eastern_palace",
+                            "mapped_value": "Eastern Palace",
+                            "tab_id": "eastern",
+                            "map_id": "eastern_palace",
+                            "zone_id": "eastern_palace"
+                      },
+                      {
+                            "value": 201,
+                            "event_key": "eastern_palace",
+                            "mapped_value": "Eastern Palace",
+                            "tab_id": "eastern",
+                            "map_id": "eastern_palace",
+                            "zone_id": "eastern_palace"
+                      },
+                      {
+                            "value": 203,
+                            "event_key": "thieves_town",
+                            "mapped_value": "Thieves Town",
+                            "tab_id": "thieves",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "thieves_town"
+                      },
+                      {
+                            "value": 204,
+                            "event_key": "thieves_town",
+                            "mapped_value": "Thieves Town",
+                            "tab_id": "thieves",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "thieves_town"
+                      },
+                      {
+                            "value": 206,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 208,
+                            "event_key": "agahnim_tower",
+                            "mapped_value": "Agahnim's Tower",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "agahnim_tower"
+                      },
+                      {
+                            "value": 209,
+                            "event_key": "misery_mire",
+                            "mapped_value": "Misery Mire",
+                            "tab_id": "mire",
+                            "map_id": "ice_mire",
+                            "zone_id": "misery_mire"
+                      },
+                      {
+                            "value": 210,
+                            "event_key": "misery_mire",
+                            "mapped_value": "Misery Mire",
+                            "tab_id": "mire",
+                            "map_id": "ice_mire",
+                            "zone_id": "misery_mire"
+                      },
+                      {
+                            "value": 213,
+                            "event_key": "turtle_rock",
+                            "mapped_value": "Turtle Rock",
+                            "tab_id": "turtle",
+                            "map_id": "turtle_gt",
+                            "zone_id": "turtle_rock"
+                      },
+                      {
+                            "value": 214,
+                            "event_key": "turtle_rock",
+                            "mapped_value": "Turtle Rock",
+                            "tab_id": "turtle",
+                            "map_id": "turtle_gt",
+                            "zone_id": "turtle_rock"
+                      },
+                      {
+                            "value": 216,
+                            "event_key": "eastern_palace",
+                            "mapped_value": "Eastern Palace",
+                            "tab_id": "eastern",
+                            "map_id": "eastern_palace",
+                            "zone_id": "eastern_palace"
+                      },
+                      {
+                            "value": 217,
+                            "event_key": "eastern_palace",
+                            "mapped_value": "Eastern Palace",
+                            "tab_id": "eastern",
+                            "map_id": "eastern_palace",
+                            "zone_id": "eastern_palace"
+                      },
+                      {
+                            "value": 218,
+                            "event_key": "eastern_palace",
+                            "mapped_value": "Eastern Palace",
+                            "tab_id": "eastern",
+                            "map_id": "eastern_palace",
+                            "zone_id": "eastern_palace"
+                      },
+                      {
+                            "value": 219,
+                            "event_key": "thieves_town",
+                            "mapped_value": "Thieves Town",
+                            "tab_id": "thieves",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "thieves_town"
+                      },
+                      {
+                            "value": 220,
+                            "event_key": "thieves_town",
+                            "mapped_value": "Thieves Town",
+                            "tab_id": "thieves",
+                            "map_id": "dark_dungeons",
+                            "zone_id": "thieves_town"
+                      },
+                      {
+                            "value": 222,
+                            "event_key": "ice_palace",
+                            "mapped_value": "Ice Palace",
+                            "tab_id": "ice",
+                            "map_id": "ice_mire",
+                            "zone_id": "ice_palace"
+                      },
+                      {
+                            "value": 224,
+                            "event_key": "agahnim_tower",
+                            "mapped_value": "Agahnim's Tower",
+                            "tab_id": "escape",
+                            "map_id": "hc_escape",
+                            "zone_id": "agahnim_tower"
+                      },
+                      {
+                            "value": 250,
+                            "event_key": "light_world",
+                            "mapped_value": "Lightworld",
+                            "tab_id": "light-world",
+                            "map_id": "light_world",
+                            "zone_id": "light_world"
+                      },
+                      {
+                            "value": 251,
+                            "event_key": "light_world",
+                            "mapped_value": "Lightworld",
+                            "tab_id": "light-world",
+                            "map_id": "light_world",
+                            "zone_id": "light_world"
+                      },
+                      {
+                            "value": 252,
+                            "event_key": "light_world",
+                            "mapped_value": "Lightworld",
+                            "tab_id": "light-world",
+                            "map_id": "light_world",
+                            "zone_id": "light_world"
+                      },
+                      {
+                            "value": 253,
+                            "event_key": "light_world",
+                            "mapped_value": "Lightworld",
+                            "tab_id": "light-world",
+                            "map_id": "light_world",
+                            "zone_id": "light_world"
+                      },
+                      {
+                            "value": 254,
+                            "event_key": "light_world",
+                            "mapped_value": "Lightworld",
+                            "tab_id": "light-world",
+                            "map_id": "light_world",
+                            "zone_id": "light_world"
+                      },
+                      {
+                            "value": 255,
+                            "event_key": "light_world",
+                            "mapped_value": "Lightworld",
+                            "tab_id": "light-world",
+                            "map_id": "light_world",
+                            "zone_id": "light_world"
+                      },
+                      {
+                            "value": 256,
+                            "event_key": "light_world",
+                            "mapped_value": "Lightworld",
+                            "tab_id": "light-world",
+                            "map_id": "light_world",
+                            "zone_id": "light_world"
+                      },
+                      {
+                            "value": 257,
+                            "event_key": "light_world",
+                            "mapped_value": "Lightworld",
+                            "tab_id": "light-world",
+                            "map_id": "light_world",
+                            "zone_id": "light_world"
+                      },
+                      {
+                            "value": 258,
+                            "event_key": "light_world",
+                            "mapped_value": "Lightworld",
+                            "tab_id": "light-world",
+                            "map_id": "light_world",
+                            "zone_id": "light_world"
+                      },
+                      {
+                            "value": 259,
+                            "event_key": "light_world",
+                            "mapped_value": "Lightworld",
+                            "tab_id": "light-world",
+                            "map_id": "light_world",
+                            "zone_id": "light_world"
+                      },
+                      {
+                            "value": 260,
+                            "event_key": "light_world",
+                            "mapped_value": "Lightworld",
+                            "tab_id": "light-world",
+                            "map_id": "light_world",
+                            "zone_id": "light_world"
+                      }
+                ]
+          },
+          {
+                "domain_id": "system_ram",
+                "address": 138,
+                "size": 2,
+                "context_key": "alttp_overworld_room",
+                "event_type": "map_changed",
+                "values": [
+                      {
+                            "min_value": 1,
+                            "max_value": 65535,
+                            "event_key": "light_world",
+                            "mapped_value": "Overworld",
+                            "tab_id": "light-world",
+                            "map_id": "light_world",
+                            "zone_id": "light_world"
+                      }
+                ]
+          }
+    ],
     "checks": [
       {
         "domain_id": "system_ram",
