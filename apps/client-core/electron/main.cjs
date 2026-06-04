@@ -39,10 +39,11 @@ const firstExistingDir = (...candidates) => {
 };
 
 const getDevRuntimeCandidates = () => {
+  const repoRuntime = path.join(__dirname, "..", "..", "..", "runtime");
   const localCoreRuntime = path.join(__dirname, "..", "..", "runtime");
   const siblingSekaiemuRuntime = path.join(__dirname, "..", "..", "..", "sekaiemu", "host", "runtime");
   const envRuntime = String(process.env.SEKAILINK_RUNTIME_DIR || "").trim();
-  return [envRuntime, localCoreRuntime, siblingSekaiemuRuntime].filter(Boolean);
+  return [envRuntime, repoRuntime, localCoreRuntime, siblingSekaiemuRuntime].filter(Boolean);
 };
 
 const getBundledRuntimeDir = () => {

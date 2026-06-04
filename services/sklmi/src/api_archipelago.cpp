@@ -83,6 +83,40 @@ std::string BuildStringArrayJson(std::vector<std::string> values, std::size_t li
     return out.str();
 }
 
+std::string BuildUintArrayJson(std::vector<std::uint64_t> values) {
+    std::sort(values.begin(), values.end());
+    values.erase(std::unique(values.begin(), values.end()), values.end());
+    std::ostringstream out;
+    out << "[";
+    for (std::size_t index = 0; index < values.size(); ++index) {
+        if (index != 0) out << ",";
+        out << values[index];
+    }
+    out << "]";
+    return out.str();
+}
+
+std::vector<std::uint64_t> ExtractUintArrayField(const std::string& text, const std::string& key) {
+    std::vector<std::uint64_t> values;
+    const auto key_pos = text.find("\"" + key + "\"");
+    if (key_pos == std::string::npos) return values;
+    const auto open = text.find('[', key_pos);
+    if (open == std::string::npos) return values;
+    const auto close = text.find(']', open);
+    if (close == std::string::npos || close <= open) return values;
+    const auto body = text.substr(open + 1, close - open - 1);
+    const std::regex number_pattern(R"((0x[0-9A-Fa-f]+|[0-9]+))");
+    for (auto it = std::sregex_iterator(body.begin(), body.end(), number_pattern);
+         it != std::sregex_iterator();
+         ++it) {
+        if (it->size() < 2) continue;
+        if (auto parsed = detail::parse_u64((*it)[1].str()); parsed.has_value()) {
+            values.push_back(*parsed);
+        }
+    }
+    return values;
+}
+
 std::vector<std::string> ItemNamesFromIdMap(const std::unordered_map<std::uint64_t, std::string>& names) {
     std::vector<std::string> values;
     values.reserve(names.size());
@@ -595,6 +629,7 @@ bool ArchipelagoRoomClient::process_packet(std::string_view packet_view, std::st
         connected_ = true;
         team_ = detail::extract_uint_field(command_packet, "team").value_or(team_);
         slot_ = detail::extract_uint_field(command_packet, "slot").value_or(slot_);
+        metadata_["checked_locations"] = BuildUintArrayJson(ExtractUintArrayField(command_packet, "checked_locations"));
         const auto player_blocks = detail::extract_object_blocks(command_packet, "players");
         if (!player_blocks.empty()) {
             metadata_["player_count"] = std::to_string(player_blocks.size());
@@ -665,6 +700,9 @@ bool ArchipelagoRoomClient::process_packet(std::string_view packet_view, std::st
         return true;
     }
     if (cmd == "RoomUpdate") {
+        if (command_packet.find("\"checked_locations\"") != std::string::npos) {
+            metadata_["checked_locations"] = BuildUintArrayJson(ExtractUintArrayField(command_packet, "checked_locations"));
+        }
         return true;
     }
     if (cmd == "ConnectionRefused") {

@@ -67,6 +67,7 @@ struct SelfOriginRoomClientState {
     bool connected = false;
     bool acknowledged = false;
     std::uint64_t reported_location_id = 0;
+    std::string checked_locations_json;
 };
 
 class SelfOriginRoomClient final : public RoomClient {
@@ -121,12 +122,16 @@ class SelfOriginRoomClient final : public RoomClient {
     }
 
     [[nodiscard]] std::unordered_map<std::string, std::string> metadata_snapshot() const override {
-        return {
+        std::unordered_map<std::string, std::string> metadata{
             {"connected", state_.connected ? "1" : "0"},
             {"room_mode", "archipelago"},
             {"slot", "1"},
             {"slot_name", "Jade"},
         };
+        if (!state_.checked_locations_json.empty()) {
+            metadata["checked_locations"] = state_.checked_locations_json;
+        }
+        return metadata;
     }
 
   private:
@@ -331,6 +336,57 @@ int main() {
     if (!contains(self_origin_sync_text, "reported|12345|Onett - Tracy Gift") ||
         !contains(self_origin_sync_text, "applied|ap:0:154:12345:1|self_origin_suppressed")) {
         std::cerr << "self_origin_sync_state_missing\n";
+        return EXIT_FAILURE;
+    }
+
+    provider.write_unsigned("system_ram", 0x20, 0x00, 1);
+    const auto stale_bridge_state = temp_dir / "stale-self-origin.bridge.state";
+    const auto stale_room_sync_state = temp_dir / "stale-self-origin.room-sync.state";
+    {
+        std::ofstream bridge_out(stale_bridge_state, std::ios::trunc);
+        bridge_out << "meta|bridge_id|earthbound-phase1-test\n";
+        bridge_out << "check|0xEB0000|1\n";
+    }
+    {
+        std::ofstream room_out(stale_room_sync_state, std::ios::trunc);
+        room_out << "meta|connected|1\n";
+        room_out << "meta|room_mode|archipelago\n";
+        room_out << "meta|slot|1\n";
+        room_out << "reported|12345|Onett - Tracy Gift\n";
+    }
+    SelfOriginRoomClientState stale_self_origin_state;
+    stale_self_origin_state.checked_locations_json = "[]";
+    {
+        RoomSynchronizedRuntimeSession session(
+            provider,
+            self_origin_sink,
+            std::make_unique<ManifestBridgeSession>(MakeSelfOriginManifest()),
+            std::make_unique<SelfOriginRoomClient>(stale_self_origin_state),
+            MakeSelfOriginManifest().injections,
+            stale_bridge_state,
+            stale_room_sync_state,
+            "room-sync-driver-1",
+            "earthbound",
+            "snes_v1");
+
+        if (session.start().state != RuntimeConnectionState::connected) {
+            std::cerr << "stale_self_origin_session_start_failed\n";
+            return EXIT_FAILURE;
+        }
+        if (session.tick({.tick_index = 4, .monotonic_ms = 64}).state != RuntimeConnectionState::connected) {
+            std::cerr << "stale_self_origin_session_tick_failed\n";
+            return EXIT_FAILURE;
+        }
+        session.stop();
+    }
+    if (stale_self_origin_state.reported_location_id != 12345 || !stale_self_origin_state.acknowledged) {
+        std::cerr << "stale_self_origin_not_rereported\n";
+        return EXIT_FAILURE;
+    }
+    const auto stale_self_origin_sync_text = slurp(stale_room_sync_state);
+    if (!contains(stale_self_origin_sync_text, "reported|12345|Onett - Tracy Gift") ||
+        !contains(stale_self_origin_sync_text, "applied|ap:0:154:12345:1|self_origin_suppressed")) {
+        std::cerr << "stale_self_origin_sync_state_missing\n";
         return EXIT_FAILURE;
     }
 

@@ -47,7 +47,7 @@ int main() {
     auto transport = std::make_unique<ScriptedTransport>(std::vector<std::string>{
         "[{\"cmd\":\"RoomInfo\",\"seed_name\":\"BETA3-ALTTP-AP\",\"datapackage_checksums\":{\"A Link to the Past\":\"abc\"}}]",
         "[{\"cmd\":\"DataPackage\",\"data\":{\"games\":{\"A Link to the Past\":{\"item_name_to_id\":{\"Hookshot\":10,\"Rupees (20)\":54},\"location_name_to_id\":{\"Sanctuary\":60025,\"Link's House\":59836}}}}}]",
-        "[{\"cmd\":\"Connected\",\"team\":0,\"slot\":1,\"slot_data\":{\"mode\":\"open\",\"goal\":\"ganon\"}},"
+        "[{\"cmd\":\"Connected\",\"team\":0,\"slot\":1,\"checked_locations\":[59836],\"slot_data\":{\"mode\":\"open\",\"goal\":\"ganon\"}},"
         "{\"cmd\":\"ReceivedItems\",\"index\":0,\"items\":[{\"item\":10,\"location\":60025,\"player\":1,\"flags\":0}]}]",
         "[{\"cmd\":\"PrintJSON\",\"data\":[{\"text\":\"Jade\",\"type\":\"player_id\",\"player\":1},{\"text\":\": hello sync\"}],\"type\":\"Chat\"}]",
         "[{\"cmd\":\"PrintJSON\",\"data\":[{\"text\":\"Jade\",\"type\":\"player_id\",\"player\":1},"
@@ -83,6 +83,7 @@ int main() {
         metadata.at("seed_name") != "BETA3-ALTTP-AP" ||
         metadata.at("team") != "0" ||
         metadata.at("slot") != "1" ||
+        metadata.at("checked_locations") != "[59836]" ||
         !contains(metadata.at("slot_data"), "\"goal\":\"ganon\"")) {
         std::cerr << "metadata_mismatch\n";
         return EXIT_FAILURE;

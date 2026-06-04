@@ -12,7 +12,7 @@ const appDir = path.resolve(__dirname, "..");
 const coreRoot = path.resolve(appDir, "..");
 const repoRoot = path.resolve(coreRoot, "..");
 
-const runtimeDir = path.join(coreRoot, "runtime");
+const runtimeDir = path.join(repoRoot, "runtime");
 const bundledDir = path.join(runtimeDir, "_bundled_libs", "bizhawk");
 const bundledPopTrackerDir = path.join(runtimeDir, "_bundled_libs", "poptracker");
 const thirdPartyDir = path.join(repoRoot, "third_party");

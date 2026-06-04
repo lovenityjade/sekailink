@@ -1,8 +1,10 @@
 import { trace, traceError } from "./trace";
 
 const envBase = import.meta.env.VITE_API_BASE_URL as string | undefined;
+const DEFAULT_API_BASE_URL = "https://sekailink.com";
 
-export const API_BASE_URL = envBase && envBase !== "same" ? envBase : "";
+export const API_BASE_URL =
+  envBase?.trim() === "same" ? "" : envBase?.trim() || DEFAULT_API_BASE_URL;
 export const DESKTOP_TOKEN_KEY = "skl_desktop_token";
 export const WEB_AUTH_TOKEN_KEY = "sekailink_session_token";
 export const WEB_AUTH_USER_KEY = "sekailink_user";

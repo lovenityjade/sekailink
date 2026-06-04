@@ -1,6 +1,7 @@
 #include "api_internal.hpp"
 
 #include <algorithm>
+#include <cctype>
 #include <cstddef>
 #include <cstdint>
 #include <filesystem>
@@ -8,6 +9,7 @@
 #include <optional>
 #include <sstream>
 #include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -132,6 +134,47 @@ bool IsSelfOriginItem(const RoomItem& item, const std::unordered_map<std::string
     }
     const auto slot = detail::parse_u64(slot_it->second).value_or(0);
     return slot != 0 && slot == item.ap_player_id;
+}
+
+std::unordered_set<std::string> ParseCheckedLocationSet(std::string_view raw) {
+    std::unordered_set<std::string> out;
+    std::string token;
+    const auto flush = [&]() {
+        if (token.empty()) return;
+        if (const auto parsed = detail::parse_u64(token); parsed.has_value()) {
+            out.insert(std::to_string(*parsed));
+        }
+        token.clear();
+    };
+    for (const auto ch : raw) {
+        if (std::isdigit(static_cast<unsigned char>(ch)) != 0) {
+            token.push_back(ch);
+        } else {
+            flush();
+        }
+    }
+    flush();
+    return out;
+}
+
+bool ReconcileReportedChecksWithRoomMetadata(std::unordered_map<std::string, std::string>& reported_checks,
+                                             const std::unordered_map<std::string, std::string>& metadata) {
+    const auto checked_it = metadata.find("checked_locations");
+    if (checked_it == metadata.end()) {
+        return false;
+    }
+    const auto server_checked = ParseCheckedLocationSet(checked_it->second);
+    bool changed = false;
+    for (auto it = reported_checks.begin(); it != reported_checks.end();) {
+        const auto normalized = detail::parse_u64(it->first);
+        if (normalized.has_value() && !server_checked.contains(std::to_string(*normalized))) {
+            it = reported_checks.erase(it);
+            changed = true;
+            continue;
+        }
+        ++it;
+    }
+    return changed;
 }
 
 std::string RoomItemTrackerKey(const RoomItem& item, std::string_view fallback_key = {}) {
@@ -670,13 +713,11 @@ RuntimeStatus RoomSynchronizedRuntimeSession::start() {
     }
     load_room_sync_state();
     refresh_room_sync_metadata();
+    ReconcileReportedChecksWithRoomMetadata(reported_checks_, room_sync_metadata_);
     sink_.trace({LogLevel::info, "RoomSynchronizedRuntimeSession", "room_metadata_ready",
                  DescribeRoomMetadataSnapshot(room_sync_metadata_), 0, 0});
     bridge_sink_ = std::make_unique<BufferedForwardingEventSink>(sink_);
     status_ = bridge_->start(provider_, *bridge_sink_);
-    if (status_.state == RuntimeConnectionState::connected && !bridge_state_path_.empty()) {
-        bridge_->load_state(bridge_state_path_);
-    }
     return status_;
 }
 
@@ -832,11 +873,9 @@ RuntimeStatus RoomSynchronizedRuntimeSession::reconnect() {
         bridge_sink_->clear();
     }
     status_ = bridge_->start(provider_, *bridge_sink_);
-    if (status_.state == RuntimeConnectionState::connected && !bridge_state_path_.empty()) {
-        bridge_->load_state(bridge_state_path_);
-    }
     load_room_sync_state();
     refresh_room_sync_metadata();
+    ReconcileReportedChecksWithRoomMetadata(reported_checks_, room_sync_metadata_);
     last_bridge_state_save_tick_ = 0;
     last_room_sync_state_save_tick_ = 0;
     sink_.trace({LogLevel::info, "RoomSynchronizedRuntimeSession", "reconnect", status_.detail, 0, 0});
