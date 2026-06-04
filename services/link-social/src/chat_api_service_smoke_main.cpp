@@ -4,6 +4,9 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <set>
+
+#include <sqlite3.h>
 
 using namespace sekailink_server;
 
@@ -58,6 +61,35 @@ int main() {
   if (stable_release.status != 200 || stable_release.body.find("0.3.1-smoke") != std::string::npos) {
     std::cerr << "release channel isolation failed\n";
     return EXIT_FAILURE;
+  }
+
+  const auto store_path = std::filesystem::temp_directory_path() / "sekailink-chat-api-presence-smoke.sqlite3";
+  std::filesystem::remove(store_path);
+  ChatApiServiceConfig store_config;
+  store_config.sqlite_path = store_path;
+  ChatApiService store_service(store_config);
+  (void)store_service;
+  sqlite3* db = nullptr;
+  if (sqlite3_open(store_path.string().c_str(), &db) != SQLITE_OK || db == nullptr) {
+    if (db) sqlite3_close(db);
+    std::cerr << "presence schema db open failed\n";
+    return EXIT_FAILURE;
+  }
+  sqlite3_stmt* stmt = nullptr;
+  std::set<std::string> columns;
+  if (sqlite3_prepare_v2(db, "PRAGMA table_info(chat_presence);", -1, &stmt, nullptr) == SQLITE_OK) {
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+      const auto* text = sqlite3_column_text(stmt, 1);
+      if (text) columns.insert(reinterpret_cast<const char*>(text));
+    }
+    sqlite3_finalize(stmt);
+  }
+  sqlite3_close(db);
+  for (const auto& column : {"role", "ready", "local_ready_known", "local_ready", "local_ready_note"}) {
+    if (!columns.count(column)) {
+      std::cerr << "presence schema missing " << column << "\n";
+      return EXIT_FAILURE;
+    }
   }
   return EXIT_SUCCESS;
 }

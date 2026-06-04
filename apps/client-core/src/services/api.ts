@@ -107,6 +107,16 @@ export const setWebAuthCache = (payload: { user?: unknown; session?: unknown } |
   }
 };
 
+export const getCachedCurrentUser = (): CurrentUser | null => {
+  try {
+    const raw = window.localStorage.getItem(WEB_AUTH_USER_KEY);
+    if (!raw) return null;
+    return normalizeIdentityUser(JSON.parse(raw));
+  } catch {
+    return null;
+  }
+};
+
 const generateDeviceId = () => {
   const bytes = new Uint8Array(16);
   if (typeof window !== "undefined" && window.crypto?.getRandomValues) {
@@ -350,6 +360,7 @@ export const apiCurrentUser = async (): Promise<CurrentUser> => {
     const payload = await apiJson<any>("/api/identity/me");
     const user = normalizeIdentityUser(payload);
     if (!user) throw new Error("invalid_identity_payload");
+    setWebAuthCache({ user: payload?.user && typeof payload.user === "object" ? payload.user : user });
     currentUserCache.value = user;
     currentUserCache.expiresAt = Date.now() + CURRENT_USER_CACHE_TTL_MS;
     return user;

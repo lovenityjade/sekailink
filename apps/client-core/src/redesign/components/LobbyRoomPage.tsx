@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import AnimatedBackground from './AnimatedBackground';
 import LobbySettingsModal from './LobbySettingsModal';
 import HelpButton from './HelpButton';
-import { apiCurrentUser, apiFetch, apiJson, apiUrl, type CurrentUser } from '../../services/api';
+import { apiCurrentUser, apiFetch, apiJson, apiUrl, getCachedCurrentUser, type CurrentUser } from '../../services/api';
 import { chatService, type SekaiChatMessage, type SekaiChatPresenceUser } from '../../services/chatService';
 import { canonicalSeedGameKey, listSeeds, type SeedEntry } from '../../services/seedConfig';
 import { listLobbies } from '../../services/lobbyClient';
@@ -194,12 +194,25 @@ const displayDate = (value?: string) => {
   return Number.isNaN(parsed.getTime()) ? value : parsed.toLocaleDateString();
 };
 
-const currentPlayerFrom = (list: Player[], identity: CurrentUser | null): Player | null =>
-  list.find((player) =>
-    player.id === identity?.user_id ||
-    player.username === identity?.display_name ||
-    player.username === identity?.username
-  ) || null;
+const normalizedIdentityValue = (value: unknown) => String(value || '').trim().toLowerCase();
+
+const currentPlayerFrom = (list: Player[], identity: CurrentUser | null): Player | null => {
+  const identityValues = new Set(
+    [
+      identity?.user_id,
+      identity?.discord_id,
+      identity?.display_name,
+      identity?.global_name,
+      identity?.username,
+    ]
+      .map(normalizedIdentityValue)
+      .filter(Boolean)
+  );
+  if (!identityValues.size) return null;
+  return list.find((player) => (
+    [player.id, player.username].map(normalizedIdentityValue).some((value) => identityValues.has(value))
+  )) || null;
+};
 
 const setupForGame = (game: string) => {
   const key = canonicalSeedGameKey(game);
@@ -246,7 +259,7 @@ export default function LobbyRoomPage({
   const [players, setPlayers] = useState<Player[]>([]);
   const [availableSeedConfigs, setAvailableSeedConfigs] = useState<SeedConfig[]>([]);
   const [chatMessages, setChatMessages] = useState<SekaiChatMessage[]>([]);
-  const [currentIdentity, setCurrentIdentity] = useState<CurrentUser | null>(null);
+  const [currentIdentity, setCurrentIdentity] = useState<CurrentUser | null>(() => getCachedCurrentUser());
   const [lobbyMetadata, setLobbyMetadata] = useState<LobbyMetadata | null>(null);
   const [generation, setGeneration] = useState<LobbyGenerationStatus | null>(null);
   const [generationPhase, setGenerationPhase] = useState<GenerationPhase>('idle');
@@ -398,7 +411,7 @@ export default function LobbyRoomPage({
         : Promise.resolve(null);
 
       const [identity, membersResponse, generationResponse, lobbies, seeds, messages, presence] = await Promise.all([
-        apiCurrentUser().catch(() => null),
+        apiCurrentUser().catch(() => getCachedCurrentUser()),
         apiJson<{ members?: LobbyMemberPayload[] }>(`/api/lobbies/${encodeURIComponent(lobbyId)}/members`).catch(() => ({ members: [] })),
         apiJson<LobbyGenerationStatus>(`/api/lobbies/${encodeURIComponent(lobbyId)}/generation`).catch(() => null),
         metadataPromise,

@@ -648,6 +648,15 @@ void sqlite_exec_checked(sqlite3* db, const char* sql) {
   }
 }
 
+void sqlite_exec_allow_duplicate_column(sqlite3* db, const char* sql) {
+  char* error = nullptr;
+  if (sqlite3_exec(db, sql, nullptr, nullptr, &error) == SQLITE_OK) return;
+  std::string message = error ? error : "sqlite_exec_failed";
+  sqlite3_free(error);
+  if (message.find("duplicate column name") != std::string::npos) return;
+  throw std::runtime_error(message);
+}
+
 std::string sqlite_column_string(sqlite3_stmt* stmt, int column) {
   const auto* text = sqlite3_column_text(stmt, column);
   return text ? reinterpret_cast<const char*>(text) : "";

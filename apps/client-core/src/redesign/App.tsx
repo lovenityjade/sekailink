@@ -10,7 +10,7 @@ import LibraryPage from './components/LibraryPage';
 import EasyConfigPage from './components/EasyConfigPage';
 import SettingsPage from './components/SettingsPage';
 import { ErrorModal, LoadingModal } from './components/FeedbackModal';
-import { apiCurrentUser, type CurrentUser } from '../services/api';
+import { apiCurrentUser, getCachedCurrentUser, type CurrentUser } from '../services/api';
 import { joinLobby, listLobbies, type LobbySummary } from '../services/lobbyClient';
 import { ALTTP_SHOWCASE_GAME, type SeedGameEntry } from '../services/seedConfig';
 import {
@@ -98,7 +98,7 @@ export default function App() {
   const [showCreateLobby, setShowCreateLobby] = useState(false);
   const [showAddFriends, setShowAddFriends] = useState(false);
   const [friendSearchQuery, setFriendSearchQuery] = useState('');
-  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(() => getCachedCurrentUser());
   const [selectedLobbyId, setSelectedLobbyId] = useState('');
   const [easyConfigGame, setEasyConfigGame] = useState<SeedGameEntry>(ALTTP_SHOWCASE_GAME);
   const [liveLobbies, setLiveLobbies] = useState<LobbySummary[]>([]);
@@ -159,7 +159,7 @@ export default function App() {
       .catch((error) => {
         if (!cancelled) {
           traceError('redesign-app', 'current_user_load_failed', error);
-          setCurrentUser(null);
+          setCurrentUser(getCachedCurrentUser());
         }
       });
     return () => {

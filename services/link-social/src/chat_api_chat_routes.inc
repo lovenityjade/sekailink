@@ -64,7 +64,7 @@ ChatApiHttpResponse ChatApiService::handle_list_presence(const std::string& chan
     return {500, R"({"ok":false,"error":"chat_store_open_failed"})"};
   }
   const char* sql =
-      "SELECT user_id, username, display_name, avatar_url, last_seen "
+      "SELECT user_id, username, display_name, avatar_url, role, ready, local_ready_known, local_ready, local_ready_note, last_seen "
       "FROM chat_presence "
       "WHERE channel_id = ? AND last_seen >= datetime('now', '-90 seconds') "
       "ORDER BY lower(display_name), lower(username) LIMIT 250;";
@@ -84,7 +84,12 @@ ChatApiHttpResponse ChatApiService::handle_list_presence(const std::string& chan
         {"display_name", display_name},
         {"name", display_name.empty() ? username : display_name},
         {"avatar_url", sqlite_column_string(stmt, 3)},
-        {"last_seen", sqlite_column_string(stmt, 4)},
+        {"role", sqlite_column_string(stmt, 4)},
+        {"ready", sqlite3_column_int(stmt, 5) != 0},
+        {"local_ready_known", sqlite3_column_int(stmt, 6) != 0},
+        {"local_ready", sqlite3_column_int(stmt, 7) != 0},
+        {"local_ready_note", sqlite_column_string(stmt, 8)},
+        {"last_seen", sqlite_column_string(stmt, 9)},
         {"status", "online"},
     });
   }
@@ -112,6 +117,9 @@ ChatApiHttpResponse ChatApiService::touch_presence(
   auto role = sanitized_text(request.value("role", std::string("player")), 32);
   if (role != "host") role = "player";
   const auto ready = request.value("ready", false);
+  const auto local_ready_known = request.value("local_ready_known", request.contains("local_ready"));
+  const auto local_ready = request.value("local_ready", false);
+  const auto local_ready_note = sanitized_text(request.value("local_ready_note", std::string{}), 180);
   const nlohmann::json gateway_body = {
       {"user_id", user_id},
       {"username", username},
@@ -119,6 +127,9 @@ ChatApiHttpResponse ChatApiService::touch_presence(
       {"avatar_url", avatar_url},
       {"role", role},
       {"ready", ready},
+      {"local_ready_known", local_ready_known},
+      {"local_ready", local_ready},
+      {"local_ready_note", local_ready_note},
   };
   (void)forward_to_gateway("POST", "/channels/" + channel_id + "/presence", gateway_body);
 
@@ -129,12 +140,17 @@ ChatApiHttpResponse ChatApiService::touch_presence(
     return {500, R"({"ok":false,"error":"chat_store_open_failed"})"};
   }
   const char* sql =
-      "INSERT INTO chat_presence (channel_id, user_id, username, display_name, avatar_url, last_seen) "
-      "VALUES (?, ?, ?, ?, ?, ?) "
+      "INSERT INTO chat_presence (channel_id, user_id, username, display_name, avatar_url, role, ready, local_ready_known, local_ready, local_ready_note, last_seen) "
+      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
       "ON CONFLICT(channel_id, user_id) DO UPDATE SET "
       "username=excluded.username,"
       "display_name=excluded.display_name,"
       "avatar_url=excluded.avatar_url,"
+      "role=excluded.role,"
+      "ready=excluded.ready,"
+      "local_ready_known=excluded.local_ready_known,"
+      "local_ready=excluded.local_ready,"
+      "local_ready_note=excluded.local_ready_note,"
       "last_seen=excluded.last_seen;";
   sqlite3_stmt* stmt = nullptr;
   if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK) {
@@ -146,7 +162,12 @@ ChatApiHttpResponse ChatApiService::touch_presence(
   sqlite3_bind_text(stmt, 3, username.c_str(), -1, SQLITE_TRANSIENT);
   sqlite3_bind_text(stmt, 4, display_name.c_str(), -1, SQLITE_TRANSIENT);
   sqlite3_bind_text(stmt, 5, avatar_url.c_str(), -1, SQLITE_TRANSIENT);
-  sqlite3_bind_text(stmt, 6, last_seen.c_str(), -1, SQLITE_TRANSIENT);
+  sqlite3_bind_text(stmt, 6, role.c_str(), -1, SQLITE_TRANSIENT);
+  sqlite3_bind_int(stmt, 7, ready ? 1 : 0);
+  sqlite3_bind_int(stmt, 8, local_ready_known ? 1 : 0);
+  sqlite3_bind_int(stmt, 9, local_ready ? 1 : 0);
+  sqlite3_bind_text(stmt, 10, local_ready_note.c_str(), -1, SQLITE_TRANSIENT);
+  sqlite3_bind_text(stmt, 11, last_seen.c_str(), -1, SQLITE_TRANSIENT);
   const auto step = sqlite3_step(stmt);
   sqlite3_finalize(stmt);
   sqlite3_close(db);

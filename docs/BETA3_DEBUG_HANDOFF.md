@@ -23,7 +23,25 @@ the 2026-06-04 route-query hotfix release.
 
 Current Client Core version:
 
-`0.3.1-prebeta3.20260604.4`
+`0.3.1-prebeta3.20260604.5`
+
+Lobby readiness/profile hotfix on 2026-06-04T18:05Z:
+
+- Root cause: Link Chat API accepted `local_ready_*` presence fields from Client Core but
+  did not persist or return them from `chat_presence`; lobby sync generation could see a
+  player as "not reported readiness" even after their local setup had reported state.
+- Client Core `0.3.1-prebeta3.20260604.5` also keeps the cached identity as the sidebar
+  fallback so an installed desktop session does not show generic `Joueur` while authenticated.
+- The lobby room now matches the current player against normalized identity aliases
+  (`user_id`, Discord id, display/global/username) before deciding whether a member is local
+  or remote.
+- Deployed Link Chat API on `link.sekailink.com`; live `chat_presence` includes `role`,
+  `ready`, `local_ready_known`, `local_ready`, and `local_ready_note`.
+- Pushed `.5` Linux/Windows update bundles and full installers to the public CDN under
+  `/var/www/sekailink.com/public/downloads/client/prebeta3/20260604`.
+- Updated `/opt/sekailink/link/chat-api/config/client_release_latest.json` and restarted
+  `sekailink-chat-api.service`; public `release-latest` for linux-x64 and win32-x64
+  returns `0.3.1-prebeta3.20260604.5`.
 
 Route-query login hotfix on 2026-06-04T10:28Z:
 
@@ -432,7 +450,7 @@ should be SekaiLink/Sync/Room terminology.
 
 Current live version:
 
-`0.3.1-prebeta3.20260604.2`
+`0.3.1-prebeta3.20260604.5`
 
 CDN directory on Link:
 
@@ -452,14 +470,14 @@ Service to restart after manifest replacement:
 
 Current live hotfix artifacts:
 
-- `SekaiLink-client-0.3.1-prebeta3.20260604.2-linux-x64.zip`
-  - SHA256: `4191ac988fdc64d5f3580b91b5aeaa7ecc53dc02b649153c56aa1dc764607f40`
-- `SekaiLink-client-0.3.1-prebeta3.20260604.2-win-x64.zip`
-  - SHA256: `8a39f1c9129be111be42faa7a02b75fa547d8a14580c4f6916b39de64da32ace`
-- `SekaiLink-client-0.3.1-prebeta3.20260604.2.AppImage`
-  - SHA256: `c15f39d107b68183cd2d8d7bac4a81296e897b57e7497878aed4cc03514f5fe5`
-- `SekaiLink-client-0.3.1-prebeta3.20260604.2.exe`
-  - SHA256: `702514c67e2bc2a548598225f71cc3d516de95dcdce5aa40b60e5c85189c38a9`
+- `SekaiLink-client-0.3.1-prebeta3.20260604.5-linux-x64.zip`
+  - SHA256: `21f90ea260f92ed47cef5b5c8ddd96dafd5014b8cb9443b875b0e55fddd65b0d`
+- `SekaiLink-client-0.3.1-prebeta3.20260604.5-win-x64.zip`
+  - SHA256: `eda622aec83b3535f19483363a58d8a52be76627d3e9f563b1e7c1045201de7a`
+- `SekaiLink-client-0.3.1-prebeta3.20260604.5.AppImage`
+  - SHA256: `f356eb06cdcc68d94da6703f7e61ef867a15d2ea4b03e15a2ee371e80983aaa8`
+- `SekaiLink-client-0.3.1-prebeta3.20260604.5.exe`
+  - SHA256: `17ad1479e4d7d8cb164c8d2a713688d10e965170751f0fffcca70ce48c37734f`
 
 Packaging commands:
 
@@ -467,7 +485,7 @@ Packaging commands:
 cd /home/thelovenityjade/DevSSD/sekailink-canonical/apps/client-core
 npm run electron:pack
 npm run electron:pack:win
-SEKAILINK_RELEASE_VERSION=0.3.1-prebeta3.20260604.2 \
+SEKAILINK_RELEASE_VERSION=0.3.1-prebeta3.20260604.5 \
 SEKAILINK_RELEASE_CHANNEL=test \
 SEKAILINK_RELEASE_BUILD=release \
 SEKAILINK_RELEASE_DATE=20260604 \

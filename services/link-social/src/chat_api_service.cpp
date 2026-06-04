@@ -124,9 +124,19 @@ void ChatApiService::initialize_store() const {
         "username TEXT,"
         "display_name TEXT,"
         "avatar_url TEXT,"
+        "role TEXT NOT NULL DEFAULT 'player',"
+        "ready INTEGER NOT NULL DEFAULT 0,"
+        "local_ready_known INTEGER NOT NULL DEFAULT 0,"
+        "local_ready INTEGER NOT NULL DEFAULT 0,"
+        "local_ready_note TEXT NOT NULL DEFAULT '',"
         "last_seen TEXT NOT NULL,"
         "PRIMARY KEY(channel_id, user_id)"
         ");");
+    sqlite_exec_allow_duplicate_column(db, "ALTER TABLE chat_presence ADD COLUMN role TEXT NOT NULL DEFAULT 'player';");
+    sqlite_exec_allow_duplicate_column(db, "ALTER TABLE chat_presence ADD COLUMN ready INTEGER NOT NULL DEFAULT 0;");
+    sqlite_exec_allow_duplicate_column(db, "ALTER TABLE chat_presence ADD COLUMN local_ready_known INTEGER NOT NULL DEFAULT 0;");
+    sqlite_exec_allow_duplicate_column(db, "ALTER TABLE chat_presence ADD COLUMN local_ready INTEGER NOT NULL DEFAULT 0;");
+    sqlite_exec_allow_duplicate_column(db, "ALTER TABLE chat_presence ADD COLUMN local_ready_note TEXT NOT NULL DEFAULT '';");
     sqlite_exec_checked(db, "CREATE INDEX IF NOT EXISTS idx_chat_presence_channel_last_seen ON chat_presence(channel_id, last_seen);");
     sqlite_exec_checked(
         db,
