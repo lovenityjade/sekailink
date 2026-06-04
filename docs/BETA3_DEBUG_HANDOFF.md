@@ -22,7 +22,16 @@ Current commit at handoff:
 
 Current Client Core version:
 
-`0.3.1-prebeta3.20260604.2`
+`0.3.1-prebeta3.20260604.3`
+
+Post-handoff CDN update on 2026-06-04T09:21Z:
+
+- Pushed `0.3.1-prebeta3.20260604.3` to the public CDN under
+  `/var/www/sekailink.com/public/downloads/client/prebeta3/20260604`.
+- Updated the active Chat API release manifest at
+  `/opt/sekailink/link/chat-api/config/client_release_latest.json`.
+- Restarted `sekailink-chat-api.service`; public checks for linux-x64 and win32-x64
+  returned version `0.3.1-prebeta3.20260604.3`.
 
 Forbidden as active sources:
 

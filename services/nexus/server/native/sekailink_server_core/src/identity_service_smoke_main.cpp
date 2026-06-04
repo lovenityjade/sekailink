@@ -130,6 +130,58 @@ std::string http_request(
   return response;
 }
 
+std::string http_expect_continue_request(std::uint16_t port, const std::string& path, const std::string& body) {
+  const int sock = ::socket(AF_INET, SOCK_STREAM, 0);
+  if (sock < 0) {
+    throw std::runtime_error("identity_smoke_socket_failed");
+  }
+  timeval recv_timeout{};
+  recv_timeout.tv_sec = 5;
+  recv_timeout.tv_usec = 0;
+  ::setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, &recv_timeout, sizeof(recv_timeout));
+  sockaddr_in addr{};
+  addr.sin_family = AF_INET;
+  addr.sin_port = htons(port);
+  addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+  if (::connect(sock, reinterpret_cast<sockaddr*>(&addr), sizeof(addr)) != 0) {
+    ::close(sock);
+    throw std::runtime_error("identity_smoke_connect_failed");
+  }
+  const std::string request_headers = "POST " + path +
+                                      " HTTP/1.1\r\nHost: 127.0.0.1\r\nConnection: close\r\n"
+                                      "Content-Type: application/json\r\nExpect: 100-continue\r\n"
+                                      "Content-Length: " +
+                                      std::to_string(body.size()) + "\r\n\r\n";
+  if (::send(sock, request_headers.data(), request_headers.size(), 0) < 0) {
+    ::close(sock);
+    throw std::runtime_error("identity_smoke_send_failed");
+  }
+  std::string response;
+  char buffer[4096];
+  while (response.find("\r\n\r\n") == std::string::npos) {
+    const auto received = ::recv(sock, buffer, sizeof(buffer), 0);
+    if (received <= 0) {
+      ::close(sock);
+      throw std::runtime_error("identity_smoke_continue_missing");
+    }
+    response.append(buffer, static_cast<std::size_t>(received));
+  }
+  require(response.find("100 Continue") != std::string::npos, "identity_expect_continue_missing");
+  if (::send(sock, body.data(), body.size(), 0) < 0) {
+    ::close(sock);
+    throw std::runtime_error("identity_smoke_body_send_failed");
+  }
+  while (true) {
+    const auto received = ::recv(sock, buffer, sizeof(buffer), 0);
+    if (received <= 0) {
+      break;
+    }
+    response.append(buffer, static_cast<std::size_t>(received));
+  }
+  ::close(sock);
+  return response;
+}
+
 std::string extract_body(const std::string& response) {
   const auto pos = response.find("\r\n\r\n");
   if (pos == std::string::npos) {
@@ -221,6 +273,13 @@ int main(int argc, char** argv) {
       ::waitpid(pid, nullptr, 0);
       throw std::runtime_error("identity_smoke_not_ready");
     }
+
+    const auto expect_login_response = http_expect_continue_request(
+        port,
+        "/login",
+        R"({"identity":"missing@example.com","password":"sekailink-password"})");
+    require(expect_login_response.find("100 Continue") != std::string::npos, "identity_expect_continue_status");
+    require(expect_login_response.find("401 Unauthorized") != std::string::npos, "identity_expect_continue_final_status");
 
     const auto register_response = http_request(
         port,

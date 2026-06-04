@@ -1,6 +1,6 @@
 {
   "name": "sekailink-client",
-  "version": "0.3.1-prebeta3.20260604.2",
+  "version": "0.3.1-prebeta3.20260604.3",
   "description": "SekaiLink desktop client (Archipelago-focused).",
   "author": "SekaiLink",
   "private": true,
@@ -24,7 +24,7 @@
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx,.cjs,.mjs --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prepare": "[ -d .git ] && husky || true"
+    "prepare": "node scripts/prepare-husky.cjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.1",

@@ -5180,10 +5180,13 @@ void IdentityHttpServer::serve_one() const {
   if (client_fd < 0) {
     throw std::runtime_error("identity_accept_failed");
   }
+  timeval recv_timeout{};
+  recv_timeout.tv_sec = 15;
+  recv_timeout.tv_usec = 0;
+  ::setsockopt(client_fd, SOL_SOCKET, SO_RCVTIMEO, &recv_timeout, sizeof(recv_timeout));
 
   std::string request;
   char buffer[4096];
-  std::size_t content_length = 0;
   while (request.find("\r\n\r\n") == std::string::npos) {
     const auto received = ::recv(client_fd, buffer, sizeof(buffer), 0);
     if (received <= 0) {
@@ -5191,27 +5194,10 @@ void IdentityHttpServer::serve_one() const {
       throw std::runtime_error("identity_recv_failed");
     }
     request.append(buffer, static_cast<std::size_t>(received));
-    const auto content_length_pos = request.find("Content-Length:");
-    if (content_length_pos != std::string::npos) {
-      const auto line_end = request.find("\r\n", content_length_pos);
-      const auto value = trim(request.substr(content_length_pos + std::string("Content-Length:").size(),
-                                             line_end - (content_length_pos + std::string("Content-Length:").size())));
-      if (!value.empty()) {
-        content_length = static_cast<std::size_t>(std::stoul(value));
-      }
-    }
   }
 
   const auto headers_end = request.find("\r\n\r\n");
   const auto body_start = headers_end + 4;
-  while (request.size() < body_start + content_length) {
-    const auto received = ::recv(client_fd, buffer, sizeof(buffer), 0);
-    if (received <= 0) {
-      break;
-    }
-    request.append(buffer, static_cast<std::size_t>(received));
-  }
-
   std::istringstream request_stream(request.substr(0, headers_end));
   std::string method;
   std::string path;
@@ -5220,6 +5206,8 @@ void IdentityHttpServer::serve_one() const {
 
   std::optional<std::string> bearer_token;
   IdentityRequestContext context;
+  std::size_t content_length = 0;
+  bool expect_continue = false;
   std::string header_line;
   std::getline(request_stream, header_line);
   while (std::getline(request_stream, header_line)) {
@@ -5237,7 +5225,13 @@ void IdentityHttpServer::serve_one() const {
     }
     const auto header_name = lower(trim(header_line.substr(0, separator)));
     const auto header_value = trim(header_line.substr(separator + 1));
-    if (header_name == "user-agent") {
+    if (header_name == "content-length") {
+      if (!header_value.empty()) {
+        content_length = static_cast<std::size_t>(std::stoul(header_value));
+      }
+    } else if (header_name == "expect") {
+      expect_continue = lower(header_value) == "100-continue";
+    } else if (header_name == "user-agent") {
       context.user_agent = header_value;
     } else if (header_name == "x-sekailink-client") {
       context.client_name = header_value;
@@ -5248,6 +5242,19 @@ void IdentityHttpServer::serve_one() const {
     } else if (header_name == "x-sekailink-locale") {
       context.locale = header_value;
     }
+  }
+
+  if (expect_continue && content_length > 0 && request.size() < body_start + content_length) {
+    static constexpr char continue_response[] = "HTTP/1.1 100 Continue\r\n\r\n";
+    ::send(client_fd, continue_response, sizeof(continue_response) - 1, 0);
+  }
+
+  while (request.size() < body_start + content_length) {
+    const auto received = ::recv(client_fd, buffer, sizeof(buffer), 0);
+    if (received <= 0) {
+      break;
+    }
+    request.append(buffer, static_cast<std::size_t>(received));
   }
 
   std::optional<nlohmann::json> body;
