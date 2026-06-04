@@ -3145,127 +3145,127 @@ nlohmann::json IdentityService::handle(
     const IdentityRequestContext& context) const {
   record_request();
   try {
-    if (path == "/health") {
+    const auto [normalized_path, query] = split_path_and_query(path);
+    if (normalized_path == "/health") {
       return {
           {"ok", true},
           {"service", "sekailink_identity_service"},
       };
     }
-    if (method == "POST" && path == "/register") {
+    if (method == "POST" && normalized_path == "/register") {
       if (!body.has_value()) {
         return {{"ok", false}, {"status", 400}, {"error", "missing_body"}};
       }
       return handle_register(*body, context);
     }
-    if (method == "POST" && path == "/login") {
+    if (method == "POST" && normalized_path == "/login") {
       if (!body.has_value()) {
         return {{"ok", false}, {"status", 400}, {"error", "missing_body"}};
       }
       return handle_login(*body, context);
     }
-    if (method == "POST" && path == "/password-recovery/request") {
+    if (method == "POST" && normalized_path == "/password-recovery/request") {
       if (!body.has_value()) {
         return {{"ok", false}, {"status", 400}, {"error", "missing_body"}};
       }
       return handle_password_reset_request(*body);
     }
-    if (method == "POST" && path == "/email-verification/complete") {
+    if (method == "POST" && normalized_path == "/email-verification/complete") {
       if (!body.has_value()) {
         return {{"ok", false}, {"status", 400}, {"error", "missing_body"}};
       }
       return handle_email_verification_complete(*body);
     }
-    if (method == "POST" && path == "/password-recovery/complete") {
+    if (method == "POST" && normalized_path == "/password-recovery/complete") {
       if (!body.has_value()) {
         return {{"ok", false}, {"status", 400}, {"error", "missing_body"}};
       }
       return handle_password_reset_complete(*body);
     }
-    if (method == "GET" && path == "/me") {
+    if (method == "GET" && normalized_path == "/me") {
       return handle_me(bearer_token);
     }
-    if (method == "GET" && path == "/me/sessions") {
+    if (method == "GET" && normalized_path == "/me/sessions") {
       return handle_sessions(bearer_token);
     }
-    if (method == "POST" && path == "/me/sessions/revoke") {
+    if (method == "POST" && normalized_path == "/me/sessions/revoke") {
       if (!body.has_value()) {
         return {{"ok", false}, {"status", 400}, {"error", "missing_body"}};
       }
       return handle_revoke_session(bearer_token, *body);
     }
-    if (method == "POST" && path == "/me/sessions/revoke-others") {
+    if (method == "POST" && normalized_path == "/me/sessions/revoke-others") {
       return handle_revoke_other_sessions(bearer_token);
     }
-    if (method == "PATCH" && path == "/me/profile") {
+    if (method == "PATCH" && normalized_path == "/me/profile") {
       if (!body.has_value()) {
         return {{"ok", false}, {"status", 400}, {"error", "missing_body"}};
       }
       return handle_update_profile(bearer_token, *body);
     }
-    if (method == "GET" && path == "/me/security") {
+    if (method == "GET" && normalized_path == "/me/security") {
       return handle_security(bearer_token);
     }
-    if (method == "POST" && path == "/me/email-verification/request") {
+    if (method == "POST" && normalized_path == "/me/email-verification/request") {
       return handle_email_verification_request(bearer_token);
     }
-    if (method == "GET" && path == "/me/linked-accounts/patreon") {
+    if (method == "GET" && normalized_path == "/me/linked-accounts/patreon") {
       return handle_patreon_link_status(bearer_token);
     }
-    if (method == "POST" && path == "/me/linked-accounts/patreon/begin") {
+    if (method == "POST" && normalized_path == "/me/linked-accounts/patreon/begin") {
       return handle_patreon_link_begin(bearer_token);
     }
-    if (method == "POST" && path == "/me/linked-accounts/patreon/complete") {
+    if (method == "POST" && normalized_path == "/me/linked-accounts/patreon/complete") {
       if (!body.has_value()) {
         return {{"ok", false}, {"status", 400}, {"error", "missing_body"}};
       }
       return handle_patreon_link_complete(bearer_token, *body);
     }
-    if (method == "POST" && path == "/me/linked-accounts/patreon/unlink") {
+    if (method == "POST" && normalized_path == "/me/linked-accounts/patreon/unlink") {
       return handle_patreon_link_unlink(bearer_token);
     }
-    if (method == "GET" && path == "/me/game-keys") {
+    if (method == "GET" && normalized_path == "/me/game-keys") {
       return handle_my_game_keys(bearer_token);
     }
-    if (method == "POST" && path == "/me/game-keys/activate") {
+    if (method == "POST" && normalized_path == "/me/game-keys/activate") {
       if (!body.has_value()) {
         return {{"ok", false}, {"status", 400}, {"error", "missing_body"}};
       }
       return handle_my_game_key_activate(bearer_token, *body);
     }
-    if (method == "POST" && path == "/me/game-keys/check") {
+    if (method == "POST" && normalized_path == "/me/game-keys/check") {
       if (!body.has_value()) {
         return {{"ok", false}, {"status", 400}, {"error", "missing_body"}};
       }
       return handle_my_game_key_check(bearer_token, *body);
     }
-    if (method == "POST" && path == "/game-keys/lookup") {
+    if (method == "POST" && normalized_path == "/game-keys/lookup") {
       if (!body.has_value()) {
         return {{"ok", false}, {"status", 400}, {"error", "missing_body"}};
       }
       return handle_game_key_lookup(*body);
     }
-    if (method == "GET" && path == "/me/security/audit") {
+    if (method == "GET" && normalized_path == "/me/security/audit") {
       return handle_auth_audit(bearer_token);
     }
-    if (method == "POST" && path == "/me/security/2fa/setup") {
+    if (method == "POST" && normalized_path == "/me/security/2fa/setup") {
       return handle_two_factor_setup(bearer_token);
     }
-    if (method == "POST" && path == "/me/security/2fa/enable") {
+    if (method == "POST" && normalized_path == "/me/security/2fa/enable") {
       if (!body.has_value()) {
         return {{"ok", false}, {"status", 400}, {"error", "missing_body"}};
       }
       return handle_two_factor_enable(bearer_token, *body);
     }
-    if (method == "POST" && path == "/me/security/2fa/disable") {
+    if (method == "POST" && normalized_path == "/me/security/2fa/disable") {
       if (!body.has_value()) {
         return {{"ok", false}, {"status", 400}, {"error", "missing_body"}};
       }
       return handle_two_factor_disable(bearer_token, *body);
     }
-    if (method == "POST" && path == "/me/security/recovery-codes/regenerate") {
+    if (method == "POST" && normalized_path == "/me/security/recovery-codes/regenerate") {
       return handle_regenerate_recovery_codes(bearer_token);
     }
-    const auto [normalized_path, query] = split_path_and_query(path);
     const auto parts = split_path(normalized_path);
     if (parts.size() == 2 && parts[0] == "admin" && parts[1] == "users") {
       if (method == "GET") {

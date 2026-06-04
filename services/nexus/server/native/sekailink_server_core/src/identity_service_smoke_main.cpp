@@ -274,6 +274,19 @@ int main(int argc, char** argv) {
       throw std::runtime_error("identity_smoke_not_ready");
     }
 
+    const auto me_query_response = http_request(port, "GET", "/me?token=stale-desktop-token", "", "");
+    require(me_query_response.find("401 Unauthorized") != std::string::npos, "identity_me_query_status");
+    require(me_query_response.find("route_not_found") == std::string::npos, "identity_me_query_not_route_not_found");
+
+    const auto login_query_response = http_request(
+        port,
+        "POST",
+        "/login?token=stale-desktop-token",
+        "",
+        R"({"identity":"missing@example.com","password":"sekailink-password"})");
+    require(login_query_response.find("401 Unauthorized") != std::string::npos, "identity_login_query_status");
+    require(login_query_response.find("route_not_found") == std::string::npos, "identity_login_query_not_route_not_found");
+
     const auto expect_login_response = http_expect_continue_request(
         port,
         "/login",

@@ -18,11 +18,32 @@ Current GitHub remote:
 
 Current commit at handoff:
 
-`99ae88b Release client hotfix for live check reporting`
+Check current git `HEAD` in the canonical repo. This handoff has been updated through
+the 2026-06-04 route-query hotfix release.
 
 Current Client Core version:
 
-`0.3.1-prebeta3.20260604.3`
+`0.3.1-prebeta3.20260604.4`
+
+Route-query login hotfix on 2026-06-04T10:28Z:
+
+- Root cause: installed Electron clients could append a stale desktop token as
+  `?token=...`; Nexus Identity compared `/me` and `/login` before stripping query
+  strings, so `/me?token=...` and `/login?token=...` returned `route_not_found`.
+- Client Core `0.3.1-prebeta3.20260604.4` removes the URL token fallback and uses the
+  `Authorization` header only.
+- Nexus Identity now normalizes query strings before early auth route checks.
+- Local `sekailink_identity_service_smoke` passed with explicit `/me?token=...` and
+  `/login?token=...` regression checks.
+- Deployed Nexus service on `nexus.sekailink.com`; public checks return `401` for
+  `/api/identity/me?token=...` and `/api/identity/login?token=...`, not 404.
+- Pushed `.4` Linux/Windows update bundles and full installers to the public CDN under
+  `/var/www/sekailink.com/public/downloads/client/prebeta3/20260604`.
+- Updated `/opt/sekailink/link/chat-api/config/client_release_latest.json` and restarted
+  `sekailink-chat-api.service`; public `release-latest` for linux-x64 and win32-x64
+  returns `0.3.1-prebeta3.20260604.4`.
+- Bootstrapper archives did not need republishing; they query `release-latest` and will
+  now install/update to `.4`.
 
 Post-handoff CDN update on 2026-06-04T09:21Z:
 

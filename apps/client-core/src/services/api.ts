@@ -159,18 +159,7 @@ export const apiFetch = async (path: string, init?: RequestInit) => {
   const requestId = ++apiRequestSeq;
   const startedAt = performance.now();
   const token = getDesktopToken();
-  let url = apiUrl(path);
-  if (token && API_BASE_URL && window.location.protocol === "file:") {
-    try {
-      const next = new URL(url, window.location.origin);
-      if (!next.searchParams.has("token")) {
-        next.searchParams.set("token", token);
-      }
-      url = next.toString();
-    } catch {
-      // Ignore token fallback.
-    }
-  }
+  const url = apiUrl(path);
   const headers = new Headers(init?.headers || undefined);
   const isDesktopRuntime = typeof window !== "undefined" && Boolean((window as any).sekailink);
   const isCrossOriginApi = (() => {
