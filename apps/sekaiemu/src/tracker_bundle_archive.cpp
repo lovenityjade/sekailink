@@ -94,7 +94,8 @@ void ExtractTrackerArchiveToDirectory(const std::filesystem::path& archive_path,
   archive_read_support_format_zip(reader);
   archive_read_support_filter_all(reader);
 
-  const int open_rc = archive_read_open_filename(reader, archive_path.c_str(), 10240);
+  const auto archive_path_string = archive_path.string();
+  const int open_rc = archive_read_open_filename(reader, archive_path_string.c_str(), 10240);
   if (open_rc != ARCHIVE_OK) {
     const std::string error =
         archive_error_string(reader) != nullptr ? archive_error_string(reader) : "archive_open_failed";

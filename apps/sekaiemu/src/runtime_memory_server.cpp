@@ -2,11 +2,25 @@
 
 #include "host_io_utils.hpp"
 
+#if defined(_WIN32)
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#ifdef DrawText
+#undef DrawText
+#endif
+using NativeSocket = SOCKET;
+#else
 #include <fcntl.h>
-#include <libretro.h>
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <unistd.h>
+using NativeSocket = int;
+#endif
+
+#include <libretro.h>
 
 #include <algorithm>
 #include <array>
@@ -21,18 +35,48 @@ namespace sekaiemu::spike {
 
 namespace {
 
-void CloseFd(int fd) {
+bool EnsureSocketRuntime() {
+#if defined(_WIN32)
+  static bool initialized = [] {
+    WSADATA data{};
+    return WSAStartup(MAKEWORD(2, 2), &data) == 0;
+  }();
+  return initialized;
+#else
+  return true;
+#endif
+}
+
+bool WouldBlock() {
+#if defined(_WIN32)
+  const int error = WSAGetLastError();
+  return error == WSAEWOULDBLOCK;
+#else
+  return errno == EAGAIN || errno == EWOULDBLOCK;
+#endif
+}
+
+void CloseFd(std::intptr_t fd) {
   if (fd >= 0) {
+#if defined(_WIN32)
+    closesocket(static_cast<SOCKET>(fd));
+#else
     close(fd);
+#endif
   }
 }
 
-bool SetNonBlocking(int fd) {
+bool SetNonBlocking(std::intptr_t fd) {
+#if defined(_WIN32)
+  u_long mode = 1;
+  return ioctlsocket(static_cast<SOCKET>(fd), FIONBIO, &mode) == 0;
+#else
   const int flags = fcntl(fd, F_GETFL, 0);
   if (flags < 0) {
     return false;
   }
   return fcntl(fd, F_SETFL, flags | O_NONBLOCK) == 0;
+#endif
 }
 
 std::string EscapeJson(std::string_view value) {
@@ -160,10 +204,14 @@ std::string Base64Encode(const std::byte* data, std::size_t size) {
   return out;
 }
 
-bool SendAll(int fd, const std::string& payload) {
+bool SendAll(std::intptr_t fd, const std::string& payload) {
   std::size_t sent = 0;
   while (sent < payload.size()) {
-    const auto written = send(fd, payload.data() + sent, payload.size() - sent, 0);
+    const auto remaining = payload.size() - sent;
+    const auto written = send(static_cast<NativeSocket>(fd),
+                              payload.data() + sent,
+                              static_cast<int>(remaining),
+                              0);
     if (written <= 0) {
       return false;
     }
@@ -188,9 +236,74 @@ bool RuntimeMemoryServer::Initialize(const std::filesystem::path& save_directory
   core_ = core;
   memory_domains_ = memory_domains;
   system_name_ = std::move(system_name);
-  socket_path_ = override_socket_path.value_or(save_directory / "runtime" / "sekaiemu-memory.sock");
+
+  if (!EnsureSocketRuntime()) {
+    error = "Failed to initialize socket runtime.";
+    return false;
+  }
 
   std::error_code ec;
+
+#if defined(_WIN32)
+  (void)save_directory;
+  const std::string endpoint = override_socket_path.has_value()
+      ? override_socket_path->string()
+      : std::string();
+  std::uint16_t requested_port = 0;
+  if (!endpoint.empty()) {
+    constexpr std::string_view prefix = "tcp://127.0.0.1:";
+    if (endpoint.rfind(std::string(prefix), 0) != 0) {
+      error = "Windows runtime memory server requires tcp://127.0.0.1:<port> override.";
+      return false;
+    }
+    try {
+      requested_port = static_cast<std::uint16_t>(std::stoul(endpoint.substr(prefix.size())));
+    } catch (...) {
+      error = "Invalid Windows runtime memory TCP endpoint.";
+      return false;
+    }
+  }
+
+  SOCKET server = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+  if (server == INVALID_SOCKET) {
+    error = "Failed to create runtime memory TCP socket.";
+    return false;
+  }
+
+  sockaddr_in addr{};
+  addr.sin_family = AF_INET;
+  addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+  addr.sin_port = htons(requested_port);
+  if (bind(server, reinterpret_cast<sockaddr*>(&addr), sizeof(addr)) != 0) {
+    error = "Failed to bind runtime memory TCP socket.";
+    closesocket(server);
+    return false;
+  }
+
+  sockaddr_in bound{};
+  int bound_len = sizeof(bound);
+  if (getsockname(server, reinterpret_cast<sockaddr*>(&bound), &bound_len) != 0) {
+    error = "Failed to resolve runtime memory TCP port.";
+    closesocket(server);
+    return false;
+  }
+  if (!SetNonBlocking(static_cast<std::intptr_t>(server))) {
+    error = "Failed to mark runtime memory TCP socket non-blocking.";
+    closesocket(server);
+    return false;
+  }
+  if (listen(server, 4) != 0) {
+    error = "Failed to listen on runtime memory TCP socket.";
+    closesocket(server);
+    return false;
+  }
+
+  const auto port = ntohs(bound.sin_port);
+  socket_path_ = std::filesystem::path("tcp://127.0.0.1:" + std::to_string(port));
+  server_fd_ = static_cast<std::intptr_t>(server);
+  return true;
+#else
+  socket_path_ = override_socket_path.value_or(save_directory / "runtime" / "sekaiemu-memory.sock");
   std::filesystem::create_directories(socket_path_.parent_path(), ec);
   if (ec) {
     error = "Failed to create runtime memory socket directory.";
@@ -233,18 +346,21 @@ bool RuntimeMemoryServer::Initialize(const std::filesystem::path& save_directory
     return false;
   }
   return true;
+#endif
 }
 
 void RuntimeMemoryServer::Shutdown() {
-  for (const int fd : client_fds_) {
+  for (const auto fd : client_fds_) {
     CloseFd(fd);
   }
   client_fds_.clear();
   CloseFd(server_fd_);
   server_fd_ = -1;
   if (!socket_path_.empty()) {
+#if !defined(_WIN32)
     std::error_code ec;
     std::filesystem::remove(socket_path_, ec);
+#endif
     socket_path_.clear();
   }
 }
@@ -255,28 +371,45 @@ void RuntimeMemoryServer::Poll() {
   }
 
   while (true) {
-    const int client = accept(server_fd_, nullptr, nullptr);
-    if (client < 0) {
+    const auto client = accept(static_cast<NativeSocket>(server_fd_), nullptr, nullptr);
+    if (client == static_cast<NativeSocket>(-1)
+#if defined(_WIN32)
+        || client == INVALID_SOCKET
+#endif
+    ) {
       break;
     }
-    if (!SetNonBlocking(client)) {
-      CloseFd(client);
+    const auto client_handle = static_cast<std::intptr_t>(client);
+    if (!SetNonBlocking(client_handle)) {
+      CloseFd(client_handle);
       continue;
     }
-    client_fds_.push_back(client);
+    client_fds_.push_back(client_handle);
   }
 
-  std::vector<int> alive_clients;
+  std::vector<std::intptr_t> alive_clients;
   alive_clients.reserve(client_fds_.size());
   std::array<char, 4096> buffer{};
-  for (const int fd : client_fds_) {
-    const auto read_size = recv(fd, buffer.data(), buffer.size() - 1, MSG_DONTWAIT);
+  for (const auto fd : client_fds_) {
+    const auto read_size = recv(static_cast<NativeSocket>(fd),
+                                buffer.data(),
+                                static_cast<int>(buffer.size() - 1),
+#if defined(_WIN32)
+                                0
+#else
+                                MSG_DONTWAIT
+#endif
+                                );
     if (read_size == 0) {
       CloseFd(fd);
       continue;
     }
     if (read_size < 0) {
-      alive_clients.push_back(fd);
+      if (WouldBlock()) {
+        alive_clients.push_back(fd);
+      } else {
+        CloseFd(fd);
+      }
       continue;
     }
     buffer[static_cast<std::size_t>(read_size)] = '\0';

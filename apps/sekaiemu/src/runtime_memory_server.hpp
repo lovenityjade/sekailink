@@ -56,8 +56,8 @@ class RuntimeMemoryServer {
                                 std::uint32_t address,
                                 std::uint32_t size) const;
 
-  int server_fd_ = -1;
-  std::vector<int> client_fds_;
+  std::intptr_t server_fd_ = -1;
+  std::vector<std::intptr_t> client_fds_;
   std::filesystem::path socket_path_;
   std::string system_name_ = "LIBRETRO";
   CoreApi* core_ = nullptr;

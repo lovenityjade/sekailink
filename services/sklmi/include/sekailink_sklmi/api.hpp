@@ -209,7 +209,7 @@ class TcpWebSocketArchipelagoTransport final : public ArchipelagoTransport {
     std::string host_;
     std::uint16_t port_ = 0;
     std::string path_;
-    int socket_ = -1;
+    std::intptr_t socket_ = -1;
     bool handshake_complete_ = false;
 };
 
@@ -388,7 +388,7 @@ class RuntimeSocketMemoryProvider final : public MemoryProvider {
 
     std::string host_;
     std::uint16_t port_ = 0;
-    int socket_ = -1;
+    std::intptr_t socket_ = -1;
     std::optional<int> protocol_version_;
     std::string system_name_;
     std::unordered_map<std::string, MemoryDomainDescriptor> descriptors_;

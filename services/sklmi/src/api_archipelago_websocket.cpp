@@ -9,6 +9,8 @@
 #if defined(_WIN32)
 #include <winsock2.h>
 #include <ws2tcpip.h>
+using socket_handle = SOCKET;
+constexpr socket_handle kInvalidSocket = INVALID_SOCKET;
 #else
 #include <arpa/inet.h>
 #include <cerrno>
@@ -18,16 +20,31 @@
 #include <sys/socket.h>
 #include <sys/time.h>
 #include <unistd.h>
+using socket_handle = int;
+constexpr socket_handle kInvalidSocket = -1;
 #endif
 
 namespace sekailink::sklmi {
 namespace {
 
-void CloseSocketFd(int fd) {
+bool EnsureSocketRuntime() {
 #if defined(_WIN32)
-    if (fd >= 0) closesocket(fd);
+    static bool initialized = [] {
+        WSADATA data{};
+        return WSAStartup(MAKEWORD(2, 2), &data) == 0;
+    }();
+    return initialized;
 #else
-    if (fd >= 0) close(fd);
+    return true;
+#endif
+}
+
+void CloseSocketFd(socket_handle fd) {
+    if (fd == kInvalidSocket) return;
+#if defined(_WIN32)
+    closesocket(fd);
+#else
+    close(fd);
 #endif
 }
 
@@ -57,16 +74,23 @@ bool IsTimeoutError() {
 #endif
 }
 
-#ifndef _WIN32
-bool SocketHasReadableData(int fd) {
+bool SocketHasReadableData(socket_handle fd) {
     fd_set read_set;
     FD_ZERO(&read_set);
     FD_SET(fd, &read_set);
     timeval timeout{};
-    const auto result = ::select(fd + 1, &read_set, nullptr, nullptr, &timeout);
+    const auto result = ::select(
+#if defined(_WIN32)
+        0,
+#else
+        fd + 1,
+#endif
+        &read_set,
+        nullptr,
+        nullptr,
+        &timeout);
     return result > 0 && FD_ISSET(fd, &read_set);
 }
-#endif
 
 }  // namespace
 
@@ -80,12 +104,12 @@ TcpWebSocketArchipelagoTransport::~TcpWebSocketArchipelagoTransport() {
 }
 
 bool TcpWebSocketArchipelagoTransport::connect(std::string* error) {
-#if defined(_WIN32)
-    if (error) *error = "archipelago_websocket_windows_pending";
-    return false;
-#else
     if (connected()) return true;
     handshake_complete_ = false;
+    if (!EnsureSocketRuntime()) {
+        if (error) *error = "archipelago_websocket_socket_runtime_failed";
+        return false;
+    }
     if (host_.empty() || port_ == 0) {
         if (error) *error = "archipelago_websocket_endpoint_missing";
         return false;
@@ -104,27 +128,35 @@ bool TcpWebSocketArchipelagoTransport::connect(std::string* error) {
         return false;
     }
 
-    int fd = -1;
+    socket_handle fd = kInvalidSocket;
     for (addrinfo* current = results; current != nullptr; current = current->ai_next) {
         fd = ::socket(current->ai_family, current->ai_socktype, current->ai_protocol);
-        if (fd < 0) continue;
+        if (fd == kInvalidSocket) continue;
         if (::connect(fd, current->ai_addr, static_cast<socklen_t>(current->ai_addrlen)) == 0) break;
         CloseSocketFd(fd);
-        fd = -1;
+        fd = kInvalidSocket;
     }
     ::freeaddrinfo(results);
 
-    if (fd < 0) {
+    if (fd == kInvalidSocket) {
         if (error) *error = "archipelago_websocket_connect_failed";
         return false;
     }
 
+#if defined(_WIN32)
+    DWORD timeout = 50;
+#else
     timeval timeout{};
     timeout.tv_sec = 0;
     timeout.tv_usec = 50000;
-    ::setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
+#endif
+    ::setsockopt(fd,
+                 SOL_SOCKET,
+                 SO_RCVTIMEO,
+                 reinterpret_cast<const char*>(&timeout),
+                 sizeof(timeout));
 
-    socket_ = fd;
+    socket_ = static_cast<std::intptr_t>(fd);
     const auto key = MakeWebSocketKey();
     std::ostringstream request;
     request << "GET " << path_ << " HTTP/1.1\r\n"
@@ -143,7 +175,7 @@ bool TcpWebSocketArchipelagoTransport::connect(std::string* error) {
     std::string response;
     char buffer[1]{};
     while (response.find("\r\n\r\n") == std::string::npos && response.size() < 8192) {
-        const auto received = ::recv(socket_, buffer, 1, 0);
+        const auto received = ::recv(static_cast<socket_handle>(socket_), buffer, 1, 0);
         if (received <= 0) {
             if (error) *error = "archipelago_websocket_handshake_recv_failed";
             disconnect();
@@ -158,7 +190,6 @@ bool TcpWebSocketArchipelagoTransport::connect(std::string* error) {
     }
     handshake_complete_ = true;
     return true;
-#endif
 }
 
 void TcpWebSocketArchipelagoTransport::disconnect() {
@@ -180,7 +211,7 @@ void TcpWebSocketArchipelagoTransport::disconnect() {
                                    std::to_integer<unsigned char>(mask[1]))};
         write_all(close_frame.data(), close_frame.size(), nullptr);
     }
-    CloseSocketFd(socket_);
+    CloseSocketFd(static_cast<socket_handle>(socket_));
     socket_ = -1;
     handshake_complete_ = false;
 }
@@ -221,12 +252,10 @@ bool TcpWebSocketArchipelagoTransport::send_text(std::string_view payload, std::
 
 std::optional<std::string> TcpWebSocketArchipelagoTransport::receive_text(std::string* error) {
     if (!ensure_connected(error)) return std::nullopt;
-#ifndef _WIN32
-    if (!SocketHasReadableData(socket_)) {
+    if (!SocketHasReadableData(static_cast<socket_handle>(socket_))) {
         if (error) error->clear();
         return std::nullopt;
     }
-#endif
     while (true) {
         const auto header = read_exact(2, error);
         if (!header.has_value()) return std::nullopt;
@@ -290,13 +319,12 @@ bool TcpWebSocketArchipelagoTransport::ensure_connected(std::string* error) {
 }
 
 bool TcpWebSocketArchipelagoTransport::write_all(const std::byte* data, std::size_t size, std::string* error) {
-#if defined(_WIN32)
-    if (error) *error = "archipelago_websocket_windows_pending";
-    return false;
-#else
     std::size_t sent = 0;
     while (sent < size) {
-        const auto written = ::send(socket_, reinterpret_cast<const char*>(data + sent), size - sent, SocketSendFlags());
+        const auto written = ::send(static_cast<socket_handle>(socket_),
+                                    reinterpret_cast<const char*>(data + sent),
+                                    static_cast<int>(size - sent),
+                                    SocketSendFlags());
         if (written <= 0) {
             if (error) *error = "archipelago_websocket_send_failed";
             return false;
@@ -304,18 +332,16 @@ bool TcpWebSocketArchipelagoTransport::write_all(const std::byte* data, std::siz
         sent += static_cast<std::size_t>(written);
     }
     return true;
-#endif
 }
 
 std::optional<std::vector<std::byte>> TcpWebSocketArchipelagoTransport::read_exact(std::size_t size, std::string* error) {
-#if defined(_WIN32)
-    if (error) *error = "archipelago_websocket_windows_pending";
-    return std::nullopt;
-#else
     std::vector<std::byte> out(size);
     std::size_t read = 0;
     while (read < size) {
-        const auto received = ::recv(socket_, reinterpret_cast<char*>(out.data() + read), size - read, 0);
+        const auto received = ::recv(static_cast<socket_handle>(socket_),
+                                     reinterpret_cast<char*>(out.data() + read),
+                                     static_cast<int>(size - read),
+                                     0);
         if (received <= 0) {
             if (IsTimeoutError()) return std::nullopt;
             if (error) *error = "archipelago_websocket_recv_failed";
@@ -324,7 +350,6 @@ std::optional<std::vector<std::byte>> TcpWebSocketArchipelagoTransport::read_exa
         read += static_cast<std::size_t>(received);
     }
     return out;
-#endif
 }
 
 }  // namespace sekailink::sklmi

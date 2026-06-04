@@ -1,6 +1,4 @@
-#define GL_GLEXT_PROTOTYPES
-#include <SDL_opengl.h>
-
+#include "opengl_loader.hpp"
 #include "opengl_video_backend.hpp"
 #include "opengl_video_utils.hpp"
 
@@ -586,6 +584,10 @@ bool OpenGlVideoBackend::CreateContext(const retro_hw_render_callback& callback,
 
   if (SDL_GL_MakeCurrent(window_, gl_context_) != 0) {
     error = std::string("SDL_GL_MakeCurrent failed: ") + SDL_GetError();
+    return false;
+  }
+
+  if (!LoadOpenGlFunctions(error)) {
     return false;
   }
 

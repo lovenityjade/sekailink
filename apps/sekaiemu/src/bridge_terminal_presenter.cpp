@@ -1,12 +1,11 @@
 #include "bridge_terminal_presenter.hpp"
 
+#include "opengl_loader.hpp"
 #include "overlay_canvas.hpp"
 #include "tracker_overlay_render_state.hpp"
 #include "tracker_runtime.hpp"
 
 #include <SDL.h>
-#define GL_GLEXT_PROTOTYPES
-#include <SDL_opengl.h>
 
 #include <algorithm>
 #include <string>
@@ -180,6 +179,11 @@ bool BridgeTerminalPresenter::EnsureWindow(unsigned width, unsigned height) {
     auto* previous_window = SDL_GL_GetCurrentWindow();
     const auto previous_context = SDL_GL_GetCurrentContext();
     if (SDL_GL_MakeCurrent(window_, gl_context_) != 0) {
+      return false;
+    }
+    std::string error;
+    if (!LoadOpenGlFunctions(error)) {
+      RestoreGlContext(previous_window, previous_context);
       return false;
     }
     SDL_GL_SetSwapInterval(0);

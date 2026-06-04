@@ -4,10 +4,13 @@
 #include "tracker_headless_runtime.hpp"
 
 #include <atomic>
+#include <charconv>
 #include <chrono>
 #include <csignal>
 #include <filesystem>
 #include <iostream>
+#include <memory>
+#include <optional>
 #include <sstream>
 #include <thread>
 #include <vector>
@@ -57,7 +60,8 @@ std::vector<InjectRule> FilterRoomControlledInjections(const BridgeManifest& man
     return rules;
 }
 
-bool ConnectWithRetry(UnixSocketMemoryProvider& provider, JsonlFileEventSink& sink, std::string* error) {
+template <typename Provider>
+bool ConnectWithRetry(Provider& provider, JsonlFileEventSink& sink, std::string* error) {
     for (int attempt = 0; attempt < 50 && !g_stop_requested.load(); ++attempt) {
         if (provider.connect(error)) {
             sink.trace({LogLevel::info, "sklmi_runtime", "provider_connect", "connected", 0, 0});
@@ -67,6 +71,26 @@ bool ConnectWithRetry(UnixSocketMemoryProvider& provider, JsonlFileEventSink& si
     }
     sink.trace({LogLevel::error, "sklmi_runtime", "provider_connect", error != nullptr ? *error : "connect_failed", 0, 0});
     return false;
+}
+
+std::optional<std::pair<std::string, std::uint16_t>> ParseTcpMemoryEndpoint(const std::string& endpoint) {
+    constexpr std::string_view prefix = "tcp://";
+    if (endpoint.rfind(std::string(prefix), 0) != 0) {
+        return std::nullopt;
+    }
+    const auto rest = endpoint.substr(prefix.size());
+    const auto colon = rest.rfind(':');
+    if (colon == std::string::npos || colon == 0 || colon + 1 >= rest.size()) {
+        return std::nullopt;
+    }
+    const auto host = rest.substr(0, colon);
+    const auto port_text = rest.substr(colon + 1);
+    std::uint64_t port = 0;
+    const auto result = std::from_chars(port_text.data(), port_text.data() + port_text.size(), port, 10);
+    if (result.ec != std::errc{} || result.ptr != port_text.data() + port_text.size() || port > 65535) {
+        return std::nullopt;
+    }
+    return std::make_pair(host, static_cast<std::uint16_t>(port));
 }
 
 std::string DescribeManifest(const BridgeManifest& manifest) {
@@ -128,18 +152,10 @@ std::string DescribeRoomClient(const RuntimeOptions& options) {
     return out.str();
 }
 
-std::string DescribeMemoryProvider(const UnixSocketMemoryProvider& provider) {
+std::string DescribeMemoryProvider(const MemoryProvider& provider) {
     std::ostringstream out;
-    out << "system=" << provider.system_name()
-        << " protocol_version=";
-    if (provider.protocol_version().has_value()) {
-        out << *provider.protocol_version();
-    } else {
-        out << "unknown";
-    }
-
     const auto domains = provider.domains();
-    out << " domains=";
+    out << "domains=";
     for (std::size_t i = 0; i < domains.size(); ++i) {
         const auto& domain = domains[i];
         if (i != 0) {
@@ -230,13 +246,31 @@ int main(int argc, char** argv) {
     sink.trace({LogLevel::info, "sklmi_runtime", "runtime_config",
                 DescribeRuntimeConfig(options, bridge_state_path, room_sync_state_path), 0, 0});
 
-    UnixSocketMemoryProvider provider(options.memory_socket_path);
     std::string connect_error;
-    if (!ConnectWithRetry(provider, sink, &connect_error)) {
-        std::cerr << "provider_connect_failed:" << connect_error << "\n";
+    std::unique_ptr<MemoryProvider> provider;
+    const auto memory_endpoint = options.memory_socket_path.string();
+    if (const auto tcp_endpoint = ParseTcpMemoryEndpoint(memory_endpoint); tcp_endpoint.has_value()) {
+        auto tcp_provider =
+            std::make_unique<RuntimeSocketMemoryProvider>(tcp_endpoint->first, tcp_endpoint->second);
+        if (!ConnectWithRetry(*tcp_provider, sink, &connect_error)) {
+            std::cerr << "provider_connect_failed:" << connect_error << "\n";
+            return 1;
+        }
+        provider = std::move(tcp_provider);
+    } else {
+#if defined(_WIN32)
+        std::cerr << "provider_connect_failed:windows_requires_tcp_memory_endpoint\n";
         return 1;
+#else
+        auto unix_provider = std::make_unique<UnixSocketMemoryProvider>(options.memory_socket_path);
+        if (!ConnectWithRetry(*unix_provider, sink, &connect_error)) {
+            std::cerr << "provider_connect_failed:" << connect_error << "\n";
+            return 1;
+        }
+        provider = std::move(unix_provider);
+#endif
     }
-    sink.trace({LogLevel::info, "sklmi_runtime", "provider_metadata", DescribeMemoryProvider(provider), 0, 0});
+    sink.trace({LogLevel::info, "sklmi_runtime", "provider_metadata", DescribeMemoryProvider(*provider), 0, 0});
 
     std::unique_ptr<RoomClient> room_client;
     if (options.mode == "offline") {
@@ -306,7 +340,7 @@ int main(int argc, char** argv) {
     }
 
     auto session = RoomSynchronizedRuntimeSession(
-        provider,
+        *provider,
         *active_sink,
         std::make_unique<ManifestBridgeSession>(*manifest),
         std::move(room_client),

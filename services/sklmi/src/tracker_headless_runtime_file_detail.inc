@@ -174,7 +174,8 @@ bool ExtractTrackerArchive(const std::filesystem::path& archive_path,
         return false;
     }
 
-    if (archive_read_open_filename(reader, archive_path.c_str(), 10240) != ARCHIVE_OK) {
+    const auto archive_path_string = archive_path.string();
+    if (archive_read_open_filename(reader, archive_path_string.c_str(), 10240) != ARCHIVE_OK) {
         if (error) *error = "tracker_archive_open_failed";
         archive_read_free(reader);
         return false;

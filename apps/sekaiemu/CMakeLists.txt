@@ -21,7 +21,17 @@ find_package(BZip2 REQUIRED)
 pkg_check_modules(SDL2 REQUIRED sdl2)
 pkg_check_modules(SDL2_IMAGE REQUIRED SDL2_image)
 pkg_check_modules(LIBARCHIVE REQUIRED libarchive)
-find_program(BASH_EXECUTABLE bash REQUIRED)
+link_directories(${SDL2_LIBRARY_DIRS} ${SDL2_IMAGE_LIBRARY_DIRS} ${LIBARCHIVE_LIBRARY_DIRS})
+if(NOT WIN32)
+  find_program(BASH_EXECUTABLE bash REQUIRED)
+endif()
+
+set(SEKAIEMU_PLATFORM_LIBS)
+if(WIN32)
+  list(APPEND SEKAIEMU_PLATFORM_LIBS ws2_32)
+else()
+  list(APPEND SEKAIEMU_PLATFORM_LIBS dl)
+endif()
 
 set(SEKAIEMU_TRACKER_RUNTIME_SOURCES
   src/tracker_bundle_archive.cpp
@@ -109,6 +119,7 @@ add_executable(sekaiemu_libretro_spike
   src/overlay_canvas.cpp
   src/profile_bridge.cpp
   src/patch_materializer.cpp
+  src/opengl_loader.cpp
   src/opengl_overlay_renderer.cpp
   src/opengl_video_utils.cpp
   src/runtime_chat_bridge.cpp
@@ -156,24 +167,26 @@ target_link_libraries(sekaiemu_libretro_spike
     OpenSSL::Crypto
     BZip2::BZip2
     OpenGL::GL
-    dl
+    ${SEKAIEMU_PLATFORM_LIBS}
 )
 
 enable_testing()
 
-add_test(
-  NAME sekaiemu_golden_earthbound
-  COMMAND ${BASH_EXECUTABLE}
-          ${CMAKE_CURRENT_SOURCE_DIR}/tests/golden/earthbound_golden.sh
-          ${CMAKE_CURRENT_SOURCE_DIR}
-)
+if(BASH_EXECUTABLE)
+  add_test(
+    NAME sekaiemu_golden_earthbound
+    COMMAND ${BASH_EXECUTABLE}
+            ${CMAKE_CURRENT_SOURCE_DIR}/tests/golden/earthbound_golden.sh
+            ${CMAKE_CURRENT_SOURCE_DIR}
+  )
 
-add_test(
-  NAME sekaiemu_golden_alttp
-  COMMAND ${BASH_EXECUTABLE}
-          ${CMAKE_CURRENT_SOURCE_DIR}/tests/golden/alttp_golden.sh
-          ${CMAKE_CURRENT_SOURCE_DIR}
-)
+  add_test(
+    NAME sekaiemu_golden_alttp
+    COMMAND ${BASH_EXECUTABLE}
+            ${CMAKE_CURRENT_SOURCE_DIR}/tests/golden/alttp_golden.sh
+            ${CMAKE_CURRENT_SOURCE_DIR}
+  )
+endif()
 
 add_executable(tracker_runtime_smoke
   src/tracker_runtime_smoke.cpp
@@ -196,7 +209,7 @@ target_link_libraries(tracker_runtime_smoke
     ${SDL2_LIBRARIES}
     ${SDL2_IMAGE_LIBRARIES}
     ${LIBARCHIVE_LIBRARIES}
-    dl
+    ${SEKAIEMU_PLATFORM_LIBS}
 )
 
 add_test(
@@ -226,7 +239,7 @@ target_link_libraries(tracker_overlay_renderer_smoke
     ${SDL2_LIBRARIES}
     ${SDL2_IMAGE_LIBRARIES}
     ${LIBARCHIVE_LIBRARIES}
-    dl
+    ${SEKAIEMU_PLATFORM_LIBS}
 )
 
 add_test(
@@ -256,7 +269,7 @@ target_link_libraries(tracker_alttp_bundle_smoke
     ${SDL2_LIBRARIES}
     ${SDL2_IMAGE_LIBRARIES}
     ${LIBARCHIVE_LIBRARIES}
-    dl
+    ${SEKAIEMU_PLATFORM_LIBS}
 )
 
 add_test(
@@ -286,7 +299,7 @@ target_link_libraries(tracker_alttp_native_bundle_smoke
     ${SDL2_LIBRARIES}
     ${SDL2_IMAGE_LIBRARIES}
     ${LIBARCHIVE_LIBRARIES}
-    dl
+    ${SEKAIEMU_PLATFORM_LIBS}
 )
 
 add_test(
@@ -316,7 +329,7 @@ target_link_libraries(tracker_preview_render
     ${SDL2_LIBRARIES}
     ${SDL2_IMAGE_LIBRARIES}
     ${LIBARCHIVE_LIBRARIES}
-    dl
+    ${SEKAIEMU_PLATFORM_LIBS}
 )
 
 add_test(

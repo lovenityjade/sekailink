@@ -2,18 +2,56 @@
 
 #include "libretro_core_utils.hpp"
 
+#if defined(_WIN32)
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#ifdef DrawText
+#undef DrawText
+#endif
+#else
 #include <dlfcn.h>
+#endif
 #include <libretro.h>
 
 namespace sekaiemu::spike {
+namespace {
+
+std::string LastLibraryError() {
+#if defined(_WIN32)
+  return "LoadLibrary/GetProcAddress failed with error " + std::to_string(GetLastError());
+#else
+  const char* error = dlerror();
+  return error ? std::string(error) : std::string("unknown dynamic loader error");
+#endif
+}
+
+void CloseLibrary(void*& handle) {
+  if (!handle) {
+    return;
+  }
+#if defined(_WIN32)
+  FreeLibrary(reinterpret_cast<HMODULE>(handle));
+#else
+  dlclose(handle);
+#endif
+  handle = nullptr;
+}
+
+}  // namespace
 
 bool LoadLibretroCore(const std::filesystem::path& core_path,
                       void*& core_handle,
                       CoreApi& api,
                       std::string& error) {
+#if defined(_WIN32)
+  core_handle = reinterpret_cast<void*>(LoadLibraryW(core_path.wstring().c_str()));
+#else
   core_handle = dlopen(core_path.c_str(), RTLD_NOW);
+#endif
   if (!core_handle) {
-    error = std::string("dlopen failed: ") + dlerror();
+    error = "Failed to load libretro core: " + LastLibraryError();
     return false;
   }
 
@@ -39,15 +77,13 @@ bool LoadLibretroCore(const std::filesystem::path& core_path,
 
   if (!ok) {
     error = "Failed to resolve required libretro symbols.";
-    dlclose(core_handle);
-    core_handle = nullptr;
+    CloseLibrary(core_handle);
     return false;
   }
 
   if (api.retro_api_version() != RETRO_API_VERSION) {
     error = "libretro API version mismatch.";
-    dlclose(core_handle);
-    core_handle = nullptr;
+    CloseLibrary(core_handle);
     return false;
   }
 
@@ -63,10 +99,7 @@ bool LoadLibretroCore(const std::filesystem::path& core_path,
 }
 
 void UnloadLibretroCore(void*& core_handle) {
-  if (core_handle) {
-    dlclose(core_handle);
-    core_handle = nullptr;
-  }
+  CloseLibrary(core_handle);
 }
 
 }  // namespace sekaiemu::spike

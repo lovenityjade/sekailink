@@ -1,6 +1,4 @@
-#define GL_GLEXT_PROTOTYPES
-#include <SDL_opengl.h>
-
+#include "opengl_loader.hpp"
 #include "opengl_overlay_renderer.hpp"
 
 #include "opengl_video_utils.hpp"
@@ -100,6 +98,10 @@ void OpenGlOverlayRenderer::Destroy() {
 
 bool OpenGlOverlayRenderer::EnsureResources(retro_hw_context_type context_type,
                                             std::string& error) {
+  if (!LoadOpenGlFunctions(error)) {
+    return false;
+  }
+
   if (program_ != 0 && texture_ != 0 && vao_ != 0 && vbo_ != 0) {
     return true;
   }

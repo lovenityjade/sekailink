@@ -1,6 +1,7 @@
 #include "logger.hpp"
 
 #include <chrono>
+#include <ctime>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -55,7 +56,11 @@ std::string TimestampNow() {
   const auto now = std::chrono::system_clock::now();
   const auto time = std::chrono::system_clock::to_time_t(now);
   std::tm local_time{};
+#ifdef _WIN32
+  localtime_s(&local_time, &time);
+#else
   localtime_r(&time, &local_time);
+#endif
 
   std::ostringstream stream;
   stream << std::put_time(&local_time, "%Y-%m-%d %H:%M:%S");

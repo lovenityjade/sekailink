@@ -8,6 +8,11 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBARCHIVE REQUIRED IMPORTED_TARGET libarchive)
 
+set(SKLMI_PLATFORM_LIBS)
+if(WIN32)
+  list(APPEND SKLMI_PLATFORM_LIBS ws2_32)
+endif()
+
 add_library(sekailink_sklmi
   src/api_archipelago.cpp
   src/api_archipelago_websocket.cpp
@@ -18,6 +23,8 @@ add_library(sekailink_sklmi
   src/api_socket_memory.cpp
   src/unix_socket_memory_provider.cpp
 )
+
+target_link_libraries(sekailink_sklmi PUBLIC ${SKLMI_PLATFORM_LIBS})
 
 target_include_directories(sekailink_sklmi
   PUBLIC

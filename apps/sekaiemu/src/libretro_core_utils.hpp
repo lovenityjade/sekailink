@@ -1,7 +1,18 @@
 #pragma once
 
-#include <dlfcn.h>
 #include <libretro.h>
+
+#if defined(_WIN32)
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#ifdef DrawText
+#undef DrawText
+#endif
+#else
+#include <dlfcn.h>
+#endif
 
 #include <algorithm>
 #include <cctype>
@@ -12,7 +23,12 @@ namespace sekaiemu::spike {
 
 template <typename T>
 bool ResolveSymbol(void* handle, const char* name, T& target) {
+#if defined(_WIN32)
+  void* symbol = reinterpret_cast<void*>(
+      GetProcAddress(reinterpret_cast<HMODULE>(handle), name));
+#else
   void* symbol = dlsym(handle, name);
+#endif
   if (!symbol) {
     return false;
   }

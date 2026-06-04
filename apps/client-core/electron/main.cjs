@@ -55,6 +55,27 @@ const getBundledRuntimeDir = () => {
   return path.join(__dirname, "..", "..", "runtime");
 };
 
+const getRuntimePlatformId = () => {
+  const arch = process.arch === "x64" ? "x64" : process.arch;
+  return `${process.platform}-${arch}`;
+};
+
+const getRuntimePlatformDir = () => {
+  return path.join(getBundledRuntimeDir(), "platforms", getRuntimePlatformId());
+};
+
+const getRuntimePlatformPath = (...parts) => {
+  return path.join(getRuntimePlatformDir(), ...parts);
+};
+
+const getPlatformRuntimeDirCandidates = (...parts) => {
+  const runtimeDir = getBundledRuntimeDir();
+  return [
+    getRuntimePlatformPath(...parts),
+    path.join(runtimeDir, ...parts),
+  ];
+};
+
 const getBundledThirdPartyDir = () => {
   // In packaged apps, third_party is shipped via extraResources to process.resourcesPath/third_party.
   // In dev, third_party lives at repo root (../../../third_party relative to client/app/electron).
@@ -1537,7 +1558,8 @@ const getPatcherWrapperPath = () => {
 };
 
 const getPopTrackerDir = () => {
-  return getRuntimeFilePath("poptracker");
+  const resolved = firstExistingDir(...getPlatformRuntimeDirCandidates("poptracker"));
+  return resolved || getRuntimeFilePath("poptracker");
 };
 
 const getPopTrackerInstalledDir = () => {
@@ -1708,7 +1730,8 @@ let _popTrackerExeCache = "";
 let _popTrackerExeSource = "";
 
 const getBundledPopTrackerLibsDir = () => {
-  return getRuntimeFilePath(path.join("_bundled_libs", "poptracker"));
+  const resolved = firstExistingDir(...getPlatformRuntimeDirCandidates("_bundled_libs", "poptracker"));
+  return resolved || getRuntimeFilePath(path.join("_bundled_libs", "poptracker"));
 };
 
 const getPopTrackerExePath = () => {
@@ -3516,21 +3539,31 @@ const resolveSekaiemuExecutable = () => {
     ? ["sekaiemu_libretro_spike.exe", "sekaiemu.exe"]
     : ["sekaiemu_libretro_spike", "sekaiemu"];
   const home = app.getPath("home");
-  const candidates = [
-    settings.exe_path,
-    path.join(getBundledRuntimeDir(), "bin", exeNames[0]),
-    path.join(getBundledRuntimeDir(), "sekaiemu", exeNames[0]),
+  const runtimeBinCandidates = exeNames.flatMap((exeName) => [
+    getRuntimePlatformPath("bin", exeName),
+    path.join(getBundledRuntimeDir(), "bin", exeName),
+    path.join(getBundledRuntimeDir(), "sekaiemu", exeName),
+  ]);
+  const devCandidates = app.isPackaged ? [] : [
     path.join("/tmp", "sekaiemu-libretro-spike-beta3-build", exeNames[0]),
     path.join(home, "Projects", "Sekaiemu-Libretro-Spike-Codex", "workspace", "sekaiemu-libretro-spike", "build", exeNames[0]),
     path.join(home, "Sekaiemu-Libretro-Spike-Codex", "workspace", "sekaiemu-libretro-spike", "build", exeNames[0]),
+  ];
+  const candidates = [
+    settings.exe_path,
+    ...runtimeBinCandidates,
+    ...devCandidates,
   ];
   for (const candidate of candidates) {
     if (fileExists(candidate)) return candidate;
   }
   const roots = [
     settings.root_dir,
+    getRuntimePlatformPath("sekaiemu"),
     path.join(getBundledRuntimeDir(), "sekaiemu"),
-    path.join(home, "Projects", "Sekaiemu-Libretro-Spike-Codex", "workspace", "sekaiemu-libretro-spike"),
+    ...(app.isPackaged ? [] : [
+      path.join(home, "Projects", "Sekaiemu-Libretro-Spike-Codex", "workspace", "sekaiemu-libretro-spike"),
+    ]),
   ].filter(Boolean);
   for (const root of roots) {
     const found = findExecutableByNamesInDir(root, exeNames, 5);
@@ -3560,20 +3593,25 @@ const resolveSekaiemuCorePath = (manifest = {}) => {
   const home = app.getPath("home");
   const roots = [
     ...settings.core_dirs,
+    getRuntimePlatformPath("cores"),
     path.join(getBundledRuntimeDir(), "cores"),
     path.join(getBundledRuntimeDir(), "libretro"),
-    path.join(home, "Projects", "Sekaiemu-Libretro-Spike-Codex", "workspace", "src"),
+    ...(app.isPackaged ? [] : [
+      path.join(home, "Projects", "Sekaiemu-Libretro-Spike-Codex", "workspace", "src"),
+    ]),
   ];
   const direct = resolvePathFromRoots(corePath, roots);
   if (direct) return direct;
 
+  const ext = process.platform === "win32" ? ".dll" : ".so";
+  const names = (...baseNames) => baseNames.map((name) => `${name}${ext}`);
   const aliases = {
-    bsnes: ["bsnes_mercury_performance_libretro.so", "bsnes_mercury_balanced_libretro.so", "bsnes_libretro.so", "snes9x_libretro.so"],
-    snes: ["bsnes_mercury_performance_libretro.so", "bsnes_mercury_balanced_libretro.so", "snes9x_libretro.so"],
-    gba: ["mgba_libretro.so"],
-    mgba: ["mgba_libretro.so"],
-    nes: ["fceumm_libretro.so", "nestopia_libretro.so"],
-    fceumm: ["fceumm_libretro.so"],
+    bsnes: names("bsnes_mercury_performance_libretro", "bsnes_mercury_balanced_libretro", "bsnes_libretro", "snes9x_libretro"),
+    snes: names("bsnes_mercury_performance_libretro", "bsnes_mercury_balanced_libretro", "snes9x_libretro"),
+    gba: names("mgba_libretro"),
+    mgba: names("mgba_libretro"),
+    nes: names("fceumm_libretro", "nestopia_libretro"),
+    fceumm: names("fceumm_libretro"),
   };
   const wanted = aliases[coreId.toLowerCase()] || (coreId ? [coreId] : []);
   if (!wanted.length) return "";
@@ -3607,13 +3645,17 @@ const resolveSklmiRuntimeForSekaiemu = () => {
   const home = app.getPath("home");
   const runtimeDir = getBundledRuntimeDir();
   const exeName = process.platform === "win32" ? "sekailink_sklmi_runtime.exe" : "sekailink_sklmi_runtime";
+  const devCandidates = app.isPackaged ? [] : [
+    path.join(home, "DevSSD", "sekailink-beta-3-final", "clean-room", "repos", "sklmi", "build", exeName),
+    path.join(home, "DevSSD", "sekailink-beta-3-final", "sklmi", "build", exeName),
+  ];
   const candidates = [
     process.env.SEKAILINK_SKLMI_RUNTIME,
+    getRuntimePlatformPath("bin", exeName),
     path.join(runtimeDir, "bin", exeName),
     path.join(runtimeDir, "sklmi", exeName),
     path.join(runtimeDir, exeName),
-    path.join(home, "DevSSD", "sekailink-beta-3-final", "clean-room", "repos", "sklmi", "build", exeName),
-    path.join(home, "DevSSD", "sekailink-beta-3-final", "sklmi", "build", exeName),
+    ...devCandidates,
   ];
   for (const candidate of candidates) {
     if (fileExists(candidate)) return candidate;
@@ -3624,13 +3666,17 @@ const resolveSklmiRuntimeForSekaiemu = () => {
 const resolveSklmiManifestDirForSekaiemu = () => {
   const home = app.getPath("home");
   const runtimeDir = getBundledRuntimeDir();
+  const devCandidates = app.isPackaged ? [] : [
+    path.join(home, "DevSSD", "sekailink-beta-3-final", "clean-room", "repos", "sklmi", "manifests"),
+    path.join(home, "DevSSD", "sekailink-beta-3-final", "sklmi", "manifests"),
+  ];
   const candidates = [
     process.env.SEKAILINK_SKLMI_MANIFEST_DIR,
+    getRuntimePlatformPath("sklmi", "manifests"),
     path.join(runtimeDir, "sklmi", "manifests"),
     path.join(runtimeDir, "manifests", "sklmi"),
     path.join(runtimeDir, "manifests"),
-    path.join(home, "DevSSD", "sekailink-beta-3-final", "clean-room", "repos", "sklmi", "manifests"),
-    path.join(home, "DevSSD", "sekailink-beta-3-final", "sklmi", "manifests"),
+    ...devCandidates,
   ];
   for (const candidate of candidates) {
     try {
@@ -3658,8 +3704,17 @@ const resolveSekaiemuTrackerPackPath = (manifest = {}, roots = []) => {
   if (declared && !path.isAbsolute(declared)) {
     const runtimePath = getRuntimeFilePath(declared);
     if (pathExists(runtimePath)) return runtimePath;
+    if (declared.toLowerCase().endsWith(".zip")) {
+      const unpackedRuntimePath = getRuntimeFilePath(declared.slice(0, -4));
+      if (pathExists(unpackedRuntimePath)) return unpackedRuntimePath;
+    }
   }
-  return resolvePathFromRoots(declared, roots, pathExists);
+  const resolved = resolvePathFromRoots(declared, roots, pathExists);
+  if (resolved) return resolved;
+  if (declared.toLowerCase().endsWith(".zip")) {
+    return resolvePathFromRoots(declared.slice(0, -4), roots, pathExists);
+  }
+  return "";
 };
 
 const normalizeChatBridgeApiBase = (value) => {
@@ -4002,6 +4057,10 @@ const tryLaunchSekaiemu = async (options = {}) => {
 };
 
 const moduleHasExternalTracker = (manifest = {}) => {
+  const emu = String(manifest?.emu || "").trim().toLowerCase();
+  if (emu === "sekaiemu" || emu === "sekaiemu-libretro") {
+    return false;
+  }
   const trackerPack = String(manifest?.tracker_pack_uid || "").trim();
   const trackerWeb = String(manifest?.tracker_web_url || "").trim();
   return Boolean(trackerPack || trackerWeb);
@@ -6333,6 +6392,28 @@ const validateSetupForModule = async (moduleId) => {
     if (!resolveSekaiemuCorePath(manifest)) {
       return { ok: false, error: "sekaiemu_core_missing", setupArea: "paths" };
     }
+    if (!resolveSklmiRuntimeForSekaiemu()) {
+      return { ok: false, error: "sklmi_runtime_missing", setupArea: "paths" };
+    }
+    if (!resolveSklmiManifestDirForSekaiemu()) {
+      return { ok: false, error: "sklmi_manifest_missing", setupArea: "paths" };
+    }
+    const sekaiemu = manifest.sekaiemu && typeof manifest.sekaiemu === "object" ? manifest.sekaiemu : {};
+    const declaredTrackerPack = String(
+      sekaiemu.tracker_pack ||
+        sekaiemu.tracker_pack_path ||
+        manifest.tracker_pack_path ||
+        ""
+    ).trim();
+    if (declaredTrackerPack) {
+      const trackerPack = resolveSekaiemuTrackerPackPath(manifest, [
+        getBundledRuntimeDir(),
+        path.join(getBundledRuntimeDir(), "tracker-bundles"),
+      ]);
+      if (!trackerPack) {
+        return { ok: false, error: "sekaiemu_tracker_pack_missing", setupArea: "paths" };
+      }
+    }
   }
 
   const config = readConfig();
@@ -6358,8 +6439,8 @@ const validateSetupForModule = async (moduleId) => {
     }
   }
 
-  // PopTracker is optional per module, but if a module declares a pack source, then PopTracker must exist.
-  if (manifest.tracker_pack_uid) {
+  // Separate PopTracker is only for legacy/non-Sekaiemu launch flows. Sekaiemu passes packs to SKLMI.
+  if (manifest.tracker_pack_uid && emu !== "sekaiemu" && emu !== "sekaiemu-libretro") {
     const trackerStatus = getPopTrackerStatus();
     if (!trackerStatus.exists) return { ok: false, error: "poptracker_missing", setupArea: "paths" };
   }

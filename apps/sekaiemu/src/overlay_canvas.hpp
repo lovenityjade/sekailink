@@ -4,6 +4,10 @@
 #include <string_view>
 #include <vector>
 
+#ifdef DrawText
+#undef DrawText
+#endif
+
 namespace sekaiemu::spike {
 
 struct UiColor {

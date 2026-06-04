@@ -22,6 +22,18 @@ namespace sekailink::sklmi {
 
 namespace {
 
+bool ensure_socket_runtime() {
+#ifdef _WIN32
+    static bool initialized = [] {
+        WSADATA data{};
+        return WSAStartup(MAKEWORD(2, 2), &data) == 0;
+    }();
+    return initialized;
+#else
+    return true;
+#endif
+}
+
 void close_socket(socket_handle handle) {
 #ifdef _WIN32
     closesocket(handle);
@@ -45,7 +57,10 @@ std::string read_socket_line(socket_handle handle) {
 bool write_socket_all(socket_handle handle, const std::string& payload) {
     std::size_t sent = 0;
     while (sent < payload.size()) {
-        const auto written = send(handle, payload.data() + sent, payload.size() - sent, 0);
+        const auto written = send(handle,
+                                  payload.data() + sent,
+                                  static_cast<int>(payload.size() - sent),
+                                  0);
         if (written <= 0) return false;
         sent += static_cast<std::size_t>(written);
     }
@@ -76,6 +91,10 @@ RuntimeSocketMemoryProvider::~RuntimeSocketMemoryProvider() {
 
 bool RuntimeSocketMemoryProvider::connect(std::string* error) {
     if (connected()) return true;
+    if (!ensure_socket_runtime()) {
+        if (error) *error = "socket_runtime_init_failed";
+        return false;
+    }
     socket_handle handle = socket(AF_INET, SOCK_STREAM, 0);
     if (handle == kInvalidSocket) {
         if (error) *error = "socket_create_failed";
@@ -94,7 +113,7 @@ bool RuntimeSocketMemoryProvider::connect(std::string* error) {
         if (error) *error = "runtime_connect_failed";
         return false;
     }
-    socket_ = static_cast<int>(handle);
+    socket_ = static_cast<std::intptr_t>(handle);
     if (!write_socket_all(handle, "VERSION\n")) {
         disconnect();
         if (error) *error = "runtime_version_write_failed";

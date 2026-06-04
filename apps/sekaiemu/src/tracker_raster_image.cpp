@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include <cctype>
-#include <dlfcn.h>
 #include <fstream>
 #include <initializer_list>
 #include <limits>
@@ -13,6 +12,18 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+
+#if defined(_WIN32)
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#ifdef DrawText
+#undef DrawText
+#endif
+#else
+#include <dlfcn.h>
+#endif
 
 namespace sekaiemu::spike {
 namespace {
@@ -136,16 +147,27 @@ TrackerRasterImage LoadPortablePixmap(const std::filesystem::path& path,
 
 void* OpenSharedLibrary(std::initializer_list<const char*> names) {
   for (const char* name : names) {
+#if defined(_WIN32)
+    if (void* handle = reinterpret_cast<void*>(LoadLibraryA(name)); handle != nullptr) {
+      return handle;
+    }
+#else
     if (void* handle = dlopen(name, RTLD_LAZY | RTLD_LOCAL); handle != nullptr) {
       return handle;
     }
+#endif
   }
   return nullptr;
 }
 
 template <typename Function>
 Function LoadSymbol(void* handle, const char* name) {
+#if defined(_WIN32)
+  return reinterpret_cast<Function>(
+      GetProcAddress(reinterpret_cast<HMODULE>(handle), name));
+#else
   return reinterpret_cast<Function>(dlsym(handle, name));
+#endif
 }
 
 struct SdlImageApi {
@@ -168,8 +190,13 @@ struct SdlImageApi {
 const SdlImageApi& GetSdlImageApi() {
   static const SdlImageApi api = [] {
     SdlImageApi loaded;
+#if defined(_WIN32)
+    loaded.sdl_handle = OpenSharedLibrary({"SDL2.dll", "libSDL2-2.0-0.dll"});
+    loaded.image_handle = OpenSharedLibrary({"SDL2_image.dll", "libSDL2_image-2.0-0.dll"});
+#else
     loaded.sdl_handle = OpenSharedLibrary({"libSDL2-2.0.so.0", "libSDL2.so"});
     loaded.image_handle = OpenSharedLibrary({"libSDL2_image-2.0.so.0", "libSDL2_image.so"});
+#endif
     if (loaded.sdl_handle == nullptr || loaded.image_handle == nullptr) {
       return loaded;
     }

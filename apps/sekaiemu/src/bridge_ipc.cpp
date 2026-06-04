@@ -1,5 +1,52 @@
 #include "bridge_ipc.hpp"
 
+#if defined(_WIN32)
+
+#include <algorithm>
+#include <system_error>
+
+namespace sekaiemu::spike {
+
+BridgeIpc::~BridgeIpc() {
+  Shutdown();
+}
+
+bool BridgeIpc::Initialize(const std::filesystem::path& bridge_root, std::string& error) {
+  std::error_code ec;
+  std::filesystem::create_directories(bridge_root, ec);
+  socket_path_ = bridge_root / "sekaiemu.sock";
+  error = "Legacy profile bridge sockets are not supported on Windows.";
+  return false;
+}
+
+void BridgeIpc::Shutdown() {
+  server_fd_ = -1;
+  socket_path_.clear();
+  client_fds_.clear();
+  pending_buffers_.clear();
+}
+
+void BridgeIpc::CloseClient(int fd) {
+  pending_buffers_.erase(fd);
+  client_fds_.erase(std::remove(client_fds_.begin(), client_fds_.end(), fd), client_fds_.end());
+}
+
+void BridgeIpc::AcceptClients() {}
+
+std::vector<std::string> BridgeIpc::DrainCommands() {
+  return {};
+}
+
+void BridgeIpc::PublishEvent(std::string_view) {}
+
+const std::filesystem::path& BridgeIpc::SocketPath() const {
+  return socket_path_;
+}
+
+}  // namespace sekaiemu::spike
+
+#else
+
 #include <fcntl.h>
 #include <sys/socket.h>
 #include <sys/un.h>
@@ -195,3 +242,5 @@ const std::filesystem::path& BridgeIpc::SocketPath() const {
 }
 
 }  // namespace sekaiemu::spike
+
+#endif

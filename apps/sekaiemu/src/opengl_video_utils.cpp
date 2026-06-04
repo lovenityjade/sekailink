@@ -1,6 +1,4 @@
-#define GL_GLEXT_PROTOTYPES
-#include <SDL_opengl.h>
-
+#include "opengl_loader.hpp"
 #include "opengl_video_utils.hpp"
 
 #include <algorithm>

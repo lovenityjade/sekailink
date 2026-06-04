@@ -64,7 +64,10 @@ class SklmiCompanionRuntime {
   std::filesystem::path companion_log_path_;
   std::string last_exit_detail_;
 
-#ifndef _WIN32
+#ifdef _WIN32
+  void* child_process_handle_ = nullptr;
+  unsigned long child_process_id_ = 0;
+#else
   int child_pid_ = -1;
 #endif
 };

@@ -1,6 +1,5 @@
 #include "host_io_utils.hpp"
 
-#include <cstdio>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -19,16 +18,16 @@ std::vector<std::uint8_t> ReadWholeFile(const std::filesystem::path& path) {
   }
 
   bytes.resize(static_cast<std::size_t>(file_size));
-  FILE* file = std::fopen(path.c_str(), "rb");
+  std::ifstream file(path, std::ios::binary);
   if (!file) {
-    std::cerr << "[sekaiemu-libretro-spike] fopen failed for " << path << "\n";
+    std::cerr << "[sekaiemu-libretro-spike] open failed for " << path << "\n";
     bytes.clear();
     return bytes;
   }
-  const auto read_bytes = std::fread(bytes.data(), 1, bytes.size(), file);
-  std::fclose(file);
+  file.read(reinterpret_cast<char*>(bytes.data()), static_cast<std::streamsize>(bytes.size()));
+  const auto read_bytes = static_cast<std::size_t>(file.gcount());
   if (read_bytes != bytes.size()) {
-    std::cerr << "[sekaiemu-libretro-spike] fread short read for " << path
+    std::cerr << "[sekaiemu-libretro-spike] short read for " << path
               << " expected=" << bytes.size() << " got=" << read_bytes << "\n";
     bytes.clear();
   }
