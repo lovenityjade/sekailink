@@ -95,8 +95,11 @@ function Install-SelfBootstrapper([string]$TargetDir) {
   $sourceDir = Split-Path -LiteralPath $PSCommandPath -Parent
   foreach ($name in @("SekaiLink-bootstrapper.cmd", "SekaiLink-bootstrapper.ps1")) {
     $src = Join-Path $sourceDir $name
+    $dst = Join-Path $TargetDir $name
     if (Test-Path -LiteralPath $src) {
-      Copy-Item -LiteralPath $src -Destination (Join-Path $TargetDir $name) -Force
+      if ([IO.Path]::GetFullPath($src) -ne [IO.Path]::GetFullPath($dst)) {
+        Copy-Item -LiteralPath $src -Destination $dst -Force
+      }
     }
   }
 }
@@ -211,9 +214,9 @@ try {
   $release = Get-ReleaseInfo $releaseUrl
 } catch {
   Write-Step "Update check failed: $($_.Exception.Message)"
-  $currentExe = Join-Path $InstallDir "SekaiLink Client.exe"
-  if (!$NoLaunch -and (Test-Path -LiteralPath $currentExe)) {
-    Launch-Client $InstallDir $StateDir "SekaiLink Client.exe"
+  $currentExeRel = Find-ClientExecutable $InstallDir
+  if (!$NoLaunch -and ![string]::IsNullOrWhiteSpace($currentExeRel)) {
+    Launch-Client $InstallDir $StateDir $currentExeRel
     exit 0
   }
   throw

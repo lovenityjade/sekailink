@@ -200,9 +200,15 @@ find_client_executable() {
 install_self_bootstrapper() {
   local target_dir="$1"
   local source_path="${BASH_SOURCE[0]}"
+  local target_path="$target_dir/sekailink-bootstrapper.sh"
   if [ -f "$source_path" ]; then
-    cp -f "$source_path" "$target_dir/sekailink-bootstrapper.sh"
-    chmod +x "$target_dir/sekailink-bootstrapper.sh" || true
+    local abs_source abs_target
+    abs_source="$(python3 -c 'import os,sys;print(os.path.abspath(sys.argv[1]))' "$source_path")"
+    abs_target="$(python3 -c 'import os,sys;print(os.path.abspath(sys.argv[1]))' "$target_path")"
+    if [ "$abs_source" != "$abs_target" ]; then
+      cp -f "$source_path" "$target_path"
+    fi
+    chmod +x "$target_path" || true
   fi
 }
 
@@ -267,8 +273,9 @@ trap cleanup EXIT
 log "Checking $release_url"
 if ! curl -fsSL -A "SekaiLink-Bootstrapper/0.1 Linux" -H "Cache-Control: no-cache" "$release_url" -o "$release_json"; then
   log "Update check failed"
-  if [ "$no_launch" -eq 0 ] && [ -f "$install_dir/sekailink-client" ]; then
-    launch_client "$install_dir" "$state_dir" "sekailink-client"
+  exe_rel="$(find_client_executable "$install_dir")"
+  if [ "$no_launch" -eq 0 ] && [ -n "$exe_rel" ]; then
+    launch_client "$install_dir" "$state_dir" "$exe_rel"
     exit 0
   fi
   exit 1

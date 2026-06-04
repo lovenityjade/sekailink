@@ -11,7 +11,7 @@ interface AuthGateProps {
   children: React.ReactNode;
 }
 
-type AuthStatus = "checking" | "authed" | "unauth" | "unreachable" | "noapi" | "update-required";
+type AuthStatus = "checking" | "authed" | "unauth" | "unreachable" | "noapi" | "update-required" | "launcher-repair";
 
 const compareVersions = (a: string, b: string) => {
   const parse = (v: string) => {
@@ -69,7 +69,7 @@ const releaseChannelFromEnv = (env: Record<string, unknown> | null | undefined, 
   if (fromEnv === "stable" || fromEnv === "debug" || fromEnv === "test") return fromEnv;
   const v = appVersion.toLowerCase();
   if (v.includes("debug") || v.includes("nightly")) return "debug";
-  return "stable";
+  return "test";
 };
 
 const releaseBuildFromEnv = (env: Record<string, unknown> | null | undefined) => {
@@ -176,6 +176,7 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
   const [updateNotesTitle, setUpdateNotesTitle] = useState(t("auth.update_title"));
   const [updateNotesMarkdown, setUpdateNotesMarkdown] = useState("");
   const [updateNotesSignature, setUpdateNotesSignature] = useState("");
+  const [launcherRepairError, setLauncherRepairError] = useState("");
   const minBootMs = 2200;
   const bootAuthTimeoutMs = 3500;
   const updateNoticeShownRef = useRef(false);
@@ -471,6 +472,35 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
     });
   }, [resolveServerUrl, t, versionInfo?.incremental_manifest_url]);
 
+  const runLauncherEntrypointGuard = useCallback(async (env?: Record<string, unknown> | null) => {
+    const packaged = Boolean(env && env.app_is_packaged === true);
+    const launchedByBootstrapper = Boolean(env && env.bootstrap_launch_token_valid === true);
+    if (!packaged || launchedByBootstrapper) return false;
+
+    const bootstrapperPath = String((env && env.bootstrapper_path) || "").trim();
+    if (bootstrapperPath && window.sekailink?.updaterLaunchBootstrapperAndQuit) {
+      setBootLabel(t("auth.boot_launching_updater"));
+      setBootProgress(0.16);
+      const result = await window.sekailink.updaterLaunchBootstrapperAndQuit();
+      if (result?.ok) {
+        authTrace("launcher_guard_relaunch", { path: String(result.path || bootstrapperPath) });
+        return true;
+      }
+      const error = String(result?.error || "bootstrapper_launch_failed");
+      setLauncherRepairError(error);
+      setStatus("launcher-repair");
+      authTrace("launcher_guard_launch_failed", { error });
+      return true;
+    }
+
+    setLauncherRepairError("bootstrapper_not_found");
+    setStatus("launcher-repair");
+    authTrace("launcher_guard_missing_bootstrapper", {
+      installDir: String((env && (env.bootstrap_install_dir || env.client_update_install_dir)) || ""),
+    });
+    return true;
+  }, [authTrace, t]);
+
   const maybeOpenUpdateNotes = useCallback(async () => {
     const notesUrlRaw = String(versionInfo?.update_notes_url || "").trim();
     if (!notesUrlRaw) return;
@@ -715,6 +745,9 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
           platform: String((env && env.platform) || ""),
         });
         if (cancelled) return;
+        const launcherHandled = await runLauncherEntrypointGuard(env);
+        authTrace("boot_launcher_guard_checked", { bootRunId, launcherHandled });
+        if (cancelled || launcherHandled) return;
         const updateStarted = await runStartupAutoUpdate(env);
         authTrace("boot_update_checked", { bootRunId, updateStarted });
         if (cancelled || updateStarted) return;
@@ -980,6 +1013,19 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
     await window.sekailink?.showItemInFolder?.(installDir);
   }, [runtimeEnv]);
 
+  const retryLauncher = useCallback(async () => {
+    setLauncherRepairError("");
+    const result = await window.sekailink?.updaterLaunchBootstrapperAndQuit?.();
+    if (!result?.ok) {
+      setLauncherRepairError(String(result?.error || "bootstrapper_launch_failed"));
+    }
+  }, []);
+
+  const openBootstrapperDownload = useCallback(async () => {
+    const url = String((runtimeEnv && runtimeEnv.bootstrapper_download_url) || "").trim();
+    if (url) await window.sekailink?.openExternal?.(url);
+  }, [runtimeEnv]);
+
   const handleAuthCallback = useCallback(
     async (url: string) => {
       try {
@@ -1101,8 +1147,43 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
     };
   }, []);
 
-  if (!bootDone && status !== "update-required") {
+  if (!bootDone && status !== "update-required" && status !== "launcher-repair") {
     return <BootScreen status={bootLabel} progress={bootProgress} version={`v${appVersion}`} />;
+  }
+
+  if (status === "launcher-repair") {
+    const installDir = String((runtimeEnv && (runtimeEnv.client_update_install_dir || runtimeEnv.bootstrap_install_dir)) || "").trim();
+    const bootstrapperPath = String((runtimeEnv && runtimeEnv.bootstrapper_path) || "").trim();
+    return (
+      <div className="skl-auth-shell">
+        <div className="skl-auth-panel">
+          <h1 className="skl-app-title">{t("auth.launcher_required")}</h1>
+          <p>{t("auth.launcher_required_body")}</p>
+          {!!bootstrapperPath && (
+            <p className="skl-auth-meta">
+              {t("auth.launcher")}: <span>{bootstrapperPath}</span>
+            </p>
+          )}
+          {!!installDir && (
+            <p className="skl-auth-meta">
+              {t("auth.install_dir")}: <span>{installDir}</span>
+            </p>
+          )}
+          {!!launcherRepairError && <p className="skl-auth-error">{launcherRepairError}</p>}
+          <div className="skl-auth-actions">
+            <button className="skl-btn primary" type="button" onClick={() => void retryLauncher()} disabled={!bootstrapperPath}>
+              {t("auth.launch_updater")}
+            </button>
+            <button className="skl-btn ghost" type="button" onClick={() => void revealDownloadedUpdate()} disabled={!installDir}>
+              {t("auth.show_in_folder")}
+            </button>
+            <button className="skl-btn ghost" type="button" onClick={() => void openBootstrapperDownload()}>
+              {t("auth.download_launcher")}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (status === "update-required") {

@@ -270,16 +270,11 @@ const base64UrlDecodeUtf8 = (value) => {
   return Buffer.from(padded, "base64").toString("utf8");
 };
 
-const validateBootstrapLaunchToken = () => {
-  // Temporary test mode: bootstrap enforcement disabled by default.
-  // Re-enable by setting SEKAILINK_REQUIRE_BOOTSTRAP=1.
-  const requireBootstrap = app.isPackaged && String(process.env.SEKAILINK_REQUIRE_BOOTSTRAP || "0") !== "0";
-  if (!requireBootstrap) return { ok: true, enforced: false };
-
+const getBootstrapLaunchTokenStatus = () => {
   const tokenRaw = String(process.env.SEKAILINK_BOOTSTRAP_TOKEN || "").trim();
-  if (!tokenRaw || !tokenRaw.includes(".")) return { ok: false, error: "bootstrap_token_missing" };
+  if (!tokenRaw || !tokenRaw.includes(".")) return { ok: false, present: false, error: "bootstrap_token_missing" };
   const [body, sig] = tokenRaw.split(".", 2);
-  if (!body || !sig || !/^[a-f0-9]{64}$/i.test(sig)) return { ok: false, error: "bootstrap_token_invalid_format" };
+  if (!body || !sig || !/^[a-f0-9]{64}$/i.test(sig)) return { ok: false, present: true, error: "bootstrap_token_invalid_format" };
 
   const installDirHint = String(process.env.SEKAILINK_BOOTSTRAP_INSTALL_DIR || "").trim();
   const stateDirHint = String(process.env.SEKAILINK_BOOTSTRAP_STATE_DIR || "").trim();
@@ -301,10 +296,10 @@ const validateBootstrapLaunchToken = () => {
     }
     if (secret.length >= 32) break;
   }
-  if (secret.length < 32) return { ok: false, error: "bootstrap_secret_missing" };
+  if (secret.length < 32) return { ok: false, present: true, error: "bootstrap_secret_missing" };
 
   const expectedSig = crypto.createHmac("sha256", secret).update(body).digest("hex");
-  if (expectedSig.toLowerCase() !== sig.toLowerCase()) return { ok: false, error: "bootstrap_token_bad_signature" };
+  if (expectedSig.toLowerCase() !== sig.toLowerCase()) return { ok: false, present: true, error: "bootstrap_token_bad_signature" };
 
   let payload = null;
   try {
@@ -312,19 +307,43 @@ const validateBootstrapLaunchToken = () => {
   } catch (_err) {
     payload = null;
   }
-  if (!payload || typeof payload !== "object") return { ok: false, error: "bootstrap_token_bad_payload" };
-  if (String(payload.iss || "") !== "sekailink-bootstrapper") return { ok: false, error: "bootstrap_token_bad_issuer" };
-  if (String(payload.aud || "") !== "sekailink-client") return { ok: false, error: "bootstrap_token_bad_audience" };
+  if (!payload || typeof payload !== "object") return { ok: false, present: true, error: "bootstrap_token_bad_payload" };
+  if (String(payload.iss || "") !== "sekailink-bootstrapper") return { ok: false, present: true, error: "bootstrap_token_bad_issuer" };
+  if (String(payload.aud || "") !== "sekailink-client") return { ok: false, present: true, error: "bootstrap_token_bad_audience" };
 
   const now = Date.now();
   const iat = Number(payload.iat || 0);
   const exp = Number(payload.exp || 0);
   if (!Number.isFinite(iat) || !Number.isFinite(exp) || exp <= now || iat > now + 10000) {
-    return { ok: false, error: "bootstrap_token_expired" };
+    return { ok: false, present: true, error: "bootstrap_token_expired" };
   }
-  if (exp - iat > 10 * 60 * 1000) return { ok: false, error: "bootstrap_token_ttl_rejected" };
+  if (exp - iat > 10 * 60 * 1000) return { ok: false, present: true, error: "bootstrap_token_ttl_rejected" };
 
-  return { ok: true, enforced: true };
+  return { ok: true, present: true, error: "" };
+};
+
+const validateBootstrapLaunchToken = () => {
+  const requireBootstrap = app.isPackaged && String(process.env.SEKAILINK_REQUIRE_BOOTSTRAP || "0") !== "0";
+  const token = getBootstrapLaunchTokenStatus();
+  if (!requireBootstrap) {
+    return {
+      ok: true,
+      enforced: false,
+      token_present: Boolean(token.present),
+      token_valid: Boolean(token.ok),
+      error: token.ok ? "" : String(token.error || ""),
+    };
+  }
+  if (!token.ok) {
+    return {
+      ok: false,
+      enforced: true,
+      token_present: Boolean(token.present),
+      token_valid: false,
+      error: String(token.error || "bootstrap_token_invalid"),
+    };
+  }
+  return { ok: true, enforced: true, token_present: true, token_valid: true, error: "" };
 };
 
 const readJsonFileSafe = (filePath) => {
@@ -366,10 +385,16 @@ const resolveBootstrapperExecutable = () => {
   const candidates = [];
 
   for (const root of roots) {
-    candidates.push(path.join(root, "SekaiLink-bootstrapper.exe"));
-    candidates.push(path.join(root, "SekaiLink Bootstrapper.exe"));
-    candidates.push(path.join(root, "SekaiLink-bootstrapper.AppImage"));
-    candidates.push(path.join(root, "SekaiLink Bootstrapper.AppImage"));
+    if (process.platform === "win32") {
+      candidates.push(path.join(root, "SekaiLink-bootstrapper.cmd"));
+      candidates.push(path.join(root, "SekaiLink-bootstrapper.ps1"));
+      candidates.push(path.join(root, "SekaiLink-bootstrapper.exe"));
+      candidates.push(path.join(root, "SekaiLink Bootstrapper.exe"));
+    } else {
+      candidates.push(path.join(root, "sekailink-bootstrapper.sh"));
+      candidates.push(path.join(root, "SekaiLink-bootstrapper.AppImage"));
+      candidates.push(path.join(root, "SekaiLink Bootstrapper.AppImage"));
+    }
   }
 
   for (const c of candidates) {
@@ -385,7 +410,7 @@ const resolveBootstrapperExecutable = () => {
         const name = String(entry.name || "");
         const lower = name.toLowerCase();
         if (!lower.includes("sekailink-bootstrapper")) continue;
-        if (!(lower.endsWith(".exe") || lower.endsWith(".appimage"))) continue;
+        if (!(lower.endsWith(".cmd") || lower.endsWith(".ps1") || lower.endsWith(".sh") || lower.endsWith(".exe") || lower.endsWith(".appimage"))) continue;
         const full = path.join(root, name);
         if (fs.existsSync(full)) return full;
       }
@@ -396,17 +421,49 @@ const resolveBootstrapperExecutable = () => {
   return "";
 };
 
+const getBootstrapperDownloadUrl = () => {
+  if (process.platform === "win32") {
+    return "https://sekailink.com/downloads/client/bootstrapper/latest/SekaiLink-bootstrapper-windows.zip";
+  }
+  return "https://sekailink.com/downloads/client/bootstrapper/latest/SekaiLink-bootstrapper-linux.tar.gz";
+};
+
+const spawnDetachedBootstrapper = (bootstrapperPath) => {
+  const p = String(bootstrapperPath || "").trim();
+  const ext = path.extname(p).toLowerCase();
+  let command = p;
+  let args = [];
+
+  if (process.platform === "win32" && (ext === ".cmd" || ext === ".bat")) {
+    command = "cmd.exe";
+    args = ["/d", "/s", "/c", `"${p.replace(/"/g, '""')}"`];
+  } else if (process.platform === "win32" && ext === ".ps1") {
+    command = "powershell.exe";
+    args = ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", p];
+  } else if (process.platform !== "win32" && ext === ".sh") {
+    try {
+      fs.chmodSync(p, fs.statSync(p).mode | 0o111);
+    } catch (_err) {
+      // best effort
+    }
+    command = "/bin/bash";
+    args = [p];
+  }
+
+  return spawn(command, args, {
+    detached: true,
+    stdio: "ignore",
+    windowsHide: true,
+    cwd: path.dirname(p),
+    env: { ...process.env, SEKAILINK_UPDATE_TRIGGER: "client" },
+  });
+};
+
 const launchBootstrapperAndQuit = async () => {
   const bootstrapperPath = resolveBootstrapperExecutable();
   if (!bootstrapperPath) return { ok: false, error: "bootstrapper_not_found" };
   try {
-    const child = spawn(bootstrapperPath, [], {
-      detached: true,
-      stdio: "ignore",
-      windowsHide: true,
-      cwd: path.dirname(bootstrapperPath),
-      env: { ...process.env, SEKAILINK_UPDATE_TRIGGER: "client" },
-    });
+    const child = spawnDetachedBootstrapper(bootstrapperPath);
     child.unref();
     setTimeout(() => app.quit(), 25);
     return { ok: true, path: bootstrapperPath };
@@ -7356,14 +7413,24 @@ secureIpcHandle("app:openExternal", async (_event, url) => {
 secureIpcHandle("app:getEnv", async () => {
   const installState = getBootstrapInstallState() || {};
   const clientUpdateInstallDir = getClientBundleInstallDir();
+  const bootstrapCheck = validateBootstrapLaunchToken();
+  const bootstrapperPath = resolveBootstrapperExecutable();
   return {
     app_version: app.getVersion ? String(app.getVersion() || "") : "",
     bootstrap_release_version: String(installState.version || installState.manifestVersion || "").trim(),
     bootstrap_channel: String(installState.channel || "").trim().toLowerCase(),
     bootstrap_build: String(installState.build || "").trim().toLowerCase(),
     bootstrap_install_dir: String(installState.installDir || process.env.SEKAILINK_BOOTSTRAP_INSTALL_DIR || "").trim(),
+    bootstrapper_path: bootstrapperPath,
+    bootstrapper_available: Boolean(bootstrapperPath),
+    bootstrapper_download_url: getBootstrapperDownloadUrl(),
+    bootstrap_launch_enforced: Boolean(bootstrapCheck.enforced),
+    bootstrap_launch_token_present: Boolean(bootstrapCheck.token_present),
+    bootstrap_launch_token_valid: Boolean(bootstrapCheck.token_valid),
+    bootstrap_launch_error: String(bootstrapCheck.error || ""),
     client_update_install_dir: clientUpdateInstallDir,
     client_update_bundle_supported: app.isPackaged && Boolean(clientUpdateInstallDir),
+    app_is_packaged: app.isPackaged,
     platform: process.platform,
     arch: process.arch,
     electron: process.versions?.electron,

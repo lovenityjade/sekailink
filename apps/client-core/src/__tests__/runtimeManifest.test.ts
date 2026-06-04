@@ -100,11 +100,22 @@ describe("runtime manifests", () => {
 
   it("supports managed client update bundles for Windows and Linux", () => {
     const main = fs.readFileSync(electronMainPath, "utf8");
+    const builder = fs.readFileSync(electronBuilderPath, "utf8");
+    const afterPack = fs.readFileSync(path.resolve(__dirname, "../../scripts/electron-after-pack.cjs"), "utf8");
+    const nsisInclude = fs.readFileSync(path.resolve(__dirname, "../../build/sekailink-launcher-shortcuts.nsh"), "utf8");
     const packageJson = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../package.json"), "utf8"));
     expect(main).toContain('artifactType === "client-bundle"');
     expect(main).toContain("applyClientBundleUpdate");
     expect(main).toContain("install-state.json");
     expect(main).toContain("client_update_bundle_supported");
+    expect(main).toContain("updater:launchBootstrapperAndQuit");
+    expect(main).toContain("bootstrap_launch_token_valid");
+    expect(builder).toContain("afterPack: scripts/electron-after-pack.cjs");
+    expect(builder).toContain("createDesktopShortcut: false");
+    expect(builder).toContain("createStartMenuShortcut: false");
+    expect(afterPack).toContain("SekaiLink-bootstrapper.cmd");
+    expect(afterPack).toContain("sekailink-bootstrapper.sh");
+    expect(nsisInclude).toContain("SekaiLink-bootstrapper.cmd");
     expect(packageJson.scripts["electron:pack:update-bundles"]).toBe("node scripts/package-update-bundles.mjs");
   });
 
