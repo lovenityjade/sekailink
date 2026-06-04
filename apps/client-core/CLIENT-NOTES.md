@@ -7,6 +7,10 @@
 - On Windows/Linux, downloaded client binaries are now applied in-place (self-replace) and the client restarts automatically (no external installer prompt).
 - On Windows/Linux, `artifact_type=client-bundle` zip releases are preferred for bugfix updates; installers/AppImages remain fallback artifacts.
 - Startup can auto-download/apply/restart when a newer client version is available.
+- Bootstrapper MVP archives are published at `/downloads/client/bootstrapper/latest/`.
+  - Windows: `SekaiLink-bootstrapper-windows.zip`
+  - Linux: `SekaiLink-bootstrapper-linux.tar.gz`
+  - The bootstrapper checks `release-latest`, installs the bundle, writes `.sekailink/install-state.json`, then launches the client.
 - Incremental sync is available through `updater:syncIncremental` using a server manifest.
 - Incremental updates are constrained to overlay-safe paths:
   - `runtime/...`

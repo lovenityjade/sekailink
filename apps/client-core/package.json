@@ -16,6 +16,7 @@
     "electron:pack": "npm run build && node scripts/prepare-native-deps.mjs && electron-builder --linux",
     "electron:pack:win": "npm run build && node scripts/prepare-native-deps.mjs && electron-builder --win nsis",
     "electron:pack:update-bundles": "node scripts/package-update-bundles.mjs",
+    "bootstrapper:pack": "node scripts/package-bootstrapper.mjs",
     "headless:smoke": "bash ../../scripts/headless-smoke.sh --wrapper common",
     "test": "vitest run --config vitest.config.ts",
     "test:watch": "vitest --config vitest.config.ts",

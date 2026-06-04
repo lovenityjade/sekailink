@@ -33,6 +33,19 @@ Post-handoff CDN update on 2026-06-04T09:21Z:
 - Restarted `sekailink-chat-api.service`; public checks for linux-x64 and win32-x64
   returned version `0.3.1-prebeta3.20260604.3`.
 
+Bootstrapper MVP on 2026-06-04T09:45Z:
+
+- Published Windows/Linux bootstrapper archives under
+  `/var/www/sekailink.com/public/downloads/client/bootstrapper/20260604`.
+- Stable public aliases:
+  - `https://sekailink.com/downloads/client/bootstrapper/latest/SekaiLink-bootstrapper-windows.zip`
+  - `https://sekailink.com/downloads/client/bootstrapper/latest/SekaiLink-bootstrapper-linux.tar.gz`
+- Linux bootstrapper was tested end-to-end in `/tmp` with `--no-launch`; it downloaded
+  the `linux-x64` client bundle, verified SHA-256, extracted, wrote install-state, and
+  a second dry-run reported `needsUpdate=0`.
+- Windows dry-run still needs validation from the Windows agent or an interactive SSH
+  session; non-interactive SSH to the Windows box was denied.
+
 Forbidden as active sources:
 
 - `/home/thelovenityjade/Projects/Sekaiemu-Libretro-Spike-Codex`
