@@ -201,19 +201,27 @@ void OpenGlVideoBackend::NotifyHardwareFrame(const void* data,
 }
 
 void OpenGlVideoBackend::SetMenuVisible(bool visible, const VideoGeometry& geometry) {
+  const bool changed = menu_visible_ != visible;
   menu_visible_ = visible;
   geometry_ = geometry;
-  ApplyWindowSizing(geometry_);
+  if (changed && visible) {
+    ApplyWindowSizing(geometry_);
+  }
   frame_ready_ = true;
 }
 
 void OpenGlVideoBackend::SetTrackerSidebarLayout(bool enabled,
                                                  unsigned sidebar_width,
                                                  const VideoGeometry& geometry) {
+  const unsigned effective_sidebar_width = enabled ? sidebar_width : 0;
+  const bool changed = tracker_sidebar_enabled_ != enabled ||
+                       tracker_sidebar_width_ != effective_sidebar_width;
   tracker_sidebar_enabled_ = enabled;
-  tracker_sidebar_width_ = enabled ? sidebar_width : 0;
+  tracker_sidebar_width_ = effective_sidebar_width;
   geometry_ = geometry;
-  ApplyWindowSizing(geometry_);
+  if (changed && enabled && !menu_visible_) {
+    ApplyWindowSizing(geometry_);
+  }
   frame_ready_ = true;
 }
 

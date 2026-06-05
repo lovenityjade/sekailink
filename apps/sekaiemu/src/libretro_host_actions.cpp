@@ -212,6 +212,7 @@ void LibretroHost::Impl::CycleTrackerDisplayMode() {
       [this](const char* reason) { SaveTrackerState(reason); });
   tracker_dirty_ = changed || tracker_dirty_;
   if (changed) {
+    tracker_force_next_render_ = true;
     SaveFrontendSettingsNow();
   }
 }
@@ -223,6 +224,7 @@ void LibretroHost::Impl::ToggleTrackerScreen() {
       [this](const char* reason) { SaveTrackerState(reason); });
   tracker_dirty_ = changed || tracker_dirty_;
   if (changed) {
+    tracker_force_next_render_ = true;
     SaveFrontendSettingsNow();
   }
 }
@@ -244,6 +246,7 @@ void LibretroHost::Impl::ToggleTrackerAutoFollow() {
       [this](const char* reason) { SaveTrackerState(reason); });
   tracker_dirty_ = changed || tracker_dirty_;
   if (changed) {
+    tracker_force_next_render_ = true;
     SaveFrontendSettingsNow();
   }
 }

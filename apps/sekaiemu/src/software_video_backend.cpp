@@ -184,18 +184,26 @@ void SoftwareVideoBackend::ClearChatOverlay() {
 void SoftwareVideoBackend::NotifyHardwareFrame(const void*, unsigned, unsigned, std::size_t) {}
 
 void SoftwareVideoBackend::SetMenuVisible(bool visible, const VideoGeometry& geometry) {
+  const bool changed = menu_visible_ != visible;
   menu_visible_ = visible;
   geometry_ = geometry;
-  ApplyWindowSizing(geometry_);
+  if (changed && visible) {
+    ApplyWindowSizing(geometry_);
+  }
 }
 
 void SoftwareVideoBackend::SetTrackerSidebarLayout(bool enabled,
                                                    unsigned sidebar_width,
                                                    const VideoGeometry& geometry) {
+  const unsigned effective_sidebar_width = enabled ? sidebar_width : 0;
+  const bool changed = tracker_sidebar_enabled_ != enabled ||
+                       tracker_sidebar_width_ != effective_sidebar_width;
   tracker_sidebar_enabled_ = enabled;
-  tracker_sidebar_width_ = enabled ? sidebar_width : 0;
+  tracker_sidebar_width_ = effective_sidebar_width;
   geometry_ = geometry;
-  ApplyWindowSizing(geometry_);
+  if (changed && enabled && !menu_visible_) {
+    ApplyWindowSizing(geometry_);
+  }
 }
 
 bool SoftwareVideoBackend::ToggleFullscreen(std::string& error) {
