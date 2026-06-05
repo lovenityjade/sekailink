@@ -173,8 +173,9 @@ class SeedConfigMysqlStore {
       const std::string& preset_key);
 
  private:
-  void open();
-  void close();
+  void open() const;
+  void close() const;
+  void ensure_connected() const;
   void init_schema();
   void exec(const std::string& sql) const;
   void execute_prepared(const std::string& sql, const std::vector<QueryValue>& values) const;
@@ -192,7 +193,7 @@ class SeedConfigMysqlStore {
   [[nodiscard]] static QueryValue nullable_int64_value(const std::optional<std::int64_t>& value);
 
   MysqlConnectionConfig config_;
-  MYSQL* connection_ = nullptr;
+  mutable MYSQL* connection_ = nullptr;
 };
 
 }  // namespace sekailink_server

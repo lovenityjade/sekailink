@@ -136,6 +136,7 @@ std::vector<SeedConfigCommonPresetSnapshot> SeedConfigMysqlStore::list_common_pr
   auto sql = common_preset_select_sql() +
              "WHERE p.archived_at IS NULL AND p.status = 'active' AND g.game_key = " + quote(game_key) +
              " ORDER BY p.sort_order ASC, p.name ASC";
+  ensure_connected();
   if (mysql_real_query(connection_, sql.data(), sql.size()) != 0) {
     throw std::runtime_error(preset_mysql_error_message(connection_, "seed_config_list_common_presets_failed"));
   }
@@ -155,6 +156,7 @@ std::optional<SeedConfigCommonPresetSnapshot> SeedConfigMysqlStore::find_common_
     std::int64_t preset_id) const {
   auto sql = common_preset_select_sql() +
              "WHERE p.archived_at IS NULL AND p.status = 'active' AND p.id = " + std::to_string(preset_id);
+  ensure_connected();
   if (mysql_real_query(connection_, sql.data(), sql.size()) != 0) {
     throw std::runtime_error(preset_mysql_error_message(connection_, "seed_config_find_common_preset_failed"));
   }
@@ -176,6 +178,7 @@ std::optional<SeedConfigCommonPresetSnapshot> SeedConfigMysqlStore::find_common_
   auto sql = common_preset_select_sql() +
              "WHERE p.archived_at IS NULL AND p.status = 'active' AND g.game_key = " + quote(game_key) +
              " AND p.preset_key = " + quote(preset_key);
+  ensure_connected();
   if (mysql_real_query(connection_, sql.data(), sql.size()) != 0) {
     throw std::runtime_error(preset_mysql_error_message(connection_, "seed_config_find_common_preset_by_key_failed"));
   }

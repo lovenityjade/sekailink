@@ -98,6 +98,7 @@ std::int64_t SeedConfigMysqlStore::upsert_game(
 }
 
 std::optional<SeedConfigGameRecord> SeedConfigMysqlStore::find_game_by_key(const std::string& game_key) const {
+  ensure_connected();
   MYSQL_STMT* stmt = mysql_stmt_init(connection_);
   if (stmt == nullptr) {
     throw std::runtime_error("seed_config_mysql_stmt_init_failed");
@@ -175,6 +176,7 @@ std::optional<SeedConfigGameRecord> SeedConfigMysqlStore::find_game_by_key(const
 }
 
 std::vector<SeedConfigGameRecord> SeedConfigMysqlStore::list_games() const {
+  ensure_connected();
   const std::string sql =
       "SELECT id, game_key, display_name, system_key, COALESCE(active_linkedworld_id, ''), status "
       "FROM games ORDER BY display_name ASC";
@@ -293,6 +295,7 @@ std::optional<SeedConfigOptionSchemaRecord> SeedConfigMysqlStore::find_active_op
       "FROM games g JOIN game_option_schema_versions s ON s.id = g.active_option_schema_id "
       "WHERE g.game_key = " +
       quote(game_key) + " LIMIT 1";
+  ensure_connected();
   if (mysql_real_query(connection_, sql.data(), sql.size()) != 0) {
     throw std::runtime_error(mysql_error_message(connection_, "seed_config_active_schema_failed"));
   }
@@ -317,6 +320,7 @@ std::optional<SeedConfigOptionSchemaRecord> SeedConfigMysqlStore::find_active_op
 }
 
 std::vector<SeedConfigOptionDefinition> SeedConfigMysqlStore::load_option_definitions(std::int64_t schema_version_id) const {
+  ensure_connected();
   const auto sql =
       "SELECT id, option_key, yaml_key, label, description, option_type, default_value_json, required, "
       "visibility_rules_json, validation_rules_json "
@@ -354,6 +358,7 @@ std::vector<SeedConfigOptionDefinition> SeedConfigMysqlStore::load_option_defini
     const auto choice_sql =
         "SELECT choice_key, yaml_value, label, description FROM game_option_choices WHERE option_id = " +
         std::to_string(row.id) + " ORDER BY sort_order ASC, id ASC";
+    ensure_connected();
     if (mysql_real_query(connection_, choice_sql.data(), choice_sql.size()) != 0) {
       throw std::runtime_error(mysql_error_message(connection_, "seed_config_load_choices_failed"));
     }
@@ -433,6 +438,7 @@ void SeedConfigMysqlStore::set_current_config_version(std::int64_t config_id, st
 std::vector<SeedConfigUserConfigRecord> SeedConfigMysqlStore::list_user_configs(
     std::int64_t user_id,
     std::optional<std::int64_t> game_id) const {
+  ensure_connected();
   auto sql =
       "SELECT id, user_id, game_id, name, description, is_default, current_version_id "
       "FROM user_game_configs WHERE archived_at IS NULL AND user_id = " +
@@ -472,7 +478,7 @@ std::vector<SeedConfigUserConfigRecord> SeedConfigMysqlStore::list_user_configs(
   return records;
 }
 
-void SeedConfigMysqlStore::open() {
+void SeedConfigMysqlStore::open() const {
   if (config_.database.empty()) {
     throw std::runtime_error("seed_config_mysql_database_required");
   }
@@ -492,10 +498,21 @@ void SeedConfigMysqlStore::open() {
   }
 }
 
-void SeedConfigMysqlStore::close() {
+void SeedConfigMysqlStore::close() const {
   if (connection_ != nullptr) {
     mysql_close(connection_);
     connection_ = nullptr;
+  }
+}
+
+void SeedConfigMysqlStore::ensure_connected() const {
+  if (connection_ == nullptr) {
+    open();
+    return;
+  }
+  if (mysql_ping(connection_) != 0) {
+    close();
+    open();
   }
 }
 
@@ -519,12 +536,14 @@ void SeedConfigMysqlStore::init_schema() {
 }
 
 void SeedConfigMysqlStore::exec(const std::string& sql) const {
+  ensure_connected();
   if (mysql_real_query(connection_, sql.data(), sql.size()) != 0) {
     throw std::runtime_error(mysql_error_message(connection_, "seed_config_mysql_query_failed"));
   }
 }
 
 void SeedConfigMysqlStore::execute_prepared(const std::string& sql, const std::vector<QueryValue>& values) const {
+  ensure_connected();
   MYSQL_STMT* stmt = mysql_stmt_init(connection_);
   if (stmt == nullptr) {
     throw std::runtime_error("seed_config_mysql_stmt_init_failed");
@@ -566,6 +585,7 @@ std::int64_t SeedConfigMysqlStore::execute_insert(const std::string& sql, const 
 std::optional<std::int64_t> SeedConfigMysqlStore::query_single_id(
     const std::string& sql,
     const std::vector<QueryValue>& values) const {
+  ensure_connected();
   MYSQL_STMT* stmt = mysql_stmt_init(connection_);
   if (stmt == nullptr) {
     throw std::runtime_error("seed_config_mysql_stmt_init_failed");
@@ -631,6 +651,7 @@ std::vector<SeedConfigUserConfigSnapshot> SeedConfigMysqlStore::list_user_config
     sql += " AND g.game_key = " + quote(*game_key);
   }
   sql += " ORDER BY g.game_key ASC, c.name ASC";
+  ensure_connected();
   if (mysql_real_query(connection_, sql.data(), sql.size()) != 0) {
     throw std::runtime_error(mysql_error_message(connection_, "seed_config_list_snapshots_failed"));
   }
@@ -669,6 +690,7 @@ std::optional<SeedConfigUserConfigSnapshot> SeedConfigMysqlStore::find_user_conf
 }
 
 bool SeedConfigMysqlStore::archive_user_config(std::int64_t user_id, std::int64_t config_id) {
+  ensure_connected();
   MYSQL_STMT* stmt = mysql_stmt_init(connection_);
   if (stmt == nullptr) {
     throw std::runtime_error("seed_config_mysql_stmt_init_failed");
@@ -707,6 +729,7 @@ bool SeedConfigMysqlStore::archive_user_config(std::int64_t user_id, std::int64_
 }
 
 std::string SeedConfigMysqlStore::quote(const std::string& value) const {
+  ensure_connected();
   std::string escaped;
   escaped.resize(value.size() * 2 + 1);
   const auto written = mysql_real_escape_string(connection_, escaped.data(), value.data(), value.size());
