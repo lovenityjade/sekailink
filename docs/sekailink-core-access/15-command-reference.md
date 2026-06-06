@@ -64,11 +64,11 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `user audit <user> --execute` | Service | Non | Liste audit utilisateur via Nexus Identity read-only; ajoute une trace audit serveur. |
 | `user revoke-sessions <user> --confirm user:<user>:revoke-sessions --execute` | Admin | Oui | Revoque toutes les sessions du compte cible via Nexus Identity; gate mutation requis. |
 | `user force-password-reset <user> --confirm user:<user>:force-password-reset --execute` | Admin | Oui | Declenche un reset password via Nexus Identity; gate mutation requis. |
-| `user configs <user>` | Service | Non | Liste configs utilisateur. |
-| `user config open <user> <config>` | Service | Non | Ouvre config. |
-| `user config diff <user> <config> <version>` | Service | Non | Compare versions. |
-| `user config export <user> <config>` | Service | Non | Exporte YAML/JSON. |
-| `user config edit <user> <config>` | Admin | Oui | Edite config source Nexus. |
+| `user configs <user_id> [game_key] [--execute]` | Service | Non | Liste configs utilisateur via seed-config API. |
+| `user config open <user_id> <config_id> [--execute]` | Service | Non | Ouvre une config via liste filtree. |
+| `user config diff <user_id> <config_id> <version>` | Service | Non | Draft diff version. |
+| `user config export <user_id> <config_id> --format yaml [--execute]` | Service | Non | Exporte YAML. |
+| `user config edit <user_id> <config_id> key=value [key=value...] --confirm user-config:<user_id>:<config_id>:edit` | Admin | Oui | Draft edition config source Nexus. |
 | `lobby list --execute` | Service | Non | Liste les lobbies via Nexus lobby-admin read-only; dry-run par defaut. |
 | `lobby open <lobby> --execute` | Service | Non | Ouvre un detail lobby via Nexus lobby-admin read-only; dry-run par defaut. |
 | `lobby create` | Admin | Oui | Cree lobby manuel. |

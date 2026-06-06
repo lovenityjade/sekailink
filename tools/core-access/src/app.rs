@@ -17,6 +17,7 @@ use crate::nexus::{
     execute_protected_get, identity_user_create_plan, identity_user_disable_plan,
     identity_user_edit_plan, identity_user_force_password_reset_plan, identity_user_plan,
     identity_user_revoke_sessions_plan, lobby_list_plan, lobby_open_plan, non_flag_args,
+    user_config_export_plan, user_config_open_plan, user_configs_plan,
 };
 use crate::rbac::Role;
 use crate::release_ops::{
@@ -292,6 +293,14 @@ impl App {
             "health" if parsed.get(1).map(String::as_str) == Some("probe") => {
                 self.health_probe(&parsed)?;
                 append_audit(&self.session, line, "ok", "health probe dry-run")?;
+                true
+            }
+            "user"
+                if parsed.get(1).map(String::as_str) == Some("configs")
+                    || parsed.get(1).map(String::as_str) == Some("config") =>
+            {
+                self.user_config(&parsed)?;
+                append_audit(&self.session, line, "ok", "user config")?;
                 true
             }
             "user"
@@ -1189,6 +1198,108 @@ impl App {
             Err(err) => println!("{err}"),
         }
         Ok(())
+    }
+
+    fn user_config(&self, parsed: &[String]) -> io::Result<()> {
+        let execute = parsed.iter().any(|part| part == "--execute");
+        match (
+            parsed.get(1).map(String::as_str),
+            parsed.get(2).map(String::as_str),
+        ) {
+            (Some("configs"), Some(user_id)) => {
+                let args = non_flag_args(parsed, 2);
+                let game_key = args.get(1).map(String::as_str);
+                match user_configs_plan(user_id, game_key) {
+                    Ok(plan) => self.render_or_execute_nexus_get(&plan, execute, None),
+                    Err(err) => {
+                        println!("{err}");
+                        Ok(())
+                    }
+                }
+            }
+            (Some("configs"), None) => {
+                println!("usage: user configs <user_id> [game_key] [--execute]");
+                Ok(())
+            }
+            (Some("config"), Some("open")) => {
+                let args = non_flag_args(parsed, 3);
+                if args.len() != 2 {
+                    println!("usage: user config open <user_id> <config_id> [--execute]");
+                    return Ok(());
+                }
+                match user_config_open_plan(&args[0], &args[1]) {
+                    Ok(plan) => self.render_or_execute_nexus_get(&plan, execute, None),
+                    Err(err) => {
+                        println!("{err}");
+                        Ok(())
+                    }
+                }
+            }
+            (Some("config"), Some("export")) => {
+                let args = non_flag_args(parsed, 3);
+                if args.len() < 2 {
+                    println!(
+                        "usage: user config export <user_id> <config_id> [--format yaml] [--execute]"
+                    );
+                    return Ok(());
+                }
+                let format = flag_value(parsed, "--format").unwrap_or("yaml");
+                if format != "yaml" && format != "yml" {
+                    println!("seed-config API currently supports YAML export only");
+                    return Ok(());
+                }
+                match user_config_export_plan(&args[0], &args[1]) {
+                    Ok(plan) => self.render_or_execute_nexus_get(&plan, execute, None),
+                    Err(err) => {
+                        println!("{err}");
+                        Ok(())
+                    }
+                }
+            }
+            (Some("config"), Some("diff")) => {
+                let args = non_flag_args(parsed, 3);
+                if args.len() != 3 {
+                    println!("usage: user config diff <user_id> <config_id> <version>");
+                    return Ok(());
+                }
+                let detail = format!("config_id={} version={}", args[1], args[2]);
+                let id = write_ops_draft(&self.session, "user-config", "diff", &args[0], &detail)?;
+                println!("user config diff draft saved: {id}");
+                println!("user_id: {}", args[0]);
+                println!("config_id: {}", args[1]);
+                println!("version: {}", args[2]);
+                println!(
+                    "MVP note: seed-config version diff route is not confirmed; no Nexus request was made."
+                );
+                Ok(())
+            }
+            (Some("config"), Some("edit")) => {
+                let args = option_positionals(parsed, 3, &["--confirm"]);
+                if args.len() < 3 {
+                    println!(
+                        "usage: user config edit <user_id> <config_id> key=value [key=value...] --confirm user-config:<user_id>:<config_id>:edit"
+                    );
+                    return Ok(());
+                }
+                let expected = format!("user-config:{}:{}:edit", args[0], args[1]);
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let detail = args[2..].join(" ");
+                let target = format!("{}/{}", args[0], args[1]);
+                let id = write_ops_draft(&self.session, "user-config", "edit", &target, &detail)?;
+                println!("user config edit draft saved: {id}");
+                println!("target: {target}");
+                println!("detail: {detail}");
+                println!("MVP note: canonical Nexus seed-config values were not changed.");
+                Ok(())
+            }
+            _ => {
+                println!("usage: user configs <user_id> [game_key]");
+                println!("       user config open|diff|export|edit");
+                Ok(())
+            }
+        }
     }
 
     fn note_add(&self, parsed: &[String]) -> io::Result<()> {
@@ -3526,6 +3637,13 @@ fn print_help() {
     println!("  user sessions <username> [--execute]");
     println!("  user devices <username> [--execute]");
     println!("  user audit <username> [limit] [event_type] [offset] [--execute]");
+    println!("  user configs <user_id> [game_key] [--execute]");
+    println!("  user config open <user_id> <config_id> [--execute]");
+    println!("  user config diff <user_id> <config_id> <version>");
+    println!("  user config export <user_id> <config_id> [--format yaml] [--execute]");
+    println!(
+        "  user config edit <user_id> <config_id> key=value [key=value...] --confirm user-config:<user_id>:<config_id>:edit"
+    );
     println!(
         "  user create <username> <email> <role> --password-env ENV [--confirm user:<username>:create] [--execute]"
     );

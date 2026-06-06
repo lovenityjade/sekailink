@@ -58,6 +58,8 @@ user search <query>
 user open <user>
 user sessions <user>
 user audit <user>
+user configs <user_id> alttp
+user config export <user_id> <config_id> --format yaml
 lobby list
 lobby open <lobby>
 room summary <room>

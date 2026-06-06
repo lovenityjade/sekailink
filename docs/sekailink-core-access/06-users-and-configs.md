@@ -69,16 +69,37 @@ source.
 Commandes:
 
 ```text
-user configs <user>
-user config open <user> <config>
-user config diff <user> <config> <version>
-user config export <user> <config> --format yaml
-user config edit <user> <config>
+user configs <user_id> [game_key] [--execute]
+user config open <user_id> <config_id> [--execute]
+user config diff <user_id> <config_id> <version>
+user config export <user_id> <config_id> --format yaml [--execute]
+user config edit <user_id> <config_id> key=value [key=value...] --confirm user-config:<user_id>:<config_id>:edit
 ```
+
+Etat actuel:
+
+- `user configs` utilise `GET /users/{user_id}/seed-configs` sur le Nexus
+  seed-config API prive;
+- `user config open` utilise la meme route avec `config_id` comme filtre
+  operateur, car la route detail par config n'est pas encore confirmee;
+- `user config export` utilise
+  `POST /users/{user_id}/seed-configs/{config_id}/export-yaml`;
+- `user config diff` ecrit un draft audite local tant que la route de diff par
+  version n'est pas confirmee;
+- `user config edit` ecrit un draft audite local et ne modifie pas les valeurs
+  canoniques Nexus;
+- les routes seed-config attendent un `user_id` Nexus numerique; utiliser
+  `user open <username>` pour resoudre un username avant d'interroger les
+  configs;
+- l'execution live exige `--execute`,
+  `SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1` et
+  `SEKAILINK_CORE_ACCESS_NEXUS_SEED_CONFIG_ADMIN_TOKEN`
+  (`SEKAILINK_CORE_ACCESS_NEXUS_ADMIN_TOKEN` reste fallback).
 
 ## Regles d'edition
 
-- Admin peut modifier directement avec diff et ops commit.
+- Admin peut preparer une modification avec diff et ops commit; l'application
+  live du patch attend une route serveur confirmee.
 - Service peut lire/diff/export.
 - Service peut preparer une edition via approval.
 - Chaque edition documente impact Client Core, generation, room et rollback.

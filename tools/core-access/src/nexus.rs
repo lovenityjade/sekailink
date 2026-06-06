@@ -6,12 +6,14 @@ pub const NEXUS_TOKEN_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_ADMIN_TOKEN";
 pub const NEXUS_AGENT_TOKEN_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_AGENT_ADMIN_TOKEN";
 pub const NEXUS_LOBBY_TOKEN_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_LOBBY_ADMIN_TOKEN";
 pub const NEXUS_IDENTITY_TOKEN_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_IDENTITY_ADMIN_TOKEN";
+pub const NEXUS_SEED_CONFIG_TOKEN_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_SEED_CONFIG_ADMIN_TOKEN";
 pub const NEXUS_MUTATION_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_MUTATION";
 
 const SSH_ALIAS: &str = "nexus-vps";
 const ADMIN_AGENT_BASE: &str = "http://127.0.0.1:19091";
 const LOBBY_ADMIN_BASE: &str = "http://127.0.0.1:19096";
 const IDENTITY_ADMIN_BASE: &str = "http://149.202.61.90:19095";
+const SEED_CONFIG_BASE: &str = "http://127.0.0.1:19106";
 
 #[derive(Debug, Clone)]
 pub struct ProtectedGetPlan {
@@ -254,6 +256,65 @@ pub fn identity_user_plan(action: &str, values: &[String]) -> Result<ProtectedGe
         }
         _ => Err(format!("unsupported user command: {action}")),
     }
+}
+
+pub fn user_configs_plan(
+    user_id: &str,
+    game_key: Option<&str>,
+) -> Result<ProtectedGetPlan, String> {
+    let user_id = clean_required_segment(user_id, "user_id")?;
+    let mut params = Vec::new();
+    push_query(&mut params, "game_key", game_key);
+    let suffix = if params.is_empty() {
+        String::new()
+    } else {
+        format!("?{}", params.join("&"))
+    };
+    Ok(ProtectedGetPlan::new(
+        format!("Nexus seed-config user configs: {user_id}"),
+        format!(
+            "{SEED_CONFIG_BASE}/users/{}/seed-configs{suffix}",
+            percent_encode_segment(&user_id)
+        ),
+        "GET /users/{user_id}/seed-configs on the private Nexus seed-config API. The route expects a numeric Nexus user_id; resolve usernames with user open first.",
+        NEXUS_SEED_CONFIG_TOKEN_ENV,
+    ))
+}
+
+pub fn user_config_open_plan(user_id: &str, config_id: &str) -> Result<ProtectedGetPlan, String> {
+    let user_id = clean_required_segment(user_id, "user_id")?;
+    let config_id = clean_required_segment(config_id, "config_id")?;
+    let mut params = Vec::new();
+    push_query(&mut params, "config_id", Some(&config_id));
+    Ok(ProtectedGetPlan::new(
+        format!("Nexus seed-config user config: {user_id}/{config_id}"),
+        format!(
+            "{SEED_CONFIG_BASE}/users/{}/seed-configs?{}",
+            percent_encode_segment(&user_id),
+            params.join("&")
+        ),
+        "GET /users/{user_id}/seed-configs on the private Nexus seed-config API. The current API returns a list; Core Access includes config_id as an operator filter hint.",
+        NEXUS_SEED_CONFIG_TOKEN_ENV,
+    ))
+}
+
+pub fn user_config_export_plan(user_id: &str, config_id: &str) -> Result<ProtectedGetPlan, String> {
+    let user_id = clean_required_segment(user_id, "user_id")?;
+    let config_id = clean_required_segment(config_id, "config_id")?;
+    Ok(ProtectedGetPlan::request(
+        format!("Nexus seed-config YAML export: {user_id}/{config_id}"),
+        "POST",
+        format!(
+            "{SEED_CONFIG_BASE}/users/{}/seed-configs/{}/export-yaml",
+            percent_encode_segment(&user_id),
+            percent_encode_segment(&config_id)
+        ),
+        "POST /users/{user_id}/seed-configs/{config_id}/export-yaml exports canonical config values as YAML without editing the source config.",
+        NEXUS_SEED_CONFIG_TOKEN_ENV,
+        None,
+        None,
+        None,
+    ))
 }
 
 pub fn identity_user_create_plan(
@@ -558,6 +619,14 @@ fn clean_identity(value: &str, label: &str) -> Result<String, String> {
     Ok(clean.to_string())
 }
 
+fn clean_required_segment(value: &str, label: &str) -> Result<String, String> {
+    let clean = value.trim();
+    if clean.is_empty() {
+        return Err(format!("{label} is required"));
+    }
+    Ok(clean.to_string())
+}
+
 fn clean_email(value: &str) -> Result<String, String> {
     let clean = clean_identity(value, "email")?;
     if !clean.contains('@') {
@@ -633,6 +702,7 @@ mod tests {
         LobbyListFilter, identity_user_disable_plan, identity_user_edit_plan,
         identity_user_force_password_reset_plan, identity_user_plan,
         identity_user_revoke_sessions_plan, lobby_list_plan, lobby_open_plan,
+        user_config_export_plan, user_config_open_plan, user_configs_plan,
     };
 
     #[test]
@@ -741,5 +811,34 @@ mod tests {
             reset.mutation_confirm.as_deref(),
             Some("user:certo:force-password-reset")
         );
+    }
+
+    #[test]
+    fn user_configs_plan_uses_seed_config_api() {
+        let plan = user_configs_plan("42", Some("a link to the past")).unwrap();
+        assert!(
+            plan.url
+                .starts_with("http://127.0.0.1:19106/users/42/seed-configs")
+        );
+        assert!(plan.url.contains("game_key=a%20link%20to%20the%20past"));
+        assert!(
+            plan.render_dry_run()
+                .contains("NEXUS_SEED_CONFIG_ADMIN_TOKEN")
+        );
+    }
+
+    #[test]
+    fn user_config_open_uses_list_filter_hint() {
+        let plan = user_config_open_plan("42", "config/7").unwrap();
+        assert!(plan.url.contains("/users/42/seed-configs?"));
+        assert!(plan.url.contains("config_id=config%2F7"));
+    }
+
+    #[test]
+    fn user_config_export_uses_yaml_post_without_mutation_confirm() {
+        let plan = user_config_export_plan("42", "7").unwrap();
+        assert_eq!(plan.method, "POST");
+        assert!(plan.url.ends_with("/users/42/seed-configs/7/export-yaml"));
+        assert!(plan.mutation_confirm.is_none());
     }
 }

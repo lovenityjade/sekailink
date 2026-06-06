@@ -55,3 +55,5 @@
 - Added Discord/Twitch bot status/log probes and audited local drafts for bot
   announcements, command edits, timers, Discord incident posts, and Twitch
   channel/lobby/title operations.
+- Added Nexus seed-config user config read/export plans and local audited
+  drafts for config diff/edit workflows.
