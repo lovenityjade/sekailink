@@ -16,14 +16,17 @@ user force-password-reset <user>
 
 Etat MVP actuel:
 
-- ces commandes produisent un plan Nexus Identity read-only;
-- `--execute` reste bloque tant que l'entree live Identity admin CLI/API n'est
-  pas documentee;
+- `user search`, `user open`, `user sessions`, `user devices` et `user audit`
+  sont connectees au Nexus Identity admin HTTP en read-only;
+- l'execution live exige `--execute`,
+  `SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1` et
+  `SEKAILINK_CORE_ACCESS_NEXUS_IDENTITY_ADMIN_TOKEN`;
+- `SEKAILINK_CORE_ACCESS_NEXUS_ADMIN_TOKEN` reste un fallback local compatible;
 - aucune mutation utilisateur n'est disponible sans contrat Nexus explicite.
 
-Le modele prive documente cote Nexus existe (`listusers`, `userinfo`,
-`listsessions`, `listdevices`, `useraudit`), mais Core Access ne l'executera pas
-tant que l'entree exacte n'est pas confirmee dans le checkout ou sur le host.
+Note importante: `user open`, `user sessions`, `user devices` et `user audit`
+declenchent une entree d'audit admin cote Identity, meme si elles ne modifient
+pas le compte cible.
 
 ## Configs utilisateur
 

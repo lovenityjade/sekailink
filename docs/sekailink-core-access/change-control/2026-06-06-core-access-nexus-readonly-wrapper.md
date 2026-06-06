@@ -63,7 +63,10 @@ Nexus host through read-only discovery.
 - Live read-only execution requires:
   - command flag: `--execute`
   - environment gate: `SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1`
-  - local token variable: `SEKAILINK_CORE_ACCESS_NEXUS_ADMIN_TOKEN`
+  - local token variable:
+    - `SEKAILINK_CORE_ACCESS_NEXUS_AGENT_ADMIN_TOKEN` for admin-agent
+    - `SEKAILINK_CORE_ACCESS_NEXUS_LOBBY_ADMIN_TOKEN` for lobby-admin
+    - `SEKAILINK_CORE_ACCESS_NEXUS_ADMIN_TOKEN` as compatibility fallback
 - Token values are not printed in dry-runs or execution logs.
 - Mutating commands remain planned and blocked.
 

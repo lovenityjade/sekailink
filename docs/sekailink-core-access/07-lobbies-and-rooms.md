@@ -27,7 +27,8 @@ Etat MVP actuel:
 - `lobby open <lobby>` prepare un GET prive vers Nexus lobby-admin;
 - l'execution live est read-only, bloquee par defaut, et exige `--execute`,
   `SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1` et
-  `SEKAILINK_CORE_ACCESS_NEXUS_ADMIN_TOKEN`;
+  `SEKAILINK_CORE_ACCESS_NEXUS_LOBBY_ADMIN_TOKEN`;
+- `SEKAILINK_CORE_ACCESS_NEXUS_ADMIN_TOKEN` reste un fallback local compatible;
 - `lobby create`, `lobby edit`, `lobby close`, `lobby lock`, `lobby unlock`,
   `lobby broadcast` et `lobby join-secret` restent non connectees dans cette
   tranche pour eviter toute mutation non gouvernee.

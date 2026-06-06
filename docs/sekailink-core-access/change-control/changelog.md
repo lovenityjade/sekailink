@@ -26,3 +26,5 @@
   terminal initialization output.
 - Added Nexus read-only wrapper plans for `nexus services`, `lobby list`,
   `lobby open`, and Identity user command planning.
+- Connected Identity user read-only commands to the confirmed Nexus Identity
+  HTTP admin GET routes with token-gated execution.

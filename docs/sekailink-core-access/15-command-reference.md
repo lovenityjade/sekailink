@@ -35,14 +35,14 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `approval list` | Service | Non | Liste les demandes et decisions locales. |
 | `approval approve <id> [reason]` | Admin | Oui | Approuve localement une demande existante, sans execution serveur en MVP. |
 | `ops snapshot [label]` | Service | Non | Cree un snapshot Markdown local avec dashboard, logs, services, audit, notes et approvals. |
-| `user search <query> --execute` | Service | Non | Planifie recherche utilisateur via Nexus Identity; execution bloquee tant que le contrat live manque. |
-| `user open <user> --execute` | Service | Non | Planifie fiche utilisateur via Nexus Identity; execution bloquee tant que le contrat live manque. |
+| `user search <query> --execute` | Service | Non | Recherche utilisateur via Nexus Identity read-only; dry-run par defaut. |
+| `user open <user> --execute` | Service | Non | Ouvre fiche utilisateur via Nexus Identity read-only; ajoute une trace audit serveur. |
 | `user create` | Admin | Oui | Cree un utilisateur. |
 | `user edit <user>` | Admin | Oui | Modifie un utilisateur. |
 | `user disable <user>` | Admin | Oui | Desactive un utilisateur et revoke sessions. |
-| `user sessions <user> --execute` | Service | Non | Planifie liste sessions via Nexus Identity; execution bloquee tant que le contrat live manque. |
-| `user devices <user> --execute` | Service | Non | Planifie liste devices via Nexus Identity; execution bloquee tant que le contrat live manque. |
-| `user audit <user> --execute` | Service | Non | Planifie audit utilisateur via Nexus Identity; execution bloquee tant que le contrat live manque. |
+| `user sessions <user> --execute` | Service | Non | Liste sessions via Nexus Identity read-only; ajoute une trace audit serveur. |
+| `user devices <user> --execute` | Service | Non | Liste devices via Nexus Identity read-only; ajoute une trace audit serveur. |
+| `user audit <user> --execute` | Service | Non | Liste audit utilisateur via Nexus Identity read-only; ajoute une trace audit serveur. |
 | `user revoke-sessions <user>` | Admin | Oui | Revoque sessions. |
 | `user force-password-reset <user>` | Admin | Oui | Force reset password. |
 | `user configs <user>` | Service | Non | Liste configs utilisateur. |

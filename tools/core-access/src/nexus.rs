@@ -3,63 +3,53 @@ use std::io::{self, Write};
 use std::process::{Command, Stdio};
 
 pub const NEXUS_TOKEN_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_ADMIN_TOKEN";
+pub const NEXUS_AGENT_TOKEN_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_AGENT_ADMIN_TOKEN";
+pub const NEXUS_LOBBY_TOKEN_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_LOBBY_ADMIN_TOKEN";
+pub const NEXUS_IDENTITY_TOKEN_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_IDENTITY_ADMIN_TOKEN";
 
 const SSH_ALIAS: &str = "nexus-vps";
 const ADMIN_AGENT_BASE: &str = "http://127.0.0.1:19091";
 const LOBBY_ADMIN_BASE: &str = "http://127.0.0.1:19096";
+const IDENTITY_ADMIN_BASE: &str = "http://149.202.61.90:19095";
 
 #[derive(Debug, Clone)]
 pub struct ProtectedGetPlan {
     pub title: String,
     pub url: String,
     pub detail: String,
+    pub token_env: &'static str,
+    pub fallback_token_env: Option<&'static str>,
 }
 
 impl ProtectedGetPlan {
-    fn new(title: impl Into<String>, url: impl Into<String>, detail: impl Into<String>) -> Self {
+    fn new(
+        title: impl Into<String>,
+        url: impl Into<String>,
+        detail: impl Into<String>,
+        token_env: &'static str,
+    ) -> Self {
         Self {
             title: title.into(),
             url: url.into(),
             detail: detail.into(),
+            token_env,
+            fallback_token_env: (token_env != NEXUS_TOKEN_ENV).then_some(NEXUS_TOKEN_ENV),
         }
     }
 
     pub fn render_dry_run(&self) -> String {
+        let fallback = self
+            .fallback_token_env
+            .map(|env| format!("; fallback ${env}"))
+            .unwrap_or_default();
         format!(
-            "{}\n{}\ntransport: ssh {} -- sh -s\nrequest: curl -fsS --connect-timeout 5 --max-time 20 --config - {}\nheader: Authorization: Bearer ${} (read from local env; value hidden)",
+            "{}\n{}\ntransport: ssh {} -- sh -s\nrequest: curl -fsS --connect-timeout 5 --max-time 20 --config - {}\nheaders: Authorization: Bearer ${}{}; X-SekaiLink-Client: core-access",
             self.title,
             self.detail,
             SSH_ALIAS,
             shell_word(&self.url),
-            NEXUS_TOKEN_ENV,
-        )
-    }
-}
-
-#[derive(Debug, Clone)]
-pub struct IdentityPlan {
-    pub title: String,
-    pub documented_command: String,
-    pub detail: String,
-}
-
-impl IdentityPlan {
-    fn new(
-        title: impl Into<String>,
-        documented_command: impl Into<String>,
-        detail: impl Into<String>,
-    ) -> Self {
-        Self {
-            title: title.into(),
-            documented_command: documented_command.into(),
-            detail: detail.into(),
-        }
-    }
-
-    pub fn render(&self) -> String {
-        format!(
-            "{}\ndocumented private command: {}\n{}\nexecution: blocked until the live Identity admin CLI/API entrypoint is documented",
-            self.title, self.documented_command, self.detail
+            self.token_env,
+            fallback,
         )
     }
 }
@@ -90,6 +80,7 @@ pub fn admin_agent_services_plan() -> ProtectedGetPlan {
         "Nexus admin-agent service inventory",
         format!("{ADMIN_AGENT_BASE}/services"),
         "GET /services on the private Nexus admin-agent.",
+        NEXUS_AGENT_TOKEN_ENV,
     )
 }
 
@@ -109,6 +100,7 @@ pub fn lobby_list_plan(filter: &LobbyListFilter) -> ProtectedGetPlan {
         "Nexus lobby-admin lobby inventory",
         format!("{LOBBY_ADMIN_BASE}/admin/lobbies{suffix}"),
         "GET /admin/lobbies on the private Nexus lobby-admin service.",
+        NEXUS_LOBBY_TOKEN_ENV,
     )
 }
 
@@ -124,58 +116,89 @@ pub fn lobby_open_plan(lobby_id: &str) -> Result<ProtectedGetPlan, String> {
             percent_encode_segment(clean)
         ),
         "GET /admin/lobbies/{lobby_id} on the private Nexus lobby-admin service.",
+        NEXUS_LOBBY_TOKEN_ENV,
     ))
 }
 
-pub fn identity_user_plan(action: &str, values: &[String]) -> Result<IdentityPlan, String> {
+pub fn identity_user_plan(action: &str, values: &[String]) -> Result<ProtectedGetPlan, String> {
     match action {
         "search" => {
-            let query = values.first().map(String::as_str).unwrap_or("");
+            let query = required_arg(values, "usage: user search <query> [limit] [role] [state] [offset] [--execute]")?;
             let limit = values.get(1).map(String::as_str).unwrap_or("50");
-            Ok(IdentityPlan::new(
-                "Nexus Identity user search plan",
-                format!("listusers {limit} {} <role> <state> <offset>", display_arg(query)),
-                "The native Nexus docs expose listusers [limit] [query] [role] [state] [offset], but no live executable/admin route has been found in read-only discovery.",
+            let role = values.get(2).map(String::as_str);
+            let state = values.get(3).map(String::as_str);
+            let offset = values.get(4).map(String::as_str);
+            let mut params = Vec::new();
+            push_query(&mut params, "limit", Some(limit));
+            push_query(&mut params, "query", Some(query));
+            push_query(&mut params, "role", role);
+            push_query(&mut params, "state", state);
+            push_query(&mut params, "offset", offset);
+            Ok(ProtectedGetPlan::new(
+                "Nexus Identity user search",
+                format!("{IDENTITY_ADMIN_BASE}/admin/users?{}", params.join("&")),
+                "GET /admin/users on the live Nexus Identity service. state accepts active/enabled/false or disabled/true.",
+                NEXUS_IDENTITY_TOKEN_ENV,
             ))
         }
         "open" => {
             let username = required_arg(values, "usage: user open <username> [--execute]")?;
-            Ok(IdentityPlan::new(
-                format!("Nexus Identity user detail plan: {username}"),
-                format!("userinfo {}", display_arg(username)),
-                "The documented private command is read-only, but Core Access has not found the live admin entrypoint yet.",
+            Ok(ProtectedGetPlan::new(
+                format!("Nexus Identity user detail: {username}"),
+                format!(
+                    "{IDENTITY_ADMIN_BASE}/admin/users/{}",
+                    percent_encode_segment(username)
+                ),
+                "GET /admin/users/{username} on the live Nexus Identity service. This route records an admin audit event.",
+                NEXUS_IDENTITY_TOKEN_ENV,
             ))
         }
         "sessions" => {
             let username = required_arg(values, "usage: user sessions <username> [--execute]")?;
-            Ok(IdentityPlan::new(
-                format!("Nexus Identity session inventory plan: {username}"),
-                format!("listsessions {}", display_arg(username)),
-                "The documented private command lists per-user sessions for moderation and account-security debugging.",
+            Ok(ProtectedGetPlan::new(
+                format!("Nexus Identity session inventory: {username}"),
+                format!(
+                    "{IDENTITY_ADMIN_BASE}/admin/users/{}/sessions",
+                    percent_encode_segment(username)
+                ),
+                "GET /admin/users/{username}/sessions on the live Nexus Identity service. This route records an admin audit event.",
+                NEXUS_IDENTITY_TOKEN_ENV,
             ))
         }
         "devices" => {
             let username = required_arg(values, "usage: user devices <username> [--execute]")?;
-            Ok(IdentityPlan::new(
-                format!("Nexus Identity device inventory plan: {username}"),
-                format!("listdevices {}", display_arg(username)),
-                "The documented private command lists per-user devices for moderation and account-security debugging.",
+            Ok(ProtectedGetPlan::new(
+                format!("Nexus Identity device inventory: {username}"),
+                format!(
+                    "{IDENTITY_ADMIN_BASE}/admin/users/{}/devices",
+                    percent_encode_segment(username)
+                ),
+                "GET /admin/users/{username}/devices on the live Nexus Identity service. This route records an admin audit event.",
+                NEXUS_IDENTITY_TOKEN_ENV,
             ))
         }
         "audit" => {
             let username = required_arg(values, "usage: user audit <username> [limit] [event_type] [offset] [--execute]")?;
             let limit = values.get(1).map(String::as_str).unwrap_or("50");
-            let event_type = values.get(2).map(String::as_str).unwrap_or("<event_type>");
-            let offset = values.get(3).map(String::as_str).unwrap_or("<offset>");
-            Ok(IdentityPlan::new(
-                format!("Nexus Identity audit plan: {username}"),
+            let event_type = values.get(2).map(String::as_str);
+            let offset = values.get(3).map(String::as_str);
+            let mut params = Vec::new();
+            push_query(&mut params, "limit", Some(limit));
+            push_query(&mut params, "event_type", event_type);
+            push_query(&mut params, "offset", offset);
+            let suffix = if params.is_empty() {
+                String::new()
+            } else {
+                format!("?{}", params.join("&"))
+            };
+            Ok(ProtectedGetPlan::new(
+                format!("Nexus Identity user audit: {username}"),
                 format!(
-                    "useraudit {} {limit} {} {}",
-                    display_arg(username),
-                    display_arg(event_type),
-                    display_arg(offset)
+                    "{IDENTITY_ADMIN_BASE}/admin/users/{}/audit{suffix}",
+                    percent_encode_segment(username)
                 ),
-                "The documented private command reads contextual admin audit events for a user.",
+                "GET /admin/users/{username}/audit on the live Nexus Identity service. This route records an admin audit-view event.",
+                NEXUS_IDENTITY_TOKEN_ENV,
             ))
         }
         _ => Err(format!("unsupported user command: {action}")),
@@ -183,12 +206,15 @@ pub fn identity_user_plan(action: &str, values: &[String]) -> Result<IdentityPla
 }
 
 pub fn execute_protected_get(plan: &ProtectedGetPlan) -> io::Result<()> {
-    let Some(token) = env::var(NEXUS_TOKEN_ENV)
-        .ok()
-        .map(|value| value.trim().to_string())
-        .filter(|value| !value.is_empty())
+    let Some((token_source, token)) = read_token(plan)
     else {
-        println!("protected Nexus read-only execution blocked: missing {NEXUS_TOKEN_ENV}");
+        println!(
+            "protected Nexus read-only execution blocked: missing {}{}",
+            plan.token_env,
+            plan.fallback_token_env
+                .map(|env| format!(" or {env}"))
+                .unwrap_or_default()
+        );
         println!("dry-run command:");
         println!("{}", plan.render_dry_run());
         return Ok(());
@@ -200,11 +226,11 @@ pub fn execute_protected_get(plan: &ProtectedGetPlan) -> io::Result<()> {
 
     println!("executing protected Nexus read-only GET:");
     println!("{}", plan.title);
-    println!("token source: {NEXUS_TOKEN_ENV} (value hidden)");
+    println!("token source: {token_source} (value hidden)");
 
     let header = curl_config_escape(&format!("Authorization: Bearer {token}"));
     let script = format!(
-        "set -eu\ncurl -fsS --connect-timeout 5 --max-time 20 --config - {} <<'__SEKAILINK_CURL__'\nheader = \"{}\"\n__SEKAILINK_CURL__\nprintf '\\n'\n",
+        "set -eu\ncurl -fsS --connect-timeout 5 --max-time 20 --config - {} <<'__SEKAILINK_CURL__'\nheader = \"{}\"\nheader = \"User-Agent: SekaiLinkCoreAccess/0.1\"\nheader = \"X-SekaiLink-Client: core-access\"\nheader = \"X-SekaiLink-Client-Version: 0.1.0\"\nheader = \"X-SekaiLink-Device-Id: core-access-bastion\"\n__SEKAILINK_CURL__\nprintf '\\n'\n",
         shell_word(&plan.url),
         header,
     );
@@ -247,6 +273,22 @@ fn required_arg<'a>(values: &'a [String], usage: &str) -> Result<&'a str, String
         .ok_or_else(|| usage.to_string())
 }
 
+fn read_token(plan: &ProtectedGetPlan) -> Option<(&'static str, String)> {
+    for env_name in [Some(plan.token_env), plan.fallback_token_env]
+        .into_iter()
+        .flatten()
+    {
+        if let Some(token) = env::var(env_name)
+            .ok()
+            .map(|value| value.trim().to_string())
+            .filter(|value| !value.is_empty())
+        {
+            return Some((env_name, token));
+        }
+    }
+    None
+}
+
 fn non_empty(value: Option<&String>) -> Option<String> {
     value
         .map(String::as_str)
@@ -282,16 +324,6 @@ fn percent_encode(value: &str) -> String {
     out
 }
 
-fn display_arg(value: &str) -> String {
-    if value.trim().is_empty() {
-        "<empty>".to_string()
-    } else if value.contains(char::is_whitespace) {
-        format!("\"{}\"", value.replace('"', "\\\""))
-    } else {
-        value.to_string()
-    }
-}
-
 fn curl_config_escape(value: &str) -> String {
     value.replace('\\', "\\\\").replace('"', "\\\"")
 }
@@ -299,7 +331,7 @@ fn curl_config_escape(value: &str) -> String {
 fn shell_word(value: &str) -> String {
     if value
         .chars()
-        .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '-' | '_' | '.' | ':' | '/' | '?' | '&' | '=' | '%' | '~'))
+        .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '-' | '_' | '.' | ':' | '/'))
     {
         value.to_string()
     } else {
@@ -335,9 +367,29 @@ mod tests {
     }
 
     #[test]
-    fn identity_plan_does_not_claim_execution() {
+    fn identity_plan_builds_live_user_detail_url() {
         let values = vec!["certo".to_string()];
         let plan = identity_user_plan("open", &values).unwrap();
-        assert!(plan.render().contains("execution: blocked"));
+        assert!(plan.url.ends_with("/admin/users/certo"));
+        assert!(plan.render_dry_run().contains("NEXUS_IDENTITY_ADMIN_TOKEN"));
+    }
+
+    #[test]
+    fn identity_search_builds_expected_filters() {
+        let values = vec![
+            "certo".to_string(),
+            "25".to_string(),
+            "admin".to_string(),
+            "active".to_string(),
+            "5".to_string(),
+        ];
+        let plan = identity_user_plan("search", &values).unwrap();
+        assert!(plan.url.contains("/admin/users?"));
+        assert!(plan.url.contains("query=certo"));
+        assert!(plan.url.contains("limit=25"));
+        assert!(plan.url.contains("role=admin"));
+        assert!(plan.url.contains("state=active"));
+        assert!(plan.url.contains("offset=5"));
+        assert!(plan.render_dry_run().contains("'http://149.202.61.90:19095/admin/users?"));
     }
 }

@@ -574,7 +574,13 @@ impl App {
         if !execute {
             println!("dry-run Nexus protected read-only request:");
             println!("{}", plan.render_dry_run());
-            println!("MVP note: command was not executed. Add --execute, set SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1, and set SEKAILINK_CORE_ACCESS_NEXUS_ADMIN_TOKEN to run it.");
+            println!(
+                "MVP note: command was not executed. Add --execute, set SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1, and set {}{} to run it.",
+                plan.token_env,
+                plan.fallback_token_env
+                    .map(|env| format!(" or {env}"))
+                    .unwrap_or_default()
+            );
             return Ok(());
         }
         if env::var("SEKAILINK_CORE_ACCESS_REMOTE_READONLY").ok().as_deref() != Some("1") {
@@ -593,14 +599,7 @@ impl App {
         let args = non_flag_args(parsed, 2);
         match identity_user_plan(action, &args) {
             Ok(plan) => {
-                println!("dry-run Nexus Identity read-only plan:");
-                println!("{}", plan.render());
-                if execute {
-                    println!("Identity execution blocked: live private CLI/API entrypoint is not documented in this checkout or discoverable read-only on nexus-vps.");
-                    println!("No SSH/API command was executed.");
-                } else {
-                    println!("MVP note: use --execute only after the Identity admin entrypoint is documented and wrapped.");
-                }
+                self.render_or_execute_nexus_get(&plan, execute)?;
             }
             Err(err) => println!("{err}"),
         }
