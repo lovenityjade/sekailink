@@ -37,6 +37,14 @@ incident export <label> --file <label>.md
 incident close <label> <resolution>
 ```
 
+## Handoff
+
+```text
+ops timeline [query]
+ops handoff shift-<date> --file shift-<date>.md
+ops snapshot <label>
+```
+
 ## Live support
 
 ```text

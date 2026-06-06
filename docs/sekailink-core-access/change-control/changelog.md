@@ -34,3 +34,5 @@
   local pins, log notes, and Markdown/JSONL/TXT evidence exports.
 - Added local incident workspace commands for append-only open/list/status,
   notes, pins, exports, and close workflow.
+- Added local ops timeline and shift handoff Markdown export for moderator/admin
+  relay between shifts.

@@ -45,6 +45,8 @@ Implemented MVP commands include:
 - `incident export <label> [--file name]`
 - `incident close <label> <resolution>`
 - `ops snapshot [label]`
+- `ops timeline [query]`
+- `ops handoff [label] [--file name]`
 - `client-banner list`
 - `client-banner preview <1|2|3>`
 - `client-banner edit <1|2|3> <text>` as Admin, local draft only

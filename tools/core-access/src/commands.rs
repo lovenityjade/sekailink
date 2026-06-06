@@ -43,6 +43,8 @@ pub const COMMANDS: &[CommandSpec] = &[
     spec("incident export", Role::Service, Confirmation::None, "Export incident workspace.", true),
     spec("incident close", Role::Service, Confirmation::None, "Close local incident workspace.", true),
     spec("ops snapshot", Role::Service, Confirmation::None, "Write local incident snapshot.", true),
+    spec("ops timeline", Role::Service, Confirmation::None, "Show local ops timeline.", true),
+    spec("ops handoff", Role::Service, Confirmation::None, "Export local shift handoff.", true),
     spec("maintenance status", Role::Service, Confirmation::None, "Show maintenance status.", true),
     spec("server services", Role::Service, Confirmation::None, "List known service targets.", true),
     spec("nexus services", Role::Service, Confirmation::None, "List private Nexus admin-agent services.", true),

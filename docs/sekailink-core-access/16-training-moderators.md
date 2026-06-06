@@ -53,6 +53,15 @@ incident close training-room resolved during training
 But: comprendre le journal append-only, les notes, les pins et l'export
 Markdown sans toucher a la production.
 
+### Exercice 4 - Faire une releve de shift
+
+```text
+ops timeline training-room
+ops handoff training-shift --file training-shift.md
+```
+
+But: produire un rapport de releve lisible pour un autre moderateur.
+
 ## A ne jamais faire sans Admin
 
 - publier une release;
@@ -70,5 +79,6 @@ Markdown sans toucher a la production.
 - Je sais verifier mon role.
 - Je sais lister logs et rooms.
 - Je sais creer un incident local, une note et un pin.
+- Je sais produire une releve de shift.
 - Je sais demander approval.
 - Je sais utiliser F12 Panic en lecture avant action.

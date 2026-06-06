@@ -33,6 +33,8 @@ incident pin
 incident export
 incident close
 ops snapshot
+ops timeline
+ops handoff
 user search
 user open
 user create

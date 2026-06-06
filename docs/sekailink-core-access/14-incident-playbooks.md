@@ -62,3 +62,14 @@
 6. Broadcast.
 7. Collect logs bundle.
 8. `incident export emergency-<scope> --file emergency-<scope>.md`
+
+## Releve apres incident
+
+1. `ops timeline <label>`
+2. `incident status <label>`
+3. `incident export <label> --file <label>.md`
+4. `ops handoff shift-<date> --file shift-<date>.md`
+
+`incident export` isole un incident. `ops handoff` resume le shift complet:
+incidents, notes, pins, approvals, maintenance, scheduler, packs, banners et
+audit local.

@@ -17,7 +17,7 @@
 3. Panels recommandes: Link logs, room logs, lobby list, alerts, Discord/Twitch.
 4. Garder F12 Panic pret.
 5. Tout incident important devient `incident note` ou `incident pin`.
-6. Exporter le workspace en fin de stream si quelque chose a ete investigue.
+6. `ops handoff stream-<date> --file stream-<date>.md` en fin de stream.
 
 ## Incident majeur
 
@@ -36,5 +36,6 @@
 1. `audit search`
 2. Filtrer par date/role/action.
 3. Exporter Markdown/JSON.
-4. Verifier actions sans rollback.
-5. Creer notes de follow-up.
+4. `ops timeline [query]`
+5. Verifier actions sans rollback.
+6. Creer notes de follow-up.

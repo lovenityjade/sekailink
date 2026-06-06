@@ -309,9 +309,9 @@ impl App {
                 append_audit(&self.session, line, "ok", "incident local")?;
                 true
             }
-            "ops" if parsed.get(1).map(String::as_str) == Some("snapshot") => {
-                self.ops_snapshot(parsed.get(2).map(String::as_str))?;
-                append_audit(&self.session, line, "ok", "ops snapshot")?;
+            "ops" => {
+                self.ops(&parsed)?;
+                append_audit(&self.session, line, "ok", "ops local")?;
                 true
             }
             "client-banner"
@@ -1080,6 +1080,153 @@ impl App {
         Ok(())
     }
 
+    fn ops(&self, parsed: &[String]) -> io::Result<()> {
+        match parsed.get(1).map(String::as_str) {
+            Some("snapshot") => self.ops_snapshot(parsed.get(2).map(String::as_str)),
+            Some("timeline") => self.ops_timeline(parsed.get(2).map(String::as_str).unwrap_or("")),
+            Some("handoff") => self.ops_handoff(parsed),
+            _ => {
+                println!("usage: ops snapshot|timeline|handoff");
+                Ok(())
+            }
+        }
+    }
+
+    fn ops_timeline(&self, query: &str) -> io::Result<()> {
+        let mut entries = self.ops_timeline_entries()?;
+        if !query.trim().is_empty() {
+            entries.retain(|entry| entry.line.contains(query));
+        }
+        if entries.is_empty() {
+            if query.trim().is_empty() {
+                println!("ops timeline is empty");
+            } else {
+                println!("no ops timeline entries matched: {query}");
+            }
+            return Ok(());
+        }
+        entries.sort_by_key(|entry| entry.ts);
+        let start = entries.len().saturating_sub(200);
+        println!("{:<12} {:<10} ENTRY", "TS", "SOURCE");
+        println!("{}", "-".repeat(96));
+        for entry in &entries[start..] {
+            println!("{:<12} {:<10} {}", entry.ts, entry.source, entry.line);
+        }
+        Ok(())
+    }
+
+    fn ops_handoff(&self, parsed: &[String]) -> io::Result<()> {
+        let label = parsed
+            .iter()
+            .skip(2)
+            .find(|part| !part.starts_with("--") && !looks_like_export_file(part))
+            .map(String::as_str)
+            .unwrap_or("shift-handoff");
+        let requested_name = handoff_file_name(parsed, label);
+        let body = self.render_handoff_report(label)?;
+        let path = write_export_with_extension(
+            &self.session,
+            "handoff",
+            Some(&requested_name),
+            "md",
+            &body,
+        )?;
+        println!("handoff written to {}", path.display());
+        println!("MVP note: handoff is local; no Nexus DB record was changed.");
+        Ok(())
+    }
+
+    fn render_handoff_report(&self, label: &str) -> io::Result<String> {
+        let audit = read_file_to_string(&self.session.audit_dir().join("core-access.jsonl"))?;
+        let notes = read_file_to_string(&self.session.notes_path())?;
+        let pins = read_file_to_string(&self.session.log_pins_path())?;
+        let incidents = read_file_to_string(&self.session.incident_events_path())?;
+        let approvals = read_file_to_string(&self.session.approvals_path())?;
+        let maintenance = read_file_to_string(&self.session.maintenance_dir().join("current.txt"))?;
+        let maintenance_history = read_file_to_string(&self.session.maintenance_dir().join("history.jsonl"))?;
+        let schedule = read_file_to_string(&self.session.scheduler_dir().join("jobs.jsonl"))?;
+        let pack_repos = read_file_to_string(&self.session.pack_repos_dir().join("repos.jsonl"))?;
+        let mut timeline = self.ops_timeline_entries()?;
+        timeline.sort_by_key(|entry| entry.ts);
+
+        let mut body = String::new();
+        body.push_str(&format!("# SekaiLink Core Access Handoff - {label}\n\n"));
+        body.push_str("## Session\n\n");
+        body.push_str(&format!("- Linux user: {}\n", self.session.linux_user));
+        body.push_str(&format!("- SekaiLink user: {}\n", self.session.sekailink_user));
+        body.push_str(&format!("- Role: {}\n", self.session.role.as_str()));
+        body.push_str(&format!("- Session: {}\n\n", self.session.session_id));
+
+        body.push_str("## Dashboard\n\n```text\n");
+        body.push_str(&render_dashboard());
+        body.push_str("```\n\n");
+
+        body.push_str("## Open Incident Labels\n\n");
+        push_open_incident_labels(&mut body, &incidents);
+
+        body.push_str("\n## Recent Ops Timeline\n\n```text\n");
+        let start = timeline.len().saturating_sub(80);
+        for entry in &timeline[start..] {
+            body.push_str(&format!("{:<12} {:<10} {}\n", entry.ts, entry.source, entry.line));
+        }
+        body.push_str("```\n\n");
+
+        push_json_section_from_text(&mut body, "Recent Incident Events", &incidents, 80);
+        push_json_section_from_text(&mut body, "Recent Notes", &notes, 60);
+        push_json_section_from_text(&mut body, "Recent Log Pins", &pins, 60);
+        push_json_section_from_text(&mut body, "Approval Queue", &approvals, 80);
+
+        body.push_str("## Maintenance Draft\n\n```text\n");
+        if maintenance.trim().is_empty() {
+            body.push_str("(none)\n");
+        } else {
+            body.push_str(&maintenance);
+            if !maintenance.ends_with('\n') {
+                body.push('\n');
+            }
+        }
+        body.push_str("```\n\n");
+
+        push_json_section_from_text(&mut body, "Maintenance History", &maintenance_history, 40);
+        push_json_section_from_text(&mut body, "Schedule Drafts", &schedule, 60);
+        push_json_section_from_text(&mut body, "Pack Repo Drafts", &pack_repos, 60);
+        body.push_str("## Client Banner Drafts\n\n```text\n");
+        for slot in 1..=3 {
+            let text = self.read_client_banner_slot(slot)?;
+            let display = if text.trim().is_empty() {
+                "(empty)"
+            } else {
+                text.trim()
+            };
+            body.push_str(&format!("slot {slot}: {display}\n"));
+        }
+        body.push_str("```\n\n");
+
+        push_json_section_from_text(&mut body, "Recent Audit", &audit, 80);
+        Ok(body)
+    }
+
+    fn ops_timeline_entries(&self) -> io::Result<Vec<TimelineEntry>> {
+        let audit = read_file_to_string(&self.session.audit_dir().join("core-access.jsonl"))?;
+        let notes = read_file_to_string(&self.session.notes_path())?;
+        let pins = read_file_to_string(&self.session.log_pins_path())?;
+        let incidents = read_file_to_string(&self.session.incident_events_path())?;
+        let approvals = read_file_to_string(&self.session.approvals_path())?;
+        let maintenance = read_file_to_string(&self.session.maintenance_dir().join("history.jsonl"))?;
+        let schedule = read_file_to_string(&self.session.scheduler_dir().join("jobs.jsonl"))?;
+        let pack_repos = read_file_to_string(&self.session.pack_repos_dir().join("repos.jsonl"))?;
+        let mut entries = Vec::new();
+        push_timeline_entries(&mut entries, "audit", &audit);
+        push_timeline_entries(&mut entries, "note", &notes);
+        push_timeline_entries(&mut entries, "pin", &pins);
+        push_timeline_entries(&mut entries, "incident", &incidents);
+        push_timeline_entries(&mut entries, "approval", &approvals);
+        push_timeline_entries(&mut entries, "maintenance", &maintenance);
+        push_timeline_entries(&mut entries, "schedule", &schedule);
+        push_timeline_entries(&mut entries, "pack", &pack_repos);
+        Ok(entries)
+    }
+
     fn ops_snapshot(&self, label: Option<&str>) -> io::Result<()> {
         let title = label.unwrap_or("incident").trim();
         let file_name = format!("{title}.md");
@@ -1470,6 +1617,8 @@ fn print_help() {
     println!("  incident export <label> [--file name]");
     println!("  incident close <label> <resolution>");
     println!("  ops snapshot [label]");
+    println!("  ops timeline [query]");
+    println!("  ops handoff [label] [--file name]");
     println!("  client-banner list");
     println!("  client-banner preview <1|2|3>");
     println!("  client-banner edit <1|2|3> <text>");
@@ -1568,6 +1717,112 @@ fn looks_like_export_file(value: &str) -> bool {
         || value.ends_with(".txt")
         || value.ends_with(".json")
         || value.ends_with(".jsonl")
+}
+
+#[derive(Debug, Clone)]
+struct TimelineEntry {
+    ts: u64,
+    source: &'static str,
+    line: String,
+}
+
+fn push_timeline_entries(entries: &mut Vec<TimelineEntry>, source: &'static str, text: &str) {
+    for line in text.lines().filter(|line| !line.trim().is_empty()) {
+        entries.push(TimelineEntry {
+            ts: extract_json_u64(line, "ts").unwrap_or_default(),
+            source,
+            line: line.to_string(),
+        });
+    }
+}
+
+fn extract_json_u64(line: &str, key: &str) -> Option<u64> {
+    let needle = format!("\"{key}\":");
+    let start = line.find(&needle)? + needle.len();
+    let value = line[start..]
+        .chars()
+        .take_while(|ch| ch.is_ascii_digit())
+        .collect::<String>();
+    value.parse().ok()
+}
+
+fn extract_json_string(line: &str, key: &str) -> Option<String> {
+    let needle = format!("\"{key}\":\"");
+    let start = line.find(&needle)? + needle.len();
+    let rest = &line[start..];
+    let mut out = String::new();
+    let mut escaped = false;
+    for ch in rest.chars() {
+        if escaped {
+            out.push(ch);
+            escaped = false;
+            continue;
+        }
+        if ch == '\\' {
+            escaped = true;
+            continue;
+        }
+        if ch == '"' {
+            return Some(out);
+        }
+        out.push(ch);
+    }
+    None
+}
+
+fn push_open_incident_labels(body: &mut String, incidents: &str) {
+    let mut states = std::collections::BTreeMap::<String, &'static str>::new();
+    for line in incidents.lines() {
+        let Some(label) = extract_json_string(line, "label") else {
+            continue;
+        };
+        if line.contains("\"event\":\"open\"") {
+            states.insert(label, "open");
+        } else if line.contains("\"event\":\"close\"") {
+            states.insert(label, "closed");
+        }
+    }
+    let open = states
+        .iter()
+        .filter(|(_, state)| **state == "open")
+        .map(|(label, _)| label)
+        .collect::<Vec<_>>();
+    if open.is_empty() {
+        body.push_str("- none\n");
+        return;
+    }
+    for label in open {
+        body.push_str(&format!("- `{label}`\n"));
+    }
+}
+
+fn push_json_section_from_text(body: &mut String, title: &str, text: &str, limit: usize) {
+    body.push_str(&format!("## {title}\n\n```json\n"));
+    push_recent_lines(body, text, limit);
+    if text.trim().is_empty() {
+        body.push_str("(empty)\n");
+    }
+    body.push_str("```\n\n");
+}
+
+fn handoff_file_name(parts: &[String], label: &str) -> String {
+    let mut i = 2;
+    while i < parts.len() {
+        match parts[i].as_str() {
+            "--file" => {
+                if let Some(value) = parts.get(i + 1) {
+                    return value.clone();
+                }
+            }
+            value if value.starts_with("--file=") => {
+                return value.trim_start_matches("--file=").to_string();
+            }
+            value if looks_like_export_file(value) => return value.to_string(),
+            _ => {}
+        }
+        i += 1;
+    }
+    format!("{label}.md")
 }
 
 fn normalize_incident_label(value: &str) -> Result<String, String> {
@@ -1790,6 +2045,23 @@ mod app_tests {
         assert!(body.contains("note"));
         assert!(body.contains("pin"));
         assert!(!body.contains("other"));
+    }
+
+    #[test]
+    fn timeline_extracts_json_timestamp() {
+        assert_eq!(
+            super::extract_json_u64("{\"ts\":123,\"event\":\"open\"}", "ts"),
+            Some(123)
+        );
+    }
+
+    #[test]
+    fn open_incident_labels_exclude_closed_labels() {
+        let incidents = "{\"label\":\"a\",\"event\":\"open\"}\n{\"label\":\"b\",\"event\":\"open\"}\n{\"label\":\"a\",\"event\":\"close\"}\n";
+        let mut body = String::new();
+        super::push_open_incident_labels(&mut body, incidents);
+        assert!(!body.contains("`a`"));
+        assert!(body.contains("`b`"));
     }
 }
 

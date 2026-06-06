@@ -42,6 +42,8 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `incident export <label> --file <name>` | Service | Non | Exporte le workspace incident local en Markdown. |
 | `incident close <label> <resolution>` | Service | Non | Ferme localement le workspace incident. |
 | `ops snapshot [label]` | Service | Non | Cree un snapshot Markdown local avec dashboard, logs, services, audit, notes et approvals. |
+| `ops timeline [query]` | Service | Non | Affiche une timeline locale audit/incidents/notes/pins/approvals/drafts. |
+| `ops handoff [label] --file <name>` | Service | Non | Exporte un rapport Markdown local de releve de shift. |
 | `user search <query> --execute` | Service | Non | Recherche utilisateur via Nexus Identity read-only; dry-run par defaut. |
 | `user open <user> --execute` | Service | Non | Ouvre fiche utilisateur via Nexus Identity read-only; ajoute une trace audit serveur. |
 | `user create` | Admin | Oui | Cree un utilisateur. |
