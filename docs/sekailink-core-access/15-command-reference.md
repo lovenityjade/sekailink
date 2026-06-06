@@ -56,14 +56,14 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `ops exports [query]` | Service | Non | Liste les exports locaux Core Access par date, taille et fichier. |
 | `user search <query> --execute` | Service | Non | Recherche utilisateur via Nexus Identity read-only; dry-run par defaut. |
 | `user open <user> --execute` | Service | Non | Ouvre fiche utilisateur via Nexus Identity read-only; ajoute une trace audit serveur. |
-| `user create` | Admin | Oui | Cree un utilisateur. |
-| `user edit <user>` | Admin | Oui | Modifie un utilisateur. |
-| `user disable <user>` | Admin | Oui | Desactive un utilisateur et revoke sessions. |
+| `user create <user> <email> <role> --password-env ENV --confirm user:<user>:create --execute` | Admin | Oui | Cree un utilisateur via Nexus Identity; mot de passe lu depuis env local, body redacted en dry-run, gate mutation requis. |
+| `user edit <user> key=value --confirm user:<user>:edit --execute` | Admin | Oui | Modifie un utilisateur via Nexus Identity; champs supportes: email, display_name, avatar_url, bio, locale, role, email_verified, disabled, permissions. |
+| `user disable <user> --confirm user:<user>:disable --execute` | Admin | Oui | Desactive un utilisateur et revoke sessions via Nexus Identity; gate mutation requis. |
 | `user sessions <user> --execute` | Service | Non | Liste sessions via Nexus Identity read-only; ajoute une trace audit serveur. |
 | `user devices <user> --execute` | Service | Non | Liste devices via Nexus Identity read-only; ajoute une trace audit serveur. |
 | `user audit <user> --execute` | Service | Non | Liste audit utilisateur via Nexus Identity read-only; ajoute une trace audit serveur. |
-| `user revoke-sessions <user>` | Admin | Oui | Revoque sessions. |
-| `user force-password-reset <user>` | Admin | Oui | Force reset password. |
+| `user revoke-sessions <user> --confirm user:<user>:revoke-sessions --execute` | Admin | Oui | Revoque toutes les sessions du compte cible via Nexus Identity; gate mutation requis. |
+| `user force-password-reset <user> --confirm user:<user>:force-password-reset --execute` | Admin | Oui | Declenche un reset password via Nexus Identity; gate mutation requis. |
 | `user configs <user>` | Service | Non | Liste configs utilisateur. |
 | `user config open <user> <config>` | Service | Non | Ouvre config. |
 | `user config diff <user> <config> <version>` | Service | Non | Compare versions. |

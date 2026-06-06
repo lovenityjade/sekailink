@@ -7,11 +7,14 @@ Commandes principales:
 ```text
 user search <query>
 user open <user>
+user create <user> <email> <role> --password-env ENV --confirm user:<user>:create
+user edit <user> key=value --confirm user:<user>:edit
+user disable <user> --confirm user:<user>:disable
 user sessions <user>
 user devices <user>
 user audit <user>
-user revoke-sessions <user>
-user force-password-reset <user>
+user revoke-sessions <user> --confirm user:<user>:revoke-sessions
+user force-password-reset <user> --confirm user:<user>:force-password-reset
 ```
 
 Etat MVP actuel:
@@ -22,11 +25,41 @@ Etat MVP actuel:
   `SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1` et
   `SEKAILINK_CORE_ACCESS_NEXUS_IDENTITY_ADMIN_TOKEN`;
 - `SEKAILINK_CORE_ACCESS_NEXUS_ADMIN_TOKEN` reste un fallback local compatible;
-- aucune mutation utilisateur n'est disponible sans contrat Nexus explicite.
+- `user create`, `user edit`, `user disable`, `user revoke-sessions` et
+  `user force-password-reset` utilisent les routes HTTP admin Nexus Identity
+  confirmees;
+- toute mutation exige le role Admin, `--execute`,
+  `SEKAILINK_CORE_ACCESS_NEXUS_MUTATION=1`, le token Identity admin, et la
+  confirmation exacte affichee dans le dry-run;
+- `user create` lit le mot de passe depuis `--password-env ENV` pour eviter de
+  l'inscrire dans l'historique shell ou dans l'audit local; le body affiche en
+  dry-run remplace toujours le mot de passe par `<redacted>`.
 
 Note importante: `user open`, `user sessions`, `user devices` et `user audit`
 declenchent une entree d'audit admin cote Identity, meme si elles ne modifient
 pas le compte cible.
+
+Les mutations utilisateur declenchent egalement l'audit admin cote Nexus
+Identity. Core Access garde une trace locale de la commande et de son statut,
+mais ne journalise jamais la valeur des tokens ni le mot de passe env.
+
+Champs `user edit` supportes:
+
+```text
+email=<email>
+display_name=<name>
+avatar_url=<url>
+bio=<text>
+locale=<locale>
+role=<player|service|moderator|admin>
+email_verified=<true|false>
+disabled=<true|false>
+permissions=<permission-a,permission-b>
+```
+
+Ces commandes ne modifient pas SKLMI, Sekaiemu, Client Core, les packs, ni les
+serveurs room. Elles appellent uniquement le contrat Nexus Identity admin deja
+present cote serveur.
 
 ## Configs utilisateur
 

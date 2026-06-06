@@ -12,8 +12,10 @@ use crate::audit::{
 use crate::commands::{COMMANDS, Confirmation, command_names, find_command, search_commands};
 use crate::line_editor::LineEditor;
 use crate::nexus::{
-    LobbyListFilter, ProtectedGetPlan, admin_agent_services_plan, execute_protected_get,
-    identity_user_plan, lobby_list_plan, lobby_open_plan, non_flag_args,
+    LobbyListFilter, NEXUS_MUTATION_ENV, ProtectedGetPlan, admin_agent_services_plan,
+    execute_protected_get, identity_user_create_plan, identity_user_disable_plan,
+    identity_user_edit_plan, identity_user_force_password_reset_plan, identity_user_plan,
+    identity_user_revoke_sessions_plan, lobby_list_plan, lobby_open_plan, non_flag_args,
 };
 use crate::rbac::Role;
 use crate::system::{
@@ -298,6 +300,20 @@ impl App {
             {
                 self.user_readonly_plan(&parsed)?;
                 append_audit(&self.session, line, "ok", "user read-only nexus plan")?;
+                true
+            }
+            "user"
+                if matches!(
+                    parsed.get(1).map(String::as_str),
+                    Some("create")
+                        | Some("edit")
+                        | Some("disable")
+                        | Some("revoke-sessions")
+                        | Some("force-password-reset")
+                ) =>
+            {
+                self.user_admin_mutation(&parsed)?;
+                append_audit(&self.session, line, "ok", "user admin nexus mutation")?;
                 true
             }
             "lobby"
@@ -873,7 +889,7 @@ impl App {
         }
         let execute = parsed.iter().any(|part| part == "--execute");
         let plan = admin_agent_services_plan();
-        self.render_or_execute_nexus_get(&plan, execute)
+        self.render_or_execute_nexus_get(&plan, execute, None)
     }
 
     fn lobby_readonly(&self, parsed: &[String]) -> io::Result<()> {
@@ -889,7 +905,7 @@ impl App {
                 }
                 let filter = LobbyListFilter::from_positionals(&args);
                 let plan = lobby_list_plan(&filter);
-                self.render_or_execute_nexus_get(&plan, execute)
+                self.render_or_execute_nexus_get(&plan, execute, None)
             }
             Some("open") => {
                 let args = non_flag_args(parsed, 2);
@@ -902,7 +918,7 @@ impl App {
                     return Ok(());
                 };
                 match lobby_open_plan(lobby_id) {
-                    Ok(plan) => self.render_or_execute_nexus_get(&plan, execute),
+                    Ok(plan) => self.render_or_execute_nexus_get(&plan, execute, None),
                     Err(err) => {
                         println!("{err}");
                         Ok(())
@@ -920,29 +936,58 @@ impl App {
         &self,
         plan: &ProtectedGetPlan,
         execute: bool,
+        confirm: Option<&str>,
     ) -> io::Result<()> {
+        let mutation_confirm = plan.mutation_confirm.as_deref();
         if !execute {
-            println!("dry-run Nexus protected read-only request:");
+            println!("dry-run Nexus protected request:");
             println!("{}", plan.render_dry_run());
-            println!(
-                "MVP note: command was not executed. Add --execute, set SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1, and set {}{} to run it.",
-                plan.token_env,
-                plan.fallback_token_env
-                    .map(|env| format!(" or {env}"))
-                    .unwrap_or_default()
-            );
+            if let Some(expected) = mutation_confirm {
+                println!(
+                    "MVP note: command was not executed. Add --execute, set {NEXUS_MUTATION_ENV}=1, pass --confirm {expected}, and set {}{} to run it.",
+                    plan.token_env,
+                    plan.fallback_token_env
+                        .map(|env| format!(" or {env}"))
+                        .unwrap_or_default()
+                );
+            } else {
+                println!(
+                    "MVP note: command was not executed. Add --execute, set SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1, and set {}{} to run it.",
+                    plan.token_env,
+                    plan.fallback_token_env
+                        .map(|env| format!(" or {env}"))
+                        .unwrap_or_default()
+                );
+            }
             return Ok(());
         }
-        if env::var("SEKAILINK_CORE_ACCESS_REMOTE_READONLY")
-            .ok()
-            .as_deref()
-            != Some("1")
-        {
-            println!("protected Nexus read-only execution blocked by environment gate");
-            println!("set SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1 and rerun with --execute");
-            println!("dry-run command:");
-            println!("{}", plan.render_dry_run());
-            return Ok(());
+        if let Some(expected) = mutation_confirm {
+            if env::var(NEXUS_MUTATION_ENV).ok().as_deref() != Some("1") {
+                println!("protected Nexus mutation blocked by environment gate");
+                println!("set {NEXUS_MUTATION_ENV}=1 and rerun with --execute");
+                println!("dry-run command:");
+                println!("{}", plan.render_dry_run());
+                return Ok(());
+            }
+            if confirm != Some(expected) {
+                println!("protected Nexus mutation blocked by confirmation guard");
+                println!("required confirmation: --confirm {expected}");
+                println!("dry-run command:");
+                println!("{}", plan.render_dry_run());
+                return Ok(());
+            }
+        } else {
+            if env::var("SEKAILINK_CORE_ACCESS_REMOTE_READONLY")
+                .ok()
+                .as_deref()
+                != Some("1")
+            {
+                println!("protected Nexus read-only execution blocked by environment gate");
+                println!("set SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1 and rerun with --execute");
+                println!("dry-run command:");
+                println!("{}", plan.render_dry_run());
+                return Ok(());
+            }
         }
         execute_protected_get(plan)
     }
@@ -953,8 +998,95 @@ impl App {
         let args = non_flag_args(parsed, 2);
         match identity_user_plan(action, &args) {
             Ok(plan) => {
-                self.render_or_execute_nexus_get(&plan, execute)?;
+                self.render_or_execute_nexus_get(&plan, execute, None)?;
             }
+            Err(err) => println!("{err}"),
+        }
+        Ok(())
+    }
+
+    fn user_admin_mutation(&self, parsed: &[String]) -> io::Result<()> {
+        let action = parsed.get(1).map(String::as_str).unwrap_or("");
+        let execute = parsed.iter().any(|part| part == "--execute");
+        let confirm = flag_value(parsed, "--confirm");
+        let plan = match action {
+            "create" => {
+                let args = option_positionals(
+                    parsed,
+                    2,
+                    &[
+                        "--password-env",
+                        "--display-name",
+                        "--locale",
+                        "--permissions",
+                    ],
+                );
+                if args.len() < 3 {
+                    println!(
+                        "usage: user create <username> <email> <role> --password-env ENV [--display-name name] [--locale fr-CA] [--permissions a,b] [--email-verified] --confirm user:<username>:create [--execute]"
+                    );
+                    return Ok(());
+                }
+                let Some(password_env) = flag_value(parsed, "--password-env") else {
+                    println!("user create requires --password-env ENV");
+                    return Ok(());
+                };
+                identity_user_create_plan(
+                    &args[0],
+                    &args[1],
+                    &args[2],
+                    flag_value(parsed, "--display-name"),
+                    flag_value(parsed, "--locale"),
+                    flag_value(parsed, "--permissions"),
+                    parsed.iter().any(|part| part == "--email-verified"),
+                    password_env,
+                )
+            }
+            "edit" => {
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                if args.len() < 2 {
+                    println!(
+                        "usage: user edit <username> key=value [key=value...] --confirm user:<username>:edit [--execute]"
+                    );
+                    return Ok(());
+                }
+                identity_user_edit_plan(&args[0], &args[1..])
+            }
+            "disable" => {
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                if args.len() != 1 {
+                    println!(
+                        "usage: user disable <username> --confirm user:<username>:disable [--execute]"
+                    );
+                    return Ok(());
+                }
+                identity_user_disable_plan(&args[0])
+            }
+            "revoke-sessions" => {
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                if args.len() != 1 {
+                    println!(
+                        "usage: user revoke-sessions <username> --confirm user:<username>:revoke-sessions [--execute]"
+                    );
+                    return Ok(());
+                }
+                identity_user_revoke_sessions_plan(&args[0])
+            }
+            "force-password-reset" => {
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                if args.len() != 1 {
+                    println!(
+                        "usage: user force-password-reset <username> --confirm user:<username>:force-password-reset [--execute]"
+                    );
+                    return Ok(());
+                }
+                identity_user_force_password_reset_plan(&args[0])
+            }
+            _ => Err(format!("unsupported user admin command: {action}")),
+        };
+
+        match plan {
+            Ok(plan) => self.render_or_execute_nexus_get(&plan, execute, confirm)?,
             Err(err) => println!("{err}"),
         }
         Ok(())
@@ -1414,6 +1546,7 @@ impl App {
             ("SEKAILINK_CORE_ACCESS_ROLE", false),
             ("SEKAILINK_CORE_ACCESS_REMOTE_READONLY", false),
             ("SEKAILINK_CORE_ACCESS_REMOTE_MUTATION", false),
+            (NEXUS_MUTATION_ENV, false),
             ("SEKAILINK_CORE_ACCESS_AGENT_ADMIN_TOKEN", true),
             ("SEKAILINK_CORE_ACCESS_NEXUS_ADMIN_TOKEN", true),
             ("SEKAILINK_CORE_ACCESS_NEXUS_AGENT_ADMIN_TOKEN", true),
@@ -2195,6 +2328,19 @@ fn print_help() {
     println!("  user sessions <username> [--execute]");
     println!("  user devices <username> [--execute]");
     println!("  user audit <username> [limit] [event_type] [offset] [--execute]");
+    println!(
+        "  user create <username> <email> <role> --password-env ENV [--confirm user:<username>:create] [--execute]"
+    );
+    println!(
+        "  user edit <username> key=value [key=value...] --confirm user:<username>:edit [--execute]"
+    );
+    println!("  user disable <username> --confirm user:<username>:disable [--execute]");
+    println!(
+        "  user revoke-sessions <username> --confirm user:<username>:revoke-sessions [--execute]"
+    );
+    println!(
+        "  user force-password-reset <username> --confirm user:<username>:force-password-reset [--execute]"
+    );
     println!("  lobby list [limit] [query] [visibility] [status] [offset] [--execute]");
     println!("  lobby open <lobby_id> [--execute]");
     println!("  logs list");
@@ -2839,7 +2985,14 @@ fn shell_safe_tool_name(name: &str) -> &str {
 fn env_check(name: &str, sensitive: bool) -> DoctorCheck {
     match env::var(name) {
         Ok(value) if value.is_empty() => DoctorCheck::warn(&format!("env:{name}"), "set but empty"),
-        Ok(value) if name == "SEKAILINK_CORE_ACCESS_REMOTE_READONLY" && value != "1" => {
+        Ok(value)
+            if matches!(
+                name,
+                "SEKAILINK_CORE_ACCESS_REMOTE_READONLY"
+                    | "SEKAILINK_CORE_ACCESS_REMOTE_MUTATION"
+                    | NEXUS_MUTATION_ENV
+            ) && value != "1" =>
+        {
             DoctorCheck::warn(&format!("env:{name}"), "set but not enabled")
         }
         Ok(_) if sensitive => DoctorCheck::ok(&format!("env:{name}"), "set (value hidden)"),

@@ -6,6 +6,7 @@ pub const NEXUS_TOKEN_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_ADMIN_TOKEN";
 pub const NEXUS_AGENT_TOKEN_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_AGENT_ADMIN_TOKEN";
 pub const NEXUS_LOBBY_TOKEN_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_LOBBY_ADMIN_TOKEN";
 pub const NEXUS_IDENTITY_TOKEN_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_IDENTITY_ADMIN_TOKEN";
+pub const NEXUS_MUTATION_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_MUTATION";
 
 const SSH_ALIAS: &str = "nexus-vps";
 const ADMIN_AGENT_BASE: &str = "http://127.0.0.1:19091";
@@ -19,6 +20,10 @@ pub struct ProtectedGetPlan {
     pub detail: String,
     pub token_env: &'static str,
     pub fallback_token_env: Option<&'static str>,
+    pub method: &'static str,
+    pub body: Option<String>,
+    pub redacted_body: Option<String>,
+    pub mutation_confirm: Option<String>,
 }
 
 impl ProtectedGetPlan {
@@ -34,6 +39,33 @@ impl ProtectedGetPlan {
             detail: detail.into(),
             token_env,
             fallback_token_env: (token_env != NEXUS_TOKEN_ENV).then_some(NEXUS_TOKEN_ENV),
+            method: "GET",
+            body: None,
+            redacted_body: None,
+            mutation_confirm: None,
+        }
+    }
+
+    fn request(
+        title: impl Into<String>,
+        method: &'static str,
+        url: impl Into<String>,
+        detail: impl Into<String>,
+        token_env: &'static str,
+        body: Option<String>,
+        redacted_body: Option<String>,
+        mutation_confirm: Option<String>,
+    ) -> Self {
+        Self {
+            title: title.into(),
+            url: url.into(),
+            detail: detail.into(),
+            token_env,
+            fallback_token_env: (token_env != NEXUS_TOKEN_ENV).then_some(NEXUS_TOKEN_ENV),
+            method,
+            body,
+            redacted_body,
+            mutation_confirm,
         }
     }
 
@@ -42,14 +74,27 @@ impl ProtectedGetPlan {
             .fallback_token_env
             .map(|env| format!("; fallback ${env}"))
             .unwrap_or_default();
+        let body = self
+            .redacted_body
+            .as_deref()
+            .map(|body| format!("\nbody: {body}"))
+            .unwrap_or_default();
+        let confirm = self
+            .mutation_confirm
+            .as_deref()
+            .map(|value| format!("\nconfirmation: --confirm {value}"))
+            .unwrap_or_default();
         format!(
-            "{}\n{}\ntransport: ssh {} -- sh -s\nrequest: curl -fsS --connect-timeout 5 --max-time 20 --config - {}\nheaders: Authorization: Bearer ${}{}; X-SekaiLink-Client: core-access",
+            "{}\n{}\ntransport: ssh {} -- sh -s\nrequest: {} {}\nheaders: Authorization: Bearer ${}{}; X-SekaiLink-Client: core-access{}{}",
             self.title,
             self.detail,
             SSH_ALIAS,
+            self.method,
             shell_word(&self.url),
             self.token_env,
             fallback,
+            body,
+            confirm,
         )
     }
 }
@@ -211,6 +256,160 @@ pub fn identity_user_plan(action: &str, values: &[String]) -> Result<ProtectedGe
     }
 }
 
+pub fn identity_user_create_plan(
+    username: &str,
+    email: &str,
+    role: &str,
+    display_name: Option<&str>,
+    locale: Option<&str>,
+    permissions: Option<&str>,
+    email_verified: bool,
+    password_env: &str,
+) -> Result<ProtectedGetPlan, String> {
+    let username = clean_identity(username, "username")?;
+    let email = clean_email(email)?;
+    let role = clean_role(role)?;
+    let password = env::var(password_env)
+        .map_err(|_| format!("missing password env var: {password_env}"))?
+        .trim()
+        .to_string();
+    if password.len() < 8 {
+        return Err("password env value must be at least 8 characters".to_string());
+    }
+
+    let mut fields = vec![
+        json_field("username", &username),
+        json_field("email", &email),
+        json_field("password", &password),
+        json_field("role", &role),
+        format!("\"email_verified\":{email_verified}"),
+    ];
+    if let Some(display_name) = display_name.filter(|value| !value.trim().is_empty()) {
+        fields.push(json_field("display_name", display_name.trim()));
+    }
+    if let Some(locale) = locale.filter(|value| !value.trim().is_empty()) {
+        fields.push(json_field("locale", locale.trim()));
+    }
+    if let Some(permissions) = permissions.filter(|value| !value.trim().is_empty()) {
+        fields.push(format!(
+            "\"permissions\":{}",
+            json_string_array(permissions)
+        ));
+    }
+
+    let redacted_fields = fields
+        .iter()
+        .map(|field| {
+            if field.starts_with("\"password\":") {
+                "\"password\":\"<redacted>\"".to_string()
+            } else {
+                field.clone()
+            }
+        })
+        .collect::<Vec<_>>();
+    Ok(ProtectedGetPlan::request(
+        format!("Nexus Identity create user: {username}"),
+        "POST",
+        format!("{IDENTITY_ADMIN_BASE}/admin/users"),
+        "POST /admin/users on the live Nexus Identity service. This route records an admin audit event.",
+        NEXUS_IDENTITY_TOKEN_ENV,
+        Some(format!("{{{}}}", fields.join(","))),
+        Some(format!("{{{}}}", redacted_fields.join(","))),
+        Some(format!("user:{username}:create")),
+    ))
+}
+
+pub fn identity_user_edit_plan(
+    username: &str,
+    patches: &[String],
+) -> Result<ProtectedGetPlan, String> {
+    let username = clean_identity(username, "username")?;
+    let mut fields = Vec::new();
+    for patch in patches {
+        let Some((key, value)) = patch.split_once('=') else {
+            return Err(format!("invalid patch: {patch}; expected key=value"));
+        };
+        match key {
+            "email" => fields.push(json_field("email", &clean_email(value)?)),
+            "display_name" | "avatar_url" | "bio" | "locale" | "role" => {
+                fields.push(json_field(key, value.trim()));
+            }
+            "email_verified" | "disabled" => {
+                fields.push(format!("\"{key}\":{}", parse_bool(value)?));
+            }
+            "permissions" => fields.push(format!("\"permissions\":{}", json_string_array(value))),
+            other => return Err(format!("unsupported user edit field: {other}")),
+        }
+    }
+    if fields.is_empty() {
+        return Err("user edit requires at least one key=value patch".to_string());
+    }
+    Ok(ProtectedGetPlan::request(
+        format!("Nexus Identity edit user: {username}"),
+        "PATCH",
+        format!(
+            "{IDENTITY_ADMIN_BASE}/admin/users/{}",
+            percent_encode_segment(&username)
+        ),
+        "PATCH /admin/users/{username} on the live Nexus Identity service. This route records an admin audit event.",
+        NEXUS_IDENTITY_TOKEN_ENV,
+        Some(format!("{{{}}}", fields.join(","))),
+        Some(format!("{{{}}}", fields.join(","))),
+        Some(format!("user:{username}:edit")),
+    ))
+}
+
+pub fn identity_user_disable_plan(username: &str) -> Result<ProtectedGetPlan, String> {
+    let username = clean_identity(username, "username")?;
+    Ok(ProtectedGetPlan::request(
+        format!("Nexus Identity disable user: {username}"),
+        "DELETE",
+        format!(
+            "{IDENTITY_ADMIN_BASE}/admin/users/{}",
+            percent_encode_segment(&username)
+        ),
+        "DELETE /admin/users/{username} soft-disables the user and revokes sessions.",
+        NEXUS_IDENTITY_TOKEN_ENV,
+        None,
+        None,
+        Some(format!("user:{username}:disable")),
+    ))
+}
+
+pub fn identity_user_revoke_sessions_plan(username: &str) -> Result<ProtectedGetPlan, String> {
+    let username = clean_identity(username, "username")?;
+    Ok(ProtectedGetPlan::request(
+        format!("Nexus Identity revoke sessions: {username}"),
+        "POST",
+        format!(
+            "{IDENTITY_ADMIN_BASE}/admin/users/{}/sessions/revoke-others",
+            percent_encode_segment(&username)
+        ),
+        "POST /admin/users/{username}/sessions/revoke-others revokes all sessions for the target user.",
+        NEXUS_IDENTITY_TOKEN_ENV,
+        None,
+        None,
+        Some(format!("user:{username}:revoke-sessions")),
+    ))
+}
+
+pub fn identity_user_force_password_reset_plan(username: &str) -> Result<ProtectedGetPlan, String> {
+    let username = clean_identity(username, "username")?;
+    Ok(ProtectedGetPlan::request(
+        format!("Nexus Identity force password reset: {username}"),
+        "POST",
+        format!(
+            "{IDENTITY_ADMIN_BASE}/admin/users/{}/password-reset",
+            percent_encode_segment(&username)
+        ),
+        "POST /admin/users/{username}/password-reset sends a reset email and records admin audit.",
+        NEXUS_IDENTITY_TOKEN_ENV,
+        None,
+        None,
+        Some(format!("user:{username}:force-password-reset")),
+    ))
+}
+
 pub fn execute_protected_get(plan: &ProtectedGetPlan) -> io::Result<()> {
     let Some((token_source, token)) = read_token(plan) else {
         println!(
@@ -231,15 +430,27 @@ pub fn execute_protected_get(plan: &ProtectedGetPlan) -> io::Result<()> {
         return Ok(());
     }
 
-    println!("executing protected Nexus read-only GET:");
+    println!("executing protected Nexus request:");
     println!("{}", plan.title);
     println!("token source: {token_source} (value hidden)");
 
     let header = curl_config_escape(&format!("Authorization: Bearer {token}"));
+    let body_config = plan
+        .body
+        .as_deref()
+        .map(|body| {
+            format!(
+                "header = \"Content-Type: application/json\"\ndata = \"{}\"\n",
+                curl_config_escape(body)
+            )
+        })
+        .unwrap_or_default();
     let script = format!(
-        "set -eu\ncurl -fsS --connect-timeout 5 --max-time 20 --config - {} <<'__SEKAILINK_CURL__'\nheader = \"{}\"\nheader = \"User-Agent: SekaiLinkCoreAccess/0.1\"\nheader = \"X-SekaiLink-Client: core-access\"\nheader = \"X-SekaiLink-Client-Version: 0.1.0\"\nheader = \"X-SekaiLink-Device-Id: core-access-bastion\"\n__SEKAILINK_CURL__\nprintf '\\n'\n",
+        "set -eu\ncurl -fsS --connect-timeout 5 --max-time 20 --request {} --config - {} <<'__SEKAILINK_CURL__'\nheader = \"{}\"\nheader = \"User-Agent: SekaiLinkCoreAccess/0.1\"\nheader = \"X-SekaiLink-Client: core-access\"\nheader = \"X-SekaiLink-Client-Version: 0.1.0\"\nheader = \"X-SekaiLink-Device-Id: core-access-bastion\"\n{}__SEKAILINK_CURL__\nprintf '\\n'\n",
+        plan.method,
         shell_word(&plan.url),
         header,
+        body_config,
     );
 
     let term = env::var("TERM")
@@ -331,6 +542,76 @@ fn percent_encode(value: &str) -> String {
     out
 }
 
+fn clean_identity(value: &str, label: &str) -> Result<String, String> {
+    let clean = value.trim();
+    if clean.is_empty() {
+        return Err(format!("{label} is required"));
+    }
+    if !clean
+        .chars()
+        .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '-' | '_' | '.' | '@'))
+    {
+        return Err(format!(
+            "{label} may only use letters, numbers, dash, underscore, dot, or @"
+        ));
+    }
+    Ok(clean.to_string())
+}
+
+fn clean_email(value: &str) -> Result<String, String> {
+    let clean = clean_identity(value, "email")?;
+    if !clean.contains('@') {
+        return Err("email must contain @".to_string());
+    }
+    Ok(clean.to_ascii_lowercase())
+}
+
+fn clean_role(value: &str) -> Result<String, String> {
+    let role = value.trim().to_ascii_lowercase();
+    match role.as_str() {
+        "player" | "service" | "admin" | "moderator" => Ok(role),
+        _ => Err("role must be player, service, moderator, or admin".to_string()),
+    }
+}
+
+fn parse_bool(value: &str) -> Result<bool, String> {
+    match value.trim().to_ascii_lowercase().as_str() {
+        "1" | "true" | "yes" | "on" => Ok(true),
+        "0" | "false" | "no" | "off" => Ok(false),
+        _ => Err(format!("invalid boolean: {value}")),
+    }
+}
+
+fn json_field(key: &str, value: &str) -> String {
+    format!("\"{}\":\"{}\"", json_escape(key), json_escape(value))
+}
+
+fn json_string_array(value: &str) -> String {
+    let items = value
+        .split(',')
+        .map(str::trim)
+        .filter(|item| !item.is_empty())
+        .map(|item| format!("\"{}\"", json_escape(item)))
+        .collect::<Vec<_>>();
+    format!("[{}]", items.join(","))
+}
+
+fn json_escape(value: &str) -> String {
+    let mut out = String::new();
+    for ch in value.chars() {
+        match ch {
+            '\\' => out.push_str("\\\\"),
+            '"' => out.push_str("\\\""),
+            '\n' => out.push_str("\\n"),
+            '\r' => out.push_str("\\r"),
+            '\t' => out.push_str("\\t"),
+            ch if ch.is_control() => out.push_str(&format!("\\u{:04x}", ch as u32)),
+            ch => out.push(ch),
+        }
+    }
+    out
+}
+
 fn curl_config_escape(value: &str) -> String {
     value.replace('\\', "\\\\").replace('"', "\\\"")
 }
@@ -348,7 +629,11 @@ fn shell_word(value: &str) -> String {
 
 #[cfg(test)]
 mod tests {
-    use super::{LobbyListFilter, identity_user_plan, lobby_list_plan, lobby_open_plan};
+    use super::{
+        LobbyListFilter, identity_user_disable_plan, identity_user_edit_plan,
+        identity_user_force_password_reset_plan, identity_user_plan,
+        identity_user_revoke_sessions_plan, lobby_list_plan, lobby_open_plan,
+    };
 
     #[test]
     fn lobby_list_builds_query_string() {
@@ -400,6 +685,61 @@ mod tests {
         assert!(
             plan.render_dry_run()
                 .contains("'http://149.202.61.90:19095/admin/users?")
+        );
+    }
+
+    #[test]
+    fn identity_edit_plan_builds_patch_body_and_confirmation() {
+        let patches = vec![
+            "display_name=Certo Admin".to_string(),
+            "disabled=false".to_string(),
+            "permissions=release:write,rooms:control".to_string(),
+        ];
+        let plan = identity_user_edit_plan("certo", &patches).unwrap();
+        assert_eq!(plan.method, "PATCH");
+        assert!(plan.url.ends_with("/admin/users/certo"));
+        assert_eq!(plan.mutation_confirm.as_deref(), Some("user:certo:edit"));
+        let body = plan.body.as_deref().unwrap_or_default();
+        assert!(body.contains("\"display_name\":\"Certo Admin\""));
+        assert!(body.contains("\"disabled\":false"));
+        assert!(body.contains("\"permissions\":[\"release:write\",\"rooms:control\"]"));
+        assert!(
+            plan.render_dry_run()
+                .contains("confirmation: --confirm user:certo:edit")
+        );
+    }
+
+    #[test]
+    fn identity_disable_plan_uses_delete_and_confirmation() {
+        let plan = identity_user_disable_plan("JoueurSansFromage").unwrap();
+        assert_eq!(plan.method, "DELETE");
+        assert!(plan.url.ends_with("/admin/users/JoueurSansFromage"));
+        assert_eq!(
+            plan.mutation_confirm.as_deref(),
+            Some("user:JoueurSansFromage:disable")
+        );
+    }
+
+    #[test]
+    fn identity_session_and_password_mutations_are_post_requests() {
+        let revoke = identity_user_revoke_sessions_plan("certo").unwrap();
+        assert_eq!(revoke.method, "POST");
+        assert!(
+            revoke
+                .url
+                .ends_with("/admin/users/certo/sessions/revoke-others")
+        );
+        assert_eq!(
+            revoke.mutation_confirm.as_deref(),
+            Some("user:certo:revoke-sessions")
+        );
+
+        let reset = identity_user_force_password_reset_plan("certo").unwrap();
+        assert_eq!(reset.method, "POST");
+        assert!(reset.url.ends_with("/admin/users/certo/password-reset"));
+        assert_eq!(
+            reset.mutation_confirm.as_deref(),
+            Some("user:certo:force-password-reset")
         );
     }
 }

@@ -54,6 +54,9 @@ ops exports [query]
 
 ```text
 user search <query>
+user open <user>
+user sessions <user>
+user audit <user>
 lobby list
 lobby open <lobby>
 room summary <room>
@@ -75,6 +78,10 @@ client diagnostics-export [query] --file diagnostics.md
 ```text
 maintenance enable <scope> --message <msg>
 server restart <server> <service> --confirm <server>:<service>:restart
+user edit <user> disabled=false --confirm user:<user>:edit
+user disable <user> --confirm user:<user>:disable
+user revoke-sessions <user> --confirm user:<user>:revoke-sessions
+user force-password-reset <user> --confirm user:<user>:force-password-reset
 release verify-cdn
 release rollback <version>
 server update plan <server>

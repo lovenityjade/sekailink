@@ -42,3 +42,5 @@
   readiness checks and export inventory before moderation shifts.
 - Added gated admin-agent commands for server health/system/services/logs and
   Admin-only service start/stop/restart with exact confirmation.
+- Added gated Nexus Identity admin mutations for user create/edit/disable,
+  session revocation, and forced password reset.
