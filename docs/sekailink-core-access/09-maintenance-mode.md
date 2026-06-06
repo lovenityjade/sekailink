@@ -27,12 +27,22 @@ Champs:
 
 ```text
 maintenance status
-maintenance enable <scope> --message <msg>
-maintenance disable
-maintenance schedule <scope> <start> <end>
-maintenance broadcast
+maintenance enable <scope> <message> --confirm maintenance:<scope>:enable
+maintenance disable [scope] [reason] --confirm maintenance:<scope>:disable
+maintenance schedule <scope> <start> <end> <message>
+maintenance broadcast <scope> <message> --confirm maintenance:<scope>:broadcast
 maintenance history
 ```
+
+Etat Core Access actuel:
+
+- `maintenance schedule` cree un draft local dans `maintenance/current.txt` et
+  `maintenance/history.jsonl`;
+- `maintenance enable`, `maintenance disable` et `maintenance broadcast` creent
+  des drafts locaux audites dans `drafts/maintenance.jsonl`;
+- aucune commande maintenance ne modifie encore le mode maintenance serveur ou
+  client;
+- les actions sensibles exigent une confirmation exacte.
 
 ## F12 Panic
 
@@ -45,4 +55,3 @@ F12 ouvre un panneau controle:
 - collect logs bundle.
 
 Chaque action Panic demande confirmation forte.
-

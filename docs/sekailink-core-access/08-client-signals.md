@@ -32,7 +32,17 @@ Regles:
 Etat Core Access actuel:
 
 - `client diagnostics-request` cree une demande locale `draft-consent-required`;
-- aucun signal client n'est envoye dans cette tranche;
+- `client broadcast`, `client maintenance-banner`, `client force-update-prompt`,
+  `client request-relogin`, `client refresh-lobby`, `client refresh-room`,
+  `client request-sklmi-reconnect`, `client restart-runtime` et
+  `client clear-cache-request` creent des drafts locaux audites dans
+  `drafts/client-signal.jsonl`;
+- les signaux sensibles exigent `--confirm client:<action>:<target>`;
+- `client refresh-lobby` et `client refresh-room` sont des drafts sans
+  confirmation forte, car ils ne sont pas destructifs;
+- `client clear-cache-request` reste marque approval-required dans le detail du
+  draft;
+- aucun signal client n'est envoye par Core Access actuellement;
 - aucun fichier Client Core, Sekaiemu ou SKLMI n'est collecte par Core Access;
 - `client diagnostics-list` liste les demandes locales;
 - `client diagnostics-export` exporte les demandes et le contrat de bundle
@@ -64,5 +74,9 @@ Ciblage:
 Exemple:
 
 ```text
-broadcast lobby pas-pour-certo "Maintenance de room dans 5 minutes."
+broadcast lobby pas-pour-certo "Maintenance de room dans 5 minutes." --confirm broadcast:lobby:pas-pour-certo
 ```
+
+Etat actuel: les commandes `broadcast ...` creent des drafts locaux audites dans
+`drafts/broadcast.jsonl`. Aucun message n'est envoye aux clients, rooms,
+lobbies, Discord ou Twitch tant que le transport serveur n'est pas connecte.

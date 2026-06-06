@@ -39,6 +39,7 @@ impl Session {
         fs::create_dir_all(self.scheduler_dir())?;
         fs::create_dir_all(self.pack_repos_dir())?;
         fs::create_dir_all(self.releases_dir())?;
+        fs::create_dir_all(self.drafts_dir())?;
         Ok(())
     }
 
@@ -94,6 +95,10 @@ impl Session {
 
     pub fn releases_dir(&self) -> PathBuf {
         self.data_dir.join("releases")
+    }
+
+    pub fn drafts_dir(&self) -> PathBuf {
+        self.data_dir.join("drafts")
     }
 }
 
@@ -370,6 +375,51 @@ pub fn write_release_draft(
         ),
     )?;
     Ok(id)
+}
+
+pub fn write_ops_draft(
+    session: &Session,
+    domain: &str,
+    action: &str,
+    target: &str,
+    detail: &str,
+) -> io::Result<String> {
+    let id = format!("draft-{}-{}", epoch_nanos(), std::process::id());
+    let file_name = safe_draft_file_name(domain);
+    append_jsonl(
+        &session.drafts_dir().join(file_name),
+        &format!(
+            "{{\"id\":\"{}\",\"ts\":{},\"state\":\"draft\",\"author\":\"{}\",\"domain\":\"{}\",\"action\":\"{}\",\"target\":\"{}\",\"detail\":\"{}\"}}\n",
+            json_escape(&id),
+            epoch_seconds(),
+            json_escape(&session.sekailink_user),
+            json_escape(domain),
+            json_escape(action),
+            json_escape(target),
+            json_escape(detail)
+        ),
+    )?;
+    Ok(id)
+}
+
+fn safe_draft_file_name(domain: &str) -> String {
+    let safe = domain
+        .chars()
+        .map(|ch| {
+            if ch.is_ascii_alphanumeric() || matches!(ch, '-' | '_') {
+                ch
+            } else {
+                '-'
+            }
+        })
+        .collect::<String>();
+    let trimmed = safe.trim_matches('-');
+    let name = if trimmed.is_empty() {
+        "drafts"
+    } else {
+        trimmed
+    };
+    format!("{name}.jsonl")
 }
 
 pub fn write_export(

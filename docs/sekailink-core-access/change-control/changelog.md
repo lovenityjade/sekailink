@@ -46,3 +46,5 @@
   session revocation, and forced password reset.
 - Added local release/CDN cockpit commands for manifest inventory,
   artifact verification, public CDN probes, and audited publish/rollback drafts.
+- Added audited local drafts for broadcasts, client signals, maintenance
+  enable/disable/broadcast, and client dashboard banner publish/rollback/disable.

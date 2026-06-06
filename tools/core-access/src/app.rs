@@ -7,8 +7,8 @@ use crate::audit::{
     Session, append_approval_decision, append_approval_request, append_audit,
     append_client_diagnostics_request, append_history, append_incident_event, append_log_pin,
     append_note, read_file_to_string, write_client_banner_draft, write_export,
-    write_export_with_extension, write_maintenance_draft, write_pack_repo, write_release_draft,
-    write_schedule_job,
+    write_export_with_extension, write_maintenance_draft, write_ops_draft, write_pack_repo,
+    write_release_draft, write_schedule_job,
 };
 use crate::commands::{COMMANDS, Confirmation, command_names, find_command, search_commands};
 use crate::line_editor::LineEditor;
@@ -392,20 +392,53 @@ impl App {
                 append_audit(&self.session, line, "ok", "client diagnostics local")?;
                 true
             }
+            "client"
+                if matches!(
+                    parsed.get(1).map(String::as_str),
+                    Some(
+                        "broadcast"
+                            | "maintenance-banner"
+                            | "force-update-prompt"
+                            | "request-relogin"
+                            | "refresh-lobby"
+                            | "refresh-room"
+                            | "request-sklmi-reconnect"
+                            | "restart-runtime"
+                            | "clear-cache-request"
+                    )
+                ) =>
+            {
+                self.client_signal_draft(&parsed)?;
+                append_audit(&self.session, line, "ok", "client signal draft")?;
+                true
+            }
             "client-banner"
                 if matches!(
                     parsed.get(1).map(String::as_str),
-                    Some("list") | Some("preview") | Some("edit")
+                    Some("list")
+                        | Some("preview")
+                        | Some("edit")
+                        | Some("publish" | "rollback" | "disable")
                 ) =>
             {
                 self.client_banner(&parsed)?;
                 append_audit(&self.session, line, "ok", "client-banner")?;
                 true
             }
+            "broadcast"
+                if matches!(
+                    parsed.get(1).map(String::as_str),
+                    Some("global" | "server" | "lobby" | "room" | "role" | "version" | "game")
+                ) =>
+            {
+                self.broadcast_draft(&parsed)?;
+                append_audit(&self.session, line, "ok", "broadcast draft")?;
+                true
+            }
             "maintenance"
                 if matches!(
                     parsed.get(1).map(String::as_str),
-                    Some("status") | Some("schedule") | Some("history")
+                    Some("enable" | "disable" | "status" | "schedule" | "broadcast" | "history")
                 ) =>
             {
                 self.maintenance(&parsed)?;
@@ -1632,6 +1665,7 @@ impl App {
             ("scheduler", self.session.scheduler_dir()),
             ("pack-repos", self.session.pack_repos_dir()),
             ("releases", self.session.releases_dir()),
+            ("drafts", self.session.drafts_dir()),
             ("docs", docs_root_path()),
             ("pdfs", docs_root_path().join("dist").join("pdf")),
         ]
@@ -1725,6 +1759,7 @@ impl App {
         let pack_repos = read_file_to_string(&self.session.pack_repos_dir().join("repos.jsonl"))?;
         let release_drafts =
             read_file_to_string(&self.session.releases_dir().join("drafts.jsonl"))?;
+        let ops_drafts = read_draft_files(&self.session.drafts_dir())?;
         let diagnostics = read_file_to_string(&self.session.client_diagnostics_path())?;
         let mut timeline = self.ops_timeline_entries()?;
         timeline.sort_by_key(|entry| entry.ts);
@@ -1777,6 +1812,7 @@ impl App {
         push_json_section_from_text(&mut body, "Schedule Drafts", &schedule, 60);
         push_json_section_from_text(&mut body, "Pack Repo Drafts", &pack_repos, 60);
         push_json_section_from_text(&mut body, "Release Drafts", &release_drafts, 60);
+        push_json_section_from_text(&mut body, "Ops Drafts", &ops_drafts, 80);
         push_json_section_from_text(&mut body, "Client Diagnostics Requests", &diagnostics, 60);
         body.push_str("## Client Banner Drafts\n\n```text\n");
         for slot in 1..=3 {
@@ -1806,6 +1842,7 @@ impl App {
         let pack_repos = read_file_to_string(&self.session.pack_repos_dir().join("repos.jsonl"))?;
         let release_drafts =
             read_file_to_string(&self.session.releases_dir().join("drafts.jsonl"))?;
+        let ops_drafts = read_draft_files(&self.session.drafts_dir())?;
         let diagnostics = read_file_to_string(&self.session.client_diagnostics_path())?;
         let mut entries = Vec::new();
         push_timeline_entries(&mut entries, "audit", &audit);
@@ -1817,6 +1854,7 @@ impl App {
         push_timeline_entries(&mut entries, "schedule", &schedule);
         push_timeline_entries(&mut entries, "pack", &pack_repos);
         push_timeline_entries(&mut entries, "release", &release_drafts);
+        push_timeline_entries(&mut entries, "draft", &ops_drafts);
         push_timeline_entries(&mut entries, "diagnostics", &diagnostics);
         Ok(entries)
     }
@@ -1975,6 +2013,126 @@ impl App {
         Ok(())
     }
 
+    fn client_signal_draft(&self, parsed: &[String]) -> io::Result<()> {
+        let action = parsed.get(1).map(String::as_str).unwrap_or("");
+        let args = option_positionals(parsed, 2, &["--confirm"]);
+        let requires_confirm = !matches!(action, "refresh-lobby" | "refresh-room");
+        let usage = match action {
+            "broadcast" => {
+                "usage: client broadcast <user|all> <message> --confirm client:broadcast:<target>"
+            }
+            "maintenance-banner" => {
+                "usage: client maintenance-banner <user|all> <message> --confirm client:maintenance-banner:<target>"
+            }
+            "force-update-prompt" => {
+                "usage: client force-update-prompt <user|all> <version|message> --confirm client:force-update-prompt:<target>"
+            }
+            "request-relogin" => {
+                "usage: client request-relogin <user|all> <reason> --confirm client:request-relogin:<target>"
+            }
+            "refresh-lobby" => "usage: client refresh-lobby <user|all> [lobby-id]",
+            "refresh-room" => "usage: client refresh-room <user|all> [room-id]",
+            "request-sklmi-reconnect" => {
+                "usage: client request-sklmi-reconnect <user|all> <reason> --confirm client:request-sklmi-reconnect:<target>"
+            }
+            "restart-runtime" => {
+                "usage: client restart-runtime <user|all> <reason> --confirm client:restart-runtime:<target>"
+            }
+            "clear-cache-request" => {
+                "usage: client clear-cache-request <user|all> <reason> --confirm client:clear-cache-request:<target>"
+            }
+            _ => "usage: client <signal> <target> [detail]",
+        };
+        let Some(target) = args.first().map(String::as_str) else {
+            println!("{usage}");
+            return Ok(());
+        };
+        let detail = if args.len() > 1 {
+            args[1..].join(" ")
+        } else if matches!(action, "refresh-lobby" | "refresh-room") {
+            "refresh requested".to_string()
+        } else {
+            String::new()
+        };
+        if detail.trim().is_empty() {
+            println!("{usage}");
+            return Ok(());
+        }
+        if requires_confirm {
+            let expected = format!("client:{action}:{target}");
+            if !confirmation_matches(parsed, &expected) {
+                return Ok(());
+            }
+        }
+        let mut stored_detail = detail;
+        if action == "clear-cache-request" {
+            stored_detail = format!("approval_required=true {stored_detail}");
+        }
+        let id = write_ops_draft(
+            &self.session,
+            "client-signal",
+            action,
+            target,
+            &stored_detail,
+        )?;
+        println!("client signal draft saved: {id}");
+        println!("action: {action}");
+        println!("target: {target}");
+        println!("detail: {stored_detail}");
+        println!("MVP note: no realtime client signal was sent.");
+        if matches!(action, "request-sklmi-reconnect" | "restart-runtime") {
+            println!("SKLMI/Sekaiemu note: no SKLMI, Sekaiemu, or Client Core code changed.");
+        }
+        Ok(())
+    }
+
+    fn broadcast_draft(&self, parsed: &[String]) -> io::Result<()> {
+        let scope = parsed.get(1).map(String::as_str).unwrap_or("");
+        let args = option_positionals(parsed, 2, &["--confirm"]);
+        let (target, message_start) = match scope {
+            "global" => ("all", 0),
+            "server" | "lobby" | "room" | "role" | "version" | "game" => {
+                let Some(target) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: broadcast {scope} <target> <message> --confirm broadcast:{scope}:<target>"
+                    );
+                    return Ok(());
+                };
+                (target, 1)
+            }
+            _ => {
+                println!("usage: broadcast global|server|lobby|room|role|version|game");
+                return Ok(());
+            }
+        };
+        let message = if args.len() > message_start {
+            args[message_start..].join(" ")
+        } else {
+            String::new()
+        };
+        if message.trim().is_empty() {
+            if scope == "global" {
+                println!("usage: broadcast global <message> --confirm broadcast:global:all");
+            } else {
+                println!(
+                    "usage: broadcast {scope} <target> <message> --confirm broadcast:{scope}:<target>"
+                );
+            }
+            return Ok(());
+        }
+        let expected = format!("broadcast:{scope}:{target}");
+        if !confirmation_matches(parsed, &expected) {
+            return Ok(());
+        }
+        let id = write_ops_draft(&self.session, "broadcast", scope, target, &message)?;
+        println!("broadcast draft saved: {id}");
+        println!("scope: {scope}");
+        println!("target: {target}");
+        println!("message: {message}");
+        println!("MVP note: no broadcast was sent to clients, lobbies, rooms, Discord, or Twitch.");
+        Ok(())
+    }
+
     fn client_banner(&self, parsed: &[String]) -> io::Result<()> {
         match parsed.get(1).map(String::as_str) {
             Some("list") => self.client_banner_list(),
@@ -2019,8 +2177,45 @@ impl App {
                 println!("MVP note: draft only; client-banner publish is not implemented.");
                 Ok(())
             }
+            Some("publish" | "rollback" | "disable") => {
+                let action = parsed.get(1).map(String::as_str).unwrap_or("");
+                let Some(slot) = parsed.get(2) else {
+                    println!(
+                        "usage: client-banner {action} <1|2|3> --confirm banner:<slot>:{action}"
+                    );
+                    return Ok(());
+                };
+                let slot = match parse_banner_slot(slot) {
+                    Ok(slot) => slot,
+                    Err(err) => {
+                        println!("{err}");
+                        return Ok(());
+                    }
+                };
+                let expected = format!("banner:{slot}:{action}");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let text = self.read_client_banner_slot(slot)?;
+                let detail = if text.trim().is_empty() {
+                    "(empty local slot)".to_string()
+                } else {
+                    text.trim().to_string()
+                };
+                let id = write_ops_draft(
+                    &self.session,
+                    "client-banner",
+                    action,
+                    &slot.to_string(),
+                    &detail,
+                )?;
+                println!("client banner {action} draft saved: {id}");
+                println!("slot {slot}: {detail}");
+                println!("MVP note: client dashboard banner config was not published.");
+                Ok(())
+            }
             _ => {
-                println!("usage: client-banner list|preview|edit");
+                println!("usage: client-banner list|preview|edit|publish|rollback|disable");
                 Ok(())
             }
         }
@@ -2064,6 +2259,55 @@ impl App {
 
     fn maintenance(&self, parsed: &[String]) -> io::Result<()> {
         match parsed.get(1).map(String::as_str) {
+            Some("enable") => {
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let Some(scope) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: maintenance enable <scope> <message> --confirm maintenance:<scope>:enable"
+                    );
+                    return Ok(());
+                };
+                let message = if args.len() > 1 {
+                    args[1..].join(" ")
+                } else {
+                    String::new()
+                };
+                if message.trim().is_empty() {
+                    println!(
+                        "usage: maintenance enable <scope> <message> --confirm maintenance:<scope>:enable"
+                    );
+                    return Ok(());
+                }
+                let expected = format!("maintenance:{scope}:enable");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let id = write_ops_draft(&self.session, "maintenance", "enable", scope, &message)?;
+                println!("maintenance enable draft saved: {id}");
+                println!("scope: {scope}");
+                println!("message: {message}");
+                println!("MVP note: production maintenance mode was not changed.");
+                Ok(())
+            }
+            Some("disable") => {
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let scope = args.first().map(String::as_str).unwrap_or("all");
+                let reason = if args.len() > 1 {
+                    args[1..].join(" ")
+                } else {
+                    "maintenance disable requested".to_string()
+                };
+                let expected = format!("maintenance:{scope}:disable");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let id = write_ops_draft(&self.session, "maintenance", "disable", scope, &reason)?;
+                println!("maintenance disable draft saved: {id}");
+                println!("scope: {scope}");
+                println!("reason: {reason}");
+                println!("MVP note: production maintenance mode was not changed.");
+                Ok(())
+            }
             Some("status") => {
                 let current =
                     read_file_to_string(&self.session.maintenance_dir().join("current.txt"))?;
@@ -2115,8 +2359,39 @@ impl App {
                 println!("MVP note: draft only; no client/server maintenance flag changed.");
                 Ok(())
             }
+            Some("broadcast") => {
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let Some(scope) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: maintenance broadcast <scope> <message> --confirm maintenance:<scope>:broadcast"
+                    );
+                    return Ok(());
+                };
+                let message = if args.len() > 1 {
+                    args[1..].join(" ")
+                } else {
+                    String::new()
+                };
+                if message.trim().is_empty() {
+                    println!(
+                        "usage: maintenance broadcast <scope> <message> --confirm maintenance:<scope>:broadcast"
+                    );
+                    return Ok(());
+                }
+                let expected = format!("maintenance:{scope}:broadcast");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let id =
+                    write_ops_draft(&self.session, "maintenance", "broadcast", scope, &message)?;
+                println!("maintenance broadcast draft saved: {id}");
+                println!("scope: {scope}");
+                println!("message: {message}");
+                println!("MVP note: no broadcast was sent.");
+                Ok(())
+            }
             _ => {
-                println!("usage: maintenance status|schedule|history");
+                println!("usage: maintenance enable|disable|status|schedule|broadcast|history");
                 Ok(())
             }
         }
@@ -2512,6 +2787,15 @@ fn flag_value<'a>(parts: &'a [String], flag: &str) -> Option<&'a str> {
     None
 }
 
+fn confirmation_matches(parts: &[String], expected: &str) -> bool {
+    if flag_value(parts, "--confirm") == Some(expected) {
+        return true;
+    }
+    println!("draft blocked by confirmation guard");
+    println!("required confirmation: --confirm {expected}");
+    false
+}
+
 fn option_positionals(parts: &[String], start: usize, value_flags: &[&str]) -> Vec<String> {
     let mut out = Vec::new();
     let mut i = start;
@@ -2624,11 +2908,31 @@ fn print_help() {
     println!("  client-banner list");
     println!("  client-banner preview <1|2|3>");
     println!("  client-banner edit <1|2|3> <text>");
+    println!("  client-banner publish|rollback|disable <1|2|3> --confirm banner:<slot>:<action>");
+    println!("  broadcast global <message> --confirm broadcast:global:all");
+    println!(
+        "  broadcast server|lobby|room|role|version|game <target> <message> --confirm broadcast:<scope>:<target>"
+    );
+    println!("  client broadcast <user|all> <message> --confirm client:broadcast:<target>");
+    println!(
+        "  client request-relogin <user|all> <reason> --confirm client:request-relogin:<target>"
+    );
+    println!("  client refresh-lobby <user|all> [lobby-id]");
+    println!("  client refresh-room <user|all> [room-id]");
+    println!(
+        "  client request-sklmi-reconnect <user|all> <reason> --confirm client:request-sklmi-reconnect:<target>"
+    );
+    println!(
+        "  client restart-runtime <user|all> <reason> --confirm client:restart-runtime:<target>"
+    );
     println!(
         "  client diagnostics-request <user> <incident> <reason> [--include client-core,sekaiemu,sklmi,configs,system]"
     );
     println!("  client diagnostics-list [query]");
     println!("  client diagnostics-export [query] [--file name]");
+    println!("  maintenance enable <scope> <message> --confirm maintenance:<scope>:enable");
+    println!("  maintenance disable [scope] [reason] --confirm maintenance:<scope>:disable");
+    println!("  maintenance broadcast <scope> <message> --confirm maintenance:<scope>:broadcast");
     println!("  maintenance status");
     println!("  maintenance schedule <scope> <start> <end> <message>");
     println!("  maintenance history");
@@ -2834,6 +3138,23 @@ fn looks_like_export_file(value: &str) -> bool {
         || value.ends_with(".txt")
         || value.ends_with(".json")
         || value.ends_with(".jsonl")
+}
+
+fn read_draft_files(dir: &Path) -> io::Result<String> {
+    let mut out = String::new();
+    if !dir.exists() {
+        return Ok(out);
+    }
+    let mut paths = fs::read_dir(dir)?
+        .filter_map(Result::ok)
+        .map(|entry| entry.path())
+        .filter(|path| path.extension().and_then(|value| value.to_str()) == Some("jsonl"))
+        .collect::<Vec<_>>();
+    paths.sort();
+    for path in paths {
+        out.push_str(&read_file_to_string(&path)?);
+    }
+    Ok(out)
 }
 
 #[derive(Debug, Clone)]

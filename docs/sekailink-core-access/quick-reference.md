@@ -77,7 +77,9 @@ client diagnostics-export [query] --file diagnostics.md
 ## Admin critical
 
 ```text
-maintenance enable <scope> --message <msg>
+maintenance enable full "Release window" --confirm maintenance:full:enable
+broadcast global "Message" --confirm broadcast:global:all
+client request-sklmi-reconnect <user> <reason> --confirm client:request-sklmi-reconnect:<user>
 server restart <server> <service> --confirm <server>:<service>:restart
 user edit <user> disabled=false --confirm user:<user>:edit
 user disable <user> --confirm user:<user>:disable

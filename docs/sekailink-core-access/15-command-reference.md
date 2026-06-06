@@ -91,30 +91,30 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `room request-sklmi-reconnect <room> <player>` | Service | Oui | Demande reconnect SKLMI. |
 | `room disconnect-runtime <room> <player>` | Admin | Oui | Deconnecte runtime. |
 | `room give-item <room> <target> <item>` | Admin | Oui | Injecte item live. |
-| `client broadcast` | Service | Oui | Message client realtime. |
-| `client maintenance-banner` | Admin | Oui | Banniere maintenance client. |
-| `client force-update-prompt` | Admin | Oui | Invite update. |
-| `client request-relogin` | Service | Oui | Demande relogin. |
-| `client refresh-lobby` | Service | Non | Refresh lobby. |
-| `client refresh-room` | Service | Non | Refresh room. |
-| `client request-sklmi-reconnect` | Service | Oui | Signal reconnect SKLMI. |
-| `client restart-runtime` | Admin | Oui | Demande restart runtime client. |
-| `client clear-cache-request` | Service | Approval | Demande clear cache. |
+| `client broadcast <user|all> <message> --confirm client:broadcast:<target>` | Service | Oui | Cree un draft audite de message client; aucun signal envoye. |
+| `client maintenance-banner <user|all> <message> --confirm client:maintenance-banner:<target>` | Admin | Oui | Cree un draft audite de banniere maintenance client; aucun signal envoye. |
+| `client force-update-prompt <user|all> <version|message> --confirm client:force-update-prompt:<target>` | Admin | Oui | Cree un draft audite d'invite update; aucun signal envoye. |
+| `client request-relogin <user|all> <reason> --confirm client:request-relogin:<target>` | Service | Oui | Cree un draft audite de relogin; aucun signal envoye. |
+| `client refresh-lobby <user|all> [lobby]` | Service | Non | Cree un draft audite de refresh lobby; aucun signal envoye. |
+| `client refresh-room <user|all> [room]` | Service | Non | Cree un draft audite de refresh room; aucun signal envoye. |
+| `client request-sklmi-reconnect <user|all> <reason> --confirm client:request-sklmi-reconnect:<target>` | Service | Oui | Cree un draft audite de reconnect SKLMI; aucun changement SKLMI. |
+| `client restart-runtime <user|all> <reason> --confirm client:restart-runtime:<target>` | Admin | Oui | Cree un draft audite de restart runtime client; aucun signal envoye. |
+| `client clear-cache-request <user|all> <reason> --confirm client:clear-cache-request:<target>` | Service | Approval | Cree un draft audite approval-required; aucun signal envoye. |
 | `client diagnostics-request <user> <incident> <reason> --include <set>` | Service | Consentement | Prepare une demande locale de bundle diagnostics client. |
 | `client diagnostics-list [query]` | Service | Non | Liste les demandes locales de diagnostics client. |
 | `client diagnostics-export [query] --file <name>` | Service | Non | Exporte les demandes diagnostics et le contrat de bundle attendu. |
-| `broadcast global <message>` | Admin | Oui | Broadcast global. |
-| `broadcast server <server> <message>` | Admin | Oui | Broadcast cible serveur. |
-| `broadcast lobby <lobby> <message>` | Service | Oui | Broadcast lobby. |
-| `broadcast room <room> <message>` | Service | Oui | Broadcast room. |
-| `broadcast role <role> <message>` | Admin | Oui | Broadcast par role. |
-| `broadcast version <version> <message>` | Admin | Oui | Broadcast par client version. |
-| `broadcast game <game> <message>` | Service | Oui | Broadcast par jeu. |
+| `broadcast global <message> --confirm broadcast:global:all` | Admin | Oui | Cree un draft audite global; aucun broadcast envoye. |
+| `broadcast server <server> <message> --confirm broadcast:server:<server>` | Admin | Oui | Cree un draft audite cible serveur; aucun broadcast envoye. |
+| `broadcast lobby <lobby> <message> --confirm broadcast:lobby:<lobby>` | Service | Oui | Cree un draft audite lobby; aucun broadcast envoye. |
+| `broadcast room <room> <message> --confirm broadcast:room:<room>` | Service | Oui | Cree un draft audite room; aucun broadcast envoye. |
+| `broadcast role <role> <message> --confirm broadcast:role:<role>` | Admin | Oui | Cree un draft audite role; aucun broadcast envoye. |
+| `broadcast version <version> <message> --confirm broadcast:version:<version>` | Admin | Oui | Cree un draft audite version client; aucun broadcast envoye. |
+| `broadcast game <game> <message> --confirm broadcast:game:<game>` | Service | Oui | Cree un draft audite jeu; aucun broadcast envoye. |
 | `maintenance status` | Service | Non | Etat maintenance. |
-| `maintenance enable <scope>` | Admin | Oui | Active maintenance. |
-| `maintenance disable` | Admin | Oui | Desactive maintenance. |
+| `maintenance enable <scope> <message> --confirm maintenance:<scope>:enable` | Admin | Oui | Cree un draft audite d'activation maintenance; aucun mode serveur change. |
+| `maintenance disable [scope] [reason] --confirm maintenance:<scope>:disable` | Admin | Oui | Cree un draft audite de desactivation maintenance; aucun mode serveur change. |
 | `maintenance schedule <scope> <start> <end>` | Admin | Oui | Planifie maintenance. |
-| `maintenance broadcast` | Admin | Oui | Annonce maintenance. |
+| `maintenance broadcast <scope> <message> --confirm maintenance:<scope>:broadcast` | Admin | Oui | Cree un draft audite d'annonce maintenance; aucun broadcast envoye. |
 | `maintenance history` | Service | Non | Historique. |
 | `release current` | Service | Non | Affiche le dernier manifeste local client update-bundle et ses URLs/fallbacks. |
 | `release list` | Service | Non | Liste les manifestes locaux dedupliques par date/version/channel/build. |
@@ -129,9 +129,9 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `client-banner list` | Service | Non | Liste 3 slots. |
 | `client-banner edit <slot>` | Admin | Oui | Edite slot. |
 | `client-banner preview <slot>` | Service | Non | Preview. |
-| `client-banner publish <slot>` | Admin | Oui | Publie slot. |
-| `client-banner rollback <slot>` | Admin | Oui | Rollback slot. |
-| `client-banner disable <slot>` | Admin | Oui | Desactive slot. |
+| `client-banner publish <slot> --confirm banner:<slot>:publish` | Admin | Oui | Cree un draft audite de publication banner; aucun dashboard client modifie. |
+| `client-banner rollback <slot> --confirm banner:<slot>:rollback` | Admin | Oui | Cree un draft audite rollback banner; aucun dashboard client modifie. |
+| `client-banner disable <slot> --confirm banner:<slot>:disable` | Admin | Oui | Cree un draft audite disable banner; aucun dashboard client modifie. |
 | `pack repo list` | Service | Non | Liste repos packs. |
 | `pack repo add` | Admin | Oui | Ajoute repo pack. |
 | `pack repo edit <id>` | Admin | Oui | Edite repo pack. |
