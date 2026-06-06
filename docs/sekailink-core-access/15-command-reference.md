@@ -9,7 +9,7 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `dashboard` | Service | Non | Affiche la matrice locale Core Access MVP. |
 | `commands list` | Service | Non | Liste le registre de commandes connu du binaire. |
 | `commands search <query>` | Service | Non | Recherche dans le registre de commandes. |
-| `server status <server|all>` | Service | Non | Statut CPU/RAM/disk/uptime/services. |
+| `server status <server|all> --execute` | Service | Non | Statut CPU/RAM/disk/uptime/services; live read-only si gate env active. |
 | `server services <server>` | Service | Non | Liste services systemd connus. |
 | `server logs <server> <service> --follow --execute` | Service | Non | Suit les logs d'un service; execution distante bloquee sans gate env. |
 | `server restart <server> <service>` | Admin | Oui | Redemarre un service allowlist. |

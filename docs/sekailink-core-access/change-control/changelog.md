@@ -21,3 +21,4 @@
   labelled service status output in health probes.
 - Aligned Nexus, Worlds, Evolution, and Pulse service allowlists with read-only
   systemd discovery.
+- Added `server status <server|all> --execute` as a gated live health alias.

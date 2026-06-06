@@ -181,8 +181,13 @@ impl App {
                 true
             }
             "server" if parsed.get(1).map(String::as_str) == Some("status") => {
-                println!("{}", render_dashboard());
-                append_audit(&self.session, line, "ok", "server status")?;
+                if parsed.iter().any(|part| part == "--execute") {
+                    self.health_probe_target(first_non_flag(&parsed, 2, "all"), true)?;
+                    append_audit(&self.session, line, "ok", "server status execute")?;
+                } else {
+                    println!("{}", render_dashboard());
+                    append_audit(&self.session, line, "ok", "server status")?;
+                }
                 true
             }
             "server" if parsed.get(1).map(String::as_str) == Some("services") => {
@@ -445,8 +450,11 @@ impl App {
     }
 
     fn health_probe(&self, parsed: &[String]) -> io::Result<()> {
-        let target = parsed.get(2).map(String::as_str).unwrap_or("all");
         let execute = parsed.iter().any(|part| part == "--execute");
+        self.health_probe_target(first_non_flag(parsed, 2, "all"), execute)
+    }
+
+    fn health_probe_target(&self, target: &str, execute: bool) -> io::Result<()> {
         match render_health_probe_plan(target) {
             Ok(plan) => {
                 self.render_or_execute_remote_plan("health probe", &plan, execute)?;
@@ -912,6 +920,15 @@ fn parse_banner_slot(value: &str) -> Result<u8, String> {
     }
 }
 
+fn first_non_flag<'a>(parts: &'a [String], start: usize, default: &'a str) -> &'a str {
+    parts
+        .iter()
+        .skip(start)
+        .find(|part| !part.starts_with("--"))
+        .map(String::as_str)
+        .unwrap_or(default)
+}
+
 fn print_usage() {
     println!("sekailink-core-access [--user USER] [--role service|admin] [--data-dir PATH] [--command COMMAND]");
 }
@@ -937,7 +954,7 @@ fn print_help() {
     println!("  auth whoami");
     println!("  commands list");
     println!("  commands search <query>");
-    println!("  server status all");
+    println!("  server status [server|all] [--execute]");
     println!("  server services [server|all]");
     println!("  server logs <server> <service> [--follow] [--execute]");
     println!("  health probe [server|all] [--execute]");

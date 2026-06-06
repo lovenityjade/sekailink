@@ -16,7 +16,7 @@ Implemented MVP commands include:
 - `auth whoami`
 - `commands list`
 - `commands search <query>`
-- `server status all`
+- `server status [server|all] [--execute]`
 - `server services [server|all]`
 - `server logs <server> <service> [--follow] [--execute]`
 - `health probe [server|all] [--execute]`
