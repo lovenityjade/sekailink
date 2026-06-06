@@ -5,6 +5,10 @@ use crate::audit::{
 };
 use crate::commands::{COMMANDS, Confirmation, command_names, find_command, search_commands};
 use crate::line_editor::LineEditor;
+use crate::nexus::{
+    LobbyListFilter, ProtectedGetPlan, admin_agent_services_plan, execute_protected_get,
+    identity_user_plan, lobby_list_plan, lobby_open_plan, non_flag_args,
+};
 use crate::rbac::Role;
 use crate::system::{
     known_services, log_catalog, render_dashboard, render_health_probe_plan, render_log_tail_plan,
@@ -195,6 +199,11 @@ impl App {
                 append_audit(&self.session, line, "ok", "server services")?;
                 true
             }
+            "nexus" if parsed.get(1).map(String::as_str) == Some("services") => {
+                self.nexus_services(&parsed)?;
+                append_audit(&self.session, line, "ok", "nexus services")?;
+                true
+            }
             "server" if parsed.get(1).map(String::as_str) == Some("logs") => {
                 self.server_logs(&parsed)?;
                 append_audit(&self.session, line, "ok", "server logs dry-run")?;
@@ -213,6 +222,26 @@ impl App {
             "health" if parsed.get(1).map(String::as_str) == Some("probe") => {
                 self.health_probe(&parsed)?;
                 append_audit(&self.session, line, "ok", "health probe dry-run")?;
+                true
+            }
+            "user"
+                if matches!(
+                    parsed.get(1).map(String::as_str),
+                    Some("search") | Some("open") | Some("sessions") | Some("devices") | Some("audit")
+                ) =>
+            {
+                self.user_readonly_plan(&parsed)?;
+                append_audit(&self.session, line, "ok", "user read-only nexus plan")?;
+                true
+            }
+            "lobby"
+                if matches!(
+                    parsed.get(1).map(String::as_str),
+                    Some("list") | Some("open")
+                ) =>
+            {
+                self.lobby_readonly(&parsed)?;
+                append_audit(&self.session, line, "ok", "lobby read-only nexus")?;
                 true
             }
             "audit" if parsed.get(1).map(String::as_str) == Some("search") => {
@@ -490,6 +519,91 @@ impl App {
             .env("TERM", term)
             .status()?;
         println!("remote command exit status: {status}");
+        Ok(())
+    }
+
+    fn nexus_services(&self, parsed: &[String]) -> io::Result<()> {
+        if parsed.len() > 2 && parsed.iter().filter(|part| !part.starts_with("--")).count() > 2 {
+            println!("usage: nexus services [--execute]");
+            return Ok(());
+        }
+        let execute = parsed.iter().any(|part| part == "--execute");
+        let plan = admin_agent_services_plan();
+        self.render_or_execute_nexus_get(&plan, execute)
+    }
+
+    fn lobby_readonly(&self, parsed: &[String]) -> io::Result<()> {
+        let execute = parsed.iter().any(|part| part == "--execute");
+        match parsed.get(1).map(String::as_str) {
+            Some("list") => {
+                let args = non_flag_args(parsed, 2);
+                if args.len() > 5 {
+                    println!("usage: lobby list [limit] [query] [visibility] [status] [offset] [--execute]");
+                    return Ok(());
+                }
+                let filter = LobbyListFilter::from_positionals(&args);
+                let plan = lobby_list_plan(&filter);
+                self.render_or_execute_nexus_get(&plan, execute)
+            }
+            Some("open") => {
+                let args = non_flag_args(parsed, 2);
+                if args.len() != 1 {
+                    println!("usage: lobby open <lobby_id> [--execute]");
+                    return Ok(());
+                }
+                let Some(lobby_id) = args.first() else {
+                    println!("usage: lobby open <lobby_id> [--execute]");
+                    return Ok(());
+                };
+                match lobby_open_plan(lobby_id) {
+                    Ok(plan) => self.render_or_execute_nexus_get(&plan, execute),
+                    Err(err) => {
+                        println!("{err}");
+                        Ok(())
+                    }
+                }
+            }
+            _ => {
+                println!("usage: lobby list|open");
+                Ok(())
+            }
+        }
+    }
+
+    fn render_or_execute_nexus_get(&self, plan: &ProtectedGetPlan, execute: bool) -> io::Result<()> {
+        if !execute {
+            println!("dry-run Nexus protected read-only request:");
+            println!("{}", plan.render_dry_run());
+            println!("MVP note: command was not executed. Add --execute, set SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1, and set SEKAILINK_CORE_ACCESS_NEXUS_ADMIN_TOKEN to run it.");
+            return Ok(());
+        }
+        if env::var("SEKAILINK_CORE_ACCESS_REMOTE_READONLY").ok().as_deref() != Some("1") {
+            println!("protected Nexus read-only execution blocked by environment gate");
+            println!("set SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1 and rerun with --execute");
+            println!("dry-run command:");
+            println!("{}", plan.render_dry_run());
+            return Ok(());
+        }
+        execute_protected_get(plan)
+    }
+
+    fn user_readonly_plan(&self, parsed: &[String]) -> io::Result<()> {
+        let action = parsed.get(1).map(String::as_str).unwrap_or("");
+        let execute = parsed.iter().any(|part| part == "--execute");
+        let args = non_flag_args(parsed, 2);
+        match identity_user_plan(action, &args) {
+            Ok(plan) => {
+                println!("dry-run Nexus Identity read-only plan:");
+                println!("{}", plan.render());
+                if execute {
+                    println!("Identity execution blocked: live private CLI/API entrypoint is not documented in this checkout or discoverable read-only on nexus-vps.");
+                    println!("No SSH/API command was executed.");
+                } else {
+                    println!("MVP note: use --execute only after the Identity admin entrypoint is documented and wrapped.");
+                }
+            }
+            Err(err) => println!("{err}"),
+        }
         Ok(())
     }
 
@@ -964,8 +1078,16 @@ fn print_help() {
     println!("  commands search <query>");
     println!("  server status [server|all] [--execute]");
     println!("  server services [server|all]");
+    println!("  nexus services [--execute]");
     println!("  server logs <server> <service> [--follow] [--execute]");
     println!("  health probe [server|all] [--execute]");
+    println!("  user search <query> [--execute]");
+    println!("  user open <username> [--execute]");
+    println!("  user sessions <username> [--execute]");
+    println!("  user devices <username> [--execute]");
+    println!("  user audit <username> [limit] [event_type] [offset] [--execute]");
+    println!("  lobby list [limit] [query] [visibility] [status] [offset] [--execute]");
+    println!("  lobby open <lobby_id> [--execute]");
     println!("  logs list");
     println!("  logs list --by-server");
     println!("  logs list --by-incident");

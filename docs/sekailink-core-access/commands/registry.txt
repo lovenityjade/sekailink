@@ -4,6 +4,7 @@ commands list
 commands search
 server status
 server services
+nexus services
 server logs
 server restart
 server update plan

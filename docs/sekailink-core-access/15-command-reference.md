@@ -11,6 +11,7 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `commands search <query>` | Service | Non | Recherche dans le registre de commandes. |
 | `server status <server|all> --execute` | Service | Non | Statut CPU/RAM/disk/uptime/services; live read-only si gate env active. |
 | `server services <server>` | Service | Non | Liste services systemd connus. |
+| `nexus services --execute` | Service | Non | Liste les services connus par le private Nexus admin-agent; dry-run par defaut. |
 | `server logs <server> <service> --follow --execute` | Service | Non | Suit les logs d'un service; execution distante bloquee sans gate env. |
 | `server restart <server> <service>` | Admin | Oui | Redemarre un service allowlist. |
 | `server update plan <server>` | Admin | Non | Prepare un plan d'update. |
@@ -34,14 +35,14 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `approval list` | Service | Non | Liste les demandes et decisions locales. |
 | `approval approve <id> [reason]` | Admin | Oui | Approuve localement une demande existante, sans execution serveur en MVP. |
 | `ops snapshot [label]` | Service | Non | Cree un snapshot Markdown local avec dashboard, logs, services, audit, notes et approvals. |
-| `user search <query>` | Service | Non | Recherche utilisateur. |
-| `user open <user>` | Service | Non | Ouvre fiche utilisateur. |
+| `user search <query> --execute` | Service | Non | Planifie recherche utilisateur via Nexus Identity; execution bloquee tant que le contrat live manque. |
+| `user open <user> --execute` | Service | Non | Planifie fiche utilisateur via Nexus Identity; execution bloquee tant que le contrat live manque. |
 | `user create` | Admin | Oui | Cree un utilisateur. |
 | `user edit <user>` | Admin | Oui | Modifie un utilisateur. |
 | `user disable <user>` | Admin | Oui | Desactive un utilisateur et revoke sessions. |
-| `user sessions <user>` | Service | Non | Liste sessions. |
-| `user devices <user>` | Service | Non | Liste devices. |
-| `user audit <user>` | Service | Non | Audit utilisateur. |
+| `user sessions <user> --execute` | Service | Non | Planifie liste sessions via Nexus Identity; execution bloquee tant que le contrat live manque. |
+| `user devices <user> --execute` | Service | Non | Planifie liste devices via Nexus Identity; execution bloquee tant que le contrat live manque. |
+| `user audit <user> --execute` | Service | Non | Planifie audit utilisateur via Nexus Identity; execution bloquee tant que le contrat live manque. |
 | `user revoke-sessions <user>` | Admin | Oui | Revoque sessions. |
 | `user force-password-reset <user>` | Admin | Oui | Force reset password. |
 | `user configs <user>` | Service | Non | Liste configs utilisateur. |
@@ -49,8 +50,8 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `user config diff <user> <config> <version>` | Service | Non | Compare versions. |
 | `user config export <user> <config>` | Service | Non | Exporte YAML/JSON. |
 | `user config edit <user> <config>` | Admin | Oui | Edite config source Nexus. |
-| `lobby list` | Service | Non | Liste lobbies. |
-| `lobby open <lobby>` | Service | Non | Ouvre lobby. |
+| `lobby list --execute` | Service | Non | Liste les lobbies via Nexus lobby-admin read-only; dry-run par defaut. |
+| `lobby open <lobby> --execute` | Service | Non | Ouvre un detail lobby via Nexus lobby-admin read-only; dry-run par defaut. |
 | `lobby create` | Admin | Oui | Cree lobby manuel. |
 | `lobby edit <lobby>` | Admin | Oui | Modifie lobby. |
 | `lobby close <lobby>` | Service/Admin | Oui/Approval | Ferme lobby selon policy. |

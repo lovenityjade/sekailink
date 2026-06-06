@@ -14,6 +14,17 @@ user revoke-sessions <user>
 user force-password-reset <user>
 ```
 
+Etat MVP actuel:
+
+- ces commandes produisent un plan Nexus Identity read-only;
+- `--execute` reste bloque tant que l'entree live Identity admin CLI/API n'est
+  pas documentee;
+- aucune mutation utilisateur n'est disponible sans contrat Nexus explicite.
+
+Le modele prive documente cote Nexus existe (`listusers`, `userinfo`,
+`listsessions`, `listdevices`, `useraudit`), mais Core Access ne l'executera pas
+tant que l'entree exacte n'est pas confirmee dans le checkout ou sur le host.
+
 ## Configs utilisateur
 
 Nexus reste la source de verite. Les YAML generes ne sont pas edites comme
@@ -35,4 +46,3 @@ user config edit <user> <config>
 - Service peut lire/diff/export.
 - Service peut preparer une edition via approval.
 - Chaque edition documente impact Client Core, generation, room et rollback.
-

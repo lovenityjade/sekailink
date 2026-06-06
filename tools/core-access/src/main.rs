@@ -2,6 +2,7 @@ mod app;
 mod audit;
 mod commands;
 mod line_editor;
+mod nexus;
 mod rbac;
 mod system;
 mod util;
@@ -12,4 +13,3 @@ fn main() {
         std::process::exit(1);
     }
 }
-

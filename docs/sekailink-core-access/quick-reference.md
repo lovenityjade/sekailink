@@ -5,6 +5,7 @@
 ```text
 auth whoami
 server status all
+nexus services
 maintenance status
 ```
 
@@ -22,6 +23,7 @@ logs export --format md
 
 ```text
 user search <query>
+lobby list
 lobby open <lobby>
 room summary <room>
 room logs <room> --follow
@@ -42,4 +44,3 @@ cleanup plan all
 ## Panic
 
 F12 ouvre Panic. Choisir le scope minimal. Toujours noter la raison.
-

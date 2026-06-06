@@ -24,3 +24,5 @@
 - Added `server status <server|all> --execute` as a gated live health alias.
 - Normalized child `TERM` for gated read-only remote execution to reduce noisy
   terminal initialization output.
+- Added Nexus read-only wrapper plans for `nexus services`, `lobby list`,
+  `lobby open`, and Identity user command planning.
