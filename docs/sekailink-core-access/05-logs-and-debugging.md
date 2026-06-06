@@ -46,6 +46,8 @@ Etat MVP actuel:
 - `logs note` ecrit une note locale ciblee `log:<source>`;
 - `logs export` produit un fichier local Markdown, JSONL ou TXT sous
   `exports/`;
+- les logs client Sekaiemu/SKLMI doivent passer par une demande
+  `client diagnostics-request` avec consentement utilisateur;
 - aucune ligne de log n'est ecrite dans Nexus DB dans cette tranche.
 
 ## Notes liees

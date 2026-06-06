@@ -1,7 +1,7 @@
 use crate::audit::{
     Session, append_approval_decision, append_approval_request, append_audit, append_history,
-    append_incident_event, append_log_pin, append_note, read_file_to_string,
-    write_client_banner_draft, write_export, write_export_with_extension,
+    append_client_diagnostics_request, append_incident_event, append_log_pin, append_note,
+    read_file_to_string, write_client_banner_draft, write_export, write_export_with_extension,
     write_maintenance_draft, write_pack_repo, write_schedule_job,
 };
 use crate::commands::{COMMANDS, Confirmation, command_names, find_command, search_commands};
@@ -312,6 +312,16 @@ impl App {
             "ops" => {
                 self.ops(&parsed)?;
                 append_audit(&self.session, line, "ok", "ops local")?;
+                true
+            }
+            "client"
+                if matches!(
+                    parsed.get(1).map(String::as_str),
+                    Some("diagnostics-request" | "diagnostics-list" | "diagnostics-export")
+                ) =>
+            {
+                self.client_diagnostics(&parsed)?;
+                append_audit(&self.session, line, "ok", "client diagnostics local")?;
                 true
             }
             "client-banner"
@@ -1146,6 +1156,7 @@ impl App {
         let maintenance_history = read_file_to_string(&self.session.maintenance_dir().join("history.jsonl"))?;
         let schedule = read_file_to_string(&self.session.scheduler_dir().join("jobs.jsonl"))?;
         let pack_repos = read_file_to_string(&self.session.pack_repos_dir().join("repos.jsonl"))?;
+        let diagnostics = read_file_to_string(&self.session.client_diagnostics_path())?;
         let mut timeline = self.ops_timeline_entries()?;
         timeline.sort_by_key(|entry| entry.ts);
 
@@ -1190,6 +1201,7 @@ impl App {
         push_json_section_from_text(&mut body, "Maintenance History", &maintenance_history, 40);
         push_json_section_from_text(&mut body, "Schedule Drafts", &schedule, 60);
         push_json_section_from_text(&mut body, "Pack Repo Drafts", &pack_repos, 60);
+        push_json_section_from_text(&mut body, "Client Diagnostics Requests", &diagnostics, 60);
         body.push_str("## Client Banner Drafts\n\n```text\n");
         for slot in 1..=3 {
             let text = self.read_client_banner_slot(slot)?;
@@ -1215,6 +1227,7 @@ impl App {
         let maintenance = read_file_to_string(&self.session.maintenance_dir().join("history.jsonl"))?;
         let schedule = read_file_to_string(&self.session.scheduler_dir().join("jobs.jsonl"))?;
         let pack_repos = read_file_to_string(&self.session.pack_repos_dir().join("repos.jsonl"))?;
+        let diagnostics = read_file_to_string(&self.session.client_diagnostics_path())?;
         let mut entries = Vec::new();
         push_timeline_entries(&mut entries, "audit", &audit);
         push_timeline_entries(&mut entries, "note", &notes);
@@ -1224,6 +1237,7 @@ impl App {
         push_timeline_entries(&mut entries, "maintenance", &maintenance);
         push_timeline_entries(&mut entries, "schedule", &schedule);
         push_timeline_entries(&mut entries, "pack", &pack_repos);
+        push_timeline_entries(&mut entries, "diagnostics", &diagnostics);
         Ok(entries)
     }
 
@@ -1267,6 +1281,94 @@ impl App {
         let path = write_export(&self.session, "snapshot", Some(&file_name), &body)?;
         println!("snapshot written to {}", path.display());
         println!("MVP note: snapshot is local, not a Nexus DB incident record yet.");
+        Ok(())
+    }
+
+    fn client_diagnostics(&self, parsed: &[String]) -> io::Result<()> {
+        match parsed.get(1).map(String::as_str) {
+            Some("diagnostics-request") => self.client_diagnostics_request(parsed),
+            Some("diagnostics-list") => self.client_diagnostics_list(parsed.get(2).map(String::as_str).unwrap_or("")),
+            Some("diagnostics-export") => self.client_diagnostics_export(parsed),
+            _ => {
+                println!("usage: client diagnostics-request|diagnostics-list|diagnostics-export");
+                Ok(())
+            }
+        }
+    }
+
+    fn client_diagnostics_request(&self, parsed: &[String]) -> io::Result<()> {
+        let args = DiagnosticsArgs::from_parts(parsed);
+        let Some(user) = args.positionals.first() else {
+            println!("usage: client diagnostics-request <user> <incident> <reason> [--include client-core,sekaiemu,sklmi,configs,system]");
+            return Ok(());
+        };
+        let Some(incident) = args.positionals.get(1) else {
+            println!("usage: client diagnostics-request <user> <incident> <reason> [--include client-core,sekaiemu,sklmi,configs,system]");
+            return Ok(());
+        };
+        let reason = if args.positionals.len() > 2 {
+            args.positionals[2..].join(" ")
+        } else {
+            String::new()
+        };
+        if reason.trim().is_empty() {
+            println!("usage: client diagnostics-request <user> <incident> <reason> [--include client-core,sekaiemu,sklmi,configs,system]");
+            return Ok(());
+        }
+        let id = append_client_diagnostics_request(&self.session, user, incident, &reason, &args.include)?;
+        println!("client diagnostics request drafted: {id}");
+        println!("target user: {user}");
+        println!("incident: {incident}");
+        println!("include: {}", args.include.join(", "));
+        println!("consent required: user must approve before any client-side upload");
+        println!("MVP note: draft only; no client signal was sent and no Client Core/Sekaiemu/SKLMI code changed.");
+        println!();
+        print_client_diagnostics_contract();
+        Ok(())
+    }
+
+    fn client_diagnostics_list(&self, query: &str) -> io::Result<()> {
+        let text = read_file_to_string(&self.session.client_diagnostics_path())?;
+        if text.trim().is_empty() {
+            println!("client diagnostics request queue is empty");
+            return Ok(());
+        }
+        let mut count = 0_usize;
+        for line in text.lines().filter(|line| query.is_empty() || line.contains(query)).take(200) {
+            println!("{line}");
+            count += 1;
+        }
+        if count == 0 {
+            println!("no client diagnostics requests matched: {query}");
+        }
+        Ok(())
+    }
+
+    fn client_diagnostics_export(&self, parsed: &[String]) -> io::Result<()> {
+        let options = LogExportOptions::from_parts(parsed);
+        let requests = read_file_to_string(&self.session.client_diagnostics_path())?;
+        let matching = matching_lines(&requests, &options.query).collect::<Vec<_>>();
+        if matching.is_empty() {
+            println!("nothing to export from local client diagnostics requests");
+            return Ok(());
+        }
+        let mut body = String::new();
+        body.push_str("# SekaiLink Client Diagnostics Requests\n\n");
+        if !options.query.trim().is_empty() {
+            body.push_str(&format!("Filter: `{}`\n\n", options.query));
+        }
+        push_json_section(&mut body, "Requests", &matching);
+        body.push_str("## Expected Client Bundle Contract\n\n");
+        body.push_str(client_diagnostics_contract_markdown());
+        let path = write_export_with_extension(
+            &self.session,
+            "client-diagnostics",
+            options.file_name.as_deref(),
+            "md",
+            &body,
+        )?;
+        println!("client diagnostics requests exported to {}", path.display());
+        println!("MVP note: export is local; no client upload was fetched.");
         Ok(())
     }
 
@@ -1622,6 +1724,9 @@ fn print_help() {
     println!("  client-banner list");
     println!("  client-banner preview <1|2|3>");
     println!("  client-banner edit <1|2|3> <text>");
+    println!("  client diagnostics-request <user> <incident> <reason> [--include client-core,sekaiemu,sklmi,configs,system]");
+    println!("  client diagnostics-list [query]");
+    println!("  client diagnostics-export [query] [--file name]");
     println!("  maintenance status");
     println!("  maintenance schedule <scope> <start> <end> <message>");
     println!("  maintenance history");
@@ -1710,6 +1815,104 @@ impl LogExportOptions {
             file_name,
         }
     }
+}
+
+#[derive(Debug, Clone)]
+struct DiagnosticsArgs {
+    positionals: Vec<String>,
+    include: Vec<String>,
+}
+
+impl DiagnosticsArgs {
+    fn from_parts(parts: &[String]) -> Self {
+        let mut positionals = Vec::new();
+        let mut include = Vec::new();
+        let mut i = 2;
+        while i < parts.len() {
+            match parts[i].as_str() {
+                "--include" => {
+                    i += 1;
+                    if let Some(value) = parts.get(i) {
+                        include.extend(parse_include_list(value));
+                    }
+                }
+                value if value.starts_with("--include=") => {
+                    include.extend(parse_include_list(value.trim_start_matches("--include=")));
+                }
+                value if value.starts_with("--") => {}
+                value => positionals.push(value.to_string()),
+            }
+            i += 1;
+        }
+        if include.is_empty() {
+            include = default_diagnostics_include();
+        }
+        include.sort();
+        include.dedup();
+        Self {
+            positionals,
+            include,
+        }
+    }
+}
+
+fn parse_include_list(value: &str) -> Vec<String> {
+    value
+        .split(',')
+        .map(|part| part.trim().to_ascii_lowercase())
+        .filter(|part| !part.is_empty())
+        .map(|part| match part.as_str() {
+            "client" => "client-core".to_string(),
+            "config" => "configs".to_string(),
+            other => other.to_string(),
+        })
+        .filter(|part| {
+            matches!(
+                part.as_str(),
+                "client-core" | "sekaiemu" | "sklmi" | "configs" | "system"
+            )
+        })
+        .collect()
+}
+
+fn default_diagnostics_include() -> Vec<String> {
+    ["client-core", "configs", "sekaiemu", "sklmi", "system"]
+        .iter()
+        .map(|value| value.to_string())
+        .collect()
+}
+
+fn print_client_diagnostics_contract() {
+    println!("Expected client diagnostics bundle:");
+    println!("{}", client_diagnostics_contract_markdown());
+}
+
+fn client_diagnostics_contract_markdown() -> &'static str {
+    r#"- `manifest.json`: request id, user, client version, OS, timestamp, selected include set.
+- `client-core/main.log`: Electron main/runtime log.
+- `client-core/renderer.log`: UI/auth/lobby flow log.
+- `client-core/updater.log`: bootstrap/update/install log.
+- `sekaiemu/sekaiemu.log`: Sekaiemu runtime log if available.
+- `sekaiemu/stdout.log` and `sekaiemu/stderr.log`: captured process streams.
+- `sklmi/sklmi.log`: SKLMI companion runtime log if available.
+- `sklmi/stdout.log` and `sklmi/stderr.log`: captured process streams.
+- `configs/client-settings.redacted.json`: client settings with tokens/secrets removed.
+- `configs/launch-context.redacted.json`: game, room, lobby, runtime paths, versions.
+- `system/platform.txt`: OS, arch, install path, app data path, disk space summary.
+
+Redaction requirements:
+
+- remove tokens, passwords, refresh tokens, cookies and private keys;
+- hash device identifiers where possible;
+- keep room/lobby/user names only when needed for the incident;
+- include only files approved by the user consent prompt.
+
+Implementation note:
+
+- Core Access currently records the request only. Client Core upload handling and
+  any Sekaiemu/SKLMI log collection hook require a documented connectivity
+  contract before implementation.
+"#
 }
 
 fn looks_like_export_file(value: &str) -> bool {
@@ -1997,7 +2200,10 @@ fn push_text_section(out: &mut String, title: &str, lines: &[&str]) {
 
 #[cfg(test)]
 mod app_tests {
-    use super::{LogExportOptions, log_filter_search_term, parse_banner_slot, render_logs_export};
+    use super::{
+        DiagnosticsArgs, LogExportOptions, log_filter_search_term, parse_banner_slot,
+        render_logs_export,
+    };
 
     #[test]
     fn banner_slot_is_limited_to_three_slots() {
@@ -2062,6 +2268,38 @@ mod app_tests {
         super::push_open_incident_labels(&mut body, incidents);
         assert!(!body.contains("`a`"));
         assert!(body.contains("`b`"));
+    }
+
+    #[test]
+    fn diagnostics_args_normalize_include_aliases() {
+        let parts = vec![
+            "client".to_string(),
+            "diagnostics-request".to_string(),
+            "player".to_string(),
+            "incident".to_string(),
+            "reason".to_string(),
+            "--include".to_string(),
+            "client,sekaiemu,sklmi,bogus".to_string(),
+        ];
+        let args = DiagnosticsArgs::from_parts(&parts);
+        assert_eq!(args.include, vec!["client-core", "sekaiemu", "sklmi"]);
+    }
+
+    #[test]
+    fn diagnostics_args_default_include_is_complete() {
+        let parts = vec![
+            "client".to_string(),
+            "diagnostics-request".to_string(),
+            "player".to_string(),
+            "incident".to_string(),
+            "reason".to_string(),
+        ];
+        let args = DiagnosticsArgs::from_parts(&parts);
+        assert!(args.include.contains(&"client-core".to_string()));
+        assert!(args.include.contains(&"sekaiemu".to_string()));
+        assert!(args.include.contains(&"sklmi".to_string()));
+        assert!(args.include.contains(&"configs".to_string()));
+        assert!(args.include.contains(&"system".to_string()));
     }
 }
 

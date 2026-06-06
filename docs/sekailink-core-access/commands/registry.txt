@@ -82,6 +82,8 @@ client request-sklmi-reconnect
 client restart-runtime
 client clear-cache-request
 client diagnostics-request
+client diagnostics-list
+client diagnostics-export
 broadcast global
 broadcast server
 broadcast lobby

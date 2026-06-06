@@ -57,6 +57,14 @@ room request-sklmi-reconnect <room> <player>
 client diagnostics-request
 ```
 
+## Client Diagnostics
+
+```text
+client diagnostics-request <user> <incident> <reason> --include sekaiemu,sklmi,client
+client diagnostics-list [query]
+client diagnostics-export [query] --file diagnostics.md
+```
+
 ## Admin critical
 
 ```text

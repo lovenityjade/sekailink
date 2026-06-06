@@ -50,6 +50,9 @@ Implemented MVP commands include:
 - `client-banner list`
 - `client-banner preview <1|2|3>`
 - `client-banner edit <1|2|3> <text>` as Admin, local draft only
+- `client diagnostics-request <user> <incident> <reason> [--include ...]`
+- `client diagnostics-list [query]`
+- `client diagnostics-export [query] [--file name]`
 - `maintenance status`
 - `maintenance schedule <scope> <start> <end> <message>` as Admin, local draft only
 - `maintenance history`

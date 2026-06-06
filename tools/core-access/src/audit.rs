@@ -30,6 +30,7 @@ impl Session {
         fs::create_dir_all(self.data_dir.join("notes"))?;
         fs::create_dir_all(self.data_dir.join("log-pins"))?;
         fs::create_dir_all(self.data_dir.join("incidents"))?;
+        fs::create_dir_all(self.data_dir.join("client-diagnostics"))?;
         fs::create_dir_all(self.data_dir.join("approvals"))?;
         fs::create_dir_all(self.data_dir.join("history"))?;
         fs::create_dir_all(self.exports_dir())?;
@@ -54,6 +55,10 @@ impl Session {
 
     pub fn incident_events_path(&self) -> PathBuf {
         self.data_dir.join("incidents").join("events.jsonl")
+    }
+
+    pub fn client_diagnostics_path(&self) -> PathBuf {
+        self.data_dir.join("client-diagnostics").join("requests.jsonl")
     }
 
     pub fn approvals_path(&self) -> PathBuf {
@@ -156,6 +161,35 @@ pub fn append_incident_event(
             json_escape(event),
             json_escape(severity),
             json_escape(detail)
+        ),
+    )?;
+    Ok(id)
+}
+
+pub fn append_client_diagnostics_request(
+    session: &Session,
+    user: &str,
+    incident: &str,
+    reason: &str,
+    include: &[String],
+) -> io::Result<String> {
+    let id = format!("client-diagnostics-{}-{}", epoch_nanos(), std::process::id());
+    let include_json = include
+        .iter()
+        .map(|value| format!("\"{}\"", json_escape(value)))
+        .collect::<Vec<_>>()
+        .join(",");
+    append_jsonl(
+        &session.client_diagnostics_path(),
+        &format!(
+            "{{\"id\":\"{}\",\"ts\":{},\"state\":\"draft-consent-required\",\"requester\":\"{}\",\"target_user\":\"{}\",\"incident\":\"{}\",\"reason\":\"{}\",\"include\":[{}]}}\n",
+            json_escape(&id),
+            epoch_seconds(),
+            json_escape(&session.sekailink_user),
+            json_escape(user),
+            json_escape(incident),
+            json_escape(reason),
+            include_json
         ),
     )?;
     Ok(id)

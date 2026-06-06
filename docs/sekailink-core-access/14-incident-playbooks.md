@@ -21,7 +21,8 @@
 5. `logs filter runtime:<player> source:link:room-runtime`
 6. `incident pin sklmi-<room>-<player> link:room-runtime <important line>`
 7. `client request-sklmi-reconnect <player>`
-8. Si echec: demander diagnostics avec consentement.
+8. Si echec: `client diagnostics-request <player> sklmi-<room>-<player> <reason> --include sekaiemu,sklmi,client`
+9. Exporter la demande si besoin avec `client diagnostics-export <player> --file diagnostics-<player>.md`.
 
 ## Client update brise
 

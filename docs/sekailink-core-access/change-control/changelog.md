@@ -36,3 +36,5 @@
   notes, pins, exports, and close workflow.
 - Added local ops timeline and shift handoff Markdown export for moderator/admin
   relay between shifts.
+- Added local client diagnostics request/list/export drafts for future
+  Client Core, Sekaiemu, and SKLMI log bundle collection with user consent.

@@ -90,7 +90,9 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `client request-sklmi-reconnect` | Service | Oui | Signal reconnect SKLMI. |
 | `client restart-runtime` | Admin | Oui | Demande restart runtime client. |
 | `client clear-cache-request` | Service | Approval | Demande clear cache. |
-| `client diagnostics-request` | Service | Consentement | Demande diagnostics. |
+| `client diagnostics-request <user> <incident> <reason> --include <set>` | Service | Consentement | Prepare une demande locale de bundle diagnostics client. |
+| `client diagnostics-list [query]` | Service | Non | Liste les demandes locales de diagnostics client. |
+| `client diagnostics-export [query] --file <name>` | Service | Non | Exporte les demandes diagnostics et le contrat de bundle attendu. |
 | `broadcast global <message>` | Admin | Oui | Broadcast global. |
 | `broadcast server <server> <message>` | Admin | Oui | Broadcast cible serveur. |
 | `broadcast lobby <lobby> <message>` | Service | Oui | Broadcast lobby. |
