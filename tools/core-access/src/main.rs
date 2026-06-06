@@ -1,3 +1,4 @@
+mod admin_agent;
 mod app;
 mod audit;
 mod commands;

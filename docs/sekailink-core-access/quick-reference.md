@@ -11,6 +11,8 @@ cargo run --manifest-path tools/core-access/Cargo.toml -- --shell
 auth whoami
 ops doctor
 server status all
+server agent-health all
+server agent-services all
 nexus services
 maintenance status
 ```
@@ -72,6 +74,7 @@ client diagnostics-export [query] --file diagnostics.md
 
 ```text
 maintenance enable <scope> --message <msg>
+server restart <server> <service> --confirm <server>:<service>:restart
 release verify-cdn
 release rollback <version>
 server update plan <server>

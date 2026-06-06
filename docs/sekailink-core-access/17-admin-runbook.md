@@ -25,14 +25,20 @@
 ## Incident majeur
 
 1. `incident open major-<date>-<scope> sev1 <summary>`
-2. Stabiliser: maintenance scope minimal.
-3. Broadcast.
-4. Snapshot rooms.
-5. Collect logs bundle.
-6. Identifier service.
-7. Appliquer rollback seulement si impact clair.
-8. `incident close major-<date>-<scope> <resolution>`
-9. Clore avec ops commit et postmortem.
+2. `server agent-health all`
+3. `server agent-system <server>`
+4. `server agent-services <server>`
+5. Stabiliser: maintenance scope minimal.
+6. Broadcast.
+7. Snapshot rooms.
+8. Collect logs bundle.
+9. Identifier service.
+10. `server agent-logs <server> <service>`
+11. Redemarrer seulement avec Admin, gate mutation, et confirmation exacte:
+   `server restart <server> <service> --confirm <server>:<service>:restart --execute`
+12. Appliquer rollback seulement si impact clair.
+13. `incident close major-<date>-<scope> <resolution>`
+14. Clore avec ops commit et postmortem.
 
 ## Audit review
 

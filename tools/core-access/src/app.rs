@@ -1,3 +1,8 @@
+use crate::admin_agent::{
+    AgentRequestPlan, agent_control_plan, agent_health_plan, agent_logs_plan, agent_servers,
+    agent_service_plan, agent_services_plan, agent_system_plan, execute_agent_request,
+    find_agent_server,
+};
 use crate::audit::{
     Session, append_approval_decision, append_approval_request, append_audit,
     append_client_diagnostics_request, append_history, append_incident_event, append_log_pin,
@@ -220,6 +225,30 @@ impl App {
             "server" if parsed.get(1).map(String::as_str) == Some("services") => {
                 self.server_services(parsed.get(2).map(String::as_str));
                 append_audit(&self.session, line, "ok", "server services")?;
+                true
+            }
+            "server"
+                if matches!(
+                    parsed.get(1).map(String::as_str),
+                    Some("agent-health")
+                        | Some("agent-system")
+                        | Some("agent-services")
+                        | Some("agent-service")
+                        | Some("agent-logs")
+                ) =>
+            {
+                self.server_agent(&parsed)?;
+                append_audit(&self.session, line, "ok", "server admin-agent read-only")?;
+                true
+            }
+            "server"
+                if matches!(
+                    parsed.get(1).map(String::as_str),
+                    Some("restart") | Some("start") | Some("stop")
+                ) =>
+            {
+                self.server_agent_control(&parsed)?;
+                append_audit(&self.session, line, "ok", "server admin-agent control")?;
                 true
             }
             "nexus" if parsed.get(1).map(String::as_str) == Some("services") => {
@@ -506,6 +535,125 @@ impl App {
         }
         println!();
         println!("MVP note: service allowlist only; no systemd or SSH call was made.");
+    }
+
+    fn server_agent(&self, parsed: &[String]) -> io::Result<()> {
+        let action = parsed.get(1).map(String::as_str).unwrap_or("");
+        let execute = parsed.iter().any(|part| part == "--execute");
+        match action {
+            "agent-health" | "agent-system" | "agent-services" => {
+                let target = parsed
+                    .iter()
+                    .skip(2)
+                    .find(|part| !part.starts_with("--"))
+                    .map(String::as_str)
+                    .unwrap_or("all");
+                let servers = if target == "all" {
+                    agent_servers().to_vec()
+                } else {
+                    match find_agent_server(target) {
+                        Ok(server) => vec![server],
+                        Err(err) => {
+                            println!("{err}");
+                            return Ok(());
+                        }
+                    }
+                };
+                for server in servers {
+                    let plan = match action {
+                        "agent-health" => agent_health_plan(server),
+                        "agent-system" => agent_system_plan(server),
+                        _ => agent_services_plan(server),
+                    };
+                    self.render_or_execute_agent_plan(&plan, execute, None)?;
+                }
+                Ok(())
+            }
+            "agent-service" | "agent-logs" => {
+                let args = option_positionals(parsed, 2, &[]);
+                if args.len() != 2 {
+                    println!("usage: server {action} <server> <service> [--execute]");
+                    return Ok(());
+                }
+                let server = match find_agent_server(&args[0]) {
+                    Ok(server) => server,
+                    Err(err) => {
+                        println!("{err}");
+                        return Ok(());
+                    }
+                };
+                let plan = if action == "agent-service" {
+                    agent_service_plan(server, &args[1])
+                } else {
+                    agent_logs_plan(server, &args[1])
+                };
+                match plan {
+                    Ok(plan) => self.render_or_execute_agent_plan(&plan, execute, None),
+                    Err(err) => {
+                        println!("{err}");
+                        Ok(())
+                    }
+                }
+            }
+            _ => {
+                println!(
+                    "usage: server agent-health|agent-system|agent-services [server|all] [--execute]"
+                );
+                println!("       server agent-service|agent-logs <server> <service> [--execute]");
+                Ok(())
+            }
+        }
+    }
+
+    fn server_agent_control(&self, parsed: &[String]) -> io::Result<()> {
+        let action = parsed.get(1).map(String::as_str).unwrap_or("");
+        let args = option_positionals(parsed, 2, &["--confirm"]);
+        if args.len() != 2 {
+            println!(
+                "usage: server {action} <server> <service> --confirm <server>:<service>:{action} [--execute]"
+            );
+            return Ok(());
+        }
+        let server = match find_agent_server(&args[0]) {
+            Ok(server) => server,
+            Err(err) => {
+                println!("{err}");
+                return Ok(());
+            }
+        };
+        let execute = parsed.iter().any(|part| part == "--execute");
+        let confirm = flag_value(parsed, "--confirm");
+        match agent_control_plan(server, &args[1], action) {
+            Ok(plan) => self.render_or_execute_agent_plan(&plan, execute, confirm),
+            Err(err) => {
+                println!("{err}");
+                Ok(())
+            }
+        }
+    }
+
+    fn render_or_execute_agent_plan(
+        &self,
+        plan: &AgentRequestPlan,
+        execute: bool,
+        confirm: Option<&str>,
+    ) -> io::Result<()> {
+        if !execute {
+            println!("dry-run admin-agent request:");
+            println!("{}", plan.render_dry_run());
+            if let Some(expected) = plan.mutation_confirm.as_deref() {
+                println!(
+                    "MVP note: command was not executed. Add --execute, set SEKAILINK_CORE_ACCESS_REMOTE_MUTATION=1, and pass --confirm {expected} to run it."
+                );
+            } else {
+                println!(
+                    "MVP note: command was not executed. Add --execute and set SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1 to run it."
+                );
+            }
+            println!();
+            return Ok(());
+        }
+        execute_agent_request(plan, confirm)
     }
 
     fn server_logs(&self, parsed: &[String]) -> io::Result<()> {
@@ -1265,8 +1413,13 @@ impl App {
             ("SEKAILINK_CORE_ACCESS_USER", false),
             ("SEKAILINK_CORE_ACCESS_ROLE", false),
             ("SEKAILINK_CORE_ACCESS_REMOTE_READONLY", false),
+            ("SEKAILINK_CORE_ACCESS_REMOTE_MUTATION", false),
+            ("SEKAILINK_CORE_ACCESS_AGENT_ADMIN_TOKEN", true),
             ("SEKAILINK_CORE_ACCESS_NEXUS_ADMIN_TOKEN", true),
             ("SEKAILINK_CORE_ACCESS_NEXUS_AGENT_ADMIN_TOKEN", true),
+            ("SEKAILINK_CORE_ACCESS_LINK_AGENT_ADMIN_TOKEN", true),
+            ("SEKAILINK_CORE_ACCESS_WORLDS_AGENT_ADMIN_TOKEN", true),
+            ("SEKAILINK_CORE_ACCESS_EVOLUTION_AGENT_ADMIN_TOKEN", true),
             ("SEKAILINK_CORE_ACCESS_NEXUS_LOBBY_ADMIN_TOKEN", true),
             ("SEKAILINK_CORE_ACCESS_NEXUS_IDENTITY_ADMIN_TOKEN", true),
         ] {
@@ -1964,6 +2117,39 @@ fn first_non_flag<'a>(parts: &'a [String], start: usize, default: &'a str) -> &'
         .unwrap_or(default)
 }
 
+fn flag_value<'a>(parts: &'a [String], flag: &str) -> Option<&'a str> {
+    let mut i = 0;
+    while i < parts.len() {
+        if parts[i] == flag {
+            return parts.get(i + 1).map(String::as_str);
+        }
+        if let Some(value) = parts[i].strip_prefix(&format!("{flag}=")) {
+            return Some(value);
+        }
+        i += 1;
+    }
+    None
+}
+
+fn option_positionals(parts: &[String], start: usize, value_flags: &[&str]) -> Vec<String> {
+    let mut out = Vec::new();
+    let mut i = start;
+    while i < parts.len() {
+        let part = &parts[i];
+        if part.starts_with("--") {
+            if value_flags.iter().any(|flag| part == flag) {
+                i += 2;
+                continue;
+            }
+            i += 1;
+            continue;
+        }
+        out.push(part.clone());
+        i += 1;
+    }
+    out
+}
+
 fn print_usage() {
     println!(
         "sekailink-core-access [--shell] [--user USER] [--role service|admin] [--data-dir PATH] [--command COMMAND]"
@@ -1993,6 +2179,14 @@ fn print_help() {
     println!("  commands search <query>");
     println!("  server status [server|all] [--execute]");
     println!("  server services [server|all]");
+    println!("  server agent-health [server|all] [--execute]");
+    println!("  server agent-system [server|all] [--execute]");
+    println!("  server agent-services [server|all] [--execute]");
+    println!("  server agent-service <server> <service> [--execute]");
+    println!("  server agent-logs <server> <service> [--execute]");
+    println!(
+        "  server restart|start|stop <server> <service> --confirm <server>:<service>:<action> [--execute]"
+    );
     println!("  nexus services [--execute]");
     println!("  server logs <server> <service> [--follow] [--execute]");
     println!("  health probe [server|all] [--execute]");

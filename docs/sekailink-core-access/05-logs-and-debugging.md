@@ -69,3 +69,36 @@ Le cockpit doit etre verbose, mais filtre par defaut:
 - erreurs et warnings visibles en haut;
 - details disponibles en drilldown;
 - bruit groupable par service, room, user ou correlation.
+
+## Admin-Agent
+
+Les commandes `server agent-*` utilisent les admin-agents loopback via SSH:
+
+- `server agent-health [server|all]` prepare `GET /health`;
+- `server agent-system [server|all]` prepare `GET /system`;
+- `server agent-services [server|all]` prepare `GET /services`;
+- `server agent-service <server> <service>` prepare `GET /services/{service}`;
+- `server agent-logs <server> <service>` prepare `GET /services/{service}/logs`.
+
+Execution live:
+
+- `--execute` reste bloque sans `SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1`;
+- les routes protegees demandent le token admin-agent du serveur;
+- les tokens sont lus depuis l'environnement local et ne sont jamais imprimes;
+- Pulse n'a pas encore de profil admin-agent dans Core Access; utiliser
+  `health probe pulse` en attendant un agent Pulse declare.
+
+Variables attendues:
+
+- `SEKAILINK_CORE_ACCESS_NEXUS_AGENT_ADMIN_TOKEN`
+- `SEKAILINK_CORE_ACCESS_LINK_AGENT_ADMIN_TOKEN`
+- `SEKAILINK_CORE_ACCESS_WORLDS_AGENT_ADMIN_TOKEN`
+- `SEKAILINK_CORE_ACCESS_EVOLUTION_AGENT_ADMIN_TOKEN`
+- `SEKAILINK_CORE_ACCESS_AGENT_ADMIN_TOKEN` comme fallback generique hors Nexus
+
+Controle service:
+
+- `server restart|start|stop` utilise `POST /services/{service}/{action}`;
+- role Admin requis;
+- `SEKAILINK_CORE_ACCESS_REMOTE_MUTATION=1` requis;
+- confirmation exacte `--confirm <server>:<service>:<action>` requise.

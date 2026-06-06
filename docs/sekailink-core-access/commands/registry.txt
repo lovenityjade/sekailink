@@ -4,9 +4,16 @@ commands list
 commands search
 server status
 server services
+server agent-health
+server agent-system
+server agent-services
+server agent-service
+server agent-logs
 nexus services
 server logs
 server restart
+server start
+server stop
 server update plan
 server update apply
 ssh open

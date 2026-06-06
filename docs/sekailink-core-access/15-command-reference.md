@@ -11,9 +11,16 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `commands search <query>` | Service | Non | Recherche dans le registre de commandes. |
 | `server status <server|all> --execute` | Service | Non | Statut CPU/RAM/disk/uptime/services; live read-only si gate env active. |
 | `server services <server>` | Service | Non | Liste services systemd connus. |
+| `server agent-health [server|all] --execute` | Service | Non | Lit `/health` des admin-agents loopback via SSH; gate read-only requis pour execution. |
+| `server agent-system [server|all] --execute` | Service | Non | Lit `/system` des admin-agents avec token serveur et gate read-only. |
+| `server agent-services [server|all] --execute` | Service | Non | Lit `/services` des admin-agents avec token serveur et gate read-only. |
+| `server agent-service <server> <service> --execute` | Service | Non | Lit etat/state d'un service declare dans l'admin-agent. |
+| `server agent-logs <server> <service> --execute` | Service | Non | Lit le tail JSON expose par l'admin-agent pour un service declare. |
 | `nexus services --execute` | Service | Non | Liste les services connus par le private Nexus admin-agent; dry-run par defaut. |
 | `server logs <server> <service> --follow --execute` | Service | Non | Suit les logs d'un service; execution distante bloquee sans gate env. |
-| `server restart <server> <service>` | Admin | Oui | Redemarre un service allowlist. |
+| `server restart <server> <service> --confirm <server>:<service>:restart --execute` | Admin | Oui | Redemarre un service declare via admin-agent; gate mutation et confirmation exacte requis. |
+| `server start <server> <service> --confirm <server>:<service>:start --execute` | Admin | Oui | Demarre un service declare via admin-agent; gate mutation et confirmation exacte requis. |
+| `server stop <server> <service> --confirm <server>:<service>:stop --execute` | Admin | Oui | Arrete un service declare via admin-agent; gate mutation et confirmation exacte requis. |
 | `server update plan <server>` | Admin | Non | Prepare un plan d'update. |
 | `server update apply <server>` | Admin | Oui | Applique un update apres backup gate. |
 | `ssh open <server>` | Admin | Oui | Ouvre une session SSH explicite. |

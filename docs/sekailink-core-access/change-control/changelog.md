@@ -40,3 +40,5 @@
   Client Core, Sekaiemu, and SKLMI log bundle collection with user consent.
 - Added local `ops doctor`, `ops paths`, and `ops exports` commands for cockpit
   readiness checks and export inventory before moderation shifts.
+- Added gated admin-agent commands for server health/system/services/logs and
+  Admin-only service start/stop/restart with exact confirmation.
