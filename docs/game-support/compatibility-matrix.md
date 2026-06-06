@@ -77,6 +77,13 @@ PopTracker pack is not always mandatory. Platformers and linear action games can
 enter the pipeline with runtime/AP heartbeat proof, a web tracker, Universal
 Tracker, or no tracker for the first trailer-grade milestone.
 
+Universal Tracker is a separate future avenue, not the current packaging target.
+For the pre-beta game pipeline, PopTracker remains the preferred installable
+tracker target, but Universal Tracker evidence can downgrade a missing
+PopTracker pack from "blocked" to "tracker acceptable for first proof" when the
+game runtime itself is otherwise viable. Current reference:
+`https://github.com/FarisTheAncient/Archipelago/releases/latest`.
+
 | Platform | Game | Tracker interpretation | Notes | Local evidence |
 |---|---|---|---|---|
 | snes | ActRaiser | optional for first heartbeat | Platformer/action structure; Discord resources still need retrieval before install automation. | none |

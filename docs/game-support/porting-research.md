@@ -65,6 +65,10 @@ fastest path is to implement connector-family adapters:
   many NES/GB/GBC/GBA games become cheaper together once that path is proven.
 - Tracker status should not control runtime priority alone. Platformers can be
   trailer-ready with AP sync, received item messages, and check reporting.
+- Universal Tracker is worth tracking as a second-lane tracker source, especially
+  for larger APWorlds that expose map, logic, autotracking, and autotabbing
+  metadata. It should not displace PopTracker for the current packaging target,
+  but it can make a game less blocked when PopTracker is missing.
 - Custom patcher/mod games need pinned URLs, repeatable install steps, and a
   packaging policy before they enter the normal CDN/update path.
 
@@ -75,6 +79,8 @@ fastest path is to implement connector-family adapters:
   `apps/client-core/electron/main.cjs`, `runtime/ap/data/lua/connector_bizhawk_generic.lua`,
   and `services/sklmi/src/api_socket_memory.cpp`.
 - Deep Research report at `/home/thelovenityjade/deep-research-report.md`.
+- Universal Tracker release lane:
+  `https://github.com/FarisTheAncient/Archipelago/releases/latest`.
 - Public Archipelago setup pages for EarthBound, Super Mario World, Kirby's
   Dream Land 3, Mega Man 2, Mega Man 3, Pokemon Emerald, Pokemon Red and Blue,
   and Super Mario Land 2.
