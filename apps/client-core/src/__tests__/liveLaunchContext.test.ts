@@ -175,6 +175,71 @@ describe("live launch context", () => {
     });
   });
 
+  it("resolves a remote player's display username to their generated AP slot", () => {
+    const downloads = indexDownloadsBySlot([], (download) => `https://link.sekailink.com${download}`);
+    const playersByName = indexPlayersByName([
+      { slot: 1, name: "Certo-alin-54fd", game: "A Link to the Past" },
+      { slot: 2, name: "Joueur-alin-bbde", game: "A Link to the Past" },
+    ]);
+
+    expect(
+      buildSelfLaunchContext({
+        roomStatus: {
+          players: [
+            { slot: 1, name: "Certo-alin-54fd", game: "A Link to the Past" },
+            { slot: 2, name: "Joueur-alin-bbde", game: "A Link to the Past" },
+          ],
+          launch_entries: [
+            {
+              entry_id: "entry-1",
+              user_id: "72",
+              username: "Certo",
+              config_id: "40",
+              display_player: "Certo",
+              slot: 1,
+              slot_name: "Certo-alin-54fd",
+              compat_player_name: "Certo-alin-54fd",
+              game: "A Link to the Past",
+              artifact_extension: ".aplttp",
+              artifact_kind: "patch",
+              download: "/generation_artifacts/sync/entry-1/AP_74082915752897734568_P1_Certo-alin-54fd.aplttp",
+            },
+            {
+              entry_id: "entry-2",
+              user_id: "74",
+              username: "JoueurSansFromage",
+              config_id: "42",
+              display_player: "JoueurSansFromage",
+              slot: 2,
+              slot_name: "Joueur-alin-bbde",
+              compat_player_name: "Joueur-alin-bbde",
+              game: "A Link to the Past",
+              artifact_extension: ".aplttp",
+              artifact_kind: "patch",
+              download: "/generation_artifacts/sync/entry-2/AP_74082915752897734568_P2_Joueur-alin-bbde.aplttp",
+            },
+          ],
+        },
+        playerName: "JoueurSansFromage",
+        selection: {
+          id: "42",
+          game: "A Link to the Past",
+          player_name: "JoueurSansFromage",
+        },
+        toUrl: (download) => `https://link.sekailink.com${download}`,
+        downloadsBySlot: downloads.single,
+        downloadsBySlotMulti: downloads.multi,
+        playersByName,
+      }),
+    ).toEqual({
+      playerName: "Joueur-alin-bbde",
+      slotId: 2,
+      downloadUrl: "https://link.sekailink.com/generation_artifacts/sync/entry-2/AP_74082915752897734568_P2_Joueur-alin-bbde.aplttp",
+      downloadUrls: ["https://link.sekailink.com/generation_artifacts/sync/entry-2/AP_74082915752897734568_P2_Joueur-alin-bbde.aplttp"],
+      apGameName: "A Link to the Past",
+    });
+  });
+
   it("keeps complete Sync packages out of player launch downloads", () => {
     const downloads = indexDownloadsBySlot(
       [

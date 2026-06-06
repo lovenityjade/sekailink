@@ -2002,7 +2002,7 @@ const LobbyPage: React.FC = () => {
       host,
       fetchRoomStatus,
       loadLatestGeneration: () => loadGeneration(),
-      playerName: selfPlayerName,
+      playerName: selfLaunchContext.playerName || selfPlayerName,
       playerAlias: me?.global_name || me?.username || selfPlayerName,
       apGameName: selfApGameName,
       playersByName,
