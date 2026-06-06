@@ -28,6 +28,7 @@ impl Session {
     pub fn ensure_dirs(&self) -> io::Result<()> {
         fs::create_dir_all(self.audit_dir())?;
         fs::create_dir_all(self.data_dir.join("notes"))?;
+        fs::create_dir_all(self.data_dir.join("log-pins"))?;
         fs::create_dir_all(self.data_dir.join("approvals"))?;
         fs::create_dir_all(self.data_dir.join("history"))?;
         fs::create_dir_all(self.exports_dir())?;
@@ -44,6 +45,10 @@ impl Session {
 
     pub fn notes_path(&self) -> PathBuf {
         self.data_dir.join("notes").join("notes.jsonl")
+    }
+
+    pub fn log_pins_path(&self) -> PathBuf {
+        self.data_dir.join("log-pins").join("pins.jsonl")
     }
 
     pub fn approvals_path(&self) -> PathBuf {
@@ -103,6 +108,23 @@ pub fn append_note(session: &Session, target: &str, text: &str) -> io::Result<St
             json_escape(&session.session_id),
             json_escape(&session.sekailink_user),
             json_escape(target),
+            json_escape(text)
+        ),
+    )?;
+    Ok(id)
+}
+
+pub fn append_log_pin(session: &Session, source: &str, text: &str) -> io::Result<String> {
+    let id = format!("log-pin-{}-{}", epoch_nanos(), std::process::id());
+    append_jsonl(
+        &session.log_pins_path(),
+        &format!(
+            "{{\"id\":\"{}\",\"ts\":{},\"session_id\":\"{}\",\"author\":\"{}\",\"source\":\"{}\",\"text\":\"{}\"}}\n",
+            json_escape(&id),
+            epoch_seconds(),
+            json_escape(&session.session_id),
+            json_escape(&session.sekailink_user),
+            json_escape(source),
             json_escape(text)
         ),
     )?;
@@ -232,10 +254,21 @@ pub fn write_pack_repo(
 }
 
 pub fn write_export(session: &Session, prefix: &str, requested_name: Option<&str>, body: &str) -> io::Result<PathBuf> {
+    write_export_with_extension(session, prefix, requested_name, "jsonl", body)
+}
+
+pub fn write_export_with_extension(
+    session: &Session,
+    prefix: &str,
+    requested_name: Option<&str>,
+    default_extension: &str,
+    body: &str,
+) -> io::Result<PathBuf> {
+    let extension = default_extension.trim_start_matches('.');
     let file_name = requested_name
         .filter(|name| !name.trim().is_empty())
         .map(sanitize_export_file_name)
-        .unwrap_or_else(|| format!("{prefix}-{}.jsonl", epoch_nanos()));
+        .unwrap_or_else(|| format!("{prefix}-{}.{}", epoch_nanos(), extension));
     let path = session.exports_dir().join(file_name);
     if let Some(parent) = path.parent() {
         fs::create_dir_all(parent)?;

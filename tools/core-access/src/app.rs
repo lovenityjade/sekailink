@@ -1,7 +1,7 @@
 use crate::audit::{
     Session, append_approval_decision, append_approval_request, append_audit, append_history,
-    append_note, read_file_to_string, write_client_banner_draft, write_export,
-    write_maintenance_draft, write_pack_repo, write_schedule_job,
+    append_log_pin, append_note, read_file_to_string, write_client_banner_draft, write_export,
+    write_export_with_extension, write_maintenance_draft, write_pack_repo, write_schedule_job,
 };
 use crate::commands::{COMMANDS, Confirmation, command_names, find_command, search_commands};
 use crate::line_editor::LineEditor;
@@ -11,8 +11,8 @@ use crate::nexus::{
 };
 use crate::rbac::Role;
 use crate::system::{
-    known_services, log_catalog, render_dashboard, render_health_probe_plan, render_log_tail_plan,
-    render_server_logs_plan,
+    known_services, log_catalog, render_dashboard, render_health_probe_plan,
+    render_log_filter_plan, render_log_search_plan, render_log_tail_plan, render_server_logs_plan,
 };
 use crate::tui::TuiExit;
 use crate::util::{home_dir, split_command_line};
@@ -231,6 +231,16 @@ impl App {
             "logs" if parsed.get(1).map(String::as_str) == Some("tail") => {
                 self.logs_tail(&parsed)?;
                 append_audit(&self.session, line, "ok", "logs tail dry-run")?;
+                true
+            }
+            "logs"
+                if matches!(
+                    parsed.get(1).map(String::as_str),
+                    Some("search" | "filter" | "pin" | "note" | "export")
+                ) =>
+            {
+                self.logs_workflow(&parsed)?;
+                append_audit(&self.session, line, "ok", "logs workflow")?;
                 true
             }
             "health" if parsed.get(1).map(String::as_str) == Some("probe") => {
@@ -489,6 +499,124 @@ impl App {
             }
             Err(err) => println!("{err}"),
         }
+        Ok(())
+    }
+
+    fn logs_workflow(&self, parsed: &[String]) -> io::Result<()> {
+        match parsed.get(1).map(String::as_str) {
+            Some("search") => self.logs_search(parsed),
+            Some("filter") => self.logs_filter(parsed),
+            Some("pin") => self.logs_pin(parsed),
+            Some("note") => self.logs_note(parsed),
+            Some("export") => self.logs_export(parsed),
+            _ => {
+                println!("usage: logs search|filter|pin|note|export");
+                Ok(())
+            }
+        }
+    }
+
+    fn logs_search(&self, parsed: &[String]) -> io::Result<()> {
+        let execute = parsed.iter().any(|part| part == "--execute");
+        let args = non_flag_args(parsed, 2);
+        let Some(query) = args.first() else {
+            println!("usage: logs search <query> [source|all] [--execute]");
+            return Ok(());
+        };
+        let source = args.get(1).map(String::as_str).unwrap_or("all");
+        match render_log_search_plan(source, query) {
+            Ok(plan) => self.render_or_execute_remote_plan("log search", &plan, execute),
+            Err(err) => {
+                println!("{err}");
+                Ok(())
+            }
+        }
+    }
+
+    fn logs_filter(&self, parsed: &[String]) -> io::Result<()> {
+        let execute = parsed.iter().any(|part| part == "--execute");
+        let args = non_flag_args(parsed, 2);
+        if args.is_empty() {
+            println!("usage: logs filter <term...> [source:<source|all>] [--execute]");
+            return Ok(());
+        }
+        let source = args
+            .iter()
+            .find_map(|arg| arg.strip_prefix("source:"))
+            .unwrap_or("all");
+        let filters = args
+            .iter()
+            .filter(|arg| !arg.starts_with("source:"))
+            .map(|arg| log_filter_search_term(arg))
+            .collect::<Vec<_>>();
+        match render_log_filter_plan(source, &filters) {
+            Ok(plan) => self.render_or_execute_remote_plan("log filter", &plan, execute),
+            Err(err) => {
+                println!("{err}");
+                Ok(())
+            }
+        }
+    }
+
+    fn logs_pin(&self, parsed: &[String]) -> io::Result<()> {
+        let Some(source) = parsed.get(2) else {
+            println!("usage: logs pin <source> <text>");
+            return Ok(());
+        };
+        let text = if parsed.len() > 3 {
+            parsed[3..].join(" ")
+        } else {
+            String::new()
+        };
+        if text.trim().is_empty() {
+            println!("usage: logs pin <source> <text>");
+            return Ok(());
+        }
+        let id = append_log_pin(&self.session, source, &text)?;
+        println!("log pin created: {id}");
+        println!("source: {source}");
+        Ok(())
+    }
+
+    fn logs_note(&self, parsed: &[String]) -> io::Result<()> {
+        let Some(source) = parsed.get(2) else {
+            println!("usage: logs note <source> <text>");
+            return Ok(());
+        };
+        let text = if parsed.len() > 3 {
+            parsed[3..].join(" ")
+        } else {
+            String::new()
+        };
+        if text.trim().is_empty() {
+            println!("usage: logs note <source> <text>");
+            return Ok(());
+        }
+        let id = append_note(&self.session, &format!("log:{source}"), &text)?;
+        println!("log note created: {id}");
+        println!("target: log:{source}");
+        Ok(())
+    }
+
+    fn logs_export(&self, parsed: &[String]) -> io::Result<()> {
+        let options = LogExportOptions::from_parts(parsed);
+        let pins = read_file_to_string(&self.session.log_pins_path())?;
+        let notes = read_file_to_string(&self.session.notes_path())?;
+        let body = render_logs_export(&pins, &notes, &options);
+        if body.trim().is_empty() {
+            println!("nothing to export from local log pins/notes");
+            return Ok(());
+        }
+        let path = write_export_with_extension(
+            &self.session,
+            "logs-evidence",
+            options.file_name.as_deref(),
+            options.format.extension(),
+            &body,
+        )?;
+        println!("logs evidence exported to {}", path.display());
+        println!("format: {}", options.format.as_str());
+        println!("MVP note: export is local; no Nexus DB incident record was changed.");
         Ok(())
     }
 
@@ -1105,6 +1233,11 @@ fn print_help() {
     println!("  logs list --by-server");
     println!("  logs list --by-incident");
     println!("  logs tail <source> [--follow] [--execute]");
+    println!("  logs search <query> [source|all] [--execute]");
+    println!("  logs filter <term...> [source:<source|all>] [--execute]");
+    println!("  logs pin <source> <text>");
+    println!("  logs note <source> <text>");
+    println!("  logs export [query] [--format md|jsonl|txt] [--file name]");
     println!("  audit search [query]");
     println!("  audit export [query] [file-name]");
     println!("  note add <target> <text>");
@@ -1130,15 +1263,206 @@ fn print_help() {
     println!("  exit");
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum LogExportFormat {
+    Markdown,
+    Jsonl,
+    Text,
+}
+
+impl LogExportFormat {
+    fn parse(value: &str) -> Self {
+        match value.trim().to_ascii_lowercase().as_str() {
+            "json" | "jsonl" => Self::Jsonl,
+            "txt" | "text" => Self::Text,
+            _ => Self::Markdown,
+        }
+    }
+
+    fn as_str(self) -> &'static str {
+        match self {
+            Self::Markdown => "md",
+            Self::Jsonl => "jsonl",
+            Self::Text => "txt",
+        }
+    }
+
+    fn extension(self) -> &'static str {
+        self.as_str()
+    }
+}
+
+#[derive(Debug, Clone)]
+struct LogExportOptions {
+    format: LogExportFormat,
+    query: String,
+    file_name: Option<String>,
+}
+
+impl LogExportOptions {
+    fn from_parts(parts: &[String]) -> Self {
+        let mut format = LogExportFormat::Markdown;
+        let mut file_name = None;
+        let mut query = Vec::new();
+        let mut i = 2;
+        while i < parts.len() {
+            match parts[i].as_str() {
+                "--format" => {
+                    i += 1;
+                    if let Some(value) = parts.get(i) {
+                        format = LogExportFormat::parse(value);
+                    }
+                }
+                value if value.starts_with("--format=") => {
+                    format = LogExportFormat::parse(value.trim_start_matches("--format="));
+                }
+                "--file" => {
+                    i += 1;
+                    if let Some(value) = parts.get(i) {
+                        file_name = Some(value.clone());
+                    }
+                }
+                value if value.starts_with("--file=") => {
+                    file_name = Some(value.trim_start_matches("--file=").to_string());
+                }
+                value if looks_like_export_file(value) && file_name.is_none() => {
+                    file_name = Some(value.to_string());
+                }
+                value => query.push(value.to_string()),
+            }
+            i += 1;
+        }
+        Self {
+            format,
+            query: query.join(" "),
+            file_name,
+        }
+    }
+}
+
+fn looks_like_export_file(value: &str) -> bool {
+    value.ends_with(".md")
+        || value.ends_with(".txt")
+        || value.ends_with(".json")
+        || value.ends_with(".jsonl")
+}
+
+fn log_filter_search_term(value: &str) -> &str {
+    let Some((prefix, term)) = value.split_once(':') else {
+        return value;
+    };
+    match prefix {
+        "user" | "lobby" | "room" | "correlation" | "item" | "runtime" => term,
+        _ => value,
+    }
+}
+
+fn render_logs_export(pins: &str, notes: &str, options: &LogExportOptions) -> String {
+    let pins = matching_lines(pins, &options.query).collect::<Vec<_>>();
+    let notes = matching_lines(notes, &options.query)
+        .filter(|line| line.contains("\"target\":\"log:"))
+        .collect::<Vec<_>>();
+    if pins.is_empty() && notes.is_empty() {
+        return String::new();
+    }
+
+    match options.format {
+        LogExportFormat::Jsonl => pins
+            .iter()
+            .chain(notes.iter())
+            .map(|line| format!("{line}\n"))
+            .collect(),
+        LogExportFormat::Text => {
+            let mut out = String::new();
+            out.push_str("SekaiLink Core Access Log Evidence Export\n");
+            out.push_str("========================================\n\n");
+            push_text_section(&mut out, "Pins", &pins);
+            push_text_section(&mut out, "Log Notes", &notes);
+            out
+        }
+        LogExportFormat::Markdown => {
+            let mut out = String::new();
+            out.push_str("# SekaiLink Core Access Log Evidence Export\n\n");
+            if !options.query.trim().is_empty() {
+                out.push_str(&format!("Filter: `{}`\n\n", options.query));
+            }
+            push_json_section(&mut out, "Pins", &pins);
+            push_json_section(&mut out, "Log Notes", &notes);
+            out
+        }
+    }
+}
+
+fn matching_lines<'a>(text: &'a str, query: &'a str) -> impl Iterator<Item = &'a str> {
+    let query = query.trim().to_ascii_lowercase();
+    text.lines().filter(move |line| {
+        !line.trim().is_empty()
+            && (query.is_empty() || line.to_ascii_lowercase().contains(&query))
+    })
+}
+
+fn push_json_section(out: &mut String, title: &str, lines: &[&str]) {
+    out.push_str(&format!("## {title}\n\n"));
+    if lines.is_empty() {
+        out.push_str("_No local evidence._\n\n");
+        return;
+    }
+    out.push_str("```json\n");
+    for line in lines {
+        out.push_str(line);
+        out.push('\n');
+    }
+    out.push_str("```\n\n");
+}
+
+fn push_text_section(out: &mut String, title: &str, lines: &[&str]) {
+    out.push_str(title);
+    out.push('\n');
+    out.push_str(&"-".repeat(title.len()));
+    out.push('\n');
+    if lines.is_empty() {
+        out.push_str("(no local evidence)\n\n");
+        return;
+    }
+    for line in lines {
+        out.push_str(line);
+        out.push('\n');
+    }
+    out.push('\n');
+}
+
 #[cfg(test)]
 mod app_tests {
-    use super::parse_banner_slot;
+    use super::{LogExportOptions, log_filter_search_term, parse_banner_slot, render_logs_export};
 
     #[test]
     fn banner_slot_is_limited_to_three_slots() {
         assert_eq!(parse_banner_slot("1").unwrap(), 1);
         assert!(parse_banner_slot("0").is_err());
         assert!(parse_banner_slot("4").is_err());
+    }
+
+    #[test]
+    fn logs_export_includes_only_log_notes() {
+        let parts = vec![
+            "logs".to_string(),
+            "export".to_string(),
+            "--format".to_string(),
+            "md".to_string(),
+        ];
+        let options = LogExportOptions::from_parts(&parts);
+        let notes = "{\"target\":\"log:link:room-runtime\",\"text\":\"kept\"}\n{\"target\":\"user:certo\",\"text\":\"ignored\"}\n";
+        let body = render_logs_export("", notes, &options);
+        assert!(body.contains("kept"));
+        assert!(!body.contains("ignored"));
+    }
+
+    #[test]
+    fn log_filter_terms_strip_known_labels() {
+        assert_eq!(log_filter_search_term("user:certo"), "certo");
+        assert_eq!(log_filter_search_term("room:abc"), "abc");
+        assert_eq!(log_filter_search_term("plain"), "plain");
+        assert_eq!(log_filter_search_term("unknown:value"), "unknown:value");
     }
 }
 

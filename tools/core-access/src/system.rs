@@ -125,6 +125,44 @@ pub fn render_log_tail_plan(source: &str, follow: bool) -> Result<String, String
     render_server_logs_plan(server, service, follow)
 }
 
+pub fn render_log_search_plan(source: &str, query: &str) -> Result<String, String> {
+    render_log_filter_plan(source, &[query])
+}
+
+pub fn render_log_filter_plan(source: &str, filters: &[&str]) -> Result<String, String> {
+    let clean_filters = filters
+        .iter()
+        .map(|filter| filter.trim())
+        .filter(|filter| !filter.is_empty())
+        .collect::<Vec<_>>();
+    if clean_filters.is_empty() {
+        return Err("logs search/filter requires at least one query term".to_string());
+    }
+
+    let sources = if source.trim().is_empty() || source == "all" {
+        log_catalog()
+            .iter()
+            .map(|(source, _, _)| *source)
+            .collect::<Vec<_>>()
+    } else {
+        vec![source]
+    };
+
+    let mut out = String::new();
+    for source in sources {
+        let plan = render_log_tail_plan(source, false)?;
+        let pipeline = clean_filters
+            .iter()
+            .map(|filter| format!("grep -i -- {}", shell_word(filter)))
+            .collect::<Vec<_>>()
+            .join(" | ");
+        out.push_str(&format!(
+            "printf '\\n### {source}\\n'; {plan} | {pipeline} || true\n"
+        ));
+    }
+    Ok(out.trim_end().to_string())
+}
+
 pub fn render_health_probe_plan(target: &str) -> Result<String, String> {
     let target = target.trim();
     if target.is_empty() || target == "all" {
@@ -293,7 +331,7 @@ fn read_disk() -> String {
 
 #[cfg(test)]
 mod tests {
-    use super::{render_server_logs_plan, service_allowed};
+    use super::{render_log_search_plan, render_server_logs_plan, service_allowed};
 
     #[test]
     fn server_logs_plan_uses_allowlisted_service() {
@@ -307,5 +345,13 @@ mod tests {
     fn server_logs_plan_rejects_unknown_service() {
         let err = render_server_logs_plan("link", "postgresql", false).unwrap_err();
         assert!(err.contains("not allowlisted"));
+    }
+
+    #[test]
+    fn log_search_plan_greps_allowlisted_source() {
+        let plan = render_log_search_plan("link:room-runtime", "sklmi runtime").unwrap();
+        assert!(plan.contains("ssh link-vps"));
+        assert!(plan.contains("journalctl -u sekailink-room-server"));
+        assert!(plan.contains("grep -i -- 'sklmi runtime'"));
     }
 }

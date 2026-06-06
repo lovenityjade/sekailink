@@ -22,11 +22,11 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `logs list --by-server` | Service | Non | Vue logs par serveur/service. |
 | `logs list --by-incident` | Service | Non | Vue logs correlees incident. |
 | `logs tail <source> --execute` | Service | Non | Suit une source log; dry-run par defaut. |
-| `logs search <query>` | Service | Non | Recherche logs. |
-| `logs filter <expr>` | Service | Non | Filtre par user/lobby/room/correlation. |
-| `logs pin` | Service | Non | Epingle la selection courante. |
-| `logs note` | Service | Non | Cree une note liee. |
-| `logs export --format <md|json|txt>` | Service | Non | Exporte logs/notes. |
+| `logs search <query> [source|all] --execute` | Service | Non | Recherche read-only dans les logs allowlistes; dry-run par defaut. |
+| `logs filter <term...> source:<source|all> --execute` | Service | Non | Filtre read-only par user/lobby/room/correlation; dry-run par defaut. |
+| `logs pin <source> <text>` | Service | Non | Epingle une ligne ou un extrait comme preuve locale. |
+| `logs note <source> <text>` | Service | Non | Cree une note locale ciblee `log:<source>`. |
+| `logs export [query] --format <md|jsonl|txt> --file <name>` | Service | Non | Exporte pins et notes logs locaux. |
 | `audit export [query] [file-name]` | Service | Non | Exporte des lignes d'audit locales dans le dossier exports Core Access. |
 | `note add <target> <text>` | Service | Non | Ajoute une note locale liee a un incident, log, user, lobby ou room. |
 | `note list [query]` | Service | Non | Liste les notes locales, optionnellement filtrees. |

@@ -30,3 +30,5 @@
   HTTP admin GET routes with token-gated execution.
 - Added the first full-screen terminal cockpit with panels, command line,
   autocomplete/history, F1-F12 hotkeys, and `--shell` fallback.
+- Added local log evidence workflow commands for search/filter dry-run plans,
+  local pins, log notes, and Markdown/JSONL/TXT evidence exports.

@@ -30,6 +30,7 @@ Fonctions presentes dans le cockpit MVP:
 Fonctions planifiees:
 
 - selection de suggestion avancee;
+- selection visuelle de plage dans les panels logs;
 - Alt+B/F;
 - reverse search;
 - edition multi-line JSON;
@@ -63,7 +64,17 @@ ligne-par-ligne pour les sessions de logs longues.
 
 ## Selection de logs
 
+MVP actuel:
+
+1. Chercher avec `logs search <query> [source|all]`.
+2. Isoler avec `logs filter user:<id> lobby:<id> source:<source|all>`.
+3. Epingler avec `logs pin <source> <text>`.
+4. Ajouter une note avec `logs note <source> <text>`.
+5. Exporter avec `logs export [query] --format md`.
+
+Selection visuelle planifiee:
+
 1. Placer le curseur sur le panel log.
 2. Selectionner une plage.
-3. F4 pour creer une note.
-4. F7 pour exporter.
+3. F4 pour creer une note depuis la selection.
+4. F7 pour exporter la selection.

@@ -24,6 +24,11 @@ Implemented MVP commands include:
 - `logs list --by-server`
 - `logs list --by-incident`
 - `logs tail <source> [--follow] [--execute]`
+- `logs search <query> [source|all] [--execute]`
+- `logs filter <term...> [source:<source|all>] [--execute]`
+- `logs pin <source> <text>`
+- `logs note <source> <text>`
+- `logs export [query] [--format md|jsonl|txt] [--file name]`
 - `audit search [query]`
 - `audit export [query] [file-name]`
 - `note add <target> <text>`

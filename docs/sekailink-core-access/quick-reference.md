@@ -19,9 +19,11 @@ maintenance status
 ```text
 logs list --by-server
 logs tail <source>
-logs filter user:<id> lobby:<id> room:<id>
-logs note
-logs export --format md
+logs search route_not_found link:chat-api
+logs filter user:<id> lobby:<id> room:<id> source:all
+logs pin <source> <text>
+logs note <source> <text>
+logs export [query] --format md
 ```
 
 ## Live support
