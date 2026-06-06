@@ -32,6 +32,7 @@ Implemented MVP commands include:
 - `approval request <command> <reason>`
 - `approval list`
 - `approval approve <id> [reason]` as Admin
+- `ops snapshot [label]`
 
 ## Build
 

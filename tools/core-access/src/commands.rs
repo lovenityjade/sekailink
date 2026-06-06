@@ -35,6 +35,7 @@ pub const COMMANDS: &[CommandSpec] = &[
     spec("approval request", Role::Service, Confirmation::None, "Create approval request.", true),
     spec("approval list", Role::Service, Confirmation::None, "List approval queue.", true),
     spec("approval approve", Role::Admin, Confirmation::Required, "Approve an approval request.", true),
+    spec("ops snapshot", Role::Service, Confirmation::None, "Write local incident snapshot.", true),
     spec("maintenance status", Role::Service, Confirmation::None, "Show maintenance status.", true),
     spec("server services", Role::Service, Confirmation::None, "List known service targets.", true),
     spec("server logs", Role::Service, Confirmation::None, "Tail service logs.", true),

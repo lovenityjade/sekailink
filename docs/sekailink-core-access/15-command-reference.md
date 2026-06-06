@@ -33,6 +33,7 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `approval request <command> <reason>` | Service | Non | Demande une approbation Admin pour une commande sensible. |
 | `approval list` | Service | Non | Liste les demandes et decisions locales. |
 | `approval approve <id> [reason]` | Admin | Oui | Approuve localement une demande existante, sans execution serveur en MVP. |
+| `ops snapshot [label]` | Service | Non | Cree un snapshot Markdown local avec dashboard, logs, services, audit, notes et approvals. |
 | `user search <query>` | Service | Non | Recherche utilisateur. |
 | `user open <user>` | Service | Non | Ouvre fiche utilisateur. |
 | `user create` | Admin | Oui | Cree un utilisateur. |

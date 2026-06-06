@@ -24,6 +24,7 @@ note export
 approval request
 approval list
 approval approve
+ops snapshot
 user search
 user open
 user create

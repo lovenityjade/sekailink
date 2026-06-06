@@ -9,3 +9,5 @@
 - Added bounded local exports for Core Access audit and note JSONL.
 - Added dry-run plans for `server logs`, `logs tail`, and `health probe`.
 - Aligned dry-run SSH output with documented `*-vps` bastion aliases.
+- Added local Markdown incident snapshots with dashboard, log catalog, services,
+  recent audit, notes, and approval queue.

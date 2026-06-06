@@ -243,6 +243,11 @@ impl App {
                 append_audit(&self.session, line, "ok", "approval")?;
                 true
             }
+            "ops" if parsed.get(1).map(String::as_str) == Some("snapshot") => {
+                self.ops_snapshot(parsed.get(2).map(String::as_str))?;
+                append_audit(&self.session, line, "ok", "ops snapshot")?;
+                true
+            }
             "maintenance" if parsed.get(1).map(String::as_str) == Some("status") => {
                 println!("maintenance: unknown (Nexus integration pending)");
                 println!("MVP note: no server state was read or changed.");
@@ -535,6 +540,49 @@ impl App {
         Ok((pending, approved))
     }
 
+    fn ops_snapshot(&self, label: Option<&str>) -> io::Result<()> {
+        let title = label.unwrap_or("incident").trim();
+        let file_name = format!("{title}.md");
+        let audit = read_file_to_string(&self.session.audit_dir().join("core-access.jsonl"))?;
+        let notes = read_file_to_string(&self.session.notes_path())?;
+        let approvals = read_file_to_string(&self.session.approvals_path())?;
+        let mut body = String::new();
+
+        body.push_str(&format!("# SekaiLink Core Access Snapshot - {title}\n\n"));
+        body.push_str("## Session\n\n");
+        body.push_str(&format!("- Linux user: {}\n", self.session.linux_user));
+        body.push_str(&format!("- SekaiLink user: {}\n", self.session.sekailink_user));
+        body.push_str(&format!("- Role: {}\n", self.session.role.as_str()));
+        body.push_str(&format!("- Session: {}\n\n", self.session.session_id));
+
+        body.push_str("## Dashboard\n\n```text\n");
+        body.push_str(&render_dashboard());
+        body.push_str("```\n\n");
+
+        body.push_str("## Log Sources\n\n");
+        for (source, server, description) in log_catalog() {
+            body.push_str(&format!("- `{source}` on {server}: {description}\n"));
+        }
+
+        body.push_str("\n## Services\n\n");
+        for (server, services) in known_services() {
+            body.push_str(&format!("- `{server}`: {}\n", services.join(", ")));
+        }
+
+        body.push_str("\n## Recent Audit\n\n```json\n");
+        push_recent_lines(&mut body, &audit, 50);
+        body.push_str("```\n\n## Recent Notes\n\n```json\n");
+        push_recent_lines(&mut body, &notes, 50);
+        body.push_str("```\n\n## Approval Queue\n\n```json\n");
+        push_recent_lines(&mut body, &approvals, 50);
+        body.push_str("```\n");
+
+        let path = write_export(&self.session, "snapshot", Some(&file_name), &body)?;
+        println!("snapshot written to {}", path.display());
+        println!("MVP note: snapshot is local, not a Nexus DB incident record yet.");
+        Ok(())
+    }
+
     fn stub_or_unknown(&self, line: &str, spec: Option<&crate::commands::CommandSpec>) -> io::Result<()> {
         if let Some(spec) = spec {
             println!("command recognized: {}", spec.name);
@@ -550,6 +598,15 @@ impl App {
             append_audit(&self.session, line, "unknown_command", "no registry match")?;
         }
         Ok(())
+    }
+}
+
+fn push_recent_lines(body: &mut String, source: &str, limit: usize) {
+    let lines = source.lines().collect::<Vec<_>>();
+    let start = lines.len().saturating_sub(limit);
+    for line in &lines[start..] {
+        body.push_str(line);
+        body.push('\n');
     }
 }
 
@@ -594,6 +651,7 @@ fn print_help() {
     println!("  approval request <command> <reason>");
     println!("  approval list");
     println!("  approval approve <id> [reason]");
+    println!("  ops snapshot [label]");
     println!("  exit");
 }
 
