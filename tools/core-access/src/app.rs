@@ -1,8 +1,8 @@
 use crate::audit::{
-    Session, append_approval_decision, append_approval_request, append_audit, append_history,
-    append_client_diagnostics_request, append_incident_event, append_log_pin, append_note,
-    read_file_to_string, write_client_banner_draft, write_export, write_export_with_extension,
-    write_maintenance_draft, write_pack_repo, write_schedule_job,
+    Session, append_approval_decision, append_approval_request, append_audit,
+    append_client_diagnostics_request, append_history, append_incident_event, append_log_pin,
+    append_note, read_file_to_string, write_client_banner_draft, write_export,
+    write_export_with_extension, write_maintenance_draft, write_pack_repo, write_schedule_job,
 };
 use crate::commands::{COMMANDS, Confirmation, command_names, find_command, search_commands};
 use crate::line_editor::LineEditor;
@@ -33,7 +33,11 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
         .unwrap_or_else(|| linux_user.clone());
     let role = options
         .role
-        .or_else(|| env::var("SEKAILINK_CORE_ACCESS_ROLE").ok().and_then(|value| Role::parse(&value)))
+        .or_else(|| {
+            env::var("SEKAILINK_CORE_ACCESS_ROLE")
+                .ok()
+                .and_then(|value| Role::parse(&value))
+        })
         .unwrap_or(Role::Service);
     let data_dir = options
         .data_dir
@@ -91,7 +95,9 @@ impl Options {
                 }
                 "--data-dir" => {
                     i += 1;
-                    data_dir = Some(PathBuf::from(args.get(i).ok_or("--data-dir requires a value")?));
+                    data_dir = Some(PathBuf::from(
+                        args.get(i).ok_or("--data-dir requires a value")?,
+                    ));
                 }
                 "--shell" => {
                     shell = true;
@@ -254,7 +260,11 @@ impl App {
             "user"
                 if matches!(
                     parsed.get(1).map(String::as_str),
-                    Some("search") | Some("open") | Some("sessions") | Some("devices") | Some("audit")
+                    Some("search")
+                        | Some("open")
+                        | Some("sessions")
+                        | Some("devices")
+                        | Some("audit")
                 ) =>
             {
                 self.user_readonly_plan(&parsed)?;
@@ -280,7 +290,12 @@ impl App {
             "audit" if parsed.get(1).map(String::as_str) == Some("export") => {
                 let query = parsed.get(2).map(String::as_str).unwrap_or("");
                 let requested_name = parsed.get(3).map(String::as_str);
-                self.export_jsonl("audit", &self.session.audit_dir().join("core-access.jsonl"), query, requested_name)?;
+                self.export_jsonl(
+                    "audit",
+                    &self.session.audit_dir().join("core-access.jsonl"),
+                    query,
+                    requested_name,
+                )?;
                 append_audit(&self.session, line, "ok", "audit export")?;
                 true
             }
@@ -358,7 +373,10 @@ impl App {
             }
             "pack"
                 if parsed.get(1).map(String::as_str) == Some("repo")
-                    && matches!(parsed.get(2).map(String::as_str), Some("list") | Some("add"))
+                    && matches!(
+                        parsed.get(2).map(String::as_str),
+                        Some("list") | Some("add")
+                    )
                     || parsed.get(1).map(String::as_str) == Some("schedule-check") =>
             {
                 self.pack(&parsed)?;
@@ -428,7 +446,11 @@ impl App {
             println!("audit log is empty: {}", path.display());
             return Ok(());
         }
-        for line in text.lines().filter(|line| query.is_empty() || line.contains(query)).take(200) {
+        for line in text
+            .lines()
+            .filter(|line| query.is_empty() || line.contains(query))
+            .take(200)
+        {
             println!("{line}");
         }
         Ok(())
@@ -448,7 +470,10 @@ impl App {
         }
         let mut body = String::new();
         let mut count = 0_usize;
-        for line in text.lines().filter(|line| query.is_empty() || line.contains(query)) {
+        for line in text
+            .lines()
+            .filter(|line| query.is_empty() || line.contains(query))
+        {
             body.push_str(line);
             body.push('\n');
             count += 1;
@@ -653,14 +678,25 @@ impl App {
         Ok(())
     }
 
-    fn render_or_execute_remote_plan(&self, label: &str, plan: &str, execute: bool) -> io::Result<()> {
+    fn render_or_execute_remote_plan(
+        &self,
+        label: &str,
+        plan: &str,
+        execute: bool,
+    ) -> io::Result<()> {
         if !execute {
             println!("dry-run {label}:");
             println!("{plan}");
-            println!("MVP note: command was not executed. Add --execute and set SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1 to run it.");
+            println!(
+                "MVP note: command was not executed. Add --execute and set SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1 to run it."
+            );
             return Ok(());
         }
-        if env::var("SEKAILINK_CORE_ACCESS_REMOTE_READONLY").ok().as_deref() != Some("1") {
+        if env::var("SEKAILINK_CORE_ACCESS_REMOTE_READONLY")
+            .ok()
+            .as_deref()
+            != Some("1")
+        {
             println!("remote read-only execution blocked by environment gate");
             println!("set SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1 and rerun with --execute");
             println!("planned command:");
@@ -698,7 +734,9 @@ impl App {
             Some("list") => {
                 let args = non_flag_args(parsed, 2);
                 if args.len() > 5 {
-                    println!("usage: lobby list [limit] [query] [visibility] [status] [offset] [--execute]");
+                    println!(
+                        "usage: lobby list [limit] [query] [visibility] [status] [offset] [--execute]"
+                    );
                     return Ok(());
                 }
                 let filter = LobbyListFilter::from_positionals(&args);
@@ -730,7 +768,11 @@ impl App {
         }
     }
 
-    fn render_or_execute_nexus_get(&self, plan: &ProtectedGetPlan, execute: bool) -> io::Result<()> {
+    fn render_or_execute_nexus_get(
+        &self,
+        plan: &ProtectedGetPlan,
+        execute: bool,
+    ) -> io::Result<()> {
         if !execute {
             println!("dry-run Nexus protected read-only request:");
             println!("{}", plan.render_dry_run());
@@ -743,7 +785,11 @@ impl App {
             );
             return Ok(());
         }
-        if env::var("SEKAILINK_CORE_ACCESS_REMOTE_READONLY").ok().as_deref() != Some("1") {
+        if env::var("SEKAILINK_CORE_ACCESS_REMOTE_READONLY")
+            .ok()
+            .as_deref()
+            != Some("1")
+        {
             println!("protected Nexus read-only execution blocked by environment gate");
             println!("set SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1 and rerun with --execute");
             println!("dry-run command:");
@@ -792,7 +838,11 @@ impl App {
             return Ok(());
         }
         let mut count = 0_usize;
-        for line in text.lines().filter(|line| query.is_empty() || line.contains(query)).take(200) {
+        for line in text
+            .lines()
+            .filter(|line| query.is_empty() || line.contains(query))
+            .take(200)
+        {
             println!("{line}");
             count += 1;
         }
@@ -930,7 +980,11 @@ impl App {
             return Ok(());
         }
         let mut count = 0_usize;
-        for line in text.lines().filter(|line| query.is_empty() || line.contains(query)).take(300) {
+        for line in text
+            .lines()
+            .filter(|line| query.is_empty() || line.contains(query))
+            .take(300)
+        {
             println!("{line}");
             count += 1;
         }
@@ -968,7 +1022,10 @@ impl App {
         for line in event_lines.iter().rev().take(12).rev() {
             println!("{line}");
         }
-        print_related_section("Related notes", incident_note_lines(&notes, &label).collect());
+        print_related_section(
+            "Related notes",
+            incident_note_lines(&notes, &label).collect(),
+        );
         print_related_section("Related pins", incident_pin_lines(&pins, &label).collect());
         Ok(())
     }
@@ -1057,13 +1114,8 @@ impl App {
         }
         let file_name = incident_export_file_name(parsed, &label);
         let body = render_incident_export(&label, &events, &notes, &pins);
-        let path = write_export_with_extension(
-            &self.session,
-            "incident",
-            Some(&file_name),
-            "md",
-            &body,
-        )?;
+        let path =
+            write_export_with_extension(&self.session, "incident", Some(&file_name), "md", &body)?;
         println!("incident exported to {}", path.display());
         println!("MVP note: export is local; no Nexus DB incident record was changed.");
         Ok(())
@@ -1095,9 +1147,7 @@ impl App {
     fn ops(&self, parsed: &[String]) -> io::Result<()> {
         match parsed.get(1).map(String::as_str) {
             Some("snapshot") => self.ops_snapshot(parsed.get(2).map(String::as_str)),
-            Some("timeline") => {
-                self.ops_timeline(parsed.get(2).map(String::as_str).unwrap_or(""))
-            }
+            Some("timeline") => self.ops_timeline(parsed.get(2).map(String::as_str).unwrap_or("")),
             Some("handoff") => self.ops_handoff(parsed),
             Some("doctor") => self.ops_doctor(parsed),
             Some("paths") => {
@@ -1113,7 +1163,9 @@ impl App {
     }
 
     fn ops_doctor(&self, parsed: &[String]) -> io::Result<()> {
-        let verbose = parsed.iter().any(|part| part == "--verbose" || part == "-v");
+        let verbose = parsed
+            .iter()
+            .any(|part| part == "--verbose" || part == "-v");
         let checks = self.doctor_checks(verbose);
         let ok = checks
             .iter()
@@ -1141,7 +1193,12 @@ impl App {
         println!("{}", "-".repeat(92));
         for check in checks {
             if verbose || check.level != DoctorLevel::Ok {
-                println!("{:<7} {:<18} {}", check.level.as_str(), check.name, check.detail);
+                println!(
+                    "{:<7} {:<18} {}",
+                    check.level.as_str(),
+                    check.name,
+                    check.detail
+                );
             }
         }
         if !verbose {
@@ -1166,7 +1223,10 @@ impl App {
         checks.push(path_check("pdf-root", &pdf_root, true));
 
         for (label, path) in [
-            ("audit-store", self.session.audit_dir().join("core-access.jsonl")),
+            (
+                "audit-store",
+                self.session.audit_dir().join("core-access.jsonl"),
+            ),
             ("notes-store", self.session.notes_path()),
             ("pins-store", self.session.log_pins_path()),
             ("incidents-store", self.session.incident_events_path()),
@@ -1224,7 +1284,10 @@ impl App {
             ));
             checks.push(DoctorCheck::ok(
                 "exports-count",
-                &format!("{} file(s)", count_export_files(&self.session.exports_dir())),
+                &format!(
+                    "{} file(s)",
+                    count_export_files(&self.session.exports_dir())
+                ),
             ));
         }
 
@@ -1342,7 +1405,8 @@ impl App {
         let incidents = read_file_to_string(&self.session.incident_events_path())?;
         let approvals = read_file_to_string(&self.session.approvals_path())?;
         let maintenance = read_file_to_string(&self.session.maintenance_dir().join("current.txt"))?;
-        let maintenance_history = read_file_to_string(&self.session.maintenance_dir().join("history.jsonl"))?;
+        let maintenance_history =
+            read_file_to_string(&self.session.maintenance_dir().join("history.jsonl"))?;
         let schedule = read_file_to_string(&self.session.scheduler_dir().join("jobs.jsonl"))?;
         let pack_repos = read_file_to_string(&self.session.pack_repos_dir().join("repos.jsonl"))?;
         let diagnostics = read_file_to_string(&self.session.client_diagnostics_path())?;
@@ -1353,7 +1417,10 @@ impl App {
         body.push_str(&format!("# SekaiLink Core Access Handoff - {label}\n\n"));
         body.push_str("## Session\n\n");
         body.push_str(&format!("- Linux user: {}\n", self.session.linux_user));
-        body.push_str(&format!("- SekaiLink user: {}\n", self.session.sekailink_user));
+        body.push_str(&format!(
+            "- SekaiLink user: {}\n",
+            self.session.sekailink_user
+        ));
         body.push_str(&format!("- Role: {}\n", self.session.role.as_str()));
         body.push_str(&format!("- Session: {}\n\n", self.session.session_id));
 
@@ -1367,7 +1434,10 @@ impl App {
         body.push_str("\n## Recent Ops Timeline\n\n```text\n");
         let start = timeline.len().saturating_sub(80);
         for entry in &timeline[start..] {
-            body.push_str(&format!("{:<12} {:<10} {}\n", entry.ts, entry.source, entry.line));
+            body.push_str(&format!(
+                "{:<12} {:<10} {}\n",
+                entry.ts, entry.source, entry.line
+            ));
         }
         body.push_str("```\n\n");
 
@@ -1413,7 +1483,8 @@ impl App {
         let pins = read_file_to_string(&self.session.log_pins_path())?;
         let incidents = read_file_to_string(&self.session.incident_events_path())?;
         let approvals = read_file_to_string(&self.session.approvals_path())?;
-        let maintenance = read_file_to_string(&self.session.maintenance_dir().join("history.jsonl"))?;
+        let maintenance =
+            read_file_to_string(&self.session.maintenance_dir().join("history.jsonl"))?;
         let schedule = read_file_to_string(&self.session.scheduler_dir().join("jobs.jsonl"))?;
         let pack_repos = read_file_to_string(&self.session.pack_repos_dir().join("repos.jsonl"))?;
         let diagnostics = read_file_to_string(&self.session.client_diagnostics_path())?;
@@ -1441,7 +1512,10 @@ impl App {
         body.push_str(&format!("# SekaiLink Core Access Snapshot - {title}\n\n"));
         body.push_str("## Session\n\n");
         body.push_str(&format!("- Linux user: {}\n", self.session.linux_user));
-        body.push_str(&format!("- SekaiLink user: {}\n", self.session.sekailink_user));
+        body.push_str(&format!(
+            "- SekaiLink user: {}\n",
+            self.session.sekailink_user
+        ));
         body.push_str(&format!("- Role: {}\n", self.session.role.as_str()));
         body.push_str(&format!("- Session: {}\n\n", self.session.session_id));
 
@@ -1476,7 +1550,9 @@ impl App {
     fn client_diagnostics(&self, parsed: &[String]) -> io::Result<()> {
         match parsed.get(1).map(String::as_str) {
             Some("diagnostics-request") => self.client_diagnostics_request(parsed),
-            Some("diagnostics-list") => self.client_diagnostics_list(parsed.get(2).map(String::as_str).unwrap_or("")),
+            Some("diagnostics-list") => {
+                self.client_diagnostics_list(parsed.get(2).map(String::as_str).unwrap_or(""))
+            }
             Some("diagnostics-export") => self.client_diagnostics_export(parsed),
             _ => {
                 println!("usage: client diagnostics-request|diagnostics-list|diagnostics-export");
@@ -1488,11 +1564,15 @@ impl App {
     fn client_diagnostics_request(&self, parsed: &[String]) -> io::Result<()> {
         let args = DiagnosticsArgs::from_parts(parsed);
         let Some(user) = args.positionals.first() else {
-            println!("usage: client diagnostics-request <user> <incident> <reason> [--include client-core,sekaiemu,sklmi,configs,system]");
+            println!(
+                "usage: client diagnostics-request <user> <incident> <reason> [--include client-core,sekaiemu,sklmi,configs,system]"
+            );
             return Ok(());
         };
         let Some(incident) = args.positionals.get(1) else {
-            println!("usage: client diagnostics-request <user> <incident> <reason> [--include client-core,sekaiemu,sklmi,configs,system]");
+            println!(
+                "usage: client diagnostics-request <user> <incident> <reason> [--include client-core,sekaiemu,sklmi,configs,system]"
+            );
             return Ok(());
         };
         let reason = if args.positionals.len() > 2 {
@@ -1501,16 +1581,26 @@ impl App {
             String::new()
         };
         if reason.trim().is_empty() {
-            println!("usage: client diagnostics-request <user> <incident> <reason> [--include client-core,sekaiemu,sklmi,configs,system]");
+            println!(
+                "usage: client diagnostics-request <user> <incident> <reason> [--include client-core,sekaiemu,sklmi,configs,system]"
+            );
             return Ok(());
         }
-        let id = append_client_diagnostics_request(&self.session, user, incident, &reason, &args.include)?;
+        let id = append_client_diagnostics_request(
+            &self.session,
+            user,
+            incident,
+            &reason,
+            &args.include,
+        )?;
         println!("client diagnostics request drafted: {id}");
         println!("target user: {user}");
         println!("incident: {incident}");
         println!("include: {}", args.include.join(", "));
         println!("consent required: user must approve before any client-side upload");
-        println!("MVP note: draft only; no client signal was sent and no Client Core/Sekaiemu/SKLMI code changed.");
+        println!(
+            "MVP note: draft only; no client signal was sent and no Client Core/Sekaiemu/SKLMI code changed."
+        );
         println!();
         print_client_diagnostics_contract();
         Ok(())
@@ -1523,7 +1613,11 @@ impl App {
             return Ok(());
         }
         let mut count = 0_usize;
-        for line in text.lines().filter(|line| query.is_empty() || line.contains(query)).take(200) {
+        for line in text
+            .lines()
+            .filter(|line| query.is_empty() || line.contains(query))
+            .take(200)
+        {
             println!("{line}");
             count += 1;
         }
@@ -1640,13 +1734,19 @@ impl App {
     }
 
     fn read_client_banner_slot(&self, slot: u8) -> io::Result<String> {
-        read_file_to_string(&self.session.client_banners_dir().join(format!("slot-{slot}.txt")))
+        read_file_to_string(
+            &self
+                .session
+                .client_banners_dir()
+                .join(format!("slot-{slot}.txt")),
+        )
     }
 
     fn maintenance(&self, parsed: &[String]) -> io::Result<()> {
         match parsed.get(1).map(String::as_str) {
             Some("status") => {
-                let current = read_file_to_string(&self.session.maintenance_dir().join("current.txt"))?;
+                let current =
+                    read_file_to_string(&self.session.maintenance_dir().join("current.txt"))?;
                 if current.trim().is_empty() {
                     println!("maintenance: no local draft");
                 } else {
@@ -1657,7 +1757,8 @@ impl App {
                 Ok(())
             }
             Some("history") => {
-                let history = read_file_to_string(&self.session.maintenance_dir().join("history.jsonl"))?;
+                let history =
+                    read_file_to_string(&self.session.maintenance_dir().join("history.jsonl"))?;
                 if history.trim().is_empty() {
                     println!("maintenance history is empty");
                 } else {
@@ -1746,9 +1847,13 @@ impl App {
     }
 
     fn pack(&self, parsed: &[String]) -> io::Result<()> {
-        match (parsed.get(1).map(String::as_str), parsed.get(2).map(String::as_str)) {
+        match (
+            parsed.get(1).map(String::as_str),
+            parsed.get(2).map(String::as_str),
+        ) {
             (Some("repo"), Some("list")) => {
-                let repos = read_file_to_string(&self.session.pack_repos_dir().join("repos.jsonl"))?;
+                let repos =
+                    read_file_to_string(&self.session.pack_repos_dir().join("repos.jsonl"))?;
                 if repos.trim().is_empty() {
                     println!("pack repo drafts are empty");
                 } else {
@@ -1791,7 +1896,12 @@ impl App {
                     println!("usage: pack schedule-check <repo-id> <when-or-interval>");
                     return Ok(());
                 };
-                let job_id = write_schedule_job(&self.session, &format!("pack-check-{id}"), when, &format!("pack check {id}"))?;
+                let job_id = write_schedule_job(
+                    &self.session,
+                    &format!("pack-check-{id}"),
+                    when,
+                    &format!("pack check {id}"),
+                )?;
                 println!("pack check schedule draft added: {job_id}");
                 println!("MVP note: job is not armed; no pack repo was fetched.");
                 Ok(())
@@ -1803,11 +1913,19 @@ impl App {
         }
     }
 
-    fn stub_or_unknown(&self, line: &str, spec: Option<&crate::commands::CommandSpec>) -> io::Result<()> {
+    fn stub_or_unknown(
+        &self,
+        line: &str,
+        spec: Option<&crate::commands::CommandSpec>,
+    ) -> io::Result<()> {
         if let Some(spec) = spec {
             println!("command recognized: {}", spec.name);
             println!("status: planned integration; no server mutation performed");
-            println!("role: {} | confirmation: {:?}", spec.role.as_str(), spec.confirmation);
+            println!(
+                "role: {} | confirmation: {:?}",
+                spec.role.as_str(),
+                spec.confirmation
+            );
             if spec.confirmation == Confirmation::Required {
                 println!("future confirmation: exact target + reason required");
             }
@@ -1847,7 +1965,9 @@ fn first_non_flag<'a>(parts: &'a [String], start: usize, default: &'a str) -> &'
 }
 
 fn print_usage() {
-    println!("sekailink-core-access [--shell] [--user USER] [--role service|admin] [--data-dir PATH] [--command COMMAND]");
+    println!(
+        "sekailink-core-access [--shell] [--user USER] [--role service|admin] [--data-dir PATH] [--command COMMAND]"
+    );
 }
 
 fn print_banner(session: &Session) {
@@ -1916,7 +2036,9 @@ fn print_help() {
     println!("  client-banner list");
     println!("  client-banner preview <1|2|3>");
     println!("  client-banner edit <1|2|3> <text>");
-    println!("  client diagnostics-request <user> <incident> <reason> [--include client-core,sekaiemu,sklmi,configs,system]");
+    println!(
+        "  client diagnostics-request <user> <incident> <reason> [--include client-core,sekaiemu,sklmi,configs,system]"
+    );
     println!("  client diagnostics-list [query]");
     println!("  client diagnostics-export [query] [--file name]");
     println!("  maintenance status");
@@ -2355,8 +2477,7 @@ fn render_logs_export(pins: &str, notes: &str, options: &LogExportOptions) -> St
 fn matching_lines<'a>(text: &'a str, query: &'a str) -> impl Iterator<Item = &'a str> {
     let query = query.trim().to_ascii_lowercase();
     text.lines().filter(move |line| {
-        !line.trim().is_empty()
-            && (query.is_empty() || line.to_ascii_lowercase().contains(&query))
+        !line.trim().is_empty() && (query.is_empty() || line.to_ascii_lowercase().contains(&query))
     })
 }
 
@@ -2466,7 +2587,11 @@ fn file_store_check(name: &str, path: &Path) -> DoctorCheck {
     match fs::metadata(path) {
         Ok(metadata) if metadata.is_file() => DoctorCheck::ok(
             name,
-            &format!("{} line(s), {}", count_file_lines(path), format_bytes(metadata.len())),
+            &format!(
+                "{} line(s), {}",
+                count_file_lines(path),
+                format_bytes(metadata.len())
+            ),
         ),
         Ok(_) => DoctorCheck::warn(name, &format!("not a regular file: {}", path.display())),
         Err(err) if err.kind() == io::ErrorKind::NotFound => {
@@ -2771,28 +2896,23 @@ fn print_log_catalog(mode: Option<&str>) {
         println!("{}", "-".repeat(84));
         println!(
             "{:<18} {:<24} login, token, route_not_found, session/device issues",
-            "identity",
-            "nexus:identity link:chat-api"
+            "identity", "nexus:identity link:chat-api"
         );
         println!(
             "{:<18} {:<24} lobby chat, readiness, client refresh, release endpoint issues",
-            "lobby",
-            "link:chat-api client:reports"
+            "lobby", "link:chat-api client:reports"
         );
         println!(
             "{:<18} {:<24} AP item routing, room disconnects, SKLMI runtime reports",
-            "room",
-            "link:room-runtime client:reports"
+            "room", "link:room-runtime client:reports"
         );
         println!(
             "{:<18} {:<24} generation queue, ALTTP package creation, worker failures",
-            "worlds",
-            "worlds:generation"
+            "worlds", "worlds:generation"
         );
         println!(
             "{:<18} {:<24} installer/update manifests, pack CDN, release SHA checks",
-            "release",
-            "evolution:cdn link:chat-api"
+            "release", "evolution:cdn link:chat-api"
         );
         return;
     }

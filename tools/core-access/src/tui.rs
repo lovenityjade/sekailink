@@ -192,7 +192,9 @@ impl TuiState {
         self.history_cursor = self.history.len();
         self.push_output(format!("> {command}"));
 
-        if command.contains("--execute") && (command.contains("--follow") || command.contains(" -f")) {
+        if command.contains("--execute")
+            && (command.contains("--follow") || command.contains(" -f"))
+        {
             self.push_output("blocked in cockpit: use F9 shell mode for live follow commands");
             return Ok(());
         }
@@ -412,7 +414,12 @@ fn draw_header(out: &mut String, state: &TuiState, cols: u16) {
         state.session.sekailink_user,
         state.session.role.as_str()
     );
-    write_at(out, 1, 1, &format!("{BLUE_BG}{BOLD}{}{RESET}", fit(&title, cols as usize)));
+    write_at(
+        out,
+        1,
+        1,
+        &format!("{BLUE_BG}{BOLD}{}{RESET}", fit(&title, cols as usize)),
+    );
     let local = local_health();
     let status = format!(
         "{GREEN}Nexus{RESET} local={} load={} ram={} disk={}   {YELLOW}Remote live checks require --execute gate{RESET}",
@@ -467,17 +474,39 @@ fn draw_left(out: &mut String, state: &TuiState, cols: u16, rows: u16) {
         View::Logs => "logs",
         View::Panic => "panic",
     };
-    write_at(out, row, 3, &fit(&format!("view: {view}"), left_w.saturating_sub(4) as usize));
+    write_at(
+        out,
+        row,
+        3,
+        &fit(&format!("view: {view}"), left_w.saturating_sub(4) as usize),
+    );
     row += 1;
     let age = state.last_status_refresh.elapsed().as_secs();
-    write_at(out, row, 3, &fit(&format!("refresh: {age}s ago"), left_w.saturating_sub(4) as usize));
+    write_at(
+        out,
+        row,
+        3,
+        &fit(
+            &format!("refresh: {age}s ago"),
+            left_w.saturating_sub(4) as usize,
+        ),
+    );
 
     if !state.suggestions.is_empty() {
         row += 2;
         write_at(out, row, 3, &format!("{YELLOW}Suggestions{RESET}"));
-        for suggestion in state.suggestions.iter().take((bottom - row).saturating_sub(1) as usize) {
+        for suggestion in state
+            .suggestions
+            .iter()
+            .take((bottom - row).saturating_sub(1) as usize)
+        {
             row += 1;
-            write_at(out, row, 3, &fit(suggestion, left_w.saturating_sub(4) as usize));
+            write_at(
+                out,
+                row,
+                3,
+                &fit(suggestion, left_w.saturating_sub(4) as usize),
+            );
         }
     }
 }
@@ -515,7 +544,11 @@ fn draw_command_line(out: &mut String, state: &TuiState, cols: u16, rows: u16) {
     } else {
         0
     };
-    let visible = input.chars().skip(start).take(input_width).collect::<String>();
+    let visible = input
+        .chars()
+        .skip(start)
+        .take(input_width)
+        .collect::<String>();
     write_at(out, rows - 1, 3, &format!("{CYAN}{prompt}{RESET}{visible}"));
     let cursor_col = 3 + prompt.len() as u16 + state.cursor.saturating_sub(start) as u16;
     out.push_str(&format!("\x1b[{};{}H\x1b[?25h", rows - 1, cursor_col));

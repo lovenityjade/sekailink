@@ -58,7 +58,9 @@ impl Session {
     }
 
     pub fn client_diagnostics_path(&self) -> PathBuf {
-        self.data_dir.join("client-diagnostics").join("requests.jsonl")
+        self.data_dir
+            .join("client-diagnostics")
+            .join("requests.jsonl")
     }
 
     pub fn approvals_path(&self) -> PathBuf {
@@ -90,7 +92,12 @@ impl Session {
     }
 }
 
-pub fn append_audit(session: &Session, command: &str, status: &str, detail: &str) -> io::Result<()> {
+pub fn append_audit(
+    session: &Session,
+    command: &str,
+    status: &str,
+    detail: &str,
+) -> io::Result<()> {
     append_jsonl(
         &session.audit_dir().join("core-access.jsonl"),
         &format!(
@@ -173,7 +180,11 @@ pub fn append_client_diagnostics_request(
     reason: &str,
     include: &[String],
 ) -> io::Result<String> {
-    let id = format!("client-diagnostics-{}-{}", epoch_nanos(), std::process::id());
+    let id = format!(
+        "client-diagnostics-{}-{}",
+        epoch_nanos(),
+        std::process::id()
+    );
     let include_json = include
         .iter()
         .map(|value| format!("\"{}\"", json_escape(value)))
@@ -195,7 +206,11 @@ pub fn append_client_diagnostics_request(
     Ok(id)
 }
 
-pub fn append_approval_request(session: &Session, requested_command: &str, reason: &str) -> io::Result<String> {
+pub fn append_approval_request(
+    session: &Session,
+    requested_command: &str,
+    reason: &str,
+) -> io::Result<String> {
     let id = format!("approval-{}-{}", epoch_nanos(), std::process::id());
     append_jsonl(
         &session.approvals_path(),
@@ -212,7 +227,12 @@ pub fn append_approval_request(session: &Session, requested_command: &str, reaso
     Ok(id)
 }
 
-pub fn append_approval_decision(session: &Session, id: &str, state: &str, reason: &str) -> io::Result<()> {
+pub fn append_approval_decision(
+    session: &Session,
+    id: &str,
+    state: &str,
+    reason: &str,
+) -> io::Result<()> {
     append_jsonl(
         &session.approvals_path(),
         &format!(
@@ -233,7 +253,12 @@ pub fn append_history(session: &Session, line: &str) -> io::Result<()> {
 
 pub fn write_client_banner_draft(session: &Session, slot: u8, text: &str) -> io::Result<String> {
     let id = format!("banner-{}-{}", epoch_nanos(), std::process::id());
-    fs::write(session.client_banners_dir().join(format!("slot-{slot}.txt")), text)?;
+    fs::write(
+        session
+            .client_banners_dir()
+            .join(format!("slot-{slot}.txt")),
+        text,
+    )?;
     append_jsonl(
         &session.client_banners_dir().join("history.jsonl"),
         &format!(
@@ -256,9 +281,7 @@ pub fn write_maintenance_draft(
     message: &str,
 ) -> io::Result<String> {
     let id = format!("maintenance-{}-{}", epoch_nanos(), std::process::id());
-    let summary = format!(
-        "id={id}\nscope={scope}\nstart={start}\nend={end}\nmessage={message}\n"
-    );
+    let summary = format!("id={id}\nscope={scope}\nstart={start}\nend={end}\nmessage={message}\n");
     fs::write(session.maintenance_dir().join("current.txt"), &summary)?;
     append_jsonl(
         &session.maintenance_dir().join("history.jsonl"),
@@ -276,7 +299,12 @@ pub fn write_maintenance_draft(
     Ok(id)
 }
 
-pub fn write_schedule_job(session: &Session, name: &str, when: &str, command: &str) -> io::Result<String> {
+pub fn write_schedule_job(
+    session: &Session,
+    name: &str,
+    when: &str,
+    command: &str,
+) -> io::Result<String> {
     let id = format!("schedule-{}-{}", epoch_nanos(), std::process::id());
     append_jsonl(
         &session.scheduler_dir().join("jobs.jsonl"),
@@ -317,7 +345,12 @@ pub fn write_pack_repo(
     Ok(record_id)
 }
 
-pub fn write_export(session: &Session, prefix: &str, requested_name: Option<&str>, body: &str) -> io::Result<PathBuf> {
+pub fn write_export(
+    session: &Session,
+    prefix: &str,
+    requested_name: Option<&str>,
+    body: &str,
+) -> io::Result<PathBuf> {
     write_export_with_extension(session, prefix, requested_name, "jsonl", body)
 }
 

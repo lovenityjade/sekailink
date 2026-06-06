@@ -45,4 +45,3 @@ mod tests {
         assert!(Role::Service.allows(Role::Service));
     }
 }
-

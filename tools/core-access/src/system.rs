@@ -27,12 +27,7 @@ pub fn render_dashboard() -> String {
     out.push_str("--------------------------------------------------------------------\n");
     out.push_str(&format!(
         "{:<11} {:<10} {:<13} {:<12} {:<11} {}\n",
-        "Nexus",
-        "LOCAL",
-        health.load,
-        health.memory,
-        health.disk,
-        health.uptime
+        "Nexus", "LOCAL", health.load, health.memory, health.disk, health.uptime
     ));
     for server in ["Link", "Worlds", "Evolution", "Pulse"] {
         out.push_str(&format!(
@@ -49,12 +44,32 @@ pub fn log_catalog() -> &'static [(&'static str, &'static str, &'static str)] {
     &[
         ("nexus:identity", "Nexus", "Identity/auth/admin audit logs"),
         ("nexus:db", "Nexus", "DB and backup logs"),
-        ("link:chat-api", "Link", "Public API, lobby, chat, release-latest"),
-        ("link:room-runtime", "Link", "Room runtime and AP multiserver logs"),
-        ("worlds:generation", "Worlds", "Generation queue and worker logs"),
+        (
+            "link:chat-api",
+            "Link",
+            "Public API, lobby, chat, release-latest",
+        ),
+        (
+            "link:room-runtime",
+            "Link",
+            "Room runtime and AP multiserver logs",
+        ),
+        (
+            "worlds:generation",
+            "Worlds",
+            "Generation queue and worker logs",
+        ),
         ("evolution:cdn", "Evolution", "CDN, packs, releases, nginx"),
-        ("pulse:assistant", "Pulse", "Pulse health/config helper logs"),
-        ("client:reports", "Link", "Uploaded client diagnostics/reports"),
+        (
+            "pulse:assistant",
+            "Pulse",
+            "Pulse health/config helper logs",
+        ),
+        (
+            "client:reports",
+            "Link",
+            "Uploaded client diagnostics/reports",
+        ),
     ]
 }
 
@@ -106,7 +121,11 @@ pub fn known_services() -> &'static [(&'static str, &'static [&'static str])] {
     ]
 }
 
-pub fn render_server_logs_plan(server: &str, service: &str, follow: bool) -> Result<String, String> {
+pub fn render_server_logs_plan(
+    server: &str,
+    service: &str,
+    follow: bool,
+) -> Result<String, String> {
     let server = normalize_server(server)?;
     if !service_allowed(server, service) {
         return Err(format!("service {service} is not allowlisted for {server}"));
@@ -120,8 +139,8 @@ pub fn render_server_logs_plan(server: &str, service: &str, follow: bool) -> Res
 }
 
 pub fn render_log_tail_plan(source: &str, follow: bool) -> Result<String, String> {
-    let (server, service) = log_source_service(source)
-        .ok_or_else(|| format!("unknown log source: {source}"))?;
+    let (server, service) =
+        log_source_service(source).ok_or_else(|| format!("unknown log source: {source}"))?;
     render_server_logs_plan(server, service, follow)
 }
 
@@ -197,9 +216,7 @@ fn health_probe_for(server: &str, services: &[&str]) -> String {
         })
         .collect::<Vec<_>>()
         .join("; ");
-    format!(
-        "ssh {ssh_alias} -- 'hostname; uptime; free -m; df -h /; {service_checks}'"
-    )
+    format!("ssh {ssh_alias} -- 'hostname; uptime; free -m; df -h /; {service_checks}'")
 }
 
 fn log_source_service(source: &str) -> Option<(&'static str, &'static str)> {

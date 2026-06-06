@@ -123,7 +123,10 @@ pub fn lobby_open_plan(lobby_id: &str) -> Result<ProtectedGetPlan, String> {
 pub fn identity_user_plan(action: &str, values: &[String]) -> Result<ProtectedGetPlan, String> {
     match action {
         "search" => {
-            let query = required_arg(values, "usage: user search <query> [limit] [role] [state] [offset] [--execute]")?;
+            let query = required_arg(
+                values,
+                "usage: user search <query> [limit] [role] [state] [offset] [--execute]",
+            )?;
             let limit = values.get(1).map(String::as_str).unwrap_or("50");
             let role = values.get(2).map(String::as_str);
             let state = values.get(3).map(String::as_str);
@@ -178,7 +181,10 @@ pub fn identity_user_plan(action: &str, values: &[String]) -> Result<ProtectedGe
             ))
         }
         "audit" => {
-            let username = required_arg(values, "usage: user audit <username> [limit] [event_type] [offset] [--execute]")?;
+            let username = required_arg(
+                values,
+                "usage: user audit <username> [limit] [event_type] [offset] [--execute]",
+            )?;
             let limit = values.get(1).map(String::as_str).unwrap_or("50");
             let event_type = values.get(2).map(String::as_str);
             let offset = values.get(3).map(String::as_str);
@@ -206,8 +212,7 @@ pub fn identity_user_plan(action: &str, values: &[String]) -> Result<ProtectedGe
 }
 
 pub fn execute_protected_get(plan: &ProtectedGetPlan) -> io::Result<()> {
-    let Some((token_source, token)) = read_token(plan)
-    else {
+    let Some((token_source, token)) = read_token(plan) else {
         println!(
             "protected Nexus read-only execution blocked: missing {}{}",
             plan.token_env,
@@ -220,7 +225,9 @@ pub fn execute_protected_get(plan: &ProtectedGetPlan) -> io::Result<()> {
         return Ok(());
     };
     if token.contains('\n') || token.contains('\r') {
-        println!("protected Nexus read-only execution blocked: {NEXUS_TOKEN_ENV} contains a newline");
+        println!(
+            "protected Nexus read-only execution blocked: {NEXUS_TOKEN_ENV} contains a newline"
+        );
         return Ok(());
     }
 
@@ -390,6 +397,9 @@ mod tests {
         assert!(plan.url.contains("role=admin"));
         assert!(plan.url.contains("state=active"));
         assert!(plan.url.contains("offset=5"));
-        assert!(plan.render_dry_run().contains("'http://149.202.61.90:19095/admin/users?"));
+        assert!(
+            plan.render_dry_run()
+                .contains("'http://149.202.61.90:19095/admin/users?")
+        );
     }
 }
