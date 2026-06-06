@@ -412,6 +412,29 @@ add_test(
   COMMAND runtime_frontend_settings_smoke
 )
 
+add_executable(runtime_memory_server_bizhawk_protocol_smoke
+  src/runtime_memory_server_bizhawk_protocol_smoke.cpp
+  src/runtime_memory_server.cpp
+  src/memory_domain_registry.cpp
+  src/host_io_utils.cpp
+)
+
+target_include_directories(runtime_memory_server_bizhawk_protocol_smoke
+  PRIVATE
+    ${SEKAIEMU_LIBRETRO_INCLUDE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/extern
+)
+
+target_link_libraries(runtime_memory_server_bizhawk_protocol_smoke
+  PRIVATE
+    ${SEKAIEMU_PLATFORM_LIBS}
+)
+
+add_test(
+  NAME sekaiemu_runtime_memory_server_bizhawk_protocol_smoke
+  COMMAND runtime_memory_server_bizhawk_protocol_smoke
+)
+
 add_executable(input_script_smoke
   src/input_script_smoke.cpp
   src/input_script.cpp

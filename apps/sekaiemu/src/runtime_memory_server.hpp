@@ -39,15 +39,22 @@ class RuntimeMemoryServer {
 
   const std::filesystem::path& SocketPath() const { return socket_path_; }
   bool Active() const { return server_fd_ >= 0; }
+  bool Locked() const { return locked_; }
 
  private:
   std::vector<RuntimeMemoryDomainInfo> BuildDomainList() const;
   std::string HandleRequestLine(const std::string& line);
   std::string HandleJsonRequest(const std::string& line);
   std::string BuildSystemResponse() const;
+  std::string BuildPreferredCoresResponse() const;
+  std::string BuildHashResponse() const;
+  std::string BuildMemorySizeResponse(const std::string& line) const;
   std::string BuildDomainsResponse() const;
+  std::string BuildGuardResponse(const std::string& line) const;
   std::string BuildReadResponse(const std::string& line) const;
   std::string BuildWriteResponse(const std::string& line);
+  std::string BuildDisplayMessageResponse();
+  std::string BuildSetMessageIntervalResponse(const std::string& line);
 
   const std::uint8_t* ResolveReadOnly(std::string_view domain_id,
                                       std::uint32_t address,
@@ -62,6 +69,8 @@ class RuntimeMemoryServer {
   std::string system_name_ = "LIBRETRO";
   CoreApi* core_ = nullptr;
   MemoryDomainRegistry* memory_domains_ = nullptr;
+  bool locked_ = false;
+  double message_interval_seconds_ = 0.0;
 };
 
 std::string InferRuntimeSystemName(const std::filesystem::path& core_path);

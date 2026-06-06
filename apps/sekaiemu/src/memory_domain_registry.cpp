@@ -7,6 +7,20 @@
 
 namespace sekaiemu::spike {
 
+namespace {
+
+std::string NormalizeMemoryDomain(std::string_view memory_domain) {
+  std::string out = Lowercase(memory_domain);
+  for (char& ch : out) {
+    if (ch == ' ' || ch == '-' || ch == '.') {
+      ch = '_';
+    }
+  }
+  return out;
+}
+
+}  // namespace
+
 void MemoryDomainRegistry::SetMemoryMaps(const retro_memory_map* map) {
   memory_descriptors_.clear();
   if (map && map->descriptors && map->num_descriptors > 0) {
@@ -26,12 +40,14 @@ const std::uint8_t* MemoryDomainRegistry::Resolve(const CoreApi& core,
     return nullptr;
   }
 
-  const auto region_name = Lowercase(memory_domain);
-  if (region_name == "system_ram" || region_name == "save_ram" || region_name == "video_ram") {
+  const auto region_name = NormalizeMemoryDomain(memory_domain);
+  if (region_name == "system_ram" || region_name == "ram" || region_name == "wram" ||
+      region_name == "save_ram" || region_name == "battery_ram" || region_name == "sram" ||
+      region_name == "video_ram" || region_name == "vram") {
     unsigned region_id = RETRO_MEMORY_SYSTEM_RAM;
-    if (region_name == "save_ram") {
+    if (region_name == "save_ram" || region_name == "battery_ram" || region_name == "sram") {
       region_id = RETRO_MEMORY_SAVE_RAM;
-    } else if (region_name == "video_ram") {
+    } else if (region_name == "video_ram" || region_name == "vram") {
       region_id = RETRO_MEMORY_VIDEO_RAM;
     }
     auto* base = static_cast<const std::uint8_t*>(core.retro_get_memory_data(region_id));
@@ -134,7 +150,7 @@ const std::uint8_t* MemoryDomainRegistry::Resolve(const CoreApi& core,
   if (!memory_descriptors_.empty()) {
     for (const auto& descriptor : memory_descriptors_) {
       const std::string descriptor_space =
-          descriptor.addrspace ? Lowercase(descriptor.addrspace) : std::string();
+          descriptor.addrspace ? NormalizeMemoryDomain(descriptor.addrspace) : std::string();
 
       const bool domain_matches =
           region_name == "bus" ||

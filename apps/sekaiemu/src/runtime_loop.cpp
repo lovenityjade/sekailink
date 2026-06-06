@@ -276,7 +276,9 @@ int RunRuntimeLoop(RuntimeLoopContext& context) {
       } else if (context.audio_buffer_status_callback && *context.audio_buffer_status_callback) {
         (*context.audio_buffer_status_callback)(true, 50, false);
       }
-      context.on_core_run();
+      if (!context.core_run_enabled || context.core_run_enabled()) {
+        context.on_core_run();
+      }
       context.on_tick_memory_server();
       context.on_tick_sklmi_companion();
       context.on_tick_profile_bridge();

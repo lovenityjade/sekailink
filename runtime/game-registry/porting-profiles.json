@@ -6,7 +6,7 @@
     "sekailink_certified_sni": "Already proven through the current SekaiLink SNES/SNI-style path.",
     "sni_client": "Archipelago SNIClient path with SNI/lua/Connector.lua for Lua-capable emulators.",
     "sni_client_rom_access": "SNIClient path that also requires ROM access or constrained emulator/core choices.",
-    "bizhawk_generic_lua": "Archipelago BizHawk Client path using data/lua/connector_bizhawk_generic.lua; SekaiLink/SKLMI already has partial support and needs completion/certification.",
+    "bizhawk_generic_lua": "APWorlds that expect Archipelago's generic BizHawk Lua protocol; Sekaiemu/SKLMI absorbs the protocol natively and needs per-core live certification.",
     "custom_apworld_or_patcher": "External APWorld, custom patcher, mod, or Discord-only source must be normalized before automation.",
     "tracker_optional": "Tracker is not a first certification blocker, usually for platformers or linear games.",
     "web_tracker_only": "A web tracker is known, but PopTracker/runtime source still needs separate confirmation."
@@ -135,122 +135,122 @@
     {
       "game_key": "mega_man_2",
       "connector_family": "bizhawk_generic_lua",
-      "porting_difficulty": "medium_high",
+      "porting_difficulty": "medium",
       "requires_lua_connector": true,
       "requires_bizhawk_client": true,
       "requires_sni": false,
       "requires_mod_or_custom_patcher": false,
       "tracker_requirement": "universal_tracker",
-      "setup_requirement": ".apmm2 patch, BizHawk 2.7+, BizHawk Client, data/lua/connector_bizhawk_generic.lua; build on existing partial SekaiLink/SKLMI BizHawk support.",
-      "evidence": ["runtime/ap/worlds/mm2/client.py", "runtime/ap/worlds/mm2/docs/setup_en.md", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "services/sklmi/src/api_socket_memory.cpp", "apps/client-core/electron/main.cjs", "https://archipelago.gg/tutorial/Mega%20Man%202/setup_en"]
+      "setup_requirement": ".apmm2 patch and BizHawk-generic protocol evidence; SekaiLink runtime transport is native Sekaiemu/SKLMI.",
+      "evidence": ["runtime/ap/worlds/mm2/client.py", "runtime/ap/worlds/mm2/docs/setup_en.md", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "apps/sekaiemu/src/runtime_memory_server.cpp", "apps/sekaiemu/src/memory_domain_registry.cpp", "services/sklmi/src/api_socket_memory.cpp", "https://archipelago.gg/tutorial/Mega%20Man%202/setup_en"]
     },
     {
       "game_key": "mega_man_3",
       "connector_family": "bizhawk_generic_lua",
-      "porting_difficulty": "medium_high",
+      "porting_difficulty": "medium",
       "requires_lua_connector": true,
       "requires_bizhawk_client": true,
       "requires_sni": false,
       "requires_mod_or_custom_patcher": false,
       "tracker_requirement": "tracker_optional",
-      "setup_requirement": ".apmm3 patch, BizHawk 2.7+, BizHawk Client, data/lua/connector_bizhawk_generic.lua; build on existing partial SekaiLink/SKLMI BizHawk support.",
-      "evidence": ["runtime/ap/worlds/mm3/client.py", "runtime/ap/worlds/mm3/docs/setup_en.md", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "services/sklmi/src/api_socket_memory.cpp", "apps/client-core/electron/main.cjs", "https://archipelago.gg/tutorial/Mega%20Man%203/setup_en"]
+      "setup_requirement": ".apmm3 patch and BizHawk-generic protocol evidence; SekaiLink runtime transport is native Sekaiemu/SKLMI.",
+      "evidence": ["runtime/ap/worlds/mm3/client.py", "runtime/ap/worlds/mm3/docs/setup_en.md", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "apps/sekaiemu/src/runtime_memory_server.cpp", "apps/sekaiemu/src/memory_domain_registry.cpp", "services/sklmi/src/api_socket_memory.cpp", "https://archipelago.gg/tutorial/Mega%20Man%203/setup_en"]
     },
     {
       "game_key": "super_mario_land_2",
       "connector_family": "bizhawk_generic_lua",
-      "porting_difficulty": "medium_high",
+      "porting_difficulty": "medium",
       "requires_lua_connector": true,
       "requires_bizhawk_client": true,
       "requires_sni": false,
       "requires_mod_or_custom_patcher": false,
       "tracker_requirement": "tracker_optional",
-      "setup_requirement": ".apsml2 patch, BizHawk 2.9.1 recommended, BizHawk Client, data/lua/connector_bizhawk_generic.lua; build on existing partial SekaiLink/SKLMI BizHawk support.",
-      "evidence": ["runtime/ap/worlds/marioland2/client.py", "runtime/ap/worlds/marioland2/docs/setup_en.md", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "services/sklmi/src/api_socket_memory.cpp", "apps/client-core/electron/main.cjs", "https://archipelago.gg/tutorial/Super%20Mario%20Land%202/setup_en"]
+      "setup_requirement": ".apsml2 patch and BizHawk-generic protocol evidence; SekaiLink runtime transport is native Sekaiemu/SKLMI.",
+      "evidence": ["runtime/ap/worlds/marioland2/client.py", "runtime/ap/worlds/marioland2/docs/setup_en.md", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "apps/sekaiemu/src/runtime_memory_server.cpp", "apps/sekaiemu/src/memory_domain_registry.cpp", "services/sklmi/src/api_socket_memory.cpp", "https://archipelago.gg/tutorial/Super%20Mario%20Land%202/setup_en"]
     },
     {
       "game_key": "pokemon_emerald",
       "connector_family": "bizhawk_generic_lua",
-      "porting_difficulty": "medium_high",
+      "porting_difficulty": "medium",
       "requires_lua_connector": true,
       "requires_bizhawk_client": true,
       "requires_sni": false,
       "requires_mod_or_custom_patcher": false,
       "tracker_requirement": "optional_poptracker_available",
-      "setup_requirement": ".apemerald patch, BizHawk 2.7+, BizHawk Client, data/lua/connector_bizhawk_generic.lua; build on existing partial SekaiLink/SKLMI BizHawk support.",
-      "evidence": ["runtime/ap/worlds/pokemon_emerald/client.py", "runtime/ap/worlds/pokemon_emerald/docs/setup_en.md", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "services/sklmi/src/api_socket_memory.cpp", "apps/client-core/electron/main.cjs", "https://archipelago.gg/tutorial/Pokemon%20Emerald/setup/en"]
+      "setup_requirement": ".apemerald patch and BizHawk-generic protocol evidence; SekaiLink runtime transport is native Sekaiemu/SKLMI.",
+      "evidence": ["runtime/ap/worlds/pokemon_emerald/client.py", "runtime/ap/worlds/pokemon_emerald/docs/setup_en.md", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "apps/sekaiemu/src/runtime_memory_server.cpp", "apps/sekaiemu/src/memory_domain_registry.cpp", "services/sklmi/src/api_socket_memory.cpp", "https://archipelago.gg/tutorial/Pokemon%20Emerald/setup/en"]
     },
     {
       "game_key": "pokemon_red_blue",
       "connector_family": "bizhawk_generic_lua",
-      "porting_difficulty": "medium_high",
+      "porting_difficulty": "medium",
       "requires_lua_connector": true,
       "requires_bizhawk_client": true,
       "requires_sni": false,
       "requires_mod_or_custom_patcher": false,
       "tracker_requirement": "optional_poptracker_available",
-      "setup_requirement": "BizHawk Client and data/lua/connector_bizhawk_generic.lua; build on existing partial SekaiLink/SKLMI BizHawk support.",
-      "evidence": ["runtime/ap/worlds/pokemon_rb/client.py", "runtime/ap/worlds/pokemon_rb/docs/setup_en.md", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "services/sklmi/src/api_socket_memory.cpp", "apps/client-core/electron/main.cjs", "https://archipelago.gg/tutorial/Pokemon%20Red%20and%20Blue/setup_en"]
+      "setup_requirement": "BizHawk-generic protocol evidence; SekaiLink runtime transport is native Sekaiemu/SKLMI.",
+      "evidence": ["runtime/ap/worlds/pokemon_rb/client.py", "runtime/ap/worlds/pokemon_rb/docs/setup_en.md", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "apps/sekaiemu/src/runtime_memory_server.cpp", "apps/sekaiemu/src/memory_domain_registry.cpp", "services/sklmi/src/api_socket_memory.cpp", "https://archipelago.gg/tutorial/Pokemon%20Red%20and%20Blue/setup_en"]
     },
     {
       "game_key": "pokemon_crystal",
       "connector_family": "bizhawk_generic_lua",
-      "porting_difficulty": "medium_high",
+      "porting_difficulty": "medium",
       "requires_lua_connector": true,
       "requires_bizhawk_client": true,
       "requires_sni": false,
       "requires_mod_or_custom_patcher": false,
       "tracker_requirement": "optional_poptracker_available",
-      "setup_requirement": "BizHawk Client path from local APWorld evidence; public setup URL still needs pinning; build on existing partial SekaiLink/SKLMI BizHawk support.",
-      "evidence": ["runtime/ap/worlds/pokemon_crystal/client.py", "runtime/ap/worlds/pokemon_crystal/docs/setup_en.md", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "services/sklmi/src/api_socket_memory.cpp", "apps/client-core/electron/main.cjs"]
+      "setup_requirement": "BizHawk-generic protocol evidence; public setup URL still needs pinning; SekaiLink runtime transport is native Sekaiemu/SKLMI.",
+      "evidence": ["runtime/ap/worlds/pokemon_crystal/client.py", "runtime/ap/worlds/pokemon_crystal/docs/setup_en.md", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "apps/sekaiemu/src/runtime_memory_server.cpp", "apps/sekaiemu/src/memory_domain_registry.cpp", "services/sklmi/src/api_socket_memory.cpp"]
     },
     {
       "game_key": "pokemon_frlg",
       "connector_family": "bizhawk_generic_lua",
-      "porting_difficulty": "medium_high",
+      "porting_difficulty": "medium",
       "requires_lua_connector": true,
       "requires_bizhawk_client": true,
       "requires_sni": false,
       "requires_mod_or_custom_patcher": false,
       "tracker_requirement": "optional_poptracker_available",
-      "setup_requirement": "BizHawk Client and data/lua/connector_bizhawk_generic.lua; build on existing partial SekaiLink/SKLMI BizHawk support.",
-      "evidence": ["runtime/ap/worlds/pokemon_frlg/client.py", "runtime/ap/worlds/pokemon_frlg/docs/setup_en.md", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "services/sklmi/src/api_socket_memory.cpp", "apps/client-core/electron/main.cjs"]
+      "setup_requirement": "BizHawk-generic protocol evidence; SekaiLink runtime transport is native Sekaiemu/SKLMI.",
+      "evidence": ["runtime/ap/worlds/pokemon_frlg/client.py", "runtime/ap/worlds/pokemon_frlg/docs/setup_en.md", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "apps/sekaiemu/src/runtime_memory_server.cpp", "apps/sekaiemu/src/memory_domain_registry.cpp", "services/sklmi/src/api_socket_memory.cpp"]
     },
     {
       "game_key": "metroid_zero_mission",
       "connector_family": "bizhawk_generic_lua",
-      "porting_difficulty": "medium_high",
+      "porting_difficulty": "medium",
       "requires_lua_connector": true,
       "requires_bizhawk_client": true,
       "requires_sni": false,
       "requires_mod_or_custom_patcher": false,
       "tracker_requirement": "optional_poptracker_available",
-      "setup_requirement": "BizHawk Client and data/lua/connector_bizhawk_generic.lua; build on existing partial SekaiLink/SKLMI BizHawk support.",
-      "evidence": ["runtime/ap/worlds/mzm/client.py", "runtime/ap/worlds/mzm/docs/setup_en.md", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "services/sklmi/src/api_socket_memory.cpp", "apps/client-core/electron/main.cjs"]
+      "setup_requirement": "BizHawk-generic protocol evidence; SekaiLink runtime transport is native Sekaiemu/SKLMI.",
+      "evidence": ["runtime/ap/worlds/mzm/client.py", "runtime/ap/worlds/mzm/docs/setup_en.md", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "apps/sekaiemu/src/runtime_memory_server.cpp", "apps/sekaiemu/src/memory_domain_registry.cpp", "services/sklmi/src/api_socket_memory.cpp"]
     },
     {
       "game_key": "tloz",
       "connector_family": "bizhawk_generic_lua",
-      "porting_difficulty": "medium_high",
+      "porting_difficulty": "medium",
       "requires_lua_connector": true,
       "requires_bizhawk_client": true,
       "requires_sni": false,
       "requires_mod_or_custom_patcher": false,
       "tracker_requirement": "optional",
-      "setup_requirement": "BizHawk Client path from local APWorld evidence; build on existing partial SekaiLink/SKLMI BizHawk support.",
-      "evidence": ["runtime/ap/worlds/tloz/Client.py", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "services/sklmi/src/api_socket_memory.cpp", "apps/client-core/electron/main.cjs"]
+      "setup_requirement": "BizHawk-generic protocol evidence; SekaiLink runtime transport is native Sekaiemu/SKLMI.",
+      "evidence": ["runtime/ap/worlds/tloz/Client.py", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "apps/sekaiemu/src/runtime_memory_server.cpp", "apps/sekaiemu/src/memory_domain_registry.cpp", "services/sklmi/src/api_socket_memory.cpp"]
     },
     {
       "game_key": "oracle_of_ages_seasons",
       "connector_family": "bizhawk_generic_lua",
-      "porting_difficulty": "medium_high",
+      "porting_difficulty": "medium",
       "requires_lua_connector": true,
       "requires_bizhawk_client": true,
       "requires_sni": false,
       "requires_mod_or_custom_patcher": false,
       "tracker_requirement": "optional_poptracker_available",
-      "setup_requirement": "BizHawk 2.10-style setup, .apoos patch for Seasons evidence, BizHawk Client; build on existing partial SekaiLink/SKLMI BizHawk support.",
-      "evidence": ["runtime/ap/worlds/tloz_oos/client.py", "runtime/ap/worlds/tloz_oos/docs/oos_setup_en.md", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "services/sklmi/src/api_socket_memory.cpp", "apps/client-core/electron/main.cjs"]
+      "setup_requirement": "BizHawk-generic protocol and .apoos patch evidence; SekaiLink runtime transport is native Sekaiemu/SKLMI.",
+      "evidence": ["runtime/ap/worlds/tloz_oos/client.py", "runtime/ap/worlds/tloz_oos/docs/oos_setup_en.md", "runtime/ap/data/lua/connector_bizhawk_generic.lua", "apps/sekaiemu/src/runtime_memory_server.cpp", "apps/sekaiemu/src/memory_domain_registry.cpp", "services/sklmi/src/api_socket_memory.cpp"]
     },
     {
       "game_key": "ladx",

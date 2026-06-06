@@ -51,6 +51,7 @@ int LibretroHost::Impl::Run() {
         ApplyFrameAutomation();
         TickCoreChatBridge();
       },
+      .core_run_enabled = [this]() { return !runtime_memory_server.Locked(); },
       .on_audio_buffer_status = [this]() {
         if (!audio_buffer_status_callback) {
           return;

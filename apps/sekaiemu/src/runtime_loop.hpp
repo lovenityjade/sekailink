@@ -38,6 +38,7 @@ struct RuntimeLoopContext {
   std::function<void()> on_save_state;
   std::function<void()> on_load_state;
   std::function<void()> on_begin_frame;
+  std::function<bool()> core_run_enabled;
   std::function<void()> on_audio_buffer_status;
   std::function<void()> on_cycle_tracker_display_mode;
   std::function<void()> on_toggle_tracker_screen;

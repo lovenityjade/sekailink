@@ -27,8 +27,9 @@ evidence:
 - APWorld is present or installable.
 - Tracker pack or compatible web tracker exists.
 - Sekaiemu can launch the game/core profile.
-- SKLMI can observe checks and inject received items, ideally through existing
-  AP clients, SNI/Lua, BizHawk connectors, or generated manifests.
+- SKLMI can observe checks and inject received items through native
+  Sekaiemu/SKLMI runtime contracts, generated manifests, or explicitly approved
+  connector exceptions.
 - Room server and client packaging can ship the pieces together.
 
 The SKLMI manifest should be treated as a runtime adapter or generated artifact,
@@ -42,6 +43,9 @@ not as a second copy of APWorld logic.
   Deep Research plus local SekaiLink evidence.
 - [porting-research.md](porting-research.md): connector/setup research used to
   estimate how hard each game is to port into SekaiLink.
+- [bizhawk-generic-native-runtime.md](bizhawk-generic-native-runtime.md):
+  native absorption plan and validation notes for the generic BizHawk Lua
+  contract.
 - [games/](games): per-game notes for certification work.
 
 Machine-readable registry:

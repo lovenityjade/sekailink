@@ -21,6 +21,7 @@ using NativeSocket = int;
 #endif
 
 #include <libretro.h>
+#include <nlohmann/json.hpp>
 
 #include <algorithm>
 #include <array>
@@ -30,6 +31,7 @@ using NativeSocket = int;
 #include <cstddef>
 #include <cstring>
 #include <sstream>
+#include <vector>
 
 namespace sekaiemu::spike {
 
@@ -150,6 +152,54 @@ std::optional<std::uint64_t> ExtractUIntField(std::string_view text, std::string
     end = text.size();
   }
   return ParseUnsigned(text.substr(start, end - start));
+}
+
+std::optional<double> ExtractDoubleField(std::string_view text, std::string_view key) {
+  const std::string needle = "\"" + std::string(key) + "\":";
+  const auto begin = text.find(needle);
+  if (begin == std::string_view::npos) {
+    return std::nullopt;
+  }
+  const auto start = begin + needle.size();
+  auto end = text.find_first_of(",}]", start);
+  if (end == std::string_view::npos) {
+    end = text.size();
+  }
+  std::string raw(text.substr(start, end - start));
+  raw.erase(raw.begin(), std::find_if(raw.begin(), raw.end(), [](unsigned char c) {
+    return !std::isspace(c) && c != '"';
+  }));
+  raw.erase(std::find_if(raw.rbegin(), raw.rend(), [](unsigned char c) {
+    return !std::isspace(c) && c != '"';
+  }).base(), raw.end());
+  if (raw.empty()) {
+    return std::nullopt;
+  }
+  try {
+    return std::stod(raw);
+  } catch (...) {
+    return std::nullopt;
+  }
+}
+
+std::string JsonError(std::string_view err) {
+  return "{\"type\":\"ERROR\",\"err\":\"" + EscapeJson(err) + "\"}";
+}
+
+std::string DomainListToJson(const std::vector<RuntimeMemoryDomainInfo>& domains) {
+  std::ostringstream json;
+  json << "[";
+  for (std::size_t i = 0; i < domains.size(); ++i) {
+    if (i > 0) json << ",";
+    const auto& domain = domains[i];
+    json << "{\"name\":\"" << EscapeJson(domain.id)
+         << "\",\"size\":" << domain.size_bytes
+         << ",\"writable\":" << (domain.writable ? "true" : "false")
+         << ",\"endianness\":\"" << EscapeJson(domain.endianness)
+         << "\"}";
+  }
+  json << "]";
+  return json.str();
 }
 
 std::optional<std::vector<std::byte>> Base64Decode(std::string_view input) {
@@ -447,25 +497,66 @@ std::vector<RuntimeMemoryDomainInfo> RuntimeMemoryServer::BuildDomainList() cons
     return domains;
   }
 
-  auto maybe_add = [&](std::string id, unsigned memory_id) {
-    void* ptr = core_->retro_get_memory_data(memory_id);
-    const auto size = core_->retro_get_memory_size(memory_id);
-    if (!ptr || size == 0) {
+  auto has_domain = [&](std::string_view id) {
+    return std::any_of(domains.begin(), domains.end(), [&](const auto& domain) {
+      return domain.id == id;
+    });
+  };
+
+  auto add_domain = [&](std::string id, std::size_t size, bool writable = true) {
+    if (id.empty() || size == 0 || has_domain(id)) {
       return;
     }
     domains.push_back(RuntimeMemoryDomainInfo{
         .id = std::move(id),
         .display_name = domains.empty() ? "Memory" : domains.back().id,
         .size_bytes = size,
-        .writable = true,
+        .writable = writable,
         .endianness = "little",
     });
     domains.back().display_name = domains.back().id;
   };
 
+  auto maybe_add = [&](std::string id, unsigned memory_id) {
+    void* ptr = core_->retro_get_memory_data(memory_id);
+    const auto size = core_->retro_get_memory_size(memory_id);
+    if (!ptr || size == 0) {
+      return;
+    }
+    add_domain(std::move(id), size);
+  };
+
   maybe_add("system_ram", RETRO_MEMORY_SYSTEM_RAM);
   maybe_add("save_ram", RETRO_MEMORY_SAVE_RAM);
   maybe_add("video_ram", RETRO_MEMORY_VIDEO_RAM);
+
+  const auto system_ram_size = core_->retro_get_memory_size(RETRO_MEMORY_SYSTEM_RAM);
+  if (system_ram_size > 0) {
+    add_domain("RAM", system_ram_size);
+    add_domain("WRAM", system_ram_size);
+  }
+
+  const auto save_ram_size = core_->retro_get_memory_size(RETRO_MEMORY_SAVE_RAM);
+  if (save_ram_size > 0) {
+    add_domain("Battery RAM", save_ram_size);
+    add_domain("SRAM", save_ram_size);
+  }
+
+  const auto video_ram_size = core_->retro_get_memory_size(RETRO_MEMORY_VIDEO_RAM);
+  if (video_ram_size > 0) {
+    add_domain("VRAM", video_ram_size);
+  }
+
+  // BizHawk generic AP clients commonly address "System Bus" with absolute
+  // addresses. Expose a large virtual bus domain; MemoryDomainRegistry resolves
+  // it through libretro memory maps at read/write time.
+  if (memory_domains_ && !memory_domains_->Descriptors().empty()) {
+    constexpr std::size_t kVirtualBusSize = static_cast<std::size_t>(0x100000000ull);
+    add_domain("System Bus", kVirtualBusSize);
+    add_domain("system_bus", kVirtualBusSize);
+    add_domain("bus", kVirtualBusSize);
+    add_domain("gba_system_bus", kVirtualBusSize);
+  }
 
   if (memory_domains_) {
     for (const auto& descriptor : memory_domains_->Descriptors()) {
@@ -473,19 +564,7 @@ std::vector<RuntimeMemoryDomainInfo> RuntimeMemoryServer::BuildDomainList() cons
         continue;
       }
       const auto name = LowercaseCopy(descriptor.addrspace);
-      const bool duplicate = std::any_of(domains.begin(), domains.end(), [&](const auto& domain) {
-        return domain.id == name;
-      });
-      if (duplicate) {
-        continue;
-      }
-      domains.push_back(RuntimeMemoryDomainInfo{
-          .id = name,
-          .display_name = name,
-          .size_bytes = static_cast<std::size_t>(descriptor.len),
-          .writable = true,
-          .endianness = "little",
-      });
+      add_domain(name, static_cast<std::size_t>(descriptor.len));
     }
   }
   return domains;
@@ -503,18 +582,67 @@ std::string RuntimeMemoryServer::HandleRequestLine(const std::string& line) {
 
 std::string RuntimeMemoryServer::HandleJsonRequest(const std::string& line) {
   std::vector<std::string> responses;
-  if (line.find("\"SYSTEM\"") != std::string::npos) {
-    responses.push_back(BuildSystemResponse());
+  try {
+    const auto requests = nlohmann::json::parse(line);
+    if (!requests.is_array()) {
+      return "[" + JsonError("request_must_be_array") + "]";
+    }
+
+    std::optional<std::string> failed_guard_response;
+    for (const auto& req : requests) {
+      if (failed_guard_response.has_value()) {
+        responses.push_back(*failed_guard_response);
+        continue;
+      }
+
+      if (!req.is_object()) {
+        responses.push_back(JsonError("request_must_be_object"));
+        continue;
+      }
+
+      const auto type = req.value("type", std::string{});
+      const auto request_line = req.dump();
+      if (type == "PING") {
+        responses.push_back("{\"type\":\"PONG\"}");
+      } else if (type == "SYSTEM") {
+        responses.push_back(BuildSystemResponse());
+      } else if (type == "PREFERRED_CORES") {
+        responses.push_back(BuildPreferredCoresResponse());
+      } else if (type == "HASH") {
+        responses.push_back(BuildHashResponse());
+      } else if (type == "MEMORY_SIZE") {
+        responses.push_back(BuildMemorySizeResponse(request_line));
+      } else if (type == "DOMAINS") {
+        responses.push_back(BuildDomainsResponse());
+      } else if (type == "GUARD") {
+        const auto response = BuildGuardResponse(request_line);
+        responses.push_back(response);
+        if (response.find("\"GUARD_RESPONSE\"") != std::string::npos &&
+            response.find("\"value\":false") != std::string::npos) {
+          failed_guard_response = response;
+        }
+      } else if (type == "LOCK") {
+        locked_ = true;
+        responses.push_back("{\"type\":\"LOCKED\"}");
+      } else if (type == "UNLOCK") {
+        locked_ = false;
+        responses.push_back("{\"type\":\"UNLOCKED\"}");
+      } else if (type == "READ") {
+        responses.push_back(BuildReadResponse(request_line));
+      } else if (type == "WRITE") {
+        responses.push_back(BuildWriteResponse(request_line));
+      } else if (type == "DISPLAY_MESSAGE") {
+        responses.push_back(BuildDisplayMessageResponse());
+      } else if (type == "SET_MESSAGE_INTERVAL") {
+        responses.push_back(BuildSetMessageIntervalResponse(request_line));
+      } else {
+        responses.push_back(JsonError("Unknown command: " + type));
+      }
+    }
+  } catch (const std::exception& ex) {
+    responses.push_back(JsonError(ex.what()));
   }
-  if (line.find("\"DOMAINS\"") != std::string::npos) {
-    responses.push_back(BuildDomainsResponse());
-  }
-  if (line.find("\"READ\"") != std::string::npos) {
-    responses.push_back(BuildReadResponse(line));
-  }
-  if (line.find("\"WRITE\"") != std::string::npos) {
-    responses.push_back(BuildWriteResponse(line));
-  }
+
   std::ostringstream json;
   json << "[";
   for (std::size_t i = 0; i < responses.size(); ++i) {
@@ -529,21 +657,53 @@ std::string RuntimeMemoryServer::BuildSystemResponse() const {
   return "{\"type\":\"SYSTEM_RESPONSE\",\"value\":\"" + EscapeJson(system_name_) + "\"}";
 }
 
-std::string RuntimeMemoryServer::BuildDomainsResponse() const {
-  std::ostringstream json;
-  json << "{\"type\":\"DOMAINS_RESPONSE\",\"value\":[";
-  const auto domains = BuildDomainList();
-  for (std::size_t i = 0; i < domains.size(); ++i) {
-    if (i > 0) json << ",";
-    const auto& domain = domains[i];
-    json << "{\"name\":\"" << EscapeJson(domain.id)
-         << "\",\"size\":" << domain.size_bytes
-         << ",\"writable\":" << (domain.writable ? "true" : "false")
-         << ",\"endianness\":\"" << domain.endianness
-         << "\"}";
+std::string RuntimeMemoryServer::BuildPreferredCoresResponse() const {
+  return "{\"type\":\"PREFERRED_CORES_RESPONSE\",\"value\":{}}";
+}
+
+std::string RuntimeMemoryServer::BuildHashResponse() const {
+  // The libretro host does not currently own ROM hash metadata at this layer.
+  // Keep the command available so generic AP clients can complete their handshake.
+  return "{\"type\":\"HASH_RESPONSE\",\"value\":\"\"}";
+}
+
+std::string RuntimeMemoryServer::BuildMemorySizeResponse(const std::string& line) const {
+  const auto domain = ExtractStringField(line, "domain");
+  if (!domain.has_value()) {
+    return JsonError("invalid_memory_size_request");
   }
-  json << "]}";
-  return json.str();
+  for (const auto& entry : BuildDomainList()) {
+    if (entry.id == *domain || entry.display_name == *domain) {
+      return "{\"type\":\"MEMORY_SIZE_RESPONSE\",\"value\":" + std::to_string(entry.size_bytes) + "}";
+    }
+  }
+  return JsonError("memory_size_failed");
+}
+
+std::string RuntimeMemoryServer::BuildDomainsResponse() const {
+  return "{\"type\":\"DOMAINS_RESPONSE\",\"value\":" + DomainListToJson(BuildDomainList()) + "}";
+}
+
+std::string RuntimeMemoryServer::BuildGuardResponse(const std::string& line) const {
+  const auto domain = ExtractStringField(line, "domain");
+  const auto address = ExtractUIntField(line, "address");
+  const auto expected = ExtractStringField(line, "expected_data");
+  if (!domain.has_value() || !address.has_value() || !expected.has_value()) {
+    return JsonError("invalid_guard_request");
+  }
+  const auto decoded = Base64Decode(*expected);
+  if (!decoded.has_value()) {
+    return JsonError("invalid_guard_value");
+  }
+  const auto* resolved = ResolveReadOnly(*domain,
+                                         static_cast<std::uint32_t>(*address),
+                                         static_cast<std::uint32_t>(decoded->size()));
+  bool ok = false;
+  if (resolved) {
+    ok = std::memcmp(resolved, decoded->data(), decoded->size()) == 0;
+  }
+  return "{\"type\":\"GUARD_RESPONSE\",\"value\":" + std::string(ok ? "true" : "false") +
+         ",\"address\":" + std::to_string(*address) + "}";
 }
 
 std::string RuntimeMemoryServer::BuildReadResponse(const std::string& line) const {
@@ -583,6 +743,18 @@ std::string RuntimeMemoryServer::BuildWriteResponse(const std::string& line) {
   }
   std::memcpy(resolved, decoded->data(), decoded->size());
   return "{\"type\":\"WRITE_RESPONSE\"}";
+}
+
+std::string RuntimeMemoryServer::BuildDisplayMessageResponse() {
+  return "{\"type\":\"DISPLAY_MESSAGE_RESPONSE\"}";
+}
+
+std::string RuntimeMemoryServer::BuildSetMessageIntervalResponse(const std::string& line) {
+  const auto value = ExtractDoubleField(line, "value");
+  if (value.has_value()) {
+    message_interval_seconds_ = *value;
+  }
+  return "{\"type\":\"SET_MESSAGE_INTERVAL_RESPONSE\"}";
 }
 
 const std::uint8_t* RuntimeMemoryServer::ResolveReadOnly(std::string_view domain_id,
