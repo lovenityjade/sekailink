@@ -61,7 +61,21 @@ pub fn log_catalog() -> &'static [(&'static str, &'static str, &'static str)] {
 pub fn known_services() -> &'static [(&'static str, &'static [&'static str])] {
     &[
         ("nexus", &["sekailink-identity", "sekailink-seed-config"]),
-        ("link", &["sekailink-chat-api", "sekailink-room-runtime", "nginx"]),
+        (
+            "link",
+            &[
+                "sekailink-admin-agent",
+                "sekailink-chat-api",
+                "sekailink-chat-daemon",
+                "sekailink-chat-gateway",
+                "sekailink-lobby-runtime",
+                "sekailink-room-server",
+                "sekailink-social-bots",
+                "sekailink-twitch-assistant",
+                "sekailink-webhost",
+                "sekailink-workers",
+            ],
+        ),
         ("worlds", &["sekailink-worlds", "generation-worker"]),
         ("evolution", &["nginx", "pack-publisher", "release-publisher"]),
         ("pulse", &["sekailink-pulse"]),
@@ -112,7 +126,13 @@ fn health_probe_for(server: &str, services: &[&str]) -> String {
     let ssh_alias = ssh_alias_for(server);
     let service_checks = services
         .iter()
-        .map(|service| format!("systemctl is-active {}", shell_word(service)))
+        .map(|service| {
+            format!(
+                "printf \"{} \"; systemctl is-active {}",
+                service,
+                shell_word(service)
+            )
+        })
         .collect::<Vec<_>>()
         .join("; ");
     format!(
@@ -125,7 +145,7 @@ fn log_source_service(source: &str) -> Option<(&'static str, &'static str)> {
         "nexus:identity" => Some(("nexus", "sekailink-identity")),
         "nexus:db" => Some(("nexus", "sekailink-seed-config")),
         "link:chat-api" => Some(("link", "sekailink-chat-api")),
-        "link:room-runtime" => Some(("link", "sekailink-room-runtime")),
+        "link:room-runtime" => Some(("link", "sekailink-room-server")),
         "worlds:generation" => Some(("worlds", "sekailink-worlds")),
         "evolution:cdn" => Some(("evolution", "nginx")),
         "pulse:assistant" => Some(("pulse", "sekailink-pulse")),
@@ -256,7 +276,7 @@ mod tests {
         let plan = render_server_logs_plan("link", "sekailink-chat-api", true).unwrap();
         assert!(plan.contains("ssh link-vps"));
         assert!(plan.contains("journalctl -u sekailink-chat-api"));
-        assert!(service_allowed("link", "sekailink-room-runtime"));
+        assert!(service_allowed("link", "sekailink-room-server"));
     }
 
     #[test]

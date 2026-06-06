@@ -17,3 +17,5 @@
 - Added local pack repository drafts and pack check scheduler draft command.
 - Added explicit `--execute` plus `SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1`
   gate for read-only remote log and health commands.
+- Aligned Link service allowlist with read-only `link-vps` systemd discovery and
+  labelled service status output in health probes.
