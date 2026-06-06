@@ -1,7 +1,8 @@
 use crate::audit::{
     Session, append_approval_decision, append_approval_request, append_audit, append_history,
-    append_log_pin, append_note, read_file_to_string, write_client_banner_draft, write_export,
-    write_export_with_extension, write_maintenance_draft, write_pack_repo, write_schedule_job,
+    append_incident_event, append_log_pin, append_note, read_file_to_string,
+    write_client_banner_draft, write_export, write_export_with_extension,
+    write_maintenance_draft, write_pack_repo, write_schedule_job,
 };
 use crate::commands::{COMMANDS, Confirmation, command_names, find_command, search_commands};
 use crate::line_editor::LineEditor;
@@ -301,6 +302,11 @@ impl App {
             "approval" => {
                 self.approval(&parsed, line)?;
                 append_audit(&self.session, line, "ok", "approval")?;
+                true
+            }
+            "incident" => {
+                self.incident(&parsed)?;
+                append_audit(&self.session, line, "ok", "incident local")?;
                 true
             }
             "ops" if parsed.get(1).map(String::as_str) == Some("snapshot") => {
@@ -864,6 +870,216 @@ impl App {
         Ok((pending, approved))
     }
 
+    fn incident(&self, parsed: &[String]) -> io::Result<()> {
+        match parsed.get(1).map(String::as_str) {
+            Some("open") => self.incident_open(parsed),
+            Some("list") => self.incident_list(parsed.get(2).map(String::as_str).unwrap_or("")),
+            Some("status") => self.incident_status(parsed),
+            Some("note") => self.incident_note(parsed),
+            Some("pin") => self.incident_pin(parsed),
+            Some("export") => self.incident_export(parsed),
+            Some("close") => self.incident_close(parsed),
+            _ => {
+                println!("usage: incident open|list|status|note|pin|export|close");
+                Ok(())
+            }
+        }
+    }
+
+    fn incident_open(&self, parsed: &[String]) -> io::Result<()> {
+        let Some(label) = parsed.get(2) else {
+            println!("usage: incident open <label> <severity> <summary>");
+            return Ok(());
+        };
+        let label = match normalize_incident_label(label) {
+            Ok(label) => label,
+            Err(err) => {
+                println!("{err}");
+                return Ok(());
+            }
+        };
+        let severity = parsed.get(3).map(String::as_str).unwrap_or("sev3");
+        let summary = if parsed.len() > 4 {
+            parsed[4..].join(" ")
+        } else {
+            "opened".to_string()
+        };
+        let id = append_incident_event(&self.session, &label, "open", severity, &summary)?;
+        println!("incident opened: {label}");
+        println!("event: {id}");
+        println!("severity: {severity}");
+        Ok(())
+    }
+
+    fn incident_list(&self, query: &str) -> io::Result<()> {
+        let text = read_file_to_string(&self.session.incident_events_path())?;
+        if text.trim().is_empty() {
+            println!("incident event log is empty");
+            return Ok(());
+        }
+        let mut count = 0_usize;
+        for line in text.lines().filter(|line| query.is_empty() || line.contains(query)).take(300) {
+            println!("{line}");
+            count += 1;
+        }
+        if count == 0 {
+            println!("no incident events matched: {query}");
+        }
+        Ok(())
+    }
+
+    fn incident_status(&self, parsed: &[String]) -> io::Result<()> {
+        let Some(label) = parsed.get(2) else {
+            println!("usage: incident status <label>");
+            return Ok(());
+        };
+        let label = match normalize_incident_label(label) {
+            Ok(label) => label,
+            Err(err) => {
+                println!("{err}");
+                return Ok(());
+            }
+        };
+        let events = read_file_to_string(&self.session.incident_events_path())?;
+        let notes = read_file_to_string(&self.session.notes_path())?;
+        let pins = read_file_to_string(&self.session.log_pins_path())?;
+        let event_lines = incident_event_lines(&events, &label).collect::<Vec<_>>();
+        if event_lines.is_empty() {
+            println!("incident not found locally: {label}");
+            println!("Use: incident open {label} sev3 <summary>");
+            return Ok(());
+        }
+        println!("incident: {label}");
+        println!("state: {}", incident_state(&event_lines));
+        println!();
+        println!("Recent events:");
+        for line in event_lines.iter().rev().take(12).rev() {
+            println!("{line}");
+        }
+        print_related_section("Related notes", incident_note_lines(&notes, &label).collect());
+        print_related_section("Related pins", incident_pin_lines(&pins, &label).collect());
+        Ok(())
+    }
+
+    fn incident_note(&self, parsed: &[String]) -> io::Result<()> {
+        let Some(label) = parsed.get(2) else {
+            println!("usage: incident note <label> <text>");
+            return Ok(());
+        };
+        let label = match normalize_incident_label(label) {
+            Ok(label) => label,
+            Err(err) => {
+                println!("{err}");
+                return Ok(());
+            }
+        };
+        let text = if parsed.len() > 3 {
+            parsed[3..].join(" ")
+        } else {
+            String::new()
+        };
+        if text.trim().is_empty() {
+            println!("usage: incident note <label> <text>");
+            return Ok(());
+        }
+        let note_id = append_note(&self.session, &format!("incident:{label}"), &text)?;
+        let event_id = append_incident_event(&self.session, &label, "note", "", &text)?;
+        println!("incident note created: {note_id}");
+        println!("event: {event_id}");
+        Ok(())
+    }
+
+    fn incident_pin(&self, parsed: &[String]) -> io::Result<()> {
+        let Some(label) = parsed.get(2) else {
+            println!("usage: incident pin <label> <source> <text>");
+            return Ok(());
+        };
+        let label = match normalize_incident_label(label) {
+            Ok(label) => label,
+            Err(err) => {
+                println!("{err}");
+                return Ok(());
+            }
+        };
+        let Some(source) = parsed.get(3) else {
+            println!("usage: incident pin <label> <source> <text>");
+            return Ok(());
+        };
+        let text = if parsed.len() > 4 {
+            parsed[4..].join(" ")
+        } else {
+            String::new()
+        };
+        if text.trim().is_empty() {
+            println!("usage: incident pin <label> <source> <text>");
+            return Ok(());
+        }
+        let pin_text = format!("incident:{label} {text}");
+        let pin_id = append_log_pin(&self.session, source, &pin_text)?;
+        let event_detail = format!("source={source} text={text}");
+        let event_id = append_incident_event(&self.session, &label, "pin", "", &event_detail)?;
+        println!("incident pin created: {pin_id}");
+        println!("event: {event_id}");
+        Ok(())
+    }
+
+    fn incident_export(&self, parsed: &[String]) -> io::Result<()> {
+        let Some(label) = parsed.get(2) else {
+            println!("usage: incident export <label> [--file name]");
+            return Ok(());
+        };
+        let label = match normalize_incident_label(label) {
+            Ok(label) => label,
+            Err(err) => {
+                println!("{err}");
+                return Ok(());
+            }
+        };
+        let events = read_file_to_string(&self.session.incident_events_path())?;
+        let notes = read_file_to_string(&self.session.notes_path())?;
+        let pins = read_file_to_string(&self.session.log_pins_path())?;
+        let event_lines = incident_event_lines(&events, &label).collect::<Vec<_>>();
+        if event_lines.is_empty() {
+            println!("incident not found locally: {label}");
+            return Ok(());
+        }
+        let file_name = incident_export_file_name(parsed, &label);
+        let body = render_incident_export(&label, &events, &notes, &pins);
+        let path = write_export_with_extension(
+            &self.session,
+            "incident",
+            Some(&file_name),
+            "md",
+            &body,
+        )?;
+        println!("incident exported to {}", path.display());
+        println!("MVP note: export is local; no Nexus DB incident record was changed.");
+        Ok(())
+    }
+
+    fn incident_close(&self, parsed: &[String]) -> io::Result<()> {
+        let Some(label) = parsed.get(2) else {
+            println!("usage: incident close <label> <resolution>");
+            return Ok(());
+        };
+        let label = match normalize_incident_label(label) {
+            Ok(label) => label,
+            Err(err) => {
+                println!("{err}");
+                return Ok(());
+            }
+        };
+        let resolution = if parsed.len() > 3 {
+            parsed[3..].join(" ")
+        } else {
+            "closed".to_string()
+        };
+        let id = append_incident_event(&self.session, &label, "close", "", &resolution)?;
+        println!("incident closed locally: {label}");
+        println!("event: {id}");
+        Ok(())
+    }
+
     fn ops_snapshot(&self, label: Option<&str>) -> io::Result<()> {
         let title = label.unwrap_or("incident").trim();
         let file_name = format!("{title}.md");
@@ -1246,6 +1462,13 @@ fn print_help() {
     println!("  approval request <command> <reason>");
     println!("  approval list");
     println!("  approval approve <id> [reason]");
+    println!("  incident open <label> <severity> <summary>");
+    println!("  incident list [query]");
+    println!("  incident status <label>");
+    println!("  incident note <label> <text>");
+    println!("  incident pin <label> <source> <text>");
+    println!("  incident export <label> [--file name]");
+    println!("  incident close <label> <resolution>");
     println!("  ops snapshot [label]");
     println!("  client-banner list");
     println!("  client-banner preview <1|2|3>");
@@ -1345,6 +1568,92 @@ fn looks_like_export_file(value: &str) -> bool {
         || value.ends_with(".txt")
         || value.ends_with(".json")
         || value.ends_with(".jsonl")
+}
+
+fn normalize_incident_label(value: &str) -> Result<String, String> {
+    let label = value.trim();
+    if label.is_empty() {
+        return Err("incident label cannot be empty".to_string());
+    }
+    if !label
+        .chars()
+        .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '_' | '-' | '.' | ':'))
+    {
+        return Err("incident label may only use letters, numbers, _, -, ., or :".to_string());
+    }
+    Ok(label.to_string())
+}
+
+fn incident_event_lines<'a>(events: &'a str, label: &str) -> impl Iterator<Item = &'a str> {
+    let needle = format!("\"label\":\"{label}\"");
+    events.lines().filter(move |line| line.contains(&needle))
+}
+
+fn incident_note_lines<'a>(notes: &'a str, label: &str) -> impl Iterator<Item = &'a str> {
+    let needle = format!("\"target\":\"incident:{label}\"");
+    notes.lines().filter(move |line| line.contains(&needle))
+}
+
+fn incident_pin_lines<'a>(pins: &'a str, label: &str) -> impl Iterator<Item = &'a str> {
+    let needle = format!("incident:{label}");
+    pins.lines().filter(move |line| line.contains(&needle))
+}
+
+fn incident_state(lines: &[&str]) -> &'static str {
+    let mut state = "unknown";
+    for line in lines {
+        if line.contains("\"event\":\"open\"") {
+            state = "open";
+        } else if line.contains("\"event\":\"close\"") {
+            state = "closed";
+        }
+    }
+    state
+}
+
+fn print_related_section(title: &str, lines: Vec<&str>) {
+    println!();
+    println!("{title}:");
+    if lines.is_empty() {
+        println!("(none)");
+        return;
+    }
+    for line in lines.iter().rev().take(12).rev() {
+        println!("{line}");
+    }
+}
+
+fn incident_export_file_name(parts: &[String], label: &str) -> String {
+    let mut i = 3;
+    while i < parts.len() {
+        match parts[i].as_str() {
+            "--file" => {
+                if let Some(value) = parts.get(i + 1) {
+                    return value.clone();
+                }
+            }
+            value if value.starts_with("--file=") => {
+                return value.trim_start_matches("--file=").to_string();
+            }
+            value if looks_like_export_file(value) => return value.to_string(),
+            _ => {}
+        }
+        i += 1;
+    }
+    format!("{label}.md")
+}
+
+fn render_incident_export(label: &str, events: &str, notes: &str, pins: &str) -> String {
+    let event_lines = incident_event_lines(events, label).collect::<Vec<_>>();
+    let note_lines = incident_note_lines(notes, label).collect::<Vec<_>>();
+    let pin_lines = incident_pin_lines(pins, label).collect::<Vec<_>>();
+    let mut out = String::new();
+    out.push_str(&format!("# SekaiLink Core Access Incident - {label}\n\n"));
+    out.push_str(&format!("State: `{}`\n\n", incident_state(&event_lines)));
+    push_json_section(&mut out, "Incident Events", &event_lines);
+    push_json_section(&mut out, "Incident Notes", &note_lines);
+    push_json_section(&mut out, "Incident Log Pins", &pin_lines);
+    out
 }
 
 fn log_filter_search_term(value: &str) -> &str {
@@ -1463,6 +1772,24 @@ mod app_tests {
         assert_eq!(log_filter_search_term("room:abc"), "abc");
         assert_eq!(log_filter_search_term("plain"), "plain");
         assert_eq!(log_filter_search_term("unknown:value"), "unknown:value");
+    }
+
+    #[test]
+    fn incident_label_rejects_spaces() {
+        assert!(super::normalize_incident_label("stream-night-1").is_ok());
+        assert!(super::normalize_incident_label("stream night").is_err());
+    }
+
+    #[test]
+    fn incident_export_collects_related_records() {
+        let events = "{\"label\":\"stream-1\",\"event\":\"open\"}\n{\"label\":\"other\",\"event\":\"open\"}\n";
+        let notes = "{\"target\":\"incident:stream-1\",\"text\":\"note\"}\n";
+        let pins = "{\"source\":\"link:room-runtime\",\"text\":\"incident:stream-1 pin\"}\n";
+        let body = super::render_incident_export("stream-1", events, notes, pins);
+        assert!(body.contains("stream-1"));
+        assert!(body.contains("note"));
+        assert!(body.contains("pin"));
+        assert!(!body.contains("other"));
     }
 }
 

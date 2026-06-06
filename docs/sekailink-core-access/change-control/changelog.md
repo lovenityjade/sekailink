@@ -32,3 +32,5 @@
   autocomplete/history, F1-F12 hotkeys, and `--shell` fallback.
 - Added local log evidence workflow commands for search/filter dry-run plans,
   local pins, log notes, and Markdown/JSONL/TXT evidence exports.
+- Added local incident workspace commands for append-only open/list/status,
+  notes, pins, exports, and close workflow.

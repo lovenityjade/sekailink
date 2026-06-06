@@ -37,6 +37,13 @@ Implemented MVP commands include:
 - `approval request <command> <reason>`
 - `approval list`
 - `approval approve <id> [reason]` as Admin
+- `incident open <label> <severity> <summary>`
+- `incident list [query]`
+- `incident status <label>`
+- `incident note <label> <text>`
+- `incident pin <label> <source> <text>`
+- `incident export <label> [--file name]`
+- `incident close <label> <resolution>`
 - `ops snapshot [label]`
 - `client-banner list`
 - `client-banner preview <1|2|3>`

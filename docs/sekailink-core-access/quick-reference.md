@@ -26,6 +26,17 @@ logs note <source> <text>
 logs export [query] --format md
 ```
 
+## Incidents
+
+```text
+incident open <label> sev3 <summary>
+incident status <label>
+incident note <label> <text>
+incident pin <label> <source> <text>
+incident export <label> --file <label>.md
+incident close <label> <resolution>
+```
+
 ## Live support
 
 ```text

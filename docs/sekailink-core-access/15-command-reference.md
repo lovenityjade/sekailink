@@ -34,6 +34,13 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `approval request <command> <reason>` | Service | Non | Demande une approbation Admin pour une commande sensible. |
 | `approval list` | Service | Non | Liste les demandes et decisions locales. |
 | `approval approve <id> [reason]` | Admin | Oui | Approuve localement une demande existante, sans execution serveur en MVP. |
+| `incident open <label> <severity> <summary>` | Service | Non | Ouvre un workspace incident local append-only. |
+| `incident list [query]` | Service | Non | Liste les events incidents locaux, optionnellement filtres. |
+| `incident status <label>` | Service | Non | Affiche etat, events, notes et pins locaux d'un incident. |
+| `incident note <label> <text>` | Service | Non | Ajoute une note locale ciblee `incident:<label>`. |
+| `incident pin <label> <source> <text>` | Service | Non | Attache une preuve log locale a un incident. |
+| `incident export <label> --file <name>` | Service | Non | Exporte le workspace incident local en Markdown. |
+| `incident close <label> <resolution>` | Service | Non | Ferme localement le workspace incident. |
 | `ops snapshot [label]` | Service | Non | Cree un snapshot Markdown local avec dashboard, logs, services, audit, notes et approvals. |
 | `user search <query> --execute` | Service | Non | Recherche utilisateur via Nexus Identity read-only; dry-run par defaut. |
 | `user open <user> --execute` | Service | Non | Ouvre fiche utilisateur via Nexus Identity read-only; ajoute une trace audit serveur. |

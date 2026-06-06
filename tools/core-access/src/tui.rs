@@ -151,7 +151,7 @@ impl TuiState {
             Key::F(1) => self.view = View::Help,
             Key::F(2) => self.run_command("server status all")?,
             Key::F(3) => self.view = View::Commands,
-            Key::F(4) => self.replace_input("note add incident "),
+            Key::F(4) => self.replace_input("incident note "),
             Key::F(5) => {
                 self.last_status_refresh = Instant::now();
                 self.push_output("dashboard refreshed");
@@ -450,7 +450,7 @@ fn draw_left(out: &mut String, state: &TuiState, cols: u16, rows: u16) {
         "F1 Help       F7 Audit",
         "F2 Status     F8 Logs",
         "F3 Commands   F9 Shell",
-        "F4 Note       F10 Clear",
+        "F4 Incident   F10 Clear",
         "F5 Refresh    F12 Panic",
     ] {
         write_at(out, row, 3, &fit(line, left_w.saturating_sub(4) as usize));
@@ -556,10 +556,11 @@ fn view_lines(state: &TuiState) -> Vec<String> {
             format!("{RED}{BOLD}PANIC VIEW{RESET}"),
             "1. Stabilize the smallest scope first.".to_string(),
             "2. Use maintenance drafts before broad impact.".to_string(),
-            "3. Snapshot: ops snapshot <incident-label>".to_string(),
-            "4. Attach notes: note add <target> <text>".to_string(),
-            "5. Use --shell for live log follow.".to_string(),
-            "6. Never mutate SKLMI without explicit approval.".to_string(),
+            "3. Open: incident open <label> sev1 <summary>".to_string(),
+            "4. Snapshot: ops snapshot <incident-label>".to_string(),
+            "5. Attach notes: incident note <label> <text>".to_string(),
+            "6. Use --shell for live log follow.".to_string(),
+            "7. Never mutate SKLMI without explicit approval.".to_string(),
         ],
     }
 }

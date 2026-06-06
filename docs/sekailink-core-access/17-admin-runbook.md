@@ -13,20 +13,23 @@
 ## Stream/live event
 
 1. Ouvrir dashboard dense.
-2. Ouvrir workspace stream.
+2. `incident open stream-<date> sev4 live monitoring`
 3. Panels recommandes: Link logs, room logs, lobby list, alerts, Discord/Twitch.
 4. Garder F12 Panic pret.
-5. Tout incident important devient une note.
+5. Tout incident important devient `incident note` ou `incident pin`.
+6. Exporter le workspace en fin de stream si quelque chose a ete investigue.
 
 ## Incident majeur
 
-1. Stabiliser: maintenance scope minimal.
-2. Broadcast.
-3. Snapshot rooms.
-4. Collect logs bundle.
-5. Identifier service.
-6. Appliquer rollback seulement si impact clair.
-7. Clore avec ops commit et postmortem.
+1. `incident open major-<date>-<scope> sev1 <summary>`
+2. Stabiliser: maintenance scope minimal.
+3. Broadcast.
+4. Snapshot rooms.
+5. Collect logs bundle.
+6. Identifier service.
+7. Appliquer rollback seulement si impact clair.
+8. `incident close major-<date>-<scope> <resolution>`
+9. Clore avec ops commit et postmortem.
 
 ## Audit review
 
@@ -35,4 +38,3 @@
 3. Exporter Markdown/JSON.
 4. Verifier actions sans rollback.
 5. Creer notes de follow-up.
-

@@ -2,21 +2,26 @@
 
 ## Room server down
 
-1. `room list`
-2. `room summary <room>`
-3. `room logs <room> --follow`
-4. `server status link`
-5. `logs filter room:<room>`
-6. F4 pour noter les lignes importantes.
-7. Si necessaire: F12 -> snapshot rooms.
+1. `incident open room-<room> sev2 room server symptoms`
+2. `room list`
+3. `room summary <room>`
+4. `room logs <room> --follow`
+5. `server status link`
+6. `logs filter room:<room> source:link:room-runtime`
+7. `incident pin room-<room> link:room-runtime <important line>`
+8. `incident note room-<room> <decision or next step>`
+9. Si necessaire: `ops snapshot room-<room>`.
 
 ## SKLMI non connecte
 
-1. `room summary <room>`
-2. Verifier presence player et runtime.
-3. `room events <room>`
-4. `client request-sklmi-reconnect <player>`
-5. Si echec: demander diagnostics avec consentement.
+1. `incident open sklmi-<room>-<player> sev3 SKLMI not connected`
+2. `room summary <room>`
+3. Verifier presence player et runtime.
+4. `room events <room>`
+5. `logs filter runtime:<player> source:link:room-runtime`
+6. `incident pin sklmi-<room>-<player> link:room-runtime <important line>`
+7. `client request-sklmi-reconnect <player>`
+8. Si echec: demander diagnostics avec consentement.
 
 ## Client update brise
 
@@ -51,8 +56,9 @@
 
 1. F12 Panic.
 2. Lire impact.
-3. Choisir scope minimal.
-4. Taper cible + raison.
-5. Broadcast.
-6. Collect logs bundle.
-
+3. `incident open emergency-<scope> sev1 <summary>`
+4. Choisir scope minimal.
+5. Taper cible + raison.
+6. Broadcast.
+7. Collect logs bundle.
+8. `incident export emergency-<scope> --file emergency-<scope>.md`

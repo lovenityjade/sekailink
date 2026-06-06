@@ -29,6 +29,7 @@ impl Session {
         fs::create_dir_all(self.audit_dir())?;
         fs::create_dir_all(self.data_dir.join("notes"))?;
         fs::create_dir_all(self.data_dir.join("log-pins"))?;
+        fs::create_dir_all(self.data_dir.join("incidents"))?;
         fs::create_dir_all(self.data_dir.join("approvals"))?;
         fs::create_dir_all(self.data_dir.join("history"))?;
         fs::create_dir_all(self.exports_dir())?;
@@ -49,6 +50,10 @@ impl Session {
 
     pub fn log_pins_path(&self) -> PathBuf {
         self.data_dir.join("log-pins").join("pins.jsonl")
+    }
+
+    pub fn incident_events_path(&self) -> PathBuf {
+        self.data_dir.join("incidents").join("events.jsonl")
     }
 
     pub fn approvals_path(&self) -> PathBuf {
@@ -126,6 +131,31 @@ pub fn append_log_pin(session: &Session, source: &str, text: &str) -> io::Result
             json_escape(&session.sekailink_user),
             json_escape(source),
             json_escape(text)
+        ),
+    )?;
+    Ok(id)
+}
+
+pub fn append_incident_event(
+    session: &Session,
+    label: &str,
+    event: &str,
+    severity: &str,
+    detail: &str,
+) -> io::Result<String> {
+    let id = format!("incident-event-{}-{}", epoch_nanos(), std::process::id());
+    append_jsonl(
+        &session.incident_events_path(),
+        &format!(
+            "{{\"id\":\"{}\",\"ts\":{},\"session_id\":\"{}\",\"actor\":\"{}\",\"label\":\"{}\",\"event\":\"{}\",\"severity\":\"{}\",\"detail\":\"{}\"}}\n",
+            json_escape(&id),
+            epoch_seconds(),
+            json_escape(&session.session_id),
+            json_escape(&session.sekailink_user),
+            json_escape(label),
+            json_escape(event),
+            json_escape(severity),
+            json_escape(detail)
         ),
     )?;
     Ok(id)

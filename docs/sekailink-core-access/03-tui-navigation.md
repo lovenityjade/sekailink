@@ -42,7 +42,7 @@ Fonctions planifiees:
 F1  Help
 F2  Server status
 F3  Command registry
-F4  Prepare note
+F4  Prepare incident note
 F5  Refresh view
 F6  Log catalog
 F7  Audit search
@@ -61,6 +61,7 @@ ligne-par-ligne pour les sessions de logs longues.
 - F11 change ou sauvegarde le layout.
 - Un workspace debug capture les panels ouverts, filtres, pins et notes.
 - Les workspaces sont lies a un incident, lobby, room, user ou release.
+- Le MVP implemente les workspaces incident via `incident open/status/note/pin/export/close`.
 
 ## Selection de logs
 

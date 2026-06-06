@@ -39,13 +39,19 @@ room logs <room> --follow
 But: identifier qui est connecte, quel runtime parle, et s'il y a des pending
 items.
 
-### Exercice 3 - Creer une note
+### Exercice 3 - Creer un incident local
 
-1. Ouvrir un log.
-2. Selectionner une plage.
-3. F4.
-4. Ajouter tags.
-5. Exporter en Markdown.
+```text
+incident open training-room sev4 training incident
+incident note training-room player reported a reconnect issue
+incident pin training-room link:room-runtime sample runtime line
+incident status training-room
+incident export training-room --file training-room.md
+incident close training-room resolved during training
+```
+
+But: comprendre le journal append-only, les notes, les pins et l'export
+Markdown sans toucher a la production.
 
 ## A ne jamais faire sans Admin
 
@@ -63,7 +69,6 @@ items.
 - Je sais me connecter au bastion.
 - Je sais verifier mon role.
 - Je sais lister logs et rooms.
-- Je sais creer une note.
+- Je sais creer un incident local, une note et un pin.
 - Je sais demander approval.
 - Je sais utiliser F12 Panic en lecture avant action.
-

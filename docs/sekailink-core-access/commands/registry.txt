@@ -25,6 +25,13 @@ note export
 approval request
 approval list
 approval approve
+incident open
+incident list
+incident status
+incident note
+incident pin
+incident export
+incident close
 ops snapshot
 user search
 user open
