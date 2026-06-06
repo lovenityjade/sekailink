@@ -68,6 +68,98 @@ pub fn known_services() -> &'static [(&'static str, &'static [&'static str])] {
     ]
 }
 
+pub fn render_server_logs_plan(server: &str, service: &str, follow: bool) -> Result<String, String> {
+    let server = normalize_server(server)?;
+    if !service_allowed(server, service) {
+        return Err(format!("service {service} is not allowlisted for {server}"));
+    }
+    let mode = if follow { "-f -n 200" } else { "-n 300" };
+    Ok(format!(
+        "ssh {server} -- journalctl -u {} {mode} --no-pager",
+        shell_word(service)
+    ))
+}
+
+pub fn render_log_tail_plan(source: &str, follow: bool) -> Result<String, String> {
+    let (server, service) = log_source_service(source)
+        .ok_or_else(|| format!("unknown log source: {source}"))?;
+    render_server_logs_plan(server, service, follow)
+}
+
+pub fn render_health_probe_plan(target: &str) -> Result<String, String> {
+    let target = target.trim();
+    if target.is_empty() || target == "all" {
+        let mut out = String::new();
+        for (server, services) in known_services() {
+            out.push_str(&health_probe_for(server, services));
+            out.push('\n');
+        }
+        return Ok(out);
+    }
+    let server = normalize_server(target)?;
+    let services = services_for(server).ok_or_else(|| format!("unknown server: {server}"))?;
+    Ok(health_probe_for(server, services))
+}
+
+pub fn service_allowed(server: &str, service: &str) -> bool {
+    services_for(server)
+        .map(|services| services.iter().any(|candidate| *candidate == service))
+        .unwrap_or(false)
+}
+
+fn health_probe_for(server: &str, services: &[&str]) -> String {
+    let service_checks = services
+        .iter()
+        .map(|service| format!("systemctl is-active {}", shell_word(service)))
+        .collect::<Vec<_>>()
+        .join("; ");
+    format!(
+        "ssh {server} -- 'hostname; uptime; free -m; df -h /; {service_checks}'"
+    )
+}
+
+fn log_source_service(source: &str) -> Option<(&'static str, &'static str)> {
+    match source {
+        "nexus:identity" => Some(("nexus", "sekailink-identity")),
+        "nexus:db" => Some(("nexus", "sekailink-seed-config")),
+        "link:chat-api" => Some(("link", "sekailink-chat-api")),
+        "link:room-runtime" => Some(("link", "sekailink-room-runtime")),
+        "worlds:generation" => Some(("worlds", "sekailink-worlds")),
+        "evolution:cdn" => Some(("evolution", "nginx")),
+        "pulse:assistant" => Some(("pulse", "sekailink-pulse")),
+        "client:reports" => Some(("link", "sekailink-chat-api")),
+        _ => None,
+    }
+}
+
+fn normalize_server(server: &str) -> Result<&'static str, String> {
+    let clean = server.trim().to_ascii_lowercase();
+    for (known, _) in known_services() {
+        if clean == *known {
+            return Ok(*known);
+        }
+    }
+    Err(format!("unknown server: {server}"))
+}
+
+fn services_for(server: &str) -> Option<&'static [&'static str]> {
+    known_services()
+        .iter()
+        .find(|(known, _)| *known == server)
+        .map(|(_, services)| *services)
+}
+
+fn shell_word(value: &str) -> String {
+    if value
+        .chars()
+        .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '-' | '_' | '.' | ':'))
+    {
+        value.to_string()
+    } else {
+        format!("'{}'", value.replace('\'', "'\\''"))
+    }
+}
+
 fn read_uptime() -> String {
     let Ok(raw) = fs::read_to_string("/proc/uptime") else {
         return "unknown".to_string();
@@ -142,3 +234,21 @@ fn read_disk() -> String {
         .to_string()
 }
 
+#[cfg(test)]
+mod tests {
+    use super::{render_server_logs_plan, service_allowed};
+
+    #[test]
+    fn server_logs_plan_uses_allowlisted_service() {
+        let plan = render_server_logs_plan("link", "sekailink-chat-api", true).unwrap();
+        assert!(plan.contains("ssh link"));
+        assert!(plan.contains("journalctl -u sekailink-chat-api"));
+        assert!(service_allowed("link", "sekailink-room-runtime"));
+    }
+
+    #[test]
+    fn server_logs_plan_rejects_unknown_service() {
+        let err = render_server_logs_plan("link", "postgresql", false).unwrap_err();
+        assert!(err.contains("not allowlisted"));
+    }
+}

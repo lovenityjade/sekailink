@@ -5,7 +5,10 @@ use crate::audit::{
 use crate::commands::{COMMANDS, Confirmation, command_names, find_command, search_commands};
 use crate::line_editor::LineEditor;
 use crate::rbac::Role;
-use crate::system::{known_services, log_catalog, render_dashboard};
+use crate::system::{
+    known_services, log_catalog, render_dashboard, render_health_probe_plan, render_log_tail_plan,
+    render_server_logs_plan,
+};
 use crate::util::{home_dir, split_command_line};
 use std::env;
 use std::io;
@@ -185,9 +188,24 @@ impl App {
                 append_audit(&self.session, line, "ok", "server services")?;
                 true
             }
+            "server" if parsed.get(1).map(String::as_str) == Some("logs") => {
+                self.server_logs(&parsed)?;
+                append_audit(&self.session, line, "ok", "server logs dry-run")?;
+                true
+            }
             "logs" if parsed.get(1).map(String::as_str) == Some("list") => {
                 print_log_catalog(parsed.get(2).map(String::as_str));
                 append_audit(&self.session, line, "ok", "logs list")?;
+                true
+            }
+            "logs" if parsed.get(1).map(String::as_str) == Some("tail") => {
+                self.logs_tail(&parsed)?;
+                append_audit(&self.session, line, "ok", "logs tail dry-run")?;
+                true
+            }
+            "health" if parsed.get(1).map(String::as_str) == Some("probe") => {
+                self.health_probe(&parsed)?;
+                append_audit(&self.session, line, "ok", "health probe dry-run")?;
                 true
             }
             "audit" if parsed.get(1).map(String::as_str) == Some("search") => {
@@ -347,6 +365,58 @@ impl App {
         }
         println!();
         println!("MVP note: service allowlist only; no systemd or SSH call was made.");
+    }
+
+    fn server_logs(&self, parsed: &[String]) -> io::Result<()> {
+        let Some(server) = parsed.get(2) else {
+            println!("usage: server logs <server> <service> [--follow]");
+            return Ok(());
+        };
+        let Some(service) = parsed.get(3) else {
+            println!("usage: server logs <server> <service> [--follow]");
+            return Ok(());
+        };
+        let follow = parsed.iter().any(|part| part == "--follow" || part == "-f");
+        match render_server_logs_plan(server, service, follow) {
+            Ok(plan) => {
+                println!("dry-run remote log command:");
+                println!("{plan}");
+                println!("MVP note: command was not executed.");
+            }
+            Err(err) => println!("{err}"),
+        }
+        Ok(())
+    }
+
+    fn logs_tail(&self, parsed: &[String]) -> io::Result<()> {
+        let Some(source) = parsed.get(2) else {
+            println!("usage: logs tail <source> [--follow]");
+            println!("try: logs list");
+            return Ok(());
+        };
+        let follow = parsed.iter().any(|part| part == "--follow" || part == "-f");
+        match render_log_tail_plan(source, follow) {
+            Ok(plan) => {
+                println!("dry-run remote log command:");
+                println!("{plan}");
+                println!("MVP note: command was not executed.");
+            }
+            Err(err) => println!("{err}"),
+        }
+        Ok(())
+    }
+
+    fn health_probe(&self, parsed: &[String]) -> io::Result<()> {
+        let target = parsed.get(2).map(String::as_str).unwrap_or("all");
+        match render_health_probe_plan(target) {
+            Ok(plan) => {
+                println!("dry-run health probe:");
+                println!("{plan}");
+                println!("MVP note: command was not executed.");
+            }
+            Err(err) => println!("{err}"),
+        }
+        Ok(())
     }
 
     fn note_add(&self, parsed: &[String]) -> io::Result<()> {
@@ -510,9 +580,12 @@ fn print_help() {
     println!("  commands search <query>");
     println!("  server status all");
     println!("  server services [server|all]");
+    println!("  server logs <server> <service> [--follow]");
+    println!("  health probe [server|all]");
     println!("  logs list");
     println!("  logs list --by-server");
     println!("  logs list --by-incident");
+    println!("  logs tail <source> [--follow]");
     println!("  audit search [query]");
     println!("  audit export [query] [file-name]");
     println!("  note add <target> <text>");

@@ -18,9 +18,12 @@ Implemented MVP commands include:
 - `commands search <query>`
 - `server status all`
 - `server services [server|all]`
+- `server logs <server> <service> [--follow]` dry-run
+- `health probe [server|all]` dry-run
 - `logs list`
 - `logs list --by-server`
 - `logs list --by-incident`
+- `logs tail <source> [--follow]` dry-run
 - `audit search [query]`
 - `audit export [query] [file-name]`
 - `note add <target> <text>`
