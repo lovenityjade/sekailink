@@ -21,6 +21,23 @@ This schema is the bridge from research to implementation.
 | `tier` | Integer 0-5 from [tiers.md](tiers.md). |
 | `notes` | Short operational notes. |
 
+## Porting Profile Fields
+
+`runtime/game-registry/porting-profiles.json` adds runtime-bridge evidence on top
+of the intake registry.
+
+| Field | Meaning |
+|---|---|
+| `connector_family` | `sekailink_certified_sni`, `sni_client`, `sni_client_rom_access`, `bizhawk_generic_lua`, `custom_apworld_or_patcher`, `tracker_optional`, or `web_tracker_only`. |
+| `porting_difficulty` | `low`, `medium`, `medium_high`, `high`, `unknown`, or `unknown_high`. |
+| `requires_lua_connector` | Whether setup requires a Lua connector. `null` means unresolved. |
+| `requires_bizhawk_client` | Whether the official setup path uses Archipelago's BizHawk Client. |
+| `requires_sni` | Whether the official setup path uses SNI/SNES device connectivity. |
+| `requires_mod_or_custom_patcher` | Whether a custom patcher, mod, or external source must be normalized. |
+| `tracker_requirement` | Operational tracker status for certification planning. |
+| `setup_requirement` | Short human-readable setup classification. |
+| `evidence` | Local paths and public URLs used for this profile. |
+
 ## Interpretation Rules
 
 - `Core-Verified` from Deep Research maps to `core_verified`.

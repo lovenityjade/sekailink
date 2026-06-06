@@ -40,10 +40,12 @@ not as a second copy of APWorld logic.
 - [intake-schema.md](intake-schema.md): normalized fields for importing games.
 - [compatibility-matrix.md](compatibility-matrix.md): first Nintendo matrix from
   Deep Research plus local SekaiLink evidence.
+- [porting-research.md](porting-research.md): connector/setup research used to
+  estimate how hard each game is to port into SekaiLink.
 - [games/](games): per-game notes for certification work.
 
 Machine-readable registry:
 
 - `runtime/game-registry/games.json`
+- `runtime/game-registry/porting-profiles.json`
 - `runtime/game-registry/platforms/*.json`
-
