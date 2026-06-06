@@ -1,0 +1,145 @@
+auth whoami
+server status
+server services
+server logs
+server restart
+server update plan
+server update apply
+ssh open
+health probe
+logs list
+logs tail
+logs search
+logs filter
+logs pin
+logs note
+logs export
+user search
+user open
+user create
+user edit
+user disable
+user sessions
+user devices
+user audit
+user revoke-sessions
+user force-password-reset
+user configs
+user config open
+user config diff
+user config export
+user config edit
+lobby list
+lobby open
+lobby create
+lobby edit
+lobby close
+lobby lock
+lobby unlock
+lobby chat
+lobby join-secret
+lobby broadcast
+room list
+room open
+room summary
+room events
+room logs
+room snapshot
+room sync
+room pending-items
+room client-reports
+room request-sklmi-reconnect
+room disconnect-runtime
+room give-item
+client broadcast
+client maintenance-banner
+client force-update-prompt
+client request-relogin
+client refresh-lobby
+client refresh-room
+client request-sklmi-reconnect
+client restart-runtime
+client clear-cache-request
+client diagnostics-request
+broadcast global
+broadcast server
+broadcast lobby
+broadcast room
+broadcast role
+broadcast version
+broadcast game
+maintenance status
+maintenance enable
+maintenance disable
+maintenance schedule
+maintenance broadcast
+maintenance history
+release current
+release list
+release verify
+release verify-cdn
+release compare
+release publish
+release rollback
+release schedule
+release notes
+release audit
+client-banner list
+client-banner edit
+client-banner preview
+client-banner publish
+client-banner rollback
+client-banner disable
+pack repo list
+pack repo add
+pack repo edit
+pack repo disable
+pack repo delete
+pack check
+pack validate
+pack stage
+pack publish
+pack rollback
+pack schedule-check
+schedule list
+schedule calendar
+schedule add
+schedule edit
+schedule pause
+schedule resume
+schedule run-now
+schedule history
+discord status
+discord reload
+discord announce
+discord sync-roles
+discord command list
+discord command enable
+discord command disable
+discord command edit
+discord timer list
+discord timer edit
+discord incident-post
+discord logs
+twitch status
+twitch connect
+twitch disconnect
+twitch announce
+twitch command list
+twitch command enable
+twitch command disable
+twitch command edit
+twitch timer list
+twitch timer edit
+twitch lobby announce
+twitch stream set-title-hint
+twitch logs
+cleanup plan logs
+cleanup plan db
+cleanup plan spool
+cleanup plan all
+cleanup apply
+cleanup history
+cleanup rollback
+audit search
+

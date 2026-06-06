@@ -3,6 +3,9 @@ build/
 build-*/
 cmake-build-*/
 dist/
+!docs/sekailink-core-access/dist/
+!docs/sekailink-core-access/dist/pdf/
+!docs/sekailink-core-access/dist/pdf/*.pdf
 out/
 release/
 coverage/

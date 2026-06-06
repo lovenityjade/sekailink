@@ -1,0 +1,5 @@
+dist/pdf/*.aux
+dist/pdf/*.log
+dist/pdf/*.out
+dist/pdf/*.toc
+dist/pdf/*.tex
