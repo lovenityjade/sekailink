@@ -1,7 +1,7 @@
 use crate::audit::{
     Session, append_approval_decision, append_approval_request, append_audit, append_history,
     append_note, read_file_to_string, write_client_banner_draft, write_export,
-    write_maintenance_draft,
+    write_maintenance_draft, write_schedule_job,
 };
 use crate::commands::{COMMANDS, Confirmation, command_names, find_command, search_commands};
 use crate::line_editor::LineEditor;
@@ -267,6 +267,16 @@ impl App {
             {
                 self.maintenance(&parsed)?;
                 append_audit(&self.session, line, "ok", "maintenance local")?;
+                true
+            }
+            "schedule"
+                if matches!(
+                    parsed.get(1).map(String::as_str),
+                    Some("list") | Some("calendar") | Some("add") | Some("history")
+                ) =>
+            {
+                self.schedule(&parsed)?;
+                append_audit(&self.session, line, "ok", "schedule local")?;
                 true
             }
             _ => {
@@ -738,6 +748,50 @@ impl App {
         }
     }
 
+    fn schedule(&self, parsed: &[String]) -> io::Result<()> {
+        match parsed.get(1).map(String::as_str) {
+            Some("list") | Some("calendar") | Some("history") => {
+                let jobs = read_file_to_string(&self.session.scheduler_dir().join("jobs.jsonl"))?;
+                if jobs.trim().is_empty() {
+                    println!("schedule is empty");
+                } else {
+                    for line in jobs.lines().take(200) {
+                        println!("{line}");
+                    }
+                }
+                println!("MVP note: local draft schedule only; no job execution is enabled.");
+                Ok(())
+            }
+            Some("add") => {
+                let Some(name) = parsed.get(2) else {
+                    println!("usage: schedule add <name> <when> <command>");
+                    return Ok(());
+                };
+                let Some(when) = parsed.get(3) else {
+                    println!("usage: schedule add <name> <when> <command>");
+                    return Ok(());
+                };
+                let command = if parsed.len() > 4 {
+                    parsed[4..].join(" ")
+                } else {
+                    String::new()
+                };
+                if command.trim().is_empty() {
+                    println!("usage: schedule add <name> <when> <command>");
+                    return Ok(());
+                }
+                let id = write_schedule_job(&self.session, name, when, &command)?;
+                println!("schedule draft added: {id}");
+                println!("MVP note: job is not armed; schedule run-now remains planned.");
+                Ok(())
+            }
+            _ => {
+                println!("usage: schedule list|calendar|add|history");
+                Ok(())
+            }
+        }
+    }
+
     fn stub_or_unknown(&self, line: &str, spec: Option<&crate::commands::CommandSpec>) -> io::Result<()> {
         if let Some(spec) = spec {
             println!("command recognized: {}", spec.name);
@@ -820,6 +874,10 @@ fn print_help() {
     println!("  maintenance status");
     println!("  maintenance schedule <scope> <start> <end> <message>");
     println!("  maintenance history");
+    println!("  schedule list");
+    println!("  schedule calendar");
+    println!("  schedule add <name> <when> <command>");
+    println!("  schedule history");
     println!("  exit");
 }
 

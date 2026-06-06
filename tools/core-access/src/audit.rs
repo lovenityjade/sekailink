@@ -33,6 +33,7 @@ impl Session {
         fs::create_dir_all(self.exports_dir())?;
         fs::create_dir_all(self.client_banners_dir())?;
         fs::create_dir_all(self.maintenance_dir())?;
+        fs::create_dir_all(self.scheduler_dir())?;
         Ok(())
     }
 
@@ -62,6 +63,10 @@ impl Session {
 
     pub fn maintenance_dir(&self) -> PathBuf {
         self.data_dir.join("maintenance")
+    }
+
+    pub fn scheduler_dir(&self) -> PathBuf {
+        self.data_dir.join("scheduler")
     }
 }
 
@@ -175,6 +180,23 @@ pub fn write_maintenance_draft(
             json_escape(start),
             json_escape(end),
             json_escape(message)
+        ),
+    )?;
+    Ok(id)
+}
+
+pub fn write_schedule_job(session: &Session, name: &str, when: &str, command: &str) -> io::Result<String> {
+    let id = format!("schedule-{}-{}", epoch_nanos(), std::process::id());
+    append_jsonl(
+        &session.scheduler_dir().join("jobs.jsonl"),
+        &format!(
+            "{{\"id\":\"{}\",\"ts\":{},\"state\":\"draft\",\"author\":\"{}\",\"name\":\"{}\",\"when\":\"{}\",\"command\":\"{}\"}}\n",
+            json_escape(&id),
+            epoch_seconds(),
+            json_escape(&session.sekailink_user),
+            json_escape(name),
+            json_escape(when),
+            json_escape(command)
         ),
     )?;
     Ok(id)

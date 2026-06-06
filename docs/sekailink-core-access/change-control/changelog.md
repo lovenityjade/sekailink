@@ -13,3 +13,4 @@
   recent audit, notes, and approval queue.
 - Added local draft management for the three client dashboard banner slots.
 - Added local maintenance schedule/status/history drafts.
+- Added local scheduler draft add/list/calendar/history commands.

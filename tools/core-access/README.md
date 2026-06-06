@@ -39,6 +39,10 @@ Implemented MVP commands include:
 - `maintenance status`
 - `maintenance schedule <scope> <start> <end> <message>` as Admin, local draft only
 - `maintenance history`
+- `schedule list`
+- `schedule calendar`
+- `schedule add <name> <when> <command>` as Admin, local draft only
+- `schedule history`
 
 ## Build
 
