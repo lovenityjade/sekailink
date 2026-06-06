@@ -1,7 +1,7 @@
 use crate::audit::{
     Session, append_approval_decision, append_approval_request, append_audit, append_history,
     append_note, read_file_to_string, write_client_banner_draft, write_export,
-    write_maintenance_draft, write_schedule_job,
+    write_maintenance_draft, write_pack_repo, write_schedule_job,
 };
 use crate::commands::{COMMANDS, Confirmation, command_names, find_command, search_commands};
 use crate::line_editor::LineEditor;
@@ -277,6 +277,15 @@ impl App {
             {
                 self.schedule(&parsed)?;
                 append_audit(&self.session, line, "ok", "schedule local")?;
+                true
+            }
+            "pack"
+                if parsed.get(1).map(String::as_str) == Some("repo")
+                    && matches!(parsed.get(2).map(String::as_str), Some("list") | Some("add"))
+                    || parsed.get(1).map(String::as_str) == Some("schedule-check") =>
+            {
+                self.pack(&parsed)?;
+                append_audit(&self.session, line, "ok", "pack local")?;
                 true
             }
             _ => {
@@ -792,6 +801,64 @@ impl App {
         }
     }
 
+    fn pack(&self, parsed: &[String]) -> io::Result<()> {
+        match (parsed.get(1).map(String::as_str), parsed.get(2).map(String::as_str)) {
+            (Some("repo"), Some("list")) => {
+                let repos = read_file_to_string(&self.session.pack_repos_dir().join("repos.jsonl"))?;
+                if repos.trim().is_empty() {
+                    println!("pack repo drafts are empty");
+                } else {
+                    for line in repos.lines().take(200) {
+                        println!("{line}");
+                    }
+                }
+                println!("MVP note: local repo drafts only; CDN publish is not connected.");
+                Ok(())
+            }
+            (Some("repo"), Some("add")) => {
+                let Some(id) = parsed.get(3) else {
+                    println!("usage: pack repo add <id> <url> <game> [notes]");
+                    return Ok(());
+                };
+                let Some(url) = parsed.get(4) else {
+                    println!("usage: pack repo add <id> <url> <game> [notes]");
+                    return Ok(());
+                };
+                let Some(game) = parsed.get(5) else {
+                    println!("usage: pack repo add <id> <url> <game> [notes]");
+                    return Ok(());
+                };
+                let notes = if parsed.len() > 6 {
+                    parsed[6..].join(" ")
+                } else {
+                    String::new()
+                };
+                let record_id = write_pack_repo(&self.session, id, url, game, &notes)?;
+                println!("pack repo draft added: {record_id}");
+                println!("MVP note: draft only; no repo was fetched or published.");
+                Ok(())
+            }
+            (Some("schedule-check"), _) => {
+                let Some(id) = parsed.get(2) else {
+                    println!("usage: pack schedule-check <repo-id> <when-or-interval>");
+                    return Ok(());
+                };
+                let Some(when) = parsed.get(3) else {
+                    println!("usage: pack schedule-check <repo-id> <when-or-interval>");
+                    return Ok(());
+                };
+                let job_id = write_schedule_job(&self.session, &format!("pack-check-{id}"), when, &format!("pack check {id}"))?;
+                println!("pack check schedule draft added: {job_id}");
+                println!("MVP note: job is not armed; no pack repo was fetched.");
+                Ok(())
+            }
+            _ => {
+                println!("usage: pack repo list | pack repo add | pack schedule-check");
+                Ok(())
+            }
+        }
+    }
+
     fn stub_or_unknown(&self, line: &str, spec: Option<&crate::commands::CommandSpec>) -> io::Result<()> {
         if let Some(spec) = spec {
             println!("command recognized: {}", spec.name);
@@ -878,6 +945,9 @@ fn print_help() {
     println!("  schedule calendar");
     println!("  schedule add <name> <when> <command>");
     println!("  schedule history");
+    println!("  pack repo list");
+    println!("  pack repo add <id> <url> <game> [notes]");
+    println!("  pack schedule-check <repo-id> <when-or-interval>");
     println!("  exit");
 }
 

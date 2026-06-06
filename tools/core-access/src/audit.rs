@@ -34,6 +34,7 @@ impl Session {
         fs::create_dir_all(self.client_banners_dir())?;
         fs::create_dir_all(self.maintenance_dir())?;
         fs::create_dir_all(self.scheduler_dir())?;
+        fs::create_dir_all(self.pack_repos_dir())?;
         Ok(())
     }
 
@@ -67,6 +68,10 @@ impl Session {
 
     pub fn scheduler_dir(&self) -> PathBuf {
         self.data_dir.join("scheduler")
+    }
+
+    pub fn pack_repos_dir(&self) -> PathBuf {
+        self.data_dir.join("pack-repos")
     }
 }
 
@@ -200,6 +205,30 @@ pub fn write_schedule_job(session: &Session, name: &str, when: &str, command: &s
         ),
     )?;
     Ok(id)
+}
+
+pub fn write_pack_repo(
+    session: &Session,
+    id: &str,
+    url: &str,
+    game: &str,
+    notes: &str,
+) -> io::Result<String> {
+    let record_id = format!("pack-repo-{}-{}", epoch_nanos(), std::process::id());
+    append_jsonl(
+        &session.pack_repos_dir().join("repos.jsonl"),
+        &format!(
+            "{{\"record_id\":\"{}\",\"ts\":{},\"state\":\"draft\",\"author\":\"{}\",\"id\":\"{}\",\"game\":\"{}\",\"url\":\"{}\",\"notes\":\"{}\"}}\n",
+            json_escape(&record_id),
+            epoch_seconds(),
+            json_escape(&session.sekailink_user),
+            json_escape(id),
+            json_escape(game),
+            json_escape(url),
+            json_escape(notes)
+        ),
+    )?;
+    Ok(record_id)
 }
 
 pub fn write_export(session: &Session, prefix: &str, requested_name: Option<&str>, body: &str) -> io::Result<PathBuf> {

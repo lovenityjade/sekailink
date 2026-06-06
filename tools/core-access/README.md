@@ -43,6 +43,9 @@ Implemented MVP commands include:
 - `schedule calendar`
 - `schedule add <name> <when> <command>` as Admin, local draft only
 - `schedule history`
+- `pack repo list`
+- `pack repo add <id> <url> <game> [notes]` as Admin, local draft only
+- `pack schedule-check <repo-id> <when-or-interval>` as Admin, local draft only
 
 ## Build
 
