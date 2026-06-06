@@ -1,0 +1,11 @@
+{
+  "platform": "gba",
+  "display_name": "Game Boy Advance",
+  "primary_core": null,
+  "core_paths": {},
+  "notes": [
+    "GBA candidates need runtime/core validation before gameplay certification.",
+    "Pokemon Emerald is a strong first candidate from the research matrix."
+  ]
+}
+

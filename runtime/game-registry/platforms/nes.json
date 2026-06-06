@@ -1,0 +1,10 @@
+{
+  "platform": "nes",
+  "display_name": "Nintendo Entertainment System",
+  "primary_core": null,
+  "core_paths": {},
+  "notes": [
+    "NES runtime support is indexed for planning. Core/runtime packaging must be validated before certification."
+  ]
+}
+

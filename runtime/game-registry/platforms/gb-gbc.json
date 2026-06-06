@@ -1,0 +1,10 @@
+{
+  "platform": "gb-gbc",
+  "display_name": "Game Boy / Game Boy Color",
+  "primary_core": null,
+  "core_paths": {},
+  "notes": [
+    "GB/GBC runtime support is indexed for planning. Core/runtime packaging must be validated before certification."
+  ]
+}
+
