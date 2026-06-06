@@ -69,12 +69,29 @@ Best immediate SekaiLink targets:
 | gba | Final Fantasy Tactics Advance | PopTracker | APWorld confirmed, setup Discord | `runtime/ap/worlds/ffta` |
 | gba | Fire Emblem: The Sacred Stones | PopTracker | APWorld/setup confirmed | none |
 
+## Tracker Optional Or Non-Blocking
+
+These games were previously easy to read as "blocked" because the research
+matrix focused on PopTracker availability. For SekaiLink certification, a
+PopTracker pack is not always mandatory. Platformers and linear action games can
+enter the pipeline with runtime/AP heartbeat proof, a web tracker, Universal
+Tracker, or no tracker for the first trailer-grade milestone.
+
+| Platform | Game | Tracker interpretation | Notes | Local evidence |
+|---|---|---|---|---|
+| snes | ActRaiser | optional for first heartbeat | Platformer/action structure; Discord resources still need retrieval before install automation. | none |
+| snes | Super Mario World 2: Yoshi's Island | optional/web alternative | Pack reported on Discord and web tracker alternative exists; PopTracker GitHub is not a hard blocker. | none |
+| nes | Mega Man 3 | optional/Universal Tracker | Platformer; Universal Tracker is enough for initial support classification. | `runtime/ap/worlds/mm3` |
+| gb/gbc | Super Mario Land 2 | optional | Platformer; APWorld/setup evidence exists but GitHub links still need resolution. | `runtime/ap/worlds/marioland2` |
+| gb/gbc | Link's Awakening DX | web tracker confirmed | MagpieTracker web tracker covers initial tracking need; missing PopTracker is not a hard blocker. | `runtime/profiles/ladx-starter.profile` |
+
 ## Next Research Tasks
 
 1. Resolve every `GitHub via source` URL from the community index or upstream
    repos before automated download is enabled.
 2. Separate local APWorld presence from true SekaiLink runtime readiness.
-3. For SNES games, inspect official clients and SNI/Lua connectors first.
-4. For each candidate, produce or generate a SKLMI runtime adapter manifest.
-5. Add one trailer checklist per game once it reaches Tier 3.
-
+3. Classify tracker requirement per game: mandatory, optional, web-only, or
+   Universal Tracker acceptable.
+4. For SNES games, inspect official clients and SNI/Lua connectors first.
+5. For each candidate, produce or generate a SKLMI runtime adapter manifest.
+6. Add one trailer checklist per game once it reaches Tier 3.

@@ -12,7 +12,7 @@ This schema is the bridge from research to implementation.
 | `archipelago_status` | `core_verified`, `unknown`, `unknown_beta`, or `missing_github`. |
 | `apworld_url` | Canonical APWorld repo/page, or `null` if unresolved. |
 | `apworld_local_path` | Local APWorld folder if present in `runtime/ap/worlds`. |
-| `tracker_status` | `github_verified`, `github_via_source`, `web_only`, `universal_tracker`, `missing`, or `discord_only`. |
+| `tracker_status` | `github_verified`, `github_via_source`, `web_only`, `universal_tracker`, `tracker_optional`, `missing`, or `discord_only`. |
 | `poptracker_url` | PopTracker repository URL, or `null`. |
 | `web_tracker_url` | Web tracker or patcher URL, or `null`. |
 | `setup_url` | Setup documentation URL, or `null`. |
@@ -27,6 +27,10 @@ This schema is the bridge from research to implementation.
 - `Unknown / Beta` maps to `unknown_beta`.
 - `GitHub via source` is preserved as unresolved evidence and maps to
   `github_via_source`.
+- `tracker_optional` means a missing PopTracker pack is not a certification
+  blocker for the first runtime path. This is common for platformers or games
+  where the useful trailer proof is boot + AP sync + item/check heartbeat rather
+  than a dense map tracker.
 - Discord-only resources are not enough for automated install without a later
   manual retrieval step.
 - A local APWorld does not prove SekaiLink runtime support. It only proves that
@@ -44,4 +48,3 @@ game validate <game_key>
 game certify <game_key>
 game publish <game_key>
 ```
-

@@ -9,7 +9,8 @@
   "notes": [
     "Unresolved 'GitHub via source' values are represented as null URLs with tracker_status or apworld_status preserving the evidence.",
     "Local APWorld presence does not prove SekaiLink runtime support.",
-    "SKLMI manifests are runtime adapters and should be generated from APWorld/client/SNI/Lua evidence when possible."
+    "SKLMI manifests are runtime adapters and should be generated from APWorld/client/SNI/Lua evidence when possible.",
+    "PopTracker is not mandatory for every game. Platformers and some action games may use tracker_optional, web_only, or universal_tracker for early certification tiers."
   ],
   "games": [
     {
@@ -205,6 +206,22 @@
       "notes": "No PopTracker URL resolved in first pass."
     },
     {
+      "game_key": "mega_man_3",
+      "display_name": "Mega Man 3",
+      "platform": "nes",
+      "archipelago_status": "unknown",
+      "apworld_url": null,
+      "apworld_local_path": "runtime/ap/worlds/mm3",
+      "tracker_status": "universal_tracker",
+      "poptracker_url": null,
+      "web_tracker_url": "universal_tracker",
+      "setup_url": null,
+      "sklmi_manifest": null,
+      "sekaiemu_profile": null,
+      "tier": 1,
+      "notes": "Tracker is non-blocking for initial platformer heartbeat; Universal Tracker is acceptable for early classification."
+    },
+    {
       "game_key": "pokemon_emerald",
       "display_name": "Pokemon Emerald",
       "platform": "gba",
@@ -299,7 +316,70 @@
       "sekaiemu_profile": null,
       "tier": 1,
       "notes": "One local APWorld family covers both Oracle games."
+    },
+    {
+      "game_key": "actraiser",
+      "display_name": "ActRaiser",
+      "platform": "snes",
+      "archipelago_status": "discord_only",
+      "apworld_url": null,
+      "apworld_local_path": null,
+      "tracker_status": "tracker_optional",
+      "poptracker_url": null,
+      "web_tracker_url": null,
+      "setup_url": null,
+      "sklmi_manifest": null,
+      "sekaiemu_profile": null,
+      "tier": 0,
+      "notes": "Platformer/action structure makes PopTracker non-blocking for first heartbeat, but Discord-only resources still need manual retrieval."
+    },
+    {
+      "game_key": "yoshis_island",
+      "display_name": "Super Mario World 2: Yoshi's Island",
+      "platform": "snes",
+      "archipelago_status": "unknown",
+      "apworld_url": null,
+      "apworld_local_path": null,
+      "tracker_status": "tracker_optional",
+      "poptracker_url": null,
+      "web_tracker_url": "web_tracker_alternative",
+      "setup_url": null,
+      "sklmi_manifest": null,
+      "sekaiemu_profile": null,
+      "tier": 0,
+      "notes": "PopTracker GitHub is unresolved, but tracker is not a hard blocker for first platformer heartbeat."
+    },
+    {
+      "game_key": "super_mario_land_2",
+      "display_name": "Super Mario Land 2: 6 Golden Coins",
+      "platform": "gb",
+      "archipelago_status": "unknown",
+      "apworld_url": null,
+      "apworld_local_path": "runtime/ap/worlds/marioland2",
+      "tracker_status": "tracker_optional",
+      "poptracker_url": null,
+      "web_tracker_url": null,
+      "setup_url": null,
+      "sklmi_manifest": null,
+      "sekaiemu_profile": null,
+      "tier": 1,
+      "notes": "Platformer; missing PopTracker should not block initial runtime/AP heartbeat work."
+    },
+    {
+      "game_key": "ladx",
+      "display_name": "The Legend of Zelda: Link's Awakening DX",
+      "platform": "gbc",
+      "archipelago_status": "unknown_beta",
+      "apworld_url": null,
+      "apworld_local_path": null,
+      "tracker_status": "web_only",
+      "poptracker_url": null,
+      "web_tracker_url": "MagpieTracker",
+      "setup_url": null,
+      "sklmi_manifest": null,
+      "sekaiemu_profile": "runtime/profiles/ladx-starter.profile",
+      "tier": 1,
+      "notes": "Web tracker is confirmed by research; missing PopTracker is not a hard blocker."
     }
   ]
 }
-
