@@ -1,6 +1,6 @@
 use crate::audit::{
     Session, append_approval_decision, append_approval_request, append_audit, append_history,
-    append_note, read_file_to_string, write_export,
+    append_note, read_file_to_string, write_client_banner_draft, write_export,
 };
 use crate::commands::{COMMANDS, Confirmation, command_names, find_command, search_commands};
 use crate::line_editor::LineEditor;
@@ -246,6 +246,16 @@ impl App {
             "ops" if parsed.get(1).map(String::as_str) == Some("snapshot") => {
                 self.ops_snapshot(parsed.get(2).map(String::as_str))?;
                 append_audit(&self.session, line, "ok", "ops snapshot")?;
+                true
+            }
+            "client-banner"
+                if matches!(
+                    parsed.get(1).map(String::as_str),
+                    Some("list") | Some("preview") | Some("edit")
+                ) =>
+            {
+                self.client_banner(&parsed)?;
+                append_audit(&self.session, line, "ok", "client-banner")?;
                 true
             }
             "maintenance" if parsed.get(1).map(String::as_str) == Some("status") => {
@@ -583,6 +593,88 @@ impl App {
         Ok(())
     }
 
+    fn client_banner(&self, parsed: &[String]) -> io::Result<()> {
+        match parsed.get(1).map(String::as_str) {
+            Some("list") => self.client_banner_list(),
+            Some("preview") => {
+                let Some(slot) = parsed.get(2) else {
+                    println!("usage: client-banner preview <1|2|3>");
+                    return Ok(());
+                };
+                let slot = match parse_banner_slot(slot) {
+                    Ok(slot) => slot,
+                    Err(err) => {
+                        println!("{err}");
+                        return Ok(());
+                    }
+                };
+                self.client_banner_preview(slot)
+            }
+            Some("edit") => {
+                let Some(slot) = parsed.get(2) else {
+                    println!("usage: client-banner edit <1|2|3> <text>");
+                    return Ok(());
+                };
+                let slot = match parse_banner_slot(slot) {
+                    Ok(slot) => slot,
+                    Err(err) => {
+                        println!("{err}");
+                        return Ok(());
+                    }
+                };
+                let text = if parsed.len() > 3 {
+                    parsed[3..].join(" ")
+                } else {
+                    String::new()
+                };
+                if text.trim().is_empty() {
+                    println!("usage: client-banner edit <1|2|3> <text>");
+                    return Ok(());
+                }
+                let id = write_client_banner_draft(&self.session, slot, &text)?;
+                println!("client banner draft saved: {id}");
+                println!("slot {slot}: {text}");
+                println!("MVP note: draft only; client-banner publish is not implemented.");
+                Ok(())
+            }
+            _ => {
+                println!("usage: client-banner list|preview|edit");
+                Ok(())
+            }
+        }
+    }
+
+    fn client_banner_list(&self) -> io::Result<()> {
+        println!("{:<6} Draft", "SLOT");
+        println!("{}", "-".repeat(76));
+        for slot in 1..=3 {
+            let text = self.read_client_banner_slot(slot)?;
+            let display = if text.trim().is_empty() {
+                "(empty local draft)".to_string()
+            } else {
+                text
+            };
+            println!("{slot:<6} {display}");
+        }
+        println!("MVP note: local drafts only; publish/rollback remain planned.");
+        Ok(())
+    }
+
+    fn client_banner_preview(&self, slot: u8) -> io::Result<()> {
+        let text = self.read_client_banner_slot(slot)?;
+        if text.trim().is_empty() {
+            println!("slot {slot} has no local draft");
+        } else {
+            println!("slot {slot} preview:");
+            println!("{text}");
+        }
+        Ok(())
+    }
+
+    fn read_client_banner_slot(&self, slot: u8) -> io::Result<String> {
+        read_file_to_string(&self.session.client_banners_dir().join(format!("slot-{slot}.txt")))
+    }
+
     fn stub_or_unknown(&self, line: &str, spec: Option<&crate::commands::CommandSpec>) -> io::Result<()> {
         if let Some(spec) = spec {
             println!("command recognized: {}", spec.name);
@@ -607,6 +699,13 @@ fn push_recent_lines(body: &mut String, source: &str, limit: usize) {
     for line in &lines[start..] {
         body.push_str(line);
         body.push('\n');
+    }
+}
+
+fn parse_banner_slot(value: &str) -> Result<u8, String> {
+    match value.parse::<u8>() {
+        Ok(slot @ 1..=3) => Ok(slot),
+        _ => Err("client banner slot must be 1, 2, or 3".to_string()),
     }
 }
 
@@ -652,7 +751,22 @@ fn print_help() {
     println!("  approval list");
     println!("  approval approve <id> [reason]");
     println!("  ops snapshot [label]");
+    println!("  client-banner list");
+    println!("  client-banner preview <1|2|3>");
+    println!("  client-banner edit <1|2|3> <text>");
     println!("  exit");
+}
+
+#[cfg(test)]
+mod app_tests {
+    use super::parse_banner_slot;
+
+    #[test]
+    fn banner_slot_is_limited_to_three_slots() {
+        assert_eq!(parse_banner_slot("1").unwrap(), 1);
+        assert!(parse_banner_slot("0").is_err());
+        assert!(parse_banner_slot("4").is_err());
+    }
 }
 
 fn print_log_catalog(mode: Option<&str>) {

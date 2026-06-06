@@ -33,6 +33,9 @@ Implemented MVP commands include:
 - `approval list`
 - `approval approve <id> [reason]` as Admin
 - `ops snapshot [label]`
+- `client-banner list`
+- `client-banner preview <1|2|3>`
+- `client-banner edit <1|2|3> <text>` as Admin, local draft only
 
 ## Build
 

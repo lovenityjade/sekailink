@@ -31,6 +31,7 @@ impl Session {
         fs::create_dir_all(self.data_dir.join("approvals"))?;
         fs::create_dir_all(self.data_dir.join("history"))?;
         fs::create_dir_all(self.exports_dir())?;
+        fs::create_dir_all(self.client_banners_dir())?;
         Ok(())
     }
 
@@ -52,6 +53,10 @@ impl Session {
 
     pub fn exports_dir(&self) -> PathBuf {
         self.data_dir.join("exports")
+    }
+
+    pub fn client_banners_dir(&self) -> PathBuf {
+        self.data_dir.join("client-banners")
     }
 }
 
@@ -123,6 +128,23 @@ pub fn append_approval_decision(session: &Session, id: &str, state: &str, reason
 
 pub fn append_history(session: &Session, line: &str) -> io::Result<()> {
     append_jsonl(&session.history_path(), &format!("{line}\n"))
+}
+
+pub fn write_client_banner_draft(session: &Session, slot: u8, text: &str) -> io::Result<String> {
+    let id = format!("banner-{}-{}", epoch_nanos(), std::process::id());
+    fs::write(session.client_banners_dir().join(format!("slot-{slot}.txt")), text)?;
+    append_jsonl(
+        &session.client_banners_dir().join("history.jsonl"),
+        &format!(
+            "{{\"id\":\"{}\",\"ts\":{},\"slot\":{},\"author\":\"{}\",\"text\":\"{}\"}}\n",
+            json_escape(&id),
+            epoch_seconds(),
+            slot,
+            json_escape(&session.sekailink_user),
+            json_escape(text)
+        ),
+    )?;
+    Ok(id)
 }
 
 pub fn write_export(session: &Session, prefix: &str, requested_name: Option<&str>, body: &str) -> io::Result<PathBuf> {

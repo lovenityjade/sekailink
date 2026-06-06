@@ -11,3 +11,4 @@
 - Aligned dry-run SSH output with documented `*-vps` bastion aliases.
 - Added local Markdown incident snapshots with dashboard, log catalog, services,
   recent audit, notes, and approval queue.
+- Added local draft management for the three client dashboard banner slots.
