@@ -2,6 +2,11 @@
 
 ## Login
 
+```sh
+cargo run --manifest-path tools/core-access/Cargo.toml
+cargo run --manifest-path tools/core-access/Cargo.toml -- --shell
+```
+
 ```text
 auth whoami
 server status all

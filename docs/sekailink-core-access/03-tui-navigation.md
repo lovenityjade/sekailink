@@ -18,18 +18,42 @@
 
 La ligne de commande est disponible partout.
 
-Fonctions requises:
+Fonctions presentes dans le cockpit MVP:
 
-- autocomplete contextuelle;
-- selection de suggestion avec Tab;
+- autocomplete par prefixe avec Tab;
 - fleches gauche/droite;
 - correction au milieu de ligne;
 - historique avec fleche haut/bas;
 - Ctrl+A/E;
-- Alt+B/F;
 - Ctrl+W;
+
+Fonctions planifiees:
+
+- selection de suggestion avancee;
+- Alt+B/F;
 - reverse search;
-- edition multi-line JSON.
+- edition multi-line JSON;
+- execution non bloquante de flux logs live.
+
+## Hotkeys MVP
+
+```text
+F1  Help
+F2  Server status
+F3  Command registry
+F4  Prepare note
+F5  Refresh view
+F6  Log catalog
+F7  Audit search
+F8  Prepare log tail
+F9  Drop to shell mode
+F10 Clear output
+F11 Cycle workspace
+F12 Panic view
+```
+
+`Ctrl+Q` ou `Ctrl+C` quitte le cockpit. Le mode `--shell` garde l'ancien prompt
+ligne-par-ligne pour les sessions de logs longues.
 
 ## Tabs, splits et workspaces
 
@@ -43,4 +67,3 @@ Fonctions requises:
 2. Selectionner une plage.
 3. F4 pour creer une note.
 4. F7 pour exporter.
-

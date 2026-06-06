@@ -14,9 +14,10 @@ use crate::system::{
     known_services, log_catalog, render_dashboard, render_health_probe_plan, render_log_tail_plan,
     render_server_logs_plan,
 };
+use crate::tui::TuiExit;
 use crate::util::{home_dir, split_command_line};
 use std::env;
-use std::io;
+use std::io::{self, IsTerminal};
 use std::path::PathBuf;
 use std::process::Command;
 
@@ -41,7 +42,14 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
         return Ok(());
     }
 
-    app.run_interactive()
+    if options.shell || !io::stdin().is_terminal() || !io::stdout().is_terminal() {
+        return app.run_interactive();
+    }
+
+    match crate::tui::run(app.session.clone())? {
+        TuiExit::Quit => Ok(()),
+        TuiExit::Shell => app.run_interactive(),
+    }
 }
 
 struct Options {
@@ -49,6 +57,7 @@ struct Options {
     role: Option<Role>,
     user: Option<String>,
     data_dir: Option<PathBuf>,
+    shell: bool,
 }
 
 impl Options {
@@ -57,6 +66,7 @@ impl Options {
         let mut role = None;
         let mut user = None;
         let mut data_dir = None;
+        let mut shell = false;
         let mut i = 0;
         while i < args.len() {
             match args[i].as_str() {
@@ -80,6 +90,9 @@ impl Options {
                     i += 1;
                     data_dir = Some(PathBuf::from(args.get(i).ok_or("--data-dir requires a value")?));
                 }
+                "--shell" => {
+                    shell = true;
+                }
                 "--help" | "-h" => {
                     print_usage();
                     std::process::exit(0);
@@ -93,6 +106,7 @@ impl Options {
             role,
             user,
             data_dir,
+            shell,
         })
     }
 }
@@ -1051,7 +1065,7 @@ fn first_non_flag<'a>(parts: &'a [String], start: usize, default: &'a str) -> &'
 }
 
 fn print_usage() {
-    println!("sekailink-core-access [--user USER] [--role service|admin] [--data-dir PATH] [--command COMMAND]");
+    println!("sekailink-core-access [--shell] [--user USER] [--role service|admin] [--data-dir PATH] [--command COMMAND]");
 }
 
 fn print_banner(session: &Session) {

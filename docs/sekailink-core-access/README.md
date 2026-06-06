@@ -1,8 +1,8 @@
 # SekaiLink Core Access
 
 SekaiLink Core Access est le cockpit d'administration de SekaiLink. Il est pense
-comme un outil TUI Rust/Ratatui lance depuis le bastion Nexus apres une connexion
-SSH, puis un login SekaiLink/Nexus.
+comme un outil TUI Rust lance depuis le bastion Nexus apres une connexion SSH,
+puis un login SekaiLink/Nexus.
 
 Le nom Core Access evite la confusion avec Client Core et les libretro cores de
 Sekaiemu.
@@ -67,16 +67,18 @@ bash docs/sekailink-core-access/scripts/build-pdf.sh
 La pipeline utilise Pandoc avec XeLaTeX. Le script signale clairement les
 dependances manquantes.
 
-## Executable MVP
+## Executable
 
-Le premier binaire local vit dans `tools/core-access/`. Il fournit un shell
-TUI/CLI bastion avec registre de commandes, autocompletion, historique,
-notes, approvals locales, audit JSONL et dashboard local. Il ne modifie aucun
-service de production tant que l'integration Nexus n'est pas implementee.
+Le binaire local vit dans `tools/core-access/`. Il lance par defaut un cockpit
+terminal plein ecran avec panels, hotkeys, ligne de commande, autocompletion,
+historique, notes, approvals locales, audit JSONL et dashboard local.
+
+Le shell ligne-par-ligne historique reste disponible avec `--shell`.
 
 Commandes de base:
 
 ```sh
 cargo run --manifest-path tools/core-access/Cargo.toml
+cargo run --manifest-path tools/core-access/Cargo.toml -- --shell
 cargo run --manifest-path tools/core-access/Cargo.toml -- --command "server status all"
 ```

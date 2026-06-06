@@ -28,3 +28,5 @@
   `lobby open`, and Identity user command planning.
 - Connected Identity user read-only commands to the confirmed Nexus Identity
   HTTP admin GET routes with token-gated execution.
+- Added the first full-screen terminal cockpit with panels, command line,
+  autocomplete/history, F1-F12 hotkeys, and `--shell` fallback.

@@ -5,6 +5,7 @@ mod line_editor;
 mod nexus;
 mod rbac;
 mod system;
+mod tui;
 mod util;
 
 fn main() {
