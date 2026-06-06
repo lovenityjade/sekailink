@@ -67,3 +67,16 @@ bash docs/sekailink-core-access/scripts/build-pdf.sh
 La pipeline utilise Pandoc avec XeLaTeX. Le script signale clairement les
 dependances manquantes.
 
+## Executable MVP
+
+Le premier binaire local vit dans `tools/core-access/`. Il fournit un shell
+TUI/CLI bastion avec registre de commandes, autocompletion, historique,
+notes, approvals locales, audit JSONL et dashboard local. Il ne modifie aucun
+service de production tant que l'integration Nexus n'est pas implementee.
+
+Commandes de base:
+
+```sh
+cargo run --manifest-path tools/core-access/Cargo.toml
+cargo run --manifest-path tools/core-access/Cargo.toml -- --command "server status all"
+```

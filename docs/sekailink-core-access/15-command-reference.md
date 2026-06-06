@@ -6,6 +6,9 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | Commande | Role | Confirmation | Description |
 | --- | --- | --- | --- |
 | `auth whoami` | Service | Non | Affiche l'identite Linux/SekaiLink et capabilities. |
+| `dashboard` | Service | Non | Affiche la matrice locale Core Access MVP. |
+| `commands list` | Service | Non | Liste le registre de commandes connu du binaire. |
+| `commands search <query>` | Service | Non | Recherche dans le registre de commandes. |
 | `server status <server|all>` | Service | Non | Statut CPU/RAM/disk/uptime/services. |
 | `server services <server>` | Service | Non | Liste services systemd connus. |
 | `server logs <server> <service> --follow` | Service | Non | Suit les logs d'un service. |
@@ -23,6 +26,11 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `logs pin` | Service | Non | Epingle la selection courante. |
 | `logs note` | Service | Non | Cree une note liee. |
 | `logs export --format <md|json|txt>` | Service | Non | Exporte logs/notes. |
+| `note add <target> <text>` | Service | Non | Ajoute une note locale liee a un incident, log, user, lobby ou room. |
+| `note list [query]` | Service | Non | Liste les notes locales, optionnellement filtrees. |
+| `approval request <command> <reason>` | Service | Non | Demande une approbation Admin pour une commande sensible. |
+| `approval list` | Service | Non | Liste les demandes et decisions locales. |
+| `approval approve <id> [reason]` | Admin | Oui | Approuve localement une demande existante, sans execution serveur en MVP. |
 | `user search <query>` | Service | Non | Recherche utilisateur. |
 | `user open <user>` | Service | Non | Ouvre fiche utilisateur. |
 | `user create` | Admin | Oui | Cree un utilisateur. |
@@ -151,4 +159,3 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `cleanup history` | Service | Non | Historique cleanup. |
 | `cleanup rollback <id>` | Admin | Oui | Rollback si possible. |
 | `audit search` | Service | Non | Recherche audit. |
-

@@ -1,0 +1,9 @@
+[package]
+name = "sekailink-core-access"
+version = "0.1.0"
+edition = "2024"
+license = "UNLICENSED"
+description = "SekaiLink Core Access bastion admin cockpit MVP"
+
+[dependencies]
+

@@ -2,6 +2,7 @@
 build/
 build-*/
 cmake-build-*/
+target/
 dist/
 !docs/sekailink-core-access/dist/
 !docs/sekailink-core-access/dist/pdf/

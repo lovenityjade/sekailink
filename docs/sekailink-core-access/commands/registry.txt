@@ -1,4 +1,7 @@
 auth whoami
+dashboard
+commands list
+commands search
 server status
 server services
 server logs
@@ -14,6 +17,11 @@ logs filter
 logs pin
 logs note
 logs export
+note add
+note list
+approval request
+approval list
+approval approve
 user search
 user open
 user create
@@ -142,4 +150,3 @@ cleanup apply
 cleanup history
 cleanup rollback
 audit search
-
