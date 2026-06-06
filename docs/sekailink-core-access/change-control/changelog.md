@@ -19,3 +19,5 @@
   gate for read-only remote log and health commands.
 - Aligned Link service allowlist with read-only `link-vps` systemd discovery and
   labelled service status output in health probes.
+- Aligned Nexus, Worlds, Evolution, and Pulse service allowlists with read-only
+  systemd discovery.

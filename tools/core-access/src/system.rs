@@ -60,7 +60,17 @@ pub fn log_catalog() -> &'static [(&'static str, &'static str, &'static str)] {
 
 pub fn known_services() -> &'static [(&'static str, &'static [&'static str])] {
     &[
-        ("nexus", &["sekailink-identity", "sekailink-seed-config"]),
+        (
+            "nexus",
+            &[
+                "sekailink-link-lobby-runtime-tunnel",
+                "sekailink-nexus-admin-agent",
+                "sekailink-nexus-identity",
+                "sekailink-nexus-lobby-admin",
+                "sekailink-nexus-room-query",
+                "sekailink-nexus-seed-config-api",
+            ],
+        ),
         (
             "link",
             &[
@@ -76,9 +86,23 @@ pub fn known_services() -> &'static [(&'static str, &'static [&'static str])] {
                 "sekailink-workers",
             ],
         ),
-        ("worlds", &["sekailink-worlds", "generation-worker"]),
-        ("evolution", &["nginx", "pack-publisher", "release-publisher"]),
-        ("pulse", &["sekailink-pulse"]),
+        (
+            "worlds",
+            &[
+                "sekailink-generation-server",
+                "sekailink-smart",
+                "sekailink-worlds-admin-agent",
+            ],
+        ),
+        (
+            "evolution",
+            &[
+                "sekailink-evolution-admin-agent",
+                "sekailink-postfix-queue-state",
+                "sekailink-postfix-tail",
+            ],
+        ),
+        ("pulse", &["sekailink-pulse-llm", "sekailink-pulse-rag-api"]),
     ]
 }
 
@@ -142,13 +166,13 @@ fn health_probe_for(server: &str, services: &[&str]) -> String {
 
 fn log_source_service(source: &str) -> Option<(&'static str, &'static str)> {
     match source {
-        "nexus:identity" => Some(("nexus", "sekailink-identity")),
-        "nexus:db" => Some(("nexus", "sekailink-seed-config")),
+        "nexus:identity" => Some(("nexus", "sekailink-nexus-identity")),
+        "nexus:db" => Some(("nexus", "sekailink-nexus-seed-config-api")),
         "link:chat-api" => Some(("link", "sekailink-chat-api")),
         "link:room-runtime" => Some(("link", "sekailink-room-server")),
-        "worlds:generation" => Some(("worlds", "sekailink-worlds")),
-        "evolution:cdn" => Some(("evolution", "nginx")),
-        "pulse:assistant" => Some(("pulse", "sekailink-pulse")),
+        "worlds:generation" => Some(("worlds", "sekailink-generation-server")),
+        "evolution:cdn" => Some(("evolution", "sekailink-evolution-admin-agent")),
+        "pulse:assistant" => Some(("pulse", "sekailink-pulse-rag-api")),
         "client:reports" => Some(("link", "sekailink-chat-api")),
         _ => None,
     }
