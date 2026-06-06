@@ -57,3 +57,5 @@
   channel/lobby/title operations.
 - Added Nexus seed-config user config read/export plans and local audited
   drafts for config diff/edit workflows.
+- Added lobby admin create/edit/close plans, lobby drafts, room-query read
+  commands, room log helpers, and audited room runtime mutation drafts.

@@ -7,6 +7,7 @@ pub const NEXUS_AGENT_TOKEN_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_AGENT_ADMIN
 pub const NEXUS_LOBBY_TOKEN_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_LOBBY_ADMIN_TOKEN";
 pub const NEXUS_IDENTITY_TOKEN_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_IDENTITY_ADMIN_TOKEN";
 pub const NEXUS_SEED_CONFIG_TOKEN_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_SEED_CONFIG_ADMIN_TOKEN";
+pub const NEXUS_ROOM_QUERY_TOKEN_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_ROOM_QUERY_ADMIN_TOKEN";
 pub const NEXUS_MUTATION_ENV: &str = "SEKAILINK_CORE_ACCESS_NEXUS_MUTATION";
 
 const SSH_ALIAS: &str = "nexus-vps";
@@ -14,6 +15,7 @@ const ADMIN_AGENT_BASE: &str = "http://127.0.0.1:19091";
 const LOBBY_ADMIN_BASE: &str = "http://127.0.0.1:19096";
 const IDENTITY_ADMIN_BASE: &str = "http://149.202.61.90:19095";
 const SEED_CONFIG_BASE: &str = "http://127.0.0.1:19106";
+const ROOM_QUERY_BASE: &str = "http://127.0.0.1:19094";
 
 #[derive(Debug, Clone)]
 pub struct ProtectedGetPlan {
@@ -164,6 +166,220 @@ pub fn lobby_open_plan(lobby_id: &str) -> Result<ProtectedGetPlan, String> {
         ),
         "GET /admin/lobbies/{lobby_id} on the private Nexus lobby-admin service.",
         NEXUS_LOBBY_TOKEN_ENV,
+    ))
+}
+
+pub fn lobby_create_plan(values: &[String]) -> Result<ProtectedGetPlan, String> {
+    let lobby_id = required_arg(
+        values,
+        "usage: lobby create <lobby_id> <name> [visibility] [owner_username] [description] --confirm lobby:<lobby_id>:create [--execute]",
+    )?;
+    let name = values.get(1).map(String::as_str).ok_or_else(|| {
+        "usage: lobby create <lobby_id> <name> [visibility] [owner_username] [description] --confirm lobby:<lobby_id>:create [--execute]".to_string()
+    })?;
+    let lobby_id = clean_required_segment(lobby_id, "lobby_id")?;
+    let mut fields = vec![json_field("lobby_id", &lobby_id), json_field("name", name)];
+    if let Some(visibility) = values.get(2).map(String::as_str) {
+        fields.push(json_field("visibility", visibility));
+    }
+    if let Some(owner) = values.get(3).map(String::as_str) {
+        fields.push(json_field("owner_username", owner));
+    }
+    if values.len() > 4 {
+        fields.push(json_field("description", &values[4..].join(" ")));
+    }
+    let body = format!("{{{}}}", fields.join(","));
+    Ok(ProtectedGetPlan::request(
+        format!("Nexus lobby-admin create lobby: {lobby_id}"),
+        "POST",
+        format!("{LOBBY_ADMIN_BASE}/admin/lobbies"),
+        "POST /admin/lobbies on the private Nexus lobby-admin service. The service audits and bridges to Link runtime when configured.",
+        NEXUS_LOBBY_TOKEN_ENV,
+        Some(body.clone()),
+        Some(body),
+        Some(format!("lobby:{lobby_id}:create")),
+    ))
+}
+
+pub fn lobby_edit_plan(lobby_id: &str, patches: &[String]) -> Result<ProtectedGetPlan, String> {
+    let lobby_id = clean_required_segment(lobby_id, "lobby_id")?;
+    let mut fields = Vec::new();
+    for patch in patches {
+        let Some((key, value)) = patch.split_once('=') else {
+            return Err(format!(
+                "invalid lobby edit patch: {patch}; expected key=value"
+            ));
+        };
+        match key {
+            "name" | "visibility" | "owner_username" | "description" | "status" => {
+                fields.push(json_field(key, value.trim()));
+            }
+            other => {
+                return Err(format!(
+                    "unsupported lobby edit field: {other}; allowed name, visibility, owner_username, description, status"
+                ));
+            }
+        }
+    }
+    if fields.is_empty() {
+        return Err("lobby edit requires at least one key=value patch".to_string());
+    }
+    let body = format!("{{{}}}", fields.join(","));
+    Ok(ProtectedGetPlan::request(
+        format!("Nexus lobby-admin edit lobby: {lobby_id}"),
+        "PATCH",
+        format!(
+            "{LOBBY_ADMIN_BASE}/admin/lobbies/{}",
+            percent_encode_segment(&lobby_id)
+        ),
+        "PATCH /admin/lobbies/{lobby_id} on the private Nexus lobby-admin service. The service audits and bridges to Link runtime when configured.",
+        NEXUS_LOBBY_TOKEN_ENV,
+        Some(body.clone()),
+        Some(body),
+        Some(format!("lobby:{lobby_id}:edit")),
+    ))
+}
+
+pub fn lobby_close_plan(lobby_id: &str) -> Result<ProtectedGetPlan, String> {
+    let lobby_id = clean_required_segment(lobby_id, "lobby_id")?;
+    Ok(ProtectedGetPlan::request(
+        format!("Nexus lobby-admin close lobby: {lobby_id}"),
+        "POST",
+        format!(
+            "{LOBBY_ADMIN_BASE}/admin/lobbies/{}/close",
+            percent_encode_segment(&lobby_id)
+        ),
+        "POST /admin/lobbies/{lobby_id}/close on the private Nexus lobby-admin service. The service audits and bridges to Link runtime when configured.",
+        NEXUS_LOBBY_TOKEN_ENV,
+        None,
+        None,
+        Some(format!("lobby:{lobby_id}:close")),
+    ))
+}
+
+#[derive(Debug, Clone, Default)]
+pub struct RoomListFilter {
+    pub limit: Option<String>,
+    pub query: Option<String>,
+    pub room_type: Option<String>,
+    pub connection_state: Option<String>,
+    pub offset: Option<String>,
+}
+
+impl RoomListFilter {
+    pub fn from_positionals(values: &[String]) -> Self {
+        Self {
+            limit: non_empty(values.first()),
+            query: non_empty(values.get(1)),
+            room_type: non_empty(values.get(2)),
+            connection_state: non_empty(values.get(3)),
+            offset: non_empty(values.get(4)),
+        }
+    }
+}
+
+pub fn room_list_plan(filter: &RoomListFilter) -> ProtectedGetPlan {
+    let mut params = Vec::new();
+    push_query(&mut params, "limit", filter.limit.as_deref());
+    push_query(&mut params, "query", filter.query.as_deref());
+    push_query(&mut params, "room_type", filter.room_type.as_deref());
+    push_query(
+        &mut params,
+        "connection_state",
+        filter.connection_state.as_deref(),
+    );
+    push_query(&mut params, "offset", filter.offset.as_deref());
+    let suffix = if params.is_empty() {
+        String::new()
+    } else {
+        format!("?{}", params.join("&"))
+    };
+    ProtectedGetPlan::new(
+        "Nexus room-query room inventory",
+        format!("{ROOM_QUERY_BASE}/rooms{suffix}"),
+        "GET /rooms on the private Nexus room-query service.",
+        NEXUS_ROOM_QUERY_TOKEN_ENV,
+    )
+}
+
+pub fn room_detail_plan(room_id: &str) -> Result<ProtectedGetPlan, String> {
+    let room_id = clean_required_segment(room_id, "room_id")?;
+    Ok(ProtectedGetPlan::new(
+        format!("Nexus room-query room snapshot: {room_id}"),
+        format!(
+            "{ROOM_QUERY_BASE}/rooms/{}",
+            percent_encode_segment(&room_id)
+        ),
+        "GET /rooms/{room_id} on the private Nexus room-query service.",
+        NEXUS_ROOM_QUERY_TOKEN_ENV,
+    ))
+}
+
+pub fn room_diagnostics_plan(room_id: &str) -> Result<ProtectedGetPlan, String> {
+    let room_id = clean_required_segment(room_id, "room_id")?;
+    Ok(ProtectedGetPlan::new(
+        format!("Nexus room-query room diagnostics: {room_id}"),
+        format!(
+            "{ROOM_QUERY_BASE}/rooms/{}/diagnostics",
+            percent_encode_segment(&room_id)
+        ),
+        "GET /rooms/{room_id}/diagnostics on the private Nexus room-query service.",
+        NEXUS_ROOM_QUERY_TOKEN_ENV,
+    ))
+}
+
+pub fn room_events_plan(room_id: &str, values: &[String]) -> Result<ProtectedGetPlan, String> {
+    let room_id = clean_required_segment(room_id, "room_id")?;
+    let mut params = Vec::new();
+    push_query(&mut params, "limit", values.first().map(String::as_str));
+    push_query(&mut params, "event_type", values.get(1).map(String::as_str));
+    push_query(&mut params, "severity", values.get(2).map(String::as_str));
+    push_query(&mut params, "offset", values.get(3).map(String::as_str));
+    push_query(&mut params, "source", values.get(4).map(String::as_str));
+    let suffix = if params.is_empty() {
+        String::new()
+    } else {
+        format!("?{}", params.join("&"))
+    };
+    Ok(ProtectedGetPlan::new(
+        format!("Nexus room-query room events: {room_id}"),
+        format!(
+            "{ROOM_QUERY_BASE}/rooms/{}/events{suffix}",
+            percent_encode_segment(&room_id)
+        ),
+        "GET /rooms/{room_id}/events on the private Nexus room-query service.",
+        NEXUS_ROOM_QUERY_TOKEN_ENV,
+    ))
+}
+
+pub fn room_client_reports_plan(
+    room_id: &str,
+    values: &[String],
+) -> Result<ProtectedGetPlan, String> {
+    let room_id = clean_required_segment(room_id, "room_id")?;
+    let mut params = Vec::new();
+    push_query(&mut params, "limit", values.first().map(String::as_str));
+    push_query(
+        &mut params,
+        "report_type",
+        values.get(1).map(String::as_str),
+    );
+    push_query(&mut params, "severity", values.get(2).map(String::as_str));
+    push_query(&mut params, "source", values.get(3).map(String::as_str));
+    push_query(&mut params, "offset", values.get(4).map(String::as_str));
+    let suffix = if params.is_empty() {
+        String::new()
+    } else {
+        format!("?{}", params.join("&"))
+    };
+    Ok(ProtectedGetPlan::new(
+        format!("Nexus room-query client reports: {room_id}"),
+        format!(
+            "{ROOM_QUERY_BASE}/rooms/{}/client-reports{suffix}",
+            percent_encode_segment(&room_id)
+        ),
+        "GET /rooms/{room_id}/client-reports on the private Nexus room-query service.",
+        NEXUS_ROOM_QUERY_TOKEN_ENV,
     ))
 }
 

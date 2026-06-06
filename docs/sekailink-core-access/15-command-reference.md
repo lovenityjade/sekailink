@@ -69,28 +69,28 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `user config diff <user_id> <config_id> <version>` | Service | Non | Draft diff version. |
 | `user config export <user_id> <config_id> --format yaml [--execute]` | Service | Non | Exporte YAML. |
 | `user config edit <user_id> <config_id> key=value [key=value...] --confirm user-config:<user_id>:<config_id>:edit` | Admin | Oui | Draft edition config source Nexus. |
-| `lobby list --execute` | Service | Non | Liste les lobbies via Nexus lobby-admin read-only; dry-run par defaut. |
-| `lobby open <lobby> --execute` | Service | Non | Ouvre un detail lobby via Nexus lobby-admin read-only; dry-run par defaut. |
-| `lobby create` | Admin | Oui | Cree lobby manuel. |
-| `lobby edit <lobby>` | Admin | Oui | Modifie lobby. |
-| `lobby close <lobby>` | Service/Admin | Oui/Approval | Ferme lobby selon policy. |
-| `lobby lock <lobby>` | Service | Oui | Verrouille lobby. |
-| `lobby unlock <lobby>` | Service | Oui | Deverrouille lobby. |
-| `lobby chat <lobby>` | Service | Non | Ouvre chat. |
-| `lobby join-secret <lobby>` | Admin | Oui | Observe lobby invisiblement pour joueurs. |
-| `lobby broadcast <lobby> <message>` | Service | Oui | Broadcast lobby. |
-| `room list` | Service | Non | Liste rooms. |
-| `room open <room>` | Service | Non | Ouvre room. |
-| `room summary <room>` | Service | Non | Resume room. |
-| `room events <room>` | Service | Non | Evenements room. |
-| `room logs <room> --follow` | Service | Non | Logs room/AP. |
-| `room snapshot <room>` | Service | Non | Snapshot et archive etat. |
-| `room sync <room>` | Admin | Oui | Force sync payload. |
-| `room pending-items <room>` | Service | Non | Items en attente. |
-| `room client-reports <room>` | Service | Non | Rapports clients. |
-| `room request-sklmi-reconnect <room> <player>` | Service | Oui | Demande reconnect SKLMI. |
-| `room disconnect-runtime <room> <player>` | Admin | Oui | Deconnecte runtime. |
-| `room give-item <room> <target> <item>` | Admin | Oui | Injecte item live. |
+| `lobby list [limit] [query] [visibility] [status] [offset] [--execute]` | Service | Non | Liste les lobbies via Nexus lobby-admin. |
+| `lobby open <lobby_id> [--execute]` | Service | Non | Ouvre un detail lobby via Nexus lobby-admin. |
+| `lobby create <lobby_id> <name> [visibility] [owner] [description] --confirm lobby:<lobby_id>:create` | Admin | Oui | Cree lobby manuel via Nexus lobby-admin. |
+| `lobby edit <lobby_id> key=value [key=value...] --confirm lobby:<lobby_id>:edit` | Admin | Oui | Modifie lobby via Nexus lobby-admin. |
+| `lobby close <lobby_id> --confirm lobby:<lobby_id>:close` | Service/Admin | Oui/Approval | Ferme lobby selon policy via Nexus lobby-admin. |
+| `lobby lock <lobby_id> [reason] --confirm lobby:<lobby_id>:lock` | Service | Oui | Draft verrouillage lobby. |
+| `lobby unlock <lobby_id> [reason] --confirm lobby:<lobby_id>:unlock` | Service | Oui | Draft deverrouillage lobby. |
+| `lobby chat <lobby_id> [--execute]` | Service | Non | Filtre logs chat-api. |
+| `lobby join-secret <lobby_id> [reason] --confirm lobby:<lobby_id>:join-secret` | Admin | Oui | Draft observer admin invisible pour joueurs. |
+| `lobby broadcast <lobby_id> <message> --confirm lobby:<lobby_id>:broadcast` | Service | Oui | Draft broadcast lobby. |
+| `room list [limit] [query] [room_type] [connection_state] [offset] [--execute]` | Service | Non | Liste rooms via Nexus room-query. |
+| `room open <room_id> [--execute]` | Service | Non | Ouvre snapshot room. |
+| `room summary <room_id> [--execute]` | Service | Non | Diagnostics room. |
+| `room events <room_id> [limit] [event_type] [severity] [offset] [source] [--execute]` | Service | Non | Evenements room. |
+| `room logs <room_id> --follow [--execute]` | Service | Non | Logs room/AP. |
+| `room snapshot <room_id> [--execute]` | Service | Non | Snapshot room. |
+| `room sync <room_id> [reason] --confirm room:<room_id>:sync` | Admin | Oui | Draft sync payload. |
+| `room pending-items <room_id> [--execute]` | Service | Non | Inspecte snapshot pour items en attente. |
+| `room client-reports <room_id> [limit] [report_type] [severity] [source] [offset] [--execute]` | Service | Non | Rapports clients. |
+| `room request-sklmi-reconnect <room_id> <player> [reason] --confirm room:<room_id>:request-sklmi-reconnect` | Service | Oui | Draft reconnect SKLMI. |
+| `room disconnect-runtime <room_id> <player|runtime> [reason] --confirm room:<room_id>:disconnect-runtime` | Admin | Oui | Draft deconnexion runtime. |
+| `room give-item <room_id> <target> <item> [reason] --confirm room:<room_id>:give-item` | Admin | Oui | Draft injection item live. |
 | `client broadcast <user|all> <message> --confirm client:broadcast:<target>` | Service | Oui | Cree un draft audite de message client; aucun signal envoye. |
 | `client maintenance-banner <user|all> <message> --confirm client:maintenance-banner:<target>` | Admin | Oui | Cree un draft audite de banniere maintenance client; aucun signal envoye. |
 | `client force-update-prompt <user|all> <version|message> --confirm client:force-update-prompt:<target>` | Admin | Oui | Cree un draft audite d'invite update; aucun signal envoye. |

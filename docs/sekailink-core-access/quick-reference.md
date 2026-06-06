@@ -61,10 +61,13 @@ user audit <user>
 user configs <user_id> alttp
 user config export <user_id> <config_id> --format yaml
 lobby list
-lobby open <lobby>
-room summary <room>
-room logs <room> --follow
-room request-sklmi-reconnect <room> <player>
+lobby open <lobby_id>
+lobby chat <lobby_id>
+room list 25 alttp
+room summary <room_id>
+room events <room_id> 50
+room logs <room_id> --follow
+room request-sklmi-reconnect <room_id> <player> --confirm room:<room_id>:request-sklmi-reconnect
 client diagnostics-request
 ```
 

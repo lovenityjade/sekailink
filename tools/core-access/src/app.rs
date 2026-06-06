@@ -13,10 +13,12 @@ use crate::audit::{
 use crate::commands::{COMMANDS, Confirmation, command_names, find_command, search_commands};
 use crate::line_editor::LineEditor;
 use crate::nexus::{
-    LobbyListFilter, NEXUS_MUTATION_ENV, ProtectedGetPlan, admin_agent_services_plan,
-    execute_protected_get, identity_user_create_plan, identity_user_disable_plan,
-    identity_user_edit_plan, identity_user_force_password_reset_plan, identity_user_plan,
-    identity_user_revoke_sessions_plan, lobby_list_plan, lobby_open_plan, non_flag_args,
+    LobbyListFilter, NEXUS_MUTATION_ENV, ProtectedGetPlan, RoomListFilter,
+    admin_agent_services_plan, execute_protected_get, identity_user_create_plan,
+    identity_user_disable_plan, identity_user_edit_plan, identity_user_force_password_reset_plan,
+    identity_user_plan, identity_user_revoke_sessions_plan, lobby_close_plan, lobby_create_plan,
+    lobby_edit_plan, lobby_list_plan, lobby_open_plan, non_flag_args, room_client_reports_plan,
+    room_detail_plan, room_diagnostics_plan, room_events_plan, room_list_plan,
     user_config_export_plan, user_config_open_plan, user_configs_plan,
 };
 use crate::rbac::Role;
@@ -334,11 +336,45 @@ impl App {
             "lobby"
                 if matches!(
                     parsed.get(1).map(String::as_str),
-                    Some("list") | Some("open")
+                    Some(
+                        "list"
+                            | "open"
+                            | "create"
+                            | "edit"
+                            | "close"
+                            | "lock"
+                            | "unlock"
+                            | "chat"
+                            | "join-secret"
+                            | "broadcast"
+                    )
                 ) =>
             {
-                self.lobby_readonly(&parsed)?;
-                append_audit(&self.session, line, "ok", "lobby read-only nexus")?;
+                self.lobby_ops(&parsed)?;
+                append_audit(&self.session, line, "ok", "lobby ops")?;
+                true
+            }
+            "room"
+                if matches!(
+                    parsed.get(1).map(String::as_str),
+                    Some(
+                        "list"
+                            | "open"
+                            | "summary"
+                            | "events"
+                            | "logs"
+                            | "snapshot"
+                            | "sync"
+                            | "pending-items"
+                            | "client-reports"
+                            | "request-sklmi-reconnect"
+                            | "disconnect-runtime"
+                            | "give-item"
+                    )
+                ) =>
+            {
+                self.room_ops(&parsed)?;
+                append_audit(&self.session, line, "ok", "room ops")?;
                 true
             }
             "audit" if parsed.get(1).map(String::as_str) == Some("search") => {
@@ -1000,7 +1036,7 @@ impl App {
         self.render_or_execute_nexus_get(&plan, execute, None)
     }
 
-    fn lobby_readonly(&self, parsed: &[String]) -> io::Result<()> {
+    fn lobby_ops(&self, parsed: &[String]) -> io::Result<()> {
         let execute = parsed.iter().any(|part| part == "--execute");
         match parsed.get(1).map(String::as_str) {
             Some("list") => {
@@ -1033,11 +1069,373 @@ impl App {
                     }
                 }
             }
+            Some("create") => {
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let Some(lobby_id) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: lobby create <lobby_id> <name> [visibility] [owner_username] [description] --confirm lobby:<lobby_id>:create [--execute]"
+                    );
+                    return Ok(());
+                };
+                let confirm = flag_value(parsed, "--confirm");
+                match lobby_create_plan(&args) {
+                    Ok(plan) => self.render_or_execute_nexus_get(&plan, execute, confirm),
+                    Err(err) => {
+                        println!("{err}");
+                        if !args.is_empty() {
+                            println!("required confirmation: --confirm lobby:{lobby_id}:create");
+                        }
+                        Ok(())
+                    }
+                }
+            }
+            Some("edit") => {
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let Some(lobby_id) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: lobby edit <lobby_id> key=value [key=value...] --confirm lobby:<lobby_id>:edit [--execute]"
+                    );
+                    return Ok(());
+                };
+                if args.len() < 2 {
+                    println!(
+                        "usage: lobby edit <lobby_id> key=value [key=value...] --confirm lobby:<lobby_id>:edit [--execute]"
+                    );
+                    return Ok(());
+                }
+                let confirm = flag_value(parsed, "--confirm");
+                match lobby_edit_plan(lobby_id, &args[1..]) {
+                    Ok(plan) => self.render_or_execute_nexus_get(&plan, execute, confirm),
+                    Err(err) => {
+                        println!("{err}");
+                        Ok(())
+                    }
+                }
+            }
+            Some("close") => {
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let Some(lobby_id) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: lobby close <lobby_id> --confirm lobby:<lobby_id>:close [--execute]"
+                    );
+                    return Ok(());
+                };
+                let confirm = flag_value(parsed, "--confirm");
+                match lobby_close_plan(lobby_id) {
+                    Ok(plan) => self.render_or_execute_nexus_get(&plan, execute, confirm),
+                    Err(err) => {
+                        println!("{err}");
+                        Ok(())
+                    }
+                }
+            }
+            Some("lock" | "unlock") => {
+                let action = parsed.get(1).map(String::as_str).unwrap_or("");
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let Some(lobby_id) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: lobby {action} <lobby_id> [reason] --confirm lobby:<lobby_id>:{action}"
+                    );
+                    return Ok(());
+                };
+                let expected = format!("lobby:{lobby_id}:{action}");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let reason = if args.len() > 1 {
+                    args[1..].join(" ")
+                } else {
+                    format!("lobby {action} requested")
+                };
+                let id = write_ops_draft(&self.session, "lobby", action, lobby_id, &reason)?;
+                println!("lobby {action} draft saved: {id}");
+                println!("lobby: {lobby_id}");
+                println!("reason: {reason}");
+                println!("MVP note: no lobby lock state was changed.");
+                Ok(())
+            }
+            Some("chat") => {
+                let Some(lobby_id) = parsed.get(2).map(String::as_str) else {
+                    println!("usage: lobby chat <lobby_id> [--execute]");
+                    return Ok(());
+                };
+                match render_log_filter_plan("link:chat-api", &[lobby_id]) {
+                    Ok(plan) => {
+                        self.render_or_execute_remote_plan("lobby chat log filter", &plan, execute)
+                    }
+                    Err(err) => {
+                        println!("{err}");
+                        Ok(())
+                    }
+                }
+            }
+            Some("join-secret") => {
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let Some(lobby_id) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: lobby join-secret <lobby_id> [reason] --confirm lobby:<lobby_id>:join-secret"
+                    );
+                    return Ok(());
+                };
+                let expected = format!("lobby:{lobby_id}:join-secret");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let reason = if args.len() > 1 {
+                    args[1..].join(" ")
+                } else {
+                    "admin observer requested".to_string()
+                };
+                let id = write_ops_draft(&self.session, "lobby", "join-secret", lobby_id, &reason)?;
+                println!("lobby join-secret draft saved: {id}");
+                println!("lobby: {lobby_id}");
+                println!("reason: {reason}");
+                println!("MVP note: no hidden observer joined; audit draft only.");
+                Ok(())
+            }
+            Some("broadcast") => {
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let Some(lobby_id) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: lobby broadcast <lobby_id> <message> --confirm lobby:<lobby_id>:broadcast"
+                    );
+                    return Ok(());
+                };
+                let message = if args.len() > 1 {
+                    args[1..].join(" ")
+                } else {
+                    String::new()
+                };
+                if message.trim().is_empty() {
+                    println!(
+                        "usage: lobby broadcast <lobby_id> <message> --confirm lobby:<lobby_id>:broadcast"
+                    );
+                    return Ok(());
+                }
+                let expected = format!("lobby:{lobby_id}:broadcast");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let id = write_ops_draft(&self.session, "lobby", "broadcast", lobby_id, &message)?;
+                println!("lobby broadcast draft saved: {id}");
+                println!("lobby: {lobby_id}");
+                println!("message: {message}");
+                println!("MVP note: no lobby broadcast was sent.");
+                Ok(())
+            }
             _ => {
-                println!("usage: lobby list|open");
+                println!(
+                    "usage: lobby list|open|create|edit|close|lock|unlock|chat|join-secret|broadcast"
+                );
                 Ok(())
             }
         }
+    }
+
+    fn room_ops(&self, parsed: &[String]) -> io::Result<()> {
+        let execute = parsed.iter().any(|part| part == "--execute");
+        match parsed.get(1).map(String::as_str) {
+            Some("list") => {
+                let args = non_flag_args(parsed, 2);
+                if args.len() > 5 {
+                    println!(
+                        "usage: room list [limit] [query] [room_type] [connection_state] [offset] [--execute]"
+                    );
+                    return Ok(());
+                }
+                let filter = RoomListFilter::from_positionals(&args);
+                let plan = room_list_plan(&filter);
+                self.render_or_execute_nexus_get(&plan, execute, None)
+            }
+            Some("open" | "snapshot") => {
+                let action = parsed.get(1).map(String::as_str).unwrap_or("");
+                let args = non_flag_args(parsed, 2);
+                let Some(room_id) = args.first().map(String::as_str) else {
+                    println!("usage: room {action} <room_id> [--execute]");
+                    return Ok(());
+                };
+                match room_detail_plan(room_id) {
+                    Ok(plan) => self.render_or_execute_nexus_get(&plan, execute, None),
+                    Err(err) => {
+                        println!("{err}");
+                        Ok(())
+                    }
+                }
+            }
+            Some("summary") => {
+                let args = non_flag_args(parsed, 2);
+                let Some(room_id) = args.first().map(String::as_str) else {
+                    println!("usage: room summary <room_id> [--execute]");
+                    return Ok(());
+                };
+                match room_diagnostics_plan(room_id) {
+                    Ok(plan) => self.render_or_execute_nexus_get(&plan, execute, None),
+                    Err(err) => {
+                        println!("{err}");
+                        Ok(())
+                    }
+                }
+            }
+            Some("events") => {
+                let args = non_flag_args(parsed, 2);
+                let Some(room_id) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: room events <room_id> [limit] [event_type] [severity] [offset] [source] [--execute]"
+                    );
+                    return Ok(());
+                };
+                match room_events_plan(room_id, &args[1..]) {
+                    Ok(plan) => self.render_or_execute_nexus_get(&plan, execute, None),
+                    Err(err) => {
+                        println!("{err}");
+                        Ok(())
+                    }
+                }
+            }
+            Some("client-reports") => {
+                let args = non_flag_args(parsed, 2);
+                let Some(room_id) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: room client-reports <room_id> [limit] [report_type] [severity] [source] [offset] [--execute]"
+                    );
+                    return Ok(());
+                };
+                match room_client_reports_plan(room_id, &args[1..]) {
+                    Ok(plan) => self.render_or_execute_nexus_get(&plan, execute, None),
+                    Err(err) => {
+                        println!("{err}");
+                        Ok(())
+                    }
+                }
+            }
+            Some("pending-items") => {
+                let args = non_flag_args(parsed, 2);
+                let Some(room_id) = args.first().map(String::as_str) else {
+                    println!("usage: room pending-items <room_id> [--execute]");
+                    return Ok(());
+                };
+                match room_detail_plan(room_id) {
+                    Ok(plan) => {
+                        self.render_or_execute_nexus_get(&plan, execute, None)?;
+                        println!(
+                            "MVP note: inspect snapshot pending_delivery_count and received_items; the direct pending_items runtime route is not connected here."
+                        );
+                        Ok(())
+                    }
+                    Err(err) => {
+                        println!("{err}");
+                        Ok(())
+                    }
+                }
+            }
+            Some("logs") => {
+                let args = non_flag_args(parsed, 2);
+                let Some(room_id) = args.first().map(String::as_str) else {
+                    println!("usage: room logs <room_id> [--follow] [--execute]");
+                    return Ok(());
+                };
+                let follow = parsed.iter().any(|part| part == "--follow" || part == "-f");
+                match render_log_filter_plan("link:room-runtime", &[room_id]) {
+                    Ok(plan) => {
+                        if follow {
+                            match render_server_logs_plan("link", "sekailink-room-server", true) {
+                                Ok(tail_plan) => self.render_or_execute_remote_plan(
+                                    "room live logs",
+                                    &tail_plan,
+                                    execute,
+                                ),
+                                Err(err) => {
+                                    println!("{err}");
+                                    Ok(())
+                                }
+                            }
+                        } else {
+                            self.render_or_execute_remote_plan("room log filter", &plan, execute)
+                        }
+                    }
+                    Err(err) => {
+                        println!("{err}");
+                        Ok(())
+                    }
+                }
+            }
+            Some("sync" | "request-sklmi-reconnect" | "disconnect-runtime" | "give-item") => {
+                self.room_mutation_draft(parsed)
+            }
+            _ => {
+                println!(
+                    "usage: room list|open|summary|events|logs|snapshot|sync|pending-items|client-reports|request-sklmi-reconnect|disconnect-runtime|give-item"
+                );
+                Ok(())
+            }
+        }
+    }
+
+    fn room_mutation_draft(&self, parsed: &[String]) -> io::Result<()> {
+        let action = parsed.get(1).map(String::as_str).unwrap_or("");
+        let args = option_positionals(parsed, 2, &["--confirm"]);
+        let Some(room_id) = args.first().map(String::as_str) else {
+            println!(
+                "usage: room {action} <room_id> [target] [detail] --confirm room:<room_id>:{action}"
+            );
+            return Ok(());
+        };
+        let expected = match action {
+            "give-item" => {
+                if args.len() < 3 {
+                    println!(
+                        "usage: room give-item <room_id> <target> <item> [reason] --confirm room:<room_id>:give-item"
+                    );
+                    return Ok(());
+                }
+                format!("room:{room_id}:give-item")
+            }
+            "request-sklmi-reconnect" => {
+                if args.len() < 2 {
+                    println!(
+                        "usage: room request-sklmi-reconnect <room_id> <player> [reason] --confirm room:<room_id>:request-sklmi-reconnect"
+                    );
+                    return Ok(());
+                }
+                format!("room:{room_id}:request-sklmi-reconnect")
+            }
+            "disconnect-runtime" => {
+                if args.len() < 2 {
+                    println!(
+                        "usage: room disconnect-runtime <room_id> <player|runtime> [reason] --confirm room:<room_id>:disconnect-runtime"
+                    );
+                    return Ok(());
+                }
+                format!("room:{room_id}:disconnect-runtime")
+            }
+            "sync" => format!("room:{room_id}:sync"),
+            _ => {
+                println!("usage: room sync|request-sklmi-reconnect|disconnect-runtime|give-item");
+                return Ok(());
+            }
+        };
+        if !confirmation_matches(parsed, &expected) {
+            return Ok(());
+        }
+        let detail = if args.len() > 1 {
+            args[1..].join(" ")
+        } else {
+            format!("room {action} requested")
+        };
+        let id = write_ops_draft(&self.session, "room", action, room_id, &detail)?;
+        println!("room {action} draft saved: {id}");
+        println!("room: {room_id}");
+        println!("detail: {detail}");
+        println!("MVP note: no room runtime mutation was executed.");
+        if action == "request-sklmi-reconnect" {
+            println!("SKLMI note: no SKLMI code or protocol changed; this is a signal draft only.");
+        }
+        if action == "give-item" {
+            println!(
+                "Safety note: snapshot and explicit Admin review are required before a live item injection."
+            );
+        }
+        Ok(())
     }
 
     fn render_or_execute_nexus_get(
@@ -3659,6 +4057,38 @@ fn print_help() {
     );
     println!("  lobby list [limit] [query] [visibility] [status] [offset] [--execute]");
     println!("  lobby open <lobby_id> [--execute]");
+    println!(
+        "  lobby create <lobby_id> <name> [visibility] [owner_username] [description] --confirm lobby:<lobby_id>:create [--execute]"
+    );
+    println!(
+        "  lobby edit <lobby_id> key=value [key=value...] --confirm lobby:<lobby_id>:edit [--execute]"
+    );
+    println!("  lobby close <lobby_id> --confirm lobby:<lobby_id>:close [--execute]");
+    println!("  lobby lock|unlock <lobby_id> [reason] --confirm lobby:<lobby_id>:<action>");
+    println!("  lobby chat <lobby_id> [--execute]");
+    println!("  lobby join-secret <lobby_id> [reason] --confirm lobby:<lobby_id>:join-secret");
+    println!("  lobby broadcast <lobby_id> <message> --confirm lobby:<lobby_id>:broadcast");
+    println!("  room list [limit] [query] [room_type] [connection_state] [offset] [--execute]");
+    println!("  room open|snapshot <room_id> [--execute]");
+    println!("  room summary <room_id> [--execute]");
+    println!(
+        "  room events <room_id> [limit] [event_type] [severity] [offset] [source] [--execute]"
+    );
+    println!(
+        "  room client-reports <room_id> [limit] [report_type] [severity] [source] [offset] [--execute]"
+    );
+    println!("  room pending-items <room_id> [--execute]");
+    println!("  room logs <room_id> [--follow] [--execute]");
+    println!("  room sync <room_id> [reason] --confirm room:<room_id>:sync");
+    println!(
+        "  room request-sklmi-reconnect <room_id> <player> [reason] --confirm room:<room_id>:request-sklmi-reconnect"
+    );
+    println!(
+        "  room disconnect-runtime <room_id> <player|runtime> [reason] --confirm room:<room_id>:disconnect-runtime"
+    );
+    println!(
+        "  room give-item <room_id> <target> <item> [reason] --confirm room:<room_id>:give-item"
+    );
     println!("  logs list");
     println!("  logs list --by-server");
     println!("  logs list --by-incident");
