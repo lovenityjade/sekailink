@@ -50,3 +50,5 @@
   enable/disable/broadcast, and client dashboard banner publish/rollback/disable.
 - Added audited local drafts for pack repo maintenance and pack
   check/validate/stage/publish/rollback/schedule workflows.
+- Added audited local drafts for scheduler edit/pause/resume/run-now and
+  cleanup plan/apply/rollback workflows.

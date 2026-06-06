@@ -469,11 +469,35 @@ impl App {
             "schedule"
                 if matches!(
                     parsed.get(1).map(String::as_str),
-                    Some("list") | Some("calendar") | Some("add") | Some("history")
+                    Some(
+                        "list"
+                            | "calendar"
+                            | "add"
+                            | "edit"
+                            | "pause"
+                            | "resume"
+                            | "run-now"
+                            | "history"
+                    )
                 ) =>
             {
                 self.schedule(&parsed)?;
                 append_audit(&self.session, line, "ok", "schedule local")?;
+                true
+            }
+            "cleanup"
+                if parsed.get(1).map(String::as_str) == Some("plan")
+                    && matches!(
+                        parsed.get(2).map(String::as_str),
+                        Some("logs" | "db" | "spool" | "all")
+                    )
+                    || matches!(
+                        parsed.get(1).map(String::as_str),
+                        Some("apply" | "history" | "rollback")
+                    ) =>
+            {
+                self.cleanup(&parsed)?;
+                append_audit(&self.session, line, "ok", "cleanup local")?;
                 true
             }
             "pack"
@@ -2636,21 +2660,32 @@ impl App {
                 Ok(())
             }
             Some("add") => {
-                let Some(name) = parsed.get(2) else {
-                    println!("usage: schedule add <name> <when> <command>");
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let Some(name) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: schedule add <name> <when> <command> --confirm schedule:<name>:add"
+                    );
                     return Ok(());
                 };
-                let Some(when) = parsed.get(3) else {
-                    println!("usage: schedule add <name> <when> <command>");
+                let Some(when) = args.get(1).map(String::as_str) else {
+                    println!(
+                        "usage: schedule add <name> <when> <command> --confirm schedule:<name>:add"
+                    );
                     return Ok(());
                 };
-                let command = if parsed.len() > 4 {
-                    parsed[4..].join(" ")
+                let command = if args.len() > 2 {
+                    args[2..].join(" ")
                 } else {
                     String::new()
                 };
                 if command.trim().is_empty() {
-                    println!("usage: schedule add <name> <when> <command>");
+                    println!(
+                        "usage: schedule add <name> <when> <command> --confirm schedule:<name>:add"
+                    );
+                    return Ok(());
+                }
+                let expected = format!("schedule:{name}:add");
+                if !confirmation_matches(parsed, &expected) {
                     return Ok(());
                 }
                 let id = write_schedule_job(&self.session, name, when, &command)?;
@@ -2658,8 +2693,132 @@ impl App {
                 println!("MVP note: job is not armed; schedule run-now remains planned.");
                 Ok(())
             }
+            Some("edit") => {
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let Some(job) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: schedule edit <job> key=value [key=value...] --confirm schedule:<job>:edit"
+                    );
+                    return Ok(());
+                };
+                if args.len() < 2 {
+                    println!(
+                        "usage: schedule edit <job> key=value [key=value...] --confirm schedule:<job>:edit"
+                    );
+                    return Ok(());
+                }
+                let expected = format!("schedule:{job}:edit");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let detail = args[1..].join(" ");
+                let id = write_ops_draft(&self.session, "schedule", "edit", job, &detail)?;
+                println!("schedule edit draft saved: {id}");
+                println!("job: {job}");
+                println!("detail: {detail}");
+                println!("MVP note: no scheduler job was modified.");
+                Ok(())
+            }
+            Some("pause" | "resume" | "run-now") => {
+                let action = parsed.get(1).map(String::as_str).unwrap_or("");
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let Some(job) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: schedule {action} <job> [reason] --confirm schedule:<job>:{action}"
+                    );
+                    return Ok(());
+                };
+                let expected = format!("schedule:{job}:{action}");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let reason = if args.len() > 1 {
+                    args[1..].join(" ")
+                } else {
+                    format!("schedule {action} requested")
+                };
+                let id = write_ops_draft(&self.session, "schedule", action, job, &reason)?;
+                println!("schedule {action} draft saved: {id}");
+                println!("job: {job}");
+                println!("reason: {reason}");
+                println!("MVP note: no scheduler job was changed or executed.");
+                Ok(())
+            }
             _ => {
-                println!("usage: schedule list|calendar|add|history");
+                println!("usage: schedule list|calendar|add|edit|pause|resume|run-now|history");
+                Ok(())
+            }
+        }
+    }
+
+    fn cleanup(&self, parsed: &[String]) -> io::Result<()> {
+        match parsed.get(1).map(String::as_str) {
+            Some("plan") => {
+                let Some(scope) = parsed.get(2).map(String::as_str) else {
+                    println!("usage: cleanup plan <logs|db|spool|all> [notes]");
+                    return Ok(());
+                };
+                if !matches!(scope, "logs" | "db" | "spool" | "all") {
+                    println!("usage: cleanup plan <logs|db|spool|all> [notes]");
+                    return Ok(());
+                }
+                let notes = if parsed.len() > 3 {
+                    parsed[3..].join(" ")
+                } else {
+                    "cleanup dry-run plan requested".to_string()
+                };
+                let id = write_ops_draft(
+                    &self.session,
+                    "cleanup",
+                    &format!("plan-{scope}"),
+                    scope,
+                    &notes,
+                )?;
+                println!("cleanup plan draft saved: {id}");
+                println!("scope: {scope}");
+                println!("notes: {notes}");
+                println!("MVP note: no cleanup scan or deletion was executed.");
+                Ok(())
+            }
+            Some("history") => {
+                let text = read_file_to_string(&self.session.drafts_dir().join("cleanup.jsonl"))?;
+                if text.trim().is_empty() {
+                    println!("cleanup history is empty");
+                } else {
+                    for line in text.lines().take(200) {
+                        println!("{line}");
+                    }
+                }
+                Ok(())
+            }
+            Some("apply" | "rollback") => {
+                let action = parsed.get(1).map(String::as_str).unwrap_or("");
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let Some(id_or_plan) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: cleanup {action} <plan_id|id> [reason] --confirm cleanup:<id>:{action}"
+                    );
+                    return Ok(());
+                };
+                let expected = format!("cleanup:{id_or_plan}:{action}");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let reason = if args.len() > 1 {
+                    args[1..].join(" ")
+                } else {
+                    format!("cleanup {action} requested")
+                };
+                let draft_id =
+                    write_ops_draft(&self.session, "cleanup", action, id_or_plan, &reason)?;
+                println!("cleanup {action} draft saved: {draft_id}");
+                println!("target: {id_or_plan}");
+                println!("reason: {reason}");
+                println!("MVP note: no cleanup mutation was executed.");
+                Ok(())
+            }
+            _ => {
+                println!("usage: cleanup plan|apply|history|rollback");
                 Ok(())
             }
         }
@@ -3102,8 +3261,14 @@ fn print_help() {
     println!("  release audit [version|date|manifest]");
     println!("  schedule list");
     println!("  schedule calendar");
-    println!("  schedule add <name> <when> <command>");
+    println!("  schedule add <name> <when> <command> --confirm schedule:<name>:add");
+    println!("  schedule edit <job> key=value [key=value...] --confirm schedule:<job>:edit");
+    println!("  schedule pause|resume|run-now <job> [reason] --confirm schedule:<job>:<action>");
     println!("  schedule history");
+    println!("  cleanup plan <logs|db|spool|all> [notes]");
+    println!("  cleanup apply <plan_id> [reason] --confirm cleanup:<plan_id>:apply");
+    println!("  cleanup history");
+    println!("  cleanup rollback <id> [reason] --confirm cleanup:<id>:rollback");
     println!("  pack repo list");
     println!("  pack repo add <id> <url> <game> [notes] --confirm pack-repo:<id>:add");
     println!("  pack repo edit <id> key=value [key=value...] --confirm pack-repo:<id>:edit");

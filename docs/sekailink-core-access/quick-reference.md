@@ -92,8 +92,9 @@ release compare 20260604 20260605
 release rollback <version>
 pack validate <repo-id>
 pack stage <repo-id> <notes> --confirm pack:<repo-id>:stage
+schedule add release-check daily "release verify latest --fast" --confirm schedule:release-check:add
+cleanup plan all before-release
 server update plan <server>
-cleanup plan all
 ```
 
 ## Panic

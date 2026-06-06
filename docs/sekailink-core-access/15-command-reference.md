@@ -145,12 +145,12 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `pack schedule-check <id> <cron|interval> --confirm pack:<id>:schedule-check` | Admin | Oui | Cree un draft scheduler de check pack; job non arme. |
 | `schedule list` | Service | Non | Liste jobs. |
 | `schedule calendar` | Service | Non | Vue calendrier. |
-| `schedule add` | Admin | Oui | Ajoute job. |
-| `schedule edit <job>` | Admin | Oui | Edite job. |
-| `schedule pause <job>` | Admin | Oui | Pause job. |
-| `schedule resume <job>` | Admin | Oui | Resume job. |
-| `schedule run-now <job>` | Admin | Oui | Lance job. |
-| `schedule history <job>` | Service | Non | Historique job. |
+| `schedule add <name> <when> <command> --confirm schedule:<name>:add` | Admin | Oui | Ajoute un draft job local; job non arme. |
+| `schedule edit <job> key=value --confirm schedule:<job>:edit` | Admin | Oui | Cree un draft edition scheduler; aucun job modifie. |
+| `schedule pause <job> [reason] --confirm schedule:<job>:pause` | Admin | Oui | Cree un draft pause scheduler; aucun job modifie. |
+| `schedule resume <job> [reason] --confirm schedule:<job>:resume` | Admin | Oui | Cree un draft resume scheduler; aucun job modifie. |
+| `schedule run-now <job> [reason] --confirm schedule:<job>:run-now` | Admin | Oui | Cree un draft run-now; aucun job execute. |
+| `schedule history` | Service | Non | Historique local des jobs/drafts scheduler. |
 | `discord status` | Service | Non | Statut bot Discord. |
 | `discord reload` | Admin | Oui | Reload bot. |
 | `discord announce <channel> <message>` | Service | Oui | Annonce Discord. |
@@ -176,11 +176,11 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `twitch lobby announce <lobby>` | Service | Oui | Annonce lobby. |
 | `twitch stream set-title-hint` | Service | Non | Aide titre stream. |
 | `twitch logs` | Service | Non | Logs Twitch. |
-| `cleanup plan logs` | Admin | Non | Dry-run nettoyage logs. |
-| `cleanup plan db` | Admin | Non | Dry-run nettoyage DB. |
-| `cleanup plan spool` | Admin | Non | Dry-run spool. |
-| `cleanup plan all` | Admin | Non | Dry-run global. |
-| `cleanup apply <plan_id>` | Admin | Oui | Applique nettoyage. |
-| `cleanup history` | Service | Non | Historique cleanup. |
-| `cleanup rollback <id>` | Admin | Oui | Rollback si possible. |
+| `cleanup plan logs` | Admin | Non | Cree un draft plan cleanup logs; aucun scan/suppression. |
+| `cleanup plan db` | Admin | Non | Cree un draft plan cleanup DB; aucune mutation DB. |
+| `cleanup plan spool` | Admin | Non | Cree un draft plan cleanup spool; aucune suppression. |
+| `cleanup plan all` | Admin | Non | Cree un draft plan cleanup global; aucun scan/suppression. |
+| `cleanup apply <plan_id> --confirm cleanup:<plan_id>:apply` | Admin | Oui | Cree un draft apply cleanup; aucune mutation executee. |
+| `cleanup history` | Service | Non | Liste les drafts cleanup locaux. |
+| `cleanup rollback <id> --confirm cleanup:<id>:rollback` | Admin | Oui | Cree un draft rollback cleanup; aucune mutation executee. |
 | `audit search` | Service | Non | Recherche audit. |

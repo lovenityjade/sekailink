@@ -21,10 +21,18 @@ cleanup plan logs
 cleanup plan db
 cleanup plan spool
 cleanup plan all
-cleanup apply <plan_id>
+cleanup apply <plan_id> [reason] --confirm cleanup:<plan_id>:apply
 cleanup history
-cleanup rollback <id>
+cleanup rollback <id> [reason] --confirm cleanup:<id>:rollback
 ```
+
+Etat Core Access actuel:
+
+- `cleanup plan ...` cree un draft local audite dans `drafts/cleanup.jsonl`;
+- `cleanup apply` et `cleanup rollback` creent des drafts Admin avec
+  confirmation exacte;
+- aucun scan, aucune suppression, aucun backup, aucune mutation DB et aucun
+  changement serveur n'est execute par Core Access dans cette tranche.
 
 ## Regles
 
@@ -39,4 +47,3 @@ cleanup rollback <id>
 Avant une action dangereuse, Core Access verifie le dernier backup. Si le backup
 est absent ou trop vieux, l'action est bloquee ou demande une approval Admin
 explicite selon la policy.
-
