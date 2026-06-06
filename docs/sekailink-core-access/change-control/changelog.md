@@ -59,3 +59,4 @@
   drafts for config diff/edit workflows.
 - Added lobby admin create/edit/close plans, lobby drafts, room-query read
   commands, room log helpers, and audited room runtime mutation drafts.
+- Added server update plan/apply drafts and gated explicit SSH open workflow.

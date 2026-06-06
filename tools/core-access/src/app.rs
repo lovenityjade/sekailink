@@ -262,6 +262,16 @@ impl App {
                 append_audit(&self.session, line, "ok", "server admin-agent control")?;
                 true
             }
+            "server" if parsed.get(1).map(String::as_str) == Some("update") => {
+                self.server_update(&parsed)?;
+                append_audit(&self.session, line, "ok", "server update")?;
+                true
+            }
+            "ssh" if parsed.get(1).map(String::as_str) == Some("open") => {
+                self.ssh_open(&parsed)?;
+                append_audit(&self.session, line, "ok", "ssh open")?;
+                true
+            }
             "nexus" if parsed.get(1).map(String::as_str) == Some("services") => {
                 self.nexus_services(&parsed)?;
                 append_audit(&self.session, line, "ok", "nexus services")?;
@@ -814,6 +824,127 @@ impl App {
             return Ok(());
         }
         execute_agent_request(plan, confirm)
+    }
+
+    fn server_update(&self, parsed: &[String]) -> io::Result<()> {
+        match parsed.get(2).map(String::as_str) {
+            Some("plan") => {
+                let args = non_flag_args(parsed, 3);
+                let Some(server_name) = args.first().map(String::as_str) else {
+                    println!("usage: server update plan <server> [scope|reason]");
+                    return Ok(());
+                };
+                let server = match find_agent_server(server_name) {
+                    Ok(server) => server,
+                    Err(err) => {
+                        println!("{err}");
+                        return Ok(());
+                    }
+                };
+                let detail = if args.len() > 1 {
+                    args[1..].join(" ")
+                } else {
+                    "server update planning requested".to_string()
+                };
+                let id =
+                    write_ops_draft(&self.session, "server-update", "plan", server.id, &detail)?;
+                println!("server update plan draft saved: {id}");
+                println!("server: {} ({})", server.display, server.ssh_alias);
+                println!("detail: {detail}");
+                println!("checklist:");
+                println!("  1. ops snapshot <label>");
+                println!("  2. server agent-health {} --execute", server.id);
+                println!("  3. server agent-services {} --execute", server.id);
+                println!("  4. backup relevant /opt/sekailink and DB state");
+                println!("  5. schedule maintenance/broadcast if user-facing");
+                println!("  6. apply via documented runbook only");
+                println!("MVP note: no server update command was executed.");
+                Ok(())
+            }
+            Some("apply") => {
+                let args = option_positionals(parsed, 3, &["--confirm"]);
+                let Some(server_name) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: server update apply <server> <plan_id|reason> --confirm server-update:<server>:apply"
+                    );
+                    return Ok(());
+                };
+                let server = match find_agent_server(server_name) {
+                    Ok(server) => server,
+                    Err(err) => {
+                        println!("{err}");
+                        return Ok(());
+                    }
+                };
+                let expected = format!("server-update:{}:apply", server.id);
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let detail = if args.len() > 1 {
+                    args[1..].join(" ")
+                } else {
+                    "server update apply requested".to_string()
+                };
+                let id =
+                    write_ops_draft(&self.session, "server-update", "apply", server.id, &detail)?;
+                println!("server update apply draft saved: {id}");
+                println!("server: {} ({})", server.display, server.ssh_alias);
+                println!("detail: {detail}");
+                println!(
+                    "MVP note: no package manager, git pull, service restart, or remote mutation was executed."
+                );
+                Ok(())
+            }
+            _ => {
+                println!("usage: server update plan|apply <server>");
+                Ok(())
+            }
+        }
+    }
+
+    fn ssh_open(&self, parsed: &[String]) -> io::Result<()> {
+        let args = option_positionals(parsed, 2, &["--confirm"]);
+        let Some(server_name) = args.first().map(String::as_str) else {
+            println!("usage: ssh open <server> [reason] --confirm ssh:<server>:open [--execute]");
+            return Ok(());
+        };
+        let server = match find_agent_server(server_name) {
+            Ok(server) => server,
+            Err(err) => {
+                println!("{err}");
+                return Ok(());
+            }
+        };
+        let expected = format!("ssh:{}:open", server.id);
+        if !confirmation_matches(parsed, &expected) {
+            return Ok(());
+        }
+        let reason = if args.len() > 1 {
+            args[1..].join(" ")
+        } else {
+            "interactive SSH requested".to_string()
+        };
+        let id = write_ops_draft(&self.session, "ssh", "open", server.id, &reason)?;
+        println!("ssh open audit draft saved: {id}");
+        println!("server: {} ({})", server.display, server.ssh_alias);
+        println!("reason: {reason}");
+        let execute = parsed.iter().any(|part| part == "--execute");
+        if !execute {
+            println!(
+                "dry-run only. Add --execute and set SEKAILINK_CORE_ACCESS_SSH_OPEN=1 to open SSH."
+            );
+            return Ok(());
+        }
+        if env::var("SEKAILINK_CORE_ACCESS_SSH_OPEN").ok().as_deref() != Some("1") {
+            println!("ssh open blocked by environment gate");
+            println!("set SEKAILINK_CORE_ACCESS_SSH_OPEN=1 and rerun with --execute");
+            println!("planned command: ssh {}", server.ssh_alias);
+            return Ok(());
+        }
+        println!("opening SSH session: ssh {}", server.ssh_alias);
+        let status = Command::new("ssh").arg(server.ssh_alias).status()?;
+        println!("ssh exit status: {status}");
+        Ok(())
     }
 
     fn server_logs(&self, parsed: &[String]) -> io::Result<()> {

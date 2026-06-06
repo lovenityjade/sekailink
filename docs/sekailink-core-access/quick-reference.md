@@ -113,6 +113,8 @@ pack stage <repo-id> <notes> --confirm pack:<repo-id>:stage
 schedule add release-check daily "release verify latest --fast" --confirm schedule:release-check:add
 cleanup plan all before-release
 server update plan <server>
+server update apply <server> <plan_id> --confirm server-update:<server>:apply
+ssh open <server> <reason> --confirm ssh:<server>:open
 ```
 
 ## Panic

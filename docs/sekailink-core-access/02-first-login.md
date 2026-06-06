@@ -47,3 +47,38 @@ Si un serveur est en rouge, ouvrir ses logs avec F8 ou:
 server logs <server> <service> --follow
 ```
 
+## SSH explicite
+
+Core Access garde l'ouverture SSH interactive derriere une confirmation et une
+gate locale:
+
+```text
+ssh open <server> <reason> --confirm ssh:<server>:open
+ssh open <server> <reason> --confirm ssh:<server>:open --execute
+```
+
+Pour executer vraiment, l'environnement local doit contenir:
+
+```sh
+export SEKAILINK_CORE_ACCESS_SSH_OPEN=1
+```
+
+Chaque tentative cree un draft audite local avant l'ouverture.
+
+## Updates serveurs
+
+Les commandes update ne lancent pas de package manager et ne redemarrent aucun
+service. Elles servent a creer un plan audite et une trace d'intention:
+
+```text
+server update plan <server> <scope>
+server update apply <server> <plan_id|reason> --confirm server-update:<server>:apply
+```
+
+Avant une application reelle hors Core Access, faire au minimum:
+
+- `ops snapshot <label>`;
+- `server agent-health <server> --execute`;
+- `server agent-services <server> --execute`;
+- backup des donnees pertinentes;
+- maintenance/broadcast si le scope est visible utilisateur.

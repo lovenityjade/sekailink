@@ -21,9 +21,9 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `server restart <server> <service> --confirm <server>:<service>:restart --execute` | Admin | Oui | Redemarre un service declare via admin-agent; gate mutation et confirmation exacte requis. |
 | `server start <server> <service> --confirm <server>:<service>:start --execute` | Admin | Oui | Demarre un service declare via admin-agent; gate mutation et confirmation exacte requis. |
 | `server stop <server> <service> --confirm <server>:<service>:stop --execute` | Admin | Oui | Arrete un service declare via admin-agent; gate mutation et confirmation exacte requis. |
-| `server update plan <server>` | Admin | Non | Prepare un plan d'update. |
-| `server update apply <server>` | Admin | Oui | Applique un update apres backup gate. |
-| `ssh open <server>` | Admin | Oui | Ouvre une session SSH explicite. |
+| `server update plan <server> [scope|reason]` | Admin | Non | Cree un draft/checklist d'update serveur; aucune mutation distante. |
+| `server update apply <server> <plan_id|reason> --confirm server-update:<server>:apply` | Admin | Oui | Cree un draft d'application update; aucune mutation distante. |
+| `ssh open <server> [reason] --confirm ssh:<server>:open --execute` | Admin | Oui | Ouvre une session SSH explicite seulement avec gate `SEKAILINK_CORE_ACCESS_SSH_OPEN=1`. |
 | `health probe <server|all> --execute` | Service | Non | Lance/verifie une sonde health; dry-run par defaut. |
 | `logs list` | Service | Non | Liste les sources logs. |
 | `logs list --by-server` | Service | Non | Vue logs par serveur/service. |
