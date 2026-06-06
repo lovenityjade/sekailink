@@ -60,6 +60,17 @@ function createLogger({ app, fs, path }) {
   let logStream = null;
   let logFilePath = "";
 
+  function writeConsole(level, ...args) {
+    try {
+      if (level === "error") console.error(...args);
+      else if (level === "warn") console.warn(...args);
+      else console.log(...args);
+    } catch (_err) {
+      // Some Wine/Electron launches expose invalid stdio handles. Logging must
+      // never crash the client, especially during updater relaunches.
+    }
+  }
+
   function getLogsDir() {
     return path.join(app.getPath("userData"), "logs");
   }
@@ -75,7 +86,7 @@ function createLogger({ app, fs, path }) {
     } catch (err) {
       logStream = null;
       logFilePath = "";
-      console.error("[logger] failed to start file logging:", err);
+      writeConsole("error", "[logger] failed to start file logging:", err);
     }
   }
 
@@ -94,25 +105,23 @@ function createLogger({ app, fs, path }) {
   function writeLine(level, scope, message) {
     const safeMessage = scrubSecretString(message);
     const line = `[${nowIso()}] [${level}] ${scope}: ${safeMessage}`;
-    if (level === "error") console.error(line);
-    else if (level === "warn") console.warn(line);
-    else console.log(line);
     try {
       if (logStream) logStream.write(line + "\n");
     } catch (_err) {
       // ignore
     }
+    writeConsole(level, line);
   }
 
   function writeJson(scope, obj) {
     const safeObj = scrubSecretsForLog(obj);
     const line = `[${nowIso()}] [json] ${scope}: ${safeStringify(safeObj)}`;
-    console.log(line);
     try {
       if (logStream) logStream.write(line + "\n");
     } catch (_err) {
       // ignore
     }
+    writeConsole("info", line);
   }
 
   function getLogFilePath() {

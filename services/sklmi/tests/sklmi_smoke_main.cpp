@@ -74,16 +74,26 @@ int main() {
 	        "domain_id": "WRAM",
 	        "address": 10,
 	        "size": 1,
-	        "context_key": "smoke.room",
+	        "context_key": "alttp_overworld_room",
 	        "event_type": "map_changed",
 	        "values": [
 	          {
-	            "value": 2,
-	            "event_key": "room.two",
-	            "mapped_value": "Room Two",
-	            "tab_id": "dungeon",
-	            "map_id": "dungeon_map",
-	            "zone_id": "room_two"
+	            "min_value": 1,
+	            "max_value": 63,
+	            "event_key": "light_world",
+	            "mapped_value": "Lightworld",
+	            "tab_id": "light-world",
+	            "map_id": "light_world",
+	            "zone_id": "light_world"
+	          },
+	          {
+	            "min_value": 64,
+	            "max_value": 127,
+	            "event_key": "dark_world",
+	            "mapped_value": "Darkworld",
+	            "tab_id": "dark-world",
+	            "map_id": "dark_world",
+	            "zone_id": "dark_world"
 	          }
 	        ]
 	      }
@@ -117,9 +127,11 @@ int main() {
 	        manifest->driver_instance_id != "driver-smoke-1" ||
 	        manifest->checks[0].compare != CompareOp::greater_or_equal || manifest->checks[1].event_type != EventType::map_changed ||
 	        manifest->checks[0].event_key != "42001" || manifest->checks[0].mapped_value != "Onett - Test" ||
-	        manifest->context_watches[0].context_key != "smoke.room" ||
-	        manifest->context_watches[0].values[0].tab_id != "dungeon" ||
-	        manifest->context_watches[0].values[0].map_id != "dungeon_map" ||
+	        manifest->context_watches[0].context_key != "alttp_overworld_room" ||
+	        manifest->context_watches[0].values[0].max_value != 63 ||
+	        manifest->context_watches[0].values[0].tab_id != "light-world" ||
+	        manifest->context_watches[0].values[1].min_value != 64 ||
+	        manifest->context_watches[0].values[1].map_id != "dark_world" ||
 	        manifest->injections[0].event_key != "1337" || manifest->injections[0].mapped_value != "Cookie") {
 	        std::cerr << "manifest_rule_decode_failed\n";
 	        return EXIT_FAILURE;
@@ -162,7 +174,8 @@ int main() {
     bool saw_check = false;
 	    bool saw_item = false;
 	    bool saw_map = false;
-	    bool saw_context_map = false;
+	    bool saw_light_world_map = false;
+	    bool saw_dark_world_map = false;
 	    bool saw_reset = false;
     for (const auto& event : sink.events()) {
         if (event.type == EventType::location_checked && event.key == "42001" && event.value == "Onett - Test" &&
@@ -176,14 +189,31 @@ int main() {
             saw_item = true;
         }
 	        if (event.type == EventType::map_changed && event.value == "Onett") saw_map = true;
-	        if (event.type == EventType::map_changed && event.key == "room.two" &&
-	            event.value == "Room Two" && event.tab_id == "dungeon" &&
-	            event.map_id == "dungeon_map" && event.zone_id == "room_two") {
-	            saw_context_map = true;
+	        if (event.type == EventType::map_changed && event.key == "light_world" &&
+	            event.value == "Lightworld" && event.tab_id == "light-world" &&
+	            event.map_id == "light_world" && event.zone_id == "light_world") {
+	            saw_light_world_map = true;
 	        }
 	    }
 
-	    if (!saw_check || !saw_item || !saw_map || !saw_context_map) {
+	    bytes[10] = std::byte{0x40};
+	    if (!provider.set_domain_bytes("WRAM", bytes)) {
+	        std::cerr << "dark_world_state_set_failed\n";
+	        return EXIT_FAILURE;
+	    }
+	    if (session.tick({.tick_index = 3, .monotonic_ms = 112}).state != RuntimeConnectionState::connected) {
+	        std::cerr << "dark_world_tick_failed\n";
+	        return EXIT_FAILURE;
+	    }
+	    for (const auto& event : sink.events()) {
+	        if (event.type == EventType::map_changed && event.key == "dark_world" &&
+	            event.value == "Darkworld" && event.tab_id == "dark-world" &&
+	            event.map_id == "dark_world" && event.zone_id == "dark_world") {
+	            saw_dark_world_map = true;
+	        }
+	    }
+
+	    if (!saw_check || !saw_item || !saw_map || !saw_light_world_map || !saw_dark_world_map) {
 	        std::cerr << "missing_expected_events\n";
 	        return EXIT_FAILURE;
 	    }
@@ -210,7 +240,7 @@ int main() {
         std::cerr << "reconnect_failed\n";
         return EXIT_FAILURE;
     }
-    const auto after_reconnect = session.tick({.tick_index = 3, .monotonic_ms = 128});
+    const auto after_reconnect = session.tick({.tick_index = 4, .monotonic_ms = 160});
     if (after_reconnect.state != RuntimeConnectionState::connected) {
         std::cerr << "reconnect_tick_failed\n";
         return EXIT_FAILURE;

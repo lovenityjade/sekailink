@@ -1629,12 +1629,21 @@
                 "values": [
                       {
                             "min_value": 1,
-                            "max_value": 65535,
+                            "max_value": 63,
                             "event_key": "light_world",
-                            "mapped_value": "Overworld",
+                            "mapped_value": "Lightworld",
                             "tab_id": "light-world",
                             "map_id": "light_world",
                             "zone_id": "light_world"
+                      },
+                      {
+                            "min_value": 64,
+                            "max_value": 127,
+                            "event_key": "dark_world",
+                            "mapped_value": "Darkworld",
+                            "tab_id": "dark-world",
+                            "map_id": "dark_world",
+                            "zone_id": "dark_world"
                       }
                 ]
           }
