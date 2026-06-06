@@ -1,0 +1,234 @@
+{
+  "schema": "sekailink.runtime.windows.v1",
+  "platform": "win32-x64",
+  "buildTimeDependencySource": "MSYS2 UCRT64",
+  "sourceBinDir": "C:\\msys64\\ucrt64\\bin",
+  "generatedAt": "2026-06-05T16:39:21.571Z",
+  "notes": [
+    "These files are staged at build time. End users must not install MSYS2, LuaJIT, Python, or extra DLLs.",
+    "ALTTP may be used as the release fixture, but runtime semantics remain generic APWorld and PopTracker pack compatibility."
+  ],
+  "files": [
+    {
+      "path": "bin/sekaiemu_libretro_spike.exe",
+      "required": true,
+      "sha256": "1fb7210ad208fcbbbb8bbea497a0136b5065fa2c91584f3fa7d47415781487a4"
+    },
+    {
+      "path": "bin/sekailink_sklmi_runtime.exe",
+      "required": true,
+      "sha256": "bf23fbedaf6f10feccf544080c1f65a07fe89c0706ddda43b4ddd9fc544bdd4d"
+    },
+    {
+      "path": "bin/luajit.exe",
+      "required": true,
+      "sha256": "7b2be35d799f618d3de66a550f8c4a561529b9ee0bfefc03a2f5ec6b7ed429e2"
+    },
+    {
+      "path": "bin/lua51.dll",
+      "required": true,
+      "sha256": "6f64bb46cce63664ea9a07ee0d5f0b0b83f68ac1024d575f46907dab98d54971"
+    },
+    {
+      "path": "bin/tracker_poptracker_eval.lua",
+      "required": true,
+      "sha256": "d1454b9c1c82ef4717875c98ddcb0afe67ee40a2428aa490de193f6f3145bc69"
+    },
+    {
+      "path": "bin/libarchive-13.dll",
+      "required": true,
+      "sha256": "a23935a246234b3549523f229cbfb88d89dcefed2b1beee04a34b29d91f5954c"
+    },
+    {
+      "path": "bin/libgcc_s_seh-1.dll",
+      "required": true,
+      "sha256": "ff139cfe956709283f7b70a06af8bc8bb9d1c3bef60ec1bc8d363c91351cfeb2"
+    },
+    {
+      "path": "bin/libstdc++-6.dll",
+      "required": true,
+      "sha256": "d9a58184f6bb27936ef03c3a3286950e4aa61c66a9f74dfa94a532b1433b368d"
+    },
+    {
+      "path": "bin/libwinpthread-1.dll",
+      "required": true,
+      "sha256": "223b235943fb9c517080b19164e93802fe86c037b7dbcdb3ee00c0c59b440c8e"
+    },
+    {
+      "path": "bin/SDL2.dll",
+      "required": true,
+      "sha256": "2e44d5bae9a97859eccde14ad4467df14bae7468594bba7fe8eb417f517ce31b"
+    },
+    {
+      "path": "bin/SDL2_image.dll",
+      "required": true,
+      "sha256": "dfdfda9af071d1b8a5ed80732821fe5146ec32a06ead120d3a12d4da5ee13b86"
+    },
+    {
+      "path": "bin/libb2-1.dll",
+      "required": true,
+      "sha256": "01bbf64090367d511f41d9fc8f34c557f61d4a227b7c9e47ce04052cbfdc3e7d"
+    },
+    {
+      "path": "bin/libbz2-1.dll",
+      "required": true,
+      "sha256": "669a4bf9266d5f020e843aa5fd75b93ce8ebde27014d5ac466a8b3cf39d8aba7"
+    },
+    {
+      "path": "bin/libcrypto-3-x64.dll",
+      "required": true,
+      "sha256": "10a3eea333ccf3076a0530d87a29d2bf8a45135bd7fa4f8cb17f3b85e6486a6f"
+    },
+    {
+      "path": "bin/libexpat-1.dll",
+      "required": true,
+      "sha256": "7b501767a4d5eb3cfac392de9f2fe4c82c8d5dbea81b077abe0365294650cee2"
+    },
+    {
+      "path": "bin/libiconv-2.dll",
+      "required": true,
+      "sha256": "94ec68fb8d342b6c91b6b48a8d95092819cdcd006a7166e0b68062f946afd08a"
+    },
+    {
+      "path": "bin/liblz4.dll",
+      "required": true,
+      "sha256": "5e83fd34144fa033c12e22718317ec2123f8a3460903932b0bfddb8aad379cfd"
+    },
+    {
+      "path": "bin/liblzma-5.dll",
+      "required": true,
+      "sha256": "ad9656bf86fb3673fa6af18fa357531096af3d76eccb4a56c4cd6a6171da1554"
+    },
+    {
+      "path": "bin/zlib1.dll",
+      "required": true,
+      "sha256": "11cd91171765cd65f1c3362e3df67e5f5a618a6b88c8cdec899b802eaf1c7b0d"
+    },
+    {
+      "path": "bin/libzstd.dll",
+      "required": true,
+      "sha256": "48368ab0ca622d0ec12f41ce85d91f22866bf5da92c77a69a06483564c93816c"
+    },
+    {
+      "path": "bin/libssl-3-x64.dll",
+      "required": true,
+      "sha256": "733a07dc9a6868b408fd2feaaa3e2afa32cdd4805177e2e540eb96edb770de63"
+    },
+    {
+      "path": "bin/libpng16-16.dll",
+      "required": true,
+      "sha256": "5c1dd5410af563f4a3c4aee10d1f749aa71e0d7fb3b4fac240eb9e96cadebd26"
+    },
+    {
+      "path": "bin/libwebp-7.dll",
+      "required": true,
+      "sha256": "8dfe40c4e0abc90ddf18f080898987e01253d099b2b2d6daf7db521e55c00446"
+    },
+    {
+      "path": "bin/libwebpdemux-2.dll",
+      "required": true,
+      "sha256": "d9ac8b88387cea7ac943c38c7610314d7a41e7d6d86a8a22582ff8b8a6b99c72"
+    },
+    {
+      "path": "bin/libsharpyuv-0.dll",
+      "required": true,
+      "sha256": "d29380c7056383f3e7a80bf9e150f0b8c425c1cf2568d1336e88979ddc2307af"
+    },
+    {
+      "path": "bin/libjxl.dll",
+      "required": true,
+      "sha256": "848e925d89918a64feeb6889ea21751bb451e7057a8c727e48db5aaff68b97fa"
+    },
+    {
+      "path": "bin/libjxl_cms.dll",
+      "required": true,
+      "sha256": "8391bd69c590bf9f7fc69cfe1ba9b479d7e4d888397717280c383f256e18cd69"
+    },
+    {
+      "path": "bin/libbrotlidec.dll",
+      "required": true,
+      "sha256": "e270b6e576594ee8ee6e33ccc54e34a54304616dd6225652e11e49d6f17ef896"
+    },
+    {
+      "path": "bin/libbrotlicommon.dll",
+      "required": true,
+      "sha256": "c62c08223e450dfc2fff33c752cc228505ffd9d755201958ba800d5d30481a2c"
+    },
+    {
+      "path": "bin/libavif-16.dll",
+      "required": true,
+      "sha256": "9986e8a1d6735c938dad0a7062cb9dbcf0cd65d32eb9347c705205fb6da070ad"
+    },
+    {
+      "path": "bin/libtiff-6.dll",
+      "required": true,
+      "sha256": "876f15a6aab834a18b457bee1bf66435ae244f5f7bc27b6ace2c9cf952f25489"
+    },
+    {
+      "path": "bin/libjpeg-8.dll",
+      "required": true,
+      "sha256": "14a1610a8c486bae8ef2c868aa04bcb202533473bd6975c46da196a236489ca8"
+    },
+    {
+      "path": "bin/libdav1d-7.dll",
+      "required": true,
+      "sha256": "787c6c918977247aeea0d91576077435bbed3a58b3438087e8edac549ad9e932"
+    },
+    {
+      "path": "bin/librav1e.dll",
+      "required": true,
+      "sha256": "bc549e2178589f371469d1bd23544859ff118e48218eae2bfca7126654988779"
+    },
+    {
+      "path": "bin/libdeflate.dll",
+      "required": true,
+      "sha256": "fb54be03668f41fae3f5d8bbabeedbc24e71b37e637e3cd34acd54f89f128ac1"
+    },
+    {
+      "path": "bin/libjbig-0.dll",
+      "required": true,
+      "sha256": "6d1657e08318630738fb0841ee28bbe7272b41b3b2ef93adaa228c4cd10092c6"
+    },
+    {
+      "path": "bin/libLerc.dll",
+      "required": true,
+      "sha256": "3e3aa1d6e040d9ac93eb81cb5e472543f612373c3ab653ed2b2a86ab1d7c05c4"
+    },
+    {
+      "path": "bin/libyuv.dll",
+      "required": true,
+      "sha256": "b1f94252985f6f49ce532b61f50b4c1ae49bff58ec213d2cdea2c769d416fddc"
+    },
+    {
+      "path": "bin/libbrotlienc.dll",
+      "required": true,
+      "sha256": "82573820fe9cc3f57004b6603428e2fa1bfc9d2048707bfcead3cfc5ef3ab284"
+    },
+    {
+      "path": "bin/libhwy.dll",
+      "required": true,
+      "sha256": "9ba0ac7bad82c4c88e9bb8d6ca8c6a83877adc1f71cc48590c65b8d26108a41c"
+    },
+    {
+      "path": "bin/liblcms2-2.dll",
+      "required": true,
+      "sha256": "03314471fadd04cdd63c108472ff85d058903d236a0356c14eda363f0e1ccb65"
+    },
+    {
+      "path": "bin/libSvtAv1Enc-4.dll",
+      "required": true,
+      "sha256": "484b89703cc2bc43a8e18f8330f024ff88459fb8ebc19fba74a7f19d1dd1c92f"
+    },
+    {
+      "path": "bin/libaom.dll",
+      "required": true,
+      "sha256": "ef3f26fca47724fb07b20d08815bb87506493663d1f0e9f2d997ceb5d78c095b"
+    }
+  ],
+  "directories": [
+    {
+      "path": "bin/tracker_poptracker_eval_parts",
+      "required": true
+    }
+  ]
+}

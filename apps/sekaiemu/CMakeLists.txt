@@ -6,6 +6,10 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+if(WIN32)
+  add_compile_definitions(SDL_MAIN_HANDLED)
+endif()
+
 set(SEKAIEMU_LIBRETRO_INCLUDE_DIR
     "${CMAKE_CURRENT_SOURCE_DIR}/extern/libretro/include")
 
@@ -22,6 +26,25 @@ pkg_check_modules(SDL2 REQUIRED sdl2)
 pkg_check_modules(SDL2_IMAGE REQUIRED SDL2_image)
 pkg_check_modules(LIBARCHIVE REQUIRED libarchive)
 link_directories(${SDL2_LIBRARY_DIRS} ${SDL2_IMAGE_LIBRARY_DIRS} ${LIBARCHIVE_LIBRARY_DIRS})
+if(WIN32)
+  foreach(_sdl2_var
+      SDL2_CFLAGS
+      SDL2_CFLAGS_OTHER
+      SDL2_IMAGE_CFLAGS
+      SDL2_IMAGE_CFLAGS_OTHER)
+    list(REMOVE_ITEM ${_sdl2_var} "-Dmain=SDL_main")
+  endforeach()
+  foreach(_sdl2_var
+      SDL2_LDFLAGS
+      SDL2_LDFLAGS_OTHER
+      SDL2_LIBRARIES
+      SDL2_IMAGE_LDFLAGS
+      SDL2_IMAGE_LDFLAGS_OTHER
+      SDL2_IMAGE_LIBRARIES)
+    list(REMOVE_ITEM ${_sdl2_var} mingw32 SDL2main)
+    list(REMOVE_ITEM ${_sdl2_var} "-mwindows")
+  endforeach()
+endif()
 if(NOT WIN32)
   find_program(BASH_EXECUTABLE bash REQUIRED)
 endif()
