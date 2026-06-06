@@ -9,6 +9,7 @@ cargo run --manifest-path tools/core-access/Cargo.toml -- --shell
 
 ```text
 auth whoami
+ops doctor
 server status all
 nexus services
 maintenance status
@@ -43,6 +44,8 @@ incident close <label> <resolution>
 ops timeline [query]
 ops handoff shift-<date> --file shift-<date>.md
 ops snapshot <label>
+ops paths
+ops exports [query]
 ```
 
 ## Live support

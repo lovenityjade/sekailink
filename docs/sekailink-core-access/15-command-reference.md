@@ -44,6 +44,9 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `ops snapshot [label]` | Service | Non | Cree un snapshot Markdown local avec dashboard, logs, services, audit, notes et approvals. |
 | `ops timeline [query]` | Service | Non | Affiche une timeline locale audit/incidents/notes/pins/approvals/drafts. |
 | `ops handoff [label] --file <name>` | Service | Non | Exporte un rapport Markdown local de releve de shift. |
+| `ops doctor [--verbose]` | Service | Non | Verifie localement l'etat du cockpit, outils, env gates, stores, docs et PDFs sans exposer les secrets. |
+| `ops paths` | Service | Non | Liste les chemins locaux Core Access utiles pour audit, notes, incidents, exports et docs. |
+| `ops exports [query]` | Service | Non | Liste les exports locaux Core Access par date, taille et fichier. |
 | `user search <query> --execute` | Service | Non | Recherche utilisateur via Nexus Identity read-only; dry-run par defaut. |
 | `user open <user> --execute` | Service | Non | Ouvre fiche utilisateur via Nexus Identity read-only; ajoute une trace audit serveur. |
 | `user create` | Admin | Oui | Cree un utilisateur. |

@@ -38,3 +38,5 @@
   relay between shifts.
 - Added local client diagnostics request/list/export drafts for future
   Client Core, Sekaiemu, and SKLMI log bundle collection with user consent.
+- Added local `ops doctor`, `ops paths`, and `ops exports` commands for cockpit
+  readiness checks and export inventory before moderation shifts.

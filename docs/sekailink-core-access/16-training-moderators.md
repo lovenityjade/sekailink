@@ -17,6 +17,18 @@ Former le role Service pour aider en live sans mettre la production en danger.
 
 ## Exercices
 
+### Exercice 0 - Verifier le poste Core Access
+
+```text
+auth whoami
+ops doctor
+ops paths
+ops exports
+```
+
+But: confirmer le role, l'etat local du cockpit, les chemins de travail, et les
+exports deja presents avant un shift.
+
 ### Exercice 1 - Diagnostiquer un joueur
 
 ```text
@@ -77,6 +89,7 @@ But: produire un rapport de releve lisible pour un autre moderateur.
 
 - Je sais me connecter au bastion.
 - Je sais verifier mon role.
+- Je sais lancer `ops doctor` avant un shift.
 - Je sais lister logs et rooms.
 - Je sais creer un incident local, une note et un pin.
 - Je sais produire une releve de shift.

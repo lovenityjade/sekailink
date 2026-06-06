@@ -18,9 +18,11 @@ use crate::system::{
 use crate::tui::TuiExit;
 use crate::util::{home_dir, split_command_line};
 use std::env;
+use std::fs;
 use std::io::{self, IsTerminal};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::Command;
+use std::time::{SystemTime, UNIX_EPOCH};
 
 pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     let options = Options::parse(env::args().skip(1).collect())?;
@@ -1093,13 +1095,200 @@ impl App {
     fn ops(&self, parsed: &[String]) -> io::Result<()> {
         match parsed.get(1).map(String::as_str) {
             Some("snapshot") => self.ops_snapshot(parsed.get(2).map(String::as_str)),
-            Some("timeline") => self.ops_timeline(parsed.get(2).map(String::as_str).unwrap_or("")),
+            Some("timeline") => {
+                self.ops_timeline(parsed.get(2).map(String::as_str).unwrap_or(""))
+            }
             Some("handoff") => self.ops_handoff(parsed),
+            Some("doctor") => self.ops_doctor(parsed),
+            Some("paths") => {
+                self.ops_paths();
+                Ok(())
+            }
+            Some("exports") => self.ops_exports(parsed.get(2).map(String::as_str).unwrap_or("")),
             _ => {
-                println!("usage: ops snapshot|timeline|handoff");
+                println!("usage: ops snapshot|timeline|handoff|doctor|paths|exports");
                 Ok(())
             }
         }
+    }
+
+    fn ops_doctor(&self, parsed: &[String]) -> io::Result<()> {
+        let verbose = parsed.iter().any(|part| part == "--verbose" || part == "-v");
+        let checks = self.doctor_checks(verbose);
+        let ok = checks
+            .iter()
+            .filter(|check| check.level == DoctorLevel::Ok)
+            .count();
+        let warn = checks
+            .iter()
+            .filter(|check| check.level == DoctorLevel::Warn)
+            .count();
+        let fail = checks
+            .iter()
+            .filter(|check| check.level == DoctorLevel::Fail)
+            .count();
+
+        println!("SekaiLink Core Access doctor");
+        println!("session: {}", self.session.session_id);
+        println!(
+            "role: {} | user: {}",
+            self.session.role.as_str(),
+            self.session.sekailink_user
+        );
+        println!("summary: ok={ok} warn={warn} fail={fail}");
+        println!();
+        println!("{:<7} {:<18} DETAIL", "STATUS", "CHECK");
+        println!("{}", "-".repeat(92));
+        for check in checks {
+            if verbose || check.level != DoctorLevel::Ok {
+                println!("{:<7} {:<18} {}", check.level.as_str(), check.name, check.detail);
+            }
+        }
+        if !verbose {
+            println!();
+            println!("Use `ops doctor --verbose` to show passing checks too.");
+        }
+        println!("No server mutation was performed.");
+        Ok(())
+    }
+
+    fn doctor_checks(&self, verbose: bool) -> Vec<DoctorCheck> {
+        let mut checks = Vec::new();
+        let repo_root = repo_root_path();
+        let docs_root = docs_root_path();
+        let pdf_root = docs_root.join("dist").join("pdf");
+
+        checks.push(path_check("repo-root", &repo_root, true));
+        checks.push(path_check("data-dir", &self.session.data_dir, true));
+        checks.push(path_check("audit-dir", &self.session.audit_dir(), true));
+        checks.push(path_check("exports-dir", &self.session.exports_dir(), true));
+        checks.push(path_check("docs-root", &docs_root, true));
+        checks.push(path_check("pdf-root", &pdf_root, true));
+
+        for (label, path) in [
+            ("audit-store", self.session.audit_dir().join("core-access.jsonl")),
+            ("notes-store", self.session.notes_path()),
+            ("pins-store", self.session.log_pins_path()),
+            ("incidents-store", self.session.incident_events_path()),
+            ("diagnostics-store", self.session.client_diagnostics_path()),
+            ("approvals-store", self.session.approvals_path()),
+        ] {
+            checks.push(file_store_check(label, &path));
+        }
+
+        for name in [
+            "git",
+            "cargo",
+            "ssh",
+            "stty",
+            "less",
+            "journalctl",
+            "xelatex",
+            "pandoc",
+            "pdftotext",
+            "pdfinfo",
+        ] {
+            checks.push(tool_check(name));
+        }
+
+        for file in [
+            "sekailink-core-access-full.pdf",
+            "sekailink-core-access-service-training.pdf",
+            "sekailink-core-access-command-reference.pdf",
+            "sekailink-core-access-incident-playbooks.pdf",
+            "sekailink-core-access-quick-reference.pdf",
+        ] {
+            checks.push(pdf_check(file, &pdf_root.join(file)));
+        }
+
+        for (name, sensitive) in [
+            ("SEKAILINK_CORE_ACCESS_USER", false),
+            ("SEKAILINK_CORE_ACCESS_ROLE", false),
+            ("SEKAILINK_CORE_ACCESS_REMOTE_READONLY", false),
+            ("SEKAILINK_CORE_ACCESS_NEXUS_ADMIN_TOKEN", true),
+            ("SEKAILINK_CORE_ACCESS_NEXUS_AGENT_ADMIN_TOKEN", true),
+            ("SEKAILINK_CORE_ACCESS_NEXUS_LOBBY_ADMIN_TOKEN", true),
+            ("SEKAILINK_CORE_ACCESS_NEXUS_IDENTITY_ADMIN_TOKEN", true),
+        ] {
+            checks.push(env_check(name, sensitive));
+        }
+
+        if verbose {
+            checks.push(DoctorCheck::ok(
+                "log-sources",
+                &format!("{} source(s)", log_catalog().len()),
+            ));
+            checks.push(DoctorCheck::ok(
+                "service-targets",
+                &format!("{} server(s)", known_services().len()),
+            ));
+            checks.push(DoctorCheck::ok(
+                "exports-count",
+                &format!("{} file(s)", count_export_files(&self.session.exports_dir())),
+            ));
+        }
+
+        checks
+    }
+
+    fn ops_paths(&self) {
+        println!("{:<22} PATH", "NAME");
+        println!("{}", "-".repeat(96));
+        for (name, path) in self.core_access_paths() {
+            println!("{:<22} {}", name, path.display());
+        }
+        println!("Secrets are not printed by this command.");
+    }
+
+    fn core_access_paths(&self) -> Vec<(&'static str, PathBuf)> {
+        vec![
+            ("data-dir", self.session.data_dir.clone()),
+            ("audit", self.session.audit_dir().join("core-access.jsonl")),
+            ("notes", self.session.notes_path()),
+            ("log-pins", self.session.log_pins_path()),
+            ("incidents", self.session.incident_events_path()),
+            ("client-diagnostics", self.session.client_diagnostics_path()),
+            ("approvals", self.session.approvals_path()),
+            ("history", self.session.history_path()),
+            ("exports", self.session.exports_dir()),
+            ("client-banners", self.session.client_banners_dir()),
+            ("maintenance", self.session.maintenance_dir()),
+            ("scheduler", self.session.scheduler_dir()),
+            ("pack-repos", self.session.pack_repos_dir()),
+            ("docs", docs_root_path()),
+            ("pdfs", docs_root_path().join("dist").join("pdf")),
+        ]
+    }
+
+    fn ops_exports(&self, query: &str) -> io::Result<()> {
+        let mut exports = export_entries(&self.session.exports_dir())?;
+        if !query.trim().is_empty() {
+            let clean = query.to_ascii_lowercase();
+            exports.retain(|entry| entry.name.to_ascii_lowercase().contains(&clean));
+        }
+        if exports.is_empty() {
+            if query.trim().is_empty() {
+                println!("no local exports found");
+            } else {
+                println!("no local exports matched: {query}");
+            }
+            return Ok(());
+        }
+        exports.sort_by_key(|entry| std::cmp::Reverse(entry.modified));
+        println!("{:<12} {:>10} FILE", "MODIFIED", "SIZE");
+        println!("{}", "-".repeat(96));
+        for entry in exports.iter().take(200) {
+            println!(
+                "{:<12} {:>10} {}",
+                entry.modified,
+                format_bytes(entry.size),
+                entry.path.display()
+            );
+        }
+        if exports.len() > 200 {
+            println!("... {} more export(s)", exports.len() - 200);
+        }
+        Ok(())
     }
 
     fn ops_timeline(&self, query: &str) -> io::Result<()> {
@@ -1721,6 +1910,9 @@ fn print_help() {
     println!("  ops snapshot [label]");
     println!("  ops timeline [query]");
     println!("  ops handoff [label] [--file name]");
+    println!("  ops doctor [--verbose]");
+    println!("  ops paths");
+    println!("  ops exports [query]");
     println!("  client-banner list");
     println!("  client-banner preview <1|2|3>");
     println!("  client-banner edit <1|2|3> <text>");
@@ -2196,6 +2388,261 @@ fn push_text_section(out: &mut String, title: &str, lines: &[&str]) {
         out.push('\n');
     }
     out.push('\n');
+}
+
+fn repo_root_path() -> PathBuf {
+    let manifest_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
+    manifest_dir
+        .parent()
+        .and_then(Path::parent)
+        .map(Path::to_path_buf)
+        .unwrap_or_else(|| env::current_dir().unwrap_or_else(|_| PathBuf::from(".")))
+}
+
+fn docs_root_path() -> PathBuf {
+    repo_root_path().join("docs").join("sekailink-core-access")
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum DoctorLevel {
+    Ok,
+    Warn,
+    Fail,
+}
+
+impl DoctorLevel {
+    fn as_str(self) -> &'static str {
+        match self {
+            Self::Ok => "OK",
+            Self::Warn => "WARN",
+            Self::Fail => "FAIL",
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+struct DoctorCheck {
+    level: DoctorLevel,
+    name: String,
+    detail: String,
+}
+
+impl DoctorCheck {
+    fn ok(name: &str, detail: &str) -> Self {
+        Self::new(DoctorLevel::Ok, name, detail)
+    }
+
+    fn warn(name: &str, detail: &str) -> Self {
+        Self::new(DoctorLevel::Warn, name, detail)
+    }
+
+    fn fail(name: &str, detail: &str) -> Self {
+        Self::new(DoctorLevel::Fail, name, detail)
+    }
+
+    fn new(level: DoctorLevel, name: &str, detail: &str) -> Self {
+        Self {
+            level,
+            name: name.to_string(),
+            detail: detail.to_string(),
+        }
+    }
+}
+
+fn path_check(name: &str, path: &Path, expect_dir: bool) -> DoctorCheck {
+    match fs::metadata(path) {
+        Ok(metadata) if expect_dir && metadata.is_dir() => {
+            DoctorCheck::ok(name, &format!("present directory: {}", path.display()))
+        }
+        Ok(metadata) if !expect_dir && metadata.is_file() => {
+            DoctorCheck::ok(name, &format!("present file: {}", path.display()))
+        }
+        Ok(_) => DoctorCheck::fail(name, &format!("wrong type: {}", path.display())),
+        Err(err) => DoctorCheck::fail(name, &format!("missing {} ({err})", path.display())),
+    }
+}
+
+fn file_store_check(name: &str, path: &Path) -> DoctorCheck {
+    match fs::metadata(path) {
+        Ok(metadata) if metadata.is_file() => DoctorCheck::ok(
+            name,
+            &format!("{} line(s), {}", count_file_lines(path), format_bytes(metadata.len())),
+        ),
+        Ok(_) => DoctorCheck::warn(name, &format!("not a regular file: {}", path.display())),
+        Err(err) if err.kind() == io::ErrorKind::NotFound => {
+            DoctorCheck::ok(name, &format!("not created yet: {}", path.display()))
+        }
+        Err(err) => DoctorCheck::warn(name, &format!("unreadable {} ({err})", path.display())),
+    }
+}
+
+fn count_file_lines(path: &Path) -> usize {
+    fs::read_to_string(path)
+        .map(|text| text.lines().count())
+        .unwrap_or_default()
+}
+
+fn tool_check(name: &str) -> DoctorCheck {
+    match command_path(name) {
+        Some(path) => DoctorCheck::ok(&format!("tool:{name}"), &path),
+        None => DoctorCheck::warn(&format!("tool:{name}"), "not found on PATH"),
+    }
+}
+
+fn command_path(name: &str) -> Option<String> {
+    let output = Command::new("sh")
+        .args(["-lc", &format!("command -v {}", shell_safe_tool_name(name))])
+        .output()
+        .ok()?;
+    if !output.status.success() {
+        return None;
+    }
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    stdout
+        .lines()
+        .next()
+        .map(str::trim)
+        .filter(|line| !line.is_empty())
+        .map(str::to_string)
+}
+
+fn shell_safe_tool_name(name: &str) -> &str {
+    if name
+        .chars()
+        .all(|ch| ch.is_ascii_alphanumeric() || matches!(ch, '-' | '_'))
+    {
+        name
+    } else {
+        ""
+    }
+}
+
+fn env_check(name: &str, sensitive: bool) -> DoctorCheck {
+    match env::var(name) {
+        Ok(value) if value.is_empty() => DoctorCheck::warn(&format!("env:{name}"), "set but empty"),
+        Ok(value) if name == "SEKAILINK_CORE_ACCESS_REMOTE_READONLY" && value != "1" => {
+            DoctorCheck::warn(&format!("env:{name}"), "set but not enabled")
+        }
+        Ok(_) if sensitive => DoctorCheck::ok(&format!("env:{name}"), "set (value hidden)"),
+        Ok(value) => DoctorCheck::ok(
+            &format!("env:{name}"),
+            &format!("set to {}", public_env_display(&value)),
+        ),
+        Err(_) if sensitive => DoctorCheck::warn(&format!("env:{name}"), "missing"),
+        Err(_) => DoctorCheck::ok(&format!("env:{name}"), "not set"),
+    }
+}
+
+fn public_env_display(value: &str) -> String {
+    value
+        .chars()
+        .map(|ch| if ch.is_ascii_graphic() { ch } else { '?' })
+        .take(48)
+        .collect()
+}
+
+fn pdf_check(name: &str, path: &Path) -> DoctorCheck {
+    match fs::metadata(path) {
+        Ok(metadata) if metadata.is_file() && metadata.len() > 0 => {
+            DoctorCheck::ok(&format!("pdf:{name}"), &format_bytes(metadata.len()))
+        }
+        Ok(_) => DoctorCheck::warn(&format!("pdf:{name}"), "missing or empty"),
+        Err(err) if err.kind() == io::ErrorKind::NotFound => {
+            DoctorCheck::warn(&format!("pdf:{name}"), "missing")
+        }
+        Err(err) => DoctorCheck::warn(&format!("pdf:{name}"), &format!("unreadable ({err})")),
+    }
+}
+
+#[derive(Debug, Clone)]
+struct ExportEntry {
+    name: String,
+    path: PathBuf,
+    size: u64,
+    modified: u64,
+}
+
+fn export_entries(root: &Path) -> io::Result<Vec<ExportEntry>> {
+    let mut entries = Vec::new();
+    if !root.exists() {
+        return Ok(entries);
+    }
+    collect_export_entries(root, root, &mut entries)?;
+    Ok(entries)
+}
+
+fn collect_export_entries(
+    root: &Path,
+    dir: &Path,
+    entries: &mut Vec<ExportEntry>,
+) -> io::Result<()> {
+    for entry in fs::read_dir(dir)? {
+        let entry = entry?;
+        let path = entry.path();
+        let metadata = entry.metadata()?;
+        if metadata.is_dir() {
+            collect_export_entries(root, &path, entries)?;
+            continue;
+        }
+        if !metadata.is_file() {
+            continue;
+        }
+        let name = path
+            .strip_prefix(root)
+            .unwrap_or(&path)
+            .display()
+            .to_string();
+        entries.push(ExportEntry {
+            name,
+            path,
+            size: metadata.len(),
+            modified: modified_epoch(metadata.modified().unwrap_or(UNIX_EPOCH)),
+        });
+    }
+    Ok(())
+}
+
+fn count_export_files(root: &Path) -> usize {
+    export_entries(root)
+        .map(|entries| entries.len())
+        .unwrap_or_default()
+}
+
+fn modified_epoch(value: SystemTime) -> u64 {
+    value
+        .duration_since(UNIX_EPOCH)
+        .map(|duration| duration.as_secs())
+        .unwrap_or_default()
+}
+
+fn format_bytes(size: u64) -> String {
+    const KB: u64 = 1024;
+    const MB: u64 = KB * 1024;
+    if size >= MB {
+        format!("{:.1}M", size as f64 / MB as f64)
+    } else if size >= KB {
+        format!("{:.1}K", size as f64 / KB as f64)
+    } else {
+        format!("{size}B")
+    }
+}
+
+#[cfg(test)]
+mod ops_doctor_tests {
+    use super::{format_bytes, modified_epoch};
+    use std::time::UNIX_EPOCH;
+
+    #[test]
+    fn bytes_are_human_readable() {
+        assert_eq!(format_bytes(0), "0B");
+        assert_eq!(format_bytes(1024), "1.0K");
+        assert_eq!(format_bytes(1024 * 1024), "1.0M");
+    }
+
+    #[test]
+    fn unix_epoch_is_stable() {
+        assert_eq!(modified_epoch(UNIX_EPOCH), 0);
+    }
 }
 
 #[cfg(test)]

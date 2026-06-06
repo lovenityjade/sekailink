@@ -35,6 +35,9 @@ incident close
 ops snapshot
 ops timeline
 ops handoff
+ops doctor
+ops paths
+ops exports
 user search
 user open
 user create

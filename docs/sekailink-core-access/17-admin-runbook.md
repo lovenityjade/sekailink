@@ -2,22 +2,25 @@
 
 ## Release day
 
-1. `release current`
-2. `release verify-cdn`
-3. `schedule calendar`
-4. `maintenance schedule client_update_only <start> <end>` si necessaire.
-5. Publier via `release publish <manifest>`.
-6. Verifier clients Linux/Windows.
-7. Creer ops note avec resultat.
+1. `ops doctor --verbose`
+2. `release current`
+3. `release verify-cdn`
+4. `schedule calendar`
+5. `maintenance schedule client_update_only <start> <end>` si necessaire.
+6. Publier via `release publish <manifest>`.
+7. Verifier clients Linux/Windows.
+8. Creer ops note avec resultat.
 
 ## Stream/live event
 
-1. Ouvrir dashboard dense.
-2. `incident open stream-<date> sev4 live monitoring`
-3. Panels recommandes: Link logs, room logs, lobby list, alerts, Discord/Twitch.
-4. Garder F12 Panic pret.
-5. Tout incident important devient `incident note` ou `incident pin`.
-6. `ops handoff stream-<date> --file stream-<date>.md` en fin de stream.
+1. `ops doctor`
+2. Ouvrir dashboard dense.
+3. `incident open stream-<date> sev4 live monitoring`
+4. Panels recommandes: Link logs, room logs, lobby list, alerts, Discord/Twitch.
+5. Garder F12 Panic pret.
+6. Tout incident important devient `incident note` ou `incident pin`.
+7. `ops exports`
+8. `ops handoff stream-<date> --file stream-<date>.md` en fin de stream.
 
 ## Incident majeur
 
@@ -37,5 +40,7 @@
 2. Filtrer par date/role/action.
 3. Exporter Markdown/JSON.
 4. `ops timeline [query]`
-5. Verifier actions sans rollback.
-6. Creer notes de follow-up.
+5. `ops paths`
+6. `ops exports [query]`
+7. Verifier actions sans rollback.
+8. Creer notes de follow-up.
