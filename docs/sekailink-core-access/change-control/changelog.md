@@ -12,3 +12,4 @@
 - Added local Markdown incident snapshots with dashboard, log catalog, services,
   recent audit, notes, and approval queue.
 - Added local draft management for the three client dashboard banner slots.
+- Added local maintenance schedule/status/history drafts.

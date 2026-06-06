@@ -1,6 +1,7 @@
 use crate::audit::{
     Session, append_approval_decision, append_approval_request, append_audit, append_history,
     append_note, read_file_to_string, write_client_banner_draft, write_export,
+    write_maintenance_draft,
 };
 use crate::commands::{COMMANDS, Confirmation, command_names, find_command, search_commands};
 use crate::line_editor::LineEditor;
@@ -258,10 +259,14 @@ impl App {
                 append_audit(&self.session, line, "ok", "client-banner")?;
                 true
             }
-            "maintenance" if parsed.get(1).map(String::as_str) == Some("status") => {
-                println!("maintenance: unknown (Nexus integration pending)");
-                println!("MVP note: no server state was read or changed.");
-                append_audit(&self.session, line, "ok", "maintenance status stub")?;
+            "maintenance"
+                if matches!(
+                    parsed.get(1).map(String::as_str),
+                    Some("status") | Some("schedule") | Some("history")
+                ) =>
+            {
+                self.maintenance(&parsed)?;
+                append_audit(&self.session, line, "ok", "maintenance local")?;
                 true
             }
             _ => {
@@ -675,6 +680,64 @@ impl App {
         read_file_to_string(&self.session.client_banners_dir().join(format!("slot-{slot}.txt")))
     }
 
+    fn maintenance(&self, parsed: &[String]) -> io::Result<()> {
+        match parsed.get(1).map(String::as_str) {
+            Some("status") => {
+                let current = read_file_to_string(&self.session.maintenance_dir().join("current.txt"))?;
+                if current.trim().is_empty() {
+                    println!("maintenance: no local draft");
+                } else {
+                    println!("local maintenance draft:");
+                    println!("{current}");
+                }
+                println!("MVP note: production maintenance mode is not connected yet.");
+                Ok(())
+            }
+            Some("history") => {
+                let history = read_file_to_string(&self.session.maintenance_dir().join("history.jsonl"))?;
+                if history.trim().is_empty() {
+                    println!("maintenance history is empty");
+                } else {
+                    for line in history.lines().take(200) {
+                        println!("{line}");
+                    }
+                }
+                Ok(())
+            }
+            Some("schedule") => {
+                let Some(scope) = parsed.get(2) else {
+                    println!("usage: maintenance schedule <scope> <start> <end> <message>");
+                    return Ok(());
+                };
+                let Some(start) = parsed.get(3) else {
+                    println!("usage: maintenance schedule <scope> <start> <end> <message>");
+                    return Ok(());
+                };
+                let Some(end) = parsed.get(4) else {
+                    println!("usage: maintenance schedule <scope> <start> <end> <message>");
+                    return Ok(());
+                };
+                let message = if parsed.len() > 5 {
+                    parsed[5..].join(" ")
+                } else {
+                    String::new()
+                };
+                if message.trim().is_empty() {
+                    println!("usage: maintenance schedule <scope> <start> <end> <message>");
+                    return Ok(());
+                }
+                let id = write_maintenance_draft(&self.session, scope, start, end, &message)?;
+                println!("maintenance draft scheduled: {id}");
+                println!("MVP note: draft only; no client/server maintenance flag changed.");
+                Ok(())
+            }
+            _ => {
+                println!("usage: maintenance status|schedule|history");
+                Ok(())
+            }
+        }
+    }
+
     fn stub_or_unknown(&self, line: &str, spec: Option<&crate::commands::CommandSpec>) -> io::Result<()> {
         if let Some(spec) = spec {
             println!("command recognized: {}", spec.name);
@@ -754,6 +817,9 @@ fn print_help() {
     println!("  client-banner list");
     println!("  client-banner preview <1|2|3>");
     println!("  client-banner edit <1|2|3> <text>");
+    println!("  maintenance status");
+    println!("  maintenance schedule <scope> <start> <end> <message>");
+    println!("  maintenance history");
     println!("  exit");
 }
 

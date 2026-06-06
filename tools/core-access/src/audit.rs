@@ -32,6 +32,7 @@ impl Session {
         fs::create_dir_all(self.data_dir.join("history"))?;
         fs::create_dir_all(self.exports_dir())?;
         fs::create_dir_all(self.client_banners_dir())?;
+        fs::create_dir_all(self.maintenance_dir())?;
         Ok(())
     }
 
@@ -57,6 +58,10 @@ impl Session {
 
     pub fn client_banners_dir(&self) -> PathBuf {
         self.data_dir.join("client-banners")
+    }
+
+    pub fn maintenance_dir(&self) -> PathBuf {
+        self.data_dir.join("maintenance")
     }
 }
 
@@ -142,6 +147,34 @@ pub fn write_client_banner_draft(session: &Session, slot: u8, text: &str) -> io:
             slot,
             json_escape(&session.sekailink_user),
             json_escape(text)
+        ),
+    )?;
+    Ok(id)
+}
+
+pub fn write_maintenance_draft(
+    session: &Session,
+    scope: &str,
+    start: &str,
+    end: &str,
+    message: &str,
+) -> io::Result<String> {
+    let id = format!("maintenance-{}-{}", epoch_nanos(), std::process::id());
+    let summary = format!(
+        "id={id}\nscope={scope}\nstart={start}\nend={end}\nmessage={message}\n"
+    );
+    fs::write(session.maintenance_dir().join("current.txt"), &summary)?;
+    append_jsonl(
+        &session.maintenance_dir().join("history.jsonl"),
+        &format!(
+            "{{\"id\":\"{}\",\"ts\":{},\"state\":\"scheduled-draft\",\"author\":\"{}\",\"scope\":\"{}\",\"start\":\"{}\",\"end\":\"{}\",\"message\":\"{}\"}}\n",
+            json_escape(&id),
+            epoch_seconds(),
+            json_escape(&session.sekailink_user),
+            json_escape(scope),
+            json_escape(start),
+            json_escape(end),
+            json_escape(message)
         ),
     )?;
     Ok(id)

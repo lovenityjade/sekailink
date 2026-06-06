@@ -36,6 +36,9 @@ Implemented MVP commands include:
 - `client-banner list`
 - `client-banner preview <1|2|3>`
 - `client-banner edit <1|2|3> <text>` as Admin, local draft only
+- `maintenance status`
+- `maintenance schedule <scope> <start> <end> <message>` as Admin, local draft only
+- `maintenance history`
 
 ## Build
 
