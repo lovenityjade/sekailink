@@ -522,6 +522,11 @@ impl App {
                 append_audit(&self.session, line, "ok", "pack local")?;
                 true
             }
+            "discord" | "twitch" => {
+                self.bot_ops(&parsed)?;
+                append_audit(&self.session, line, "ok", "bot ops")?;
+                true
+            }
             _ => {
                 self.stub_or_unknown(line, spec)?;
                 true
@@ -3033,6 +3038,356 @@ impl App {
         }
     }
 
+    fn bot_ops(&self, parsed: &[String]) -> io::Result<()> {
+        let platform = parsed.first().map(String::as_str).unwrap_or("");
+        let service = match platform {
+            "discord" => "sekailink-social-bots",
+            "twitch" => "sekailink-twitch-assistant",
+            _ => {
+                println!("usage: discord|twitch <command>");
+                return Ok(());
+            }
+        };
+        match parsed.get(1).map(String::as_str) {
+            Some("status") => {
+                let execute = parsed.iter().any(|part| part == "--execute");
+                let server = match find_agent_server("link") {
+                    Ok(server) => server,
+                    Err(err) => {
+                        println!("{err}");
+                        return Ok(());
+                    }
+                };
+                match agent_service_plan(server, service) {
+                    Ok(plan) => self.render_or_execute_agent_plan(&plan, execute, None)?,
+                    Err(err) => println!("{err}"),
+                }
+                let drafts = read_file_to_string(
+                    &self.session.drafts_dir().join(format!("{platform}.jsonl")),
+                )?;
+                let count = drafts
+                    .lines()
+                    .filter(|line| !line.trim().is_empty())
+                    .count();
+                println!("{platform} local drafts: {count}");
+                println!(
+                    "MVP note: bot config API is not connected; status uses service/log probes only."
+                );
+                Ok(())
+            }
+            Some("logs") => {
+                let execute = parsed.iter().any(|part| part == "--execute");
+                let source = if platform == "discord" {
+                    "discord:bot"
+                } else {
+                    "twitch:assistant"
+                };
+                let follow = parsed.iter().any(|part| part == "--follow" || part == "-f");
+                match render_log_tail_plan(source, follow) {
+                    Ok(plan) => self.render_or_execute_remote_plan("bot logs", &plan, execute)?,
+                    Err(err) => println!("{err}"),
+                }
+                Ok(())
+            }
+            Some("reload") if platform == "discord" => {
+                self.bot_simple_confirmed_draft(platform, "reload", "bot", parsed, 2)
+            }
+            Some("sync-roles") if platform == "discord" => {
+                self.bot_simple_confirmed_draft(platform, "sync-roles", "all", parsed, 2)
+            }
+            Some("announce") => self.bot_announce(platform, parsed),
+            Some("command") => self.bot_command(platform, parsed),
+            Some("timer") => self.bot_timer(platform, parsed),
+            Some("incident-post") if platform == "discord" => self.discord_incident_post(parsed),
+            Some("connect" | "disconnect") if platform == "twitch" => {
+                let action = parsed.get(1).map(String::as_str).unwrap_or("");
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let Some(channel) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: twitch {action} <channel> [reason] --confirm twitch:{action}:<channel>"
+                    );
+                    return Ok(());
+                };
+                let expected = format!("twitch:{action}:{channel}");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let detail = if args.len() > 1 {
+                    args[1..].join(" ")
+                } else {
+                    format!("twitch {action} requested")
+                };
+                let id = write_ops_draft(&self.session, "twitch", action, channel, &detail)?;
+                println!("twitch {action} draft saved: {id}");
+                println!("channel: {channel}");
+                println!("detail: {detail}");
+                println!("MVP note: Twitch API was not called.");
+                Ok(())
+            }
+            Some("lobby") if platform == "twitch" => self.twitch_lobby(parsed),
+            Some("stream") if platform == "twitch" => self.twitch_stream(parsed),
+            _ => {
+                if platform == "discord" {
+                    println!(
+                        "usage: discord status|reload|announce|sync-roles|command|timer|incident-post|logs"
+                    );
+                } else {
+                    println!(
+                        "usage: twitch status|connect|disconnect|announce|command|timer|lobby|stream|logs"
+                    );
+                }
+                Ok(())
+            }
+        }
+    }
+
+    fn bot_simple_confirmed_draft(
+        &self,
+        platform: &str,
+        action: &str,
+        target: &str,
+        parsed: &[String],
+        detail_start: usize,
+    ) -> io::Result<()> {
+        let expected = format!("{platform}:{action}:{target}");
+        if !confirmation_matches(parsed, &expected) {
+            return Ok(());
+        }
+        let args = option_positionals(parsed, detail_start, &["--confirm"]);
+        let detail = if args.is_empty() {
+            format!("{platform} {action} requested")
+        } else {
+            args.join(" ")
+        };
+        let id = write_ops_draft(&self.session, platform, action, target, &detail)?;
+        println!("{platform} {action} draft saved: {id}");
+        println!("target: {target}");
+        println!("detail: {detail}");
+        println!("MVP note: bot process/API was not changed.");
+        Ok(())
+    }
+
+    fn bot_announce(&self, platform: &str, parsed: &[String]) -> io::Result<()> {
+        let args = option_positionals(parsed, 2, &["--confirm"]);
+        let Some(channel) = args.first().map(String::as_str) else {
+            println!(
+                "usage: {platform} announce <channel> <message> --confirm {platform}:announce:<channel>"
+            );
+            return Ok(());
+        };
+        let message = if args.len() > 1 {
+            args[1..].join(" ")
+        } else {
+            String::new()
+        };
+        if message.trim().is_empty() {
+            println!(
+                "usage: {platform} announce <channel> <message> --confirm {platform}:announce:<channel>"
+            );
+            return Ok(());
+        }
+        let expected = format!("{platform}:announce:{channel}");
+        if !confirmation_matches(parsed, &expected) {
+            return Ok(());
+        }
+        let id = write_ops_draft(&self.session, platform, "announce", channel, &message)?;
+        println!("{platform} announce draft saved: {id}");
+        println!("channel: {channel}");
+        println!("message: {message}");
+        println!("MVP note: announcement was not sent.");
+        Ok(())
+    }
+
+    fn bot_command(&self, platform: &str, parsed: &[String]) -> io::Result<()> {
+        match parsed.get(2).map(String::as_str) {
+            Some("list") => {
+                self.bot_history(platform, "command")?;
+                println!("MVP note: live bot command registry is not connected yet.");
+                Ok(())
+            }
+            Some("enable" | "disable" | "edit") => {
+                let action = parsed.get(2).map(String::as_str).unwrap_or("");
+                let args = option_positionals(parsed, 3, &["--confirm"]);
+                let Some(name) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: {platform} command {action} <name> [detail] --confirm {platform}:command:<name>:{action}"
+                    );
+                    return Ok(());
+                };
+                let expected = format!("{platform}:command:{name}:{action}");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let detail = if args.len() > 1 {
+                    args[1..].join(" ")
+                } else {
+                    format!("command {action} requested")
+                };
+                let id = write_ops_draft(
+                    &self.session,
+                    platform,
+                    &format!("command-{action}"),
+                    name,
+                    &detail,
+                )?;
+                println!("{platform} command {action} draft saved: {id}");
+                println!("command: {name}");
+                println!("detail: {detail}");
+                println!("MVP note: bot command config was not changed.");
+                Ok(())
+            }
+            _ => {
+                println!("usage: {platform} command list|enable|disable|edit");
+                Ok(())
+            }
+        }
+    }
+
+    fn bot_timer(&self, platform: &str, parsed: &[String]) -> io::Result<()> {
+        match parsed.get(2).map(String::as_str) {
+            Some("list") => {
+                self.bot_history(platform, "timer")?;
+                println!("MVP note: live bot timer registry is not connected yet.");
+                Ok(())
+            }
+            Some("edit") => {
+                let args = option_positionals(parsed, 3, &["--confirm"]);
+                let Some(timer_id) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: {platform} timer edit <id> key=value [key=value...] --confirm {platform}:timer:<id>:edit"
+                    );
+                    return Ok(());
+                };
+                if args.len() < 2 {
+                    println!(
+                        "usage: {platform} timer edit <id> key=value [key=value...] --confirm {platform}:timer:<id>:edit"
+                    );
+                    return Ok(());
+                }
+                let expected = format!("{platform}:timer:{timer_id}:edit");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let detail = args[1..].join(" ");
+                let id = write_ops_draft(&self.session, platform, "timer-edit", timer_id, &detail)?;
+                println!("{platform} timer edit draft saved: {id}");
+                println!("timer: {timer_id}");
+                println!("detail: {detail}");
+                println!("MVP note: bot timer config was not changed.");
+                Ok(())
+            }
+            _ => {
+                println!("usage: {platform} timer list|edit");
+                Ok(())
+            }
+        }
+    }
+
+    fn discord_incident_post(&self, parsed: &[String]) -> io::Result<()> {
+        let args = option_positionals(parsed, 2, &["--confirm"]);
+        let Some(incident) = args.first().map(String::as_str) else {
+            println!(
+                "usage: discord incident-post <incident> [channel] [message] --confirm discord:incident-post:<incident>"
+            );
+            return Ok(());
+        };
+        let expected = format!("discord:incident-post:{incident}");
+        if !confirmation_matches(parsed, &expected) {
+            return Ok(());
+        }
+        let detail = if args.len() > 1 {
+            args[1..].join(" ")
+        } else {
+            "incident post requested".to_string()
+        };
+        let id = write_ops_draft(&self.session, "discord", "incident-post", incident, &detail)?;
+        println!("discord incident-post draft saved: {id}");
+        println!("incident: {incident}");
+        println!("detail: {detail}");
+        println!("MVP note: Discord API was not called.");
+        Ok(())
+    }
+
+    fn twitch_lobby(&self, parsed: &[String]) -> io::Result<()> {
+        match parsed.get(2).map(String::as_str) {
+            Some("announce") => {
+                let args = option_positionals(parsed, 3, &["--confirm"]);
+                let Some(lobby) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: twitch lobby announce <lobby> [message] --confirm twitch:lobby:<lobby>:announce"
+                    );
+                    return Ok(());
+                };
+                let expected = format!("twitch:lobby:{lobby}:announce");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let detail = if args.len() > 1 {
+                    args[1..].join(" ")
+                } else {
+                    "lobby announcement requested".to_string()
+                };
+                let id =
+                    write_ops_draft(&self.session, "twitch", "lobby-announce", lobby, &detail)?;
+                println!("twitch lobby announce draft saved: {id}");
+                println!("lobby: {lobby}");
+                println!("detail: {detail}");
+                println!("MVP note: Twitch API was not called.");
+                Ok(())
+            }
+            _ => {
+                println!("usage: twitch lobby announce <lobby>");
+                Ok(())
+            }
+        }
+    }
+
+    fn twitch_stream(&self, parsed: &[String]) -> io::Result<()> {
+        match parsed.get(2).map(String::as_str) {
+            Some("set-title-hint") => {
+                let args = non_flag_args(parsed, 3);
+                if args.is_empty() {
+                    println!("usage: twitch stream set-title-hint [channel] <title>");
+                    return Ok(());
+                }
+                let (target, title) = if args.len() == 1 {
+                    ("default", args[0].clone())
+                } else {
+                    (args[0].as_str(), args[1..].join(" "))
+                };
+                let id =
+                    write_ops_draft(&self.session, "twitch", "stream-title-hint", target, &title)?;
+                println!("twitch stream title hint draft saved: {id}");
+                println!("target: {target}");
+                println!("title: {title}");
+                println!("MVP note: title hint is local; Twitch API was not called.");
+                Ok(())
+            }
+            _ => {
+                println!("usage: twitch stream set-title-hint [channel] <title>");
+                Ok(())
+            }
+        }
+    }
+
+    fn bot_history(&self, platform: &str, filter: &str) -> io::Result<()> {
+        let text =
+            read_file_to_string(&self.session.drafts_dir().join(format!("{platform}.jsonl")))?;
+        if text.trim().is_empty() {
+            println!("{platform} draft history is empty");
+            return Ok(());
+        }
+        let mut shown = 0_usize;
+        for line in text.lines().filter(|line| line.contains(filter)).take(200) {
+            println!("{line}");
+            shown += 1;
+        }
+        if shown == 0 {
+            println!("no {platform} drafts matched: {filter}");
+        }
+        Ok(())
+    }
+
     fn stub_or_unknown(
         &self,
         line: &str,
@@ -3279,6 +3634,34 @@ fn print_help() {
     println!(
         "  pack schedule-check <repo-id> <when-or-interval> --confirm pack:<repo-id>:schedule-check"
     );
+    println!("  discord status [--execute]");
+    println!("  discord logs [--follow] [--execute]");
+    println!("  discord reload --confirm discord:reload:bot");
+    println!("  discord announce <channel> <message> --confirm discord:announce:<channel>");
+    println!("  discord sync-roles --confirm discord:sync-roles:all");
+    println!("  discord command list");
+    println!(
+        "  discord command enable|disable|edit <name> [detail] --confirm discord:command:<name>:<action>"
+    );
+    println!("  discord timer list");
+    println!(
+        "  discord timer edit <id> key=value [key=value...] --confirm discord:timer:<id>:edit"
+    );
+    println!(
+        "  discord incident-post <incident> [channel] [message] --confirm discord:incident-post:<incident>"
+    );
+    println!("  twitch status [--execute]");
+    println!("  twitch logs [--follow] [--execute]");
+    println!("  twitch connect|disconnect <channel> [reason] --confirm twitch:<action>:<channel>");
+    println!("  twitch announce <channel> <message> --confirm twitch:announce:<channel>");
+    println!("  twitch command list");
+    println!(
+        "  twitch command enable|disable|edit <name> [detail] --confirm twitch:command:<name>:<action>"
+    );
+    println!("  twitch timer list");
+    println!("  twitch timer edit <id> key=value [key=value...] --confirm twitch:timer:<id>:edit");
+    println!("  twitch lobby announce <lobby> [message] --confirm twitch:lobby:<lobby>:announce");
+    println!("  twitch stream set-title-hint [channel] <title>");
     println!("  exit");
 }
 

@@ -17,6 +17,8 @@ Sources prioritaires:
 - Worlds generation;
 - Evolution packs/releases;
 - Pulse;
+- Discord social bot;
+- Twitch assistant;
 - room multiserver logs;
 - room events;
 - DB/backup logs;

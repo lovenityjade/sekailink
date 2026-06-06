@@ -70,6 +70,16 @@ pub fn log_catalog() -> &'static [(&'static str, &'static str, &'static str)] {
             "Link",
             "Uploaded client diagnostics/reports",
         ),
+        (
+            "discord:bot",
+            "Link",
+            "Discord social bot status, announcements, command changes",
+        ),
+        (
+            "twitch:assistant",
+            "Link",
+            "Twitch assistant status, announcements, command changes",
+        ),
     ]
 }
 
@@ -229,6 +239,8 @@ fn log_source_service(source: &str) -> Option<(&'static str, &'static str)> {
         "evolution:cdn" => Some(("evolution", "sekailink-evolution-admin-agent")),
         "pulse:assistant" => Some(("pulse", "sekailink-pulse-rag-api")),
         "client:reports" => Some(("link", "sekailink-chat-api")),
+        "discord:bot" => Some(("link", "sekailink-social-bots")),
+        "twitch:assistant" => Some(("link", "sekailink-twitch-assistant")),
         _ => None,
     }
 }

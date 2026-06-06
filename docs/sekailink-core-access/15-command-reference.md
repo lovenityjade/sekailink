@@ -151,31 +151,31 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `schedule resume <job> [reason] --confirm schedule:<job>:resume` | Admin | Oui | Cree un draft resume scheduler; aucun job modifie. |
 | `schedule run-now <job> [reason] --confirm schedule:<job>:run-now` | Admin | Oui | Cree un draft run-now; aucun job execute. |
 | `schedule history` | Service | Non | Historique local des jobs/drafts scheduler. |
-| `discord status` | Service | Non | Statut bot Discord. |
-| `discord reload` | Admin | Oui | Reload bot. |
-| `discord announce <channel> <message>` | Service | Oui | Annonce Discord. |
-| `discord sync-roles` | Admin | Oui | Sync roles. |
+| `discord status [--execute]` | Service | Non | Statut bot Discord via service allowliste. |
+| `discord reload --confirm discord:reload:bot` | Admin | Oui | Draft reload bot. |
+| `discord announce <channel> <message> --confirm discord:announce:<channel>` | Service | Oui | Draft annonce Discord. |
+| `discord sync-roles --confirm discord:sync-roles:all` | Admin | Oui | Draft sync roles. |
 | `discord command list` | Service | Non | Liste commandes. |
-| `discord command enable <name>` | Admin | Oui | Active commande. |
-| `discord command disable <name>` | Admin | Oui | Desactive commande. |
-| `discord command edit <name>` | Admin | Oui | Edite commande. |
+| `discord command enable <name> [detail] --confirm discord:command:<name>:enable` | Admin | Oui | Draft activation commande. |
+| `discord command disable <name> [detail] --confirm discord:command:<name>:disable` | Admin | Oui | Draft desactivation commande. |
+| `discord command edit <name> [detail] --confirm discord:command:<name>:edit` | Admin | Oui | Draft edition commande. |
 | `discord timer list` | Service | Non | Liste timers. |
-| `discord timer edit <id>` | Admin | Oui | Edite timer. |
-| `discord incident-post <incident>` | Service | Oui | Poste incident. |
-| `discord logs` | Service | Non | Logs Discord. |
-| `twitch status` | Service | Non | Statut bot Twitch. |
-| `twitch connect <channel>` | Admin | Oui | Connecte channel. |
-| `twitch disconnect <channel>` | Admin | Oui | Deconnecte channel. |
-| `twitch announce <channel> <message>` | Service | Oui | Annonce Twitch. |
+| `discord timer edit <id> key=value [key=value...] --confirm discord:timer:<id>:edit` | Admin | Oui | Draft edition timer. |
+| `discord incident-post <incident> [channel] [message] --confirm discord:incident-post:<incident>` | Service | Oui | Draft post incident. |
+| `discord logs [--follow] [--execute]` | Service | Non | Logs Discord. |
+| `twitch status [--execute]` | Service | Non | Statut bot Twitch via service allowliste. |
+| `twitch connect <channel> [reason] --confirm twitch:connect:<channel>` | Admin | Oui | Draft connexion channel. |
+| `twitch disconnect <channel> [reason] --confirm twitch:disconnect:<channel>` | Admin | Oui | Draft deconnexion channel. |
+| `twitch announce <channel> <message> --confirm twitch:announce:<channel>` | Service | Oui | Draft annonce Twitch. |
 | `twitch command list` | Service | Non | Liste commandes. |
-| `twitch command enable <name>` | Admin | Oui | Active commande. |
-| `twitch command disable <name>` | Admin | Oui | Desactive commande. |
-| `twitch command edit <name>` | Admin | Oui | Edite commande. |
+| `twitch command enable <name> [detail] --confirm twitch:command:<name>:enable` | Admin | Oui | Draft activation commande. |
+| `twitch command disable <name> [detail] --confirm twitch:command:<name>:disable` | Admin | Oui | Draft desactivation commande. |
+| `twitch command edit <name> [detail] --confirm twitch:command:<name>:edit` | Admin | Oui | Draft edition commande. |
 | `twitch timer list` | Service | Non | Liste timers. |
-| `twitch timer edit <id>` | Admin | Oui | Edite timer. |
-| `twitch lobby announce <lobby>` | Service | Oui | Annonce lobby. |
-| `twitch stream set-title-hint` | Service | Non | Aide titre stream. |
-| `twitch logs` | Service | Non | Logs Twitch. |
+| `twitch timer edit <id> key=value [key=value...] --confirm twitch:timer:<id>:edit` | Admin | Oui | Draft edition timer. |
+| `twitch lobby announce <lobby> [message] --confirm twitch:lobby:<lobby>:announce` | Service | Oui | Draft annonce lobby. |
+| `twitch stream set-title-hint [channel] <title>` | Service | Non | Draft aide titre stream. |
+| `twitch logs [--follow] [--execute]` | Service | Non | Logs Twitch. |
 | `cleanup plan logs` | Admin | Non | Cree un draft plan cleanup logs; aucun scan/suppression. |
 | `cleanup plan db` | Admin | Non | Cree un draft plan cleanup DB; aucune mutation DB. |
 | `cleanup plan spool` | Admin | Non | Cree un draft plan cleanup spool; aucune suppression. |

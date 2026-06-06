@@ -52,3 +52,6 @@
   check/validate/stage/publish/rollback/schedule workflows.
 - Added audited local drafts for scheduler edit/pause/resume/run-now and
   cleanup plan/apply/rollback workflows.
+- Added Discord/Twitch bot status/log probes and audited local drafts for bot
+  announcements, command edits, timers, Discord incident posts, and Twitch
+  channel/lobby/title operations.

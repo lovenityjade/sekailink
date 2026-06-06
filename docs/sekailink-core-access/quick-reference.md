@@ -74,6 +74,19 @@ client diagnostics-list [query]
 client diagnostics-export [query] --file diagnostics.md
 ```
 
+## Bots
+
+```text
+discord status
+discord logs --follow
+discord announce <channel> <message> --confirm discord:announce:<channel>
+discord incident-post <incident> <channel> <message> --confirm discord:incident-post:<incident>
+twitch status
+twitch logs --follow
+twitch announce <channel> <message> --confirm twitch:announce:<channel>
+twitch stream set-title-hint <channel> <title>
+```
+
 ## Admin critical
 
 ```text
