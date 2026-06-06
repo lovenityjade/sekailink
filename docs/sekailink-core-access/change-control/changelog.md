@@ -15,3 +15,5 @@
 - Added local maintenance schedule/status/history drafts.
 - Added local scheduler draft add/list/calendar/history commands.
 - Added local pack repository drafts and pack check scheduler draft command.
+- Added explicit `--execute` plus `SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1`
+  gate for read-only remote log and health commands.

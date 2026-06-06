@@ -18,12 +18,12 @@ Implemented MVP commands include:
 - `commands search <query>`
 - `server status all`
 - `server services [server|all]`
-- `server logs <server> <service> [--follow]` dry-run
-- `health probe [server|all]` dry-run
+- `server logs <server> <service> [--follow] [--execute]`
+- `health probe [server|all] [--execute]`
 - `logs list`
 - `logs list --by-server`
 - `logs list --by-incident`
-- `logs tail <source> [--follow]` dry-run
+- `logs tail <source> [--follow] [--execute]`
 - `audit search [query]`
 - `audit export [query] [file-name]`
 - `note add <target> <text>`
@@ -74,3 +74,10 @@ SEKAILINK_CORE_ACCESS_USER=jade SEKAILINK_CORE_ACCESS_ROLE=admin \
 
 Production auth must be replaced by Nexus login/capabilities before this tool is
 trusted for real server mutation.
+
+Read-only remote commands are blocked unless both conditions are true:
+
+- the command includes `--execute`;
+- `SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1` is set in the environment.
+
+Remote write/mutation commands remain unimplemented.

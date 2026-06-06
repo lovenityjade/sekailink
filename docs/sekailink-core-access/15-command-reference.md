@@ -11,16 +11,16 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `commands search <query>` | Service | Non | Recherche dans le registre de commandes. |
 | `server status <server|all>` | Service | Non | Statut CPU/RAM/disk/uptime/services. |
 | `server services <server>` | Service | Non | Liste services systemd connus. |
-| `server logs <server> <service> --follow` | Service | Non | Suit les logs d'un service. |
+| `server logs <server> <service> --follow --execute` | Service | Non | Suit les logs d'un service; execution distante bloquee sans gate env. |
 | `server restart <server> <service>` | Admin | Oui | Redemarre un service allowlist. |
 | `server update plan <server>` | Admin | Non | Prepare un plan d'update. |
 | `server update apply <server>` | Admin | Oui | Applique un update apres backup gate. |
 | `ssh open <server>` | Admin | Oui | Ouvre une session SSH explicite. |
-| `health probe <server|all>` | Service | Non | Lance/verifie une sonde health. |
+| `health probe <server|all> --execute` | Service | Non | Lance/verifie une sonde health; dry-run par defaut. |
 | `logs list` | Service | Non | Liste les sources logs. |
 | `logs list --by-server` | Service | Non | Vue logs par serveur/service. |
 | `logs list --by-incident` | Service | Non | Vue logs correlees incident. |
-| `logs tail <source>` | Service | Non | Suit une source log. |
+| `logs tail <source> --execute` | Service | Non | Suit une source log; dry-run par defaut. |
 | `logs search <query>` | Service | Non | Recherche logs. |
 | `logs filter <expr>` | Service | Non | Filtre par user/lobby/room/correlation. |
 | `logs pin` | Service | Non | Epingle la selection courante. |

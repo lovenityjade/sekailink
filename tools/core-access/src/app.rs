@@ -14,6 +14,7 @@ use crate::util::{home_dir, split_command_line};
 use std::env;
 use std::io;
 use std::path::PathBuf;
+use std::process::Command;
 
 pub fn run() -> Result<(), Box<dyn std::error::Error>> {
     let options = Options::parse(env::args().skip(1).collect())?;
@@ -416,11 +417,10 @@ impl App {
             return Ok(());
         };
         let follow = parsed.iter().any(|part| part == "--follow" || part == "-f");
+        let execute = parsed.iter().any(|part| part == "--execute");
         match render_server_logs_plan(server, service, follow) {
             Ok(plan) => {
-                println!("dry-run remote log command:");
-                println!("{plan}");
-                println!("MVP note: command was not executed.");
+                self.render_or_execute_remote_plan("remote log command", &plan, execute)?;
             }
             Err(err) => println!("{err}"),
         }
@@ -434,11 +434,10 @@ impl App {
             return Ok(());
         };
         let follow = parsed.iter().any(|part| part == "--follow" || part == "-f");
+        let execute = parsed.iter().any(|part| part == "--execute");
         match render_log_tail_plan(source, follow) {
             Ok(plan) => {
-                println!("dry-run remote log command:");
-                println!("{plan}");
-                println!("MVP note: command was not executed.");
+                self.render_or_execute_remote_plan("remote log command", &plan, execute)?;
             }
             Err(err) => println!("{err}"),
         }
@@ -447,14 +446,34 @@ impl App {
 
     fn health_probe(&self, parsed: &[String]) -> io::Result<()> {
         let target = parsed.get(2).map(String::as_str).unwrap_or("all");
+        let execute = parsed.iter().any(|part| part == "--execute");
         match render_health_probe_plan(target) {
             Ok(plan) => {
-                println!("dry-run health probe:");
-                println!("{plan}");
-                println!("MVP note: command was not executed.");
+                self.render_or_execute_remote_plan("health probe", &plan, execute)?;
             }
             Err(err) => println!("{err}"),
         }
+        Ok(())
+    }
+
+    fn render_or_execute_remote_plan(&self, label: &str, plan: &str, execute: bool) -> io::Result<()> {
+        if !execute {
+            println!("dry-run {label}:");
+            println!("{plan}");
+            println!("MVP note: command was not executed. Add --execute and set SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1 to run it.");
+            return Ok(());
+        }
+        if env::var("SEKAILINK_CORE_ACCESS_REMOTE_READONLY").ok().as_deref() != Some("1") {
+            println!("remote read-only execution blocked by environment gate");
+            println!("set SEKAILINK_CORE_ACCESS_REMOTE_READONLY=1 and rerun with --execute");
+            println!("planned command:");
+            println!("{plan}");
+            return Ok(());
+        }
+        println!("executing read-only {label}:");
+        println!("{plan}");
+        let status = Command::new("sh").arg("-lc").arg(plan).status()?;
+        println!("remote command exit status: {status}");
         Ok(())
     }
 
@@ -920,12 +939,12 @@ fn print_help() {
     println!("  commands search <query>");
     println!("  server status all");
     println!("  server services [server|all]");
-    println!("  server logs <server> <service> [--follow]");
-    println!("  health probe [server|all]");
+    println!("  server logs <server> <service> [--follow] [--execute]");
+    println!("  health probe [server|all] [--execute]");
     println!("  logs list");
     println!("  logs list --by-server");
     println!("  logs list --by-incident");
-    println!("  logs tail <source> [--follow]");
+    println!("  logs tail <source> [--follow] [--execute]");
     println!("  audit search [query]");
     println!("  audit export [query] [file-name]");
     println!("  note add <target> <text>");
