@@ -26,8 +26,10 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `logs pin` | Service | Non | Epingle la selection courante. |
 | `logs note` | Service | Non | Cree une note liee. |
 | `logs export --format <md|json|txt>` | Service | Non | Exporte logs/notes. |
+| `audit export [query] [file-name]` | Service | Non | Exporte des lignes d'audit locales dans le dossier exports Core Access. |
 | `note add <target> <text>` | Service | Non | Ajoute une note locale liee a un incident, log, user, lobby ou room. |
 | `note list [query]` | Service | Non | Liste les notes locales, optionnellement filtrees. |
+| `note export [query] [file-name]` | Service | Non | Exporte des notes locales dans le dossier exports Core Access. |
 | `approval request <command> <reason>` | Service | Non | Demande une approbation Admin pour une commande sensible. |
 | `approval list` | Service | Non | Liste les demandes et decisions locales. |
 | `approval approve <id> [reason]` | Admin | Oui | Approuve localement une demande existante, sans execution serveur en MVP. |

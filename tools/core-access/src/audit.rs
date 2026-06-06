@@ -30,6 +30,7 @@ impl Session {
         fs::create_dir_all(self.data_dir.join("notes"))?;
         fs::create_dir_all(self.data_dir.join("approvals"))?;
         fs::create_dir_all(self.data_dir.join("history"))?;
+        fs::create_dir_all(self.exports_dir())?;
         Ok(())
     }
 
@@ -47,6 +48,10 @@ impl Session {
 
     pub fn history_path(&self) -> PathBuf {
         self.data_dir.join("history").join("commands.txt")
+    }
+
+    pub fn exports_dir(&self) -> PathBuf {
+        self.data_dir.join("exports")
     }
 }
 
@@ -120,6 +125,19 @@ pub fn append_history(session: &Session, line: &str) -> io::Result<()> {
     append_jsonl(&session.history_path(), &format!("{line}\n"))
 }
 
+pub fn write_export(session: &Session, prefix: &str, requested_name: Option<&str>, body: &str) -> io::Result<PathBuf> {
+    let file_name = requested_name
+        .filter(|name| !name.trim().is_empty())
+        .map(sanitize_export_file_name)
+        .unwrap_or_else(|| format!("{prefix}-{}.jsonl", epoch_nanos()));
+    let path = session.exports_dir().join(file_name);
+    if let Some(parent) = path.parent() {
+        fs::create_dir_all(parent)?;
+    }
+    fs::write(&path, body)?;
+    Ok(path)
+}
+
 pub fn read_file_to_string(path: &Path) -> io::Result<String> {
     match fs::read_to_string(path) {
         Ok(value) => Ok(value),
@@ -134,4 +152,40 @@ fn append_jsonl(path: &Path, line: &str) -> io::Result<()> {
     }
     let mut file = OpenOptions::new().create(true).append(true).open(path)?;
     file.write_all(line.as_bytes())
+}
+
+fn sanitize_export_file_name(name: &str) -> String {
+    let mut out = String::new();
+    for ch in name.trim().chars() {
+        if ch.is_ascii_alphanumeric() || matches!(ch, '.' | '-' | '_') {
+            out.push(ch);
+        } else {
+            out.push('_');
+        }
+    }
+    if out.is_empty() {
+        "export.jsonl".to_string()
+    } else if out.ends_with(".jsonl") || out.ends_with(".txt") || out.ends_with(".md") {
+        out
+    } else {
+        format!("{out}.jsonl")
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::sanitize_export_file_name;
+
+    #[test]
+    fn export_file_name_is_bounded() {
+        assert_eq!(
+            sanitize_export_file_name("../../incident room.json"),
+            ".._.._incident_room.json.jsonl"
+        );
+    }
+
+    #[test]
+    fn export_file_name_keeps_known_extension() {
+        assert_eq!(sanitize_export_file_name("room-logs.txt"), "room-logs.txt");
+    }
 }

@@ -1,6 +1,6 @@
 use crate::audit::{
     Session, append_approval_decision, append_approval_request, append_audit, append_history,
-    append_note, read_file_to_string,
+    append_note, read_file_to_string, write_export,
 };
 use crate::commands::{COMMANDS, Confirmation, command_names, find_command, search_commands};
 use crate::line_editor::LineEditor;
@@ -196,6 +196,13 @@ impl App {
                 append_audit(&self.session, line, "ok", "audit search")?;
                 true
             }
+            "audit" if parsed.get(1).map(String::as_str) == Some("export") => {
+                let query = parsed.get(2).map(String::as_str).unwrap_or("");
+                let requested_name = parsed.get(3).map(String::as_str);
+                self.export_jsonl("audit", &self.session.audit_dir().join("core-access.jsonl"), query, requested_name)?;
+                append_audit(&self.session, line, "ok", "audit export")?;
+                true
+            }
             "note" if parsed.get(1).map(String::as_str) == Some("add") => {
                 self.note_add(&parsed)?;
                 append_audit(&self.session, line, "ok", "note add")?;
@@ -204,6 +211,13 @@ impl App {
             "note" if parsed.get(1).map(String::as_str) == Some("list") => {
                 self.note_list(parsed.get(2).map(String::as_str).unwrap_or(""))?;
                 append_audit(&self.session, line, "ok", "note list")?;
+                true
+            }
+            "note" if parsed.get(1).map(String::as_str) == Some("export") => {
+                let query = parsed.get(2).map(String::as_str).unwrap_or("");
+                let requested_name = parsed.get(3).map(String::as_str);
+                self.export_jsonl("notes", &self.session.notes_path(), query, requested_name)?;
+                append_audit(&self.session, line, "ok", "note export")?;
                 true
             }
             "approval" => {
@@ -283,6 +297,35 @@ impl App {
         for line in text.lines().filter(|line| query.is_empty() || line.contains(query)).take(200) {
             println!("{line}");
         }
+        Ok(())
+    }
+
+    fn export_jsonl(
+        &self,
+        prefix: &str,
+        source_path: &std::path::Path,
+        query: &str,
+        requested_name: Option<&str>,
+    ) -> io::Result<()> {
+        let text = read_file_to_string(source_path)?;
+        if text.is_empty() {
+            println!("nothing to export from {}", source_path.display());
+            return Ok(());
+        }
+        let mut body = String::new();
+        let mut count = 0_usize;
+        for line in text.lines().filter(|line| query.is_empty() || line.contains(query)) {
+            body.push_str(line);
+            body.push('\n');
+            count += 1;
+        }
+        if count == 0 {
+            println!("no lines matched export query: {query}");
+            return Ok(());
+        }
+        let path = write_export(&self.session, prefix, requested_name, &body)?;
+        println!("exported {count} lines to {}", path.display());
+        println!("MVP note: exports are local Core Access files, not Nexus DB records yet.");
         Ok(())
     }
 
@@ -471,8 +514,10 @@ fn print_help() {
     println!("  logs list --by-server");
     println!("  logs list --by-incident");
     println!("  audit search [query]");
+    println!("  audit export [query] [file-name]");
     println!("  note add <target> <text>");
     println!("  note list [query]");
+    println!("  note export [query] [file-name]");
     println!("  approval request <command> <reason>");
     println!("  approval list");
     println!("  approval approve <id> [reason]");

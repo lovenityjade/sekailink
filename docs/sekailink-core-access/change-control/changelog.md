@@ -6,3 +6,4 @@
 - Added local-only Rust MVP under `tools/core-access` with command registry,
   RBAC gates, persistent command history, local JSONL audit, notes, approval
   queue primitives, log catalog and local dashboard.
+- Added bounded local exports for Core Access audit and note JSONL.

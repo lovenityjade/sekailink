@@ -22,8 +22,10 @@ Implemented MVP commands include:
 - `logs list --by-server`
 - `logs list --by-incident`
 - `audit search [query]`
+- `audit export [query] [file-name]`
 - `note add <target> <text>`
 - `note list [query]`
+- `note export [query] [file-name]`
 - `approval request <command> <reason>`
 - `approval list`
 - `approval approve <id> [reason]` as Admin

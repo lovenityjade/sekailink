@@ -17,8 +17,10 @@ logs filter
 logs pin
 logs note
 logs export
+audit export
 note add
 note list
+note export
 approval request
 approval list
 approval approve
