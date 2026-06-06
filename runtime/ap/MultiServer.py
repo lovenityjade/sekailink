@@ -2774,6 +2774,7 @@ async def main(args: argparse.Namespace):
                   args.hint_cost, not args.disable_item_cheat, args.release_mode, args.collect_mode,
                   args.countdown_mode, args.remaining_mode, args.hint_mode,
                   args.auto_shutdown, args.compatibility, args.log_network)
+    ctx.save_filename = args.savefile
     data_filename = args.multidata
 
     if not data_filename:

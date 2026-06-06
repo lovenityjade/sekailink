@@ -138,6 +138,10 @@ SEKAILINK_ROOM_RUNTIME_PYTHON=/opt/sekailink/link/ap-runtime/python/bin/python3
 SEKAILINK_ROOM_RUNTIME_PORT_RANGE=38290-38390
 ```
 
+Room runtime saves are enabled by default and stored under the generation's
+`room-runtime/saves` directory. Set `SEKAILINK_ROOM_RUNTIME_DISABLE_SAVE=1`
+only for disposable test rooms.
+
 Advanced deployments can replace the default command with
 `SEKAILINK_ROOM_RUNTIME_COMMAND`. Supported placeholders are:
 
@@ -148,7 +152,9 @@ Advanced deployments can replace the default command with
 - `{generation_id}`
 - `{output_dir}`
 - `{runtime_root}`
+- `{savefile}`
 
 The status response publishes `room_status`, `room_host`, `last_port`,
-`room_runtime_log`, and `room_multidata_path`. Core uses the room status endpoint
-to resolve the final `host:port` passed to Sekaiemu/SKLMI.
+`room_runtime_log`, `room_runtime_savefile`, and `room_multidata_path`. Core uses
+the room status endpoint to resolve the final `host:port` passed to
+Sekaiemu/SKLMI.

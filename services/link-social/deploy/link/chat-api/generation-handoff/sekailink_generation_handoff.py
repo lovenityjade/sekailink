@@ -517,6 +517,13 @@ def extract_multidata(sync_package_path: str, member: str, runtime_root: Path) -
     return str(output)
 
 
+def room_runtime_savefile(state: dict[str, Any], runtime_root: Path) -> Path:
+    save_root = runtime_root / "saves"
+    save_root.mkdir(parents=True, exist_ok=True)
+    generation_id = safe_component(str(state.get("generation_id", "")), "generation")
+    return save_root / f"{generation_id}.apsave"
+
+
 def room_runtime_command(
     state: dict[str, Any],
     multidata_path: str,
@@ -524,6 +531,8 @@ def room_runtime_command(
     port: int,
     runtime_root: Path,
 ) -> tuple[list[str], Path]:
+    savefile = room_runtime_savefile(state, runtime_root)
+    state["room_runtime_savefile"] = str(savefile)
     replacements = {
         "{multidata_path}": multidata_path,
         "{host}": host,
@@ -532,6 +541,7 @@ def room_runtime_command(
         "{generation_id}": str(state.get("generation_id", "")),
         "{output_dir}": str(state.get("output_dir", "")),
         "{runtime_root}": str(runtime_root),
+        "{savefile}": str(savefile),
     }
     command = env_command("SEKAILINK_ROOM_RUNTIME_COMMAND", [])
     if command:
@@ -554,10 +564,13 @@ def room_runtime_command(
         host,
         "--port",
         str(port),
-        "--disable_save",
+        "--savefile",
+        str(savefile),
         "--loglevel",
         os.environ.get("SEKAILINK_ROOM_RUNTIME_LOGLEVEL", "info"),
     ]
+    if os.environ.get("SEKAILINK_ROOM_RUNTIME_DISABLE_SAVE", "").strip() == "1":
+        command.append("--disable_save")
     if os.environ.get("SEKAILINK_ROOM_RUNTIME_USE_EMBEDDED_OPTIONS", "").strip() == "1":
         command.append("--use_embedded_options")
     auto_shutdown = os.environ.get("SEKAILINK_ROOM_RUNTIME_AUTO_SHUTDOWN_SECONDS", "").strip()
@@ -583,11 +596,16 @@ def refresh_room_runtime_state(state: dict[str, Any]) -> None:
             state["room_status"] = "starting"
             state["last_port"] = 0
         state["room_runtime_alive"] = True
+        state.pop("room_runtime_error", None)
+        state.pop("room_runtime_stopped_at", None)
         return
     if pid > 0:
         state["room_status"] = "stopped"
         state["room_runtime_alive"] = False
+        state["room_runtime_pid"] = 0
         state["last_port"] = 0
+        state.pop("room_url", None)
+        state.setdefault("room_runtime_stopped_at", now_unix())
 
 
 def stop_room_runtime(state: dict[str, Any]) -> None:
@@ -596,6 +614,7 @@ def stop_room_runtime(state: dict[str, Any]) -> None:
     if pid <= 0 or not pid_alive(pid):
         state["room_status"] = "stopped"
         state["room_runtime_alive"] = False
+        state["room_runtime_pid"] = 0
         state["last_port"] = 0
         state.pop("room_url", None)
         return
@@ -626,6 +645,7 @@ def stop_room_runtime(state: dict[str, Any]) -> None:
 
     state["room_status"] = "stopped"
     state["room_runtime_alive"] = False
+    state["room_runtime_pid"] = 0
     state["last_port"] = 0
     state.pop("room_url", None)
     state["room_runtime_stopped_at"] = now_unix()
@@ -707,6 +727,8 @@ def ensure_room_runtime(state: dict[str, Any], sync_package_path: str, package_i
     state["room_multidata_path"] = multidata_path
     state["room_runtime_log"] = str(runtime_log)
     state["room_runtime_started_at"] = now_unix()
+    state.pop("room_runtime_error", None)
+    state.pop("room_runtime_stopped_at", None)
     state["room_status"] = "starting"
     state["last_port"] = 0
     timeout = float(os.environ.get("SEKAILINK_ROOM_RUNTIME_START_TIMEOUT_SECONDS", "10"))
@@ -716,6 +738,7 @@ def ensure_room_runtime(state: dict[str, Any], sync_package_path: str, package_i
     elif process.poll() is not None:
         state["room_status"] = "failed"
         state["room_runtime_alive"] = False
+        state["room_runtime_pid"] = 0
         state["room_runtime_error"] = f"room_runtime_exit:{process.returncode}"
 
 
@@ -992,6 +1015,7 @@ def response_from_state(state: dict[str, Any]) -> dict[str, Any]:
         "room_host": state.get("room_host", ""),
         "room_bind_host": state.get("room_bind_host", ""),
         "room_multidata_path": state.get("room_multidata_path", ""),
+        "room_runtime_savefile": state.get("room_runtime_savefile", ""),
         "room_runtime_log": state.get("room_runtime_log", ""),
         "room_runtime_pid": int(state.get("room_runtime_pid") or 0),
         "room_runtime_alive": bool(state.get("room_runtime_alive", False)),
