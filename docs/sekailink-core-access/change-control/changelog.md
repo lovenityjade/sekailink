@@ -44,3 +44,5 @@
   Admin-only service start/stop/restart with exact confirmation.
 - Added gated Nexus Identity admin mutations for user create/edit/disable,
   session revocation, and forced password reset.
+- Added local release/CDN cockpit commands for manifest inventory,
+  artifact verification, public CDN probes, and audited publish/rollback drafts.

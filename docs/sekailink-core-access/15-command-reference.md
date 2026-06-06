@@ -116,16 +116,16 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `maintenance schedule <scope> <start> <end>` | Admin | Oui | Planifie maintenance. |
 | `maintenance broadcast` | Admin | Oui | Annonce maintenance. |
 | `maintenance history` | Service | Non | Historique. |
-| `release current` | Service | Non | Release actuelle. |
-| `release list` | Service | Non | Releases connues. |
-| `release verify` | Service | Non | Verifie manifest. |
-| `release verify-cdn` | Service | Non | Verifie CDN/SHA. |
-| `release compare <a> <b>` | Service | Non | Compare releases. |
-| `release publish <manifest>` | Admin | Oui | Publie manifest. |
-| `release rollback <version>` | Admin | Oui | Rollback release. |
-| `release schedule <version> <datetime>` | Admin | Oui | Planifie release. |
-| `release notes <version>` | Service | Non | Notes release. |
-| `release audit <version>` | Service | Non | Audit release. |
+| `release current` | Service | Non | Affiche le dernier manifeste local client update-bundle et ses URLs/fallbacks. |
+| `release list` | Service | Non | Liste les manifestes locaux dedupliques par date/version/channel/build. |
+| `release verify [latest|version|date|manifest] [--fast]` | Service | Non | Verifie existence, taille et SHA-256 des artefacts locaux; `--fast` saute le hash. |
+| `release verify-cdn [channel] [platform|all] --execute` | Service | Non | Probe l'API publique `release-latest`; dry-run par defaut. |
+| `release compare <a> <b>` | Service | Non | Compare deux manifestes locaux par version, URL, artefacts, tailles et hash. |
+| `release publish <manifest|version|date> --confirm release:<version>:publish` | Admin | Oui | Cree un draft audite de publication; ne modifie pas le CDN. |
+| `release rollback <version> --confirm release:<version>:rollback` | Admin | Oui | Cree un draft audite de rollback; ne modifie pas le CDN. |
+| `release schedule <manifest|version|date> <datetime> --confirm release:<version>:schedule` | Admin | Oui | Cree un draft release et un draft scheduler; non arme. |
+| `release notes [version|date|manifest]` | Service | Non | Affiche le manifeste local et les drafts release lies. |
+| `release audit [version|date|manifest]` | Service | Non | Affiche le manifeste local et les drafts release lies. |
 | `client-banner list` | Service | Non | Liste 3 slots. |
 | `client-banner edit <slot>` | Admin | Oui | Edite slot. |
 | `client-banner preview <slot>` | Service | Non | Preview. |

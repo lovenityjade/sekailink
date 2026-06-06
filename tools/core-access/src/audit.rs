@@ -38,6 +38,7 @@ impl Session {
         fs::create_dir_all(self.maintenance_dir())?;
         fs::create_dir_all(self.scheduler_dir())?;
         fs::create_dir_all(self.pack_repos_dir())?;
+        fs::create_dir_all(self.releases_dir())?;
         Ok(())
     }
 
@@ -89,6 +90,10 @@ impl Session {
 
     pub fn pack_repos_dir(&self) -> PathBuf {
         self.data_dir.join("pack-repos")
+    }
+
+    pub fn releases_dir(&self) -> PathBuf {
+        self.data_dir.join("releases")
     }
 }
 
@@ -343,6 +348,28 @@ pub fn write_pack_repo(
         ),
     )?;
     Ok(record_id)
+}
+
+pub fn write_release_draft(
+    session: &Session,
+    action: &str,
+    target: &str,
+    detail: &str,
+) -> io::Result<String> {
+    let id = format!("release-{}-{}", epoch_nanos(), std::process::id());
+    append_jsonl(
+        &session.releases_dir().join("drafts.jsonl"),
+        &format!(
+            "{{\"id\":\"{}\",\"ts\":{},\"state\":\"draft\",\"author\":\"{}\",\"action\":\"{}\",\"target\":\"{}\",\"detail\":\"{}\"}}\n",
+            json_escape(&id),
+            epoch_seconds(),
+            json_escape(&session.sekailink_user),
+            json_escape(action),
+            json_escape(target),
+            json_escape(detail)
+        ),
+    )?;
+    Ok(id)
 }
 
 pub fn write_export(

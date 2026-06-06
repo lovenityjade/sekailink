@@ -7,7 +7,8 @@ use crate::audit::{
     Session, append_approval_decision, append_approval_request, append_audit,
     append_client_diagnostics_request, append_history, append_incident_event, append_log_pin,
     append_note, read_file_to_string, write_client_banner_draft, write_export,
-    write_export_with_extension, write_maintenance_draft, write_pack_repo, write_schedule_job,
+    write_export_with_extension, write_maintenance_draft, write_pack_repo, write_release_draft,
+    write_schedule_job,
 };
 use crate::commands::{COMMANDS, Confirmation, command_names, find_command, search_commands};
 use crate::line_editor::LineEditor;
@@ -18,6 +19,11 @@ use crate::nexus::{
     identity_user_revoke_sessions_plan, lobby_list_plan, lobby_open_plan, non_flag_args,
 };
 use crate::rbac::Role;
+use crate::release_ops::{
+    dedupe_manifests, discover_manifests, latest_manifest, public_release_urls,
+    render_manifest_compare, render_manifest_list, render_manifest_summary, render_verification,
+    resolve_manifest, verify_manifest,
+};
 use crate::system::{
     known_services, log_catalog, render_dashboard, render_health_probe_plan,
     render_log_filter_plan, render_log_search_plan, render_log_tail_plan, render_server_logs_plan,
@@ -404,6 +410,27 @@ impl App {
             {
                 self.maintenance(&parsed)?;
                 append_audit(&self.session, line, "ok", "maintenance local")?;
+                true
+            }
+            "release"
+                if matches!(
+                    parsed.get(1).map(String::as_str),
+                    Some(
+                        "current"
+                            | "list"
+                            | "verify"
+                            | "verify-cdn"
+                            | "compare"
+                            | "publish"
+                            | "rollback"
+                            | "schedule"
+                            | "notes"
+                            | "audit"
+                    )
+                ) =>
+            {
+                self.release(&parsed)?;
+                append_audit(&self.session, line, "ok", "release workflow")?;
                 true
             }
             "schedule"
@@ -1604,6 +1631,7 @@ impl App {
             ("maintenance", self.session.maintenance_dir()),
             ("scheduler", self.session.scheduler_dir()),
             ("pack-repos", self.session.pack_repos_dir()),
+            ("releases", self.session.releases_dir()),
             ("docs", docs_root_path()),
             ("pdfs", docs_root_path().join("dist").join("pdf")),
         ]
@@ -1695,6 +1723,8 @@ impl App {
             read_file_to_string(&self.session.maintenance_dir().join("history.jsonl"))?;
         let schedule = read_file_to_string(&self.session.scheduler_dir().join("jobs.jsonl"))?;
         let pack_repos = read_file_to_string(&self.session.pack_repos_dir().join("repos.jsonl"))?;
+        let release_drafts =
+            read_file_to_string(&self.session.releases_dir().join("drafts.jsonl"))?;
         let diagnostics = read_file_to_string(&self.session.client_diagnostics_path())?;
         let mut timeline = self.ops_timeline_entries()?;
         timeline.sort_by_key(|entry| entry.ts);
@@ -1746,6 +1776,7 @@ impl App {
         push_json_section_from_text(&mut body, "Maintenance History", &maintenance_history, 40);
         push_json_section_from_text(&mut body, "Schedule Drafts", &schedule, 60);
         push_json_section_from_text(&mut body, "Pack Repo Drafts", &pack_repos, 60);
+        push_json_section_from_text(&mut body, "Release Drafts", &release_drafts, 60);
         push_json_section_from_text(&mut body, "Client Diagnostics Requests", &diagnostics, 60);
         body.push_str("## Client Banner Drafts\n\n```text\n");
         for slot in 1..=3 {
@@ -1773,6 +1804,8 @@ impl App {
             read_file_to_string(&self.session.maintenance_dir().join("history.jsonl"))?;
         let schedule = read_file_to_string(&self.session.scheduler_dir().join("jobs.jsonl"))?;
         let pack_repos = read_file_to_string(&self.session.pack_repos_dir().join("repos.jsonl"))?;
+        let release_drafts =
+            read_file_to_string(&self.session.releases_dir().join("drafts.jsonl"))?;
         let diagnostics = read_file_to_string(&self.session.client_diagnostics_path())?;
         let mut entries = Vec::new();
         push_timeline_entries(&mut entries, "audit", &audit);
@@ -1783,6 +1816,7 @@ impl App {
         push_timeline_entries(&mut entries, "maintenance", &maintenance);
         push_timeline_entries(&mut entries, "schedule", &schedule);
         push_timeline_entries(&mut entries, "pack", &pack_repos);
+        push_timeline_entries(&mut entries, "release", &release_drafts);
         push_timeline_entries(&mut entries, "diagnostics", &diagnostics);
         Ok(entries)
     }
@@ -2088,6 +2122,220 @@ impl App {
         }
     }
 
+    fn release(&self, parsed: &[String]) -> io::Result<()> {
+        let repo_root = repo_root_path();
+        match parsed.get(1).map(String::as_str) {
+            Some("current") => match latest_manifest(&repo_root)? {
+                Some(manifest) => {
+                    println!("{}", render_manifest_summary(&manifest));
+                }
+                None => {
+                    println!("no local release manifest found");
+                    println!(
+                        "expected: apps/client-core/release/update-bundles/YYYYMMDD/sekailink-client-release-YYYYMMDD.json"
+                    );
+                }
+            },
+            Some("list") => {
+                let manifests = dedupe_manifests(&discover_manifests(&repo_root)?);
+                println!("{}", render_manifest_list(&manifests));
+            }
+            Some("verify") => {
+                let args = non_flag_args(parsed, 2);
+                let selector = args.first().map(String::as_str);
+                let check_sha = !parsed.iter().any(|part| part == "--fast");
+                match resolve_manifest(&repo_root, selector)? {
+                    Some(manifest) => {
+                        println!("release verify: {}", manifest.version);
+                        println!("manifest: {}", manifest.path.display());
+                        if check_sha {
+                            println!("sha256: enabled");
+                        } else {
+                            println!("sha256: skipped by --fast");
+                        }
+                        let verification = verify_manifest(&manifest, check_sha);
+                        println!("{}", render_verification(&verification, check_sha));
+                    }
+                    None => println!("release manifest not found"),
+                }
+            }
+            Some("verify-cdn") => {
+                let args = non_flag_args(parsed, 2);
+                let channel = args.first().map(String::as_str).unwrap_or("test");
+                let platform = args.get(1).map(String::as_str).unwrap_or("all");
+                let execute = parsed.iter().any(|part| part == "--execute");
+                let urls = public_release_urls(channel, platform);
+                println!("release CDN probe");
+                for url in &urls {
+                    println!("GET {url}");
+                }
+                if !execute {
+                    println!("dry-run only. Add --execute to call the public release-latest API.");
+                    return Ok(());
+                }
+                for url in urls {
+                    println!();
+                    println!("== {url}");
+                    let status = Command::new("curl")
+                        .arg("-fsS")
+                        .arg("--connect-timeout")
+                        .arg("5")
+                        .arg("--max-time")
+                        .arg("20")
+                        .arg(&url)
+                        .status()?;
+                    println!();
+                    println!("curl exit status: {status}");
+                }
+            }
+            Some("compare") => {
+                let args = non_flag_args(parsed, 2);
+                if args.len() != 2 {
+                    println!(
+                        "usage: release compare <manifest|version|date> <manifest|version|date>"
+                    );
+                    return Ok(());
+                }
+                let left = resolve_manifest(&repo_root, Some(&args[0]))?;
+                let right = resolve_manifest(&repo_root, Some(&args[1]))?;
+                match (left, right) {
+                    (Some(left), Some(right)) => {
+                        println!("{}", render_manifest_compare(&left, &right));
+                    }
+                    (None, _) => println!("left release manifest not found: {}", args[0]),
+                    (_, None) => println!("right release manifest not found: {}", args[1]),
+                }
+            }
+            Some("notes") | Some("audit") => {
+                let action = parsed.get(1).map(String::as_str).unwrap_or("notes");
+                let args = non_flag_args(parsed, 2);
+                let selector = args.first().map(String::as_str);
+                match resolve_manifest(&repo_root, selector)? {
+                    Some(manifest) => {
+                        println!("release {action}: {}", manifest.version);
+                        println!("{}", render_manifest_summary(&manifest));
+                        let drafts =
+                            read_file_to_string(&self.session.releases_dir().join("drafts.jsonl"))?;
+                        if drafts.trim().is_empty() {
+                            println!("local release drafts: empty");
+                        } else {
+                            println!("local release drafts:");
+                            for line in drafts
+                                .lines()
+                                .filter(|line| {
+                                    selector.map(|value| line.contains(value)).unwrap_or(true)
+                                })
+                                .take(100)
+                            {
+                                println!("{line}");
+                            }
+                        }
+                    }
+                    None => println!("release manifest not found"),
+                }
+            }
+            Some("publish") => {
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let Some(selector) = args.first() else {
+                    println!(
+                        "usage: release publish <manifest|version|date> --confirm release:<version>:publish"
+                    );
+                    return Ok(());
+                };
+                match resolve_manifest(&repo_root, Some(selector))? {
+                    Some(manifest) => {
+                        let expected = format!("release:{}:publish", manifest.version);
+                        if flag_value(parsed, "--confirm") != Some(expected.as_str()) {
+                            println!("release publish draft blocked by confirmation guard");
+                            println!("required confirmation: --confirm {expected}");
+                            return Ok(());
+                        }
+                        let detail = format!(
+                            "manifest={} channel={} build={} artifacts={}",
+                            manifest.path.display(),
+                            manifest.channel,
+                            manifest.build,
+                            manifest.artifacts.len()
+                        );
+                        let id = write_release_draft(
+                            &self.session,
+                            "publish",
+                            &manifest.version,
+                            &detail,
+                        )?;
+                        println!("release publish draft saved: {id}");
+                        println!(
+                            "MVP note: no CDN file was uploaded and no service was restarted."
+                        );
+                    }
+                    None => println!("release manifest not found: {selector}"),
+                }
+            }
+            Some("rollback") => {
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let Some(version) = args.first() else {
+                    println!(
+                        "usage: release rollback <version> --confirm release:<version>:rollback"
+                    );
+                    return Ok(());
+                };
+                let expected = format!("release:{version}:rollback");
+                if flag_value(parsed, "--confirm") != Some(expected.as_str()) {
+                    println!("release rollback draft blocked by confirmation guard");
+                    println!("required confirmation: --confirm {expected}");
+                    return Ok(());
+                }
+                let id = write_release_draft(
+                    &self.session,
+                    "rollback",
+                    version,
+                    "rollback requested; manual CDN manifest replacement still required",
+                )?;
+                println!("release rollback draft saved: {id}");
+                println!("MVP note: no CDN manifest changed.");
+            }
+            Some("schedule") => {
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                if args.len() < 2 {
+                    println!(
+                        "usage: release schedule <version|manifest|date> <datetime> --confirm release:<version>:schedule"
+                    );
+                    return Ok(());
+                }
+                let selector = &args[0];
+                let when = &args[1];
+                let version = resolve_manifest(&repo_root, Some(selector))?
+                    .map(|manifest| manifest.version)
+                    .unwrap_or_else(|| selector.clone());
+                let expected = format!("release:{version}:schedule");
+                if flag_value(parsed, "--confirm") != Some(expected.as_str()) {
+                    println!("release schedule draft blocked by confirmation guard");
+                    println!("required confirmation: --confirm {expected}");
+                    return Ok(());
+                }
+                let release_id = write_release_draft(
+                    &self.session,
+                    "schedule",
+                    &version,
+                    &format!("when={when}"),
+                )?;
+                let job_id = write_schedule_job(
+                    &self.session,
+                    &format!("release-publish-{version}"),
+                    when,
+                    &format!("release publish {version} --confirm release:{version}:publish"),
+                )?;
+                println!("release schedule draft saved: {release_id}");
+                println!("schedule draft added: {job_id}");
+                println!("MVP note: schedule is not armed for automatic CDN mutation.");
+            }
+            _ => println!(
+                "usage: release current|list|verify|verify-cdn|compare|publish|rollback|schedule|notes|audit"
+            ),
+        }
+        Ok(())
+    }
+
     fn schedule(&self, parsed: &[String]) -> io::Result<()> {
         match parsed.get(1).map(String::as_str) {
             Some("list") | Some("calendar") | Some("history") => {
@@ -2384,6 +2632,18 @@ fn print_help() {
     println!("  maintenance status");
     println!("  maintenance schedule <scope> <start> <end> <message>");
     println!("  maintenance history");
+    println!("  release current");
+    println!("  release list");
+    println!("  release verify [latest|version|date|manifest] [--fast]");
+    println!("  release verify-cdn [channel] [platform|all] [--execute]");
+    println!("  release compare <version|date|manifest> <version|date|manifest>");
+    println!("  release publish <version|date|manifest> --confirm release:<version>:publish");
+    println!("  release rollback <version> --confirm release:<version>:rollback");
+    println!(
+        "  release schedule <version|date|manifest> <datetime> --confirm release:<version>:schedule"
+    );
+    println!("  release notes [version|date|manifest]");
+    println!("  release audit [version|date|manifest]");
     println!("  schedule list");
     println!("  schedule calendar");
     println!("  schedule add <name> <when> <command>");

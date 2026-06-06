@@ -5,6 +5,7 @@ mod commands;
 mod line_editor;
 mod nexus;
 mod rbac;
+mod release_ops;
 mod system;
 mod tui;
 mod util;

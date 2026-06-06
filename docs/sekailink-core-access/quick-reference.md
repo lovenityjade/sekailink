@@ -15,6 +15,7 @@ server agent-health all
 server agent-services all
 nexus services
 maintenance status
+release current
 ```
 
 ## Logs
@@ -83,6 +84,9 @@ user disable <user> --confirm user:<user>:disable
 user revoke-sessions <user> --confirm user:<user>:revoke-sessions
 user force-password-reset <user> --confirm user:<user>:force-password-reset
 release verify-cdn
+release list
+release verify latest --fast
+release compare 20260604 20260605
 release rollback <version>
 server update plan <server>
 cleanup plan all
