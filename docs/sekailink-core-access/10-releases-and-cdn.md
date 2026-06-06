@@ -76,14 +76,25 @@ Commandes:
 
 ```text
 pack repo list
-pack repo add
-pack repo edit <id>
-pack repo disable <id>
-pack repo delete <id>
-pack check <id>
-pack validate <id>
-pack stage <id>
-pack publish <id>
-pack rollback <id> <version>
-pack schedule-check <id> <cron|interval>
+pack repo add <id> <url> <game> [notes] --confirm pack-repo:<id>:add
+pack repo edit <id> key=value [key=value...] --confirm pack-repo:<id>:edit
+pack repo disable <id> [reason] --confirm pack-repo:<id>:disable
+pack repo delete <id> [reason] --confirm pack-repo:<id>:delete
+pack check <id> [notes]
+pack validate <id> [notes]
+pack stage <id> [notes] --confirm pack:<id>:stage
+pack publish <id> [notes] --confirm pack:<id>:publish
+pack rollback <id> <version> --confirm pack:<id>:rollback:<version>
+pack schedule-check <id> <cron|interval> --confirm pack:<id>:schedule-check
 ```
+
+Etat actuel:
+
+- les commandes `pack repo add/edit/disable/delete` creent des drafts locaux
+  audites;
+- `pack check` et `pack validate` creent des drafts Service sans fetch reseau;
+- `pack stage`, `pack publish`, `pack rollback` et `pack schedule-check`
+  creent des drafts Admin avec confirmation exacte;
+- aucun pack n'est telecharge, aucun artifact CDN n'est stage/publie, aucune
+  logique Lua n'est executee, et aucun comportement SKLMI/Sekaiemu n'est
+  modifie par cette tranche.

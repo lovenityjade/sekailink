@@ -48,3 +48,5 @@
   artifact verification, public CDN probes, and audited publish/rollback drafts.
 - Added audited local drafts for broadcasts, client signals, maintenance
   enable/disable/broadcast, and client dashboard banner publish/rollback/disable.
+- Added audited local drafts for pack repo maintenance and pack
+  check/validate/stage/publish/rollback/schedule workflows.

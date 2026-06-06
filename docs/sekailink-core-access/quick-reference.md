@@ -90,6 +90,8 @@ release list
 release verify latest --fast
 release compare 20260604 20260605
 release rollback <version>
+pack validate <repo-id>
+pack stage <repo-id> <notes> --confirm pack:<repo-id>:stage
 server update plan <server>
 cleanup plan all
 ```

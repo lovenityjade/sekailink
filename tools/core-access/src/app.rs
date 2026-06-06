@@ -480,9 +480,19 @@ impl App {
                 if parsed.get(1).map(String::as_str) == Some("repo")
                     && matches!(
                         parsed.get(2).map(String::as_str),
-                        Some("list") | Some("add")
+                        Some("list" | "add" | "edit" | "disable" | "delete")
                     )
-                    || parsed.get(1).map(String::as_str) == Some("schedule-check") =>
+                    || matches!(
+                        parsed.get(1).map(String::as_str),
+                        Some(
+                            "check"
+                                | "validate"
+                                | "stage"
+                                | "publish"
+                                | "rollback"
+                                | "schedule-check"
+                        )
+                    ) =>
             {
                 self.pack(&parsed)?;
                 append_audit(&self.session, line, "ok", "pack local")?;
@@ -2674,20 +2684,31 @@ impl App {
                 Ok(())
             }
             (Some("repo"), Some("add")) => {
-                let Some(id) = parsed.get(3) else {
-                    println!("usage: pack repo add <id> <url> <game> [notes]");
+                let args = option_positionals(parsed, 3, &["--confirm"]);
+                let Some(id) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: pack repo add <id> <url> <game> [notes] --confirm pack-repo:<id>:add"
+                    );
                     return Ok(());
                 };
-                let Some(url) = parsed.get(4) else {
-                    println!("usage: pack repo add <id> <url> <game> [notes]");
+                let Some(url) = args.get(1).map(String::as_str) else {
+                    println!(
+                        "usage: pack repo add <id> <url> <game> [notes] --confirm pack-repo:<id>:add"
+                    );
                     return Ok(());
                 };
-                let Some(game) = parsed.get(5) else {
-                    println!("usage: pack repo add <id> <url> <game> [notes]");
+                let Some(game) = args.get(2).map(String::as_str) else {
+                    println!(
+                        "usage: pack repo add <id> <url> <game> [notes] --confirm pack-repo:<id>:add"
+                    );
                     return Ok(());
                 };
-                let notes = if parsed.len() > 6 {
-                    parsed[6..].join(" ")
+                let expected = format!("pack-repo:{id}:add");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let notes = if args.len() > 3 {
+                    args[3..].join(" ")
                 } else {
                     String::new()
                 };
@@ -2696,13 +2717,142 @@ impl App {
                 println!("MVP note: draft only; no repo was fetched or published.");
                 Ok(())
             }
-            (Some("schedule-check"), _) => {
-                let Some(id) = parsed.get(2) else {
-                    println!("usage: pack schedule-check <repo-id> <when-or-interval>");
+            (Some("repo"), Some("edit")) => {
+                let args = option_positionals(parsed, 3, &["--confirm"]);
+                let Some(id) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: pack repo edit <id> key=value [key=value...] --confirm pack-repo:<id>:edit"
+                    );
                     return Ok(());
                 };
-                let Some(when) = parsed.get(3) else {
-                    println!("usage: pack schedule-check <repo-id> <when-or-interval>");
+                if args.len() < 2 {
+                    println!(
+                        "usage: pack repo edit <id> key=value [key=value...] --confirm pack-repo:<id>:edit"
+                    );
+                    return Ok(());
+                }
+                let expected = format!("pack-repo:{id}:edit");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let detail = args[1..].join(" ");
+                let draft_id = write_ops_draft(&self.session, "pack-repo", "edit", id, &detail)?;
+                println!("pack repo edit draft saved: {draft_id}");
+                println!("repo: {id}");
+                println!("detail: {detail}");
+                println!("MVP note: no pack repo config was published.");
+                Ok(())
+            }
+            (Some("repo"), Some("disable" | "delete")) => {
+                let action = parsed.get(2).map(String::as_str).unwrap_or("");
+                let args = option_positionals(parsed, 3, &["--confirm"]);
+                let Some(id) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: pack repo {action} <id> [reason] --confirm pack-repo:<id>:{action}"
+                    );
+                    return Ok(());
+                };
+                let expected = format!("pack-repo:{id}:{action}");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let reason = if args.len() > 1 {
+                    args[1..].join(" ")
+                } else {
+                    format!("pack repo {action} requested")
+                };
+                let draft_id = write_ops_draft(&self.session, "pack-repo", action, id, &reason)?;
+                println!("pack repo {action} draft saved: {draft_id}");
+                println!("repo: {id}");
+                println!("reason: {reason}");
+                println!("MVP note: no pack repo config was published.");
+                Ok(())
+            }
+            (Some("check" | "validate"), _) => {
+                let action = parsed.get(1).map(String::as_str).unwrap_or("");
+                let args = non_flag_args(parsed, 2);
+                let Some(id) = args.first().map(String::as_str) else {
+                    println!("usage: pack {action} <repo-id> [notes]");
+                    return Ok(());
+                };
+                let detail = if args.len() > 1 {
+                    args[1..].join(" ")
+                } else {
+                    format!("{action} requested")
+                };
+                let draft_id = write_ops_draft(&self.session, "pack", action, id, &detail)?;
+                println!("pack {action} draft saved: {draft_id}");
+                println!("repo: {id}");
+                println!("detail: {detail}");
+                println!("MVP note: no pack repo was fetched and no Lua logic was evaluated.");
+                Ok(())
+            }
+            (Some("stage" | "publish"), _) => {
+                let action = parsed.get(1).map(String::as_str).unwrap_or("");
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let Some(id) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: pack {action} <repo-id> [notes] --confirm pack:<repo-id>:{action}"
+                    );
+                    return Ok(());
+                };
+                let expected = format!("pack:{id}:{action}");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let detail = if args.len() > 1 {
+                    args[1..].join(" ")
+                } else {
+                    format!("{action} requested")
+                };
+                let draft_id = write_ops_draft(&self.session, "pack", action, id, &detail)?;
+                println!("pack {action} draft saved: {draft_id}");
+                println!("repo: {id}");
+                println!("detail: {detail}");
+                println!("MVP note: no CDN pack artifact was staged or published.");
+                Ok(())
+            }
+            (Some("rollback"), _) => {
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let Some(id) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: pack rollback <repo-id> <version> --confirm pack:<repo-id>:rollback:<version>"
+                    );
+                    return Ok(());
+                };
+                let Some(version) = args.get(1).map(String::as_str) else {
+                    println!(
+                        "usage: pack rollback <repo-id> <version> --confirm pack:<repo-id>:rollback:<version>"
+                    );
+                    return Ok(());
+                };
+                let expected = format!("pack:{id}:rollback:{version}");
+                if !confirmation_matches(parsed, &expected) {
+                    return Ok(());
+                }
+                let draft_id = write_ops_draft(&self.session, "pack", "rollback", id, version)?;
+                println!("pack rollback draft saved: {draft_id}");
+                println!("repo: {id}");
+                println!("version: {version}");
+                println!("MVP note: no CDN pack artifact was rolled back.");
+                Ok(())
+            }
+            (Some("schedule-check"), _) => {
+                let args = option_positionals(parsed, 2, &["--confirm"]);
+                let Some(id) = args.first().map(String::as_str) else {
+                    println!(
+                        "usage: pack schedule-check <repo-id> <when-or-interval> --confirm pack:<repo-id>:schedule-check"
+                    );
+                    return Ok(());
+                };
+                let Some(when) = args.get(1).map(String::as_str) else {
+                    println!(
+                        "usage: pack schedule-check <repo-id> <when-or-interval> --confirm pack:<repo-id>:schedule-check"
+                    );
+                    return Ok(());
+                };
+                let expected = format!("pack:{id}:schedule-check");
+                if !confirmation_matches(parsed, &expected) {
                     return Ok(());
                 };
                 let job_id = write_schedule_job(
@@ -2716,7 +2866,9 @@ impl App {
                 Ok(())
             }
             _ => {
-                println!("usage: pack repo list | pack repo add | pack schedule-check");
+                println!(
+                    "usage: pack repo list|add|edit|disable|delete | pack check|validate|stage|publish|rollback|schedule-check"
+                );
                 Ok(())
             }
         }
@@ -2953,8 +3105,15 @@ fn print_help() {
     println!("  schedule add <name> <when> <command>");
     println!("  schedule history");
     println!("  pack repo list");
-    println!("  pack repo add <id> <url> <game> [notes]");
-    println!("  pack schedule-check <repo-id> <when-or-interval>");
+    println!("  pack repo add <id> <url> <game> [notes] --confirm pack-repo:<id>:add");
+    println!("  pack repo edit <id> key=value [key=value...] --confirm pack-repo:<id>:edit");
+    println!("  pack repo disable|delete <id> [reason] --confirm pack-repo:<id>:<action>");
+    println!("  pack check|validate <repo-id> [notes]");
+    println!("  pack stage|publish <repo-id> [notes] --confirm pack:<repo-id>:<action>");
+    println!("  pack rollback <repo-id> <version> --confirm pack:<repo-id>:rollback:<version>");
+    println!(
+        "  pack schedule-check <repo-id> <when-or-interval> --confirm pack:<repo-id>:schedule-check"
+    );
     println!("  exit");
 }
 

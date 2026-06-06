@@ -133,16 +133,16 @@ etre preparees par Service mais executees seulement apres approbation Admin.
 | `client-banner rollback <slot> --confirm banner:<slot>:rollback` | Admin | Oui | Cree un draft audite rollback banner; aucun dashboard client modifie. |
 | `client-banner disable <slot> --confirm banner:<slot>:disable` | Admin | Oui | Cree un draft audite disable banner; aucun dashboard client modifie. |
 | `pack repo list` | Service | Non | Liste repos packs. |
-| `pack repo add` | Admin | Oui | Ajoute repo pack. |
-| `pack repo edit <id>` | Admin | Oui | Edite repo pack. |
-| `pack repo disable <id>` | Admin | Oui | Desactive repo. |
-| `pack repo delete <id>` | Admin | Oui | Supprime repo. |
-| `pack check <id>` | Service | Non | Check repo. |
-| `pack validate <id>` | Service | Non | Valide pack. |
-| `pack stage <id>` | Admin | Oui | Stage pack. |
-| `pack publish <id>` | Admin | Oui | Publie pack. |
-| `pack rollback <id> <version>` | Admin | Oui | Rollback pack. |
-| `pack schedule-check <id> <cron|interval>` | Admin | Oui | Planifie checks. |
+| `pack repo add <id> <url> <game> [notes] --confirm pack-repo:<id>:add` | Admin | Oui | Cree un draft repo pack; aucun fetch/publish. |
+| `pack repo edit <id> key=value --confirm pack-repo:<id>:edit` | Admin | Oui | Cree un draft edition repo pack; aucun publish. |
+| `pack repo disable <id> [reason] --confirm pack-repo:<id>:disable` | Admin | Oui | Cree un draft disable repo pack; aucun publish. |
+| `pack repo delete <id> [reason] --confirm pack-repo:<id>:delete` | Admin | Oui | Cree un draft delete repo pack; aucun publish. |
+| `pack check <id> [notes]` | Service | Non | Cree un draft check pack; aucun fetch reseau. |
+| `pack validate <id> [notes]` | Service | Non | Cree un draft validate pack; aucune logique Lua executee. |
+| `pack stage <id> [notes] --confirm pack:<id>:stage` | Admin | Oui | Cree un draft stage pack; aucun artifact CDN stage. |
+| `pack publish <id> [notes] --confirm pack:<id>:publish` | Admin | Oui | Cree un draft publish pack; aucun artifact CDN publie. |
+| `pack rollback <id> <version> --confirm pack:<id>:rollback:<version>` | Admin | Oui | Cree un draft rollback pack; aucun artifact CDN modifie. |
+| `pack schedule-check <id> <cron|interval> --confirm pack:<id>:schedule-check` | Admin | Oui | Cree un draft scheduler de check pack; job non arme. |
 | `schedule list` | Service | Non | Liste jobs. |
 | `schedule calendar` | Service | Non | Vue calendrier. |
 | `schedule add` | Admin | Oui | Ajoute job. |
