@@ -74,8 +74,9 @@ pub fn render_server_logs_plan(server: &str, service: &str, follow: bool) -> Res
         return Err(format!("service {service} is not allowlisted for {server}"));
     }
     let mode = if follow { "-f -n 200" } else { "-n 300" };
+    let ssh_alias = ssh_alias_for(server);
     Ok(format!(
-        "ssh {server} -- journalctl -u {} {mode} --no-pager",
+        "ssh {ssh_alias} -- journalctl -u {} {mode} --no-pager",
         shell_word(service)
     ))
 }
@@ -108,13 +109,14 @@ pub fn service_allowed(server: &str, service: &str) -> bool {
 }
 
 fn health_probe_for(server: &str, services: &[&str]) -> String {
+    let ssh_alias = ssh_alias_for(server);
     let service_checks = services
         .iter()
         .map(|service| format!("systemctl is-active {}", shell_word(service)))
         .collect::<Vec<_>>()
         .join("; ");
     format!(
-        "ssh {server} -- 'hostname; uptime; free -m; df -h /; {service_checks}'"
+        "ssh {ssh_alias} -- 'hostname; uptime; free -m; df -h /; {service_checks}'"
     )
 }
 
@@ -147,6 +149,17 @@ fn services_for(server: &str) -> Option<&'static [&'static str]> {
         .iter()
         .find(|(known, _)| *known == server)
         .map(|(_, services)| *services)
+}
+
+fn ssh_alias_for(server: &str) -> &'static str {
+    match server {
+        "nexus" => "nexus-vps",
+        "link" => "link-vps",
+        "worlds" => "worlds-vps",
+        "evolution" => "evolution-vps",
+        "pulse" => "pulse-vps",
+        _ => "unknown-vps",
+    }
 }
 
 fn shell_word(value: &str) -> String {
@@ -241,7 +254,7 @@ mod tests {
     #[test]
     fn server_logs_plan_uses_allowlisted_service() {
         let plan = render_server_logs_plan("link", "sekailink-chat-api", true).unwrap();
-        assert!(plan.contains("ssh link"));
+        assert!(plan.contains("ssh link-vps"));
         assert!(plan.contains("journalctl -u sekailink-chat-api"));
         assert!(service_allowed("link", "sekailink-room-runtime"));
     }

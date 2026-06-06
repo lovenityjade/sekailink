@@ -8,3 +8,4 @@
   queue primitives, log catalog and local dashboard.
 - Added bounded local exports for Core Access audit and note JSONL.
 - Added dry-run plans for `server logs`, `logs tail`, and `health probe`.
+- Aligned dry-run SSH output with documented `*-vps` bastion aliases.
