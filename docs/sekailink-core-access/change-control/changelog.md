@@ -22,3 +22,5 @@
 - Aligned Nexus, Worlds, Evolution, and Pulse service allowlists with read-only
   systemd discovery.
 - Added `server status <server|all> --execute` as a gated live health alias.
+- Normalized child `TERM` for gated read-only remote execution to reduce noisy
+  terminal initialization output.

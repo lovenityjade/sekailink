@@ -480,7 +480,15 @@ impl App {
         }
         println!("executing read-only {label}:");
         println!("{plan}");
-        let status = Command::new("sh").arg("-lc").arg(plan).status()?;
+        let term = env::var("TERM")
+            .ok()
+            .filter(|value| value != "dumb")
+            .unwrap_or_else(|| "xterm-256color".to_string());
+        let status = Command::new("sh")
+            .arg("-lc")
+            .arg(plan)
+            .env("TERM", term)
+            .status()?;
         println!("remote command exit status: {status}");
         Ok(())
     }
