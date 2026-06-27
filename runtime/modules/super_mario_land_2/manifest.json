@@ -1,0 +1,46 @@
+{
+  "game_id": "super_mario_land_2",
+  "display_name": "Super Mario Land 2",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apsml2"
+  ],
+  "patch_world_module": "worlds.marioland2",
+  "ap_world": "marioland2",
+  "required_roms": [
+    "super_mario_land_2"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "super_mario_land_2",
+    "world": "marioland2",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/marioland2/client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".gb"
+    ],
+    "md5": [
+      "a8413347d5df8c9d14f97f0330d67bce"
+    ],
+    "sha1": [
+      "bba408539ecbf8d322324956d859bc86e2a9977b"
+    ]
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "gb",
+    "ap_game": "Super Mario Land 2"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "",
+  "support_status": "not_available",
+  "availability_status": "unavailable_gb_gbc_pending_tester",
+  "compatibility_notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+}

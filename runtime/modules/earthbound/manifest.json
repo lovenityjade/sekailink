@@ -10,14 +10,18 @@
   "required_roms": [
     "earthbound"
   ],
-  "client_mode": "embedded",
+  "client_mode": "archipelago",
   "rom_requirements": {
     "extensions": [
       ".sfc",
       ".smc"
     ],
-    "md5": [],
-    "sha1": []
+    "md5": [
+      "a864b2e5c141d2dec1c4cbed75a42a85"
+    ],
+    "sha1": [
+      "d67a8ef36ef616bc39306aa1b486e1bd3047815a"
+    ]
   },
   "features": {
     "autotracking": true,
@@ -31,5 +35,13 @@
   "tracker_pack_uid": "https://github.com/PinkSwitch/earthbound_poptracker/releases/tag/ebpoptracker1.0",
   "tracker_asset_regex": "\\.zip$",
   "default_tracker_variant": "Map Tracker",
-  "tracker_web_url": ""
+  "tracker_web_url": "",
+  "ap_client": "sni",
+  "ap_world": "earthbound",
+  "archipelago_client": {
+    "game_key": "earthbound",
+    "world": "earthbound",
+    "wrapper": "sni",
+    "client_file": "worlds/earthbound/Client.py"
+  }
 }

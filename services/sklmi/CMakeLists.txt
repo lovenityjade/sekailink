@@ -7,6 +7,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBARCHIVE REQUIRED IMPORTED_TARGET libarchive)
+pkg_check_modules(CURL REQUIRED IMPORTED_TARGET libcurl)
 
 set(SKLMI_PLATFORM_LIBS)
 if(WIN32)
@@ -32,6 +33,7 @@ target_include_directories(sekailink_sklmi
 )
 
 add_executable(sekailink_sklmi_runtime
+  src/bug_report_client.cpp
   src/runtime_main.cpp
   src/runtime_options.cpp
   src/runtime_jsonl_sink.cpp
@@ -39,7 +41,7 @@ add_executable(sekailink_sklmi_runtime
 )
 
 target_link_libraries(sekailink_sklmi_runtime PRIVATE sekailink_sklmi)
-target_link_libraries(sekailink_sklmi_runtime PRIVATE PkgConfig::LIBARCHIVE)
+target_link_libraries(sekailink_sklmi_runtime PRIVATE PkgConfig::LIBARCHIVE PkgConfig::CURL)
 target_include_directories(sekailink_sklmi_runtime PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 add_executable(sekailink_sklmi_smoke
@@ -65,6 +67,18 @@ add_executable(sekailink_sklmi_unix_socket_smoke
 )
 
 target_link_libraries(sekailink_sklmi_unix_socket_smoke PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_generic_bizhawk_manifest_smoke
+  tests/sklmi_generic_bizhawk_manifest_smoke_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_generic_bizhawk_manifest_smoke PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_archipelago_client_wrapper_manifest_smoke
+  tests/sklmi_archipelago_client_wrapper_manifest_smoke_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_archipelago_client_wrapper_manifest_smoke PRIVATE sekailink_sklmi)
 
 add_executable(sekailink_sklmi_sekaiemu_runtime_proof
   tests/sklmi_sekaiemu_runtime_proof_main.cpp
@@ -182,6 +196,14 @@ enable_testing()
 
 add_test(NAME sekailink_sklmi_smoke COMMAND sekailink_sklmi_smoke)
 add_test(NAME sekailink_sklmi_legacy_manifest_smoke COMMAND sekailink_sklmi_legacy_manifest_smoke)
+add_test(NAME sekailink_sklmi_generic_bizhawk_manifest_smoke
+  COMMAND sekailink_sklmi_generic_bizhawk_manifest_smoke ${CMAKE_CURRENT_SOURCE_DIR})
+add_test(NAME sekailink_sklmi_archipelago_client_wrapper_manifest_smoke
+  COMMAND sekailink_sklmi_archipelago_client_wrapper_manifest_smoke)
+add_test(NAME sekailink_sklmi_runtime_socket_smoke COMMAND sekailink_sklmi_runtime_socket_smoke)
+if(NOT WIN32)
+  add_test(NAME sekailink_sklmi_unix_socket_smoke COMMAND sekailink_sklmi_unix_socket_smoke)
+endif()
 add_test(NAME sekailink_sklmi_earthbound_golden COMMAND sekailink_sklmi_earthbound_golden)
 add_test(NAME sekailink_sklmi_alttp_golden COMMAND sekailink_sklmi_alttp_golden)
 add_test(NAME sekailink_sklmi_room_sync_smoke COMMAND sekailink_sklmi_room_sync_smoke)

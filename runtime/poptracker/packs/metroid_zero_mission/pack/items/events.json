@@ -1,0 +1,77 @@
+[
+    {
+        "name": "Deorem Defeated",
+        "codes": "Deorem Defeated",
+        "img": "images/bosses/Deorem.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Ziplines Activated",
+        "codes": "Ziplines Activated",
+        "type": "toggle"
+    },
+    {
+        "name": "Mua Defeated",
+        "codes": "Acid Worm Defeated",
+        "img": "images/bosses/AcidWorm.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Kraid Defeated",
+        "codes": "Kraid Defeated",
+        "img": "images/bosses/Kraid.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Imago Cocoon Defeated",
+        "codes": "Imago Cocoon Defeated",
+        "img": "images/bosses/ImagoCocoon.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Imago Defeated",
+        "codes": "Imago Defeated",
+        "img": "images/bosses/Imago.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Ridley Defeated",
+        "codes": "Ridley Defeated",
+        "img": "images/bosses/Ridley.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Mother Brain Defeated",
+        "codes": "Mother Brain Defeated",
+        "img": "images/bosses/MotherBrain.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Escaped Zebes",
+        "codes": "Escaped Zebes",
+        "img": "images/misc/greensquare.png",
+        "disabled_img": "images/misc/redsquare.png",
+        "disabled_img_mods": "",
+        "type": "toggle"
+    },
+    {
+        "name": "Chozo Ghost Defeated",
+        "codes": "Chozo Ghost Defeated",
+        "img": "images/bosses/ChozoGhost.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Mecha Ridley Defeated",
+        "codes": "Mecha Ridley Defeated",
+        "img": "images/bosses/MechaRidley.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Escaped Chozodia",
+        "codes": "Escaped Chozodia",
+        "img": "images/misc/greensquare.png",
+        "disabled_img": "images/misc/redsquare.png",
+        "disabled_img_mods": "",
+        "type": "toggle"
+    }
+]

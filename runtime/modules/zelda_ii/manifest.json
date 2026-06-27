@@ -1,0 +1,44 @@
+{
+  "game_id": "zelda_ii",
+  "display_name": "Zelda II: The Adventure of Link",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apz2"
+  ],
+  "patch_world_module": "worlds.zelda2",
+  "ap_world": "zelda2",
+  "required_roms": [
+    "zelda_ii"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "zelda_ii",
+    "world": "zelda2",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/zelda2/Client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".nes"
+    ],
+    "md5": [
+      "764d36fa8a2450834da5e8194281035a",
+      "88c0493fb1146834836c0ff4f3e06e45"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "nestopia",
+    "ap_game": "Zelda II: The Adventure of Link"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "",
+  "tracker_pack_path": "poptracker/packs/zelda_ii/pack/zelda-2-ap-tracker-0.0.4",
+  "default_tracker_variant": "Map Tracker"
+}

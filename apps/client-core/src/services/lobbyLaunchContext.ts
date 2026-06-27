@@ -29,6 +29,10 @@ export type LobbyRoomLaunchEntry = {
   artifact_member?: string;
   artifact_extension?: string;
   artifact_kind?: string;
+  tracker_variant?: string;
+  trackerVariant?: string;
+  tracker_game_id?: string;
+  trackerGameId?: string;
   sync_package_path?: string;
   download?: string;
 };
@@ -49,14 +53,23 @@ export type LobbySelectionShape = {
   game?: string;
   player_name?: string;
   title?: string;
+  tracker_variant?: string;
+  trackerVariant?: string;
+  tracker_game_id?: string;
+  trackerGameId?: string;
 };
 
 export type SelfLaunchContext = {
+  /** AP slot name. Kept as playerName for older call sites, but this must never be an account/display name. */
   playerName: string;
+  slotName: string;
+  accountName: string;
   slotId?: number;
   downloadUrl?: string;
   downloadUrls: string[];
   apGameName: string;
+  matched: boolean;
+  matchError?: string;
 };
 
 const knownNonLaunchExtensions = new Set([
@@ -170,13 +183,14 @@ const scoreLaunchEntryForSelection = (
   const entryUsernameKey = normalizeLookupKey(entry.username);
   const entryGameKey = normalizeLookupKey(entry.game);
   const entryTitleKey = normalizeLookupKey(entry.title);
+  const hasSelection = Boolean(selectionId || selectionGameKey || selectionTitleKey);
 
   if (selectionId && entryConfigId && selectionId === entryConfigId) score += 100;
   if (selectionPlayerKey && entrySlotNameKey && selectionPlayerKey === entrySlotNameKey) score += 80;
-  if (playerKey && entrySlotNameKey && playerKey === entrySlotNameKey) score += 70;
-  if (playerKey && entryUsernameKey && playerKey === entryUsernameKey) score += 50;
   if (selectionGameKey && entryGameKey && selectionGameKey === entryGameKey) score += 15;
   if (selectionTitleKey && entryTitleKey && selectionTitleKey === entryTitleKey) score += 10;
+  if (!hasSelection && playerKey && entrySlotNameKey && playerKey === entrySlotNameKey) score += 70;
+  if (!hasSelection && playerKey && entryUsernameKey && playerKey === entryUsernameKey) score += 50;
   if (typeof options.slotId === "number" && typeof entry.slot === "number" && options.slotId === entry.slot) score += 25;
   return score;
 };
@@ -190,15 +204,19 @@ export const buildSelfLaunchContext = (options: {
   downloadsBySlotMulti: Map<number, string[]>;
   playersByName: Map<string, number>;
 }) => {
-  const playerName = String(options.playerName || "").trim();
-  const slotId = resolvePlayerSlotId(options.playersByName, playerName);
+  const accountName = String(options.playerName || "").trim();
+  const slotId = resolvePlayerSlotId(options.playersByName, accountName);
+  const hasSelection = Boolean(
+    firstSelectionId(options.selection) ||
+      normalizeLookupKey(options.selection?.game) ||
+      normalizeLookupKey(options.selection?.title)
+  );
   const launchEntries = Array.isArray(options.roomStatus?.launch_entries) ? options.roomStatus?.launch_entries || [] : [];
   const scoredEntries = launchEntries
-    .filter((entry) => isLaunchArtifactEntry(entry))
     .map((entry) => ({
       entry,
       score: scoreLaunchEntryForSelection(entry, {
-        playerName,
+        playerName: accountName,
         selection: options.selection,
         slotId,
       }),
@@ -207,15 +225,25 @@ export const buildSelfLaunchContext = (options: {
     .sort((a, b) => b.score - a.score);
   const bestScore = scoredEntries[0]?.score || 0;
   const selectedEntries = bestScore > 0 ? scoredEntries.filter((entry) => entry.score === bestScore).map((entry) => entry.entry) : [];
+  const launchableSelectedEntries = selectedEntries.filter((entry) => isLaunchArtifactEntry(entry));
+  const slotKeysForSelection = new Set(
+    (launchableSelectedEntries.length ? launchableSelectedEntries : selectedEntries)
+      .map((entry) => String(entry.slot ?? entryLaunchSlotName(entry) ?? "").trim())
+      .filter(Boolean)
+  );
+  const ambiguousSelection = hasSelection && slotKeysForSelection.size > 1;
   const selectedSlotId =
-    selectedEntries.find((entry) => typeof entry.slot === "number")?.slot ??
-    slotId;
+    !ambiguousSelection && selectedEntries.length > 0
+      ? selectedEntries.find((entry) => typeof entry.slot === "number")?.slot
+      : hasSelection
+        ? undefined
+        : slotId;
   const selectedLaunchSlotName =
-    selectedEntries.map(entryLaunchSlotName).find(Boolean) ||
+    (!ambiguousSelection ? selectedEntries.map(entryLaunchSlotName).find(Boolean) : "") ||
     (typeof selectedSlotId === "number"
       ? String((options.roomStatus?.players || []).find((player) => player?.slot === selectedSlotId)?.name || "").trim()
       : "");
-  const selectedDownloads = selectedEntries
+  const selectedDownloads = launchableSelectedEntries
     .map((entry) => String(entry.download || "").trim())
     .filter(Boolean)
     .map((download) => (options.toUrl ? options.toUrl(download) : download));
@@ -224,13 +252,22 @@ export const buildSelfLaunchContext = (options: {
   const downloadUrls = selectedDownloads.length ? selectedDownloads : slotDownloadUrls;
   const downloadUrl = downloadUrls[0] || slotDownloadUrl;
   const apGameName =
-    String(selectedEntries.find((entry) => entry.game)?.game || "").trim() ||
-    resolvePlayerApGameName(options.roomStatus, selectedSlotId, playerName);
+    (!ambiguousSelection ? String(selectedEntries.find((entry) => entry.game)?.game || "").trim() : "") ||
+    resolvePlayerApGameName(options.roomStatus, selectedSlotId, selectedLaunchSlotName);
+  const matched = Boolean(selectedLaunchSlotName && typeof selectedSlotId === "number" && !ambiguousSelection);
   return {
-    playerName: selectedLaunchSlotName || playerName,
+    playerName: selectedLaunchSlotName,
+    slotName: selectedLaunchSlotName,
+    accountName,
     slotId: selectedSlotId,
     downloadUrl,
     downloadUrls,
     apGameName,
+    matched,
+    matchError: ambiguousSelection
+      ? "ambiguous_launch_entry"
+      : hasSelection && !matched
+        ? "launch_entry_not_found"
+        : undefined,
   } satisfies SelfLaunchContext;
 };

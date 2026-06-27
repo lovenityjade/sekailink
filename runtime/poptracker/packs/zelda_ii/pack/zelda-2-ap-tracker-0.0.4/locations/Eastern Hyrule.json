@@ -1,0 +1,189 @@
+[
+    {
+        "name": "Eastern Hyrule",
+        "chest_unopened_img": "/images/items/close.png",
+        "chest_opened_img": "/images/items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "@Northeastern Hyrule, $candle", "@Northeastern Hyrule, boots",
+            "@Western Coast, raft",
+            "@Southeastern Hyrule, flute"
+        ],
+        "children": [
+            {
+                "name": "Eastern Hyrule",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Eastern Forest",
+                        "access_rules": [],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "1348",
+                        "y": "867"
+                    },
+                    {
+                        "map": "East Hyrule",
+                        "x": "197",
+                        "y": "490"
+                    }
+                ]
+            },
+            {
+                "name": "Eastern Hyrule​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Sage of Nabooru",
+                        "access_rules": [],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "1556",
+                        "y": "899"
+                    },
+                    {
+                        "map": "East Hyrule",
+                        "x": "405",
+                        "y": "422"
+                    }
+                ]
+            },
+            {
+                "name": "Eastern Hyrule​​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Eastern Cave",
+                        "access_rules": ["^$candle"],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "1588",
+                        "y": "1075"
+                    },
+                    {
+                        "map": "East Hyrule",
+                        "x": "437",
+                        "y": "698"
+                    }
+                ]
+            },
+            {
+                "name": "Eastern Hyrule​​​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Eastern Peninsula Secret",
+                        "access_rules": ["boots, jumpspell", "hammer, jumpspell"],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "2036",
+                        "y": "963"
+                    },
+                    {
+                        "map": "East Hyrule",
+                        "x": "885",
+                        "y": "586"
+                    }
+                ]
+            },
+            {
+                "name": "Eastern Hyrule​​​​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Eastern Beach Secret",
+                        "access_rules": [],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "1730",
+                        "y": "835"
+                    },
+                    {
+                        "map": "East Hyrule",
+                        "x": "581",
+                        "y": "458"
+                    }
+                ]
+            },
+            {
+                "name": "Eastern Hyrule​​​​​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Ocean Item",
+                        "access_rules": ["boots"],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "2196",
+                        "y": "835"
+                    },
+                    {
+                        "map": "East Hyrule",
+                        "x": "1045",
+                        "y": "458"
+                    }
+                ]
+            }
+        ]
+    }
+]

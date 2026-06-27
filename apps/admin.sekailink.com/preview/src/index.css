@@ -1,0 +1,37 @@
+:root {
+  --app-bg: #071014;
+  --panel: #0d151d;
+  --heading: #f4fbfb;
+  --text: #b9c6c8;
+  --muted: #728286;
+  --border: rgba(194, 232, 230, 0.13);
+  --orange: #ff6847;
+  --mint: #54d3c2;
+  --violet: #b67cff;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
+  color: var(--text);
+  background: var(--app-bg);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.35;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 1024px;
+  background: var(--app-bg);
+}
+
+#root {
+  min-height: 100vh;
+}

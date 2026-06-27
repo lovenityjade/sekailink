@@ -16,6 +16,12 @@ from .data import BASE_OFFSET, POKEDEX_OFFSET, data
 from .options import Goal, RemoteItems
 from .util import pokemon_data_to_json, json_to_pokemon_data
 
+try:
+    from apclient_events import emit as sekailink_emit
+except Exception:
+    def sekailink_emit(*_args, **_kwargs):
+        return None
+
 if TYPE_CHECKING:
     from worlds._bizhawk.context import BizHawkClientContext
 
@@ -292,11 +298,13 @@ class PokemonEmeraldClient(BizHawkClient):
             local_found_key_items = {location_name: False for location_name in KEY_LOCATION_FLAGS}
             defeated_legendaries = {legendary_name: False for legendary_name in LEGENDARY_NAMES.values()}
             caught_legendaries = {legendary_name: False for legendary_name in LEGENDARY_NAMES.values()}
+            set_flag_count = 0
 
             # Check set flags
             for byte_i, byte in enumerate(flag_bytes):
                 for i in range(8):
                     if byte & (1 << i) != 0:
+                        set_flag_count += 1
                         flag_id = byte_i * 8 + i
 
                         location_id = flag_id + BASE_OFFSET
@@ -328,6 +336,27 @@ class PokemonEmeraldClient(BizHawkClient):
                             location_id = dex_number + BASE_OFFSET + POKEDEX_OFFSET
                             if location_id in ctx.server_locations:
                                 local_checked_locations.add(location_id)
+
+            debug_snapshot = (
+                set_flag_count,
+                len(local_checked_locations),
+                sum(1 for value in local_set_events.values() if value),
+                sum(1 for value in local_found_key_items.values() if value),
+                len(pokedex_caught_bytes),
+            )
+            if getattr(self, "_sekailink_last_location_debug", None) != debug_snapshot:
+                self._sekailink_last_location_debug = debug_snapshot
+                sekailink_emit(
+                    "pokemon_emerald_location_debug",
+                    set_flag_count=set_flag_count,
+                    matched_location_count=len(local_checked_locations),
+                    event_count=debug_snapshot[2],
+                    key_item_flag_count=debug_snapshot[3],
+                    pokedex_bytes=len(pokedex_caught_bytes),
+                    sb1_address=sb1_address,
+                    sb2_address=sb2_address,
+                    server_location_count=len(getattr(ctx, "server_locations", []) or []),
+                )
 
             # Count legendary hunt flags
             if ctx.slot_data["goal"] == Goal.option_legendary_hunt:

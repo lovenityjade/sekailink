@@ -15,6 +15,11 @@ export interface LobbySummary {
   member_count?: number;
   message_count?: number;
   url?: string;
+  asynchronous?: boolean;
+  is_async?: boolean;
+  room_type?: string;
+  metadata?: Record<string, unknown>;
+  async_state?: Record<string, unknown> | null;
 }
 
 export interface CreateLobbyInput {
@@ -24,6 +29,7 @@ export interface CreateLobbyInput {
   max_players?: string;
   spoiler?: string;
   item_cheat?: boolean;
+  asynchronous?: boolean;
 }
 
 type TimedCache<T> = {
@@ -132,6 +138,10 @@ export const createLobby = async (input: CreateLobbyInput): Promise<{ lobbyId?: 
       max_players: String(input.max_players || "50"),
       spoiler: String(input.spoiler || "off"),
       item_cheat: Boolean(input.item_cheat),
+      asynchronous: Boolean(input.asynchronous),
+      is_async: Boolean(input.asynchronous),
+      room_type: input.asynchronous ? "async" : "active",
+      mode: input.asynchronous ? "async" : "active",
       release_mode: "auto",
       collect_mode: "auto",
       remaining_mode: "auto",

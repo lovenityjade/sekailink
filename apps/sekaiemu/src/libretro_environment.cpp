@@ -218,6 +218,24 @@ bool HandleLibretroEnvironmentCommand(LibretroEnvironmentContext& context,
       }
       return false;
     }
+    case RETRO_ENVIRONMENT_SET_GEOMETRY: {
+      auto* geometry = static_cast<const retro_game_geometry*>(data);
+      if (geometry && context.av_info) {
+        context.av_info->geometry = *geometry;
+        if (context.trace) {
+          std::ostringstream line;
+          line << "Libretro core updated geometry to "
+               << context.av_info->geometry.base_width << "x"
+               << context.av_info->geometry.base_height;
+          context.trace(line.str());
+        }
+        if (context.maybe_update_video_backend_geometry) {
+          context.maybe_update_video_backend_geometry();
+        }
+        return true;
+      }
+      return false;
+    }
     case RETRO_ENVIRONMENT_SET_MESSAGE:
     case RETRO_ENVIRONMENT_SET_MESSAGE_EXT:
     case RETRO_ENVIRONMENT_SET_MINIMUM_AUDIO_LATENCY:
@@ -230,7 +248,6 @@ bool HandleLibretroEnvironmentCommand(LibretroEnvironmentContext& context,
     case RETRO_ENVIRONMENT_SET_INPUT_DESCRIPTORS:
     case RETRO_ENVIRONMENT_SET_CONTROLLER_INFO:
     case RETRO_ENVIRONMENT_SET_SUPPORT_NO_GAME:
-    case RETRO_ENVIRONMENT_SET_GEOMETRY:
     case RETRO_ENVIRONMENT_SET_SERIALIZATION_QUIRKS:
     case RETRO_ENVIRONMENT_GET_INPUT_BITMASKS:
       return true;

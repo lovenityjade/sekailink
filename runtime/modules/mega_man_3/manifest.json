@@ -1,0 +1,46 @@
+{
+  "game_id": "mega_man_3",
+  "display_name": "Mega Man 3",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apmm3"
+  ],
+  "patch_world_module": "worlds.mm3",
+  "ap_world": "mm3",
+  "required_roms": [
+    "mega_man_3"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "mega_man_3",
+    "world": "mm3",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/mm3/client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".nes"
+    ],
+    "md5": [
+      "75b924155cafee335c9ea7a01bfc8efb"
+    ],
+    "sha1": [
+      "53197445e137e47a73fd4876b87e288ed0fed5c6"
+    ]
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "nestopia",
+    "ap_game": "Mega Man 3"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "universal_tracker",
+  "support_status": "supported_trackerless",
+  "tracker_status": "trackerless_supported",
+  "compatibility_notes": "Supported without a PopTracker pack for the current compatibility tier; Universal Tracker may exist separately."
+}

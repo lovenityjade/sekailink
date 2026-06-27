@@ -8,6 +8,7 @@
 #include "runtime_loop.hpp"
 
 #include <iostream>
+#include <sstream>
 #include <string_view>
 #include <vector>
 
@@ -84,6 +85,30 @@ int LibretroHost::Impl::Run() {
       .on_backspace_chat_input = [this]() { BackspaceChatInput(); },
       .on_autocomplete_chat_input = [this]() { AutocompleteChatInput(); },
       .on_append_chat_input = [this](std::string_view text) { AppendChatInput(text); },
+      .on_runtime_debug_event = [this](const SDL_Event& event) {
+        if (!bridge_terminal_presenter_.HandleSdlEvent(event)) {
+          return false;
+        }
+        for (const auto& command : bridge_terminal_presenter_.DrainPendingChatCommands()) {
+          bool sent = false;
+          std::string detail;
+          if (core_chat_bridge_.HasOutbox()) {
+            sent = core_chat_bridge_.SendChat(command);
+            detail = sent ? "sent via runtime chat bridge outbox" : "runtime chat bridge outbox failed";
+          }
+          if (!sent && !tracker_command_log_path_.empty()) {
+            EmitTrackerCommand(nlohmann::json{{"cmd", "chat.say"}, {"text", command}});
+            sent = true;
+            detail = "queued via tracker command log";
+          }
+          if (!sent && detail.empty()) {
+            detail = "no chat bridge or tracker command log available";
+          }
+          bridge_terminal_presenter_.RecordCommandDelivery(command, sent, detail);
+        }
+        bridge_terminal_last_render_frame_ = 0;
+        return true;
+      },
       .on_present_frame = [this]() { PresentFrame(); },
       .on_update_menu_overlay = [this]() { UpdateMenuOverlay(); },
       .on_reset_core = [this]() { core.retro_reset(); },
@@ -128,7 +153,10 @@ void LibretroHost::Impl::UpdateMenuOverlay() {
                            audio_output.MasterVolumePercent(),
                            chat_overlay_.Enabled(),
                            notifications_enabled_,
-                           bridge_terminal_presenter_.Enabled());
+                           bridge_terminal_presenter_.Enabled(),
+                           [this](std::string_view text) {
+                             EmitTrackerCommand(nlohmann::json{{"cmd", "chat.say"}, {"text", std::string(text)}});
+                           });
   RenderBridgeTerminal();
 }
 
@@ -149,6 +177,12 @@ void LibretroHost::Impl::TickProfileBridge() {
         return ResolveMutableMemorySource(domain, start, length);
       },
       .trace = [](const std::string& line) { std::cerr << line << "\n"; },
+      .location_triggered = [this](std::uint32_t location_id, const std::string& name) {
+        std::ostringstream text;
+        text << "Sekaiemu detected check: " << name << " (0x"
+             << std::hex << std::uppercase << location_id << std::dec << ")";
+        chat_overlay_.AddMessage("SEKAIEMU", text.str(), frame_counter);
+      },
   });
 }
 
@@ -202,19 +236,24 @@ void LibretroHost::Impl::TickCoreChatBridge() {
   }
   core_chat_bridge_.Tick(frame_counter);
   for (const auto& message : core_chat_bridge_.DrainIncoming()) {
+    std::cerr << "[sekaiemu] chat bridge received: " << message.author
+              << ": " << message.text << "\n";
     chat_overlay_.AddExternalMessage(message.id, message.author, message.text, message.kind, frame_counter);
   }
 }
 
 BridgeRuntimeStatus LibretroHost::Impl::CurrentBridgeRuntimeStatus() const {
-  return BuildBridgeRuntimeStatusForHost(options,
-                                         launch_profile,
-                                         bridge_owner,
-                                         active_sklmi_bridge_spec,
-                                         profile_bridge,
-                                         runtime_memory_server,
-                                         sklmi_companion_runtime,
-                                         bridge_runtime_last_error);
+  auto status = BuildBridgeRuntimeStatusForHost(options,
+                                                launch_profile,
+                                                bridge_owner,
+                                                active_sklmi_bridge_spec,
+                                                profile_bridge,
+                                                runtime_memory_server,
+                                                sklmi_companion_runtime,
+                                                bridge_runtime_last_error);
+  status.tracker_snapshot_path = tracker_snapshot_path_.string();
+  status.tracker_command_log_path = tracker_command_log_path_.string();
+  return status;
 }
 
 void LibretroHost::Impl::DumpMemorySnapshot() {

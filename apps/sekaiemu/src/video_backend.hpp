@@ -5,6 +5,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <functional>
 #include <string>
 
 namespace sekaiemu::spike {
@@ -52,6 +53,7 @@ class VideoBackend {
                                        unsigned sidebar_width,
                                        const VideoGeometry& geometry) = 0;
   virtual bool ToggleFullscreen(std::string& error) = 0;
+  virtual void SetImGuiDrawCallback(std::function<void()> callback) { (void)callback; }
   virtual void Present() = 0;
   virtual void Shutdown() = 0;
 

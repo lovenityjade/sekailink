@@ -1,0 +1,187 @@
+[
+    {
+        "name": "Northwestern Hyrule",
+        "chest_unopened_img": "/images/items/close.png",
+        "chest_opened_img": "/images/items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "","@Western Hyrule, ^$candle", "@Western Hyrule, $boulder", 
+        ],
+        "children": [
+            {
+                "name": "Northwestern Hyrule",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Northern Desert Cave",
+                        "access_rules": ["^$candle"],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "490",
+                        "y": "51"
+                    },
+                    {
+                        "map": "West Hyrule",
+                        "x": "490",
+                        "y": "48"
+                    }
+                ]
+            },
+            {
+                "name": "Northwestern Hyrule​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Northwestern Forest Item",
+                        "access_rules": [],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "618",
+                        "y": "211"
+                    },
+                    {
+                        "map": "West Hyrule",
+                        "x": "618",
+                        "y": "208"
+                    }
+                ]
+            },
+            {
+                "name": "Northwestern Hyrule​​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "North Castle Cave",
+                        "access_rules": ["^$candle"],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "282",
+                        "y": "499"
+                    },
+                    {
+                        "map": "West Hyrule",
+                        "x": "282",
+                        "y": "496"
+                    }
+                ]
+            },
+            {
+                "name": "Northwestern Hyrule​​​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Sage of Rauru",
+                        "access_rules": [],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "762",
+                        "y": "403"
+                    },
+                    {
+                        "map": "West Hyrule",
+                        "x": "762",
+                        "y": "400"
+                    }
+                ]
+            },
+            {
+                "name": "Northwestern Hyrule​​​​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Sage of Ruto",
+                        "access_rules": ["trophy"],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "58",
+                        "y": "115"
+                    },
+                    {
+                        "map": "West Hyrule",
+                        "x": "58",
+                        "y": "112"
+                    }
+                ]
+            },
+            {
+                "name": "Northwestern Hyrule​​​​​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Tantari Coast Item",
+                        "access_rules": [],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "1018",
+                        "y": "563"
+                    },
+                    {
+                        "map": "West Hyrule",
+                        "x": "1018",
+                        "y": "560"
+                    }
+                ]
+            }
+        ]
+    }
+]

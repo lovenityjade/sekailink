@@ -556,6 +556,7 @@ nlohmann::json SeedConfigApiService::handle_list_user_configs(
           {"user_id", config.user_id},
           {"game_key", config.game_key},
           {"name", config.name},
+          {"description", config.description},
           {"values", config.values},
           {"values_hash", config.values_hash},
       });

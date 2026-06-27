@@ -1,0 +1,45 @@
+{
+  "game_id": "mega_man_2",
+  "display_name": "Mega Man 2",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apmm2"
+  ],
+  "patch_world_module": "worlds.mm2",
+  "ap_world": "mm2",
+  "required_roms": [
+    "mega_man_2"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "mega_man_2",
+    "world": "mm2",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/mm2/client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".nes"
+    ],
+    "md5": [
+      "caaeb9ee3b52839de261fd16f93103e6"
+    ],
+    "sha1": [
+      "6b5b9235c3f630486ed8f07a133b044eaa2e22b2"
+    ]
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "nestopia",
+    "ap_game": "Mega Man 2"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "universal_tracker",
+  "tracker_pack_path": "poptracker/packs/mega_man_2/pack",
+  "default_tracker_variant": "standard"
+}

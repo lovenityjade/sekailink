@@ -4,6 +4,7 @@ import { HashRouter } from "react-router-dom";
 import App from "./App";
 import { I18nProvider } from "./i18n";
 import { runtime } from "./services/runtime";
+import { hydrateClientTheme } from "./services/theme";
 import { trace, traceError } from "./services/trace";
 
 import "./styles/circuitForge.css";
@@ -46,6 +47,8 @@ try {
 } catch {
   // ignore
 }
+
+void hydrateClientTheme();
 
 // Forward renderer crashes/errors to the Electron main process so they get written to log files.
 // This is best-effort; logging must never break the UI.

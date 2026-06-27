@@ -1,0 +1,160 @@
+﻿{
+  "tracker_default": {
+    "type": "container",
+    "background": "#000000",
+    "content": {
+      "type": "dock",
+      "dropshadow": true,
+      "content": [
+        {
+          "type": "dock",
+          "dock": "bottom",
+          "v_alignment": "stretch",
+          "content": [
+            {
+              "type": "group",
+              "header": "Items",
+              "dock": "left",
+              "content": {
+                "type": "layout",
+                "key": "shared_item_grid"
+              }
+            },
+            {
+              "type": "group",
+              "header": "Shops",
+              "dock": "left",
+              "content": {
+                "type": "layout",
+                "key": "shop_grid"
+              }
+            },
+            {
+              "type": "group",
+              "header": "*Track shops",
+              "dock": "left",
+              "content": {
+                "type": "layout",
+                "key": "shop_grid2"
+              }
+            },
+            {
+              "type": "group",
+              "header": "Settings",
+              "dock": "right",
+              "content": {
+                "type": "layout",
+                "key": "settings_grid"
+              }
+            }
+          ]
+        },
+        {
+          "type": "tabbed",
+          "tabs": [
+            {
+              "title": "Overworld",
+              "icon": "images/items/triforce.png",
+              "content": {
+                "type": "map",
+                "maps": [
+                  "overworld"
+                ]
+              }
+            },
+            {
+              "title": "Level 1 (Eagle)",
+              "icon": "images/icons/d1.png",
+              "content": {
+                "type": "map",
+                "maps": [
+                  "level1"
+                ]
+              }
+            },
+            {
+              "title": "Level 2 (Moon)",
+              "icon": "images/icons/d2.png",
+              "content": {
+                "type": "map",
+                "maps": [
+                  "level2"
+                ]
+              }
+            },
+            {
+              "title": "Level 3 (Manji)",
+              "icon": "images/icons/d3.png",
+              "content": {
+                "type": "map",
+                "maps": [
+                  "level3"
+                ]
+              }
+            },
+            {
+              "title": "Level 4 (Snake)",
+              "icon": "images/icons/d4.png",
+              "content": {
+                "type": "map",
+                "maps": [
+                  "level4"
+                ]
+              }
+            },
+            {
+              "title": "Level 5 (Lizard)",
+              "icon": "images/icons/d5.png",
+              "content": {
+                "type": "map",
+                "maps": [
+                  "level5"
+                ]
+              }
+            },
+            {
+              "title": "Level 6 (Dragon)",
+              "icon": "images/icons/d6.png",
+              "content": {
+                "type": "map",
+                "maps": [
+                  "level6"
+                ]
+              }
+            },
+            {
+              "title": "Level 7 (Demon)",
+              "icon": "images/icons/d1.png",
+              "content": {
+                "type": "map",
+                "maps": [
+                  "level7"
+                ]
+              }
+            },
+            {
+              "title": "Level 8 (Lion)",
+              "icon": "images/icons/d4.png",
+              "content": {
+                "type": "map",
+                "maps": [
+                  "level8"
+                ]
+              }
+            },
+            {
+              "title": "Level 9 (Death Mountain)",
+              "icon": "images/icons/Ganon.png",
+              "content": {
+                "type": "map",
+                "maps": [
+                  "level9"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

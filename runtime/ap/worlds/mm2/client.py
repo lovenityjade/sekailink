@@ -534,33 +534,37 @@ class MegaMan2Client(BizHawkClient):
         await write(ctx.bizhawk_ctx, writes)
 
         new_checks = []
+        known_checks = ctx.checked_locations | ctx.locations_checked
+        server_locations = getattr(ctx, "server_locations", set()) or set()
+
+        def add_check(location_id: int) -> None:
+            if location_id in known_checks:
+                return
+            if server_locations and location_id not in server_locations:
+                return
+            new_checks.append(location_id)
+
         # check for locations
         for i in range(8):
             flag = 1 << i
             if robot_masters_defeated[0] & flag:
-                wep_id = 0x880101 + i
-                if wep_id not in ctx.checked_locations:
-                    new_checks.append(wep_id)
+                add_check(0x880101 + i)
 
         for i in range(3):
             flag = 1 << i
             if items_acquired[0] & flag:
-                itm_id = 0x880111 + i
-                if itm_id not in ctx.checked_locations:
-                    new_checks.append(itm_id)
+                add_check(0x880111 + i)
 
         for i in range(0xD):
             rbm_id = 0x880001 + i
             if completed_stages[i] != 0:
-                if rbm_id not in ctx.checked_locations:
-                    new_checks.append(rbm_id)
+                add_check(rbm_id)
 
         for consumable in MM2_CONSUMABLE_TABLE:
-            if consumable not in ctx.checked_locations:
-                is_checked = consumable_checks[MM2_CONSUMABLE_TABLE[consumable][0]] \
-                             & MM2_CONSUMABLE_TABLE[consumable][1]
-                if is_checked:
-                    new_checks.append(consumable)
+            is_checked = consumable_checks[MM2_CONSUMABLE_TABLE[consumable][0]] \
+                         & MM2_CONSUMABLE_TABLE[consumable][1]
+            if is_checked:
+                add_check(consumable)
 
         for new_check_id in new_checks:
             ctx.locations_checked.add(new_check_id)

@@ -9,6 +9,7 @@
 #include <cstdio>
 #include <cstdint>
 #include <iostream>
+#include <string_view>
 
 namespace sekaiemu::spike {
 
@@ -68,6 +69,13 @@ void LibretroHost::Impl::LogPrintf(enum retro_log_level level, const char* fmt, 
   std::array<char, 2048> buffer{};
   vsnprintf(buffer.data(), buffer.size(), fmt, args);
   va_end(args);
+
+  // bsnes-mercury reports this every frame for some enhancement-chip games
+  // with no cartridge SRAM (notably MMX3/Cx4). It makes real runtime failures
+  // almost impossible to read and can flood the Client Core log bridge.
+  if (std::string_view(buffer.data()) == "SRAM memory size: 0.\n") {
+    return;
+  }
 
   std::cerr << "[libretro][" << LogLevelName(level) << "] " << buffer.data();
 }

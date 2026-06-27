@@ -87,7 +87,7 @@ std::optional<std::filesystem::path> FindFirstExistingDirectory(
 }  // namespace
 
 std::optional<SklmiBridgeSpec> ResolveSklmiBridgeSpec(std::string_view game_name) {
-  static const std::array<SklmiBridgeSpec, 2> kKnownSpecs{{
+  static const std::array<SklmiBridgeSpec, 3> kKnownSpecs{{
       SklmiBridgeSpec{
           .game_name = "EarthBound",
           .bridge_id = "earthbound-phase1",
@@ -97,6 +97,11 @@ std::optional<SklmiBridgeSpec> ResolveSklmiBridgeSpec(std::string_view game_name
           .game_name = "A Link to the Past",
           .bridge_id = "alttp-phase1",
           .manifest_filename = "alttp.phase1.json",
+      },
+      SklmiBridgeSpec{
+          .game_name = "The Legend of Zelda",
+          .bridge_id = "tloz-phase1",
+          .manifest_filename = "tloz.phase1.json",
       },
   }};
 
@@ -120,8 +125,8 @@ std::optional<std::filesystem::path> ResolveSklmiRuntimeBinary(
   }
   if (const auto home = HomePath()) {
     if (const auto resolved = FindFirstExistingFile({
-            *home / "DevSSD/sekailink-beta-3-final/clean-room/repos/sklmi/build/sekailink_sklmi_runtime",
-            *home / "DevSSD/sekailink-beta-3-final/sklmi/build/sekailink_sklmi_runtime",
+            *home / "SekaiLink/canonical/services/sklmi/build/sekailink_sklmi_runtime",
+            *home / "SekaiLink/canonical/runtime/bin/sekailink_sklmi_runtime",
             std::filesystem::path("/tmp/sekailink-sklmi-build-beta3/sekailink_sklmi_runtime"),
             std::filesystem::path("/tmp/sekailink-sklmi-build-clean/sekailink_sklmi_runtime"),
             std::filesystem::path("/tmp/sekailink-sklmi-build/sekailink_sklmi_runtime"),
@@ -158,9 +163,8 @@ std::optional<std::filesystem::path> ResolveSklmiManifestDirectory(
   }
   if (const auto home = HomePath()) {
     if (const auto resolved = FindFirstExistingDirectory({
-            *home / "DevSSD/sekailink-beta-3-final/clean-room/repos/sklmi/manifests",
-            *home / "DevSSD/sekailink-beta-3-final/sklmi/manifests",
-            *home / "DevSSD/SekaiLinkDev/sekailink-sklmi/manifests",
+            *home / "SekaiLink/canonical/services/sklmi/manifests",
+            *home / "SekaiLink/canonical/runtime/sklmi/manifests",
         })) {
       return resolved;
     }

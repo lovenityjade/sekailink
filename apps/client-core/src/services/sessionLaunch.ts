@@ -18,11 +18,22 @@ export type SessionLaunchRequest = {
   playerAlias?: string;
   password?: string;
   apGameName?: string;
+  trackerVariant?: string;
   forceTrackerVariantPrompt?: boolean;
   chatBridge?: {
     channelId?: string;
     lobbyId?: string;
   };
+  multiGameEntries?: Array<{
+    id?: string;
+    label?: string;
+    configName?: string;
+    downloadUrl?: string;
+    apGameName?: string;
+    slot?: string;
+    playerAlias?: string;
+    trackerVariant?: string;
+  }>;
 };
 
 export type SessionLaunchOutcome =
@@ -87,11 +98,14 @@ export const executeSessionLaunch = async (request: SessionLaunchRequest): Promi
     playerAlias: request.playerAlias,
     password: request.password,
     apGameName: request.apGameName,
+    trackerVariant: request.trackerVariant,
+    packVariant: request.trackerVariant,
     forceTrackerVariantPrompt: request.forceTrackerVariantPrompt === true,
     chatBridge: request.chatBridge,
     apiBaseUrl: API_BASE_URL,
     authToken: getDesktopToken(),
     deviceId: getDeviceId(),
+    multiGameEntries: request.multiGameEntries,
   });
 
   const launchData = launchRes as any;

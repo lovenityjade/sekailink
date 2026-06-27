@@ -1,6 +1,8 @@
 #include "runtime_memory_server.hpp"
 
 #include "host_io_utils.hpp"
+#include "runtime_memory_socket_utils.hpp"
+#include "runtime_memory_utils.hpp"
 
 #if defined(_WIN32)
 #ifndef NOMINMAX
@@ -13,6 +15,8 @@
 #endif
 using NativeSocket = SOCKET;
 #else
+#include <arpa/inet.h>
+#include <netinet/in.h>
 #include <fcntl.h>
 #include <sys/socket.h>
 #include <sys/un.h>
@@ -30,247 +34,12 @@ using NativeSocket = int;
 #include <cerrno>
 #include <cstddef>
 #include <cstring>
+#include <fstream>
+#include <iostream>
 #include <sstream>
 #include <vector>
 
 namespace sekaiemu::spike {
-
-namespace {
-
-bool EnsureSocketRuntime() {
-#if defined(_WIN32)
-  static bool initialized = [] {
-    WSADATA data{};
-    return WSAStartup(MAKEWORD(2, 2), &data) == 0;
-  }();
-  return initialized;
-#else
-  return true;
-#endif
-}
-
-bool WouldBlock() {
-#if defined(_WIN32)
-  const int error = WSAGetLastError();
-  return error == WSAEWOULDBLOCK;
-#else
-  return errno == EAGAIN || errno == EWOULDBLOCK;
-#endif
-}
-
-void CloseFd(std::intptr_t fd) {
-  if (fd >= 0) {
-#if defined(_WIN32)
-    closesocket(static_cast<SOCKET>(fd));
-#else
-    close(fd);
-#endif
-  }
-}
-
-bool SetNonBlocking(std::intptr_t fd) {
-#if defined(_WIN32)
-  u_long mode = 1;
-  return ioctlsocket(static_cast<SOCKET>(fd), FIONBIO, &mode) == 0;
-#else
-  const int flags = fcntl(fd, F_GETFL, 0);
-  if (flags < 0) {
-    return false;
-  }
-  return fcntl(fd, F_SETFL, flags | O_NONBLOCK) == 0;
-#endif
-}
-
-std::string EscapeJson(std::string_view value) {
-  std::string out;
-  out.reserve(value.size() + 8);
-  for (const char ch : value) {
-    switch (ch) {
-      case '\\': out += "\\\\"; break;
-      case '"': out += "\\\""; break;
-      case '\n': out += "\\n"; break;
-      case '\r': out += "\\r"; break;
-      case '\t': out += "\\t"; break;
-      default: out.push_back(ch); break;
-    }
-  }
-  return out;
-}
-
-std::optional<std::uint64_t> ParseUnsigned(std::string_view text) {
-  auto trimmed = std::string(text);
-  auto not_space = [](unsigned char c) { return !std::isspace(c); };
-  trimmed.erase(trimmed.begin(), std::find_if(trimmed.begin(), trimmed.end(), not_space));
-  trimmed.erase(std::find_if(trimmed.rbegin(), trimmed.rend(), not_space).base(), trimmed.end());
-  if (trimmed.empty()) {
-    return std::nullopt;
-  }
-  std::uint64_t value = 0;
-  auto begin = trimmed.data();
-  auto end = trimmed.data() + trimmed.size();
-  const bool hex = trimmed.size() > 2 && trimmed[0] == '0' && (trimmed[1] == 'x' || trimmed[1] == 'X');
-  if (hex) {
-    begin += 2;
-  }
-  const auto result = std::from_chars(begin, end, value, hex ? 16 : 10);
-  if (result.ec != std::errc{} || result.ptr != end) {
-    return std::nullopt;
-  }
-  return value;
-}
-
-std::string LowercaseCopy(std::string value) {
-  std::transform(value.begin(), value.end(), value.begin(), [](unsigned char c) {
-    return static_cast<char>(std::tolower(c));
-  });
-  return value;
-}
-
-std::optional<std::string> ExtractStringField(std::string_view text, std::string_view key) {
-  const std::string needle = "\"" + std::string(key) + "\":\"";
-  const auto begin = text.find(needle);
-  if (begin == std::string_view::npos) {
-    return std::nullopt;
-  }
-  const auto start = begin + needle.size();
-  const auto end = text.find('"', start);
-  if (end == std::string_view::npos) {
-    return std::nullopt;
-  }
-  return std::string(text.substr(start, end - start));
-}
-
-std::optional<std::uint64_t> ExtractUIntField(std::string_view text, std::string_view key) {
-  const std::string needle = "\"" + std::string(key) + "\":";
-  const auto begin = text.find(needle);
-  if (begin == std::string_view::npos) {
-    return std::nullopt;
-  }
-  const auto start = begin + needle.size();
-  auto end = text.find_first_of(",}]", start);
-  if (end == std::string_view::npos) {
-    end = text.size();
-  }
-  return ParseUnsigned(text.substr(start, end - start));
-}
-
-std::optional<double> ExtractDoubleField(std::string_view text, std::string_view key) {
-  const std::string needle = "\"" + std::string(key) + "\":";
-  const auto begin = text.find(needle);
-  if (begin == std::string_view::npos) {
-    return std::nullopt;
-  }
-  const auto start = begin + needle.size();
-  auto end = text.find_first_of(",}]", start);
-  if (end == std::string_view::npos) {
-    end = text.size();
-  }
-  std::string raw(text.substr(start, end - start));
-  raw.erase(raw.begin(), std::find_if(raw.begin(), raw.end(), [](unsigned char c) {
-    return !std::isspace(c) && c != '"';
-  }));
-  raw.erase(std::find_if(raw.rbegin(), raw.rend(), [](unsigned char c) {
-    return !std::isspace(c) && c != '"';
-  }).base(), raw.end());
-  if (raw.empty()) {
-    return std::nullopt;
-  }
-  try {
-    return std::stod(raw);
-  } catch (...) {
-    return std::nullopt;
-  }
-}
-
-std::string JsonError(std::string_view err) {
-  return "{\"type\":\"ERROR\",\"err\":\"" + EscapeJson(err) + "\"}";
-}
-
-std::string DomainListToJson(const std::vector<RuntimeMemoryDomainInfo>& domains) {
-  std::ostringstream json;
-  json << "[";
-  for (std::size_t i = 0; i < domains.size(); ++i) {
-    if (i > 0) json << ",";
-    const auto& domain = domains[i];
-    json << "{\"name\":\"" << EscapeJson(domain.id)
-         << "\",\"size\":" << domain.size_bytes
-         << ",\"writable\":" << (domain.writable ? "true" : "false")
-         << ",\"endianness\":\"" << EscapeJson(domain.endianness)
-         << "\"}";
-  }
-  json << "]";
-  return json.str();
-}
-
-std::optional<std::vector<std::byte>> Base64Decode(std::string_view input) {
-  static constexpr std::string_view kAlphabet =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-  auto decode_char = [](char c) -> std::optional<unsigned> {
-    const auto pos = kAlphabet.find(c);
-    if (pos == std::string_view::npos) return std::nullopt;
-    return static_cast<unsigned>(pos);
-  };
-
-  if (input.size() % 4 != 0) {
-    return std::nullopt;
-  }
-
-  std::vector<std::byte> out;
-  out.reserve((input.size() / 4) * 3);
-  for (std::size_t i = 0; i < input.size(); i += 4) {
-    const auto d0 = decode_char(input[i]);
-    const auto d1 = decode_char(input[i + 1]);
-    if (!d0.has_value() || !d1.has_value()) {
-      return std::nullopt;
-    }
-    const auto d2 = input[i + 2] == '=' ? std::optional<unsigned>{0} : decode_char(input[i + 2]);
-    const auto d3 = input[i + 3] == '=' ? std::optional<unsigned>{0} : decode_char(input[i + 3]);
-    if (!d2.has_value() || !d3.has_value()) {
-      return std::nullopt;
-    }
-    const auto combined = (*d0 << 18U) | (*d1 << 12U) | (*d2 << 6U) | *d3;
-    out.push_back(static_cast<std::byte>((combined >> 16U) & 0xFFU));
-    if (input[i + 2] != '=') out.push_back(static_cast<std::byte>((combined >> 8U) & 0xFFU));
-    if (input[i + 3] != '=') out.push_back(static_cast<std::byte>(combined & 0xFFU));
-  }
-  return out;
-}
-
-std::string Base64Encode(const std::byte* data, std::size_t size) {
-  static constexpr char kAlphabet[] =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-  std::string out;
-  out.reserve(((size + 2) / 3) * 4);
-  for (std::size_t i = 0; i < size; i += 3) {
-    const auto b0 = static_cast<unsigned>(std::to_integer<unsigned char>(data[i]));
-    const auto b1 = (i + 1 < size) ? static_cast<unsigned>(std::to_integer<unsigned char>(data[i + 1])) : 0U;
-    const auto b2 = (i + 2 < size) ? static_cast<unsigned>(std::to_integer<unsigned char>(data[i + 2])) : 0U;
-    const auto combined = (b0 << 16U) | (b1 << 8U) | b2;
-    out.push_back(kAlphabet[(combined >> 18U) & 0x3FU]);
-    out.push_back(kAlphabet[(combined >> 12U) & 0x3FU]);
-    out.push_back(i + 1 < size ? kAlphabet[(combined >> 6U) & 0x3FU] : '=');
-    out.push_back(i + 2 < size ? kAlphabet[combined & 0x3FU] : '=');
-  }
-  return out;
-}
-
-bool SendAll(std::intptr_t fd, const std::string& payload) {
-  std::size_t sent = 0;
-  while (sent < payload.size()) {
-    const auto remaining = payload.size() - sent;
-    const auto written = send(static_cast<NativeSocket>(fd),
-                              payload.data() + sent,
-                              static_cast<int>(remaining),
-                              0);
-    if (written <= 0) {
-      return false;
-    }
-    sent += static_cast<std::size_t>(written);
-  }
-  return true;
-}
-
-}  // namespace
 
 RuntimeMemoryServer::~RuntimeMemoryServer() {
   Shutdown();
@@ -281,11 +50,22 @@ bool RuntimeMemoryServer::Initialize(const std::filesystem::path& save_directory
                                      std::string system_name,
                                      CoreApi* core,
                                      MemoryDomainRegistry* memory_domains,
-                                     std::string& error) {
+                                     std::string& error,
+                                     std::optional<std::filesystem::path> rom_path) {
   Shutdown();
   core_ = core;
   memory_domains_ = memory_domains;
   system_name_ = std::move(system_name);
+  rom_data_.clear();
+  prg_rom_offset_ = 0;
+  if (rom_path.has_value() && !rom_path->empty()) {
+    rom_data_ = ReadBinaryFile(*rom_path);
+    const bool has_ines_header = rom_data_.size() > 16 &&
+        rom_data_[0] == 'N' && rom_data_[1] == 'E' && rom_data_[2] == 'S' && rom_data_[3] == 0x1A;
+    if (has_ines_header && LowercaseCopy(system_name_) == "nes") {
+      prg_rom_offset_ = 16;
+    }
+  }
 
   if (!EnsureSocketRuntime()) {
     error = "Failed to initialize socket runtime.";
@@ -293,23 +73,29 @@ bool RuntimeMemoryServer::Initialize(const std::filesystem::path& save_directory
   }
 
   std::error_code ec;
-
-#if defined(_WIN32)
-  (void)save_directory;
   const std::string endpoint = override_socket_path.has_value()
       ? override_socket_path->string()
       : std::string();
-  std::uint16_t requested_port = 0;
-  if (!endpoint.empty()) {
+
+  auto parse_loopback_tcp_endpoint = [](const std::string& raw, std::uint16_t& out_port) -> bool {
     constexpr std::string_view prefix = "tcp://127.0.0.1:";
-    if (endpoint.rfind(std::string(prefix), 0) != 0) {
-      error = "Windows runtime memory server requires tcp://127.0.0.1:<port> override.";
+    if (raw.rfind(std::string(prefix), 0) != 0) {
       return false;
     }
     try {
-      requested_port = static_cast<std::uint16_t>(std::stoul(endpoint.substr(prefix.size())));
+      out_port = static_cast<std::uint16_t>(std::stoul(raw.substr(prefix.size())));
+      return true;
     } catch (...) {
-      error = "Invalid Windows runtime memory TCP endpoint.";
+      return false;
+    }
+  };
+
+#if defined(_WIN32)
+  (void)save_directory;
+  std::uint16_t requested_port = 0;
+  if (!endpoint.empty()) {
+    if (!parse_loopback_tcp_endpoint(endpoint, requested_port)) {
+      error = "Windows runtime memory server requires tcp://127.0.0.1:<port> override.";
       return false;
     }
   }
@@ -353,6 +139,56 @@ bool RuntimeMemoryServer::Initialize(const std::filesystem::path& save_directory
   server_fd_ = static_cast<std::intptr_t>(server);
   return true;
 #else
+  std::uint16_t requested_port = 0;
+  if (!endpoint.empty() && endpoint.rfind("tcp://", 0) == 0) {
+    if (!parse_loopback_tcp_endpoint(endpoint, requested_port)) {
+      error = "Runtime memory TCP endpoint must be tcp://127.0.0.1:<port>.";
+      return false;
+    }
+
+    server_fd_ = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (server_fd_ < 0) {
+      error = "Failed to create runtime memory TCP socket.";
+      return false;
+    }
+
+    int reuse = 1;
+    setsockopt(server_fd_, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
+
+    sockaddr_in addr{};
+    addr.sin_family = AF_INET;
+    addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+    addr.sin_port = htons(requested_port);
+    if (bind(server_fd_, reinterpret_cast<sockaddr*>(&addr), sizeof(addr)) != 0) {
+      error = "Failed to bind runtime memory TCP socket: ";
+      error += std::strerror(errno);
+      Shutdown();
+      return false;
+    }
+
+    sockaddr_in bound{};
+    socklen_t bound_len = sizeof(bound);
+    if (getsockname(server_fd_, reinterpret_cast<sockaddr*>(&bound), &bound_len) != 0) {
+      error = "Failed to resolve runtime memory TCP port.";
+      Shutdown();
+      return false;
+    }
+    if (!SetNonBlocking(server_fd_)) {
+      error = "Failed to mark runtime memory TCP socket non-blocking.";
+      Shutdown();
+      return false;
+    }
+    if (listen(server_fd_, 4) != 0) {
+      error = "Failed to listen on runtime memory TCP socket.";
+      Shutdown();
+      return false;
+    }
+
+    const auto port = ntohs(bound.sin_port);
+    socket_path_ = std::filesystem::path("tcp://127.0.0.1:" + std::to_string(port));
+    return true;
+  }
+
   socket_path_ = override_socket_path.value_or(save_directory / "runtime" / "sekaiemu-memory.sock");
   std::filesystem::create_directories(socket_path_.parent_path(), ec);
   if (ec) {
@@ -404,12 +240,18 @@ void RuntimeMemoryServer::Shutdown() {
     CloseFd(fd);
   }
   client_fds_.clear();
+  client_buffers_.clear();
   CloseFd(server_fd_);
   server_fd_ = -1;
+  read_trace_count_ = 0;
+  write_trace_count_ = 0;
+  guard_trace_count_ = 0;
   if (!socket_path_.empty()) {
 #if !defined(_WIN32)
-    std::error_code ec;
-    std::filesystem::remove(socket_path_, ec);
+    if (socket_path_.string().rfind("tcp://", 0) != 0) {
+      std::error_code ec;
+      std::filesystem::remove(socket_path_, ec);
+    }
 #endif
     socket_path_.clear();
   }
@@ -452,6 +294,7 @@ void RuntimeMemoryServer::Poll() {
                                 );
     if (read_size == 0) {
       CloseFd(fd);
+      client_buffers_.erase(fd);
       continue;
     }
     if (read_size < 0) {
@@ -459,19 +302,20 @@ void RuntimeMemoryServer::Poll() {
         alive_clients.push_back(fd);
       } else {
         CloseFd(fd);
+        client_buffers_.erase(fd);
       }
       continue;
     }
-    buffer[static_cast<std::size_t>(read_size)] = '\0';
-    std::string payload(buffer.data(), static_cast<std::size_t>(read_size));
-    std::size_t start = 0;
+    auto& payload = client_buffers_[fd];
+    payload.append(buffer.data(), static_cast<std::size_t>(read_size));
     bool keep = true;
-    while (start < payload.size()) {
-      const auto end = payload.find('\n', start);
+    while (true) {
+      const auto end = payload.find('\n');
       if (end == std::string::npos) {
         break;
       }
-      std::string line = payload.substr(start, end - start);
+      std::string line = payload.substr(0, end);
+      payload.erase(0, end + 1);
       if (!line.empty() && line.back() == '\r') {
         line.pop_back();
       }
@@ -480,12 +324,15 @@ void RuntimeMemoryServer::Poll() {
         keep = false;
         break;
       }
-      start = end + 1;
+    }
+    if (payload.size() > 4 * 1024 * 1024) {
+      keep = false;
     }
     if (keep) {
       alive_clients.push_back(fd);
     } else {
       CloseFd(fd);
+      client_buffers_.erase(fd);
     }
   }
   client_fds_ = std::move(alive_clients);
@@ -534,12 +381,20 @@ std::vector<RuntimeMemoryDomainInfo> RuntimeMemoryServer::BuildDomainList() cons
   if (system_ram_size > 0) {
     add_domain("RAM", system_ram_size);
     add_domain("WRAM", system_ram_size);
+    if (IsGbaSystem(system_name_) && system_ram_size >= 0x00048000u) {
+      add_domain("EWRAM", 0x00040000u);
+      add_domain("IWRAM", 0x00008000u);
+    }
   }
 
   const auto save_ram_size = core_->retro_get_memory_size(RETRO_MEMORY_SAVE_RAM);
   if (save_ram_size > 0) {
     add_domain("Battery RAM", save_ram_size);
     add_domain("SRAM", save_ram_size);
+    if (IsGameBoySystem(system_name_)) {
+      add_domain("CartRAM", save_ram_size);
+      add_domain("Cart RAM", save_ram_size);
+    }
   }
 
   const auto video_ram_size = core_->retro_get_memory_size(RETRO_MEMORY_VIDEO_RAM);
@@ -547,15 +402,28 @@ std::vector<RuntimeMemoryDomainInfo> RuntimeMemoryServer::BuildDomainList() cons
     add_domain("VRAM", video_ram_size);
   }
 
+  if (!rom_data_.empty()) {
+    add_domain("ROM", rom_data_.size(), false);
+    add_domain("Cart ROM", rom_data_.size(), false);
+    if (prg_rom_offset_ < rom_data_.size()) {
+      add_domain("PRG ROM", rom_data_.size() - prg_rom_offset_, false);
+    }
+  }
+
   // BizHawk generic AP clients commonly address "System Bus" with absolute
   // addresses. Expose a large virtual bus domain; MemoryDomainRegistry resolves
   // it through libretro memory maps at read/write time.
-  if (memory_domains_ && !memory_domains_->Descriptors().empty()) {
+  if (memory_domains_ &&
+      (!memory_domains_->Descriptors().empty() || IsGbaSystem(system_name_) || IsGameBoySystem(system_name_))) {
     constexpr std::size_t kVirtualBusSize = static_cast<std::size_t>(0x100000000ull);
     add_domain("System Bus", kVirtualBusSize);
     add_domain("system_bus", kVirtualBusSize);
     add_domain("bus", kVirtualBusSize);
-    add_domain("gba_system_bus", kVirtualBusSize);
+    if (IsGbaSystem(system_name_)) {
+      add_domain("gba_system_bus", kVirtualBusSize);
+    } else if (IsGameBoySystem(system_name_)) {
+      add_domain("gb_system_bus", kVirtualBusSize);
+    }
   }
 
   if (memory_domains_) {
@@ -702,6 +570,12 @@ std::string RuntimeMemoryServer::BuildGuardResponse(const std::string& line) con
   if (resolved) {
     ok = std::memcmp(resolved, decoded->data(), decoded->size()) == 0;
   }
+  TraceMemoryRequest("GUARD",
+                     *domain,
+                     static_cast<std::uint32_t>(*address),
+                     static_cast<std::uint32_t>(decoded->size()),
+                     ok,
+                     ok ? "matched" : "mismatch_or_unresolved");
   return "{\"type\":\"GUARD_RESPONSE\",\"value\":" + std::string(ok ? "true" : "false") +
          ",\"address\":" + std::to_string(*address) + "}";
 }
@@ -711,14 +585,26 @@ std::string RuntimeMemoryServer::BuildReadResponse(const std::string& line) cons
   const auto address = ExtractUIntField(line, "address");
   const auto size = ExtractUIntField(line, "size");
   if (!domain.has_value() || !address.has_value() || !size.has_value()) {
-    return "{\"type\":\"ERROR\",\"value\":\"invalid_read_request\"}";
+    return JsonError("invalid_read_request");
   }
   const auto* resolved = ResolveReadOnly(*domain,
                                          static_cast<std::uint32_t>(*address),
                                          static_cast<std::uint32_t>(*size));
   if (!resolved) {
-    return "{\"type\":\"ERROR\",\"value\":\"read_failed\"}";
+    TraceMemoryRequest("READ",
+                       *domain,
+                       static_cast<std::uint32_t>(*address),
+                       static_cast<std::uint32_t>(*size),
+                       false,
+                       "read_failed");
+    return JsonError("read_failed");
   }
+  TraceMemoryRequest("READ",
+                     *domain,
+                     static_cast<std::uint32_t>(*address),
+                     static_cast<std::uint32_t>(*size),
+                     true,
+                     "ok");
   const auto encoded = Base64Encode(reinterpret_cast<const std::byte*>(resolved),
                                     static_cast<std::size_t>(*size));
   return "{\"type\":\"READ_RESPONSE\",\"value\":\"" + encoded + "\"}";
@@ -729,20 +615,87 @@ std::string RuntimeMemoryServer::BuildWriteResponse(const std::string& line) {
   const auto address = ExtractUIntField(line, "address");
   const auto value = ExtractStringField(line, "value");
   if (!domain.has_value() || !address.has_value() || !value.has_value()) {
-    return "{\"type\":\"ERROR\",\"value\":\"invalid_write_request\"}";
+    return JsonError("invalid_write_request");
   }
   const auto decoded = Base64Decode(*value);
   if (!decoded.has_value()) {
-    return "{\"type\":\"ERROR\",\"value\":\"invalid_write_value\"}";
+    return JsonError("invalid_write_value");
+  }
+  const auto normalized_domain = NormalizeDomainName(*domain);
+  if (IsGameBoySystem(system_name_) && IsRomDomain(normalized_domain)) {
+    if (ApplyGameBoyRomWrite(normalized_domain,
+                             static_cast<std::uint32_t>(*address),
+                             *decoded)) {
+      TraceMemoryRequest("WRITE",
+                         *domain,
+                         static_cast<std::uint32_t>(*address),
+                         static_cast<std::uint32_t>(decoded->size()),
+                         true,
+                         "gameboy_rom_patch");
+      return "{\"type\":\"WRITE_RESPONSE\"}";
+    }
+    TraceMemoryRequest("WRITE",
+                       *domain,
+                       static_cast<std::uint32_t>(*address),
+                       static_cast<std::uint32_t>(decoded->size()),
+                       false,
+                       "gameboy_rom_patch_failed");
+    return JsonError("write_failed");
   }
   auto* resolved = ResolveWritable(*domain,
                                    static_cast<std::uint32_t>(*address),
                                    static_cast<std::uint32_t>(decoded->size()));
   if (!resolved) {
-    return "{\"type\":\"ERROR\",\"value\":\"write_failed\"}";
+    TraceMemoryRequest("WRITE",
+                       *domain,
+                       static_cast<std::uint32_t>(*address),
+                       static_cast<std::uint32_t>(decoded->size()),
+                       false,
+                       "write_failed");
+    return JsonError("write_failed");
   }
   std::memcpy(resolved, decoded->data(), decoded->size());
+  TraceMemoryRequest("WRITE",
+                     *domain,
+                     static_cast<std::uint32_t>(*address),
+                     static_cast<std::uint32_t>(decoded->size()),
+                     true,
+                     "ok");
   return "{\"type\":\"WRITE_RESPONSE\"}";
+}
+
+bool RuntimeMemoryServer::ApplyGameBoyRomWrite(std::string_view normalized_domain,
+                                               std::uint32_t address,
+                                               const std::vector<std::byte>& bytes) {
+  if (!core_ || !core_->retro_cheat_set || rom_data_.empty() || bytes.empty()) {
+    return false;
+  }
+
+  const std::size_t base = normalized_domain == "prg_rom" ? prg_rom_offset_ : 0;
+  const std::size_t offset = base + static_cast<std::size_t>(address);
+  if (offset > rom_data_.size() || bytes.size() > rom_data_.size() - offset) {
+    return false;
+  }
+
+  for (std::size_t i = 0; i < bytes.size(); ++i) {
+    const std::size_t absolute_offset = offset + i;
+    const auto cpu_address = GameBoyRomOffsetToCpuAddress(absolute_offset);
+    if (!cpu_address.has_value()) {
+      return false;
+    }
+
+    const auto new_value = static_cast<std::uint8_t>(bytes[i]);
+    const auto old_value = rom_data_[absolute_offset];
+    const auto code = EncodeGameBoyGameGeniePatch(*cpu_address, new_value, old_value);
+    auto [it, inserted] = game_boy_rom_patch_indices_.try_emplace(absolute_offset,
+                                                                  next_game_boy_rom_patch_index_);
+    if (inserted) {
+      ++next_game_boy_rom_patch_index_;
+    }
+    core_->retro_cheat_set(it->second, true, code.c_str());
+    rom_data_[absolute_offset] = new_value;
+  }
+  return true;
 }
 
 std::string RuntimeMemoryServer::BuildDisplayMessageResponse() {
@@ -760,39 +713,161 @@ std::string RuntimeMemoryServer::BuildSetMessageIntervalResponse(const std::stri
 const std::uint8_t* RuntimeMemoryServer::ResolveReadOnly(std::string_view domain_id,
                                                          std::uint32_t address,
                                                          std::uint32_t size) const {
-  if (!memory_domains_ || !core_) {
+  const auto normalized_domain = NormalizeDomainName(std::string(domain_id));
+  if (!rom_data_.empty() && IsRomDomain(normalized_domain)) {
+    const std::size_t base = normalized_domain == "prg_rom" ? prg_rom_offset_ : 0;
+    const std::size_t offset = base + static_cast<std::size_t>(address);
+    const std::size_t length = static_cast<std::size_t>(size);
+    if (offset <= rom_data_.size() && length <= rom_data_.size() - offset) {
+      return rom_data_.data() + offset;
+    }
     return nullptr;
   }
-  return memory_domains_->Resolve(*core_, domain_id, address, size);
+  if (IsGbaSystem(system_name_) && core_ &&
+      (IsGbaSramDomain(normalized_domain) || IsGbaBusDomain(normalized_domain))) {
+    if (const auto* gba_resolved =
+            ResolveGbaLibretroMemory(*core_, normalized_domain, address, size)) {
+      return gba_resolved;
+    }
+  }
+  if (!rom_data_.empty() && IsGbaSystem(system_name_) && IsGbaBusDomain(normalized_domain)) {
+    constexpr std::uint32_t kGbaRomBase = 0x08000000u;
+    constexpr std::uint32_t kGbaRomMirrorSize = 0x02000000u;
+    const std::uint32_t mirror_offset = address >= kGbaRomBase
+        ? (address - kGbaRomBase) % kGbaRomMirrorSize
+        : address;
+    const std::size_t offset = static_cast<std::size_t>(mirror_offset);
+    const std::size_t length = static_cast<std::size_t>(size);
+    if (offset <= rom_data_.size() && length <= rom_data_.size() - offset) {
+      return rom_data_.data() + offset;
+    }
+  }
+  if (!core_) {
+    return nullptr;
+  }
+  if (IsGameBoySystem(system_name_) && IsGameBoyBusDomain(normalized_domain)) {
+    if (!rom_data_.empty() && address < 0x8000u) {
+      const std::size_t offset = static_cast<std::size_t>(address);
+      const std::size_t length = static_cast<std::size_t>(size);
+      if (offset <= rom_data_.size() && length <= rom_data_.size() - offset) {
+        return rom_data_.data() + offset;
+      }
+    }
+  }
+  if (IsGbaSystem(system_name_) &&
+      (IsGbaEwramDomain(normalized_domain) || IsGbaIwramDomain(normalized_domain))) {
+    if (const auto* gba_resolved =
+            ResolveGbaLibretroMemory(*core_, normalized_domain, address, size)) {
+      return gba_resolved;
+    }
+    if (memory_domains_) {
+      if (const auto bus_address = GbaRelativeDomainToBusAddress(normalized_domain, address, size)) {
+        if (const auto* bus_resolved =
+                memory_domains_->Resolve(*core_, "System Bus", *bus_address, size)) {
+          return bus_resolved;
+        }
+      }
+    }
+  }
+  if (!memory_domains_) {
+    return nullptr;
+  }
+  if (IsGbaSystem(system_name_) && IsGbaSramDomain(normalized_domain)) {
+    if (const auto bus_address = GbaRelativeDomainToBusAddress(normalized_domain, address, size)) {
+      if (const auto* bus_resolved =
+              memory_domains_->Resolve(*core_, "System Bus", *bus_address, size)) {
+        return bus_resolved;
+      }
+    }
+  }
+  if (const auto* resolved = memory_domains_->Resolve(*core_, domain_id, address, size)) {
+    return resolved;
+  }
+  if (IsGbaSystem(system_name_) && IsGbaBusDomain(normalized_domain)) {
+    return ResolveGbaLibretroMemory(*core_, normalized_domain, address, size);
+  }
+  return nullptr;
 }
 
 std::uint8_t* RuntimeMemoryServer::ResolveWritable(std::string_view domain_id,
                                                    std::uint32_t address,
                                                    std::uint32_t size) const {
-  if (!memory_domains_ || !core_) {
+  const auto normalized_domain = NormalizeDomainName(std::string(domain_id));
+  if (!core_) {
     return nullptr;
   }
-  return memory_domains_->ResolveMutable(*core_, domain_id, address, size);
+  if (IsRomDomain(normalized_domain)) {
+    if (memory_domains_) {
+      if (auto* resolved = memory_domains_->ResolveMutable(*core_, domain_id, address, size)) {
+        return resolved;
+      }
+    }
+    return nullptr;
+  }
+  if (IsGbaSystem(system_name_) &&
+      (IsGbaEwramDomain(normalized_domain) || IsGbaIwramDomain(normalized_domain) ||
+       IsGbaSramDomain(normalized_domain) || IsGbaBusDomain(normalized_domain))) {
+    if (auto* gba_resolved =
+            ResolveGbaLibretroMemoryMutable(*core_, normalized_domain, address, size)) {
+      return gba_resolved;
+    }
+    if (memory_domains_ && !IsGbaBusDomain(normalized_domain)) {
+      if (const auto bus_address = GbaRelativeDomainToBusAddress(normalized_domain, address, size)) {
+        if (auto* bus_resolved =
+                memory_domains_->ResolveMutable(*core_, "System Bus", *bus_address, size)) {
+          return bus_resolved;
+        }
+      }
+    }
+  }
+  if (!memory_domains_) {
+    return nullptr;
+  }
+  if (auto* resolved = memory_domains_->ResolveMutable(*core_, domain_id, address, size)) {
+    return resolved;
+  }
+  if (IsGbaSystem(system_name_) && IsGbaBusDomain(normalized_domain)) {
+    return ResolveGbaLibretroMemoryMutable(*core_, normalized_domain, address, size);
+  }
+  return nullptr;
 }
 
-std::string InferRuntimeSystemName(const std::filesystem::path& core_path) {
-  const auto name = LowercaseCopy(core_path.filename().string());
-  if (name.find("bsnes") != std::string::npos || name.find("snes") != std::string::npos) {
-    return "SNES";
+void RuntimeMemoryServer::TraceMemoryRequest(std::string_view type,
+                                             std::string_view domain,
+                                             std::uint32_t address,
+                                             std::uint32_t size,
+                                             bool ok,
+                                             std::string_view detail) const {
+  std::uint64_t count = 0;
+  const auto type_text = std::string(type);
+  if (type_text == "READ") {
+    count = ++read_trace_count_;
+  } else if (type_text == "WRITE") {
+    count = ++write_trace_count_;
+  } else if (type_text == "GUARD") {
+    count = ++guard_trace_count_;
   }
-  if (name.find("mgba") != std::string::npos) {
-    return "GBA";
+
+  const bool should_trace =
+      !ok ||
+      type_text == "WRITE" ||
+      type_text == "GUARD" ||
+      count <= 24 ||
+      count % 1000 == 0;
+  if (!should_trace) {
+    return;
   }
-  if (name.find("gambatte") != std::string::npos) {
-    return "GBGBC";
-  }
-  if (name.find("nestopia") != std::string::npos || name.find("fce") != std::string::npos) {
-    return "NES";
-  }
-  if (name.find("mupen") != std::string::npos || name.find("parallel") != std::string::npos) {
-    return "N64";
-  }
-  return "LIBRETRO";
+
+  std::cerr << "[sekaiemu-memory] " << type
+            << " #" << count
+            << " system=" << system_name_
+            << " domain=" << domain
+            << " address=0x" << std::hex << address
+            << " size=0x" << size
+            << std::dec
+            << " ok=" << (ok ? "true" : "false")
+            << " detail=" << detail
+            << "\n";
 }
 
 }  // namespace sekaiemu::spike

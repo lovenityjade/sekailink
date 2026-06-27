@@ -1,0 +1,235 @@
+{
+    "shared_item_grid": {
+        "type": "array",
+        "orientation": "vertical",
+        "margin": "2,2",
+        "content": [
+            {
+                "type": "array",
+                "orientation": "vertical",
+                "margin": "0,0",
+                "content": [
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "3, 10",
+                        "margin": "0,0",
+                        "h_alignment": "left",
+                        "rows": [
+                            [
+                                "sword", "sword2", "sword3", "shield2", "bomb", "bow", "botharrows"    
+                            ]
+                        ]
+                    },
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "3, 10",
+                        "margin": "0,0",
+                        "h_alignment": "left",
+                        "rows": [
+                            [
+                                "bracelet", "magicrod", "bothboomers", "bothcandles", "food", "letter", "magicbook"
+                            ]
+                        ]
+                    },
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "3, 10",
+                        "margin": "0,0",
+                        "h_alignment": "left",
+                        "rows": [
+                            [
+                                "flute", "raft", "ladder", "bothrings", "magickey", "heart", "triforce"
+                            ]
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "settings_grid": {
+        "type": "array",
+        "orientation": "vertical",
+        "margin": "2,2",
+        "content": [
+            {
+                "type": "array",
+                "orientation": "vertical",
+                "margin": "0,0",
+                "content": [
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "10, 10",
+                        "margin": "10,0",
+                        "h_alignment": "left",
+                        "item_size": 100,
+                        "rows": [
+                            [
+                                "positionbutton", "safe"   
+                            ]
+                        ]
+                    },
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "10, -30",
+                        "margin": "10,0",
+                        "h_alignment": "left",
+                        "item_size": 100,
+                        "rows": [
+                            [
+                                "poolbutton", "pooltrue"  
+                            ]
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "shop_grid": {
+        "type": "array",
+        "orientation": "vertical",
+        "margin": "15,2",
+        "content": [
+            {
+                "type": "array",
+                "orientation": "vertical",
+                "margin": "0,0",
+                "content": [
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "0, 2",
+                        "margin": "0,0",
+                        "h_alignment": "left",
+                        "item_size": 30,
+                        "rows": [
+                            [
+                                "arrowshop"
+                            ]
+                        ]
+                    },
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "0, 2",
+                        "margin": "0,0",
+                        "h_alignment": "left",
+                        "item_size": 30,
+                        "rows": [
+                            [
+                                "candleshop"
+                            ]
+                        ]
+                    },
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "0, 2",
+                        "margin": "0,0",
+                        "h_alignment": "left",
+                        "item_size": 30,
+                        "rows": [
+                            [
+                                "potionshop"
+                            ]
+                        ]
+                    },
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "0, 2",
+                        "margin": "0,0",
+                        "h_alignment": "left",
+                        "item_size": 30,
+                        "rows": [
+                            [
+                                "ringshop"
+                            ]
+                        ]
+                    },
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "0, 2",
+                        "margin": "0,0",
+                        "h_alignment": "left",
+                        "item_size": 30,
+                        "rows": [
+                            [
+                                "shieldshop"
+                            ]
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "shop_grid2": {
+        "type": "array",
+        "orientation": "vertical",
+        "margin": "0,4",
+        "content": [
+            {
+                "type": "array",
+                "orientation": "vertical",
+                "margin": "0,0",
+                "content": [
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "3, 0",
+                        "margin": "0,3",
+                        "h_alignment": "left",
+                        "item_size": 26,
+                        "rows": [
+                            [
+                                "1","30","61"
+                            ]
+                        ]
+                    },
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "3, 0",
+                        "margin": "0,4",
+                        "h_alignment": "left",
+                        "item_size": 26,
+                        "rows": [
+                            [
+                                "91","121","151"
+                            ]
+                        ]
+                    },
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "3, 0",
+                        "margin": "0,4",
+                        "h_alignment": "left",
+                        "item_size": 26,
+                        "rows": [
+                            [
+                                "181","211","241"
+                            ]
+                        ]
+                    },
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "3, 0",
+                        "margin": "0,4",
+                        "h_alignment": "left",
+                        "item_size": 26,
+                        "rows": [
+                            [
+                                "271","301","331"
+                            ]
+                        ]
+                    },
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "3, 0",
+                        "margin": "0,4",
+                        "h_alignment": "left",
+                        "item_size": 26,
+                        "rows": [
+                            [
+                                "361","391","421"
+                            ]
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

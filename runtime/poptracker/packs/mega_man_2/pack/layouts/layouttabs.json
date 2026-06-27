@@ -1,0 +1,130 @@
+{
+    "layouttabs": {
+        "type": "tabbed",
+        "tabs": [
+            {
+                "title": "Stage Select",
+                "content": {
+                    "type": "map",
+                    "maps": [
+                        "stages"
+                    ]
+                }
+            },
+            {
+                "title": "Robot Masters",
+                "content": {
+                    "type": "tabbed",
+                    "tabs": [
+                        {
+                            "title": "Bubble Man",
+                            "content": {
+                                "type": "map",
+                                "maps": ["bubble_man"]
+                            }
+                        },
+                        {
+                            "title": "Air Man",
+                            "content": {
+                                "type": "map",
+                                "maps": ["air_man"]
+                            }
+                        },
+                        {
+                            "title": "Quick Man",
+                            "content": {
+                                "type": "map",
+                                "maps": ["quick_man"]
+                            }
+                        },
+                        {
+                            "title": "Heat Man",
+                            "content": {
+                                "type": "map",
+                                "maps": ["heat_man"]
+                            }
+                        },
+                        {
+                            "title": "Wood Man",
+                            "content": {
+                                "type": "map",
+                                "maps": ["wood_man"]
+                            }
+                        },
+                        {
+                            "title": "Metal Man",
+                            "content": {
+                                "type": "map",
+                                "maps": ["metal_man"]
+                            }
+                        },
+                        {
+                            "title": "Flash Man",
+                            "content": {
+                                "type": "map",
+                                "maps": ["flash_man"]
+                            }
+                        },
+                        {
+                            "title": "Crash Man",
+                            "content": {
+                                "type": "map",
+                                "maps": ["crash_man"]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Dr. Wily",
+                "content": {
+                    "type": "tabbed",
+                    "tabs": [
+                        {
+                            "title": "Dr. Wily 1",
+                            "content": {
+                                "type": "map",
+                                "maps": ["wily_1"]
+                            }
+                        },
+                        {
+                            "title": "Dr. Wily 2",
+                            "content": {
+                                "type": "map",
+                                "maps": ["wily_2"]
+                            }
+                        },
+                        {
+                            "title": "Dr. Wily 3",
+                            "content": {
+                                "type": "map",
+                                "maps": ["wily_3"]
+                            }
+                        },
+                        {
+                            "title": "Dr. Wily 4",
+                            "content": {
+                                "type": "map",
+                                "maps": ["wily_4"]
+                            }
+                        },
+                        {
+                            "title": "Dr. Wily 5",
+                            "content": {
+                                "type": "map",
+                                "maps": ["wily_5"]
+                            }
+                        },
+                        {
+                            "title": "Dr. Wily 6",
+                            "content": {
+                                "type": "map",
+                                "maps": ["wily_6"]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,45 @@
+{
+  "game_id": "donkey_kong_country_3",
+  "display_name": "Donkey Kong Country 3",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apdkc3"
+  ],
+  "patch_world_module": "worlds.dkc3",
+  "ap_world": "dkc3",
+  "required_roms": [
+    "donkey_kong_country_3"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "sni",
+  "archipelago_client": {
+    "game_key": "donkey_kong_country_3",
+    "world": "dkc3",
+    "wrapper": "sni",
+    "client_file": "worlds/dkc3/Client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [
+      "120abf304f0c40fe059f6a192ed4f947"
+    ],
+    "sha1": [
+      "d737e90d91dba8620fd5c2985eb6ff2cda7f23f9"
+    ]
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "snes",
+    "ap_game": "Donkey Kong Country 3"
+  },
+  "tracker_pack_uid": "https://github.com/PoryGone/DKC3_AP_Tracker/releases/",
+  "tracker_web_url": "",
+  "tracker_asset_regex": "\\.zip$"
+}

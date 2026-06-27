@@ -45,6 +45,15 @@ std::vector<sekailink_server::SeedConfigOptionDefinition> alttp_definitions() {
           .default_value = false,
           .required = true,
       },
+      sekailink_server::SeedConfigOptionDefinition{
+          .option_key = "junk_fill_weights",
+          .yaml_key = "junk_fill_weights",
+          .label = "Junk fill weights",
+          .description = "Weighted junk item fill map.",
+          .type = "enum",
+          .default_value = nlohmann::json{{"Missile Tank", 1}, {"Super Missile Tank", 0}, {"Power Bomb Tank", 0}, {"Nothing", 0}},
+          .required = true,
+      },
   };
 }
 
@@ -58,6 +67,7 @@ int main() {
         {
             {"goal", "triforce_hunt"},
             {"triforce_pieces_required", 30},
+            {"junk_fill_weights", "Missile Tank"},
         });
     require(valid.ok, "valid_config_rejected");
     require(valid.canonical_values.at("goal") == "triforce_hunt", "goal_not_canonical");
@@ -79,6 +89,8 @@ int main() {
     require(yaml.find("goal: triforce_hunt") != std::string::npos, "yaml_goal_missing");
     require(yaml.find("triforce_pieces_required: 30") != std::string::npos, "yaml_integer_missing");
     require(yaml.find("swordless: false") != std::string::npos, "yaml_default_missing");
+    require(yaml.find("junk_fill_weights: {") != std::string::npos, "yaml_object_option_missing");
+    require(yaml.find("\"Missile Tank\":1") != std::string::npos, "yaml_weighted_choice_missing");
 
     const auto manifest = sekailink_server::seed_config_sync_manifest(
         42,

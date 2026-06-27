@@ -122,13 +122,49 @@ ChatApiHttpResponse ChatApiService::handle_misc_compat(
             {"subject", sanitized_text(request.value("subject", std::string("SekaiLink report")), 160)},
         }.dump()};
   }
+  if (parts.size() == 2 && parts[0] == "room_admin_secrets" && method == "POST") {
+    if (config_.room_admin_tool_token.empty()) {
+      return {503, R"({"ok":false,"error":"room_admin_tool_token_not_configured"})"};
+    }
+    const auto request = body.value_or(nlohmann::json::object());
+    const auto presented = request.is_object() ? trim(request.value("admin_tool_token", std::string{})) : std::string{};
+    if (presented.empty() || presented != config_.room_admin_tool_token) {
+      return {401, R"({"ok":false,"error":"unauthorized"})"};
+    }
+    if (config_.generation_handoff_command.empty()) {
+      return {503, R"({"ok":false,"error":"generation_handoff_not_configured"})"};
+    }
+    const auto room_id = url_decode(parts[1]);
+    const auto generation_state = load_generation_state(room_id);
+    if (!generation_state.value("ok", false)) {
+      return {404, R"({"ok":false,"error":"generation_state_not_found"})"};
+    }
+    const auto generation_id = generation_state.value("generation_id", std::string{});
+    const auto handoff = run_generation_handoff(
+        config_,
+        generation_id,
+        nlohmann::json{
+            {"schema_version", "sekailink-live-generation-request-v1"},
+            {"action", "generation_admin_secrets"},
+            {"generation_id", generation_id},
+            {"lobby_id", generation_state.value("lobby_id", std::string{})},
+            {"sync_id", generation_state.value("lobby_id", std::string{})},
+            {"source", "link-chat-api-room-admin-secrets"},
+        });
+    if (!handoff.ok || !handoff.response.is_object()) {
+      return {502, nlohmann::json{{"ok", false}, {"error", handoff.error.empty() ? "generation_handoff_failed" : handoff.error}}.dump()};
+    }
+    if (!handoff.response.value("ok", false)) {
+      return {404, handoff.response.dump()};
+    }
+    return {200, handoff.response.dump()};
+  }
   if (parts.size() == 2 && parts[0] == "room_status" && method == "GET") {
     const auto room_id = url_decode(parts[1]);
     const auto generation_state = load_generation_state(room_id);
     if (generation_state.value("ok", false)) {
       auto generation_response = generation_state.at("response");
       if (!config_.generation_handoff_command.empty() &&
-          json_int(generation_response, {"last_port", "room_port", "port"}) <= 0 &&
           generation_response.value("sync_package_ready", false)) {
         const auto generation_id = generation_state.value("generation_id", std::string{});
         const auto handoff = run_generation_handoff(
@@ -219,6 +255,7 @@ ChatApiHttpResponse ChatApiService::handle_misc_compat(
               {"last_port", last_port},
               {"room_port", json_int(generation_response, {"room_port"})},
               {"room_host", json_string(generation_response, "room_host")},
+              {"room_runtime_error", json_string(generation_response, "room_runtime_error")},
               {"room_runtime_log", json_string(generation_response, "room_runtime_log")},
               {"players", players},
               {"downloads", downloads},

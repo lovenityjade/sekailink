@@ -84,7 +84,7 @@ the following:
 - Doc Robot
 
 Colors attempt to map a list of HTML-defined colors to what the NES can render. A full list of applicable colors can be
-found [here](https://github.com/MultiworldGG/MultiworldGG/blob/main/worlds/mm2/Color.py#L11). Alternatively, colors can 
+found [here](https://github.com/ArchipelagoMW/Archipelago/blob/main/worlds/mm2/Color.py#L11). Alternatively, colors can 
 be supplied directly using `$xx` format. A full list of NES colors can be found [here](https://www.nesdev.org/wiki/PPU_palettes#2C02).
 
 You can also pass only one color (such as `Mega Buster-Red`) and it will interpret a second color based off of the color

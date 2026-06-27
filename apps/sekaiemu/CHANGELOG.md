@@ -1,5 +1,210 @@
 # Changelog
 
+## 2026-06-25
+
+- Froze NES as a validated BETA-3 runtime system after successful Client Core
+  and multiworld tests. NES should now be treated as a known-good generic
+  BizHawk-style bridge reference unless a reproducible regression appears.
+- Registered The Legend of Zelda in the Sekaiemu SKLMI bridge registry so its
+  existing `tloz.phase1.json` manifest is used instead of falling back to the
+  legacy profile socket bridge, which could fail on long Linux save paths.
+- Split the runtime memory server into focused memory utility and socket utility
+  modules. The server source is now below the 800-line maintenance limit while
+  keeping the BizHawk-compatible protocol and GBA/GB domain behavior unchanged.
+- Added the first generic Sekaiemu Runtime Debug window, replacing the old
+  bridge terminal title and view with Readable/RAW tabs, runtime event
+  filtering, redacted report copying, and low-level SKLMI trace/companion log
+  ingestion without adding game-specific debug logic.
+- Routed SDL input to the separate Runtime Debug window so its tabs, filters,
+  clear action, and copy-report action can be used without leaking clicks into
+  the emulator, tracker, or runtime menu.
+- Added a test command input to Runtime Debug. `give <slot> <item>` is
+  translated to the same Archipelago admin chat command used by `skl-room`
+  (`!admin /send ...`), while `say <message>` sends normal AP chat through the
+  existing SKLMI chat bridge/command-log path.
+- Runtime Debug `give` now mirrors `skl-room` admin login behavior by reading
+  `SEKAILINK_AP_ADMIN_PASSWORD`, sending `!admin login` before `!admin /send`,
+  and redacting the password from Readable/RAW logs and copied reports.
+- Expanded Runtime Debug into a small `skl-room`-style console with relevant
+  debug commands (`help`, `status`, `players`, `items`, `give`, `say`,
+  `ap-say`, `hint`, `collect`, `remaining`, `admin`) plus Tab autocomplete for
+  commands, slot names, item names, and known location names from the active
+  runtime snapshot.
+- Stabilized the ESC runtime menu by removing the unstable ImGui tab selection
+  loop, replacing it with a deterministic SekaiLink-styled tab strip, fixing
+  the inverted Advanced mode toggle, and preventing menu mouse clicks from
+  leaking into the emulator/tracker underneath.
+- Fixed Runtime Debug check progress so it falls back to
+  `checked_locations + missing_locations` when the client snapshot does not
+  provide an explicit `summary.total`, preventing misleading `0/0` progress.
+- Expanded Runtime Debug readable summaries to keep human-friendly AP events
+  together with raw IDs: checks now show location names plus location IDs,
+  received items show item names plus raw item/location/player numbers, and
+  memory bridge reads/writes show address, size, and byte previews.
+- Added tracker pipeline visibility to Runtime Debug. It now tails the tracker
+  command log for commands sent to the tracker and records tracker snapshot
+  responses with revision, check count, item count, active map, and active tab.
+- Added bounded low-level BizHawk-compatible memory socket tracing for READ,
+  WRITE, and GUARD requests. The trace includes domain, address, size, and
+  resolution status so GBA/GB/NES core bridge failures can be diagnosed at the
+  generic memory layer instead of game by game.
+- Surfaced the main `sekaiemu.log` path in Runtime Debug and tail only the
+  relevant runtime/memory/connection/error lines there. The Debug window can
+  now show `[sekaiemu-memory]` bridge traffic without drowning users in core
+  log spam.
+- Aligned the bundled Mega Man 3 Archipelago runtime client with the generated
+  `0.1.7` patch format. MM3 patches were validating as `0.1.7` while the local
+  client expected `0.1.8`, so the client connected but never started its RAM
+  watcher or sent location checks.
+- Fixed Mega Man 2 and Mega Man 3 check deduplication in the local
+  Archipelago runtime clients. The watchers now consider both server-confirmed
+  `checked_locations` and locally queued `locations_checked`, preventing repeated
+  `LocationChecks` spam for the same pickup while keeping detection generic.
+- Guarded Mega Man 2 and Mega Man 3 outgoing checks against the room's
+  `server_locations`. Pickups disabled by the current seed options are no
+  longer reported as if they were valid checks, which avoids silent server
+  ignores such as MM3 sending `Needle Man Stage - Weapon Energy 1` when only
+  the enabled consumable locations are present in the room.
+- Replaced deprecated `Utils.get_options()` ROM setting lookups in Zelda II,
+  Wario Land, Donkey Kong Country, and Mega Man X3 runtimes with the current
+  Archipelago settings API so patch/launch no longer trips on updated AP
+  runtime warnings/errors.
+- Fixed the Zelda II AP runtime client so received items are written to RAM
+  before side-scroll state filtering, NPC checks can be reported outside
+  side-scroll scenes, and outgoing checks are deduplicated/guarded against the
+  room's active `server_locations`.
+- Added a Zelda II-only WRAM fallback that resolves its cartridge WRAM accesses
+  through `WRAM`, `SRAM`, `Battery RAM`, or NES `System Bus` without changing
+  the shared NES core bridge used by Zelda 1, Mega Man 2, and Mega Man 3.
+
+## 2026-06-21
+
+- Disabled the internal Sekaiemu tracker runtime for normal host launches.
+  Legacy tracker CLI flags are still parsed for compatibility, but they no
+  longer map into `HostOptions`; BETA-3 uses external PopTracker instead.
+
+## 2026-06-20
+
+- Fixed the runtime memory server TCP reader so fragmented JSON-line requests
+  are buffered per client until complete. This resolves Super Mario Land 2
+  watcher timeouts when the AP client sends large batched `System Bus` reads
+  for coinsanity/midway/level checks, and keeps the fix generic for other
+  BizHawk-compatible clients.
+- Added local reference copies of Zunawe's `bhc-substitutes` mGBA and PJ64
+  connectors under `third_party/bhc-substitutes` to compare Sekaiemu's
+  BizHawk-compatible bridge against known emulator substitute scripts.
+- Matched the GBA bridge more closely to the mGBA substitute connector by
+  treating `System Bus` as the authoritative GBA access path and mirroring
+  high GBA save/SRAM addresses such as `0x0E01FFFE` into smaller libretro
+  save RAM regions, including the 32 KiB save RAM case seen in live mGBA tests.
+- Added smoke coverage for mirrored 32 KiB GBA save RAM reads/writes through
+  both `System Bus` and `SRAM`, then rebuilt and staged the local Linux
+  Sekaiemu runtime binary.
+- Made battery save loading tolerant when a core exposes a larger save RAM
+  region than the existing `.sav` file. Smaller GBA saves now load into memory
+  and pad the remaining save RAM instead of being skipped entirely.
+- Fixed the generic GBA memory bridge used by BizHawk-wrapper Archipelago
+  clients so `EWRAM`, `IWRAM`, `System Bus`, `bus`, and `gba_system_bus`
+  resolve correctly through mGBA/libretro memory.
+- Added GBA SRAM mapping through `System Bus` at `0x0E000000`, including the
+  Fusion receive counter addresses at `0x0E01FFFE` and `0x0E01FFFF`, without
+  changing the already-working MZM ROM/RAM bridge path.
+- Added GBA ROM bus reads through `System Bus` at `0x08000000`, which generic
+  BizHawk-style GBA clients use to validate headers and seed symbols.
+- Rebuilt and staged the local Linux Sekaiemu runtime binary after the GBA
+  bridge fix.
+- Added a descriptor-backed fallback for GBA relative domains so clients that
+  ask for `IWRAM:offset` or `EWRAM:offset` still work when mGBA/libretro
+  exposes those regions through the `System Bus` memory map instead of one
+  contiguous system RAM block.
+- Revalidated Metroid Fusion live through Client Core: Sekaiemu exposed Morph
+  Ball state in `IWRAM`, the AP client sent `LocationChecks` for `Main Deck --
+  Quarantine Bay`, and the server returned `ReceivedItems`.
+- Fixed BizHawk protocol error responses from the runtime memory server so
+  failed `READ`/`WRITE` requests return the upstream-compatible `err` field
+  instead of `value`. This prevents generic BizHawk AP clients such as Metroid
+  Fusion from crashing their watcher on a transient or guarded memory read
+  failure.
+- Added a smoke assertion covering the `READ` error payload shape used by
+  upstream Archipelago BizHawk clients.
+- Rebuilt and staged the local Linux Sekaiemu runtime binary after the BizHawk
+  protocol error payload fix.
+- Added a generic BizHawk-compatible TCP memory bridge path for Sekaiemu on
+  Linux, matching the Archipelago BizHawk client connector port range used by
+  upstream clients.
+- Added read-only ROM domains for the runtime memory bridge, including
+  headerless `PRG ROM` exposure for NES clients such as The Legend of Zelda.
+- Updated the Linux bundled Sekaiemu runtime binary so BizHawk-wrapper
+  Archipelago clients can connect to Sekaiemu through the same memory protocol
+  used by `connector_bizhawk_generic.lua`.
+
+## 2026-06-13
+
+- Revalidated the Dear ImGui Sekaiemu runtime integration from a clean local
+  build directory.
+- Verified the full Sekaiemu smoke suite after the ImGui runtime/menu/layout
+  preview work, including ALTTP tracker bundle rendering, preview rendering,
+  launch options, save states, frontend settings, and the BizHawk-compatible
+  memory protocol smoke.
+
+## 2026-06-12
+
+- Started the Sekaiemu Dear ImGui runtime migration with vendored ImGui
+  v1.91.9b and SDL2/OpenGL3 backend integration.
+- Added an OpenGL ImGui draw callback path so Sekaiemu can render native menu
+  and tracker panels directly in the runtime frame instead of rasterizing them
+  through the old overlay canvas.
+- Added a SekaiLink-styled ImGui runtime menu covering main actions, settings,
+  input bindings, core options, bridge status, sync info, and save-state slots.
+- Added a first generic ImGui tracker surface backed by the existing tracker
+  runtime state, including tabs, map selection, info panels, live feed, loading,
+  and error states.
+- Added a real `--layout-preview` mode for opening Sekaiemu without ROM/core,
+  showing a retro no-cartridge preview surface plus the offline tracker layout
+  in windowed or fullscreen mode.
+- Added an ALTTP pack-driven ImGui preview bridge that renders the existing
+  native tracker pack into an ImGui texture, letting the lab compare tracker
+  layout direction before the tracker is fully rewritten as native ImGui
+  widgets.
+- Polished the ImGui layout preview with crisp nearest-neighbor tracker pack
+  rendering, ALTTP-specific offline preview state, realistic checks/items, and
+  keyboard shortcuts for split/PIP/toggle tracker layout comparison.
+
+## 2026-06-11
+
+- Added automatic Sekaiemu runtime bug-report submission for patch preparation,
+  libretro initialization, and non-zero runtime exits using the shared
+  `/api/client/bug-report` payload contract.
+- Sekaiemu bug reports now include the active runtime log tail, game/core
+  context, player alias, and linkedworld/AP game metadata when available.
+- Fixed a Windows/MSYS2 build break in the tracker runtime smoke by passing
+  libarchive a UTF-8 narrow archive path instead of a wide filesystem path.
+
+## 2026-06-10
+
+- Verified live runtime memory socket exposure for NES/FCEUmm, GBA/mGBA, and
+  GB/GBC/Gambatte with real local ROM launches.
+- Restricted the `gba_system_bus` memory domain to GBA sessions only, while
+  keeping descriptor-backed `System Bus` available for NES and GB/GBC generic
+  integration.
+
+## 2026-06-06
+
+- Added an explicit tracker loading state so Sekaiemu shows
+  "Loading tracker..." until tracker data is ready, then either renders the
+  tracker or shows a clear tracker error panel.
+- Hardened tracker initialization failures so a broken tracker pack reports
+  `TRACKER ERROR` in the overlay instead of aborting the whole emulator launch.
+- Kept the last valid tracker map as a fallback when auto-follow temporarily
+  loses its map/zone hint, preventing ALTTP from snapping back to the default
+  map after leaving a dark-world context.
+- Completed tracker checks now disappear from native map pins and pack-layout
+  pins, including their click targets.
+- Window sizing now avoids shrinking an already larger user-resized Sekaiemu
+  window, reducing streamer-hostile snap-back when tracker/sidebar state changes.
+- SKLMI companion runtime exit errors now include the companion log path so
+  connection/runtime checkups point directly to the diagnostic file.
+
 ## 2026-05-10
 
 - Added `TrackerBundle::LoadFromPath` so Sekaiemu can consume either extracted

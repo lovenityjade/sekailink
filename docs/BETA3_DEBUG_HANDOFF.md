@@ -10,7 +10,7 @@ canonical tree. That already happened once and caused tracker layout/runtime reg
 
 Use only:
 
-`/home/thelovenityjade/DevSSD/sekailink-canonical`
+`/home/thelovenityjade/SekaiLink/canonical`
 
 Current GitHub remote:
 
@@ -482,7 +482,7 @@ Current live hotfix artifacts:
 Packaging commands:
 
 ```bash
-cd /home/thelovenityjade/DevSSD/sekailink-canonical/apps/client-core
+cd /home/thelovenityjade/SekaiLink/canonical/apps/client-core
 npm run electron:pack
 npm run electron:pack:win
 SEKAILINK_RELEASE_VERSION=0.3.1-prebeta3.20260604.5 \
@@ -713,7 +713,7 @@ curl -fsS 'https://sekailink.com/api/client/version?channel=test&platform=linux-
 
 ## Practical First Steps For Next Agent
 
-1. Start in `/home/thelovenityjade/DevSSD/sekailink-canonical`.
+1. Start in `/home/thelovenityjade/SekaiLink/canonical`.
 2. Run `git status --short`. If dirty, understand changes before touching anything.
 3. Read:
    - `docs/SOURCE_OF_TRUTH.md`

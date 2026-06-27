@@ -1,0 +1,48 @@
+{
+  "game_id": "pokemon_firered",
+  "display_name": "Pokemon FireRed and LeafGreen",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apfirered",
+    ".apleafgreen"
+  ],
+  "patch_world_module": "worlds.pokemon_frlg",
+  "ap_world": "pokemon_frlg",
+  "required_roms": [
+    "pokemon_firered"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "pokemon_firered",
+    "world": "pokemon_frlg",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/pokemon_frlg/client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".gba"
+    ],
+    "md5": [
+      "e26ee0d44e809351c8ce2d73c7400cdd",
+      "51901a6e40661b3914aa333c802e24e8",
+      "612ca9473451fa42b51d1711031ed5f6",
+      "9d33a02159e018d09073e700e1fd10fd"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "gba",
+    "ap_game": "Pokemon FireRed and LeafGreen"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "",
+  "support_status": "not_available",
+  "availability_status": "unavailable_gba_pending_tester",
+  "compatibility_notes": "Temporarily unavailable for BETA-3 launch: GBA support is frozen to confirmed bilateral games only until a focused tester validates this title."
+}

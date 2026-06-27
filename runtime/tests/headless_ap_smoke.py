@@ -33,8 +33,8 @@ class SmokeState:
 
 
 def repo_root() -> Path:
-    # client/runtime/tests/headless_ap_smoke.py -> repo root is parents[3]
-    return Path(__file__).resolve().parents[3]
+    # runtime/tests/headless_ap_smoke.py -> repo root is parents[2]
+    return Path(__file__).resolve().parents[2]
 
 
 def ensure_repo_syspath() -> str:
@@ -45,7 +45,7 @@ def ensure_repo_syspath() -> str:
 
 
 def wrapper_script_path(which: str) -> Path:
-    base = repo_root() / "client" / "runtime"
+    base = repo_root() / "runtime"
     if which == "bizhawk":
         return base / "bizhawkclient_wrapper.py"
     return base / "commonclient_wrapper.py"
@@ -171,8 +171,14 @@ async def run_smoke(args: argparse.Namespace) -> int:
         return 2
 
     env = os.environ.copy()
-    root = ensure_repo_syspath()
-    env["PYTHONPATH"] = root + (os.pathsep + env["PYTHONPATH"] if env.get("PYTHONPATH") else "")
+    root_path = repo_root()
+    ensure_repo_syspath()
+    ap_root = root_path / "runtime" / "ap"
+    wrapper_root = root_path / "runtime"
+    env["SEKAILINK_AP_ROOT"] = str(ap_root)
+    env["PYTHONPATH"] = os.pathsep.join(
+        [str(wrapper_root), str(ap_root), *(env["PYTHONPATH"].split(os.pathsep) if env.get("PYTHONPATH") else [])]
+    )
     env.setdefault("SKIP_REQUIREMENTS_UPDATE", "1")
 
     proc = await asyncio.create_subprocess_exec(
@@ -182,7 +188,7 @@ async def run_smoke(args: argparse.Namespace) -> int:
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,
         env=env,
-        cwd=root,
+        cwd=str(root_path),
     )
 
     stdout_task = asyncio.create_task(_read_wrapper_stdout(proc.stdout, state))
@@ -243,6 +249,7 @@ async def run_smoke(args: argparse.Namespace) -> int:
         "client_cmds_seen": state.client_cmds_seen,
         "failures": state.failures,
         "events_count": len(state.wrapper_events),
+        "events_tail": state.wrapper_events[-8:],
         "stderr_lines": len(state.wrapper_stderr),
     }
     print(json.dumps(summary, ensure_ascii=True))
@@ -258,7 +265,7 @@ async def run_smoke(args: argparse.Namespace) -> int:
 
 async def run_compat_smoke(args: argparse.Namespace) -> int:
     root = repo_root()
-    common_client = root / "CommonClient.py"
+    common_client = root / "runtime" / "ap" / "CommonClient.py"
     failures: list[str] = []
     if not common_client.exists():
         failures.append("missing_commonclient_py")
@@ -270,11 +277,11 @@ async def run_compat_smoke(args: argparse.Namespace) -> int:
     # AttributeError: 'ClientConnection' object has no attribute 'open'
     if "async def send_msgs" not in source:
         failures.append("missing_send_msgs")
-    if "getattr(socket, \"closed\", False)" not in source:
+    if "sekailink_socket_closed" not in source:
         failures.append("missing_closed_guard")
-    if "hasattr(socket, \"open\")" not in source:
+    if "sekailink_socket_open" not in source:
         failures.append("missing_open_guard")
-    if "await socket.send(encode(msgs))" not in source:
+    if "await self.server.socket.send(encode(msgs))" not in source:
         failures.append("missing_send_call")
 
     summary = {

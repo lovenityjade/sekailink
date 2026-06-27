@@ -1,0 +1,15 @@
+[submodule "libultraship"]
+	path = libultraship
+	url = https://github.com/kenix3/libultraship.git
+[submodule "ZAPDTR"]
+	path = ZAPDTR
+	url = https://github.com/harbourmasters/ZAPDTR
+[submodule "OTRExporter"]
+	path = OTRExporter
+	url = https://github.com/harbourmasters/OTRExporter
+[submodule "subprojects/wswrap"]
+	path = subprojects/wswrap
+	url = https://github.com/black-sliver/wswrap.git
+[submodule "subprojects/apclientpp"]
+	path = subprojects/apclientpp
+	url = https://github.com/black-sliver/apclientpp.git

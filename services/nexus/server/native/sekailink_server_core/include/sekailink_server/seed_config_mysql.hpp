@@ -46,6 +46,7 @@ struct SeedConfigUserConfigSnapshot {
   std::int64_t user_id = 0;
   std::string game_key;
   std::string name;
+  std::string description;
   nlohmann::json values = nlohmann::json::object();
   std::string values_hash;
 };

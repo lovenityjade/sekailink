@@ -25,6 +25,9 @@ roms/
 patched/
 downloads/
 generated/
+runtime/local-roms/
+AP_*.xml
+imgui.ini
 *.log
 *.sqlite
 *.sqlite3
@@ -54,6 +57,10 @@ __pycache__/
 *.smc
 *.z64
 *.n64
+*.v64
+*.iso
+*.gcm
+*.rvz
 *.gb
 *.gbc
 *.gba

@@ -10,6 +10,7 @@ export const WEB_AUTH_TOKEN_KEY = "sekailink_session_token";
 export const WEB_AUTH_USER_KEY = "sekailink_user";
 export const WEB_AUTH_SESSION_KEY = "sekailink_session";
 export const DEVICE_ID_KEY = "skl_device_id";
+const SESSION_FALLBACK_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 let desktopTokenMemory = "";
 
 const logApiTrace = (payload: Record<string, unknown>) => {
@@ -65,8 +66,21 @@ export const errorFromResponse = async (response: Response, fallback = "Request 
 };
 
 export const getDesktopToken = () => {
-  if (desktopTokenMemory) return desktopTokenMemory;
   try {
+    const rawSession = window.localStorage.getItem(WEB_AUTH_SESSION_KEY);
+    if (rawSession) {
+      const session = JSON.parse(rawSession);
+      const expiresAt = Date.parse(String(session?.expires_at || ""));
+      if (Number.isFinite(expiresAt) && expiresAt <= Date.now()) {
+        desktopTokenMemory = "";
+        window.localStorage.removeItem(DESKTOP_TOKEN_KEY);
+        window.localStorage.removeItem(WEB_AUTH_TOKEN_KEY);
+        window.localStorage.removeItem(WEB_AUTH_USER_KEY);
+        window.localStorage.removeItem(WEB_AUTH_SESSION_KEY);
+        return null;
+      }
+    }
+    if (desktopTokenMemory) return desktopTokenMemory;
     const stored =
       window.localStorage.getItem(DESKTOP_TOKEN_KEY) ||
       window.localStorage.getItem(WEB_AUTH_TOKEN_KEY);
@@ -84,6 +98,8 @@ export const setDesktopToken = (token: string | null) => {
     if (!token) {
       window.localStorage.removeItem(DESKTOP_TOKEN_KEY);
       window.localStorage.removeItem(WEB_AUTH_TOKEN_KEY);
+      window.localStorage.removeItem(WEB_AUTH_USER_KEY);
+      window.localStorage.removeItem(WEB_AUTH_SESSION_KEY);
       return;
     }
     window.localStorage.setItem(DESKTOP_TOKEN_KEY, token);
@@ -101,7 +117,15 @@ export const setWebAuthCache = (payload: { user?: unknown; session?: unknown } |
       return;
     }
     if (payload.user) window.localStorage.setItem(WEB_AUTH_USER_KEY, JSON.stringify(payload.user));
-    if (payload.session) window.localStorage.setItem(WEB_AUTH_SESSION_KEY, JSON.stringify(payload.session));
+    if (payload.session) {
+      const session: Record<string, unknown> = payload.session && typeof payload.session === "object"
+        ? { ...(payload.session as Record<string, unknown>) }
+        : { value: payload.session };
+      if (!session.expires_at) {
+        session.expires_at = new Date(Date.now() + SESSION_FALLBACK_TTL_MS).toISOString();
+      }
+      window.localStorage.setItem(WEB_AUTH_SESSION_KEY, JSON.stringify(session));
+    }
   } catch {
     // Ignore storage errors.
   }

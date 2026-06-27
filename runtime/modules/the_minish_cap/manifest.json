@@ -1,0 +1,48 @@
+{
+  "game_id": "the_minish_cap",
+  "display_name": "The Minish Cap",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".aptmc"
+  ],
+  "patch_world_module": "worlds.tmc",
+  "ap_world": "tmc",
+  "required_roms": [
+    "the_minish_cap"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "the_minish_cap",
+    "world": "tmc",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/tmc/client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".gba"
+    ],
+    "md5": [
+      "2af78edbe244b5de44471368ae2b6f0b"
+    ],
+    "sha1": [
+      "cff199b36ff173fb6faf152653d1bccf87c26fb7"
+    ]
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "gba",
+    "ap_game": "The Minish Cap"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "",
+  "support_status": "supported",
+  "availability_status": "available_beta3_confirmed",
+  "compatibility_notes": "BETA-3 confirmed bilateral item/check communication.",
+  "tracker_pack_path": "poptracker/packs/the_minish_cap/pack",
+  "default_tracker_variant": "AP_h"
+}

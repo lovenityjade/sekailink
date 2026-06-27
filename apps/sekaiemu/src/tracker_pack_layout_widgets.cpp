@@ -230,6 +230,9 @@ void DrawPackPinsForMap(OverlayCanvas& canvas,
       }
     }
     const bool checked = PinChecked(pin, checked_ids);
+    if (checked) {
+      continue;
+    }
     const int px = ResolveMapCoordinate(pin.x, target_x, target_width, source_width);
     const int py = ResolveMapCoordinate(pin.y, target_y, target_height, source_height);
     DrawPinMarker(canvas, palette, px, py, pin, checked);

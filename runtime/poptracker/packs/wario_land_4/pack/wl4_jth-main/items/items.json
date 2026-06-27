@@ -1,0 +1,678 @@
+[
+	{
+		"name": "Swim",
+		"type": "toggle",
+		"img": "images/swim1.png",
+		"codes": "swim"
+	},
+	{
+		"name": "Head Smash",
+		"type": "toggle",
+		"img": "images/headsmash1.png",
+		"codes": "headsmash"
+	},
+	{
+		"name": "Dash Attack",
+		"type": "toggle",
+		"img": "images/dashattack1.png",
+		"codes": "dashattack"
+	},
+	{
+		"name": "Stomp Jump",
+		"type": "toggle",
+		"img": "images/enemyjump1.png",
+		"codes": "stompjump"
+	},
+	{
+		"name": "Progressive Ground Pound",
+		"type": "progressive",
+		"codes": "progressivegroundpound",
+		"allow_disabled": true,
+		"loop": false,
+		"stages": [
+			{
+				"img": "images/groundpound1.png",
+				"codes": "groundpound",
+				"inherit_codes": false
+			},
+			{
+				"img": "images/groundpound2.png",
+				"codes": "supergroundpound",
+				"inherit_codes": true
+			}
+		]
+	},	
+	{
+		"name": "Progressive Grab",
+		"type": "progressive",
+		"codes": "progressivegrab",
+		"allow_disabled": true,
+		"loop": false,
+		"stages": [
+			{
+				"img": "images/grab1.png",
+				"codes": "grab",
+				"inherit_codes": false
+			},
+			{
+				"img": "images/grab2.png",
+				"codes": "heavygrab",
+				"inherit_codes": true
+			}
+		]
+	},	
+	{
+		"name": "Top Right Entry Jewel Piece",
+		"type": "consumable",
+		"max_quantity": 1,
+		"initial_quantity": 0,
+		"img": "images/jewelentryne.png",
+		"codes": "entryne"
+	},
+	{
+		"name": "Bottom Right Entry Jewel Piece",
+		"type": "consumable",
+		"max_quantity": 1,
+		"initial_quantity": 0,
+		"img": "images/jewelentryse.png",
+		"codes": "entryse"
+	},
+	{
+		"name": "Bottom Left Entry Jewel Piece",
+		"type": "consumable",
+		"max_quantity": 1,
+		"initial_quantity": 0,
+		"img": "images/jewelentrysw.png",
+		"codes": "entrysw"
+	},
+	{
+		"name": "Top Left Entry Jewel Piece",
+		"type": "consumable",
+		"max_quantity": 1,
+		"initial_quantity": 0,
+		"img": "images/jewelentrynw.png",
+		"codes": "entrynw"
+	},
+	{
+		"name": "Top Right Emerald Piece",
+		"type": "consumable",
+		"max_quantity": 4,
+		"initial_quantity": 0,
+		"img": "images/jewelemeraldne.png",
+		"codes": "emeraldne"
+	},
+	{
+		"name": "Bottom Right Emerald Piece",
+		"type": "consumable",
+		"max_quantity": 4,
+		"initial_quantity": 0,
+		"img": "images/jewelemeraldse.png",
+		"codes": "emeraldse"
+	},
+	{
+		"name": "Bottom Left Emerald Piece",
+		"type": "consumable",
+		"max_quantity": 4,
+		"initial_quantity": 0,
+		"img": "images/jewelemeraldsw.png",
+		"codes": "emeraldsw"
+	},
+	{
+		"name": "Null Filler",
+		"type": "consumable",
+		"max_quantity": 1,
+		"initial_quantity": 0,
+		"img": "images/jewelemerald.png",
+		"codes": "nullitem"
+	},
+	{
+		"name": "Top Left Emerald Piece",
+		"type": "consumable",
+		"max_quantity": 4,
+		"initial_quantity": 0,
+		"img": "images/jewelemeraldnw.png",
+		"codes": "emeraldnw"
+	},
+	{
+		"name": "Top Right Ruby Piece",
+		"type": "consumable",
+		"max_quantity": 4,
+		"initial_quantity": 0,
+		"img": "images/jewelrubyne.png",
+		"codes": "rubyne"
+	},
+	{
+		"name": "Bottom Right Ruby Piece",
+		"type": "consumable",
+		"max_quantity": 4,
+		"initial_quantity": 0,
+		"img": "images/jewelrubyse.png",
+		"codes": "rubyse"
+	},
+	{
+		"name": "Bottom Left Ruby Piece",
+		"type": "consumable",
+		"max_quantity": 4,
+		"initial_quantity": 0,
+		"img": "images/jewelrubysw.png",
+		"codes": "rubysw"
+	},
+	{
+		"name": "Top Left Ruby Piece",
+		"type": "consumable",
+		"max_quantity": 4,
+		"initial_quantity": 0,
+		"img": "images/jewelrubynw.png",
+		"codes": "rubynw"
+	},
+	{
+		"name": "Top Right Topaz Piece",
+		"type": "consumable",
+		"max_quantity": 4,
+		"initial_quantity": 0,
+		"img": "images/jeweltopazne.png",
+		"codes": "topazne"
+	},
+	{
+		"name": "Bottom Right Topaz Piece",
+		"type": "consumable",
+		"max_quantity": 4,
+		"initial_quantity": 0,
+		"img": "images/jeweltopazse.png",
+		"codes": "topazse"
+	},
+	{
+		"name": "Bottom Left Topaz Piece",
+		"type": "consumable",
+		"max_quantity": 4,
+		"initial_quantity": 0,
+		"img": "images/jeweltopazsw.png",
+		"codes": "topazsw"
+	},
+	{
+		"name": "Top Left Topaz Piece",
+		"type": "consumable",
+		"max_quantity": 4,
+		"initial_quantity": 0,
+		"img": "images/jeweltopaznw.png",
+		"codes": "topaznw"
+	},
+	{
+		"name": "Top Right Sapphire Piece",
+		"type": "consumable",
+		"max_quantity": 4,
+		"initial_quantity": 0,
+		"img": "images/jewelsapphirene.png",
+		"codes": "sapphirene"
+	},
+	{
+		"name": "Bottom Right Sapphire Piece",
+		"type": "consumable",
+		"max_quantity": 4,
+		"initial_quantity": 0,
+		"img": "images/jewelsapphirese.png",
+		"codes": "sapphirese"
+	},
+	{
+		"name": "Bottom Left Sapphire Piece",
+		"type": "consumable",
+		"max_quantity": 4,
+		"initial_quantity": 0,
+		"img": "images/jewelsapphiresw.png",
+		"codes": "sapphiresw"
+	},
+	{
+		"name": "Top Left Sapphire Piece",
+		"type": "consumable",
+		"max_quantity": 4,
+		"initial_quantity": 0,
+		"img": "images/jewelsapphirenw.png",
+		"codes": "sapphirenw"
+	},
+	{
+		"name": "Top Right Golden Jewel Piece",
+		"type": "consumable",
+		"max_quantity": 1,
+		"initial_quantity": 0,
+		"img": "images/jewelgoldenne.png",
+		"codes": "goldenne"
+	},
+	{
+		"name": "Bottom Right Golden Jewel Piece",
+		"type": "consumable",
+		"max_quantity": 1,
+		"initial_quantity": 0,
+		"img": "images/jewelgoldense.png",
+		"codes": "goldense"
+	},
+	{
+		"name": "Bottom Left Golden Jewel Piece",
+		"type": "consumable",
+		"max_quantity": 1,
+		"initial_quantity": 0,
+		"img": "images/jewelgoldensw.png",
+		"codes": "goldensw"
+	},
+	{
+		"name": "Top Left Golden Jewel Piece",
+		"type": "consumable",
+		"max_quantity": 1,
+		"initial_quantity": 0,
+		"img": "images/jewelgoldennw.png",
+		"codes": "goldennw"
+	},
+	{
+		"name": "CD",
+		"type": "consumable",
+		"max_quantity": 16,
+		"initial_quantity": 0,
+		"img": "images/cd.png",
+		"codes": "cd"
+	},
+	{
+		"name": "Golden Tree Pot",
+		"type": "toggle",
+		"img": "images/treasure1.png",
+		"codes": "treasure1"
+	},
+	{
+		"name": "Golden Apple",
+		"type": "toggle",
+		"img": "images/treasure2.png",
+		"codes": "treasure2"
+	},
+	{
+		"name": "Golden Fish",
+		"type": "toggle",
+		"img": "images/treasure3.png",
+		"codes": "treasure3"
+	},
+	{
+		"name": "Golden Candle Holder",
+		"type": "toggle",
+		"img": "images/treasure4.png",
+		"codes": "treasure4"
+	},
+	{
+		"name": "Golden Lamp",
+		"type": "toggle",
+		"img": "images/treasure5.png",
+		"codes": "treasure5"
+	},
+	{
+		"name": "Golden Crescent Moon Bed",
+		"type": "toggle",
+		"img": "images/treasure6.png",
+		"codes": "treasure6"
+	},
+	{
+		"name": "Golden Teddy Bear",
+		"type": "toggle",
+		"img": "images/treasure7.png",
+		"codes": "treasure7"
+	},
+	{
+		"name": "Golden Lollipop",
+		"type": "toggle",
+		"img": "images/treasure8.png",
+		"codes": "treasure8"
+	},
+	{
+		"name": "Golden Game Boy Advance",
+		"type": "toggle",
+		"img": "images/treasure9.png",
+		"codes": "treasure9"
+	},
+	{
+		"name": "Golden Robot",
+		"type": "toggle",
+		"img": "images/treasure10.png",
+		"codes": "treasure10"
+	},
+	{
+		"name": "Golden Rocket",
+		"type": "toggle",
+		"img": "images/treasure11.png",
+		"codes": "treasure11"
+	},
+	{
+		"name": "Golden Rocking Horse",
+		"type": "toggle",
+		"img": "images/treasure12.png",
+		"codes": "treasure12"
+	},	
+	{
+		"name": "Difficulty",
+		"type": "progressive",
+		"codes": "op_difficulty",
+		"allow_disabled": false,
+		"loop": true,
+		"stages": [
+			{
+				"img": "images/normal.png",
+				"codes": "normal",
+				"inherit_codes": false
+			},
+			{
+				"img": "images/hard.png",
+				"codes": "hard",
+				"inherit_codes": false
+			},
+			{
+				"img": "images/shard.png",
+				"codes": "shard",
+				"inherit_codes": false
+			}
+		]
+	},
+	{
+		"name": "Required Jewels",
+		"type": "consumable",
+		"max_quantity": 4,
+		"initial_quantity": 2,
+		"codes": "op_reqjewel",
+		"allow_disabled": false,
+		"img": "images/requiredjewel.png"
+	},
+	{
+		"name": "Required Golden Jewels",
+		"type": "consumable",
+		"max_quantity": 1,
+		"initial_quantity": 1,
+		"codes": "op_reqgjewel",
+		"allow_disabled": false,
+		"img": "images/requiredgoldenjewel.png"
+	},
+	{
+		"name": "Open Portals",
+		"type": "progressive",
+		"codes": "op_openportal",
+		"allow_disabled": false,
+		"loop":true,
+		"stages": [
+			{
+				"name": "Open Portals Off",
+				"img": "images/portal_grey.png",
+				"codes": "op_openportal_0",
+				"inheret_codes": false
+			},
+			{
+				"name": "Open Portals On",
+				"img": "images/portal.png",
+				"codes": "op_openportal_1",
+				"inheret_codes": false
+			}
+		]
+	},
+	{
+		"name": "Treasure Hunt",
+		"type": "progressive",
+		"codes": "op_treasurehunt",
+		"allow_disabled": false,
+		"loop":true,
+		"stages": [
+			{
+				"name": "Treasure Hunt Off",
+				"img": "images/chest_grey.png",
+				"codes": "op_treasurehunt_0",
+				"inheret_codes": false
+			},
+			{
+				"name": "Treasure Hunt On",
+				"img": "images/chest.png",
+				"codes": "op_treasurehunt_1",
+				"inheret_codes": false
+			}
+		]
+	},	
+	{
+		"name": "Advanced Logic",
+		"type": "progressive",
+		"codes": "op_advancedlogic",
+		"allow_disabled": false,
+		"loop":true,
+		"stages": [
+			{
+				"name": "Advanced Logic Off",
+				"img": "images/wario_splat_grey.png",
+				"codes": "op_advancedlogic_0",
+				"inheret_codes": false
+			},
+			{
+				"name": "Advanced Logic On",
+				"img": "images/wario_splat.png",
+				"codes": "op_advancedlogic_1",
+				"inheret_codes": false
+			}
+		]
+	},
+	{
+		"name": "Diamond Shuffle",
+		"type": "progressive",
+		"codes": "op_diamond",
+		"allow_disabled": false,
+		"loop":true,
+		"stages": [
+			{
+				"name": "Diamond Shuffle Off",
+				"img": "images/diamond_grey.png",
+				"codes": "op_diamond_0",
+				"inheret_codes": false
+			},
+			{
+				"name": "Diamond Shuffle On",
+				"img": "images/diamond.png",
+				"codes": "op_diamond_1",
+				"inheret_codes": false
+			}
+		]
+	},
+	{
+		"name": "Defeat Cractus (Event)",
+		"type": "toggle",
+		"img": "images/boss_cractus.png",
+		"codes": "eventcractus"
+	},
+	{
+		"name": "Defeat Cuckoo Condor (Event)",
+		"type": "toggle",
+		"img": "images/boss_condor.png",
+		"codes": "eventcondor"
+	},
+	{
+		"name": "Defeat Aerodent (Event)",
+		"type": "toggle",
+		"img": "images/boss_aerodent.png",
+		"codes": "eventaerodent"
+	},
+	{
+		"name": "Defeat Catbat (Event)",
+		"type": "toggle",
+		"img": "images/boss_catbat.png",
+		"codes": "eventcatbat"
+	},
+	{
+		"name": "Defeat Golden Diva (Event)",
+		"type": "toggle",
+		"img": "images/boss_diva.png",
+		"codes": "eventdiva"
+	},
+	{
+		"name": "Open Doors",
+		"type": "progressive",
+		"codes": "op_doors",
+		"allow_disabled": false,
+		"loop":true,
+		"initial_stage_idx": 1,
+		"stages": [
+			{
+				"name": "No Keyzer (Open Doors)",
+				"img": "images/keyzer_grey.png",
+				"codes": "op_doors_0",
+				"inheret_codes": false
+			},
+			{
+				"name": "Golden Passage Keyzer Required",
+				"img": "images/keyzer_golden.png",
+				"codes": "op_doors_1",
+				"inheret_codes": false
+			},
+			{
+				"name": "Keyzer Required (Closed Doors)",
+				"img": "images/keyzer.png",
+				"codes": "op_doors_2",
+				"inheret_codes": false
+			}
+		]
+	},
+	{
+		"name": "Keyzer Shuffle",
+		"type": "progressive",
+		"codes": "op_keyzershuffle",
+		"allow_disabled": false,
+		"loop":true,
+		"initial_stage_idx": 0,
+		"stages": [
+			{
+				"name": "Keyzer Shuffle Off",
+				"img": "images/keyzer_grey.png",
+				"codes": "op_keyzershuffle_off",
+				"inheret_codes": false
+			},
+			{
+				"name": "Keyzer Shuffle On",
+				"img": "images/keyzer.png",
+				"codes": "op_keyzershuffle_on",
+				"inheret_codes": false
+			}
+		]
+	},
+	{
+		"name": "Keyzer Hall Of Hieroglyphs",
+		"type": "toggle",
+		"img": "images/keyzer.png",
+		"codes": "keyzerhoh"
+	},
+	{
+		"name": "Keyzer Palm Tree Paradise",
+		"type": "toggle",
+		"img": "images/keyzer.png",
+		"codes": "keyzerptp"
+	},
+	{
+		"name": "Keyzer Wildflower Fields",
+		"type": "toggle",
+		"img": "images/keyzer.png",
+		"codes": "keyzerwf"
+	},
+	{
+		"name": "Keyzer Mystic Lake",
+		"type": "toggle",
+		"img": "images/keyzer.png",
+		"codes": "keyzerml"
+	},
+	{
+		"name": "Keyzer Monsoon Jungle",
+		"type": "toggle",
+		"img": "images/keyzer.png",
+		"codes": "keyzermj"
+	},
+	{
+		"name": "Keyzer The Curious Factory",
+		"type": "toggle",
+		"img": "images/keyzer.png",
+		"codes": "keyzercf"
+	},
+	{
+		"name": "Keyzer The Toxic Landfill",
+		"type": "toggle",
+		"img": "images/keyzer.png",
+		"codes": "keyzertl"
+	},
+	{
+		"name": "Keyzer 40 Below Fridge",
+		"type": "toggle",
+		"img": "images/keyzer.png",
+		"codes": "keyzerbf"
+	},
+	{
+		"name": "Keyzer Pinball Zone",
+		"type": "toggle",
+		"img": "images/keyzer.png",
+		"codes": "keyzerpz"
+	},
+	{
+		"name": "Keyzer Toy Block Tower",
+		"type": "toggle",
+		"img": "images/keyzer.png",
+		"codes": "keyzertbt"
+	},
+	{
+		"name": "Keyzer The Big Board",
+		"type": "toggle",
+		"img": "images/keyzer.png",
+		"codes": "keyzerbb"
+	},
+	{
+		"name": "Keyzer Doodle Woods",
+		"type": "toggle",
+		"img": "images/keyzer.png",
+		"codes": "keyzerdw"
+	},
+	{
+		"name": "Keyzer Domino Row",
+		"type": "toggle",
+		"img": "images/keyzer.png",
+		"codes": "keyzerdr"
+	},
+	{
+		"name": "Keyzer Crescent Moon Village",
+		"type": "toggle",
+		"img": "images/keyzer.png",
+		"codes": "keyzercmv"
+	},
+	{
+		"name": "Keyzer Arabian Night",
+		"type": "toggle",
+		"img": "images/keyzer.png",
+		"codes": "keyzeran"
+	},
+	{
+		"name": "Keyzer Fiery Cavern",
+		"type": "toggle",
+		"img": "images/keyzer.png",
+		"codes": "keyzerfc"
+	},
+	{
+		"name": "Keyzer Hotel Horror",
+		"type": "toggle",
+		"img": "images/keyzer.png",
+		"codes": "keyzerhh"
+	},
+	{
+		"name": "Keyzer Golden Passage",
+		"type": "toggle",
+		"img": "images/keyzer.png",
+		"codes": "keyzergp"
+	},	
+	{
+		"name": "Automatic Tab Toggle",
+		"type": "progressive",
+		"codes": "op_auto_tab",
+		"allow_disabled": false,
+		"loop":true,
+		"initial_stage_idx": 1,
+		"stages": [
+			{
+				"img": "images/autotaboff.png",
+				"codes": "op_auto_tab_off",
+				"inheret_codes": false
+			},
+			{
+				"img": "images/autotabon.png",
+				"codes": "op_auto_tab_on",
+				"inheret_codes": false
+			}
+		]
+	}
+]

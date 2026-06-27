@@ -1,0 +1,47 @@
+{
+  "game_id": "oracle_of_ages",
+  "display_name": "The Legend of Zelda - Oracle of Ages",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apooa"
+  ],
+  "patch_world_module": "worlds.tloz_ooa",
+  "ap_world": "tloz_ooa",
+  "required_roms": [
+    "oracle_of_ages"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "oracle_of_ages",
+    "world": "tloz_ooa",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/tloz_ooa/Client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".gbc",
+      ".gb"
+    ],
+    "md5": [
+      "c4639cc61c049e5a085526bb6cac03bb"
+    ],
+    "sha1": [
+      "880374fb978b18af4aa529e2e32f7ffb4d7dd2f4"
+    ]
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "gbc",
+    "ap_game": "The Legend of Zelda - Oracle of Ages"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "",
+  "support_status": "not_available",
+  "availability_status": "unavailable_gb_gbc_pending_tester",
+  "compatibility_notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+}

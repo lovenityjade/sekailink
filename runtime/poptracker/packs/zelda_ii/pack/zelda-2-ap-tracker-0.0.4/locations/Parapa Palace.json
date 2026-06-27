@@ -1,0 +1,61 @@
+[
+    {
+        "name": "Parapa Palace",
+        "chest_unopened_img": "/images/items/close.png",
+        "chest_opened_img": "/images/items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "@Northwestern Hyrule"
+        ],
+        "sections": [
+            {
+                "name": "Parapa Palace: 1F West Hall",
+                "access_rules": [],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Parapa Palace: Pedestal Item",
+                "access_rules": ["^$key|parapa|2|3"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Parapa Palace: Crumbling Bridge",
+                "access_rules": ["^$key|parapa|1|1"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Parapa Palace: Stairwell",
+                "access_rules": ["^$key|parapa|1|1"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Parapa Palace: Guarded Item",
+                "access_rules": ["^$key|parapa|1|1"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Parapa Palace: Horsehead Drop",
+                "access_rules": ["^$key|parapa|2|3"],
+                "visibility_rules": [],
+                "item_count": 1
+            }
+        ],
+        "map_locations": [
+            {
+                "map": "Overworld",
+                "x": "1018",
+                "y": "51"
+            },
+            {
+                "map": "West Hyrule",
+                "x": "1018",
+                "y": "48"
+            }
+        ]
+    }
+]

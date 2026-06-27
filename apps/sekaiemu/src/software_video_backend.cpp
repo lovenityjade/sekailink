@@ -341,6 +341,13 @@ void SoftwareVideoBackend::ApplyWindowSizing(const VideoGeometry& geometry) {
     target_width += static_cast<int>(tracker_sidebar_width_);
   }
 
+  int current_width = 0;
+  int current_height = 0;
+  SDL_GetWindowSize(window_, &current_width, &current_height);
+  if (current_width >= target_width && current_height >= target_height) {
+    return;
+  }
+
   SDL_SetWindowSize(window_, target_width, target_height);
 }
 

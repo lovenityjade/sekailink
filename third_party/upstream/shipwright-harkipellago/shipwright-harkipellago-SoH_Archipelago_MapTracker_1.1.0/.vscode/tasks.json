@@ -1,0 +1,479 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Setup CMake Project",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-S",
+                ".",
+                "-B",
+                "build-cmake",
+                "-G",
+                "Ninja"
+            ],
+            "windows": {
+                "command": "${env:ProgramFiles}\\CMake\\bin\\cmake.exe",
+                "args": [
+                    "-S",
+                    ".",
+                    "-B",
+                    "build/x64",
+                    "-G",
+                    "Visual Studio 17 2022",
+                    "-T",
+                    "v143",
+                    "-A",
+                    "x64",
+                    "-DBUILD_REMOTE_CONTROL=ON"
+                ],
+                "options": {
+                    "env": {
+                        "Path": "C:\\Program Files\\Git\\cmd;${env:Path}"
+                    },
+                    "shell": {
+                        "executable": "C:\\Windows\\System32\\cmd.exe",
+                        "args": ["/d", "/c"]
+                    }
+                }
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Generate SOH OTR",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "build-cmake",
+                "--target",
+                "GenerateSohOtr",
+                "--parallel"
+            ],
+            "windows": {
+                "command": "${env:ProgramFiles}\\CMake\\bin\\cmake.exe",
+                "args": [
+                    "--build",
+                    "build/x64",
+                    "--target",
+                    "GenerateSohOtr",
+                    "--config",
+                    "Release",
+                    "--parallel"
+                ],
+                "options": {
+                    "env": {
+                        "Path": "C:\\Program Files\\Git\\cmd;${env:Path}"
+                    },
+                    "shell": {
+                        "executable": "C:\\Windows\\System32\\cmd.exe",
+                        "args": ["/d", "/c"]
+                    }
+                }
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build soh (incremental)",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "build-cmake",
+                "--target",
+                "soh",
+                "--parallel"
+            ],
+            "windows": {
+                "command": "${env:ProgramFiles}\\CMake\\bin\\cmake.exe",
+                "args": [
+                    "--build",
+                    "build/x64",
+                    "--config",
+                    "Debug",
+                    "--target",
+                    "soh",
+                    "--parallel"
+                ],
+                "options": {
+                    "env": {
+                        "Path": "C:\\Program Files\\Git\\cmd;${env:Path}"
+                    },
+                    "shell": {
+                        "executable": "C:\\Windows\\System32\\cmd.exe",
+                        "args": ["/d", "/c"]
+                    }
+                }
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "presentation": {
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "Build soh",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "build-cmake",
+                "--target",
+                "soh",
+                "--parallel"
+            ],
+            "windows": {
+                "command": "${env:ProgramFiles}\\CMake\\bin\\cmake.exe",
+                "args": [
+                    "--build",
+                    "build/x64",
+                    "--config",
+                    "Debug",
+                    "--target",
+                    "soh",
+                    "--parallel"
+                ],
+                "options": {
+                    "env": {
+                        "Path": "C:\\Program Files\\Git\\cmd;${env:Path}"
+                    },
+                    "shell": {
+                        "executable": "C:\\Windows\\System32\\cmd.exe",
+                        "args": ["/d", "/c"]
+                    }
+                }
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "dependsOn": [
+                "Generate SOH OTR"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "Build soh (Release, incremental)",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "build-cmake",
+                "--config",
+                "Release",
+                "--target",
+                "soh",
+                "--parallel"
+            ],
+            "windows": {
+                "command": "${env:ProgramFiles}\\CMake\\bin\\cmake.exe",
+                "args": [
+                    "--build",
+                    "build/x64",
+                    "--config",
+                    "Release",
+                    "--target",
+                    "soh",
+                    "--parallel"
+                ],
+                "options": {
+                    "env": {
+                        "Path": "C:\\Program Files\\Git\\cmd;${env:Path}"
+                    },
+                    "shell": {
+                        "executable": "C:\\Windows\\System32\\cmd.exe",
+                        "args": ["/d", "/c"]
+                    }
+                }
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "presentation": {
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "Build soh (Release)",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "build-cmake",
+                "--config",
+                "Release",
+                "--target",
+                "soh",
+                "--parallel"
+            ],
+            "windows": {
+                "command": "${env:ProgramFiles}\\CMake\\bin\\cmake.exe",
+                "args": [
+                    "--build",
+                    "build/x64",
+                    "--config",
+                    "Release",
+                    "--target",
+                    "soh",
+                    "--parallel"
+                ],
+                "options": {
+                    "env": {
+                        "Path": "C:\\Program Files\\Git\\cmd;${env:Path}"
+                    },
+                    "shell": {
+                        "executable": "C:\\Windows\\System32\\cmd.exe",
+                        "args": ["/d", "/c"]
+                    }
+                }
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "dependsOn": [
+                "Generate SOH OTR"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "Build Project (incremental)",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "build-cmake",
+                "--parallel"
+            ],
+            "windows": {
+                "command": "${env:ProgramFiles}\\CMake\\bin\\cmake.exe",
+                "args": [
+                    "--build",
+                    "build/x64",
+                    "--config",
+                    "Debug",
+                    "--parallel"
+                ],
+                "options": {
+                    "env": {
+                        "Path": "C:\\Program Files\\Git\\cmd;${env:Path}"
+                    },
+                    "shell": {
+                        "executable": "C:\\Windows\\System32\\cmd.exe",
+                        "args": ["/d", "/c"]
+                    }
+                }
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "Build Project",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "build-cmake",
+                "--parallel"
+            ],
+            "windows": {
+                "command": "${env:ProgramFiles}\\CMake\\bin\\cmake.exe",
+                "args": [
+                    "--build",
+                    "build/x64",
+                    "--config",
+                    "Debug",
+                    "--parallel"
+                ],
+                "options": {
+                    "env": {
+                        "Path": "C:\\Program Files\\Git\\cmd;${env:Path}"
+                    },
+                    "shell": {
+                        "executable": "C:\\Windows\\System32\\cmd.exe",
+                        "args": ["/d", "/c"]
+                    }
+                }
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "dependsOn": [
+                "Generate SOH OTR"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "Build Project (Release, incremental)",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "build-cmake",
+                "--config",
+                "Release",
+                "--parallel"
+            ],
+            "windows": {
+                "command": "${env:ProgramFiles}\\CMake\\bin\\cmake.exe",
+                "args": [
+                    "--build",
+                    "build/x64",
+                    "--config",
+                    "Release",
+                    "--parallel"
+                ],
+                "options": {
+                    "env": {
+                        "Path": "C:\\Program Files\\Git\\cmd;${env:Path}"
+                    },
+                    "shell": {
+                        "executable": "C:\\Windows\\System32\\cmd.exe",
+                        "args": ["/d", "/c"]
+                    }
+                }
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "Build Project (Release)",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "build-cmake",
+                "--config",
+                "Release",
+                "--parallel"
+            ],
+            "windows": {
+                "command": "${env:ProgramFiles}\\CMake\\bin\\cmake.exe",
+                "args": [
+                    "--build",
+                    "build/x64",
+                    "--config",
+                    "Release",
+                    "--parallel"
+                ],
+                "options": {
+                    "env": {
+                        "Path": "C:\\Program Files\\Git\\cmd;${env:Path}"
+                    },
+                    "shell": {
+                        "executable": "C:\\Windows\\System32\\cmd.exe",
+                        "args": ["/d", "/c"]
+                    }
+                }
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "dependsOn": [
+                "Generate SOH OTR"
+            ],
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "Run soh (Release)",
+            "type": "shell",
+            "command": "${workspaceFolder}/x64/Release/soh.exe",
+            "windows": {
+                "command": "${workspaceFolder}\\x64\\Release\\soh.exe",
+                "options": {
+                    "shell": {
+                        "executable": "C:\\Windows\\System32\\cmd.exe",
+                        "args": ["/d", "/c"]
+                    },
+                    "cwd": "${workspaceFolder}/x64/Release"
+                }
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/x64/Release"
+            },
+            "dependsOn": [
+                "Build soh (Release, incremental)"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Build All",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Setup CMake Project",
+                "Generate SOH OTR",
+                "Build Project"
+            ],
+            "group": "build",
+            "problemMatcher": []
+        }
+    ]
+}

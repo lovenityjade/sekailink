@@ -1,0 +1,46 @@
+{
+  "game_id": "the_legend_of_zelda",
+  "display_name": "The Legend of Zelda",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".aptloz"
+  ],
+  "patch_world_module": "worlds.tloz",
+  "ap_world": "tloz",
+  "required_roms": [
+    "the_legend_of_zelda"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "the_legend_of_zelda",
+    "world": "tloz",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/tloz/Client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".nes"
+    ],
+    "md5": [
+      "337bd6f1a1163df31bf2633665589ab0"
+    ],
+    "sha1": [
+      "dab79c84934f9aa5db4e7dad390e5d0c12443fa2"
+    ]
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "nestopia",
+    "profile": "profiles/tloz-starter.profile",
+    "ap_game": "The Legend of Zelda"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "",
+  "tracker_pack_path": "poptracker/packs/the_legend_of_zelda/pack",
+  "default_tracker_variant": "standard"
+}

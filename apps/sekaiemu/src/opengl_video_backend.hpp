@@ -2,7 +2,9 @@
 
 #include "opengl_overlay_renderer.hpp"
 #include "video_backend.hpp"
+#include "imgui_runtime.hpp"
 
+#include <functional>
 #include <vector>
 
 namespace sekaiemu::spike {
@@ -39,6 +41,7 @@ class OpenGlVideoBackend final : public VideoBackend {
                                unsigned sidebar_width,
                                const VideoGeometry& geometry) override;
   bool ToggleFullscreen(std::string& error) override;
+  void SetImGuiDrawCallback(std::function<void()> callback) override;
   void Present() override;
   void Shutdown() override;
 
@@ -100,10 +103,16 @@ class OpenGlVideoBackend final : public VideoBackend {
   unsigned core_frame_width_ = 0;
   unsigned core_frame_height_ = 0;
   bool context_logged_ = false;
+  bool stride_width_logged_ = false;
+  bool stride_probe_logged_ = false;
+  unsigned stride_probe_sample_count_ = 0;
+  bool stride_probe_visible_logged_ = false;
   bool menu_visible_ = false;
   bool tracker_sidebar_enabled_ = false;
   unsigned tracker_sidebar_width_ = 0;
   bool fullscreen_ = false;
+  SekaiemuImGuiRuntime imgui_runtime_;
+  std::function<void()> imgui_draw_callback_;
 };
 
 }  // namespace sekaiemu::spike

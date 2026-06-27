@@ -2,8 +2,8 @@
   "schema": "sekailink.runtime.windows.v1",
   "platform": "win32-x64",
   "buildTimeDependencySource": "MSYS2 UCRT64",
-  "sourceBinDir": "C:\\msys64\\ucrt64\\bin",
-  "generatedAt": "2026-06-05T16:39:21.571Z",
+  "sourceBinDir": "/mnt/windows/msys64/ucrt64/bin",
+  "generatedAt": "2026-06-08T03:17:42.121Z",
   "notes": [
     "These files are staged at build time. End users must not install MSYS2, LuaJIT, Python, or extra DLLs.",
     "ALTTP may be used as the release fixture, but runtime semantics remain generic APWorld and PopTracker pack compatibility."
@@ -12,7 +12,7 @@
     {
       "path": "bin/sekaiemu_libretro_spike.exe",
       "required": true,
-      "sha256": "1fb7210ad208fcbbbb8bbea497a0136b5065fa2c91584f3fa7d47415781487a4"
+      "sha256": "76085d78983ae2c97342a6fac932309821b3b0c76c687d6df8bd7fd0abc637a5"
     },
     {
       "path": "bin/sekailink_sklmi_runtime.exe",
@@ -32,7 +32,7 @@
     {
       "path": "bin/tracker_poptracker_eval.lua",
       "required": true,
-      "sha256": "d1454b9c1c82ef4717875c98ddcb0afe67ee40a2428aa490de193f6f3145bc69"
+      "sha256": "29d79503e555563c1fffdb306653168c3f710cf38f96ff62768b0648286b6672"
     },
     {
       "path": "bin/libarchive-13.dll",

@@ -1,0 +1,3145 @@
+[
+    {
+        "name": "Skull Woods - Insides",
+        "children": [
+            {
+                "name": "Bumper Cave (Bottom)",
+                "sections": [
+                    {
+                        "name": "From Bumper Cave (Bottom)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_bumper_cave_bottom_inside"
+                        ],
+                        "hosted_item": "from_Dark_bumper_cave_bottom_inside"
+                    },
+                    {
+                        "name": "To Bumper Cave (Bottom)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dark_bumper_cave_bottom_inside"
+                        ],
+                        "hosted_item": "to_Dark_bumper_cave_bottom_inside"
+                    },
+                    {
+                        "name": "Bumper Cave (Bottom)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_bumper_cave_bottom_inside"
+                        ],
+                        "hosted_item": "from_Dark_bumper_cave_bottom_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "skull_woods_caves",
+                        "x":584,
+                        "y":370,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":584,
+                        "y":370,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":584,
+                        "y":370,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Bumper Cave (Top)",
+                "sections": [
+                    {
+                        "name": "From Bumper Cave (Top)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_bumper_cave_top_inside"
+                        ],
+                        "hosted_item": "from_Dark_bumper_cave_top_inside"
+                    },
+                    {
+                        "name": "To Bumper Cave (Top)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dark_bumper_cave_top_inside"
+                        ],
+                        "hosted_item": "to_Dark_bumper_cave_top_inside"
+                    },
+                    {
+                        "name": "Bumper Cave (Top)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_bumper_cave_top_inside"
+                        ],
+                        "hosted_item": "from_Dark_bumper_cave_top_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "skull_woods_caves",
+                        "x":615,
+                        "y":239,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":615,
+                        "y":239,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":615,
+                        "y":239,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Dark World Lumberjack Shop",
+                "sections": [
+                    {
+                        "name": "From Dark World Lumberjack Shop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_lumpberjacks_shop_inside"
+                        ],
+                        "hosted_item": "from_Dark_lumpberjacks_shop_inside"
+                    },
+                    {
+                        "name": "To Dark World Lumberjack Shop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dark_lumpberjacks_shop_inside"
+                        ],
+                        "hosted_item": "to_Dark_lumpberjacks_shop_inside"
+                    },
+                    {
+                        "name": "Dark World Lumberjack Shop",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_lumpberjacks_shop_inside"
+                        ],
+                        "hosted_item": "from_Dark_lumpberjacks_shop_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "skull_woods_caves",
+                        "x":593,
+                        "y":108,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":593,
+                        "y":108,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":593,
+                        "y":108,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Skull Woods Back Entrance",
+                "sections": [
+                    {
+                        "name": "From Skull Woods Back Entrance",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_SW_back_entrance_inside"
+                        ],
+                        "hosted_item": "from_SW_back_entrance_inside"
+                    },
+                    {
+                        "name": "To Skull Woods Back Entrance",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_SW_back_entrance_inside"
+                        ],
+                        "hosted_item": "to_SW_back_entrance_inside"
+                    },
+                    {
+                        "name": "Skull Woods Back Entrance",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_SW_back_entrance_inside"
+                        ],
+                        "hosted_item": "from_SW_back_entrance_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "skull_woods_caves",
+                        "x":32,
+                        "y":239,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":32,
+                        "y":239,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":32,
+                        "y":239,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "SW",
+                        "x":33,
+                        "y":313,
+                        "size":10,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Skull Woods West Lobby",
+                "sections": [
+                    {
+                        "name": "From Skull Woods West Lobby",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_SW_west_lobby_entrance_inside"
+                        ],
+                        "hosted_item": "from_SW_west_lobby_entrance_inside"
+                    },
+                    {
+                        "name": "To Skull Woods West Lobby",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_SW_west_lobby_entrance_inside"
+                        ],
+                        "hosted_item": "to_SW_west_lobby_entrance_inside"
+                    },
+                    {
+                        "name": "Skull Woods West Lobby",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_SW_west_lobby_entrance_inside"
+                        ],
+                        "hosted_item": "from_SW_west_lobby_entrance_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "skull_woods_caves",
+                        "x":163,
+                        "y":239,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":163,
+                        "y":239,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":163,
+                        "y":239,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "SW",
+                        "x":166,
+                        "y":186,
+                        "size":10,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Skull Woods Back Hole",
+                "sections": [
+                    // {
+                    //     "name": "From Skull Woods Back Hole",
+                    // "visibility_rules": ["er_insanity"],
+                    // "clear_as_group":false,
+                    //     "access_rules": [
+                    //         "^$ChangeLocationColor|from_SW_north_drop_inside"
+                    //     ],
+                    //     "hosted_item": "from_SW_north_drop_inside"
+                    // },
+                    {
+                        "name": "To Skull Woods Back Hole",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_SW_north_drop_inside"
+                        ],
+                        "hosted_item": "to_SW_north_drop_inside"
+                    },
+                    {
+                        "name": "Skull Woods Back Hole",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_SW_north_drop_inside"
+                        ],
+                        "hosted_item": "from_SW_north_drop_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "skull_woods_caves",
+                        "x":227,
+                        "y":181,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":227,
+                        "y":181,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":227,
+                        "y":181,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "SW",
+                        "x":230,
+                        "y":105,
+                        "size":10,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Skull Woods Circle Pot Drop",
+                "sections": [
+                    // {
+                    //     "name": "From Skull Woods Circle Pot Drop",
+                    // "visibility_rules": ["er_insanity"],
+                    // "clear_as_group":false,
+                    //     "access_rules": [
+                    //         "^$ChangeLocationColor|from_SW_pot_circle_drop_inside"
+                    //     ],
+                    //     "hosted_item": "from_SW_pot_circle_drop_inside"
+                    // },
+                    {
+                        "name": "To Skull Woods Circle Pot Drop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_SW_pot_circle_drop_inside"
+                        ],
+                        "hosted_item": "to_SW_pot_circle_drop_inside"
+                    },
+                    {
+                        "name": "Skull Woods Circle Pot Drop",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_SW_pot_circle_drop_inside"
+                        ],
+                        "hosted_item": "from_SW_pot_circle_drop_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "skull_woods_caves",
+                        "x":493,
+                        "y":149,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":493,
+                        "y":149,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":493,
+                        "y":149,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "SW",
+                        "x":562,
+                        "y":96,
+                        "size":10,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Skull Woods Pinball Drop",
+                "sections": [
+                    // {
+                    //     "name": "From Skull Woods Pinball Drop",
+                    // "visibility_rules": ["er_insanity"],
+                    // "clear_as_group":false,
+                    //     "access_rules": [
+                    //         "^$ChangeLocationColor|from_SW_pinball_drop_inside"
+                    //     ],
+                    //     "hosted_item": "from_SW_pinball_drop_inside"
+                    // },
+                    {
+                        "name": "To Skull Woods Pinball Drop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_SW_pinball_drop_inside"
+                        ],
+                        "hosted_item": "to_SW_pinball_drop_inside"
+                    },
+                    {
+                        "name": "Skull Woods Pinball Drop",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_SW_pinball_drop_inside"
+                        ],
+                        "hosted_item": "from_SW_pinball_drop_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "skull_woods_caves",
+                        "x":456,
+                        "y":291,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":456,
+                        "y":291,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":456,
+                        "y":291,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "SW",
+                        "x":526,
+                        "y":234,
+                        "size":10,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Skull Woods Bottom Left Drop",
+                "sections": [
+                    // {
+                    //     "name": "From Skull Woods Bottom Left Drop",
+                    // "visibility_rules": ["er_insanity"],
+                    // "clear_as_group":false,
+                    //     "access_rules": [
+                    //         "^$ChangeLocationColor|from_SW_bottom_left_drop_inside"
+                    //     ],
+                    //     "hosted_item": "from_SW_bottom_left_drop_inside"
+                    // },
+                    {
+                        "name": "To Skull Woods Bottom Left Drop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_SW_bottom_left_drop_inside"
+                        ],
+                        "hosted_item": "to_SW_bottom_left_drop_inside"
+                    },
+                    {
+                        "name": "Skull Woods Bottom Left Drop",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_SW_bottom_left_drop_inside"
+                        ],
+                        "hosted_item": "from_SW_bottom_left_drop_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "skull_woods_caves",
+                        "x":292,
+                        "y":278,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":292,
+                        "y":278,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":292,
+                        "y":278,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "SW",
+                        "x":365,
+                        "y":220,
+                        "size":10,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Skull Woods Big Chest Entrance",
+                "sections": [
+                    {
+                        "name": "From Skull Woods Big Chest Entrance",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_SW_big_chest_entrance_inside"
+                        ],
+                        "hosted_item": "from_SW_big_chest_entrance_inside"
+                    },
+                    {
+                        "name": "To Skull Woods Big Chest Entrance",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_SW_big_chest_entrance_inside"
+                        ],
+                        "hosted_item": "to_SW_big_chest_entrance_inside"
+                    },
+                    {
+                        "name": "Skull Woods Big Chest Entrance",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_SW_big_chest_entrance_inside"
+                        ],
+                        "hosted_item": "from_SW_big_chest_entrance_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "skull_woods_caves",
+                        "x":422,
+                        "y":239,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":422,
+                        "y":239,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":422,
+                        "y":239,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "SW",
+                        "x":493,
+                        "y":186,
+                        "size":10,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Skull Woods Gibdo Entrance",
+                "sections": [
+                    {
+                        "name": "From Skull Woods Gibdo Entrance",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_SW_gibdo_entrance_inside"
+                        ],
+                        "hosted_item": "from_SW_gibdo_entrance_inside"
+                    },
+                    {
+                        "name": "To Skull Woods Gibdo Entrance",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_SW_gibdo_entrance_inside"
+                        ],
+                        "hosted_item": "to_SW_gibdo_entrance_inside"
+                    },
+                    {
+                        "name": "Skull Woods Gibdo Entrance",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_SW_gibdo_entrance_inside"
+                        ],
+                        "hosted_item": "from_SW_gibdo_entrance_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "skull_woods_caves",
+                        "x":292,
+                        "y":239,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":292,
+                        "y":239,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":292,
+                        "y":239,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "SW",
+                        "x":295,
+                        "y":186,
+                        "size":10,
+                        "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Dark Death Mountain - Insides",
+        "children": [
+            {
+                "name": "Ganons Tower",
+                "sections": [
+                    {
+                        "name": "From Ganons Tower",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_GT_entrance_inside"
+                        ],
+                        "hosted_item": "from_GT_entrance_inside"
+                    },
+                    {
+                        "name": "To Ganons Tower",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_GT_entrance_inside"
+                        ],
+                        "hosted_item": "to_GT_entrance_inside"
+                    },
+                    {
+                        "name": "Ganons Tower",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_GT_entrance_inside"
+                        ],
+                        "hosted_item": "from_GT_entrance_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_death_mountain_caves",
+                        "x":194,
+                        "y":184,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":844,
+                        "y":184,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":844,
+                        "y":184,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "GT_Bottom",
+                        "x":395,
+                        "y":181,
+                        "size":10,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "GT_Top",
+                        "x":646,
+                        "y":375,
+                        "size":10,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Turtle Rock",
+                "sections": [
+                    {
+                        "name": "From Turtle Rock",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_TR_main_entrance_inside"
+                        ],
+                        "hosted_item": "from_TR_main_entrance_inside"
+                    },
+                    {
+                        "name": "To Turtle Rock",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_TR_main_entrance_inside"
+                        ],
+                        "hosted_item": "to_TR_main_entrance_inside"
+                    },
+                    {
+                        "name": "Turtle Rock",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_TR_main_entrance_inside"
+                        ],
+                        "hosted_item": "from_TR_main_entrance_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_death_mountain_caves",
+                        "x":871,
+                        "y":249,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1512,
+                        "y":249,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1512,
+                        "y":249,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "TR",
+                        "x":620,
+                        "y":428,
+                        "size":10,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Turtle Rock Ledge Exit (West)",
+                "sections": [
+                    {
+                        "name": "From Turtle Rock Ledge Exit (West)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_TR_laser_entrance_inside"
+                        ],
+                        "hosted_item": "from_TR_laser_entrance_inside"
+                    },
+                    {
+                        "name": "To Turtle Rock Ledge Exit (West)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_TR_laser_entrance_inside"
+                        ],
+                        "hosted_item": "to_TR_laser_entrance_inside"
+                    },
+                    {
+                        "name": "Turtle Rock Ledge Exit (West)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_TR_laser_entrance_inside"
+                        ],
+                        "hosted_item": "from_TR_laser_entrance_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_death_mountain_caves",
+                        "x":386,
+                        "y":240,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1036,
+                        "y":240,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1036,
+                        "y":240,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "TR",
+                        "x":228,
+                        "y":428,
+                        "size":10,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Turtle Rock Ledge Exit (East)",
+                "sections": [
+                    {
+                        "name": "From Turtle Rock Ledge Exit (East)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_TR_big_chest_entrance_inside"
+                        ],
+                        "hosted_item": "from_TR_big_chest_entrance_inside"
+                    },
+                    {
+                        "name": "To Turtle Rock Ledge Exit (East)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_TR_big_chest_entrance_inside"
+                        ],
+                        "hosted_item": "to_TR_big_chest_entrance_inside"
+                    },
+                    {
+                        "name": "Turtle Rock Ledge Exit (East)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_TR_big_chest_entrance_inside"
+                        ],
+                        "hosted_item": "from_TR_big_chest_entrance_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_death_mountain_caves",
+                        "x":581,
+                        "y":240,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1231,
+                        "y":240,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1231,
+                        "y":240,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "TR",
+                        "x":355,
+                        "y":428,
+                        "size":10,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Turtle Rock Isolated Ledge Exit",
+                "sections": [
+                    {
+                        "name": "From Turtle Rock Isolated Ledge Exit",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_TR_eye_bridge_entrance_inside"
+                        ],
+                        "hosted_item": "from_TR_eye_bridge_entrance_inside"
+                    },
+                    {
+                        "name": "To Turtle Rock Isolated Ledge Exit",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_TR_eye_bridge_entrance_inside"
+                        ],
+                        "hosted_item": "to_TR_eye_bridge_entrance_inside"
+                    },
+                    {
+                        "name": "Turtle Rock Isolated Ledge Exit",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_TR_eye_bridge_entrance_inside"
+                        ],
+                        "hosted_item": "from_TR_eye_bridge_entrance_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_death_mountain_caves",
+                        "x":484,
+                        "y":377,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1135,
+                        "y":377,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1135,
+                        "y":377,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "TR",
+                        "x":160,
+                        "y":428,
+                        "size":10,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Hookshot Cave",
+                "sections": [
+                    {
+                        "name": "From Hookshot Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Hookshot_cave_inside"
+                        ],
+                        "hosted_item": "from_Hookshot_cave_inside"
+                    },
+                    {
+                        "name": "To Hookshot Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Hookshot_cave_inside"
+                        ],
+                        "hosted_item": "to_Hookshot_cave_inside"
+                    },
+                    {
+                        "name": "Hookshot Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Hookshot_cave_inside"
+                        ],
+                        "hosted_item": "from_Hookshot_cave_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_death_mountain_caves",
+                        "x":516,
+                        "y":119,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1166,
+                        "y":119,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1166,
+                        "y":119,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Dark Floating Island",
+                "sections": [
+                    {
+                        "name": "From Dark Floating Island",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_floating_island_inside"
+                        ],
+                        "hosted_item": "from_Dark_floating_island_inside"
+                    },
+                    {
+                        "name": "To Dark Floating Island",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dark_floating_island_inside"
+                        ],
+                        "hosted_item": "to_Dark_floating_island_inside"
+                    },
+                    {
+                        "name": "Dark Floating Island",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_floating_island_inside"
+                        ],
+                        "hosted_item": "from_Dark_floating_island_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_death_mountain_caves",
+                        "x":452,
+                        "y":56,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1102,
+                        "y":56,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1102,
+                        "y":56,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Superbunny Cave (Top)",
+                "sections": [
+                    {
+                        "name": "From Superbunny Cave (Top)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Superbunny_cave_top_inside"
+                        ],
+                        "hosted_item": "from_Superbunny_cave_top_inside"
+                    },
+                    {
+                        "name": "To Superbunny Cave (Top)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Superbunny_cave_top_inside"
+                        ],
+                        "hosted_item": "to_Superbunny_cave_top_inside"
+                    },
+                    {
+                        "name": "Superbunny Cave (Top)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Superbunny_cave_top_inside"
+                        ],
+                        "hosted_item": "from_Superbunny_cave_top_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_death_mountain_caves",
+                        "x":742,
+                        "y":185,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1392,
+                        "y":185,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1392,
+                        "y":185,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Superbunny Cave (Bottom)",
+                "sections": [
+                    {
+                        "name": "From Superbunny Cave (Bottom)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Superbunny_cave_bottom_inside"
+                        ],
+                        "hosted_item": "from_Superbunny_cave_bottom_inside"
+                    },
+                    {
+                        "name": "To Superbunny Cave (Bottom)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Superbunny_cave_bottom_inside"
+                        ],
+                        "hosted_item": "to_Superbunny_cave_bottom_inside"
+                    },
+                    {
+                        "name": "Superbunny Cave (Bottom)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Superbunny_cave_bottom_inside"
+                        ],
+                        "hosted_item": "from_Superbunny_cave_bottom_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_death_mountain_caves",
+                        "x":581,
+                        "y":434,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1231,
+                        "y":434,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1231,
+                        "y":434,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Cave Shop (Dark Death Mountain)",
+                "sections": [
+                    {
+                        "name": "From Cave Shop (Dark Death Mountain)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_death_mountain_shop_inside"
+                        ],
+                        "hosted_item": "from_Dark_death_mountain_shop_inside"
+                    },
+                    {
+                        "name": "To Cave Shop (Dark Death Mountain)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dark_death_mountain_shop_inside"
+                        ],
+                        "hosted_item": "to_Dark_death_mountain_shop_inside"
+                    },
+                    {
+                        "name": "Cave Shop (Dark Death Mountain)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_death_mountain_shop_inside"
+                        ],
+                        "hosted_item": "from_Dark_death_mountain_shop_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_death_mountain_caves",
+                        "x":710,
+                        "y":434,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1359,
+                        "y":434,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1359,
+                        "y":434,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Spike Cave",
+                "sections": [
+                    {
+                        "name": "From Spike Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Spike_cave_inside"
+                        ],
+                        "hosted_item": "from_Spike_cave_inside"
+                    },
+                    {
+                        "name": "To Spike Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Spike_cave_inside"
+                        ],
+                        "hosted_item": "to_Spike_cave_inside"
+                    },
+                    {
+                        "name": "Spike Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Spike_cave_inside"
+                        ],
+                        "hosted_item": "from_Spike_cave_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_death_mountain_caves",
+                        "x":193,
+                        "y":418,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":843,
+                        "y":371,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":843,
+                        "y":371,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Dark Death Mountain Fairy",
+                "sections": [
+                    {
+                        "name": "From Dark Death Mountain Fairy",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_death_mountain_fairy_inside"
+                        ],
+                        "hosted_item": "from_Dark_death_mountain_fairy_inside"
+                    },
+                    {
+                        "name": "To Dark Death Mountain Fairy",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dark_death_mountain_fairy_inside"
+                        ],
+                        "hosted_item": "to_Dark_death_mountain_fairy_inside"
+                    },
+                    {
+                        "name": "Dark Death Mountain Fairy",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_death_mountain_fairy_inside"
+                        ],
+                        "hosted_item": "from_Dark_death_mountain_fairy_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_death_mountain_caves",
+                        "x":64,
+                        "y":434,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":714,
+                        "y":434,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":714,
+                        "y":434,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Village of the Outcast - Insides",
+        "children": [
+            {
+                "name": "C-Shaped House",
+                "sections": [
+                    {
+                        "name": "From C-Shaped House",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_C_shaped_house_inside"
+                        ],
+                        "hosted_item": "from_C_shaped_house_inside"
+                    },
+                    {
+                        "name": "To C-Shaped House",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_C_shaped_house_inside"
+                        ],
+                        "hosted_item": "to_C_shaped_house_inside"
+                    },
+                    {
+                        "name": "C-Shaped House",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_C_shaped_house_inside"
+                        ],
+                        "hosted_item": "from_C_shaped_house_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "outcast_village_caves",
+                        "x":322,
+                        "y":261,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":322,
+                        "y":667,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":322,
+                        "y":667,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Chest Game",
+                "sections": [
+                    {
+                        "name": "From Chest Game",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Chest_game_inside"
+                        ],
+                        "hosted_item": "from_Chest_game_inside"
+                    },
+                    {
+                        "name": "To Chest Game",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Chest_game_inside"
+                        ],
+                        "hosted_item": "to_Chest_game_inside"
+                    },
+                    {
+                        "name": "Chest Game",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Chest_game_inside"
+                        ],
+                        "hosted_item": "from_Chest_game_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "outcast_village_caves",
+                        "x":64,
+                        "y":261,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":64,
+                        "y":667,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":64,
+                        "y":667,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Brewery",
+                "sections": [
+                    {
+                        "name": "From Brewery",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Brewery_inside"
+                        ],
+                        "hosted_item": "from_Brewery_inside"
+                    },
+                    {
+                        "name": "To Brewery",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Brewery_inside"
+                        ],
+                        "hosted_item": "to_Brewery_inside"
+                    },
+                    {
+                        "name": "Brewery",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Brewery_inside"
+                        ],
+                        "hosted_item": "from_Brewery_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "outcast_village_caves",
+                        "x":194,
+                        "y":501,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":194,
+                        "y":906,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":194,
+                        "y":906,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Hammer Peg Cave",
+                "sections": [
+                    {
+                        "name": "From Hammer Peg Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Peg_cave_inside"
+                        ],
+                        "hosted_item": "from_Peg_cave_inside"
+                    },
+                    {
+                        "name": "To Hammer Peg Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Peg_cave_inside"
+                        ],
+                        "hosted_item": "to_Peg_cave_inside"
+                    },
+                    {
+                        "name": "Hammer Peg Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Peg_cave_inside"
+                        ],
+                        "hosted_item": "from_Peg_cave_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "outcast_village_caves",
+                        "x":484,
+                        "y":500,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":484,
+                        "y":904,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":484,
+                        "y":904,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Red Shield Shop",
+                "sections": [
+                    {
+                        "name": "From Red Shield Shop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Red_shield_shop_inside"
+                        ],
+                        "hosted_item": "from_Red_shield_shop_inside"
+                    },
+                    {
+                        "name": "To Red Shield Shop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Red_shield_shop_inside"
+                        ],
+                        "hosted_item": "to_Red_shield_shop_inside"
+                    },
+                    {
+                        "name": "Red Shield Shop",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Red_shield_shop_inside"
+                        ],
+                        "hosted_item": "from_Red_shield_shop_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "outcast_village_caves",
+                        "x":484,
+                        "y":262,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":484,
+                        "y":666,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":484,
+                        "y":666,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Fortune Teller (Dark)",
+                "sections": [
+                    {
+                        "name": "From Fortune Teller (Dark)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_village_fortune_teller_inside"
+                        ],
+                        "hosted_item": "from_Dark_village_fortune_teller_inside"
+                    },
+                    {
+                        "name": "To Fortune Teller (Dark)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dark_village_fortune_teller_inside"
+                        ],
+                        "hosted_item": "to_Dark_village_fortune_teller_inside"
+                    },
+                    {
+                        "name": "Fortune Teller (Dark)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_village_fortune_teller_inside"
+                        ],
+                        "hosted_item": "from_Dark_village_fortune_teller_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "outcast_village_caves",
+                        "x":322,
+                        "y":109,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":322,
+                        "y":513,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":322,
+                        "y":513,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Village of Outcasts Shop",
+                "sections": [
+                    {
+                        "name": "From Village of Outcasts Shop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_village_shop_inside"
+                        ],
+                        "hosted_item": "from_Dark_village_shop_inside"
+                    },
+                    {
+                        "name": "To Village of Outcasts Shop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dark_village_shop_inside"
+                        ],
+                        "hosted_item": "to_Dark_village_shop_inside"
+                    },
+                    {
+                        "name": "Village of Outcasts Shop",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_village_shop_inside"
+                        ],
+                        "hosted_item": "from_Dark_village_shop_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "outcast_village_caves",
+                        "x":322,
+                        "y":382,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":322,
+                        "y":786,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":322,
+                        "y":786,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Thieves Town",
+                "sections": [
+                    {
+                        "name": "From Thieves Town",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_TT_entrance_inside"
+                        ],
+                        "hosted_item": "from_TT_entrance_inside"
+                    },
+                    {
+                        "name": "To Thieves Town",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_TT_entrance_inside"
+                        ],
+                        "hosted_item": "to_TT_entrance_inside"
+                    },
+                    {
+                        "name": "Thieves Town",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_TT_entrance_inside"
+                        ],
+                        "hosted_item": "from_TT_entrance_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "outcast_village_caves",
+                        "x":193,
+                        "y":263,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":193,
+                        "y":666,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":193,
+                        "y":666,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "TT",
+                        "x":65,
+                        "y":245,
+                        "size":10,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Archery Game",
+                "sections": [
+                    {
+                        "name": "From Archery Game",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_archery_minigame_inside"
+                        ],
+                        "hosted_item": "from_Dark_archery_minigame_inside"
+                    },
+                    {
+                        "name": "To Archery Game",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dark_archery_minigame_inside"
+                        ],
+                        "hosted_item": "to_Dark_archery_minigame_inside"
+                    },
+                    {
+                        "name": "Archery Game",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_archery_minigame_inside"
+                        ],
+                        "hosted_item": "from_Dark_archery_minigame_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "outcast_village_caves",
+                        "x":322,
+                        "y":654,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":322,
+                        "y":1060,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":322,
+                        "y":1060,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Dark Central - Insides",
+        "children": [
+            {
+                "name": "Pyramid Hole",
+                "sections": [
+                    // {
+                    //     "name": "From Pyramid Hole",
+                    // "visibility_rules": ["er_insanity"],
+                    // "clear_as_group":false,
+                    //     "access_rules": [
+                    //         "^$ChangeLocationColor|from_Pyramid_hole_inside"
+                    //     ],
+                    //     "hosted_item": "from_Pyramid_hole_inside"
+                    // },
+                    {
+                        "name": "To Pyramid Hole",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Pyramid_hole_inside"
+                        ],
+                        "hosted_item": "to_Pyramid_hole_inside"
+                    },
+                    {
+                        "name": "Pyramid Hole",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Pyramid_hole_inside"
+                        ],
+                        "hosted_item": "from_Pyramid_hole_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_central_hyrule_caves",
+                        "x":289,
+                        "y":218,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":939,
+                        "y":674,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":939,
+                        "y":674,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Pyramid Exit",
+                "sections": [
+                    {
+                        "name": "From Pyramid Exit",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Pyramid_exit_inside"
+                        ],
+                        "hosted_item": "from_Pyramid_exit_inside"
+                    },
+                    {
+                        "name": "To Pyramid Exit",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Pyramid_exit_inside"
+                        ],
+                        "hosted_item": "to_Pyramid_exit_inside"
+                    },
+                    {
+                        "name": "Pyramid Exit",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Pyramid_exit_inside"
+                        ],
+                        "hosted_item": "from_Pyramid_exit_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_central_hyrule_caves",
+                        "x":96,
+                        "y":432,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":746,
+                        "y":889,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":746,
+                        "y":889,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Pyramid Fairy",
+                "sections": [
+                    {
+                        "name": "From Pyramid Fairy",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Pyramid_fairy_cave_inside"
+                        ],
+                        "hosted_item": "from_Pyramid_fairy_cave_inside"
+                    },
+                    {
+                        "name": "To Pyramid Fairy",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Pyramid_fairy_cave_inside"
+                        ],
+                        "hosted_item": "to_Pyramid_fairy_cave_inside"
+                    },
+                    {
+                        "name": "Pyramid Fairy",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Pyramid_fairy_cave_inside"
+                        ],
+                        "hosted_item": "from_Pyramid_fairy_cave_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_central_hyrule_caves",
+                        "x":256,
+                        "y":421,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":906,
+                        "y":877,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":906,
+                        "y":877,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Dark Sanctuary Hint",
+                "sections": [
+                    {
+                        "name": "From Dark Sanctuary Hint",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_chapel_inside"
+                        ],
+                        "hosted_item": "from_Dark_chapel_inside"
+                    },
+                    {
+                        "name": "To Dark Sanctuary Hint",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dark_chapel_inside"
+                        ],
+                        "hosted_item": "to_Dark_chapel_inside"
+                    },
+                    {
+                        "name": "Dark Sanctuary Hint",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_chapel_inside"
+                        ],
+                        "hosted_item": "from_Dark_chapel_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_central_hyrule_caves",
+                        "x":63,
+                        "y":53,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":714,
+                        "y":568,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":714,
+                        "y":568,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "PoD Area - Insides",
+        "children": [
+            {
+                "name": "Palace of Darkness",
+                "sections": [
+                    {
+                        "name": "From Palace of Darkness",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_PoD_entrance_inside"
+                        ],
+                        "hosted_item": "from_PoD_entrance_inside"
+                    },
+                    {
+                        "name": "To Palace of Darkness",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_PoD_entrance_inside"
+                        ],
+                        "hosted_item": "to_PoD_entrance_inside"
+                    },
+                    {
+                        "name": "Palace of Darkness",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_PoD_entrance_inside"
+                        ],
+                        "hosted_item": "from_PoD_entrance_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "pod_area_caves",
+                        "x":193,
+                        "y":175,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1489,
+                        "y":627,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1489,
+                        "y":627,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "PoD",
+                        "x":192,
+                        "y":375,
+                        "size":10,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Palace of Darkness Hint",
+                "sections": [
+                    {
+                        "name": "From Palace of Darkness Hint",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_PoD_hint_house_inside"
+                        ],
+                        "hosted_item": "from_PoD_hint_house_inside"
+                    },
+                    {
+                        "name": "To Palace of Darkness Hint",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_PoD_hint_house_inside"
+                        ],
+                        "hosted_item": "to_PoD_hint_house_inside"
+                    },
+                    {
+                        "name": "Palace of Darkness Hint",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_PoD_hint_house_inside"
+                        ],
+                        "hosted_item": "from_PoD_hint_house_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "pod_area_caves",
+                        "x":63,
+                        "y":294,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1359,
+                        "y":746,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1359,
+                        "y":746,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "East Dark World Hint",
+                "sections": [
+                    {
+                        "name": "From East Dark World Hint",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_PoD_east_darkworld_hint_inside"
+                        ],
+                        "hosted_item": "from_PoD_east_darkworld_hint_inside"
+                    },
+                    {
+                        "name": "To East Dark World Hint",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_PoD_east_darkworld_hint_inside"
+                        ],
+                        "hosted_item": "to_PoD_east_darkworld_hint_inside"
+                    },
+                    {
+                        "name": "East Dark World Hint",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_PoD_east_darkworld_hint_inside"
+                        ],
+                        "hosted_item": "from_PoD_east_darkworld_hint_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "pod_area_caves",
+                        "x":196,
+                        "y":520,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1484,
+                        "y":928,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1484,
+                        "y":928,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Dark World Potion Shop",
+                "sections": [
+                    {
+                        "name": "From Dark World Potion Shop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_potion_shop_inside"
+                        ],
+                        "hosted_item": "from_Dark_potion_shop_inside"
+                    },
+                    {
+                        "name": "To Dark World Potion Shop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dark_potion_shop_inside"
+                        ],
+                        "hosted_item": "to_Dark_potion_shop_inside"
+                    },
+                    {
+                        "name": "Dark World Potion Shop",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_potion_shop_inside"
+                        ],
+                        "hosted_item": "from_Dark_potion_shop_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "pod_area_caves",
+                        "x":64,
+                        "y":109,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1359,
+                        "y":561,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1359,
+                        "y":561,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Dark Lake Hylia Fairy",
+                "sections": [
+                    {
+                        "name": "From Dark Lake Hylia Fairy",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_lake_hylia_fairy_inside"
+                        ],
+                        "hosted_item": "from_Dark_lake_hylia_fairy_inside"
+                    },
+                    {
+                        "name": "To Dark Lake Hylia Fairy",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dark_lake_hylia_fairy_inside"
+                        ],
+                        "hosted_item": "to_Dark_lake_hylia_fairy_inside"
+                    },
+                    {
+                        "name": "Dark Lake Hylia Fairy",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_lake_hylia_fairy_inside"
+                        ],
+                        "hosted_item": "from_Dark_lake_hylia_fairy_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "pod_area_caves",
+                        "x":64,
+                        "y":469,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1360,
+                        "y":919,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1360,
+                        "y":919,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Misery Mire - Insides",
+        "children": [
+            {
+                "name": "Misery Mire",
+                "sections": [
+                    {
+                        "name": "From Misery Mire",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_MM_entrance_inside"
+                        ],
+                        "hosted_item": "from_MM_entrance_inside"
+                    },
+                    {
+                        "name": "To Misery Mire",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_MM_entrance_inside"
+                        ],
+                        "hosted_item": "to_MM_entrance_inside"
+                    },
+                    {
+                        "name": "Misery Mire",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_MM_entrance_inside"
+                        ],
+                        "hosted_item": "from_MM_entrance_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "misery_mire_caves",
+                        "x":161,
+                        "y":109,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":161,
+                        "y":1205,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":161,
+                        "y":1205,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "MM",
+                        "x":257,
+                        "y":413,
+                        "size":10,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Mire Shed",
+                "sections": [
+                    {
+                        "name": "From Mire Shed",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Mire_shed_inside"
+                        ],
+                        "hosted_item": "from_Mire_shed_inside"
+                    },
+                    {
+                        "name": "To Mire Shed",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Mire_shed_inside"
+                        ],
+                        "hosted_item": "to_Mire_shed_inside"
+                    },
+                    {
+                        "name": "Mire Shed",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Mire_shed_inside"
+                        ],
+                        "hosted_item": "from_Mire_shed_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "misery_mire_caves",
+                        "x":63,
+                        "y":114,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":63,
+                        "y":1205,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":63,
+                        "y":1205,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Dark Desert Hint",
+                "sections": [
+                    {
+                        "name": "From Dark Desert Hint",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_desert_hint_inside"
+                        ],
+                        "hosted_item": "from_Dark_desert_hint_inside"
+                    },
+                    {
+                        "name": "To Dark Desert Hint",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dark_desert_hint_inside"
+                        ],
+                        "hosted_item": "to_Dark_desert_hint_inside"
+                    },
+                    {
+                        "name": "Dark Desert Hint",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_desert_hint_inside"
+                        ],
+                        "hosted_item": "from_Dark_desert_hint_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "misery_mire_caves",
+                        "x":517,
+                        "y":262,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":322,
+                        "y":1205,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":322,
+                        "y":1205,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Dark Desert Fairy",
+                "sections": [
+                    {
+                        "name": "From Dark Desert Fairy",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_desert_fairy_cave_inside"
+                        ],
+                        "hosted_item": "from_Dark_desert_fairy_cave_inside"
+                    },
+                    {
+                        "name": "To Dark Desert Fairy",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dark_desert_fairy_cave_inside"
+                        ],
+                        "hosted_item": "to_Dark_desert_fairy_cave_inside"
+                    },
+                    {
+                        "name": "Dark Desert Fairy",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_desert_fairy_cave_inside"
+                        ],
+                        "hosted_item": "from_Dark_desert_fairy_cave_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "misery_mire_caves",
+                        "x":322,
+                        "y":107,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":517,
+                        "y":1357,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":517,
+                        "y":1357,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Swamp - Insides",
+        "children": [
+            {
+                "name": "Big Bomb Shop",
+                "sections": [
+                    {
+                        "name": "From Big Bomb Shop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Big_bomb_shop_inside"
+                        ],
+                        "hosted_item": "from_Big_bomb_shop_inside"
+                    },
+                    {
+                        "name": "To Big Bomb Shop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Big_bomb_shop_inside"
+                        ],
+                        "hosted_item": "to_Big_bomb_shop_inside"
+                    },
+                    {
+                        "name": "Big Bomb Shop",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Big_bomb_shop_inside"
+                        ],
+                        "hosted_item": "from_Big_bomb_shop_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "swamp_caves",
+                        "x":193,
+                        "y":111,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":775,
+                        "y":1098,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":775,
+                        "y":1098,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Bonk Fairy (Dark)",
+                "sections": [
+                    {
+                        "name": "From Bonk Fairy (Dark)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Big_bomb_shop_fairy_cave_inside"
+                        ],
+                        "hosted_item": "from_Big_bomb_shop_fairy_cave_inside"
+                    },
+                    {
+                        "name": "To Bonk Fairy (Dark)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Big_bomb_shop_fairy_cave_inside"
+                        ],
+                        "hosted_item": "to_Big_bomb_shop_fairy_cave_inside"
+                    },
+                    {
+                        "name": "Bonk Fairy (Dark)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Big_bomb_shop_fairy_cave_inside"
+                        ],
+                        "hosted_item": "from_Big_bomb_shop_fairy_cave_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "swamp_caves",
+                        "x":63,
+                        "y":111,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":646,
+                        "y":1098,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":646,
+                        "y":1098,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Hype Cave",
+                "sections": [
+                    {
+                        "name": "From Hype Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Hype_cave_inside"
+                        ],
+                        "hosted_item": "from_Hype_cave_inside"
+                    },
+                    {
+                        "name": "To Hype Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Hype_cave_inside"
+                        ],
+                        "hosted_item": "to_Hype_cave_inside"
+                    },
+                    {
+                        "name": "Hype Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Hype_cave_inside"
+                        ],
+                        "hosted_item": "from_Hype_cave_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "swamp_caves",
+                        "x":320,
+                        "y":229,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":903,
+                        "y":1219,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":903,
+                        "y":1219,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Swamp Palace",
+                "sections": [
+                    {
+                        "name": "From Swamp Palace",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_SP_entrance_inside"
+                        ],
+                        "hosted_item": "from_SP_entrance_inside"
+                    },
+                    {
+                        "name": "To Swamp Palace",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_SP_entrance_inside"
+                        ],
+                        "hosted_item": "to_SP_entrance_inside"
+                    },
+                    {
+                        "name": "Swamp Palace",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_SP_entrance_inside"
+                        ],
+                        "hosted_item": "from_SP_entrance_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "swamp_caves",
+                        "x":64,
+                        "y":368,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":646,
+                        "y":1357,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":646,
+                        "y":1357,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "SP",
+                        "x":641,
+                        "y":444,
+                        "size":10,
+                        "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Dark Lake Hylia - Insides",
+        "children": [
+            {
+                "name": "Dark Lake Hylia Shop",
+                "sections": [
+                    {
+                        "name": "From Dark Lake Hylia Shop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_lake_shop_inside"
+                        ],
+                        "hosted_item": "from_Dark_lake_shop_inside"
+                    },
+                    {
+                        "name": "To Dark Lake Hylia Shop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dark_lake_shop_inside"
+                        ],
+                        "hosted_item": "to_Dark_lake_shop_inside"
+                    },
+                    {
+                        "name": "Dark Lake Hylia Shop",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_lake_shop_inside"
+                        ],
+                        "hosted_item": "from_Dark_lake_shop_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_lake_hylia_caves",
+                        "x":64,
+                        "y":262,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1036,
+                        "y":1195,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1036,
+                        "y":1195,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Dark Lake Hylia Ledge Fairy",
+                "sections": [
+                    {
+                        "name": "From Dark Lake Hylia Ledge Fairy",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_lake_hylia_ledge_fairy_inside"
+                        ],
+                        "hosted_item": "from_Dark_lake_hylia_ledge_fairy_inside"
+                    },
+                    {
+                        "name": "To Dark Lake Hylia Ledge Fairy",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dark_lake_hylia_ledge_fairy_inside"
+                        ],
+                        "hosted_item": "to_Dark_lake_hylia_ledge_fairy_inside"
+                    },
+                    {
+                        "name": "Dark Lake Hylia Ledge Fairy",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_lake_hylia_ledge_fairy_inside"
+                        ],
+                        "hosted_item": "from_Dark_lake_hylia_ledge_fairy_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_lake_hylia_caves",
+                        "x":387,
+                        "y":109,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1359,
+                        "y":1043,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1359,
+                        "y":1043,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Dark Lake Hylia Ledge Spike Cave",
+                "sections": [
+                    {
+                        "name": "From Dark Lake Hylia Ledge Spike Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_lake_hylia_ledge_spike_hint_inside"
+                        ],
+                        "hosted_item": "from_Dark_lake_hylia_ledge_spike_hint_inside"
+                    },
+                    {
+                        "name": "To Dark Lake Hylia Ledge Spike Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dark_lake_hylia_ledge_spike_hint_inside"
+                        ],
+                        "hosted_item": "to_Dark_lake_hylia_ledge_spike_hint_inside"
+                    },
+                    {
+                        "name": "Dark Lake Hylia Ledge Spike Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_lake_hylia_ledge_spike_hint_inside"
+                        ],
+                        "hosted_item": "from_Dark_lake_hylia_ledge_spike_hint_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_lake_hylia_caves",
+                        "x":449,
+                        "y":229,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1421,
+                        "y":1163,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1421,
+                        "y":1163,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Dark Lake Hylia Ledge Hint",
+                "sections": [
+                    {
+                        "name": "From Dark Lake Hylia Ledge Hint",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_lake_hylia_ledge_hint_inside"
+                        ],
+                        "hosted_item": "from_Dark_lake_hylia_ledge_hint_inside"
+                    },
+                    {
+                        "name": "To Dark Lake Hylia Ledge Hint",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dark_lake_hylia_ledge_hint_inside"
+                        ],
+                        "hosted_item": "to_Dark_lake_hylia_ledge_hint_inside"
+                    },
+                    {
+                        "name": "Dark Lake Hylia Ledge Hint",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dark_lake_hylia_ledge_hint_inside"
+                        ],
+                        "hosted_item": "from_Dark_lake_hylia_ledge_hint_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_lake_hylia_caves",
+                        "x":517,
+                        "y":102,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1489,
+                        "y":1043,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1489,
+                        "y":1043,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Ice Palace",
+                "sections": [
+                    {
+                        "name": "From Ice Palace",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_IP_entrance_inside"
+                        ],
+                        "hosted_item": "from_IP_entrance_inside"
+                    },
+                    {
+                        "name": "To Ice Palace",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_IP_entrance_inside"
+                        ],
+                        "hosted_item": "to_IP_entrance_inside"
+                    },
+                    {
+                        "name": "Ice Palace",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_IP_entrance_inside"
+                        ],
+                        "hosted_item": "from_IP_entrance_inside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dark_lake_hylia_caves",
+                        "x":226,
+                        "y":410,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_er",
+                        "x":1198,
+                        "y":1347,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "darkworld_caves_reduced_er",
+                        "x":1198,
+                        "y":1347,
+                        "size":32,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "IP",
+                        "x":96,
+                        "y":55,
+                        "size":10,
+                        "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    }
+]

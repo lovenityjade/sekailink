@@ -27,20 +27,36 @@ contextBridge.exposeInMainWorld("sekailink", {
   configSetWindowing: (windowing) => ipcRenderer.invoke("config:setWindowing", windowing),
   configSetLayout: (layout) => ipcRenderer.invoke("config:setLayout", layout),
   romsScan: (folderPath) => ipcRenderer.invoke("roms:scan", folderPath),
-  romsImport: (filePath) => ipcRenderer.invoke("roms:import", filePath),
+  romsImport: (payload) => ipcRenderer.invoke("roms:import", payload),
   commonClientStart: (options) => ipcRenderer.invoke("commonclient:start", options),
   commonClientSend: (command) => ipcRenderer.invoke("commonclient:send", command),
   commonClientStop: () => ipcRenderer.invoke("commonclient:stop"),
   bizhawkClientStart: (options) => ipcRenderer.invoke("bizhawkclient:start", options),
   bizhawkClientSend: (command) => ipcRenderer.invoke("bizhawkclient:send", command),
   bizhawkClientStop: () => ipcRenderer.invoke("bizhawkclient:stop"),
+  archipelagoClientList: () => ipcRenderer.invoke("archipelagoclient:list"),
+  archipelagoClientStart: (options) => ipcRenderer.invoke("archipelagoclient:start", options),
+  archipelagoClientSend: (clientId, command) => ipcRenderer.invoke("archipelagoclient:send", clientId, command),
+  archipelagoClientStop: (clientId) => ipcRenderer.invoke("archipelagoclient:stop", clientId),
   patcherApply: (options) => ipcRenderer.invoke("patcher:apply", options),
   patcherResolveCachedRom: (options) => ipcRenderer.invoke("patcher:resolveCachedRom", options),
   patcherListCachedRoms: () => ipcRenderer.invoke("patcher:listCachedRoms"),
   bizhawkLaunch: (options) => ipcRenderer.invoke("bizhawk:launch", options),
   bizhawkStop: (pid) => ipcRenderer.invoke("bizhawk:stop", pid),
+  sekaiEmuLabListCores: () => ipcRenderer.invoke("sekaiemu:lab:listCores"),
+  sekaiEmuLabLaunch: (options) => ipcRenderer.invoke("sekaiemu:lab:launch", options),
+  sekaiEmuStop: (pid) => ipcRenderer.invoke("sekaiemu:stop", pid),
+  sekaiEmuGetSession: (pid) => ipcRenderer.invoke("sekaiemu:getSession", pid),
+  sekaiEmuSetInputState: (pid, keys) => ipcRenderer.invoke("sekaiemu:setInputState", pid, keys),
+  sekaiEmuSetPaused: (pid, paused) => ipcRenderer.invoke("sekaiemu:setPaused", pid, paused),
+  sekaiEmuReset: (pid) => ipcRenderer.invoke("sekaiemu:reset", pid),
+  sekaiEmuMemoryDomains: (options) => ipcRenderer.invoke("sekaiemu:memory:domains", options),
+  sekaiEmuReadMemory: (options) => ipcRenderer.invoke("sekaiemu:memory:read", options),
+  sekaiEmuDumpMemory: (options) => ipcRenderer.invoke("sekaiemu:memory:dump", options),
   trackerLaunch: (options) => ipcRenderer.invoke("tracker:launch", options),
   trackerStop: (pid) => ipcRenderer.invoke("tracker:stop", pid),
+  trackerRuntimeStatus: (pid) => ipcRenderer.invoke("tracker:runtimeStatus", pid),
+  trackerRuntimeCommand: (pid, command, detail) => ipcRenderer.invoke("tracker:runtimeCommand", pid, command, detail),
   trackerInstallPack: (options) => ipcRenderer.invoke("tracker:installPack", options),
   trackerStatus: () => ipcRenderer.invoke("tracker:status"),
   trackerValidatePack: (gameId) => ipcRenderer.invoke("tracker:validatePack", gameId),
@@ -61,6 +77,8 @@ contextBridge.exposeInMainWorld("sekailink", {
   wmctrlStatus: () => ipcRenderer.invoke("runtime:wmctrlStatus"),
   getDisplays: () => ipcRenderer.invoke("runtime:getDisplays"),
   sessionAutoLaunch: (options) => ipcRenderer.invoke("session:autoLaunch", options),
+  multiGameList: () => ipcRenderer.invoke("runtime:multiGameList"),
+  multiGameSwitch: (entryId, options) => ipcRenderer.invoke("runtime:multiGameSwitch", entryId, options),
   sessionTrackerVariantResponse: (payload) => ipcRenderer.invoke("session:trackerVariantResponse", payload),
   logToMain: (payload) => ipcRenderer.invoke("log:renderer", payload),
   onCommonClientEvent: (handler) => {
@@ -74,6 +92,12 @@ contextBridge.exposeInMainWorld("sekailink", {
     const listener = (_event, data) => handler(data);
     ipcRenderer.on("bizhawkclient:event", listener);
     return () => ipcRenderer.removeListener("bizhawkclient:event", listener);
+  },
+  onArchipelagoClientEvent: (handler) => {
+    if (typeof handler !== "function") return () => {};
+    const listener = (_event, data) => handler(data);
+    ipcRenderer.on("archipelagoclient:event", listener);
+    return () => ipcRenderer.removeListener("archipelagoclient:event", listener);
   },
   onSessionEvent: (handler) => {
     if (typeof handler !== "function") return () => {};

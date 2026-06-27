@@ -78,10 +78,11 @@ bool InitializeRuntimeMemoryServerForHost(const HostOptions& options,
                                          : std::optional<std::filesystem::path>{options.memory_socket_path};
   if (!runtime_memory_server.Initialize(options.save_directory,
                                         override_socket,
-                                        InferRuntimeSystemName(options.core_path),
+                                        InferRuntimeSystemName(options.core_path, options.game_path),
                                         &core,
                                         &memory_domains,
-                                        error)) {
+                                        error,
+                                        options.game_path)) {
     last_error = error;
     return false;
   }
@@ -217,6 +218,9 @@ BridgeRuntimeStatus BuildBridgeRuntimeStatusForHost(
   status.ap_path = options.ap_path;
   status.ap_slot_name = options.ap_slot_name;
   status.runtime_memory_socket_path = runtime_memory_server.SocketPath().string();
+  status.sekaiemu_log_path =
+      (options.log_directory.empty() ? options.save_directory / "logs" : options.log_directory) /
+      "sekaiemu.log";
   status.legacy_bridge_socket_path = profile_bridge.Active() ? profile_bridge.SocketPath().string() : "";
   status.manifest_path = sklmi_companion_runtime.ManifestPath().string();
   status.room_state_path = sklmi_companion_runtime.RoomStatePath().string();

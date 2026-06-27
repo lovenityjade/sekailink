@@ -823,8 +823,8 @@ function LiveOptionField({
   const label = option.label || option.option_key.replace(/_/g, ' ');
   const description = option.description || '';
   const rules = option.validation_rules || {};
-  const min = Number(rules.range_start ?? rules.min ?? 0);
-  const max = Number(rules.range_end ?? rules.max ?? 100);
+  const min = Number(rules.range_start ?? rules.minimum ?? rules.min ?? 0);
+  const max = Number(rules.range_end ?? rules.maximum ?? rules.max ?? 100);
   const numericValue = typeof value === 'number' ? value : Number(value || min);
 
   if (option.type === 'boolean') {
@@ -960,7 +960,9 @@ function defaultLiveOptionValue(option: SeedOptionDefinition): unknown {
   }
   if (option.default_value !== undefined && option.default_value !== null) return option.default_value;
   if (option.type === 'boolean') return false;
-  if (option.type === 'integer' || option.type === 'number') return option.validation_rules?.range_start ?? 0;
+  if (option.type === 'integer' || option.type === 'number') {
+    return option.validation_rules?.range_start ?? option.validation_rules?.minimum ?? option.validation_rules?.min ?? 0;
+  }
   if (option.type === 'array') return [];
   if (option.type === 'object') return {};
   return '';

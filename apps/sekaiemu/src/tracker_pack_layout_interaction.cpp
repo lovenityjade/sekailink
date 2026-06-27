@@ -351,6 +351,9 @@ void CollectNodeHits(std::vector<TrackerPackHitTarget>& targets,
       }
       auto hit_pin = pin;
       hit_pin.checked = PinChecked(pin, checked_ids);
+      if (hit_pin.checked) {
+        continue;
+      }
       AddPinHit(targets,
                 hit_pin,
                 ResolveMapCoordinate(pin.x, image_rect.x, image_rect.width, source_width),

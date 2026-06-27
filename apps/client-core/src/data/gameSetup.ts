@@ -15,6 +15,7 @@ export type GameSetupEntry = {
   displayName: string;
   moduleId?: string;
   romKey?: string;
+  available?: boolean;
   trackerPack?: TrackerPackSource;
 };
 
@@ -25,6 +26,7 @@ export const gameSetupRegistry: GameSetupEntry[] = [
     displayName: "Pokemon FireRed",
     moduleId: "pokemon_firered_bizhawk",
     romKey: "pokemon_firered",
+    available: false,
     trackerPack: {
       type: "github_release",
       repo: "vyneras/pokemon-frlg-tracker",
@@ -37,6 +39,7 @@ export const gameSetupRegistry: GameSetupEntry[] = [
     displayName: "Pokemon LeafGreen",
     moduleId: "pokemon_leafgreen_bizhawk",
     romKey: "pokemon_leafgreen",
+    available: false,
     trackerPack: {
       type: "github_release",
       repo: "vyneras/pokemon-frlg-tracker",
@@ -49,6 +52,7 @@ export const gameSetupRegistry: GameSetupEntry[] = [
     displayName: "Pokemon Emerald",
     moduleId: "pokemon_emerald_bizhawk",
     romKey: "pokemon_emerald",
+    available: false,
     trackerPack: {
       type: "github_release",
       repo: "seto10987/Archipelago-Emerald-AP-Tracker",
@@ -91,5 +95,17 @@ export const gameSetupRegistry: GameSetupEntry[] = [
     apGameId: "Ship of Harkinian",
     displayName: "Ship of Harkinian",
     moduleId: "oot_soh"
+  },
+  {
+    gameId: "mega_man_battle_network_3",
+    apGameId: "MegaMan Battle Network 3",
+    displayName: "Mega Man Battle Network 3",
+    moduleId: "mega_man_battle_network_3",
+    romKey: "mega_man_battle_network_3",
+    available: false,
+    trackerPack: {
+      type: "direct",
+      url: "local:MMBN3_AP_Tracker.zip"
+    }
   }
 ];

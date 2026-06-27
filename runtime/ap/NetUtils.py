@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
+import os
 import typing
 import enum
 import warnings
@@ -543,6 +544,8 @@ class MultiData(typing.TypedDict):
 
 
 if typing.TYPE_CHECKING:  # type-check with pure python implementation until we have a typing stub
+    LocationStore = _LocationStore
+elif os.environ.get("SEKAILINK_DISABLE_SPEEDUPS", "").lower() in ("1", "true", "yes"):
     LocationStore = _LocationStore
 else:
     try:

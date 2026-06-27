@@ -1,0 +1,48 @@
+{
+  "game_id": "metroid_zero_mission",
+  "display_name": "Metroid: Zero Mission",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apmzm"
+  ],
+  "patch_world_module": "worlds.mzm",
+  "ap_world": "mzm",
+  "required_roms": [
+    "metroid_zero_mission"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "metroid_zero_mission",
+    "world": "mzm",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/mzm/client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".gba"
+    ],
+    "md5": [
+      "ebbce58109988b6da61ebb06c7a432d5"
+    ],
+    "sha1": [
+      "5de8536afe1f0078ee6fe1089f890e8c7aa0a6e8"
+    ]
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "gba",
+    "ap_game": "Metroid: Zero Mission"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "",
+  "support_status": "supported",
+  "availability_status": "available_beta3_confirmed",
+  "compatibility_notes": "BETA-3 confirmed bilateral item/check communication.",
+  "tracker_pack_path": "poptracker/packs/metroid_zero_mission/pack",
+  "default_tracker_variant": "standard"
+}

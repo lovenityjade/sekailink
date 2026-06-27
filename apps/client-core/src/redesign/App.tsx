@@ -1,21 +1,35 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Home, Library, Users, Settings, User, Bell, Play, Star, Clock, ChevronLeft, ChevronRight, X, Zap, UserPlus, Send, Search } from 'lucide-react';
+import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Home, Library, Users, Settings, Bell, Play, Star, Clock, ChevronLeft, ChevronRight, X, UserPlus, Send, Search, Sparkles, ExternalLink, MessageCircle, Megaphone, Smile } from 'lucide-react';
+import packageJson from '../../package.json';
 import TitleBar from './components/TitleBar';
 import AnimatedBackground from './components/AnimatedBackground';
-import LobbiesPage from './components/LobbiesPage';
 import CreateLobbyModal from './components/CreateLobbyModal';
-import LobbyRoomPage from './components/LobbyRoomPage';
 import HelpButton from './components/HelpButton';
-import LibraryPage from './components/LibraryPage';
-import EasyConfigPage from './components/EasyConfigPage';
-import SettingsPage from './components/SettingsPage';
+import { appendEmote, STANDARD_EMOTES } from './components/EmoteText';
+import {
+  ChatMessage,
+  FriendCard,
+  FriendRequestNotification,
+  LobbyCard,
+  NavItem,
+  NotificationItem,
+  ProfileAvatar,
+  StatsCard,
+  StatusMenuItem,
+} from './components/AppWidgets';
 import { ErrorModal, LoadingModal } from './components/FeedbackModal';
 import { apiCurrentUser, getCachedCurrentUser, type CurrentUser } from '../services/api';
 import { joinLobby, listLobbies, type LobbySummary } from '../services/lobbyClient';
 import { ALTTP_SHOWCASE_GAME, type SeedGameEntry } from '../services/seedConfig';
+import { runtime } from '../services/runtime';
+import { APP_TOAST_EVENT, SOCIAL_OPEN_DM_EVENT, UPDATE_AVAILABLE_EVENT, type AppToastPayload } from '../services/toast';
 import {
   listSocialSnapshot,
+  isPresenceOnline,
   loadDirectMessages,
+  markDirectMessagesRead,
+  normalizePresenceStatus,
+  presenceStatusLabel,
   respondSocialFriendRequest,
   searchSocialUsers,
   sendDirectMessage,
@@ -26,24 +40,43 @@ import {
   type SocialRequest,
 } from '../services/socialClient';
 import { trace, traceError } from '../services/trace';
+import { useSfx } from '../hooks/useSfx';
+import { isRuntimeLabSession } from '../services/runtimeLab';
 
 const NEWS_ITEMS = [
   {
     title: "BETA-3 Showcase",
     description: "A Link to the Past is the current live showcase for lobbies, seed configs, and Sekaiemu launch.",
-    tag: "SHOWCASE"
+    tag: "SHOWCASE",
+    image: "/assets/img/banners/banner-1.png",
+    detailUrl: "https://sekailink.com/showcase"
   },
   {
     title: "Live Lobby Runtime",
     description: "Lobbies, friends, room chat, and seed selections now come from Nexus.",
-    tag: "LIVE"
+    tag: "LIVE",
+    image: "/assets/img/banners/banner-3.png",
+    detailUrl: "https://sekailink.com/lobbies"
   },
   {
     title: "Pulse Seed Setup",
     description: "Use Easy Mode for guided configs or Advanced Mode for full APWorld options.",
-    tag: "PULSE"
+    tag: "PULSE",
+    image: "/assets/img/banners/banner-2.png",
+    detailUrl: "https://pulse.sekailink.com"
   }
 ];
+
+const APP_VERSION = String((packageJson as { version?: string }).version || 'dev');
+
+const ChatPage = lazy(() => import('./components/ChatPage'));
+const EasyConfigPage = lazy(() => import('./components/EasyConfigPage'));
+const LibraryPage = lazy(() => import('./components/LibraryPage'));
+const LobbiesPage = lazy(() => import('./components/LobbiesPage'));
+const LobbyRoomPage = lazy(() => import('./components/LobbyRoomPage'));
+const PulsePage = lazy(() => import('./components/PulsePage'));
+const SekaiemuRuntimeLabPage = lazy(() => import('./components/SekaiemuRuntimeLabPage'));
+const SettingsPage = lazy(() => import('./components/SettingsPage'));
 
 type UserStatus = 'online' | 'appear-offline' | 'busy' | 'afk';
 
@@ -51,24 +84,18 @@ const profileName = (profile: SocialProfile | null) =>
   profile?.display_name || profile?.name || profile?.username || profile?.user_id || 'Player';
 
 const isProfileOnline = (profile: SocialProfile) => {
-  const status = String(profile.presence_status || profile.status || '').toLowerCase();
-  return status !== 'offline' && status !== 'appear-offline';
+  return isPresenceOnline(profile.presence_status || profile.status);
 };
 
 const statusLabel = (status: string) => {
-  const normalized = String(status || '').toLowerCase();
-  if (normalized === 'dnd' || normalized === 'busy') return 'Busy';
-  if (normalized === 'afk') return 'AFK';
-  if (normalized === 'offline' || normalized === 'appear-offline') return 'Offline';
-  return 'Online';
+  return presenceStatusLabel(status);
 };
 
 const userStatusFromPresence = (status: string): UserStatus => {
-  const normalized = String(status || '').toLowerCase();
+  const normalized = normalizePresenceStatus(status, 'offline');
   if (normalized === 'dnd' || normalized === 'busy') return 'busy';
   if (normalized === 'afk') return 'afk';
-  if (normalized === 'offline' || normalized === 'appear-offline') return 'appear-offline';
-  return 'online';
+  return normalized === 'online' ? 'online' : 'appear-offline';
 };
 
 const presenceFromUserStatus = (status: UserStatus) => {
@@ -88,10 +115,31 @@ const formatMessageTime = (value: string) => {
   return new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 };
 
-export default function App() {
+function PageLoader() {
+  return (
+    <div className="relative z-10 flex min-h-[320px] items-center justify-center rounded-xl border border-[#2a2b30] bg-[#14151a]/70 text-sm font-medium text-[#8e8f94]">
+      Loading...
+    </div>
+  );
+}
+
+function RedesignShell() {
+  const { play } = useSfx();
   const [activeNav, setActiveNav] = useState('home');
   const [currentNews, setCurrentNews] = useState(0);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showDiscordModal, setShowDiscordModal] = useState(false);
+  const [showBannerModal, setShowBannerModal] = useState(false);
+  const [showUpdateInstallModal, setShowUpdateInstallModal] = useState(false);
+  const [updateNoticeVersion, setUpdateNoticeVersion] = useState('');
+  const [toasts, setToasts] = useState<Array<AppToastPayload & { id: string }>>([]);
+  const [systemNotifications, setSystemNotifications] = useState<Array<{
+    id: string;
+    title: string;
+    message: string;
+    type: 'info' | 'update';
+    read: boolean;
+  }>>([]);
   const [selectedFriend, setSelectedFriend] = useState<SocialProfile | null>(null);
   const [userStatus, setUserStatus] = useState<UserStatus>('online');
   const [showStatusMenu, setShowStatusMenu] = useState(false);
@@ -108,6 +156,7 @@ export default function App() {
   const [incomingRequests, setIncomingRequests] = useState<SocialRequest[]>([]);
   const [outgoingRequests, setOutgoingRequests] = useState<SocialRequest[]>([]);
   const [unreadDmCount, setUnreadDmCount] = useState(0);
+  const [unreadDmByUser, setUnreadDmByUser] = useState<Record<string, number>>({});
   const [socialLoading, setSocialLoading] = useState(true);
   const [friendSearchResults, setFriendSearchResults] = useState<SocialProfile[]>([]);
   const [friendSearchBusy, setFriendSearchBusy] = useState(false);
@@ -116,6 +165,7 @@ export default function App() {
   const [dmDraft, setDmDraft] = useState('');
   const [dmLoading, setDmLoading] = useState(false);
   const [dmSending, setDmSending] = useState(false);
+  const [showDmEmotes, setShowDmEmotes] = useState(false);
   const [uiError, setUiError] = useState('');
   const [lobbyTransition, setLobbyTransition] = useState<{
     lobbyId: string;
@@ -124,23 +174,113 @@ export default function App() {
   } | null>(null);
   const lobbiesRefreshInFlight = useRef(false);
   const socialRefreshInFlight = useRef(false);
+  const previousSocialCounts = useRef({ friendsOnline: 0, incoming: 0, unread: 0 });
 
   useEffect(() => {
     trace('redesign-app', 'mounted');
     return () => trace('redesign-app', 'unmounted');
   }, []);
 
+  const pushToast = useCallback((payload: AppToastPayload) => {
+    const id = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    setToasts((prev) => [...prev.slice(-3), { ...payload, id }]);
+    const duration = payload.sticky ? 9000 : payload.durationMs || 4200;
+    window.setTimeout(() => {
+      setToasts((prev) => prev.filter((toast) => toast.id !== id));
+    }, duration);
+  }, []);
+
+  const addSystemNotification = useCallback((notification: Omit<typeof systemNotifications[number], 'id' | 'read'>) => {
+    setSystemNotifications((prev) => [
+      {
+        ...notification,
+        id: `${notification.type}-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+        read: false,
+      },
+      ...prev,
+    ].slice(0, 20));
+    play(notification.type === 'update' ? 'sfx_update_notification' : 'sfx_global_notification', 0.85);
+    pushToast({ message: notification.message, kind: notification.type === 'update' ? 'success' : 'info' });
+  }, [play, pushToast]);
+
+  useEffect(() => {
+    const handleToast = (event: Event) => {
+      const detail = (event as CustomEvent<AppToastPayload>).detail;
+      if (!detail?.message) return;
+      pushToast(detail);
+      play(detail.kind === 'error' ? 'sfx_generation_error' : 'sfx_global_notification', 0.75);
+    };
+    const handleOpenDm = (event: Event) => {
+      const detail = (event as CustomEvent<{ userId?: string; name?: string }>).detail;
+      const userId = String(detail?.userId || '').trim();
+      if (!userId) return;
+      const friend = friends.find((entry) => entry.user_id === userId);
+      setSelectedFriend(friend || {
+        user_id: userId,
+        username: detail?.name || userId,
+        display_name: detail?.name || userId,
+        name: detail?.name || userId,
+        avatar_url: '',
+        status: 'offline',
+        presence_status: 'offline',
+      });
+      setShowNotifications(false);
+    };
+    const handleUpdateAvailable = (event: Event) => {
+      const detail = (event as CustomEvent<{ version?: string; message?: string }>).detail || {};
+      const version = String(detail.version || '').trim();
+      const message = String(detail.message || (version ? `A new version is available ${version}!` : 'A new version is available!'));
+      if (version) setUpdateNoticeVersion(version);
+      addSystemNotification({
+        title: 'SekaiLink update',
+        message,
+        type: 'update',
+      });
+    };
+    window.addEventListener(APP_TOAST_EVENT, handleToast);
+    window.addEventListener(SOCIAL_OPEN_DM_EVENT, handleOpenDm);
+    window.addEventListener(UPDATE_AVAILABLE_EVENT, handleUpdateAvailable);
+    return () => {
+      window.removeEventListener(APP_TOAST_EVENT, handleToast);
+      window.removeEventListener(SOCIAL_OPEN_DM_EVENT, handleOpenDm);
+      window.removeEventListener(UPDATE_AVAILABLE_EVENT, handleUpdateAvailable);
+    };
+  }, [addSystemNotification, friends, play, pushToast]);
+
+  useEffect(() => {
+    const unsubscribe = runtime.onUpdaterEvent?.((raw) => {
+      const event = raw && typeof raw === 'object' ? raw as Record<string, unknown> : {};
+      const type = String(event.type || event.event || event.status || '').toLowerCase();
+      if (!type.includes('available') && !type.includes('ready') && !type.includes('update')) return;
+      const version = String(event.version || event.latest || event.releaseVersion || '').trim();
+      if (version) setUpdateNoticeVersion(version);
+      addSystemNotification({
+        title: 'SekaiLink update',
+        message: version ? `A new version is available ${version}!` : 'A new version is available!',
+        type: 'update',
+      });
+    });
+    return () => {
+      if (typeof unsubscribe === 'function') unsubscribe();
+    };
+  }, [addSystemNotification]);
+
   useEffect(() => {
     trace('redesign-app', 'navigation_changed', { activeNav, selectedLobbyId });
   }, [activeNav, selectedLobbyId]);
 
+  const selectNews = useCallback((nextIndex: number) => {
+    const normalized = (nextIndex + NEWS_ITEMS.length) % NEWS_ITEMS.length;
+    setCurrentNews((current) => (normalized === current ? current : normalized));
+  }, []);
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentNews((prev) => (prev + 1) % NEWS_ITEMS.length);
-    }, 5000); // Change news every 5 seconds
+      selectNews(currentNews + 1);
+    }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [currentNews, selectNews]);
 
   useEffect(() => {
     let cancelled = false;
@@ -208,7 +348,24 @@ export default function App() {
       setIncomingRequests(snapshot.incoming);
       setOutgoingRequests(snapshot.outgoing);
       setUnreadDmCount(snapshot.unreadCount);
+      setUnreadDmByUser(snapshot.unreadByUser || {});
       setUserStatus(userStatusFromPresence(snapshot.presenceStatus));
+      if (previousSocialCounts.current.friendsOnline && snapshot.friends.filter(isProfileOnline).length > previousSocialCounts.current.friendsOnline) {
+        play('sfx_friend_online', 0.75);
+      }
+      if (snapshot.incoming.length > previousSocialCounts.current.incoming) {
+        play('sfx_friend_request_notification', 0.85);
+        pushToast({ message: 'New friend request received.', kind: 'info' });
+      }
+      if (snapshot.unreadCount > previousSocialCounts.current.unread) {
+        play('sfx_chat_notification', 0.8);
+        pushToast({ message: 'New unread message.', kind: 'info' });
+      }
+      previousSocialCounts.current = {
+        friendsOnline: snapshot.friends.filter(isProfileOnline).length,
+        incoming: snapshot.incoming.length,
+        unread: snapshot.unreadCount,
+      };
       trace('redesign-app', 'social_load_success', {
         friends: snapshot.friends.length,
         incoming: snapshot.incoming.length,
@@ -221,11 +378,12 @@ export default function App() {
       setIncomingRequests([]);
       setOutgoingRequests([]);
       setUnreadDmCount(0);
+      setUnreadDmByUser({});
     } finally {
       setSocialLoading(false);
       socialRefreshInFlight.current = false;
     }
-  }, []);
+  }, [play, pushToast]);
 
   useEffect(() => {
     void refreshSocial();
@@ -279,7 +437,18 @@ export default function App() {
       setDmLoading(true);
       try {
         const next = await loadDirectMessages(selectedFriend.user_id);
-        if (!cancelled) setDmMessages(next);
+        await markDirectMessagesRead(selectedFriend.user_id).catch((error) => {
+          traceError('redesign-app', 'dm_mark_read_failed', error, { userId: selectedFriend.user_id });
+        });
+        if (!cancelled) {
+          setDmMessages(next);
+          setUnreadDmByUser((prev) => {
+            const nextUnread = { ...prev };
+            delete nextUnread[selectedFriend.user_id];
+            return nextUnread;
+          });
+          setUnreadDmCount((count) => Math.max(0, count - Number(unreadDmByUser[selectedFriend.user_id] || 0)));
+        }
       } catch (error) {
         if (!cancelled) {
           traceError('redesign-app', 'dm_load_failed', error, { userId: selectedFriend.user_id });
@@ -295,11 +464,12 @@ export default function App() {
       cancelled = true;
       window.clearInterval(interval);
     };
-  }, [selectedFriend?.user_id]);
+  }, [selectedFriend?.user_id, unreadDmByUser]);
 
   const onlineFriends = useMemo(() => friends.filter(isProfileOnline), [friends]);
-  const notificationCount = incomingRequests.length + unreadDmCount;
-  const activeHomeLobbies = useMemo(() => liveLobbies.filter((lobby) => !lobby.is_locked).slice(0, 3), [liveLobbies]);
+  const unreadSystemCount = systemNotifications.filter((notification) => !notification.read).length;
+  const notificationCount = incomingRequests.length + unreadDmCount + unreadSystemCount;
+  const activeHomeLobbies = useMemo(() => liveLobbies.filter((lobby) => !lobby.is_locked).slice(0, 9), [liveLobbies]);
 
   const handleSetUserStatus = async (status: UserStatus) => {
     setUserStatus(status);
@@ -390,6 +560,28 @@ export default function App() {
     }
   };
 
+  const handleLaunchUpdate = async () => {
+    setShowNotifications(false);
+    setShowUpdateInstallModal(true);
+  };
+
+  const confirmLaunchUpdate = async () => {
+    setShowUpdateInstallModal(false);
+    try {
+      await runtime.updaterLaunchBootstrapperAndQuit?.();
+    } catch (error) {
+      traceError('redesign-app', 'update_bootloader_launch_failed', error);
+      setUiError(error instanceof Error ? error.message : 'Unable to launch the bootloader.');
+    }
+  };
+
+  const handleUnreadMessagesClick = () => {
+    const unreadUserId = Object.entries(unreadDmByUser).sort((a, b) => b[1] - a[1])[0]?.[0] || '';
+    const friend = friends.find((entry) => entry.user_id === unreadUserId) || friends[0];
+    if (friend) setSelectedFriend(friend);
+    setShowNotifications(false);
+  };
+
   const handleLobbyInitialLoadComplete = useCallback((loadedLobbyId: string) => {
     setLobbyTransition((current) => (
       current?.lobbyId === loadedLobbyId ? null : current
@@ -410,12 +602,12 @@ export default function App() {
         {/* Logo */}
         <div className="p-6 border-b border-[#2a2b30]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#ff6b35] to-[#f38181] flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-xl">S</span>
+            <div className="w-10 h-10 rounded-lg bg-[#161b22] flex items-center justify-center shadow-lg overflow-hidden border border-[#2a2b30]">
+              <img src="/assets/img/sekailink-logo-image.png" alt="SekaiLink" className="w-8 h-8 object-contain" />
             </div>
             <div>
               <div className="font-bold text-lg">SekaiLink</div>
-              <div className="text-xs text-[#8e8f94]">Client Core</div>
+              <div className="text-xs text-[#8e8f94]">v{APP_VERSION}</div>
             </div>
           </div>
         </div>
@@ -424,7 +616,9 @@ export default function App() {
         <nav className="flex-1 p-4 space-y-1">
           <NavItem icon={<Home className="w-5 h-5" />} label="Home" active={activeNav === 'home'} onClick={() => setActiveNav('home')} />
           <NavItem icon={<Library className="w-5 h-5" />} label="Library" active={activeNav === 'library'} onClick={() => setActiveNav('library')} />
+          <NavItem icon={<MessageCircle className="w-5 h-5" />} label="Chat" active={activeNav === 'chat'} onClick={() => setActiveNav('chat')} />
           <NavItem icon={<Users className="w-5 h-5" />} label="Lobbies" active={activeNav === 'lobbies'} onClick={() => setActiveNav('lobbies')} />
+          <NavItem icon={<Sparkles className="w-5 h-5" />} label="Pulse" active={activeNav === 'pulse'} onClick={() => setActiveNav('pulse')} />
           <NavItem icon={<Settings className="w-5 h-5" />} label="Settings" active={activeNav === 'settings'} onClick={() => setActiveNav('settings')} />
         </nav>
 
@@ -435,9 +629,7 @@ export default function App() {
             className="flex items-center gap-3 p-3 rounded-lg bg-[#1c1d22] hover:bg-[#2a2b30] transition-colors cursor-pointer"
           >
             <div className="relative">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#4ecdc4] to-[#95e1d3] flex items-center justify-center">
-                <User className="w-5 h-5 text-white" />
-              </div>
+              <ProfileAvatar name={displayName} avatarUrl={currentUser?.avatar_url || ''} size="md" />
               {/* Status Indicator */}
               <div className={`absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full border-2 border-[#0e0f13] ${
                 userStatus === 'online' ? 'bg-[#4ecdc4]' :
@@ -522,17 +714,33 @@ export default function App() {
           </div>
 
           {/* News Banner */}
-          <div className="relative bg-gradient-to-r from-[#1c1d22] via-[#2a2b30] to-[#1c1d22] rounded-xl p-6 card-float overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#ff6b35]/10 to-transparent" />
-            <div className="relative flex items-center justify-between">
+          <div className="relative rounded-xl card-float overflow-hidden border border-[#2a2b30]">
+            <button
+              onClick={() => setShowBannerModal(true)}
+              className="absolute inset-0 z-10"
+              aria-label={`Open ${NEWS_ITEMS[currentNews].title}`}
+            />
+            {NEWS_ITEMS.map((item, index) => (
+              <img
+                key={item.image}
+                src={item.image}
+                alt={index === currentNews ? item.title : ''}
+                aria-hidden={index === currentNews ? undefined : true}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out ${
+                  index === currentNews ? 'opacity-100' : 'opacity-0'
+                }`}
+              />
+            ))}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0e0f13]/80 via-[#0e0f13]/35 to-[#0e0f13]/70" />
+            <div className="relative flex items-center justify-between min-h-44 p-6">
               <button
-                onClick={() => setCurrentNews((prev) => (prev - 1 + NEWS_ITEMS.length) % NEWS_ITEMS.length)}
-                className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#2a2b30] hover:bg-[#3a3b40] transition-colors"
+                onClick={() => selectNews(currentNews - 1)}
+                className="relative z-20 w-8 h-8 flex items-center justify-center rounded-lg bg-[#2a2b30] hover:bg-[#3a3b40] transition-colors"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
 
-              <div className="flex-1 mx-6 text-center">
+              <div className="flex-1 mx-6 text-center pointer-events-none">
                 <div className="inline-block px-3 py-1 bg-[#ff6b35] rounded-full text-xs font-bold mb-2">
                   {NEWS_ITEMS[currentNews].tag}
                 </div>
@@ -541,8 +749,8 @@ export default function App() {
               </div>
 
               <button
-                onClick={() => setCurrentNews((prev) => (prev + 1) % NEWS_ITEMS.length)}
-                className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#2a2b30] hover:bg-[#3a3b40] transition-colors"
+                onClick={() => selectNews(currentNews + 1)}
+                className="relative z-20 w-8 h-8 flex items-center justify-center rounded-lg bg-[#2a2b30] hover:bg-[#3a3b40] transition-colors"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
@@ -553,7 +761,7 @@ export default function App() {
               {NEWS_ITEMS.map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => setCurrentNews(index)}
+                  onClick={() => selectNews(index)}
                   className={`w-2 h-2 rounded-full transition-all ${
                     index === currentNews ? 'bg-[#ff6b35] w-6' : 'bg-[#2a2b30]'
                   }`}
@@ -570,6 +778,7 @@ export default function App() {
               value={String(liveLobbies.filter((lobby) => !lobby.is_locked).length)}
               change={lobbiesLoading ? 'Loading from Nexus' : `${liveLobbies.length} total listed`}
               color="from-[#ff6b35] to-[#f38181]"
+              onClick={() => setActiveNav('lobbies')}
             />
             <StatsCard
               icon={<Users className="w-6 h-6" />}
@@ -577,12 +786,13 @@ export default function App() {
               value={String(onlineFriends.length)}
               change={`${friends.length} friends on Nexus`}
               color="from-[#4ecdc4] to-[#95e1d3]"
+              onClick={() => setShowDiscordModal(true)}
             />
             <StatsCard
               icon={<Star className="w-6 h-6" />}
-              label="Pending Requests"
-              value={String(incomingRequests.length)}
-              change={outgoingRequests.length ? `${outgoingRequests.length} sent` : 'No outgoing requests'}
+              label="Online Players"
+              value={String(onlineFriends.length)}
+              change="Visible Nexus friends online"
               color="from-[#aa96da] to-[#f38181]"
             />
           </div>
@@ -603,7 +813,7 @@ export default function App() {
             </div>
 
             {/* Lobbies List */}
-            <div className="space-y-3">
+            <div className="grid grid-cols-3 gap-3">
               {activeHomeLobbies.map((lobby) => (
                 <LobbyCard
                   key={lobby.id}
@@ -632,83 +842,109 @@ export default function App() {
         </div>
         )}
 
-        {activeNav === 'library' && (
-          <div className="relative z-10">
-            <LibraryPage
-              onNavigateToEasyConfig={(game) => {
-                setEasyConfigGame(game);
-                setActiveNav('easy-config');
-              }}
-            />
-          </div>
-        )}
+        <Suspense fallback={<PageLoader />}>
+          {activeNav === 'library' && (
+            <div className="relative z-10">
+              <LibraryPage
+                onNavigateToEasyConfig={(game) => {
+                  setEasyConfigGame(game);
+                  setActiveNav('easy-config');
+                }}
+              />
+            </div>
+          )}
 
-        {activeNav === 'easy-config' && (
-          <div className="relative z-10 h-full">
-            <EasyConfigPage
-              game={easyConfigGame}
-              onBack={() => setActiveNav('library')}
-              onComplete={(config) => {
-                trace('redesign-app', 'easy_config_completed', {
-                  seedId: config.id,
-                  title: config.title,
-                  gameKey: config.game_key,
-                });
-                setActiveNav('library');
-              }}
-            />
-          </div>
-        )}
+          {activeNav === 'easy-config' && (
+            <div className="relative z-10 h-full">
+              <EasyConfigPage
+                game={easyConfigGame}
+                onBack={() => setActiveNav('library')}
+                onComplete={(config) => {
+                  trace('redesign-app', 'easy_config_completed', {
+                    seedId: config.id,
+                    title: config.title,
+                    gameKey: config.game_key,
+                  });
+                  setActiveNav('library');
+                }}
+              />
+            </div>
+          )}
 
-        {activeNav === 'lobbies' && (
-          <div className="relative z-10">
-            <LobbiesPage
-              onCreateLobby={() => setShowCreateLobby(true)}
-              onJoinStart={(lobby) => {
-                if (!lobby.id) return;
-                setLobbyTransition({
-                  lobbyId: lobby.id,
-                  label: lobby.name || lobby.id,
-                  phase: 'joining',
-                });
-              }}
-              onJoinError={(lobby) => {
-                setLobbyTransition((current) => (
-                  current?.lobbyId === lobby.id ? null : current
-                ));
-              }}
-              onJoinLobby={(lobbyId, lobby) => {
-                setLobbyTransition({
-                  lobbyId,
-                  label: lobby?.name || lobbyId,
-                  phase: 'loading',
-                });
-                setSelectedLobbyId(lobbyId);
-                setActiveNav('lobby-room');
-              }}
-            />
-          </div>
-        )}
+          {activeNav === 'chat' && (
+            <div className="relative z-10 h-full">
+              <ChatPage
+                currentUser={currentUser}
+                friends={friends}
+                onOpenLobby={(lobbyId, lobbyName) => {
+                  setLobbyTransition({
+                    lobbyId,
+                    label: lobbyName || lobbyId,
+                    phase: 'loading',
+                  });
+                  setSelectedLobbyId(lobbyId);
+                  setActiveNav('lobby-room');
+                }}
+              />
+            </div>
+          )}
 
-        {activeNav === 'lobby-room' && (
-          <div className="relative z-10 h-full">
-            <LobbyRoomPage
-              lobbyId={selectedLobbyId || undefined}
-              onInitialLoadComplete={handleLobbyInitialLoadComplete}
-              onLeaveLobby={() => {
-                setLobbyTransition(null);
-                setSelectedLobbyId('');
-                setActiveNav('lobbies');
-              }}
-            />
-          </div>
-        )}
+          {activeNav === 'lobbies' && (
+            <div className="relative z-10">
+              <LobbiesPage
+                onCreateLobby={() => setShowCreateLobby(true)}
+                onJoinStart={(lobby) => {
+                  if (!lobby.id) return;
+                  setLobbyTransition({
+                    lobbyId: lobby.id,
+                    label: lobby.name || lobby.id,
+                    phase: 'joining',
+                  });
+                }}
+                onJoinError={(lobby) => {
+                  setLobbyTransition((current) => (
+                    current?.lobbyId === lobby.id ? null : current
+                  ));
+                }}
+                onJoinLobby={(lobbyId, lobby) => {
+                  setLobbyTransition({
+                    lobbyId,
+                    label: lobby?.name || lobbyId,
+                    phase: 'loading',
+                  });
+                  setSelectedLobbyId(lobbyId);
+                  setActiveNav('lobby-room');
+                }}
+              />
+            </div>
+          )}
 
-        {activeNav === 'settings' && (
-          <div className="relative z-10 h-full">
-            <SettingsPage />
-          </div>
-        )}
+          {activeNav === 'lobby-room' && (
+            <div className="relative z-10 h-full">
+              <LobbyRoomPage
+                lobbyId={selectedLobbyId || undefined}
+                onInitialLoadComplete={handleLobbyInitialLoadComplete}
+                onLeaveLobby={() => {
+                  setLobbyTransition(null);
+                  setSelectedLobbyId('');
+                  setActiveNav('lobbies');
+                }}
+              />
+            </div>
+          )}
+
+          {activeNav === 'settings' && (
+            <div className="relative z-10 h-full">
+              <SettingsPage />
+            </div>
+          )}
+
+          {activeNav === 'pulse' && (
+            <div className="relative z-10 h-full">
+              <PulsePage />
+            </div>
+          )}
+        </Suspense>
       </main>
 
       {/* Right Sidebar */}
@@ -718,7 +954,10 @@ export default function App() {
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-bold">Friends</h2>
             <button
-              onClick={() => setShowNotifications(!showNotifications)}
+              onClick={() => {
+                setShowNotifications(!showNotifications);
+                setSystemNotifications((prev) => prev.map((notification) => ({ ...notification, read: true })));
+              }}
               className="relative"
             >
               <Bell className="w-5 h-5 text-[#8e8f94] cursor-pointer hover:text-white transition-colors" />
@@ -752,8 +991,10 @@ export default function App() {
             <FriendCard
               key={friend.user_id}
               name={profileName(friend)}
+              avatarUrl={friend.avatar_url}
               status={statusLabel(friend.presence_status || friend.status)}
               online={isProfileOnline(friend)}
+              unreadCount={unreadDmByUser[friend.user_id] || 0}
               onClick={() => setSelectedFriend(friend)}
             />
           ))}
@@ -799,11 +1040,21 @@ export default function App() {
 
               {/* Notifications List */}
               <div className="max-h-96 overflow-auto">
+                {systemNotifications.map((notification, index) => (
+                  <NotificationItem
+                    key={notification.id}
+                    title={notification.title}
+                    message={notification.message}
+                    time="Now"
+                    index={index}
+                    onClick={notification.type === 'update' ? () => void handleLaunchUpdate() : undefined}
+                  />
+                ))}
                 {incomingRequests.map((request, index) => (
                   <FriendRequestNotification
                     key={request.id || request.user_id}
                     request={request}
-                    index={index}
+                    index={systemNotifications.length + index}
                     busy={friendActionBusyId === String(request.id)}
                     onAccept={() => void handleRespondFriendRequest(request, 'accept')}
                     onDecline={() => void handleRespondFriendRequest(request, 'decline')}
@@ -814,7 +1065,8 @@ export default function App() {
                     title="Unread messages"
                     message={`${unreadDmCount} direct message${unreadDmCount === 1 ? '' : 's'} waiting in Nexus.`}
                     time="Now"
-                    index={incomingRequests.length}
+                    index={systemNotifications.length + incomingRequests.length}
+                    onClick={handleUnreadMessagesClick}
                   />
                 )}
                 {notificationCount === 0 && (
@@ -846,7 +1098,10 @@ export default function App() {
             {/* Backdrop */}
             <div
               className="fixed inset-0 bg-black/60 z-50 backdrop-blur-sm"
-              onClick={() => setSelectedFriend(null)}
+              onClick={() => {
+                setSelectedFriend(null);
+                setShowDmEmotes(false);
+              }}
             />
 
             {/* Chat Panel */}
@@ -856,9 +1111,7 @@ export default function App() {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <div className="relative">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#f38181] flex items-center justify-center font-bold text-lg">
-                        {profileName(selectedFriend).charAt(0)}
-                      </div>
+                      <ProfileAvatar name={profileName(selectedFriend)} avatarUrl={selectedFriend.avatar_url} size="lg" />
                       {isProfileOnline(selectedFriend) && (
                         <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full border-2 border-[#0e0f13] bg-[#4ecdc4]" />
                       )}
@@ -871,7 +1124,10 @@ export default function App() {
                     </div>
                   </div>
                   <button
-                    onClick={() => setSelectedFriend(null)}
+                    onClick={() => {
+                      setSelectedFriend(null);
+                      setShowDmEmotes(false);
+                    }}
                     className="w-10 h-10 rounded-lg bg-[#2a2b30] hover:bg-[#f85149] transition-colors flex items-center justify-center group"
                   >
                     <X className="w-5 h-5 text-[#8e8f94] group-hover:text-white" />
@@ -897,6 +1153,18 @@ export default function App() {
                     message={message.content}
                     time={formatMessageTime(message.created_at)}
                     sent={message.from_id === currentUser?.user_id}
+                    lobbyLinks={liveLobbies.filter((lobby) => !lobby.is_locked).map((lobby) => ({ id: lobby.id, name: lobby.name || lobby.id }))}
+                    onLobbyLinkClick={(lobby) => {
+                      setSelectedFriend(null);
+                      setShowDmEmotes(false);
+                      setLobbyTransition({
+                        lobbyId: lobby.id,
+                        label: lobby.name || lobby.id,
+                        phase: 'loading',
+                      });
+                      setSelectedLobbyId(lobby.id);
+                      setActiveNav('lobby-room');
+                    }}
                   />
                 ))}
                 {!dmLoading && dmMessages.length === 0 && (
@@ -913,7 +1181,34 @@ export default function App() {
 
               {/* Input Area */}
               <div className="p-4 border-t border-[#2a2b30] bg-[#14151a]">
-                <div className="flex gap-2">
+                <div className="relative flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowDmEmotes((value) => !value)}
+                    className="w-12 h-12 rounded-lg border border-[#2a2b30] bg-[#1c1d22] text-[#8e8f94] transition-colors hover:border-[#ff6b35] hover:text-white"
+                    aria-label="Show direct message emotes"
+                  >
+                    <Smile className="mx-auto h-5 w-5" />
+                  </button>
+                  {showDmEmotes && (
+                    <div className="absolute bottom-[58px] left-0 z-30 grid w-72 grid-cols-4 gap-2 rounded-lg border border-[#2a2b30] bg-[#1c1d22] p-3 shadow-2xl">
+                      {STANDARD_EMOTES.map((emote) => (
+                        <button
+                          key={emote.code}
+                          type="button"
+                          onClick={() => {
+                            setDmDraft((value) => appendEmote(value, emote.code));
+                            setShowDmEmotes(false);
+                          }}
+                          className="rounded-lg bg-[#14151a] px-2 py-2 text-left text-sm transition-colors hover:bg-[#2a2b30]"
+                          title={`${emote.label} ${emote.code}`}
+                        >
+                          <span className="mr-1 text-base">{emote.emoji}</span>
+                          <span className="text-xs text-[#8e8f94]">{emote.code}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
                   <input
                     type="text"
                     value={dmDraft}
@@ -1005,9 +1300,7 @@ export default function App() {
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#4ecdc4] to-[#95e1d3] flex items-center justify-center font-bold text-sm">
-                              {profileName(profile).charAt(0)}
-                            </div>
+                            <ProfileAvatar name={profileName(profile)} avatarUrl={profile.avatar_url} size="md" />
                             <div>
                               <div className="font-medium">{profileName(profile)}</div>
                               <div className="text-xs text-[#8e8f94]">{profile.username || profile.user_id}</div>
@@ -1055,6 +1348,50 @@ export default function App() {
         />
       )}
 
+      {showUpdateInstallModal && (
+        <div className="fixed inset-0 z-[75] flex items-center justify-center bg-black/70 backdrop-blur-sm p-6">
+          <div className="w-full max-w-md rounded-xl border border-[#2a2b30] bg-[#161b22] p-6 shadow-2xl">
+            <div className="mb-5 flex items-start justify-between gap-4">
+              <div>
+                <p className="mb-1 text-xs font-bold uppercase tracking-[0.16em] text-[#4ecdc4]">Update</p>
+                <h3 className="text-xl font-bold text-white">
+                  {updateNoticeVersion
+                    ? `A new version is available ${updateNoticeVersion}!`
+                    : 'A new version is available!'}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowUpdateInstallModal(false)}
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2a2b30] text-[#8e8f94] transition-colors hover:bg-[#3a3b40] hover:text-white"
+                aria-label="Close update prompt"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            <p className="mb-6 text-sm leading-relaxed text-[#b9babf]">
+              SekaiLink needs to close and relaunch the bootloader to install it.
+            </p>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <button
+                type="button"
+                onClick={() => void confirmLaunchUpdate()}
+                className="flex-1 rounded-lg bg-gradient-to-r from-[#ff6b35] to-[#f38181] px-4 py-3 text-sm font-bold text-white shadow-lg transition-transform hover:scale-[1.01]"
+              >
+                Restart & Install
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowUpdateInstallModal(false)}
+                className="flex-1 rounded-lg border border-[#2a2b30] bg-[#1c1d22] px-4 py-3 text-sm font-bold text-[#b9babf] transition-colors hover:border-[#4ecdc4] hover:text-white"
+              >
+                Later
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {uiError && (
         <ErrorModal
           title="SekaiLink client error"
@@ -1075,329 +1412,99 @@ export default function App() {
         />
       )}
 
+      {showDiscordModal && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/70 backdrop-blur-sm p-6">
+          <div className="w-full max-w-md rounded-xl border border-[#2a2b30] bg-[#161b22] p-6 shadow-2xl">
+            <div className="flex items-start justify-between gap-4 mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-lg bg-[#5865f2] flex items-center justify-center">
+                  <MessageCircle className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold">Join the SekaiLink Discord</h3>
+                  <p className="text-sm text-[#8e8f94]">Find players, testers, streamers and support.</p>
+                </div>
+              </div>
+              <button onClick={() => setShowDiscordModal(false)} className="w-9 h-9 rounded-lg bg-[#2a2b30] hover:bg-[#3a3b40] flex items-center justify-center">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <button
+              onClick={() => {
+                runtime.openExternal?.('https://discord.gg/sekailink');
+                setShowDiscordModal(false);
+              }}
+              className="w-full py-3 rounded-lg bg-gradient-to-r from-[#5865f2] to-[#aa96da] font-bold flex items-center justify-center gap-2"
+            >
+              <ExternalLink className="w-4 h-4" />
+              Join Discord
+            </button>
+          </div>
+        </div>
+      )}
+
+      {showBannerModal && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/75 backdrop-blur-sm p-6">
+          <div className="w-full max-w-3xl rounded-xl border border-[#2a2b30] bg-[#161b22] shadow-2xl overflow-hidden">
+            <div className="relative h-56">
+              <img src={NEWS_ITEMS[currentNews].image} alt={NEWS_ITEMS[currentNews].title} className="absolute inset-0 w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#161b22] to-transparent" />
+              <button onClick={() => setShowBannerModal(false)} className="absolute right-4 top-4 w-9 h-9 rounded-lg bg-black/50 hover:bg-black/70 flex items-center justify-center">
+                <X className="w-4 h-4" />
+              </button>
+              <div className="absolute left-6 bottom-5">
+                <div className="text-xs font-bold text-[#ff6b35] mb-1">{NEWS_ITEMS[currentNews].tag}</div>
+                <h3 className="text-2xl font-bold">{NEWS_ITEMS[currentNews].title}</h3>
+              </div>
+            </div>
+            <div className="p-6 space-y-4">
+              <p className="text-[#b9babf]">{NEWS_ITEMS[currentNews].description}</p>
+              <button
+                onClick={() => runtime.openExternal?.(NEWS_ITEMS[currentNews].detailUrl)}
+                className="px-5 py-2.5 rounded-lg bg-[#2a2b30] hover:bg-[#3a3b40] text-sm font-medium flex items-center gap-2"
+              >
+                <ExternalLink className="w-4 h-4" />
+                Open details
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="fixed right-5 bottom-5 z-[80] space-y-2 pointer-events-none">
+        {toasts.map((toast) => (
+          <button
+            key={toast.id}
+            onClick={() => {
+              if (toast.action?.type === 'open_dm') {
+                const friend = friends.find((entry) => entry.user_id === toast.action?.userId);
+                if (friend) setSelectedFriend(friend);
+              }
+              setToasts((prev) => prev.filter((entry) => entry.id !== toast.id));
+            }}
+            className="pointer-events-auto block w-80 rounded-lg border border-[#2a2b30] bg-[#161b22]/95 px-4 py-3 text-left text-sm shadow-2xl hover:border-[#ff6b35] transition-colors"
+          >
+            <div className="flex items-start gap-3">
+              <Megaphone className="mt-0.5 w-4 h-4 text-[#ff6b35] flex-shrink-0" />
+              <span>{toast.message}</span>
+            </div>
+          </button>
+        ))}
+      </div>
+
       {/* Floating Help Button */}
       <HelpButton />
     </div>
   );
 }
 
-function NavItem({ icon, label, active, onClick }: {
-  icon: React.ReactNode;
-  label: string;
-  active: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`
-        w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all
-        ${active
-          ? 'bg-gradient-to-r from-[#ff6b35] to-[#f38181] text-white shadow-lg'
-          : 'text-[#8e8f94] hover:bg-[#1c1d22] hover:text-white'
-        }
-      `}
-    >
-      {icon}
-      <span className="font-medium">{label}</span>
-    </button>
-  );
-}
-
-function StatsCard({ icon, label, value, change, color }: {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-  change: string;
-  color: string;
-}) {
-  return (
-    <div className="bg-gradient-card rounded-xl p-6 card-float card-float-hover">
-      <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center mb-4 shadow-lg`}>
-        <div className="text-white">{icon}</div>
-      </div>
-      <div className="text-3xl font-bold mb-1">{value}</div>
-      <div className="text-sm text-white mb-1">{label}</div>
-      <div className="text-xs text-[#8e8f94]">{change}</div>
-    </div>
-  );
-}
-
-function GameCard({ title, platform, status, image, disabled }: {
-  title: string;
-  platform: string;
-  status: string;
-  image: string;
-  disabled?: boolean;
-}) {
-  return (
-    <div className={`
-      bg-gradient-card rounded-xl overflow-hidden card-float transition-all
-      ${disabled ? 'opacity-50 cursor-not-allowed' : 'card-float-hover cursor-pointer'}
-    `}>
-      {/* Image Area */}
-      <div className="h-48 bg-gradient-to-br from-[#2a2b30] to-[#1c1d22] flex items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1c1d22] via-transparent to-transparent" />
-        <div className="text-6xl font-bold text-[#2a2b30] z-10">{image}</div>
-        {!disabled && (
-          <div className="absolute top-4 right-4 px-3 py-1 bg-[#ff6b35] rounded-full text-xs font-medium shadow-lg">
-            {platform}
-          </div>
-        )}
-      </div>
-
-      {/* Content */}
-      <div className="p-6">
-        <h3 className="text-lg font-bold mb-2">{title}</h3>
-        <p className="text-sm text-[#8e8f94] mb-4">{status}</p>
-        {!disabled && (
-          <button className="w-full py-2 bg-[#2a2b30] hover:bg-[#3a3b40] rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2">
-            <Play className="w-4 h-4" />
-            Select
-          </button>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function FriendCard({ name, status, lobbyId, online, inGame, onClick }: {
-  name: string;
-  status: string;
-  lobbyId?: string;
-  online?: boolean;
-  inGame?: boolean;
-  onClick?: () => void;
-}) {
-  return (
-    <div onClick={onClick} className="p-3 rounded-lg bg-[#1c1d22] hover:bg-[#2a2b30] transition-colors cursor-pointer">
-      <div className="flex items-center gap-3">
-        <div className="relative">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#ff6b35] to-[#f38181] flex items-center justify-center text-sm font-bold">
-            {name.charAt(0)}
-          </div>
-          {online && (
-            <div className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-[#1c1d22] ${
-              inGame ? 'bg-[#ff6b35]' : 'bg-[#4ecdc4]'
-            }`} />
-          )}
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="font-medium text-sm">{name}</div>
-          <div className="text-xs text-[#8e8f94] truncate">
-            {lobbyId ? `${status} • ${lobbyId}` : status}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function NotificationItem({ title, message, time, index }: {
-  title: string;
-  message: string;
-  time: string;
-  index: number;
-}) {
-  const gradients = [
-    'from-[#ff6b35]/10 to-transparent',
-    'from-[#4ecdc4]/10 to-transparent',
-    'from-[#aa96da]/10 to-transparent',
-    'from-[#f38181]/10 to-transparent',
-    'from-[#95e1d3]/10 to-transparent',
-  ];
-
-  const accentColors = [
-    'bg-[#ff6b35]',
-    'bg-[#4ecdc4]',
-    'bg-[#aa96da]',
-    'bg-[#f38181]',
-    'bg-[#95e1d3]',
-  ];
-
-  const gradient = gradients[index % gradients.length];
-  const accent = accentColors[index % accentColors.length];
-
-  return (
-    <div className={`p-4 border-l-2 ${accent.replace('bg-', 'border-')} bg-gradient-to-r ${gradient} hover:bg-[#2a2b30]/30 transition-colors cursor-pointer relative overflow-hidden`}>
-      <div className={`absolute left-0 top-0 bottom-0 w-1 ${accent}`} />
-      <div className="ml-2">
-        <div className="flex items-start justify-between gap-2 mb-1">
-          <h4 className="font-semibold text-sm">{title}</h4>
-          <span className="text-[10px] text-[#8e8f94] whitespace-nowrap">{time}</span>
-        </div>
-        <p className="text-xs text-[#8e8f94] leading-relaxed">{message}</p>
-      </div>
-    </div>
-  );
-}
-
-function FriendRequestNotification({ request, index, busy, onAccept, onDecline }: {
-  request: SocialRequest;
-  index: number;
-  busy?: boolean;
-  onAccept: () => void;
-  onDecline: () => void;
-}) {
-  return (
-    <div className="p-4 border-l-2 border-[#4ecdc4] bg-gradient-to-r from-[#4ecdc4]/10 to-transparent relative overflow-hidden">
-      <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#4ecdc4]" />
-      <div className="ml-2">
-        <div className="flex items-start justify-between gap-2 mb-1">
-          <h4 className="font-semibold text-sm">Friend Request</h4>
-          <span className="text-[10px] text-[#8e8f94] whitespace-nowrap">
-            {request.created_at ? formatMessageTime(request.created_at) : `#${index + 1}`}
-          </span>
-        </div>
-        <p className="text-xs text-[#8e8f94] leading-relaxed mb-3">
-          {request.from_name || profileName(request)} wants to connect on Nexus.
-        </p>
-        <div className="flex gap-2">
-          <button
-            onClick={onAccept}
-            disabled={busy}
-            className="flex-1 py-1.5 rounded-lg bg-[#4ecdc4] text-[#14151a] text-xs font-bold disabled:opacity-50"
-          >
-            Accept
-          </button>
-          <button
-            onClick={onDecline}
-            disabled={busy}
-            className="flex-1 py-1.5 rounded-lg bg-[#2a2b30] text-xs font-bold disabled:opacity-50"
-          >
-            Decline
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function LobbyCard({ name, host, seedsInSync, players, maxPlayers, status, joining, onJoin }: {
-  name: string;
-  host: string;
-  seedsInSync: number;
-  players: number;
-  maxPlayers: number;
-  status: 'waiting' | 'in-progress';
-  joining?: boolean;
-  onJoin?: () => void;
-}) {
-  const statusConfig = {
-    waiting: {
-      bg: 'bg-[#4ecdc4]',
-      text: 'Waiting',
-      gradient: 'from-[#4ecdc4]/10 to-transparent'
-    },
-    'in-progress': {
-      bg: 'bg-[#ff6b35]',
-      text: 'In Progress',
-      gradient: 'from-[#ff6b35]/10 to-transparent'
-    }
-  }[status];
-
-  return (
-    <div className={`p-5 bg-gradient-to-r ${statusConfig.gradient} border-2 border-[#2a2b30] rounded-lg hover:border-[#ff6b35] transition-all cursor-pointer card-float-hover`}>
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex-1">
-          <div className="flex items-center gap-3 mb-2">
-            <h3 className="text-lg font-bold">{name}</h3>
-            <span className={`${statusConfig.bg} text-[#14151a] px-3 py-1 rounded-full text-xs font-bold`}>
-              {statusConfig.text}
-            </span>
-          </div>
-          <div className="flex items-center gap-4 text-sm text-[#8e8f94]">
-            <div className="flex items-center gap-1.5">
-              <User className="w-4 h-4" />
-              <span>Host: {host}</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Zap className="w-4 h-4" />
-              <span>Seeds in Sync: {seedsInSync}</span>
-            </div>
-          </div>
-        </div>
-        <button
-          onClick={onJoin}
-          disabled={joining}
-          className="px-5 py-2 bg-[#2a2b30] hover:bg-[#3a3b40] rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
-        >
-          {joining ? 'Joining...' : 'Join'}
-        </button>
-      </div>
-
-      {/* Players Bar */}
-      <div className="flex items-center gap-3">
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-2">
-            <Users className="w-4 h-4 text-[#8e8f94]" />
-            <span className="text-sm text-[#8e8f94]">{players}/{maxPlayers} Players</span>
-          </div>
-          <div className="h-2 bg-[#14151a] rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-[#4ecdc4] to-[#95e1d3] rounded-full transition-all"
-              style={{ width: `${Math.min(100, Math.max(0, (players / maxPlayers) * 100))}%` }}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ChatMessage({ message, time, sent }: {
-  message: string;
-  time: string;
-  sent: boolean;
-}) {
-  return (
-    <div className={`flex ${sent ? "justify-end" : "justify-start"}`}>
-      <div className={`max-w-[75%] ${sent ? "order-1" : "order-2"}`}>
-        <div
-          className={`px-4 py-3 rounded-2xl shadow-lg ${
-            sent
-              ? "bg-gradient-to-r from-[#ff6b35] to-[#f38181] text-white rounded-br-sm"
-              : "bg-[#1c1d22] text-white rounded-bl-sm"
-          }`}
-        >
-          <p className="text-sm leading-relaxed">{message}</p>
-        </div>
-        <div className={`mt-1 px-2 text-[10px] text-[#8e8f94] ${sent ? "text-right" : "text-left"}`}>
-          {time}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function StatusMenuItem({ status, label, color, isActive, onClick }: {
-  status: string;
-  label: string;
-  color: string;
-  isActive: boolean;
-  onClick: () => void;
-}) {
-  const gradients = {
-    "bg-[#4ecdc4]": "from-[#4ecdc4]/10 to-transparent",
-    "bg-[#ff6b35]": "from-[#ff6b35]/10 to-transparent",
-    "bg-[#f69d50]": "from-[#f69d50]/10 to-transparent",
-    "bg-[#8e8f94]": "from-[#8e8f94]/10 to-transparent"
-  };
-
-  return (
-    <button
-      onClick={onClick}
-      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all ${
-        isActive
-          ? `bg-gradient-to-r ${gradients[color as keyof typeof gradients]} border border-[#2a2b30]`
-          : "hover:bg-[#2a2b30]"
-      }`}
-    >
-      <div className={`w-3 h-3 rounded-full ${color}`} />
-      <span className="text-sm font-medium text-white">{label}</span>
-      {isActive && (
-        <div className="ml-auto w-1.5 h-1.5 rounded-full bg-white" />
-      )}
-    </button>
-  );
+export default function App() {
+  if (isRuntimeLabSession()) {
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <SekaiemuRuntimeLabPage />
+      </Suspense>
+    );
+  }
+  return <RedesignShell />;
 }

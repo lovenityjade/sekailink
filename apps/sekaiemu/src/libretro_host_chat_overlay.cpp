@@ -22,15 +22,19 @@ struct ChatOverlayGeometry {
 ChatOverlayGeometry ResolveChatOverlayGeometry(TrackerDisplayMode mode, const VideoGeometry& geometry) {
   const unsigned game_width = std::max(geometry.width, 256u);
   const unsigned game_height = std::max(geometry.height, 224u);
+  const unsigned stable_width = 1280u;
+  const unsigned stable_height = 720u;
   if (mode == TrackerDisplayMode::SplitScreen) {
     const unsigned tracker_sidebar_width = std::max(360u, game_height * 2u);
-    return ChatOverlayGeometry{game_width * 3u + tracker_sidebar_width,
-                               game_height * 3u,
-                               static_cast<int>(game_width * 3u),
-                               static_cast<int>(game_height * 3u)};
+    const unsigned core_width = game_width * 3u + tracker_sidebar_width;
+    const unsigned core_height = game_height * 3u;
+    return ChatOverlayGeometry{std::max(stable_width, core_width),
+                               std::max(stable_height, core_height),
+                               static_cast<int>(std::max(stable_width, core_width)),
+                               static_cast<int>(std::max(stable_height, core_height))};
   }
-  const unsigned width = std::max(game_width, 640u);
-  const unsigned height = std::max(game_height, 360u);
+  const unsigned width = std::max(stable_width, game_width * 3u);
+  const unsigned height = std::max(stable_height, game_height * 3u);
   return ChatOverlayGeometry{width, height, static_cast<int>(width), static_cast<int>(height)};
 }
 

@@ -1,0 +1,47 @@
+{
+  "game_id": "oracle_of_seasons",
+  "display_name": "The Legend of Zelda - Oracle of Seasons",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apoos"
+  ],
+  "patch_world_module": "worlds.tloz_oos",
+  "ap_world": "tloz_oos",
+  "required_roms": [
+    "oracle_of_seasons"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "oracle_of_seasons",
+    "world": "tloz_oos",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/tloz_oos/Client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".gbc",
+      ".gb"
+    ],
+    "md5": [
+      "f2dc6c4e093e4f8c6cbea80e8dbd62cb"
+    ],
+    "sha1": [
+      "ba1268290fb2b1b70505d2d7b5825fc8a4816a4b"
+    ]
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "gbc",
+    "ap_game": "The Legend of Zelda - Oracle of Seasons"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "",
+  "support_status": "not_available",
+  "availability_status": "unavailable_gb_gbc_pending_tester",
+  "compatibility_notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+}

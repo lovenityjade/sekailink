@@ -1,0 +1,93 @@
+[
+    {
+        "name": "Maze Palace",
+        "chest_unopened_img": "/images/items/close.png",
+        "chest_opened_img": "/images/items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "@Northeastern Hyrule"
+        ],
+        "sections": [
+            {
+                "name": "Maze Palace: Nook Item",
+                "access_rules": ["downthrust"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Maze Palace: Sealed Item",
+                "access_rules": ["^$key|maze|1|3, handyglove, upthrust, jumpspell"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Maze Palace: Block Mountain Left",
+                "access_rules": ["^$key|maze|2|4, handyglove"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Maze Palace: Block Mountain Right",
+                "access_rules": ["^$key|maze|2|4, handyglove"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Maze Palace: West Hall of Fire",
+                "access_rules": ["^$key|maze|2|4"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Maze Palace: East Hall of Fire",
+                "access_rules": [],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Maze Palace: Basement Hall of Fire",
+                "access_rules": [],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Maze Palace: Block Mountain Basement",
+                "access_rules": ["handyglove"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Maze Palace: Pillar Item",
+                "access_rules": ["^$key|maze|4|6, jumpspell"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Maze Palace: Pedestal Item",
+                "access_rules": ["^$key|maze|1|5"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Maze Palace: Carock Drop",
+                "access_rules": ["^$key|maze|4|6, reflectspell"],
+                "visibility_rules": [],
+                "item_count": 1
+            }
+        ],
+        "map_locations": [
+            {
+                "map": "Overworld",
+                "x": "945",
+                "y": "1651",
+                "size": 24
+            },
+            {
+                "map": "Island Maze",
+                "x": "379",
+                "y": "429",
+                "size": 16
+            }
+        ]
+    }
+]

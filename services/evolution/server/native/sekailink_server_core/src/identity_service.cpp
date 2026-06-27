@@ -39,6 +39,8 @@ namespace sekailink_server {
 
 namespace {
 
+constexpr std::uint32_t kMinimumEmailVerificationTtlSeconds = 60 * 60;
+
 std::string http_status_text(int status_code) {
   switch (status_code) {
     case 200:
@@ -1393,6 +1395,8 @@ IdentityServiceConfig load_identity_service_config(const std::filesystem::path& 
   if (json.contains("email_verification_ttl_seconds")) {
     config.email_verification_ttl_seconds = json.at("email_verification_ttl_seconds").get<std::uint32_t>();
   }
+  config.email_verification_ttl_seconds =
+      std::max(config.email_verification_ttl_seconds, kMinimumEmailVerificationTtlSeconds);
   if (json.contains("public_base_url")) {
     config.public_base_url = json.at("public_base_url").get<std::string>();
   }

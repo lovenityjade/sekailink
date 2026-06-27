@@ -10,7 +10,7 @@ import subprocess
 from typing import Any
 
 import settings
-from CommonClient import CommonContext, ClientCommandProcessor, get_base_parser, server_loop, logger, gui_enabled
+from CommonClient import CommonContext, ClientCommandProcessor, get_base_parser, server_loop, logger, gui_enabled, sekailink_socket_closed
 import Patch
 import Utils
 apname = Utils.instance_name if Utils.instance_name else "Archipelago"
@@ -263,7 +263,7 @@ async def _game_watcher(ctx: BizHawkClientContext):
 
             rom_hash = await get_hash(ctx.bizhawk_ctx)
             if ctx.rom_hash is not None and ctx.rom_hash != rom_hash:
-                if ctx.server is not None and not ctx.server.socket.closed:
+                if ctx.server is not None and not sekailink_socket_closed(ctx.server.socket):
                     logger.info(f"ROM changed. Disconnecting from server.")
 
                 ctx.auth = None
@@ -294,7 +294,7 @@ async def _game_watcher(ctx: BizHawkClientContext):
             continue
 
         # Server auth
-        if ctx.server is not None and not ctx.server.socket.closed:
+        if ctx.server is not None and not sekailink_socket_closed(ctx.server.socket):
             if ctx.auth_status == AuthStatus.NOT_AUTHENTICATED:
                 Utils.async_start(ctx.server_auth(ctx.password_requested))
         else:

@@ -1,0 +1,64 @@
+[
+    {
+        "name": "5-6",
+        "children":
+        [
+            {
+                "name": "Star 1 (right)",
+                "chest_unopened_img": "images/StarSmall.png",
+                "chest_opened_img": "images/StarSmallDim.png",
+                "visibility_rules": ["Starsanity"],
+                "map_locations":
+                [
+                    {
+                        "map": "5-6",
+                        "x": "1704",
+                        "y": "111"
+                    }
+                ],
+                "sections":
+                [
+                    {
+                        "name": "Star 1",
+                    }
+                ]
+            },
+            {
+                "name": "1-Up (Middle)",
+                "map_locations":
+                [
+                    {
+                        "map": "5-6",
+                        "x": "1592",
+                        "y": "111"
+                    }
+                ],
+                "sections":
+                [
+                    {
+                        "name": "1-Up (Middle)",
+                        "ref": "Level 5/5-6/Iceberg 6 - 1-Up (Middle)"
+                    }
+                ]
+            },
+            {
+                "name": "Maxim Tomato (Left)",
+                "map_locations":
+                [
+                    {
+                        "map": "5-6",
+                        "x": "1480",
+                        "y": "111"
+                    }
+                ],
+                "sections":
+                [
+                    {
+                        "name": "Maxim Tomato (Left)",
+                        "ref": "Level 5/5-6/Iceberg 6 - Maxim Tomato (Left)"
+                    }
+                ]
+            }
+        ]
+    }
+]

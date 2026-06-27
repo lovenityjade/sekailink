@@ -1,0 +1,49 @@
+{
+  "game_id": "secret_of_mana",
+  "display_name": "Secret of Mana",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apsom"
+  ],
+  "patch_world_module": "worlds.som",
+  "ap_world": "som",
+  "required_roms": [
+    "secret_of_mana"
+  ],
+  "client_mode": "web_ap_client",
+  "ap_client": "web_ap_client",
+  "web_ap_client": {
+    "game_key": "secret_of_mana",
+    "client": "ap-somclient",
+    "url": "http://evermizer.com/somclient/",
+    "source": "http://evermizer.com/somclient/",
+    "requires_sni_bridge": true
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [
+      "10a894199a9adc50ff88815fd9853e19"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "snes9x",
+    "ap_game": "Secret of Mana"
+  },
+  "tracker_pack_uid": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker",
+  "tracker_web_url": "",
+  "tracker_asset_regex": "\\.zip$",
+  "default_tracker_variant": "standard",
+  "support_status": "supported",
+  "tracker_status": "github_verified",
+  "compatibility_notes": "SNES/SNI game. Uses the upstream Evermizer SoM browser AP client through SekaiLink's web_ap_client wrapper; this keeps SoM out of the generic Python SNI wrapper. The web client must be loaded over http:// for non-SSL ws:// rooms. Uses Snes9x core to avoid known bsnes-mercury black-screen behavior in this runtime path.",
+  "tracker_pack_path": "poptracker/packs/secret_of_mana/pack"
+}

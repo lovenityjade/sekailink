@@ -1,5 +1,7 @@
 #include "launcher.hpp"
 
+#include "bug_report_client.hpp"
+#include "layout_preview.hpp"
 #include "libretro_host.hpp"
 #include "logger.hpp"
 #include "patch_materializer.hpp"
@@ -129,6 +131,26 @@ std::string DescribeRequest(const LaunchRequest& request) {
   return description.str();
 }
 
+void ReportRuntimeFailure(const LaunchRequest& request,
+                          const std::filesystem::path& log_path,
+                          const std::string& title,
+                          const std::string& detail) {
+  BugReportContext report;
+  report.title = title;
+  report.description = detail;
+  report.log_path = log_path;
+  report.game = !request.game_path.empty() ? request.game_path.filename().string() : request.patch_path.filename().string();
+  report.core = request.core_path.filename().string();
+  report.linkedworld_id = request.ap_game;
+  report.player_alias = request.player_alias.empty() ? request.ap_slot_name : request.player_alias;
+  std::string report_error;
+  if (!SubmitBugReport(report, &report_error)) {
+    LogWarn("Sekaiemu bug report submission failed: " + report_error);
+  } else {
+    LogInfo("Sekaiemu bug report submitted.");
+  }
+}
+
 }  // namespace
 
 LaunchResult RunSekaiemu(const LaunchRequest& request) {
@@ -138,6 +160,21 @@ LaunchResult RunSekaiemu(const LaunchRequest& request) {
   InitializeLogger(result.log_path);
   LogInfo("Sekaiemu launch requested.");
   LogInfo(DescribeRequest(request));
+
+  if (request.layout_preview) {
+    std::string error;
+    result.exit_code = RunLayoutPreview(request, error);
+    result.ok = result.exit_code == 0;
+    result.technical_message = error;
+    if (!result.ok) {
+      result.user_message = "Sekaiemu could not open the layout preview.";
+      LogError(error);
+    } else {
+      LogInfo("Sekaiemu layout preview exited cleanly.");
+    }
+    ShutdownLogger();
+    return result;
+  }
 
   if (!ValidateLaunchRequest(request, result)) {
     LogError(result.technical_message);
@@ -151,6 +188,7 @@ LaunchResult RunSekaiemu(const LaunchRequest& request) {
     result.user_message = "Sekaiemu could not prepare the selected patch for launch.";
     result.technical_message = patch_result.technical_error;
     LogError(result.technical_message);
+    ReportRuntimeFailure(materialized_request, result.log_path, "Sekaiemu patch preparation failed", result.technical_message);
     ShutdownLogger();
     return result;
   }
@@ -163,6 +201,7 @@ LaunchResult RunSekaiemu(const LaunchRequest& request) {
     result.user_message = "Sekaiemu could not initialize the selected core or game.";
     result.technical_message = host.LastError();
     LogError(result.technical_message);
+    ReportRuntimeFailure(materialized_request, result.log_path, "Sekaiemu core initialization failed", result.technical_message);
     ShutdownLogger();
     return result;
   }
@@ -175,6 +214,7 @@ LaunchResult RunSekaiemu(const LaunchRequest& request) {
     if (!result.technical_message.empty()) {
       LogError(result.technical_message);
     }
+    ReportRuntimeFailure(materialized_request, result.log_path, "Sekaiemu runtime exited with an error", result.technical_message);
   } else {
     LogInfo("Sekaiemu runtime exited cleanly.");
   }

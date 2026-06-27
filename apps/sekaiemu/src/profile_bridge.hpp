@@ -16,6 +16,7 @@ struct ProfileBridgeCallbacks {
   std::function<std::vector<std::uint8_t>(const WatchRegion&)> read_region;
   std::function<std::uint8_t*(std::string_view, std::uint32_t, std::uint32_t)> resolve_mutable;
   std::function<void(const std::string&)> trace;
+  std::function<void(std::uint32_t, const std::string&)> location_triggered;
 };
 
 class ProfileBridge {

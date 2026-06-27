@@ -13,7 +13,9 @@ import ast
 import hashlib
 import json
 import os
+import pickle
 import re
+import secrets
 import signal
 import shlex
 import socket
@@ -21,10 +23,15 @@ import subprocess
 import sys
 import time
 import warnings
+import zlib
 from urllib.parse import quote
 import zipfile
 from pathlib import Path
 from typing import Any
+
+
+os.environ.setdefault("SKIP_REQUIREMENTS_UPDATE", "1")
+os.environ.setdefault("PYTHONNOUSERSITE", "1")
 
 
 def safe_component(value: str, fallback: str) -> str:
@@ -117,6 +124,24 @@ def set_top_level_yaml_scalar(content: str, key: str, value: str) -> str:
 def top_level_yaml_key(line: str) -> str:
     if not line or line[0].isspace() or line.lstrip().startswith("#"):
         return ""
+    stripped = line.strip()
+    if stripped[:1] in {"'", '"'}:
+        quote_char = stripped[0]
+        escaped = False
+        value: list[str] = []
+        for char in stripped[1:]:
+            if quote_char == '"' and escaped:
+                value.append(char)
+                escaped = False
+                continue
+            if quote_char == '"' and char == "\\":
+                escaped = True
+                continue
+            if char == quote_char:
+                rest = stripped[len(value) + 2:].lstrip()
+                return "".join(value).strip() if rest.startswith(":") else ""
+            value.append(char)
+        return ""
     match = re.match(r"^([^:#][^:]*?)\s*:", line)
     if not match:
         return ""
@@ -159,7 +184,7 @@ def ensure_game_options_section(content: str, ap_game_name: str) -> str:
 
     if not game_lines:
         return "\n".join(root_lines)
-    return "\n".join(root_lines + ["", f"{game_name}:"] + game_lines)
+    return "\n".join(root_lines + ["", f"{yaml_quote(game_name)}:"] + game_lines)
 
 
 def normalized_token(value: str) -> str:
@@ -167,6 +192,20 @@ def normalized_token(value: str) -> str:
 
 
 _AP_GAME_NAME_CACHE: dict[str, str] | None = None
+
+AP_GAME_ALIASES: dict[str, str] = {
+    # Live Worlds currently registers this APWorld without the title colon.
+    "metroid_zero_mission": "Metroid Zero Mission",
+    "metroidzeromission": "Metroid Zero Mission",
+    "Metroid: Zero Mission": "Metroid Zero Mission",
+    # The installed LADX APWorld is the beta package and registers this exact game name.
+    "ladx": "Links Awakening DX Beta",
+    "links_awakening_dx": "Links Awakening DX Beta",
+    "linksawakeningdx": "Links Awakening DX Beta",
+    "links_awakening_dx_beta": "Links Awakening DX Beta",
+    "linksawakeningdxbeta": "Links Awakening DX Beta",
+    "Links Awakening DX": "Links Awakening DX Beta",
+}
 
 
 def ap_runtime_root() -> Path | None:
@@ -184,6 +223,22 @@ def ap_runtime_root() -> Path | None:
         path = Path(multiserver).resolve().parent
         if (path / "worlds").is_dir():
             return path
+    return None
+
+
+def generation_ap_root() -> Path | None:
+    for name in (
+        "SEKAILINK_GENERATION_AP_ROOT",
+        "SEKAILINK_GENERATOR_AP_ROOT",
+    ):
+        value = os.environ.get(name, "").strip()
+        if value:
+            path = Path(value)
+            if (path / "worlds").is_dir() and (path / "NetUtils.py").is_file():
+                return path
+    default = Path("/opt/sekailink-generate")
+    if (default / "worlds").is_dir() and (default / "NetUtils.py").is_file():
+        return default
     return None
 
 
@@ -241,7 +296,11 @@ def ap_game_name_cache() -> dict[str, str]:
 def ap_game_name_for(game_key: str, game_display_name: str, raw_game: str) -> str:
     cache = ap_game_name_cache()
     for candidate in (raw_game, game_key, game_display_name):
+        if candidate in AP_GAME_ALIASES:
+            return AP_GAME_ALIASES[candidate]
         token = normalized_token(candidate)
+        if token and token in AP_GAME_ALIASES:
+            return AP_GAME_ALIASES[token]
         if token and token in cache:
             return cache[token]
     return raw_game or game_display_name or game_key or "unknown"
@@ -430,16 +489,22 @@ def room_runtime_enabled() -> bool:
     return os.environ.get("SEKAILINK_ROOM_RUNTIME_ENABLED", "").strip() == "1"
 
 
-def pid_alive(pid: int) -> bool:
+def pid_alive(pid: int, expected_fragment: str = "") -> bool:
     if pid <= 0:
         return False
     try:
         os.kill(pid, 0)
-        return True
     except ProcessLookupError:
         return False
     except PermissionError:
-        return True
+        pass
+    if expected_fragment:
+        try:
+            cmdline = Path(f"/proc/{pid}/cmdline").read_bytes().replace(b"\x00", b" ").decode("utf-8", "replace")
+            return expected_fragment in cmdline
+        except Exception:
+            return False
+    return True
 
 
 def tcp_connectable(host: str, port: int, timeout: float = 0.25) -> bool:
@@ -524,6 +589,68 @@ def room_runtime_savefile(state: dict[str, Any], runtime_root: Path) -> Path:
     return save_root / f"{generation_id}.apsave"
 
 
+def ensure_room_runtime_server_password(state: dict[str, Any]) -> str:
+    configured = os.environ.get("SEKAILINK_ROOM_RUNTIME_SERVER_PASSWORD", "").strip()
+    if configured:
+        state["room_ap_admin_password"] = configured
+        state["room_ap_admin_password_source"] = "env"
+        return configured
+    existing = str(state.get("room_ap_admin_password") or "").strip()
+    if existing:
+        state.setdefault("room_ap_admin_password_source", "state")
+        return existing
+    password = "skl-" + secrets.token_urlsafe(32)
+    state["room_ap_admin_password"] = password
+    state["room_ap_admin_password_source"] = "generated"
+    return password
+
+
+def patch_multidata_server_password(multidata_path: str, server_password: str) -> str:
+    if not server_password:
+        return multidata_path
+    path = Path(multidata_path)
+    if not path.is_file() or path.suffix.lower() != ".archipelago":
+        return multidata_path
+
+    multiserver = os.environ.get("SEKAILINK_ROOM_RUNTIME_MULTISERVER", "").strip()
+    if not multiserver:
+        return multidata_path
+    data = path.read_bytes()
+    if not data:
+        return multidata_path
+    format_version = data[:1]
+    decode_root = generation_ap_root() or Path(multiserver).resolve().parent
+    decode_dir = str(decode_root)
+    if decode_dir not in sys.path:
+        sys.path.insert(0, decode_dir)
+    for venv_name in (".venv", "venv"):
+        for site_packages in (decode_root / venv_name).glob("lib/python*/site-packages"):
+            site_text = str(site_packages)
+            if site_text not in sys.path:
+                sys.path.insert(0, site_text)
+    # NetUtils.Hint is pickled inside multidata and has changed shape across
+    # AP/MWGG versions. Force the generator's NetUtils to be imported for this
+    # decode/encode pass so we do not reconstruct hints with the room runtime's
+    # potentially older class signature.
+    for module_name in ("NetUtils",):
+        module_path = getattr(sys.modules.get(module_name), "__file__", "")
+        if module_path and not str(module_path).startswith(decode_dir):
+            sys.modules.pop(module_name, None)
+    decoded = pickle.loads(zlib.decompress(data[1:]))
+    if not isinstance(decoded, dict):
+        return multidata_path
+    server_options = decoded.get("server_options")
+    if not isinstance(server_options, dict):
+        server_options = {}
+        decoded["server_options"] = server_options
+    server_options["server_password"] = server_password
+    patched = format_version + zlib.compress(pickle.dumps(decoded))
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_bytes(patched)
+    tmp.replace(path)
+    return str(path)
+
+
 def room_runtime_command(
     state: dict[str, Any],
     multidata_path: str,
@@ -533,6 +660,7 @@ def room_runtime_command(
 ) -> tuple[list[str], Path]:
     savefile = room_runtime_savefile(state, runtime_root)
     state["room_runtime_savefile"] = str(savefile)
+    server_password = ensure_room_runtime_server_password(state)
     replacements = {
         "{multidata_path}": multidata_path,
         "{host}": host,
@@ -542,6 +670,7 @@ def room_runtime_command(
         "{output_dir}": str(state.get("output_dir", "")),
         "{runtime_root}": str(runtime_root),
         "{savefile}": str(savefile),
+        "{server_password}": server_password,
     }
     command = env_command("SEKAILINK_ROOM_RUNTIME_COMMAND", [])
     if command:
@@ -569,6 +698,8 @@ def room_runtime_command(
         "--loglevel",
         os.environ.get("SEKAILINK_ROOM_RUNTIME_LOGLEVEL", "info"),
     ]
+    if server_password:
+        command.extend(["--server_password", server_password])
     if os.environ.get("SEKAILINK_ROOM_RUNTIME_DISABLE_SAVE", "").strip() == "1":
         command.append("--disable_save")
     if os.environ.get("SEKAILINK_ROOM_RUNTIME_USE_EMBEDDED_OPTIONS", "").strip() == "1":
@@ -588,7 +719,8 @@ def refresh_room_runtime_state(state: dict[str, Any]) -> None:
     ).strip())
     port = int(state.get("room_port") or 0)
     pid = int(state.get("room_runtime_pid") or 0)
-    if pid > 0 and pid_alive(pid):
+    expected_fragment = str(state.get("room_multidata_path") or state.get("generation_id") or "").strip()
+    if pid > 0 and pid_alive(pid, expected_fragment):
         if tcp_connectable(host, port):
             state["room_status"] = "ready"
             state["last_port"] = port
@@ -611,7 +743,8 @@ def refresh_room_runtime_state(state: dict[str, Any]) -> None:
 def stop_room_runtime(state: dict[str, Any]) -> None:
     refresh_room_runtime_state(state)
     pid = int(state.get("room_runtime_pid") or 0)
-    if pid <= 0 or not pid_alive(pid):
+    expected_fragment = str(state.get("room_multidata_path") or state.get("generation_id") or "").strip()
+    if pid <= 0 or not pid_alive(pid, expected_fragment):
         state["room_status"] = "stopped"
         state["room_runtime_alive"] = False
         state["room_runtime_pid"] = 0
@@ -633,10 +766,10 @@ def stop_room_runtime(state: dict[str, Any]) -> None:
         send(signal.SIGTERM)
         deadline = time.time() + float(os.environ.get("SEKAILINK_ROOM_RUNTIME_STOP_TIMEOUT_SECONDS", "5"))
         while time.time() < deadline:
-            if not pid_alive(pid):
+            if not pid_alive(pid, expected_fragment):
                 break
             time.sleep(0.2)
-        if pid_alive(pid):
+        if pid_alive(pid, expected_fragment):
             send(signal.SIGKILL)
     except Exception as exc:
         state["room_runtime_error"] = f"room_runtime_stop_failed:{exc}"
@@ -673,6 +806,15 @@ def ensure_room_runtime(state: dict[str, Any], sync_package_path: str, package_i
     if not multidata_path:
         state["room_status"] = "package_ready"
         state["room_runtime_error"] = "room_multidata_extract_failed"
+        state["last_port"] = 0
+        return
+    try:
+        server_password = ensure_room_runtime_server_password(state)
+        multidata_path = patch_multidata_server_password(multidata_path, server_password)
+        state["room_multidata_admin_password_embedded"] = True
+    except Exception as exc:
+        state["room_status"] = "package_ready"
+        state["room_runtime_error"] = f"room_multidata_admin_password_patch_failed:{exc}"
         state["last_port"] = 0
         return
     try:
@@ -816,12 +958,16 @@ def sftp_to_host_path(sftp_path: str) -> str:
 
 
 def run_checked(args: list[str], label: str) -> subprocess.CompletedProcess[str]:
+    env = dict(os.environ)
+    env.setdefault("SKIP_REQUIREMENTS_UPDATE", "1")
+    env.setdefault("PYTHONNOUSERSITE", "1")
     completed = subprocess.run(
         args,
         check=False,
         capture_output=True,
         text=True,
         timeout=remote_timeout(),
+        env=env,
     )
     if completed.returncode != 0:
         detail = (completed.stderr or completed.stdout or "").strip().splitlines()
@@ -1032,6 +1178,10 @@ def response_from_state(state: dict[str, Any]) -> dict[str, Any]:
         response["room_runtime_error"] = state["room_runtime_error"]
     if state.get("error"):
         response["error"] = state["error"]
+    if state.get("generation_exit_code") is not None:
+        response["generation_exit_code"] = state["generation_exit_code"]
+    if state.get("generation_log_path"):
+        response["generation_log_path"] = state["generation_log_path"]
     return response
 
 
@@ -1117,8 +1267,7 @@ def submit_generation(request: dict[str, Any], state_path: Path, spool_root: Pat
         )
         content = str(item["content"])
         content = set_top_level_yaml_scalar(content, "name", compat_name)
-        if not yaml_scalar(content, "game"):
-            content = set_top_level_yaml_scalar(content, "game", ap_game_name)
+        content = set_top_level_yaml_scalar(content, "game", ap_game_name)
         content = ensure_game_options_section(content, ap_game_name)
         config_file_id = safe_component(str(item["config_id"]), f"config-{item['config_index']}")
         path = players_dir / f"{entry_index:03d}-{safe_component(compat_name, 'player')}-{config_file_id}.yaml"
@@ -1229,7 +1378,16 @@ def generation_status(request: dict[str, Any], state_path: Path) -> dict[str, An
         if status_response.get("ok", False) and isinstance(status_response.get("job"), dict):
             job = status_response["job"]
             state["status"] = job.get("status", state.get("status", "queued"))
-            state["error"] = "" if state["status"] != "failed" else f"generation_exit_code:{job.get('exit_code')}"
+            if state["status"] == "failed":
+                detail = str(job.get("error_detail") or "").strip()
+                if detail:
+                    state["error"] = detail[-1800:]
+                    state["generation_exit_code"] = job.get("exit_code")
+                    state["generation_log_path"] = job.get("log_path", "")
+                else:
+                    state["error"] = f"generation_exit_code:{job.get('exit_code')}"
+            else:
+                state["error"] = ""
             if state["status"] in {"succeeded", "success", "completed"} and remote_spool_configured():
                 remote_artifact = remote_latest_zip(str(state.get("remote_output_dir", "")))
                 if remote_artifact:
@@ -1240,7 +1398,8 @@ def generation_status(request: dict[str, Any], state_path: Path) -> dict[str, An
         elif not status_response.get("ok", False):
             return {"ok": False, "status": "error", "error": status_response.get("error", "generation_status_failed")}
     artifact_path = latest_zip(Path(str(state.get("output_dir", "")))) or str(state.get("artifact_path", ""))
-    if str(state.get("status", "")) in {"succeeded", "success", "completed"} and artifact_path:
+    status_text = str(state.get("status", "")).lower()
+    if artifact_path and status_text not in {"failed", "error", "cancelled", "canceled"}:
         sync_entries = state.get("sync_entries", [])
         if not isinstance(sync_entries, list):
             sync_entries = []
@@ -1255,6 +1414,102 @@ def generation_status(request: dict[str, Any], state_path: Path) -> dict[str, An
         state["updated_at"] = int(time.time())
         atomic_write_json(state_path, state)
     return response_from_state(state)
+
+
+def generation_admin_secrets(request: dict[str, Any], state_path: Path) -> dict[str, Any]:
+    if not state_path.exists():
+        return {"ok": False, "status": "error", "error": "generation_state_missing"}
+    state = read_json(state_path)
+    password = str(state.get("room_ap_admin_password") or "").strip()
+    if not password:
+        return {"ok": False, "status": "error", "error": "room_ap_admin_password_missing"}
+    return {
+        "ok": True,
+        "generation_id": state.get("generation_id", request.get("generation_id", "")),
+        "sync_id": state.get("sync_id", state.get("lobby_id", "")),
+        "room_status": state.get("room_status", ""),
+        "room_host": state.get("room_host", ""),
+        "room_port": int(state.get("room_port") or 0),
+        "room_runtime_alive": bool(state.get("room_runtime_alive", False)),
+        "ap_admin_password": password,
+        "ap_admin_password_source": state.get("room_ap_admin_password_source", ""),
+    }
+
+
+def validate_seed_config(request: dict[str, Any], state_path: Path, spool_root: Path) -> dict[str, Any]:
+    content = str(request.get("content", "")).strip()
+    if not content:
+        return {"ok": False, "status": "error", "error": "validation_empty_config_content"}
+    timeout = float(os.environ.get("SEKAILINK_CONFIG_VALIDATION_TIMEOUT_SECONDS", "60"))
+    poll_interval = float(os.environ.get("SEKAILINK_CONFIG_VALIDATION_POLL_SECONDS", "1"))
+    player_name = str(request.get("player_name") or "validation").strip() or "validation"
+    game_key = str(request.get("game_key") or "").strip()
+    game_display_name = str(request.get("game_display_name") or request.get("game") or game_key or yaml_scalar(content, "game") or "unknown").strip()
+    generation_id = str(request.get("generation_id") or f"config-validation-{int(time.time() * 1000)}")
+    submit_request = {
+        "schema_version": "sekailink-config-validation-v1",
+        "generation_id": generation_id,
+        "lobby_id": "config-validation",
+        "sync_id": generation_id,
+        "created_at": request.get("created_at", ""),
+        "source": "link-chat-api-config-validation",
+        "players": [
+            {
+                "user_id": str(request.get("user_id", "")),
+                "username": player_name,
+                "configs": [
+                    {
+                        "config_id": str(request.get("config_id", "validation")),
+                        "version_id": str(request.get("version_id", "")),
+                        "title": str(request.get("title", "Validation")),
+                        "game": game_display_name,
+                        "game_key": game_key,
+                        "game_display_name": game_display_name,
+                        "content": content,
+                        "source": "nexus.seed_config_api.validation",
+                    }
+                ],
+            }
+        ],
+    }
+    submitted = submit_generation(submit_request, state_path, spool_root)
+    if not submitted.get("ok", False):
+        return {
+            "ok": False,
+            "status": "error",
+            "error": submitted.get("error", "validation_submit_failed"),
+            "detail": submitted.get("detail", ""),
+        }
+    started = time.time()
+    last: dict[str, Any] = submitted
+    while time.time() - started <= timeout:
+        last = generation_status({"generation_id": generation_id}, state_path)
+        status = str(last.get("status", "")).lower()
+        if status in {"succeeded", "generated", "ready"}:
+            return {
+                "ok": True,
+                "status": "validated",
+                "generation_id": generation_id,
+                "message": "config_validated_by_archipelago",
+            }
+        if status in {"failed", "error"}:
+            return {
+                "ok": False,
+                "status": "error",
+                "generation_id": generation_id,
+                "error": last.get("error", "config_validation_failed"),
+                "detail": last.get("detail") or last.get("error_detail") or last.get("message", ""),
+                "generation_exit_code": last.get("generation_exit_code"),
+                "generation_log_path": last.get("generation_log_path", ""),
+            }
+        time.sleep(max(0.1, poll_interval))
+    return {
+        "ok": False,
+        "status": "error",
+        "generation_id": generation_id,
+        "error": "config_validation_timeout",
+        "detail": last.get("error") or last.get("message") or "",
+    }
 
 
 def stop_generation(request: dict[str, Any], state_path: Path) -> dict[str, Any]:
@@ -1285,6 +1540,10 @@ def main() -> int:
       action = request.get("action", "submit_generation")
       if action == "generation_status":
           response = generation_status(request, state_path)
+      elif action == "generation_admin_secrets":
+          response = generation_admin_secrets(request, state_path)
+      elif action == "validate_seed_config":
+          response = validate_seed_config(request, state_path, spool_root)
       elif action == "stop_generation":
           response = stop_generation(request, state_path)
       elif action == "submit_generation":

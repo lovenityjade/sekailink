@@ -1,0 +1,44 @@
+{
+  "game_id": "secret_of_evermore",
+  "display_name": "Secret of Evermore",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apsoe"
+  ],
+  "patch_world_module": "worlds.soe",
+  "ap_world": "soe",
+  "required_roms": [
+    "secret_of_evermore"
+  ],
+  "client_mode": "web_ap_client",
+  "ap_client": "web_ap_client",
+  "web_ap_client": {
+    "game_key": "secret_of_evermore",
+    "client": "ap-soeclient",
+    "url": "http://evermizer.com/apclient/",
+    "source": "third_party/upstream/ap-soeclient",
+    "requires_sni_bridge": true
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "snes9x",
+    "ap_game": "Secret of Evermore"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "",
+  "support_status": "supported",
+  "tracker_status": "trackerless_supported",
+  "compatibility_notes": "SNES/SNI game. Uses the upstream Evermizer browser AP client through SekaiLink's web_ap_client wrapper. Uses Snes9x core to match the Evermizer/SNI browser-client runtime path without changing the default SNES core."
+}

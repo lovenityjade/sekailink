@@ -217,15 +217,19 @@ const PrototypeShell: React.FC<PrototypeShellProps> = ({ children }) => {
       }
       const appInfo = {
         ...(artifacts.appInfo || {}),
+        source: "client-core",
+        component: "sekailink-client-core",
         bizhawk_sekailink_version: String(runtimeVersions?.bizhawk_version || ""),
         poptracker_sekailink_version: String(runtimeVersions?.poptracker_version || ""),
       };
+      const reporterName = String(me?.display_name || me?.global_name || me?.username || "SekaiLink Client").slice(0, 80);
       const response = await apiFetch("/api/client/bug-report", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           title,
           description,
+          reporter_name: reporterName,
           screenshot_base64: artifacts.screenshotBase64 || "",
           logs_text: artifacts.logsText || "",
           system_info: artifacts.systemInfo || {},
@@ -242,7 +246,7 @@ const PrototypeShell: React.FC<PrototypeShellProps> = ({ children }) => {
     } finally {
       setBugReportSubmitting(false);
     }
-  }, []);
+  }, [me]);
 
   const logout = React.useCallback(async () => {
     setHeaderMenuOpen(false);

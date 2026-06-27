@@ -7,11 +7,11 @@
 namespace sekaiemu::spike {
 namespace {
 
-constexpr std::uint64_t kMessageTtlFrames = 60 * 12;
+constexpr std::uint64_t kMessageTtlFrames = 60 * 14;
 constexpr std::uint64_t kTypingRefreshFrames = 5;
 constexpr std::size_t kMaxStoredMessages = 64;
 constexpr std::size_t kMaxExternalMessageIds = 256;
-constexpr std::size_t kMaxVisibleLines = 8;
+constexpr std::size_t kMaxVisibleLines = 7;
 constexpr std::size_t kMaxInputChars = 160;
 constexpr std::size_t kMaxAuthorChars = 48;
 constexpr std::size_t kMaxSuggestionLines = 5;
@@ -342,10 +342,14 @@ void RuntimeChatOverlay::AddExternalMessage(std::uint64_t id,
   if (clean_text.empty()) {
     return;
   }
-  const bool system_like = kind == "system" || kind == "connection" || kind == "defeat";
+  const bool system_like = kind == "system" || kind == "connection" || kind == "defeat" ||
+                           kind == "archipelago" || kind == "web-ap-client" ||
+                           kind == "web-ap-client-command" || kind == "web-ap-client-error";
+  if (system_like) {
+    return;
+  }
   const bool likely_echo = frame >= last_submit_frame_ &&
                            frame - last_submit_frame_ < 60 * 10 &&
-                           !system_like &&
                            clean_text == last_submitted_text_;
   if (likely_echo) {
     return;
@@ -397,14 +401,15 @@ void RuntimeChatOverlay::Render(OverlayCanvas& canvas,
     return;
   }
 
-  const int scale = game_area_width >= 900 ? 3 : 2;
-  const int margin = std::max(8, game_area_width / 80);
-  const int line_height = 8 * scale + 3;
-  const int input_height = typing_ ? line_height + 9 : 0;
-  const int max_width = std::max(180, std::min(game_area_width - margin * 2, game_area_width * 74 / 100));
-  const std::size_t max_chars = static_cast<std::size_t>(std::max(12, (max_width - 14) / (6 * scale)));
+  const int scale = 2;
+  const int margin = std::max(18, std::min(34, game_area_width / 46));
+  const int line_height = 8 * scale + 9;
+  const int input_height = typing_ ? line_height + 22 : 0;
+  const int max_width = std::clamp(game_area_width * 50 / 100, 500, 760);
+  const std::size_t max_chars = static_cast<std::size_t>(std::max(22, (max_width - 34) / (6 * scale)));
 
   struct RenderLine {
+    std::string author;
     std::string text;
     std::uint8_t alpha = 255;
   };
@@ -415,9 +420,10 @@ void RuntimeChatOverlay::Render(OverlayCanvas& canvas,
     if (alpha == 0) {
       continue;
     }
-    const auto wrapped = WrapText(message.author + ": " + message.text, max_chars);
+    const auto author_width = std::min<std::size_t>(14, message.author.size() + 1);
+    const auto wrapped = WrapText(message.text, max_chars > author_width ? max_chars - author_width : max_chars);
     for (const auto& line : wrapped) {
-      lines.push_back(RenderLine{line, alpha});
+      lines.push_back(RenderLine{message.author, line, alpha});
     }
   }
   if (lines.size() > kMaxVisibleLines) {
@@ -429,28 +435,30 @@ void RuntimeChatOverlay::Render(OverlayCanvas& canvas,
   if (typing_) {
     const auto suggestions = BuildInputSuggestions();
     const int input_y = bottom - input_height + 2;
-    canvas.FillRect(margin, input_y, max_width, input_height - 2, UiColor{0, 0, 0, 185});
-    canvas.DrawRect(margin, input_y, max_width, input_height - 2, UiColor{190, 205, 230, 210});
+    canvas.FillRect(margin + 3, input_y + 3, max_width, input_height - 2, UiColor{0, 0, 0, 72});
+    canvas.FillRect(margin, input_y, max_width, input_height - 2, UiColor{14, 20, 27, 214});
+    canvas.DrawRect(margin, input_y, max_width, input_height - 2, UiColor{78, 205, 196, 190});
     const auto prompt = "> " + input_;
     DrawShadowedText(canvas,
-                     margin + 7,
-                     input_y + 6,
+                     margin + 12,
+                     input_y + 13,
                      prompt.size() > max_chars ? prompt.substr(prompt.size() - max_chars) : prompt,
-                     UiColor{245, 245, 245, 255},
+                     UiColor{236, 247, 247, 255},
                      scale);
     if (!suggestions.empty()) {
       const int suggestion_height =
           static_cast<int>(suggestions.size()) * line_height + 8;
       const int suggestion_y = std::max(margin, input_y - suggestion_height - 4);
-      canvas.FillRect(margin, suggestion_y, max_width, suggestion_height, UiColor{0, 0, 0, 205});
-      canvas.DrawRect(margin, suggestion_y, max_width, suggestion_height, UiColor{120, 225, 210, 220});
-      int suggestion_line_y = suggestion_y + 5;
+      canvas.FillRect(margin + 3, suggestion_y + 3, max_width, suggestion_height, UiColor{0, 0, 0, 66});
+      canvas.FillRect(margin, suggestion_y, max_width, suggestion_height, UiColor{14, 20, 27, 218});
+      canvas.DrawRect(margin, suggestion_y, max_width, suggestion_height, UiColor{78, 205, 196, 170});
+      int suggestion_line_y = suggestion_y + 7;
       for (const auto& suggestion : suggestions) {
         DrawShadowedText(canvas,
-                         margin + 8,
+                         margin + 12,
                          suggestion_line_y,
                          TruncateText(suggestion, max_chars),
-                         UiColor{210, 255, 248, 245},
+                         UiColor{190, 255, 247, 245},
                          scale);
         suggestion_line_y += line_height;
       }
@@ -458,11 +466,29 @@ void RuntimeChatOverlay::Render(OverlayCanvas& canvas,
     bottom = input_y - 3;
   }
 
-  int y = bottom - line_count * line_height;
+  const int panel_height = line_count > 0 ? line_count * line_height + 18 : 0;
+  int panel_y = bottom - panel_height;
+  if (line_count > 0) {
+    canvas.FillRect(margin + 4, panel_y + 4, max_width, panel_height, UiColor{0, 0, 0, 58});
+    canvas.FillRect(margin, panel_y, max_width, panel_height, UiColor{10, 14, 20, 146});
+    canvas.DrawRect(margin, panel_y, max_width, panel_height, UiColor{78, 205, 196, 78});
+  }
+  int y = panel_y + 9;
   for (const auto& line : lines) {
-    const UiColor background{0, 0, 0, static_cast<std::uint8_t>(line.alpha * 145 / 255)};
-    canvas.FillRect(margin, y - 2, max_width, line_height, background);
-    DrawShadowedText(canvas, margin + 7, y + 2, line.text, UiColor{245, 245, 245, line.alpha}, scale);
+    const auto author = TruncateText(line.author, 13);
+    const int author_width = static_cast<int>(author.size()) * 6 * scale + 12;
+    DrawShadowedText(canvas,
+                     margin + 12,
+                     y + 2,
+                     author,
+                     UiColor{78, 235, 224, line.alpha},
+                     scale);
+    DrawShadowedText(canvas,
+                     margin + 12 + author_width,
+                     y + 2,
+                     TruncateText(line.text, max_chars),
+                     UiColor{232, 239, 244, line.alpha},
+                     scale);
     y += line_height;
   }
 }

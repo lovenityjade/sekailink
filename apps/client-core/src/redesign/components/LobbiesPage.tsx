@@ -1,8 +1,9 @@
-import { Users, Zap, User, Clock, Calendar } from 'lucide-react';
+import { Users, Zap, User, Clock, Calendar, Search, Lock } from 'lucide-react';
+import type React from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { joinLobby, listLobbies, type LobbySummary } from '../../services/lobbyClient';
 import { trace, traceError } from '../../services/trace';
-import { ErrorModal } from './FeedbackModal';
+import { ErrorModal, LoadingModal } from './FeedbackModal';
 
 interface LobbiesPageProps {
   onCreateLobby?: () => void;
@@ -29,11 +30,31 @@ const maxPlayersForLobby = (lobby: LobbySummary) => {
   return Number.isFinite(max) && max > 0 ? max : 50;
 };
 
+const isAsyncLobby = (lobby: LobbySummary) => {
+  const metadata = lobby.metadata && typeof lobby.metadata === 'object' ? lobby.metadata : {};
+  const values = [
+    lobby.asynchronous,
+    lobby.is_async,
+    lobby.room_type,
+    (lobby as any).async,
+    (lobby as any).mode,
+    (lobby as any).lobby_type,
+    metadata.asynchronous,
+    metadata.is_async,
+    metadata.room_type,
+    metadata.mode,
+    metadata.lobby_type,
+  ];
+  return Boolean(lobby.async_state) || values.some((value) => value === true || String(value || '').toLowerCase() === 'async');
+};
+
 export default function LobbiesPage({ onCreateLobby, onJoinStart, onJoinError, onJoinLobby }: LobbiesPageProps = {}) {
   const [lobbies, setLobbies] = useState<LobbySummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [joiningId, setJoiningId] = useState('');
   const [error, setError] = useState('');
+  const [query, setQuery] = useState('');
+  const [showPrivate, setShowPrivate] = useState(true);
 
   const load = useCallback(async () => {
     trace('lobbies-page', 'load_start');
@@ -56,8 +77,25 @@ export default function LobbiesPage({ onCreateLobby, onJoinStart, onJoinError, o
     return () => window.clearInterval(interval);
   }, [load]);
 
-  const activeLobbies = useMemo(() => lobbies.filter((lobby) => !lobby.is_locked), [lobbies]);
-  const completedLobbies = useMemo(() => lobbies.filter((lobby) => lobby.is_locked), [lobbies]);
+  const filteredLobbies = useMemo(() => {
+    const clean = query.trim().toLowerCase();
+    return lobbies.filter((lobby) => {
+      if (!showPrivate && lobby.is_private) return false;
+      if (!clean) return true;
+      const haystack = [
+        lobby.name,
+        lobby.owner,
+        lobby.description,
+        (lobby as any).game,
+        (lobby as any).games,
+        (lobby as any).games_included,
+      ].join(' ').toLowerCase();
+      return haystack.includes(clean);
+    });
+  }, [lobbies, query, showPrivate]);
+  const activeLobbies = useMemo(() => filteredLobbies.filter((lobby) => !lobby.is_locked && !isAsyncLobby(lobby)), [filteredLobbies]);
+  const asyncLobbies = useMemo(() => filteredLobbies.filter((lobby) => !lobby.is_locked && isAsyncLobby(lobby)), [filteredLobbies]);
+  const completedLobbies = useMemo(() => filteredLobbies.filter((lobby) => lobby.is_locked), [filteredLobbies]);
 
   const handleJoin = async (lobby: LobbySummary) => {
     if (!lobby.id || joiningId) return;
@@ -85,49 +123,58 @@ export default function LobbiesPage({ onCreateLobby, onJoinStart, onJoinError, o
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold mb-1">Lobbies</h1>
-        <p className="text-[#8e8f94]">Manage your active and completed lobbies</p>
+        <p className="text-[#8e8f94]">Search active rooms, async rooms, and completed lobbies</p>
       </div>
 
-      {/* Active Lobbies Section */}
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <div className="w-1 h-6 bg-[#4ecdc4] rounded-full" />
-            <h2 className="text-xl font-bold">Active Lobbies</h2>
-            <span className="px-2 py-1 bg-[#4ecdc4]/20 text-[#4ecdc4] rounded-full text-xs font-bold">
-              {activeLobbies.length} Active
-            </span>
-          </div>
-          <button
-            onClick={onCreateLobby}
-            className="px-5 py-2.5 bg-gradient-to-r from-[#ff6b35] to-[#f38181] rounded-lg font-medium shadow-lg hover:shadow-xl glow-hover transition-all"
-          >
-            Create New Lobby
-          </button>
+      <div className="rounded-xl border border-[#2a2b30] bg-[#0e0f13]/80 p-4 flex flex-wrap items-center gap-3">
+        <div className="relative flex-1 min-w-72">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8e8f94]" />
+          <input
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search by title, host, or games included..."
+            className="w-full pl-10 pr-4 py-3 bg-[#14151a] border-2 border-[#2a2b30] rounded-lg text-white placeholder:text-[#8e8f94] focus:border-[#4ecdc4] outline-none"
+          />
         </div>
+        <button
+          onClick={() => setShowPrivate((value) => !value)}
+          className={`px-4 py-3 rounded-lg border text-sm font-medium flex items-center gap-2 ${
+            showPrivate ? 'border-[#4ecdc4] bg-[#4ecdc4]/10 text-[#4ecdc4]' : 'border-[#2a2b30] bg-[#14151a] text-[#8e8f94]'
+          }`}
+        >
+          <Lock className="w-4 h-4" />
+          Show Private Lobbies
+        </button>
+        <button
+          onClick={onCreateLobby}
+          className="px-5 py-3 bg-gradient-to-r from-[#ff6b35] to-[#f38181] rounded-lg font-medium shadow-lg hover:shadow-xl glow-hover transition-all"
+        >
+          Create New Lobby
+        </button>
+      </div>
 
-        <div className="grid grid-cols-1 gap-4">
+      <div className="grid grid-cols-2 gap-6">
+        <LobbyColumn
+          title="Active Lobbies"
+          accent="#4ecdc4"
+          count={activeLobbies.length}
+          emptyLabel={loading ? 'Loading lobbies...' : 'No active lobbies yet.'}
+        >
           {activeLobbies.map((lobby) => (
-            <ActiveLobbyCard
-              key={lobby.id}
-              name={lobby.name || lobby.id}
-              host={lobby.owner || 'Unknown'}
-              seedsInSync={Number(lobby.message_count || 0)}
-              players={Number(lobby.member_count || 0)}
-              maxPlayers={maxPlayersForLobby(lobby)}
-              status={lobby.is_locked ? 'in-progress' : 'waiting'}
-              createdAt={formatAge(lobby.last_activity)}
-              joining={joiningId === lobby.id}
-              onJoin={() => void handleJoin(lobby)}
-            />
+            <ActiveLobbyCard key={lobby.id} lobby={lobby} joining={joiningId === lobby.id} onJoin={() => void handleJoin(lobby)} />
           ))}
-          {!loading && activeLobbies.length === 0 && (
-            <EmptyLobbyState label="No active lobbies yet." />
-          )}
-          {loading && activeLobbies.length === 0 && (
-            <EmptyLobbyState label="Loading lobbies..." />
-          )}
-        </div>
+        </LobbyColumn>
+
+        <LobbyColumn
+          title="Async Lobbies"
+          accent="#aa96da"
+          count={asyncLobbies.length}
+          emptyLabel={loading ? 'Loading async lobbies...' : 'No async lobbies in this filter.'}
+        >
+          {asyncLobbies.map((lobby) => (
+            <ActiveLobbyCard key={lobby.id} lobby={lobby} joining={joiningId === lobby.id} onJoin={() => void handleJoin(lobby)} asyncLobby />
+          ))}
+        </LobbyColumn>
       </div>
 
       {/* Completed Lobbies Section */}
@@ -165,6 +212,12 @@ export default function LobbiesPage({ onCreateLobby, onJoinStart, onJoinError, o
           onClose={() => setError('')}
         />
       )}
+      {loading && (
+        <LoadingModal
+          title="Loading Lobbies"
+          message="Loading lobbies from Nexus..."
+        />
+      )}
     </div>
   );
 }
@@ -177,22 +230,49 @@ function EmptyLobbyState({ label }: { label: string }) {
   );
 }
 
-function ActiveLobbyCard({ name, host, seedsInSync, players, maxPlayers, status, createdAt, joining, onJoin }: {
-  name: string;
-  host: string;
-  seedsInSync: number;
-  players: number;
-  maxPlayers: number;
-  status: 'waiting' | 'in-progress';
-  createdAt: string;
+function LobbyColumn({ title, accent, count, emptyLabel, children }: {
+  title: string;
+  accent: string;
+  count: number;
+  emptyLabel: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-1 h-6 rounded-full" style={{ backgroundColor: accent }} />
+        <h2 className="text-xl font-bold">{title}</h2>
+        <span className="px-2 py-1 rounded-full text-xs font-bold" style={{ color: accent, backgroundColor: `${accent}22` }}>
+          {count}
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4">
+        {children}
+        {count === 0 && <EmptyLobbyState label={emptyLabel} />}
+      </div>
+    </div>
+  );
+}
+
+function ActiveLobbyCard({ lobby, asyncLobby, joining, onJoin }: {
+  lobby: LobbySummary;
+  asyncLobby?: boolean;
   joining?: boolean;
   onJoin: () => void;
 }) {
+  const name = lobby.name || lobby.id;
+  const host = lobby.owner || 'Unknown';
+  const seedsInSync = Number(lobby.message_count || 0);
+  const players = Number(lobby.member_count || 0);
+  const maxPlayers = maxPlayersForLobby(lobby);
+  const status: 'waiting' | 'in-progress' = lobby.is_locked ? 'in-progress' : 'waiting';
+  const createdAt = formatAge(lobby.last_activity);
   const statusConfig = {
     waiting: {
-      bg: 'bg-[#4ecdc4]',
-      text: 'Waiting',
-      gradient: 'from-[#4ecdc4]/10 to-transparent'
+      bg: asyncLobby ? 'bg-[#aa96da]' : 'bg-[#4ecdc4]',
+      text: asyncLobby ? 'Async' : 'Waiting',
+      gradient: asyncLobby ? 'from-[#aa96da]/10 to-transparent' : 'from-[#4ecdc4]/10 to-transparent'
     },
     'in-progress': {
       bg: 'bg-[#ff6b35]',
@@ -232,7 +312,7 @@ function ActiveLobbyCard({ name, host, seedsInSync, players, maxPlayers, status,
             disabled={joining}
             className="px-5 py-2.5 bg-[#2a2b30] hover:bg-[#3a3b40] rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
           >
-            {joining ? 'Joining...' : status === 'waiting' ? 'Join' : 'Spectate'}
+            {joining ? 'Joining...' : status === 'waiting' ? 'Join' : 'Return'}
           </button>
         </div>
       </div>

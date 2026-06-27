@@ -11,12 +11,20 @@ const releaseDir = path.join(appDir, "release");
 const packageJson = JSON.parse(fs.readFileSync(path.join(appDir, "package.json"), "utf8"));
 
 const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-const releaseVersion = String(process.env.SEKAILINK_RELEASE_VERSION || `${packageJson.version}-prebeta3.${today}.1`).trim();
+const packageVersion = String(packageJson.version || "").trim();
+const baseVersion = packageVersion.replace(/-prebeta3\.\d{8}\.\d+$/, "");
+const releaseVersion = String(process.env.SEKAILINK_RELEASE_VERSION || packageVersion || `${baseVersion}-prebeta3.${today}.1`).trim();
 const channel = String(process.env.SEKAILINK_RELEASE_CHANNEL || "test").trim();
 const build = String(process.env.SEKAILINK_RELEASE_BUILD || "release").trim();
 const dateDir = String(process.env.SEKAILINK_RELEASE_DATE || today).trim();
 const baseUrl = String(process.env.SEKAILINK_RELEASE_BASE_URL || `https://sekailink.com/downloads/client/prebeta3/${dateDir}`).replace(/\/+$/, "");
 const outputRoot = path.join(releaseDir, "update-bundles", dateDir);
+const requestedBundleKeys = new Set(
+  String(process.env.SEKAILINK_RELEASE_BUNDLES || "")
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean),
+);
 
 const bundles = [
   {
@@ -102,6 +110,10 @@ const releases = [];
 const artifacts = [];
 
 for (const bundle of bundles) {
+  if (requestedBundleKeys.size > 0 && !requestedBundleKeys.has(bundle.key)) {
+    log(`skip ${bundle.key}: not requested`);
+    continue;
+  }
   if (!fs.existsSync(bundle.source)) {
     log(`skip ${bundle.key}: missing ${bundle.source}`);
     continue;

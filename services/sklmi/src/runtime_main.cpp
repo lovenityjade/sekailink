@@ -1,3 +1,4 @@
+#include "bug_report_client.hpp"
 #include "runtime_jsonl_sink.hpp"
 #include "runtime_options.hpp"
 #include "sekailink_sklmi/api.hpp"
@@ -100,6 +101,37 @@ std::string DescribeManifest(const BridgeManifest& manifest) {
         << " core_profile=" << manifest.core_profile.name
         << " checks=" << manifest.checks.size()
         << " injections=" << manifest.injections.size();
+    if (manifest.archipelago_client_wrapper.enabled) {
+        out << " ap_client_wrapper=" << manifest.archipelago_client_wrapper.wrapper
+            << " ap_game_key=" << manifest.archipelago_client_wrapper.game_key
+            << " ap_world=" << manifest.archipelago_client_wrapper.world
+            << " ap_status=" << manifest.archipelago_client_wrapper.status;
+    }
+    return out.str();
+}
+
+std::string DescribeArchipelagoClientWrapper(const ArchipelagoClientWrapperConfig& config) {
+    if (!config.enabled) return "disabled";
+    std::ostringstream out;
+    out << "wrapper=" << config.wrapper
+        << " game_key=" << config.game_key
+        << " game=" << config.game
+        << " platform=" << config.platform
+        << " world=" << config.world
+        << " module=" << config.module
+        << " client_file=" << config.client_file
+        << " status=" << config.status
+        << " requires=";
+    if (config.dependency_hints.empty()) {
+        out << "[]";
+    } else {
+        out << "[";
+        for (std::size_t index = 0; index < config.dependency_hints.size(); ++index) {
+            if (index != 0) out << ",";
+            out << config.dependency_hints[index];
+        }
+        out << "]";
+    }
     return out.str();
 }
 
@@ -201,6 +233,15 @@ int main(int argc, char** argv) {
         std::cerr << "trace_log_open_failed\n";
         return 1;
     }
+    auto report_basic_failure = [&](const std::string& title, const std::string& detail) {
+        auto report = MakeBugReportContext(options, title, detail);
+        std::string report_error;
+        if (!SubmitBugReport(report, &report_error)) {
+            sink.trace({LogLevel::warning, "sklmi_runtime", "bug_report_failed", report_error, 0, 0});
+        } else {
+            sink.trace({LogLevel::info, "sklmi_runtime", "bug_report_submitted", title, 0, 0});
+        }
+    };
 
     std::unique_ptr<TrackerHeadlessRuntime> tracker_runtime;
     std::unique_ptr<TrackerForwardingEventSink> tracker_sink;
@@ -222,6 +263,8 @@ int main(int argc, char** argv) {
                  .initial_player_alias = options.player_alias},
                 &tracker_error)) {
             std::cerr << "tracker_init_failed:" << tracker_error << "\n";
+            sink.trace({LogLevel::error, "sklmi_runtime", "tracker_init_failed", tracker_error, 0, 0});
+            report_basic_failure("SKLMI tracker initialization failed", tracker_error);
             return 1;
         }
         tracker_sink = std::make_unique<TrackerForwardingEventSink>(sink, *tracker_runtime);
@@ -233,12 +276,34 @@ int main(int argc, char** argv) {
     if (!manifest.has_value()) {
         sink.trace({LogLevel::error, "sklmi_runtime", "manifest_load", manifest_error, 0, 0});
         std::cerr << "manifest_load_failed:" << manifest_error << "\n";
+        report_basic_failure("SKLMI manifest load failed", manifest_error);
         return 1;
     }
     if (!options.driver_instance_id.empty()) {
         manifest->driver_instance_id = options.driver_instance_id;
     }
     sink.trace({LogLevel::info, "sklmi_runtime", "manifest_loaded", DescribeManifest(*manifest), 0, 0});
+    if (manifest->archipelago_client_wrapper.enabled) {
+        sink.trace({LogLevel::info,
+                    "sklmi_runtime",
+                    "archipelago_client_wrapper",
+                    DescribeArchipelagoClientWrapper(manifest->archipelago_client_wrapper),
+                    0,
+                    0});
+    }
+    auto report_failure = [&](const std::string& title, const std::string& detail) {
+        auto report = MakeBugReportContext(options, title, detail);
+        report.bridge_id = manifest->bridge_id;
+        report.linkedworld_id = manifest->linkedworld_id;
+        report.core_profile = manifest->core_profile.name;
+        report.archipelago_client_wrapper = DescribeArchipelagoClientWrapper(manifest->archipelago_client_wrapper);
+        std::string report_error;
+        if (!SubmitBugReport(report, &report_error)) {
+            sink.trace({LogLevel::warning, "sklmi_runtime", "bug_report_failed", report_error, 0, 0});
+        } else {
+            sink.trace({LogLevel::info, "sklmi_runtime", "bug_report_submitted", title, 0, 0});
+        }
+    };
 
     std::filesystem::create_directories(options.runtime_state_root);
     const auto bridge_state_path = ResolveBridgeStatePath(*manifest, options.runtime_state_root);
@@ -254,6 +319,7 @@ int main(int argc, char** argv) {
             std::make_unique<RuntimeSocketMemoryProvider>(tcp_endpoint->first, tcp_endpoint->second);
         if (!ConnectWithRetry(*tcp_provider, sink, &connect_error)) {
             std::cerr << "provider_connect_failed:" << connect_error << "\n";
+            report_failure("SKLMI memory provider connection failed", connect_error);
             return 1;
         }
         provider = std::move(tcp_provider);
@@ -265,6 +331,7 @@ int main(int argc, char** argv) {
         auto unix_provider = std::make_unique<UnixSocketMemoryProvider>(options.memory_socket_path);
         if (!ConnectWithRetry(*unix_provider, sink, &connect_error)) {
             std::cerr << "provider_connect_failed:" << connect_error << "\n";
+            report_failure("SKLMI memory provider connection failed", connect_error);
             return 1;
         }
         provider = std::move(unix_provider);
@@ -313,6 +380,7 @@ int main(int argc, char** argv) {
             std::string tracker_error;
             if (!tracker_runtime->PublishSnapshotFastIfChanged(&tracker_error)) {
                 std::cerr << "tracker_snapshot_failed:" << tracker_error << "\n";
+                report_failure("SKLMI tracker snapshot failed", tracker_error);
                 return false;
             }
             next_tracker_publish_ms = monotonic_ms + kTrackerPublishIntervalMs;
@@ -326,6 +394,7 @@ int main(int argc, char** argv) {
         std::string tracker_error;
         if (!tracker_runtime->PublishSnapshotIfChanged(&tracker_error)) {
             std::cerr << "tracker_snapshot_failed:" << tracker_error << "\n";
+            report_failure("SKLMI tracker snapshot failed", tracker_error);
             return false;
         }
         next_tracker_publish_ms = monotonic_ms + kTrackerPublishIntervalMs;
@@ -361,6 +430,7 @@ int main(int argc, char** argv) {
                 "sklmi_runtime", "session_start", status.detail, 0, 0});
     if (status.state != RuntimeConnectionState::connected) {
         std::cerr << "session_start_failed:" << status.detail << "\n";
+        report_failure("SKLMI session start failed", status.detail);
         return 1;
     }
     if (tracker_runtime != nullptr) {
@@ -381,6 +451,7 @@ int main(int argc, char** argv) {
             sink.trace({LogLevel::error, "sklmi_runtime", "session_tick", status.detail, tick_index, monotonic_ms});
             session.stop();
             std::cerr << "session_tick_failed:" << status.detail << "\n";
+            report_failure("SKLMI session tick failed", status.detail);
             return 1;
         }
         if (tracker_runtime != nullptr) {

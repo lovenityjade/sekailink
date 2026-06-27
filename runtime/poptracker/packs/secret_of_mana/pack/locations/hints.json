@@ -1,0 +1,278 @@
+[
+    {
+        "name": "Early Game Hints",
+        "children": [
+            {
+                "name": "Potos Area Hints",
+                "map_locations": [
+                    {
+                        "map": "overworld_hints",
+                        "x": 2430,
+                        "y": 3200
+                    }
+                ],
+                "sections": [
+                    {
+                        "name": "Potos Elder Hint",
+                        "chest_unopened_img": "images/hint.png",
+                        "chest_opened_img": "images/hint_done.png",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Potos Cannon",
+                        "hosted_item": "cannon_hint"
+                    },
+                    {
+                        "name": "Potos Forest Sign",
+                        "chest_unopened_img": "images/hint.png",
+                        "chest_opened_img": "images/hint_done.png",
+                        "access_rules": [
+                            "$canCutStuff"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Potos Threeway Sign",
+                        "chest_unopened_img": "images/hint.png",
+                        "chest_opened_img": "images/hint_done.png",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Beware Goblins Sign",
+                        "chest_unopened_img": "images/hint.png",
+                        "chest_opened_img": "images/hint_done.png",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Sign in front of Neko",
+                        "chest_unopened_img": "images/hint.png",
+                        "chest_opened_img": "images/hint_done.png",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Sign north of Pandora",
+                        "chest_unopened_img": "images/hint.png",
+                        "chest_opened_img": "images/hint_done.png",
+                        "item_count": 1
+                    }
+                ]
+            },
+            {
+                "name": "Gaia's Navel Hints",
+                "map_locations": [
+                    {
+                        "map": "overworld_hints",
+                        "x": 2180,
+                        "y": 3235
+                    }
+                ],
+                "sections": [
+                    {
+                        "name": "Gaia's Navel Sign",
+                        "chest_unopened_img": "images/hint.png",
+                        "chest_opened_img": "images/hint_done.png",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Flower Guy",
+                        "chest_unopened_img": "images/hint.png",
+                        "chest_opened_img": "images/hint_done.png",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Sign in front of Kippo Vilalge",
+                        "chest_unopened_img": "images/hint.png",
+                        "chest_opened_img": "images/hint_done.png",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Gaia's Navel Cannon",
+                        "hosted_item": "cannon_hint"
+                    }
+                ]
+            },
+            {
+                "name": "Water Palace Hints",
+                "map_locations": [
+                    {
+                        "map": "overworld_hints",
+                        "x": 2125,
+                        "y": 2925
+                    }
+                ],
+                "sections": [
+                    {
+                        "name": "Water Palace Sign",
+                        "chest_unopened_img": "images/hint.png",
+                        "chest_opened_img": "images/hint_done.png",
+                        "item_count": 1
+                    }
+                ]
+            },
+            {
+                "name": "Upper Lands Cannon Hints",
+                "map_locations": [
+                    {
+                        "map": "overworld_hints",
+                        "x": 2620,
+                        "y": 2720
+                    }
+                ],
+                "sections": [
+                    {
+                        "hosted_item": "cannon_hint"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Mid Game Hints",
+        "access_rules": [
+            "$hasDrum",
+            "$canDestroyUFOrb"
+        ],
+        "children": [
+            {
+                "name": "North Town Hints",
+                "map_locations": [
+                    {
+                        "map": "overworld_hints",
+                        "x": 3200,
+                        "y": 1150
+                    }
+                ],
+                "sections": [
+                    {
+                        "name": "Krissie",
+                        "chest_unopened_img": "images/hint.png",
+                        "chest_opened_img": "images/hint_done.png",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Dyluck",
+                        "chest_unopened_img": "images/hint.png",
+                        "chest_opened_img": "images/hint_done.png",
+                        "item_count": 1
+                    }
+                ]
+            },
+            {
+                "name": "Santas House Hints",
+                "map_locations": [
+                    {
+                        "map": "overworld_hints",
+                        "x": 2625,
+                        "y": 625
+                    }
+                ],
+                "sections": [
+                    {
+                        "name": "Rudolph",
+                        "chest_unopened_img": "images/hint.png",
+                        "chest_opened_img": "images/hint_done.png",
+                        "item_count": 1
+                    }
+                ]
+            },
+            {
+                "name": "Kakara Cannon",
+                "map_locations": [
+                    {
+                        "map": "overworld_hints",
+                        "x": 720,
+                        "y": 1500
+                    }
+                ],
+                "sections": [
+                    {
+                        "hosted_item": "cannon_hint"
+                    }
+                ]
+            },
+            {
+                "name": "South Town Cannon",
+                "map_locations": [
+                    {
+                        "map": "overworld_hints",
+                        "x": 3680,
+                        "y": 1640
+                    }
+                ],
+                "sections": [
+                    {
+                        "hosted_item": "cannon_hint"
+                    }
+                ]
+            },
+            {
+                "name": "Ice Country Cannon",
+                "map_locations": [
+                    {
+                        "map": "overworld_hints",
+                        "x": 2860,
+                        "y": 630
+                    }
+                ],
+                "sections": [
+                    {
+                        "hosted_item": "cannon_hint"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Late Game Hints",
+        "access_rules": [
+            "$hasDrum"
+        ],
+        "children": [
+            {
+                "name": "Mountain Hints",
+                "map_locations": [
+                    {
+                        "map": "overworld_hints",
+                        "x": 1300,
+                        "y": 2900
+                    }
+                ],
+                "sections": [
+                    {
+                        "name": "Mandala Village Tower",
+                        "chest_unopened_img": "images/hint.png",
+                        "chest_opened_img": "images/hint_done.png",
+                        "item_count": 7
+                    },
+                    {
+                        "name": "Jehk and Johk",
+                        "chest_unopened_img": "images/hint.png",
+                        "chest_opened_img": "images/hint_done.png",
+                        "access_rules": [
+                            "$hasWhip"
+                        ],
+                        "item_count": 2
+                    }
+                ]
+            },
+            {
+                "name": "Tasnica Hints",
+                "map_locations": [
+                    {
+                        "map": "overworld_hints",
+                        "x": 388,
+                        "y": 3203
+                    }
+                ],
+                "sections": [
+                    {
+                        "name": "Tasnica King",
+                        "chest_unopened_img": "images/hint.png",
+                        "chest_opened_img": "images/hint_done.png",
+                        "item_count": 1
+                    }
+                ]
+            }
+        ]
+    }
+]

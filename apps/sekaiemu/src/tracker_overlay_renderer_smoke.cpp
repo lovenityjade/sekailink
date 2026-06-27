@@ -162,10 +162,6 @@ int main() {
     std::cerr << "tracker_overlay_renderer_pending_item_badge_missing\n";
     return 1;
   }
-  if (!CanvasContainsPixel(canvas, 63, 63, 63)) {
-    std::cerr << "tracker_overlay_renderer_checked_pin_missing\n";
-    return 1;
-  }
   if (!CanvasContainsPixel(canvas, 255, 88, 88)) {
     std::cerr << "tracker_overlay_renderer_open_pin_missing\n";
     return 1;

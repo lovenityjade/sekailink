@@ -84,7 +84,9 @@ const defaultValueForOption = (option: SeedOptionDefinition): unknown => {
   if (option.default_value !== undefined && option.default_value !== null) return option.default_value;
   if (option.type === "boolean") return false;
   if (option.type === "enum") return option.choices?.[0]?.yaml_value || "";
-  if (option.type === "integer" || option.type === "number") return option.validation_rules?.range_start ?? 0;
+  if (option.type === "integer" || option.type === "number") {
+    return option.validation_rules?.range_start ?? option.validation_rules?.minimum ?? option.validation_rules?.min ?? 0;
+  }
   if (option.type === "array") return [];
   if (option.type === "object") return {};
   return "";
@@ -106,7 +108,7 @@ const normalizeAdvancedValue = (option: SeedOptionDefinition, raw: unknown): unk
   const value = raw ?? defaultValueForOption(option);
   if (control === "toggle") return Boolean(value);
   if (control === "range" || control === "named_range" || option.type === "integer" || option.type === "number") {
-    const fallback = Number(option.validation_rules?.range_start ?? 0);
+    const fallback = Number(option.validation_rules?.range_start ?? option.validation_rules?.minimum ?? option.validation_rules?.min ?? 0);
     const parsed = option.type === "number" ? Number(value) : Number.parseInt(String(value ?? fallback), 10);
     return Number.isFinite(parsed) ? parsed : fallback;
   }
@@ -377,8 +379,8 @@ const SeedConfigModal: React.FC<SeedConfigModalProps> = ({
   const renderAdvancedControl = (option: SeedOptionDefinition) => {
     const value = advancedValues[option.option_key] ?? defaultValueForOption(option);
     const control = optionControl(option);
-    const min = Number(option.validation_rules?.range_start ?? 0);
-    const max = Number(option.validation_rules?.range_end ?? 100);
+    const min = Number(option.validation_rules?.range_start ?? option.validation_rules?.minimum ?? option.validation_rules?.min ?? 0);
+    const max = Number(option.validation_rules?.range_end ?? option.validation_rules?.maximum ?? option.validation_rules?.max ?? 100);
 
     if (control === "toggle") {
       return (

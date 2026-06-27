@@ -9,11 +9,52 @@ ChatApiHttpResponse ChatApiService::handle_world_config(
   const auto me = identity_user_id(identity);
   if (me.empty()) return {401, R"({"ok":false,"error":"unauthorized"})"};
   auto canonical_seed_game_key = [](std::string key) {
-    if (trim(key).empty()) return std::string{};
-    key = linkedworld_id_from_game(std::move(key));
+    key = lower(trim(std::move(key)));
+    if (key.empty()) return std::string{};
+    std::string normalized;
+    normalized.reserve(key.size());
+    bool last_was_separator = false;
+    for (const auto c : key) {
+      if (std::isalnum(static_cast<unsigned char>(c)) != 0) {
+        normalized.push_back(c);
+        last_was_separator = false;
+      } else if (!last_was_separator) {
+        normalized.push_back('_');
+        last_was_separator = true;
+      }
+    }
+    while (!normalized.empty() && normalized.front() == '_') normalized.erase(normalized.begin());
+    while (!normalized.empty() && normalized.back() == '_') normalized.pop_back();
+    key = std::move(normalized);
+    if (key.rfind("multiworldgg_", 0) == 0) key = key.substr(std::string("multiworldgg_").size());
     if (key == "alttp" || key == "a-link-to-the-past" || key == "a_link_to_the_past") {
       return std::string("a_link_to_the_past");
     }
+    static const std::unordered_map<std::string, std::string> aliases = {
+        {"chrono_trigger_jets_of_time", "chrono_trigger"},
+        {"final_fantasy_iv_free_enterprise", "final_fantasy_iv"},
+        {"final_fantasy_v_career_day", "final_fantasy_v"},
+        {"kirby_s_dream_land_3", "kirbys_dream_land_3"},
+        {"ladx", "links_awakening_dx"},
+        {"links_awakening_dx_beta", "links_awakening_dx"},
+        {"link_s_awakening_dx", "links_awakening_dx"},
+        {"the_legend_of_zelda_link_s_awakening_dx", "links_awakening_dx"},
+        {"the_legend_of_zelda_links_awakening_dx", "links_awakening_dx"},
+        {"lufia_ii_ancient_cave", "lufia_ii"},
+        {"luigi_s_mansion", "luigis_mansion"},
+        {"mario_and_luigi_superstar_saga", "mario_luigi_superstar_saga"},
+        {"mega_man_battle_network_3_blue", "mega_man_battle_network_3"},
+        {"paper_mario_the_thousand_year_door", "thousand_year_door"},
+        {"pokemon_firered_and_leafgreen", "pokemon_firered"},
+        {"pokemon_fire_red_and_leaf_green", "pokemon_firered"},
+        {"pokemon_red_and_blue", "pokemon_red_blue"},
+        {"the_legend_of_zelda_a_link_to_the_past", "a_link_to_the_past"},
+        {"the_legend_of_zelda_oracle_of_ages", "oracle_of_ages"},
+        {"the_legend_of_zelda_oracle_of_seasons", "oracle_of_seasons"},
+        {"the_legend_of_zelda_twilight_princess", "twilight_princess"},
+        {"zelda_ii_the_adventure_of_link", "zelda_ii"},
+    };
+    if (const auto it = aliases.find(key); it != aliases.end()) return it->second;
     return key;
   };
   if (method == "GET" && !parts.empty() && parts[0] == "seed-configs") {
@@ -45,6 +86,116 @@ ChatApiHttpResponse ChatApiService::handle_world_config(
     }
     return fallback;
   };
+  auto validate_saved_seed_config = [&](const std::string& config_id,
+                                        const std::string& version_id,
+                                        const std::string& game_key,
+                                        const std::string& game_display_name,
+                                        const std::string& title) -> std::optional<ChatApiHttpResponse> {
+    if (config_.generation_handoff_command.empty()) {
+      return std::nullopt;
+    }
+    const auto exported = forward_to_seed_config(
+        "POST",
+        "/users/" + me + "/seed-configs/" + config_id + "/export-yaml",
+        std::nullopt);
+    const auto exported_json = parse_body_json(exported);
+    const auto export_status = response_status_from_body(exported, exported_json);
+    if (export_status != 200 || !exported_json.value("ok", false) ||
+        !exported_json.contains("yaml") || !exported_json.at("yaml").is_string()) {
+      const auto cleanup = forward_to_seed_config("DELETE", "/users/" + me + "/seed-configs/" + config_id, std::nullopt);
+      (void)cleanup;
+      return ChatApiHttpResponse{
+          export_status,
+          nlohmann::json{
+              {"ok", false},
+              {"error", "seed_config_export_failed"},
+              {"detail", exported_json.value("error", std::string("unable_to_export_validation_yaml"))},
+          }.dump()};
+    }
+    const auto validation_id = "config-validation-" + config_id + "-" + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch()).count());
+    const nlohmann::json validation_request = {
+        {"schema_version", "sekailink-config-validation-request-v1"},
+        {"action", "validate_seed_config"},
+        {"generation_id", validation_id},
+        {"user_id", me},
+        {"player_name", identity_display_name(identity)},
+        {"config_id", config_id},
+        {"version_id", version_id},
+        {"title", title},
+        {"game_key", game_key},
+        {"game_display_name", game_display_name},
+        {"content", exported_json.at("yaml").get<std::string>()},
+        {"created_at", utc_now_iso8601()},
+    };
+    const auto handoff = run_generation_handoff(config_, validation_id, validation_request);
+    if (!handoff.ok || !handoff.response.value("ok", false)) {
+      const auto cleanup = forward_to_seed_config("DELETE", "/users/" + me + "/seed-configs/" + config_id, std::nullopt);
+      (void)cleanup;
+      const auto detail = handoff.response.is_object()
+          ? first_string_limited(handoff.response, {"detail", "message", "error"}, handoff.error, 4096)
+          : handoff.error;
+      return ChatApiHttpResponse{
+          400,
+          nlohmann::json{
+              {"ok", false},
+              {"error", "seed_config_apworld_validation_failed"},
+              {"detail", detail.empty() ? std::string("Archipelago rejected this seed config.") : detail},
+              {"generation_exit_code", handoff.response.is_object() && handoff.response.contains("generation_exit_code") ? handoff.response.at("generation_exit_code") : nlohmann::json(nullptr)},
+              {"generation_log_path", handoff.response.is_object() ? handoff.response.value("generation_log_path", std::string{}) : std::string{}},
+          }.dump()};
+    }
+    return std::nullopt;
+  };
+  if (method == "POST" && parts.size() == 1 && parts[0] == "seed-configs" &&
+      !config_.seed_config_user_token.empty() && is_decimal_id_string(me)) {
+    const auto request = body.value_or(nlohmann::json::object());
+    auto game_key = canonical_seed_game_key(first_string_limited(request, {"game_key"}, "", 120));
+    if (game_key.empty()) return {400, R"({"ok":false,"error":"missing_game_key"})"};
+    const auto values = request.contains("values") && request.at("values").is_object()
+        ? request.at("values")
+        : nlohmann::json::object();
+    nlohmann::json upstream_body = {
+        {"game_key", game_key},
+        {"name", first_string_limited(request, {"title", "name"}, "SekaiLink Seed", 120)},
+        {"description", first_string_limited(request, {"description"}, "Created from SekaiLink Client Core.", 240)},
+        {"values", values},
+    };
+    const auto upstream = forward_to_seed_config("POST", "/users/" + me + "/seed-configs", upstream_body);
+    const auto parsed = parse_body_json(upstream);
+    const auto status = response_status_from_body(upstream, parsed);
+    if (status != 200 || !parsed.value("ok", false) || !parsed.contains("config") || !parsed.at("config").is_object()) {
+      return {status, parsed.dump()};
+    }
+    const auto& config = parsed.at("config");
+    const auto config_id = json_id_or(config, "config_id", json_id_or(config, "id"));
+    const auto version_id = json_id_or(config, "version_id");
+    const auto game_display_name = seed_game_display_name(game_key, first_string_limited(request, {"game"}, game_key, 120));
+    const auto title = first_string_limited(config, {"name", "title"}, upstream_body.value("name", std::string("SekaiLink Seed")), 120);
+    if (const auto validation_error = validate_saved_seed_config(config_id, version_id, game_key, game_display_name, title);
+        validation_error.has_value()) {
+      return *validation_error;
+    }
+    nlohmann::json item = {
+        {"id", config_id},
+        {"config_id", config_id},
+        {"yaml_id", config_id},
+        {"title", title},
+        {"name", title},
+        {"game", game_display_name},
+        {"game_key", game_key},
+        {"game_display_name", game_display_name},
+        {"linkedworld_id", linkedworld_id_from_game(game_key)},
+        {"player_name", identity_display_name(identity)},
+        {"custom", true},
+        {"source", "advanced.seed_config_api"},
+        {"validation_status", config_.generation_handoff_command.empty() ? "skipped" : "validated"},
+        {"values", config.contains("values") && config.at("values").is_object() ? config.at("values") : values},
+    };
+    if (!version_id.empty()) item["version_id"] = version_id;
+    if (config.contains("values_hash") && config.at("values_hash").is_string()) item["values_hash"] = config.at("values_hash");
+    return {200, nlohmann::json{{"ok", true}, {"seed", item}, {"yaml", item}, {"source", "nexus.seed_config_api"}}.dump()};
+  }
   auto explicit_seed_config_values = [&](const std::string& game_key, const nlohmann::json& values) {
     if (!values.is_object()) return nlohmann::json::object();
     const auto upstream = forward_to_seed_config("GET", "/seed-configs/games/" + game_key + "/options", std::nullopt);
@@ -193,7 +344,9 @@ ChatApiHttpResponse ChatApiService::handle_world_config(
     session["session_id"] = pulse_session_id(session);
     if (answered >= questions.size()) {
       session["complete"] = true;
-      session["summary"] = "Pulse has enough information to create this Sync config.";
+      if (!session.contains("summary") || !session.at("summary").is_string() || session.at("summary").get<std::string>().empty()) {
+        session["summary"] = "Pulse has enough information to create this Sync config.";
+      }
     } else {
       session["complete"] = false;
       session["question"] = questions.at(answered);
@@ -334,6 +487,57 @@ ChatApiHttpResponse ChatApiService::handle_world_config(
     }
     return values;
   };
+  auto pulse_local_answer = [](std::string prompt) {
+    const auto text = lower(trim(std::move(prompt)));
+    if (text.empty()) {
+      return std::string("Pose-moi une question sur Archipelago, les settings, les trackers ou SekaiLink et je vais te repondre avec ma base locale.");
+    }
+    if (text.find("keysanity") != std::string::npos || text.find("key sanity") != std::string::npos) {
+      return std::string("Keysanity veut dire que les cles, et parfois les maps/compasses/big keys selon le jeu, deviennent des checks/items randomises au lieu de rester dans leur structure normale. C'est plus long a router et le tracker devient beaucoup plus important.");
+    }
+    if (text.find("sphere") != std::string::npos || text.find("spheres") != std::string::npos) {
+      return std::string("Une sphere est une couche de progression du spoiler log. La sphere 0 correspond au depart, puis chaque sphere suivante liste les checks rendus logiquement accessibles grace aux items obtenus dans les spheres precedentes.");
+    }
+    if (text.find("spoiler") != std::string::npos || text.find("hint") != std::string::npos || text.find("indice") != std::string::npos) {
+      return std::string("Je peux aider a lire un spoiler log ou donner un indice, mais il faut que la seed ne soit pas en contexte de race et que le joueur accepte les spoilers. En mode safe, je peux expliquer la logique sans reveler les placements exacts.");
+    }
+    if (text.find("bk") != std::string::npos || text.find("bloque") != std::string::npos || text.find("blocked") != std::string::npos) {
+      return std::string("BK veut dire que tu es bloque cote progression. Logical BK signifie qu'il te manque un item logique venant probablement d'un autre check ou joueur. Full BK signifie que tu n'as vraiment plus de check raisonnable a faire sans aide, hint ou verification de sync.");
+    }
+    if (text.find("deathlink") != std::string::npos || text.find("death link") != std::string::npos) {
+      return std::string("DeathLink est une option reseau ou la mort d'un joueur peut envoyer une mort aux autres joueurs qui ont aussi active DeathLink. Ce n'est pas universel: il faut que le jeu ou le client le supporte explicitement.");
+    }
+    if (text.find("yaml") != std::string::npos || text.find("setting") != std::string::npos || text.find("option") != std::string::npos) {
+      return std::string("Le YAML est la configuration d'un slot Archipelago: jeu, nom du joueur, objectif, logique, shuffles et options propres au monde. Pour bien l'expliquer, il faut separer les options communes d'Archipelago des options specifiques au jeu.");
+    }
+    if (text.find("tracker") != std::string::npos || text.find("poptracker") != std::string::npos) {
+      return std::string("Un tracker sert a visualiser les items, les checks restants et parfois la logique accessible. PopTracker est la cible principale de SekaiLink pour le moment; Universal Tracker est interessant, mais reste une avenue separee.");
+    }
+    if (text.find("apworld") != std::string::npos || text.find("archipelago") != std::string::npos) {
+      return std::string("Un APWorld est le module Archipelago qui decrit un jeu: ses items, locations, options, logique et generation. SekaiLink utilise ces informations pour aider la creation de seeds, le suivi des rooms et l'integration client/emulateur.");
+    }
+    if (text.find("sync") != std::string::npos || text.find("connexion") != std::string::npos || text.find("connect") != std::string::npos) {
+      return std::string("Pour diagnostiquer une sync, verifie dans l'ordre: le bon serveur/room, le bon slot, le client connecte, l'etat safe du jeu pour recevoir les items, puis les logs SKLMI/Sekaiemu. Certains jeux retardent les items en combat, menu ou script.");
+    }
+    return std::string("Je suis en mode base de connaissances locale pour l'instant. Je peux expliquer les termes de randomizer, les settings Archipelago, les trackers, la logique de seed et les diagnostics de connexion. Donne-moi le jeu et le setting qui te melange.");
+  };
+  if (parts.size() == 2 && parts[0] == "pulse" && parts[1] == "chat") {
+    if (method != "POST") return pulse_error(405, "method_not_allowed");
+    const auto request = body.value_or(nlohmann::json::object());
+    const auto prompt = first_string_limited(request, {"prompt", "message", "content"}, "", 4000);
+    return {
+        200,
+        nlohmann::json{
+            {"ok", true},
+            {"answer", pulse_local_answer(prompt)},
+            {"source", "pulse.local_knowledge_fallback"},
+            {"degraded", true},
+        }.dump()};
+  }
+  if (parts.size() == 2 && parts[0] == "pulse" && parts[1] == "feedback") {
+    if (method != "POST") return pulse_error(405, "method_not_allowed");
+    return {200, nlohmann::json{{"ok", true}, {"source", "pulse.feedback_ack"}}.dump()};
+  }
   if (parts.size() >= 3 && parts[0] == "pulse" && parts[1] == "seed-config" && parts[2] == "sessions") {
     if (!is_decimal_id_string(me)) return pulse_error(502, "seed_config_user_mapping_unavailable");
     if (method == "POST" && parts.size() == 3) {
@@ -378,6 +582,20 @@ ChatApiHttpResponse ChatApiService::handle_world_config(
           {"answer_label", first_string_limited(request, {"answer_label", "label"}, answer_id, 120)},
       });
       (*session)["answers"] = std::move(answers);
+      if (session->at("answers").is_array() && session->at("answers").size() >= questions.size()) {
+        const auto game_key = canonical_seed_game_key(first_string_limited(*session, {"game_key"}, "", 120));
+        const auto ids = pulse_answer_ids(*session);
+        const auto values = pulse_values_from_answers(game_key, ids);
+        (*session)["summary"] = "Pulse selected a guided " + first_string_limited(*session, {"game_name"}, game_key, 120) +
+                                " setup based on your answers. Review the settings below before creating the seed.";
+        (*session)["seed"] = {
+            {"title", first_string_limited(*session, {"title"}, "Pulse Seed", 120)},
+            {"game", first_string_limited(*session, {"game_name"}, game_key, 120)},
+            {"game_key", game_key},
+            {"source", "pulse"},
+            {"values", values},
+        };
+      }
       return pulse_response_for_session(std::move(*session));
     }
     if (method == "POST" && parts.size() == 5 && parts[4] == "confirm") {
@@ -389,7 +607,10 @@ ChatApiHttpResponse ChatApiService::handle_world_config(
       if (game_key.empty()) return pulse_error(400, "missing_game_key");
       const auto game_name = seed_game_display_name(game_key, first_string_limited(*session, {"game_name"}, game_key, 120));
       const auto values = pulse_values_from_answers(game_key, ids);
-      const auto name = sanitized_text("Pulse " + game_name + " " + utc_now_iso8601(), 120);
+      const auto requested_name = first_string_limited(body.value_or(nlohmann::json::object()), {"title", "name"}, "", 120);
+      const auto name = requested_name.empty()
+          ? sanitized_text("Pulse " + game_name + " " + utc_now_iso8601(), 120)
+          : sanitized_text(requested_name, 120);
       nlohmann::json upstream_body = {
           {"game_key", game_key},
           {"name", name},
@@ -404,12 +625,18 @@ ChatApiHttpResponse ChatApiService::handle_world_config(
       }
       const auto& config = parsed.at("config");
       const auto config_id = json_id_or(config, "config_id", json_id_or(config, "id"));
+      const auto version_id = json_id_or(config, "version_id");
+      const auto title = first_string_limited(config, {"name", "title"}, name, 120);
+      if (const auto validation_error = validate_saved_seed_config(config_id, version_id, game_key, game_name, title);
+          validation_error.has_value()) {
+        return *validation_error;
+      }
       nlohmann::json seed = {
           {"id", config_id},
           {"config_id", config_id},
           {"yaml_id", config_id},
-          {"title", first_string_limited(config, {"name", "title"}, name, 120)},
-          {"name", first_string_limited(config, {"name", "title"}, name, 120)},
+          {"title", title},
+          {"name", title},
           {"game", game_name},
           {"game_key", game_key},
           {"game_display_name", game_name},
@@ -417,9 +644,9 @@ ChatApiHttpResponse ChatApiService::handle_world_config(
           {"player_name", identity_display_name(identity)},
           {"custom", true},
           {"source", "pulse.seed_config_api"},
+          {"validation_status", config_.generation_handoff_command.empty() ? "skipped" : "validated"},
           {"values", config.contains("values") && config.at("values").is_object() ? config.at("values") : values},
       };
-      const auto version_id = json_id_or(config, "version_id");
       if (!version_id.empty()) seed["version_id"] = version_id;
       return {200, nlohmann::json{{"ok", true}, {"seed", seed}, {"yaml", seed}, {"source", "pulse.seed_config_api"}}.dump()};
     }
@@ -441,6 +668,18 @@ ChatApiHttpResponse ChatApiService::handle_world_config(
         const auto game_display_name = seed_game_display_name(
             game_key,
             first_string_limited(config, {"game_display_name", "game"}, game_key.empty() ? std::string("unknown") : game_key, 120));
+        auto source = first_string_limited(config, {"source"}, "", 80);
+        if (source.empty()) {
+          const auto description = lower(first_string_limited(config, {"description"}, "", 240));
+          const auto title = lower(first_string_limited(config, {"name", "title"}, config_id, 120));
+          if (description.find("pulse") != std::string::npos || title.rfind("pulse ", 0) == 0) {
+            source = "pulse";
+          } else if (description.find("easy") != std::string::npos || title.rfind("easy ", 0) == 0) {
+            source = "easy";
+          } else {
+            source = "nexus.seed_config_api";
+          }
+        }
         nlohmann::json item = {
             {"id", config_id},
             {"config_id", config_id},
@@ -453,9 +692,10 @@ ChatApiHttpResponse ChatApiService::handle_world_config(
             {"linkedworld_id", game_key.empty() ? linkedworld_id_from_game(game_display_name) : linkedworld_id_from_game(game_key)},
             {"player_name", identity_display_name(identity)},
             {"custom", true},
-            {"source", "nexus.seed_config_api"},
+            {"source", source},
         };
         if (!version_id.empty()) item["version_id"] = version_id;
+        if (config.contains("description") && config.at("description").is_string()) item["description"] = config.at("description");
         if (config.contains("values") && config.at("values").is_object()) item["values"] = config.at("values");
         if (config.contains("values_hash") && config.at("values_hash").is_string()) item["values_hash"] = config.at("values_hash");
         if (config.contains("updated_at") && config.at("updated_at").is_string()) item["updated_at"] = config.at("updated_at");
@@ -571,6 +811,7 @@ ChatApiHttpResponse ChatApiService::handle_world_config(
       const auto values = request.contains("values") && request.at("values").is_object()
           ? request.at("values")
           : nlohmann::json::object();
+      const auto requested_source = first_string_limited(request, {"source", "mode"}, "", 80);
       nlohmann::json upstream_body = {
           {"game_key", game_key},
           {"name", first_string_limited(request, {"title", "name"}, "SekaiLink Seed", 120)},
@@ -597,7 +838,7 @@ ChatApiHttpResponse ChatApiService::handle_world_config(
             {"linkedworld_id", linkedworld_id_from_game(game_key)},
             {"player_name", identity_display_name(identity)},
             {"custom", true},
-            {"source", "nexus.seed_config_api"},
+            {"source", requested_source.empty() ? std::string("nexus.seed_config_api") : requested_source},
         };
         if (!version_id.empty()) item["version_id"] = version_id;
         return {200, nlohmann::json{{"ok", true}, {"id", config_id}, {"yaml", item}, {"source", "nexus.seed_config_api"}}.dump()};

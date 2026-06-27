@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SekaiLink Pulse Console</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="pulse-rail" aria-label="Pulse">
+        <div class="brand">
+          <img src="/sekailink-logo-text.png" alt="SekaiLink" />
+          <span>Pulse Console</span>
+        </div>
+        <div class="portrait-wrap">
+          <img class="portrait" src="/pulse.png" alt="Pulse" />
+          <div class="halo"></div>
+        </div>
+        <div class="status-card">
+          <div class="status-line">
+            <span class="dot" id="pulseDot"></span>
+            <strong id="pulseStatus">Checking Pulse...</strong>
+          </div>
+          <p id="pulseMeta">RAG, model and console status will appear here.</p>
+        </div>
+        <div class="quick-prompts">
+          <button type="button" data-prompt="Challenge cette idée: est-ce que SekaiLink devrait prioriser les jeux avec Generic Lua BizHawk avant les intégrations SNI spécifiques?">Challenge Roadmap</button>
+          <button type="button" data-prompt="Explique-moi les risques d'une configuration ALTTP trop chaotique pour une première seed publique.">Risk Review</button>
+          <button type="button" data-prompt="Quelles questions devrais-je poser à Pulse pour améliorer un preset casual ALTTP?">Better Questions</button>
+        </div>
+      </section>
+
+      <section class="workbench" aria-label="Conversation avec Pulse">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Direct channel</p>
+            <h1>Parler à Pulse</h1>
+          </div>
+          <div class="top-actions">
+            <button id="copyLast" type="button" title="Copier la dernière réponse">Copy</button>
+            <button id="exportLog" type="button" title="Exporter cette session">Export</button>
+            <button id="clearChat" type="button" title="Effacer la session locale">Clear</button>
+          </div>
+        </header>
+
+        <section id="messages" class="messages" aria-live="polite">
+          <article class="message pulse">
+            <div class="avatar">P</div>
+            <div class="bubble">
+              <div class="message-head">
+                <strong>Pulse</strong>
+                <span>ready</span>
+              </div>
+              <p>Je suis branchée. Donne-moi une idée à challenger, une question APWorld, ou un contexte de bug. Je vais rester directe.</p>
+            </div>
+          </article>
+        </section>
+
+        <form id="askForm" class="composer">
+          <div class="file-strip">
+            <label class="file-button" for="fileInput">Attach files</label>
+            <input id="fileInput" type="file" multiple accept=".yaml,.yml,.json,.txt,.log,.spoiler" />
+            <div id="fileList" class="file-list">No files attached</div>
+          </div>
+          <textarea id="messageInput" rows="4" placeholder="Pose ta question à Pulse..." required></textarea>
+          <div class="composer-actions">
+            <div class="hint" id="charHint">0 / 6000</div>
+            <button id="sendButton" type="submit">Send to Pulse</button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="context-panel" aria-label="Contexte">
+        <div class="panel-block">
+          <label for="modeSelect">Mode</label>
+          <select id="modeSelect">
+            <option value="challenge">Challenge</option>
+            <option value="normal">Normal</option>
+            <option value="debug">Debug</option>
+            <option value="explain">Explain</option>
+            <option value="draft">AP Draft</option>
+            <option value="summary">AP Summary</option>
+          </select>
+        </div>
+        <div class="panel-block">
+          <label for="scopeSelect">Scope</label>
+          <select id="scopeSelect">
+            <option value="pulse">Pulse General</option>
+            <option value="apworld">APWorld RAG</option>
+          </select>
+        </div>
+        <div class="panel-block">
+          <label for="gameKey">Game key</label>
+          <input id="gameKey" type="text" value="alttp" />
+        </div>
+        <div class="panel-block grow">
+          <label for="contextInput">Contexte optionnel</label>
+          <textarea id="contextInput" rows="10" placeholder="Colle ici un résumé, un bug, un extrait non-secret, ou les contraintes à respecter."></textarea>
+        </div>
+        <div class="rules">
+          <strong>Guardrails</strong>
+          <p>Pas de secrets, pas de SSH, pas de commandes serveur. Pulse peut challenger, expliquer, diagnostiquer, et aider les configs.</p>
+        </div>
+      </aside>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>

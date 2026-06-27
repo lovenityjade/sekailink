@@ -1,5 +1,53 @@
 # Changelog
 
+## 2026-06-26
+
+- Fixed live SNES generation for Super Mario World on Worlds.
+- Installed the validated Super Mario World USA ROM on Worlds at `/opt/sekailink-generate/roms/smw_usa.sfc` with MD5 `cdd3c8c37322978ca8669b34bc89c804`.
+- Updated all active generator `host.yaml` copies so `smw_options.rom_file` uses the absolute Super Mario World ROM path:
+  `/opt/sekailink-generate/host.yaml`,
+  `/opt/sekailink/worlds/generation-server/host.yaml`, and
+  `/opt/sekailink/worlds/generation-server/home/.local/share/SekaiLink/host.yaml`.
+- Verified the live generator venv can load `worlds.smw.Rom.get_base_rom_bytes()` successfully.
+- Fixed live SNES generation for Lufia II Ancient Cave on Worlds.
+- Installed the validated Lufia II USA ROM on Worlds at `/opt/sekailink-generate/roms/lufia2_usa.sfc` with MD5 `6efc477d6203ed2b3b9133c1cd9e9c5d`.
+- Updated all active generator `host.yaml` copies so `lufia2ac_options.rom_file` uses the absolute Lufia II ROM path:
+  `/opt/sekailink-generate/host.yaml`,
+  `/opt/sekailink/worlds/generation-server/host.yaml`, and
+  `/opt/sekailink/worlds/generation-server/home/.local/share/SekaiLink/host.yaml`.
+- Verified the live generator venv can load `worlds.lufia2ac.Rom.get_base_rom_bytes()` successfully.
+- Fixed live GB/GBC generation for Wario Land on Worlds.
+- Patched the live Wario Land APWorld ROM loader in `/opt/sekailink-generate/worlds/wl/Rom.py` to use the Archipelago settings API instead of deprecated `Utils.get_options()`.
+- Installed the validated Wario Land World ROM on Worlds at `/opt/sekailink-generate/roms/wario_land_world.gb` with MD5 `d9d957771484ef846d4e8d241f6f2815`.
+- Updated the active generator `host.yaml` at `/opt/sekailink-generate/host.yaml` so `wl_options.rom_file` uses the absolute Wario Land ROM path.
+- Verified the live generator venv can load both `worlds.dkc3.Rom.get_base_rom_bytes()` and `worlds.wl.Rom.get_base_rom_bytes()` successfully.
+
+## 2026-06-25
+
+- Installed the validated Donkey Kong Country 3 USA ROM on Worlds for Archipelago's `dkc3_options`.
+- Added the DKC3 ROM path to the live generator `host.yaml` and also placed the file in Archipelago's `user_path` under the exact canonical name expected by the APWorld.
+- Verified `worlds.dkc3.Rom.get_base_rom_bytes()` succeeds on Worlds with MD5 `120abf304f0c40fe059f6a192ed4f947`.
+
+## 2026-06-21
+
+- Installed Secret of Mana's `som.apworld` into both the live generator and
+  runtime world folders on Worlds.
+- Added `som` to the live `SEKAILINK_WORLD_FILTER` and restarted the
+  generation server.
+- Configured the required Secret of Mana USA ROM path for the generator user
+  data and validated its expected MD5.
+- Confirmed a live Secret of Mana generation smoke produces an AP archive.
+
+## 2026-06-20
+
+- Stabilized the live Worlds/APWorld generator after the Archipelago 0.6.7 update.
+- Added `SEKAILINK_DISABLE_SPEEDUPS` support in `NetUtils.py` so live generation can use the pure Python `LocationStore` path instead of trying to compile `_speedups.pyx` on the VPS.
+- Pinned the live generation virtualenv back to a compatible requests stack: `requests 2.32.5`, `urllib3 2.5.0`, and `chardet 5.2.0`.
+- Added generation-service preflight logs for missing `Players/` paths, output directory creation failures, and empty command templates.
+- Made the native generation service pass `SKIP_REQUIREMENTS_UPDATE=1`, `PYTHONNOUSERSITE=1`, and `SEKAILINK_DISABLE_SPEEDUPS=1` to generation child processes.
+- Deployed the rebuilt `sekailink_generation_server_service` on Worlds with a timestamped binary backup.
+- Validated the live TCP generation path with a successful The Legend of Zelda smoke job and a negative missing-`Players/` smoke that now returns `generation_preflight_failed: yaml_path_missing` in `error_detail`.
+
 ## 2026-05-18
 
 - Added a server-first seed package path for LinkedWorlds using `patch.mode=server_dispatch`.

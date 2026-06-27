@@ -1,0 +1,97 @@
+[
+    {
+        "name": "Palace on the Sea",
+        "chest_unopened_img": "/images/items/close.png",
+        "chest_opened_img": "/images/items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "@Eastern Hyrule, boots"
+        ],
+        "sections": [
+            {
+                "name": "Palace on the Sea: Ledge Item",
+                "access_rules": ["fairyspell"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Palace on the Sea: Crumbling Bridge",
+                "access_rules": ["fairyspell"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Palace on the Sea: Falling Blocks",
+                "access_rules": ["^$key|sea|1|1, fairyspell, handyglove"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Palace on the Sea: Above Elevator",
+                "access_rules": ["^$key|sea|1|1, fairyspell, jumpspell"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Palace on the Sea: Block Alcove",
+                "access_rules": ["^$key|sea|1|1, fairyspell, handyglove, upthrust, downthrust"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Palace on the Sea: Knuckle Alcove",
+                "access_rules": ["^$key|sea|1|1, fairyspell, jumpspell"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Palace on the Sea: Pedestal Item",
+                "access_rules": ["^$key|sea|3|5, fairyspell"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Palace on the Sea: Skeleton Key",
+                "access_rules": ["^$key|sea|1|1, fairyspell"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Palace on the Sea: West Wing",
+                "access_rules": ["^$key|sea|2|4, fairyspell"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Palace on the Sea: Block Line",
+                "access_rules": ["^$key|sea|2|4, fairyspell, handyglove","^$key|sea|2|4, fairyspell, jumpspell"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Palace on the Sea: West Knuckle Alcove",
+                "access_rules": ["^$key|sea|2|4, fairyspell, handyglove, upthrust, downthrust"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Palace on the Sea: Gooma Drop",
+                "access_rules": ["^$key|sea|3|5, fairyspell"],
+                "visibility_rules": [],
+                "item_count": 1
+            }
+        ],
+        "map_locations": [
+            {
+                "map": "Overworld",
+                "x": "2180",
+                "y": "899"
+            },
+            {
+                "map": "East Hyrule",
+                "x": "1029",
+                "y": "522"
+            }
+        ]
+    }
+]

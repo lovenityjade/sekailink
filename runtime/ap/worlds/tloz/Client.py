@@ -16,6 +16,17 @@ if TYPE_CHECKING:
 base_id = 7000
 logger = logging.getLogger("Client")
 
+
+def sekailink_socket_closed(socket) -> bool:
+    if socket is None:
+        return True
+    if hasattr(socket, "closed"):
+        return bool(getattr(socket, "closed"))
+    state = getattr(socket, "state", None)
+    if state is not None and str(state).upper().endswith("CLOSED"):
+        return True
+    return False
+
 WRAM_NAMES = {
     "NesHawk": "Battery RAM",
     "SubNESHawk": "Battery RAM",
@@ -65,7 +76,7 @@ class TLOZClient(BizHawkClient):
         ctx.auth = auth_raw.decode().replace('\x00', ' ').strip()
 
     async def game_watcher(self, ctx: "BizHawkClientContext") -> None:
-        if ctx.server is None or ctx.server.socket.closed or ctx.slot_data is None:
+        if ctx.server is None or sekailink_socket_closed(ctx.server.socket) or ctx.slot_data is None:
             return
         try:
             if self.major_location_offsets is None:

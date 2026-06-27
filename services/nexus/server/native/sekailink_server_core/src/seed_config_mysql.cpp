@@ -641,7 +641,7 @@ std::vector<SeedConfigUserConfigSnapshot> SeedConfigMysqlStore::list_user_config
     std::int64_t user_id,
     const std::optional<std::string>& game_key) const {
   auto sql =
-      "SELECT c.id, v.id, c.user_id, g.game_key, c.name, v.values_json, v.values_hash "
+      "SELECT c.id, v.id, c.user_id, g.game_key, c.name, c.description, v.values_json, v.values_hash "
       "FROM user_game_configs c "
       "JOIN games g ON g.id = c.game_id "
       "JOIN user_game_config_versions v ON v.id = c.current_version_id "
@@ -668,8 +668,9 @@ std::vector<SeedConfigUserConfigSnapshot> SeedConfigMysqlStore::list_user_config
         .user_id = row[2] == nullptr ? 0 : std::stoll(row[2]),
         .game_key = row[3] == nullptr ? "" : std::string(row[3], lengths[3]),
         .name = row[4] == nullptr ? "" : std::string(row[4], lengths[4]),
-        .values = row[5] == nullptr ? nlohmann::json::object() : nlohmann::json::parse(std::string(row[5], lengths[5])),
-        .values_hash = row[6] == nullptr ? "" : std::string(row[6], lengths[6]),
+        .description = row[5] == nullptr ? "" : std::string(row[5], lengths[5]),
+        .values = row[6] == nullptr ? nlohmann::json::object() : nlohmann::json::parse(std::string(row[6], lengths[6])),
+        .values_hash = row[7] == nullptr ? "" : std::string(row[7], lengths[7]),
     });
   }
   mysql_free_result(result);

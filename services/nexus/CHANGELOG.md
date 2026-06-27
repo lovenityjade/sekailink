@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-21 - Secret of Mana seed config import
+
+- Imported the Secret of Mana seed-config schema into the live Nexus
+  seed-config API and verified it exposes 37 options to authenticated clients.
+
+## 2026-06-06 - Identity registration hardening
+
+- Added a one-hour minimum clamp for email verification token TTL so a bad
+  service config cannot issue registration links that expire before delivery.
+
 ## 2026-05-30 - Shared seed config presets
 
 - Added a generic Nexus shared preset layer for `Game -> Preset -> Values`,

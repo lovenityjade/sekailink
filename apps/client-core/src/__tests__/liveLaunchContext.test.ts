@@ -64,10 +64,13 @@ describe("live launch context", () => {
       }),
     ).toEqual({
       playerName: "Jade-ALTTP",
+      slotName: "Jade-ALTTP",
+      accountName: "Jade-ALTTP",
       slotId: 1,
       downloadUrl: "https://link.sekailink.com/generation_artifacts/sync/1/player.aplttp",
       downloadUrls: ["https://link.sekailink.com/generation_artifacts/sync/1/player.aplttp"],
       apGameName: "A Link to the Past",
+      matched: true,
     });
   });
 
@@ -122,10 +125,13 @@ describe("live launch context", () => {
       }),
     ).toEqual({
       playerName: "Jade-ALTTP-Second",
+      slotName: "Jade-ALTTP-Second",
+      accountName: "Jade-ALTTP-Second",
       slotId: 2,
       downloadUrl: "https://link.sekailink.com/generation_artifacts/sync/entry-2/Jade-ALTTP-Second.aplttp",
       downloadUrls: ["https://link.sekailink.com/generation_artifacts/sync/entry-2/Jade-ALTTP-Second.aplttp"],
       apGameName: "A Link to the Past",
+      matched: true,
     });
   });
 
@@ -168,10 +174,144 @@ describe("live launch context", () => {
       }),
     ).toEqual({
       playerName: "thelov-alin-5836",
+      slotName: "thelov-alin-5836",
+      accountName: "thelovenityjade",
       slotId: 1,
       downloadUrl: "https://link.sekailink.com/generation_artifacts/sync/entry-1/AP_Seed_P1_thelov-alin-5836.aplttp",
       downloadUrls: ["https://link.sekailink.com/generation_artifacts/sync/entry-1/AP_Seed_P1_thelov-alin-5836.aplttp"],
       apGameName: "A Link to the Past",
+      matched: true,
+    });
+  });
+
+  it("does not use the shared account username as a slot fallback in multi-game rooms", () => {
+    const downloads = indexDownloadsBySlot([], (download) => `https://link.sekailink.com${download}`);
+    const playersByName = indexPlayersByName([
+      { slot: 1, name: "thelov-alin-223f", game: "A Link to the Past" },
+      { slot: 2, name: "thelov-donk-3bc7", game: "Donkey Kong Country" },
+      { slot: 3, name: "thelov-eart-8ab7", game: "EarthBound" },
+    ]);
+
+    expect(
+      buildSelfLaunchContext({
+        roomStatus: {
+          players: [
+            { slot: 1, name: "thelov-alin-223f", game: "A Link to the Past" },
+            { slot: 2, name: "thelov-donk-3bc7", game: "Donkey Kong Country" },
+            { slot: 3, name: "thelov-eart-8ab7", game: "EarthBound" },
+          ],
+          launch_entries: [
+            {
+              entry_id: "entry-1",
+              username: "thelovenityjade",
+              config_id: "cfg-alttp",
+              slot: 1,
+              slot_name: "thelov-alin-223f",
+              game: "A Link to the Past",
+              artifact_extension: ".aplttp",
+              artifact_kind: "patch",
+              download: "/generation_artifacts/sync/1/alttp.aplttp",
+            },
+            {
+              entry_id: "entry-2",
+              username: "thelovenityjade",
+              config_id: "cfg-dkc",
+              slot: 2,
+              slot_name: "thelov-donk-3bc7",
+              game: "Donkey Kong Country",
+              artifact_extension: ".apdkc",
+              artifact_kind: "patch",
+              download: "/generation_artifacts/sync/2/dkc.apdkc",
+            },
+            {
+              entry_id: "entry-3",
+              username: "thelovenityjade",
+              config_id: "cfg-earthbound",
+              slot: 3,
+              slot_name: "thelov-eart-8ab7",
+              game: "EarthBound",
+              artifact_extension: ".apeb",
+              artifact_kind: "patch",
+              download: "/generation_artifacts/sync/3/earthbound.apeb",
+            },
+          ],
+        },
+        playerName: "thelovenityjade",
+        selection: {
+          id: "cfg-dkc",
+          game: "Donkey Kong Country",
+          player_name: "thelovenityjade",
+        },
+        toUrl: (download) => `https://link.sekailink.com${download}`,
+        downloadsBySlot: downloads.single,
+        downloadsBySlotMulti: downloads.multi,
+        playersByName,
+      }),
+    ).toEqual({
+      playerName: "thelov-donk-3bc7",
+      slotName: "thelov-donk-3bc7",
+      accountName: "thelovenityjade",
+      slotId: 2,
+      downloadUrl: "https://link.sekailink.com/generation_artifacts/sync/2/dkc.apdkc",
+      downloadUrls: ["https://link.sekailink.com/generation_artifacts/sync/2/dkc.apdkc"],
+      apGameName: "Donkey Kong Country",
+      matched: true,
+    });
+  });
+
+  it("refuses ambiguous selected configs instead of falling back to the account username", () => {
+    const downloads = indexDownloadsBySlot([], (download) => `https://link.sekailink.com${download}`);
+    const playersByName = indexPlayersByName([
+      { slot: 1, name: "thelov-alin-1111", game: "A Link to the Past" },
+      { slot: 2, name: "thelov-alin-2222", game: "A Link to the Past" },
+    ]);
+
+    expect(
+      buildSelfLaunchContext({
+        roomStatus: {
+          players: [
+            { slot: 1, name: "thelov-alin-1111", game: "A Link to the Past" },
+            { slot: 2, name: "thelov-alin-2222", game: "A Link to the Past" },
+          ],
+          launch_entries: [
+            {
+              entry_id: "entry-1",
+              username: "thelovenityjade",
+              slot: 1,
+              slot_name: "thelov-alin-1111",
+              game: "A Link to the Past",
+              artifact_kind: "patch",
+              artifact_extension: ".aplttp",
+              download: "/generation_artifacts/sync/1/alttp.aplttp",
+            },
+            {
+              entry_id: "entry-2",
+              username: "thelovenityjade",
+              slot: 2,
+              slot_name: "thelov-alin-2222",
+              game: "A Link to the Past",
+              artifact_kind: "patch",
+              artifact_extension: ".aplttp",
+              download: "/generation_artifacts/sync/2/alttp.aplttp",
+            },
+          ],
+        },
+        playerName: "thelovenityjade",
+        selection: {
+          game: "A Link to the Past",
+          player_name: "thelovenityjade",
+        },
+        toUrl: (download) => `https://link.sekailink.com${download}`,
+        downloadsBySlot: downloads.single,
+        downloadsBySlotMulti: downloads.multi,
+        playersByName,
+      }),
+    ).toMatchObject({
+      playerName: "",
+      slotName: "",
+      accountName: "thelovenityjade",
+      matched: false,
+      matchError: "ambiguous_launch_entry",
     });
   });
 
@@ -233,10 +373,13 @@ describe("live launch context", () => {
       }),
     ).toEqual({
       playerName: "Joueur-alin-bbde",
+      slotName: "Joueur-alin-bbde",
+      accountName: "JoueurSansFromage",
       slotId: 2,
       downloadUrl: "https://link.sekailink.com/generation_artifacts/sync/entry-2/AP_74082915752897734568_P2_Joueur-alin-bbde.aplttp",
       downloadUrls: ["https://link.sekailink.com/generation_artifacts/sync/entry-2/AP_74082915752897734568_P2_Joueur-alin-bbde.aplttp"],
       apGameName: "A Link to the Past",
+      matched: true,
     });
   });
 

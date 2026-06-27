@@ -1,0 +1,45 @@
+{
+  "game_id": "final_fantasy_tactics_advance",
+  "display_name": "Final Fantasy Tactics Advance",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apffta"
+  ],
+  "patch_world_module": "worlds.ffta",
+  "ap_world": "ffta",
+  "required_roms": [
+    "final_fantasy_tactics_advance"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "final_fantasy_tactics_advance",
+    "world": "ffta",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/ffta/client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".gba"
+    ],
+    "md5": [
+      "cd99cdde3d45554c1b36fbeb8863b7bd"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "gba",
+    "ap_game": "Final Fantasy Tactics Advance"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "",
+  "support_status": "not_available",
+  "tracker_status": "trackerless_supported",
+  "compatibility_notes": "Temporarily unavailable: client connection was observed, but item/check transactions are unable to test manually because checks depend on FFTA mission reward flow. Needs a dedicated FFTA tester before re-enabling.",
+  "availability_status": "unavailable_gba_pending_tester"
+}

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { apiCurrentUser, apiFetch, apiJson, apiUrl } from "../services/api";
+import { apiAssetUrl, apiCurrentUser, apiFetch, apiJson, apiUrl, isUsableAvatarUrl } from "../services/api";
 import { chatService } from "../services/chatService";
 import { getLaunchErrorMessage, type LaunchRecoveryAction } from "../services/launchRecovery";
 import { getLaunchReadiness } from "../services/launchReadiness";
@@ -215,6 +215,7 @@ interface LobbyProfileData {
   bio: string;
   badges: string[];
   user_id?: string;
+  avatar_url?: string;
 }
 
 interface HintCatalogResponse {
@@ -613,6 +614,7 @@ const LobbyPage: React.FC = () => {
     onWarning: (text) => showToast(text, "error"),
     onSm64ManualTutorial: () => setSm64exTutorialOpen(true),
   });
+  const launchInProgress = launchModalOpen && !launchError;
 
   useEffect(() => {
     if (!toast) return;
@@ -1878,6 +1880,7 @@ const LobbyPage: React.FC = () => {
         })(),
         badges: member.is_host ? ["Host"] : [],
         user_id: member.discord_id,
+        avatar_url: member.discord_id === me?.discord_id && isUsableAvatarUrl(me?.avatar_url) ? apiAssetUrl(me?.avatar_url) : "",
       },
     });
   };
@@ -1994,6 +1997,7 @@ const LobbyPage: React.FC = () => {
   };
 
   const handleLaunch = async (downloadUrls?: string | string[]) => {
+    if (launchInProgress) return;
     window.SKL_SFX?.stopBgm?.();
     const launchRes = await executeRoomSessionLaunch({
       downloadUrls,
@@ -2196,9 +2200,11 @@ const LobbyPage: React.FC = () => {
   }, [selfDownloadUrl]);
 
   const selfLaunchBlockedBySetup = Boolean(selfSelectionGame && localLaunchReadiness && !localLaunchReadiness.ready);
-  const selfLaunchDisabled = !selfCanLaunch || selfLaunchBlockedBySetup;
+  const selfLaunchDisabled = !selfCanLaunch || selfLaunchBlockedBySetup || launchInProgress;
   const selfLaunchTitle = !selfCanLaunch
     ? "No launch package is available for you yet."
+    : launchInProgress
+      ? "SekaiLink is already launching this game."
     : selfLaunchBlockedBySetup
       ? String(localLaunchReadiness?.errorText || localLaunchReadiness?.note || "Local setup is incomplete.")
       : "Launch your game through SekaiLink.";
@@ -2268,6 +2274,7 @@ const LobbyPage: React.FC = () => {
                       type="button"
                       disabled={selfLaunchDisabled}
                       onClick={() => {
+                        if (selfLaunchDisabled) return;
                         sfx.play("confirm", 0.2);
                         handleLaunch(selfDownloadUrls || selfDownloadUrl);
                       }}
@@ -2360,6 +2367,7 @@ const LobbyPage: React.FC = () => {
                       type="button"
                       disabled={selfLaunchDisabled}
                       onClick={() => {
+                        if (selfLaunchDisabled) return;
                         sfx.play("confirm", 0.2);
                         handleLaunch(selfDownloadUrls || selfDownloadUrl);
                       }}
@@ -3276,8 +3284,11 @@ const LobbyPage: React.FC = () => {
                             <button
                               type="button"
                               className="skl-btn ghost"
-                              onClick={() => handleLaunch(patches)}
-                              disabled={!isSelf}
+                              onClick={() => {
+                                if (!isSelf || launchInProgress) return;
+                                handleLaunch(patches);
+                              }}
+                              disabled={!isSelf || launchInProgress}
                             >
                               {isSelf ? "Launch All" : "All Patches"}
                             </button>
@@ -3289,8 +3300,11 @@ const LobbyPage: React.FC = () => {
                                 key={url}
                                 type="button"
                                 className="skl-btn ghost"
-                                onClick={() => handleLaunch(url)}
-                                disabled={!isSelf}
+                                onClick={() => {
+                                  if (!isSelf || launchInProgress) return;
+                                  handleLaunch(url);
+                                }}
+                                disabled={!isSelf || launchInProgress}
                               >
                                 {isSelf ? `Launch ${label}` : label}
                               </button>
@@ -3319,6 +3333,23 @@ const LobbyPage: React.FC = () => {
             {profileModal.error && !profileModal.loading && <div className="skl-ready-status">{profileModal.error}</div>}
             {!profileModal.loading && !profileModal.error && profileModal.data && (
               <div className="skl-player-info">
+                <div className="skl-player-info-row">
+                  <span className="skl-player-info-label">Profile</span>
+                  <span className="skl-player-info-value" style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
+                    {isUsableAvatarUrl(profileModal.data.avatar_url) ? (
+                      <img
+                        className="skl-chat-avatar"
+                        src={apiAssetUrl(profileModal.data.avatar_url)}
+                        alt={`${profileModal.data.display_name || "Player"} avatar`}
+                      />
+                    ) : (
+                      <span className="skl-chat-avatar" aria-hidden="true" style={{ display: "inline-grid", placeItems: "center" }}>
+                        {(profileModal.data.display_name || "?").slice(0, 1).toUpperCase()}
+                      </span>
+                    )}
+                    {profileModal.data.display_name || "-"}
+                  </span>
+                </div>
                 <div className="skl-player-info-row">
                   <span className="skl-player-info-label">Name</span>
                   <span className="skl-player-info-value">{profileModal.data.display_name || "-"}</span>

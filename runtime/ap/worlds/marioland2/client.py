@@ -148,6 +148,17 @@ class MarioLand2Client(BizHawkClient):
             elif data["type"] == "bell" and data["id"] == current_level and midway_point == 0xFF:
                 locations_checked.append(ID)
 
+        if locations_checked and locations_checked != self.locations_array:
+            server_open = bool(ctx.server and ctx.server.socket.open and not ctx.server.socket.closed)
+            known_missing = sorted(set(locations_checked) & set(getattr(ctx, "missing_locations", set())))
+            known_checked = sorted(set(locations_checked) & set(getattr(ctx, "checked_locations", set())))
+            logger.info(
+                "SML2 watcher checks=%s current_level=%s midway=%s music=0x%02x "
+                "server_open=%s missing=%s checked=%s",
+                locations_checked, current_level, midway_point, music, server_open,
+                known_missing, known_checked,
+            )
+
         invincibility_length = int((832.0 / (star_count + 1))
                                    * (items_received.count("Super Star Duration Increase") + 1))
 
@@ -228,6 +239,7 @@ class MarioLand2Client(BizHawkClient):
 
         if locations_checked and locations_checked != self.locations_array:
             self.locations_array = locations_checked
+            logger.info("SML2 sending LocationChecks: %s", locations_checked)
             await ctx.send_msgs([{"cmd": "LocationChecks", "locations": locations_checked}])
 
         if music == 0x18:

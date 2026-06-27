@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { APP_TOAST_EVENT, type AppToastKind, type AppToastPayload } from "@/services/toast";
+import { APP_TOAST_EVENT, openSocialDm, type AppToastKind, type AppToastPayload } from "@/services/toast";
 
 type NotificationItem = {
   id: number;
@@ -7,6 +7,7 @@ type NotificationItem = {
   kind: AppToastKind;
   read: boolean;
   createdAt: string;
+  action?: AppToastPayload["action"];
 };
 
 const STORAGE_KEY = "sklp_notification_center_v1";
@@ -31,6 +32,7 @@ const NotificationCenter: React.FC = () => {
           kind: (entry.kind === "success" || entry.kind === "error" ? entry.kind : "info") as AppToastKind,
           read: Boolean(entry.read),
           createdAt: String(entry.createdAt || new Date().toISOString()),
+          action: entry.action && typeof entry.action === "object" ? entry.action : undefined,
         }))
         .filter((entry) => entry.message);
       setItems(hydrated.slice(0, MAX_ITEMS));
@@ -60,6 +62,7 @@ const NotificationCenter: React.FC = () => {
         kind: (detail.kind || "info") as AppToastKind,
         read: false,
         createdAt: new Date().toISOString(),
+        action: detail.action,
       };
       setItems((prev) => [next, ...prev].slice(0, MAX_ITEMS));
       if (selectedId === null) setSelectedId(id);
@@ -75,12 +78,18 @@ const NotificationCenter: React.FC = () => {
   );
 
   const markAllRead = () => {
-    setItems((prev) => prev.map((item) => ({ ...item, read: true })));
+    setItems([]);
+    setSelectedId(null);
   };
 
   const selectItem = (id: number) => {
-    setSelectedId(id);
-    setItems((prev) => prev.map((item) => (item.id === id ? { ...item, read: true } : item)));
+    const item = items.find((entry) => entry.id === id);
+    if (item?.action?.type === "open_dm") {
+      openSocialDm(item.action.userId, item.action.name);
+      setOpen(false);
+    }
+    setItems((prev) => prev.filter((entry) => entry.id !== id));
+    setSelectedId((current) => (current === id ? null : current));
   };
 
   return (
@@ -101,7 +110,7 @@ const NotificationCenter: React.FC = () => {
           <header className="sklp-notify-head">
             <div className="sklp-notify-title">Notifications</div>
             <button type="button" className="sklp-notify-markall" onClick={markAllRead} disabled={!items.length}>
-              Mark all as Read
+              Clear Read
             </button>
           </header>
 
@@ -141,4 +150,3 @@ const NotificationCenter: React.FC = () => {
 };
 
 export default NotificationCenter;
-

@@ -1,0 +1,26 @@
+{
+  "name": "sekailink-bootloader",
+  "version": "0.1.0",
+  "description": "SekaiLink clean update bootloader.",
+  "author": "SekaiLink",
+  "private": true,
+  "main": "main.cjs",
+  "type": "commonjs",
+  "scripts": {
+    "start": "electron ."
+  },
+  "build": {
+    "extraResources": [
+      {
+        "from": "resources/bin",
+        "to": "bin"
+      }
+    ]
+  },
+  "devDependencies": {
+    "electron": "28.2.0"
+  },
+  "dependencies": {
+    "extract-zip": "^2.0.1"
+  }
+}

@@ -39,6 +39,8 @@ namespace sekailink_server {
 
 namespace {
 
+constexpr std::uint32_t kMinimumSessionTtlSeconds = 60 * 60 * 24 * 30;
+
 std::string http_status_text(int status_code) {
   switch (status_code) {
     case 200:
@@ -1386,6 +1388,9 @@ IdentityServiceConfig load_identity_service_config(const std::filesystem::path& 
   }
   if (json.contains("session_ttl_seconds")) {
     config.session_ttl_seconds = json.at("session_ttl_seconds").get<std::uint32_t>();
+  }
+  if (config.session_ttl_seconds < kMinimumSessionTtlSeconds) {
+    config.session_ttl_seconds = kMinimumSessionTtlSeconds;
   }
   if (json.contains("password_reset_ttl_seconds")) {
     config.password_reset_ttl_seconds = json.at("password_reset_ttl_seconds").get<std::uint32_t>();

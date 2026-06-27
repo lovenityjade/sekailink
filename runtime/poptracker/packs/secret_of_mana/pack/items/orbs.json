@@ -1,0 +1,154 @@
+[
+    //header
+    {
+        "name": "Earth Temple",
+        "type": "static",
+        "capturable": false,
+        "img": "images/overlay_et.png",
+        "img_mods": "stretch",
+        "codes": "header_et"
+    },
+    {
+        "name": "Upper Land Forest",
+        "type": "static",
+        "capturable": false,
+        "img": "images/overlay_uf.png",
+        "codes": "header_uf"
+    },
+    {
+        "name": "Matango Cave",
+        "type": "static",
+        "capturable": false,
+        "img": "images/overlay_mc.png",
+        "codes": "header_mc"
+    },
+    {
+        "name": "Fire Palace",
+        "type": "static",
+        "capturable": false,
+        "img": "images/overlay_fp.png",
+        "codes": "header_fp"
+    },
+    {
+        "name": "Moon Palace",
+        "type": "static",
+        "capturable": false,
+        "img": "images/overlay_mp.png",
+        "codes": "header_mp"
+    },
+    {
+        "name": "Grand Palace",
+        "type": "static",
+        "capturable": false,
+        "img": "images/overlay_gp.png",
+        "codes": "header_gp"
+    },
+    //header short
+    {
+        "name": "Earth Temple",
+        "type": "static",
+        "capturable": false,
+        "img": "images/overlay_et_short.png",
+        "img_mods": "stretch",
+        "codes": "header_et_short"
+    },
+    {
+        "name": "Upper Land Forest",
+        "type": "static",
+        "capturable": false,
+        "img": "images/overlay_uf_short.png",
+        "codes": "header_uf_short"
+    },
+    {
+        "name": "Matango Cave",
+        "type": "static",
+        "capturable": false,
+        "img": "images/overlay_mc_short.png",
+        "codes": "header_mc_short"
+    },
+    {
+        "name": "Fire Palace",
+        "type": "static",
+        "capturable": false,
+        "img": "images/overlay_fp_short.png",
+        "codes": "header_fp_short"
+    },
+    {
+        "name": "Moon Palace",
+        "type": "static",
+        "capturable": false,
+        "img": "images/overlay_mp_short.png",
+        "codes": "header_mp_short"
+    },
+    {
+        "name": "Grand Palace",
+        "type": "static",
+        "capturable": false,
+        "img": "images/overlay_gp_short.png",
+        "codes": "header_gp_short"
+    },
+    //generics
+    {
+        "name": "Unanalysed Orb",
+        "type": "static",
+        "capturable": true,
+        "img": "images/orb.png",
+        "codes": "orb_unknown"
+    },
+    {
+        "name": "Undine Orb",
+        "type": "static",
+        "capturable": true,
+        "img": "images/orb_undine.png",
+        "codes": "orb_undine"
+    },
+    {
+        "name": "Gnome Orb",
+        "type": "static",
+        "capturable": true,
+        "img": "images/orb_gnome.png",
+        "codes": "orb_gnome"
+    },
+    {
+        "name": "Sylphid Orb",
+        "type": "static",
+        "capturable": true,
+        "img": "images/orb_sylphid.png",
+        "codes": "orb_sylphid"
+    },
+    {
+        "name": "Salamando Orb",
+        "type": "static",
+        "capturable": true,
+        "img": "images/orb_salamando.png",
+        "codes": "orb_salamando"
+    },
+    {
+        "name": "Shade Orb",
+        "type": "static",
+        "capturable": true,
+        "img": "images/orb_shade.png",
+        "codes": "orb_shade"
+    },
+    {
+        "name": "Lumina Orb",
+        "type": "static",
+        "capturable": true,
+        "img": "images/orb_lumina.png",
+        "codes": "orb_lumina"
+    },
+    {
+        "name": "Luna Orb",
+        "type": "static",
+        "capturable": true,
+        "img": "images/orb_luna.png",
+        "codes": "orb_luna"
+    },
+    {
+        "name": "Dryad Orb",
+        "type": "static",
+        "capturable": true,
+        "img": "images/orb_dryad.png",
+        "codes": "orb_dryad"
+    }
+]

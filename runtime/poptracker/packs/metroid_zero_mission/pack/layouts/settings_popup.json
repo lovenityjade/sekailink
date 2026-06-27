@@ -1,0 +1,38 @@
+{
+    "settings_popup": {
+        "type": "container",
+        "background": "#000000",
+        "content": [
+            {
+                "type": "tabbed",
+                "background": "#000000",
+                "tabs": [
+                    {
+                        "title": "Options",
+                        "icon": "images/items/SpeedBooster.png",
+                        "content": {
+                            "type": "layout",
+                            "key": "options"
+                        }
+                    },
+                    {
+                        "title": "Layout Patches",
+                        "icon": "images/options/LayoutBlockBreakable.png",
+                        "content": {
+                            "type": "layout",
+                            "key": "layout_patches"
+                        }
+                    },
+                    {
+                        "title": "Tricks",
+                        "icon": "images/items/Bomb.png",
+                        "content": {
+                            "type": "layout",
+                            "key": "tricks"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

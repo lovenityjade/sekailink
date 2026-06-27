@@ -335,6 +335,9 @@ void TrackerRuntime::EnsureSelectionConsistency() {
     if (followed_map.empty()) {
       followed_map = ResolveZoneMapId();
     }
+    if (!followed_map.empty()) {
+      ui_state_.previous_map_id = followed_map;
+    }
     if (const auto tab_id = FindVisibleTabForMap(followed_map); !tab_id.empty()) {
       ui_state_.active_tab_id = tab_id;
       if (const auto* tab = bundle_->FindTab(tab_id); tab != nullptr && !tab->view_id.empty()) {
@@ -442,6 +445,12 @@ std::string TrackerRuntime::ResolvedMapId() const {
   }
   if (const auto zone_map = ResolveZoneMapId(); !zone_map.empty()) {
     return zone_map;
+  }
+  if (ResolvedAutoFollowMap() && !ui_state_.previous_map_id.empty()) {
+    if (const auto* previous_map = bundle_->FindMap(ui_state_.previous_map_id);
+        previous_map != nullptr && MapVisible(*previous_map)) {
+      return previous_map->id;
+    }
   }
   if (const auto* active_tab = bundle_->FindTab(ui_state_.active_tab_id);
       active_tab != nullptr && !active_tab->map_id.empty()) {

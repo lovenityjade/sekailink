@@ -54,6 +54,15 @@ const SettingsPage: React.FC = () => {
   const [sekaiemuRootDir, setSekaiemuRootDir] = useState("");
   const [sekaiemuCoreDirsText, setSekaiemuCoreDirsText] = useState("");
   const [sekaiemuArgsText, setSekaiemuArgsText] = useState("");
+  const [sekaiemuSettingsMode, setSekaiemuSettingsMode] = useState<"easy" | "advanced">("easy");
+  const [sekaiemuChatOverlayEnabled, setSekaiemuChatOverlayEnabled] = useState(true);
+  const [sekaiemuNotificationsEnabled, setSekaiemuNotificationsEnabled] = useState(true);
+  const [sekaiemuBridgeTerminalEnabled, setSekaiemuBridgeTerminalEnabled] = useState(false);
+  const [sekaiemuMasterVolume, setSekaiemuMasterVolume] = useState(50);
+  const [sekaiemuTrackerDisplayMode, setSekaiemuTrackerDisplayMode] = useState("split-screen");
+  const [sekaiemuTrackerScreenVisible, setSekaiemuTrackerScreenVisible] = useState(true);
+  const [sekaiemuTrackerAutoFollow, setSekaiemuTrackerAutoFollow] = useState(true);
+  const [sekaiemuCorePrefsText, setSekaiemuCorePrefsText] = useState("");
   const [sohExePath, setSohExePath] = useState("");
   const [sohRootDir, setSohRootDir] = useState("");
   const [sohAutoInstall, setSohAutoInstall] = useState(true);
@@ -160,6 +169,17 @@ const SettingsPage: React.FC = () => {
     setSekaiemuRootDir(typeof sekaiemu?.root_dir === "string" ? sekaiemu.root_dir : "");
     setSekaiemuCoreDirsText(Array.isArray(sekaiemu?.core_dirs) ? sekaiemu.core_dirs.join("\n") : "");
     setSekaiemuArgsText(Array.isArray(sekaiemu?.args) ? sekaiemu.args.join("\n") : "");
+    const frontend = sekaiemu?.frontend && typeof sekaiemu.frontend === "object" ? sekaiemu.frontend : {};
+    setSekaiemuSettingsMode(frontend?.settings_mode === "advanced" ? "advanced" : "easy");
+    setSekaiemuChatOverlayEnabled(typeof frontend?.chat_overlay_enabled === "boolean" ? Boolean(frontend.chat_overlay_enabled) : true);
+    setSekaiemuNotificationsEnabled(typeof frontend?.notifications_enabled === "boolean" ? Boolean(frontend.notifications_enabled) : true);
+    setSekaiemuBridgeTerminalEnabled(Boolean(frontend?.bridge_terminal_enabled));
+    setSekaiemuMasterVolume(Number.isFinite(Number(frontend?.master_volume_percent)) ? Math.max(0, Math.min(150, Number(frontend.master_volume_percent))) : 50);
+    setSekaiemuTrackerDisplayMode(typeof frontend?.tracker_display_mode === "string" ? frontend.tracker_display_mode : "split-screen");
+    setSekaiemuTrackerScreenVisible(typeof frontend?.tracker_screen_visible === "boolean" ? Boolean(frontend.tracker_screen_visible) : true);
+    setSekaiemuTrackerAutoFollow(typeof frontend?.tracker_auto_follow === "boolean" ? Boolean(frontend.tracker_auto_follow) : true);
+    const cores = sekaiemu?.cores && typeof sekaiemu.cores === "object" ? sekaiemu.cores : {};
+    setSekaiemuCorePrefsText(Object.entries(cores).map(([key, value]) => `${key}=${String(value || "")}`).join("\n"));
 
     const soh = games?.oot_soh || {};
     setSohExePath(typeof soh?.exe_path === "string" ? soh.exe_path : "");
@@ -462,6 +482,20 @@ const SettingsPage: React.FC = () => {
       .map((line) => line.trim())
       .filter(Boolean);
 
+  const parseKeyValueText = (value: string) => {
+    const out: Record<string, string> = {};
+    for (const line of String(value || "").split(/\r?\n/)) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith("#")) continue;
+      const eq = trimmed.indexOf("=");
+      if (eq <= 0) continue;
+      const key = trimmed.slice(0, eq).trim();
+      const val = trimmed.slice(eq + 1).trim();
+      if (key && val) out[key] = val;
+    }
+    return out;
+  };
+
   const saveWindowing = async (preset?: "handheld" | "desktop" | "streamer") => {
     setWindowingStatus("");
     try {
@@ -696,6 +730,17 @@ const SettingsPage: React.FC = () => {
         root_dir: sekaiemuRootDir.trim() || undefined,
         core_dirs: parseArgsText(sekaiemuCoreDirsText),
         args: parseArgsText(sekaiemuArgsText),
+        frontend: {
+          settings_mode: sekaiemuSettingsMode,
+          chat_overlay_enabled: sekaiemuChatOverlayEnabled,
+          notifications_enabled: sekaiemuNotificationsEnabled,
+          bridge_terminal_enabled: sekaiemuBridgeTerminalEnabled,
+          master_volume_percent: Math.max(0, Math.min(150, Number(sekaiemuMasterVolume) || 0)),
+          tracker_display_mode: sekaiemuTrackerDisplayMode,
+          tracker_screen_visible: sekaiemuTrackerScreenVisible,
+          tracker_auto_follow: sekaiemuTrackerAutoFollow,
+        },
+        cores: parseKeyValueText(sekaiemuCorePrefsText),
       };
       const res: any = await runtime.configSetGame?.("sekaiemu", patch);
       if (!res?.ok) {
@@ -1165,6 +1210,73 @@ const SettingsPage: React.FC = () => {
                   onChange={(e) => setSekaiemuCoreDirsText(e.target.value)}
                   style={{ width: "100%", minHeight: 70, fontFamily: "monospace" }}
                   placeholder={"Example:\n/home/user/libretro/cores"}
+                />
+              </div>
+
+              <div style={{ borderTop: "1px solid rgba(56, 243, 221, 0.14)", marginTop: 14, paddingTop: 12 }}>
+                <div style={{ fontWeight: 700, marginBottom: 8 }}>Sekaiemu runtime UI</div>
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+                  <label style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
+                    Menu mode
+                    <select value={sekaiemuSettingsMode} onChange={(e) => setSekaiemuSettingsMode(e.target.value === "advanced" ? "advanced" : "easy")}>
+                      <option value="easy">Easy</option>
+                      <option value="advanced">Advanced</option>
+                    </select>
+                  </label>
+                  <label style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
+                    Tracker display
+                    <select value={sekaiemuTrackerDisplayMode} onChange={(e) => setSekaiemuTrackerDisplayMode(e.target.value)}>
+                      <option value="split-screen">Split screen</option>
+                      <option value="separate-window">Separate window</option>
+                      <option value="pip-overlay">PiP overlay</option>
+                      <option value="toggle-screen">Toggle screen</option>
+                    </select>
+                  </label>
+                  <label style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
+                    Volume
+                    <input
+                      type="range"
+                      min={0}
+                      max={150}
+                      step={1}
+                      value={sekaiemuMasterVolume}
+                      onChange={(e) => setSekaiemuMasterVolume(Number(e.target.value))}
+                    />
+                    <span style={{ minWidth: 44 }}>{sekaiemuMasterVolume}%</span>
+                  </label>
+                </div>
+                <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 10 }}>
+                  <label style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
+                    <input type="checkbox" checked={sekaiemuChatOverlayEnabled} onChange={(e) => setSekaiemuChatOverlayEnabled(e.target.checked)} />
+                    Chat overlay
+                  </label>
+                  <label style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
+                    <input type="checkbox" checked={sekaiemuNotificationsEnabled} onChange={(e) => setSekaiemuNotificationsEnabled(e.target.checked)} />
+                    Runtime notifications
+                  </label>
+                  <label style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
+                    <input type="checkbox" checked={sekaiemuBridgeTerminalEnabled} onChange={(e) => setSekaiemuBridgeTerminalEnabled(e.target.checked)} />
+                    SKLMI terminal panel
+                  </label>
+                  <label style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
+                    <input type="checkbox" checked={sekaiemuTrackerScreenVisible} onChange={(e) => setSekaiemuTrackerScreenVisible(e.target.checked)} />
+                    Tracker visible
+                  </label>
+                  <label style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
+                    <input type="checkbox" checked={sekaiemuTrackerAutoFollow} onChange={(e) => setSekaiemuTrackerAutoFollow(e.target.checked)} />
+                    Auto-follow maps / autotabbing
+                  </label>
+                </div>
+              </div>
+
+              <div style={{ marginTop: 12 }}>
+                <div style={{ fontSize: 12, opacity: 0.8, marginBottom: 6 }}>Core preferences (one key=value per line):</div>
+                <textarea
+                  className="input"
+                  value={sekaiemuCorePrefsText}
+                  onChange={(e) => setSekaiemuCorePrefsText(e.target.value)}
+                  style={{ width: "100%", minHeight: 70, fontFamily: "monospace" }}
+                  placeholder={"Example:\nsnes=bsnes\ngba=mgba\nnes=fceumm"}
                 />
               </div>
 

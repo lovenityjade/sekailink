@@ -12,10 +12,16 @@ endif()
 
 set(SEKAIEMU_LIBRETRO_INCLUDE_DIR
     "${CMAKE_CURRENT_SOURCE_DIR}/extern/libretro/include")
+set(SEKAIEMU_IMGUI_DIR
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../third_party/imgui")
 
 if(NOT EXISTS "${SEKAIEMU_LIBRETRO_INCLUDE_DIR}/libretro.h")
   message(FATAL_ERROR
     "Missing vendored libretro API header at ${SEKAIEMU_LIBRETRO_INCLUDE_DIR}/libretro.h")
+endif()
+if(NOT EXISTS "${SEKAIEMU_IMGUI_DIR}/imgui.h")
+  message(FATAL_ERROR
+    "Missing vendored Dear ImGui at ${SEKAIEMU_IMGUI_DIR}")
 endif()
 
 find_package(PkgConfig REQUIRED)
@@ -25,7 +31,8 @@ find_package(BZip2 REQUIRED)
 pkg_check_modules(SDL2 REQUIRED sdl2)
 pkg_check_modules(SDL2_IMAGE REQUIRED SDL2_image)
 pkg_check_modules(LIBARCHIVE REQUIRED libarchive)
-link_directories(${SDL2_LIBRARY_DIRS} ${SDL2_IMAGE_LIBRARY_DIRS} ${LIBARCHIVE_LIBRARY_DIRS})
+pkg_check_modules(CURL REQUIRED libcurl)
+link_directories(${SDL2_LIBRARY_DIRS} ${SDL2_IMAGE_LIBRARY_DIRS} ${LIBARCHIVE_LIBRARY_DIRS} ${CURL_LIBRARY_DIRS})
 if(WIN32)
   foreach(_sdl2_var
       SDL2_CFLAGS
@@ -93,6 +100,12 @@ set(SEKAIEMU_TRACKER_RENDER_SOURCES
 
 add_executable(sekaiemu_libretro_spike
   src/main.cpp
+  ${SEKAIEMU_IMGUI_DIR}/imgui.cpp
+  ${SEKAIEMU_IMGUI_DIR}/imgui_draw.cpp
+  ${SEKAIEMU_IMGUI_DIR}/imgui_tables.cpp
+  ${SEKAIEMU_IMGUI_DIR}/imgui_widgets.cpp
+  ${SEKAIEMU_IMGUI_DIR}/backends/imgui_impl_sdl2.cpp
+  ${SEKAIEMU_IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
   src/audio_output.cpp
   src/bridge_adapters/alttp_adapter.cpp
   src/bridge_adapters/firered_adapter.cpp
@@ -100,6 +113,7 @@ add_executable(sekaiemu_libretro_spike
   src/bridge_adapters/oot_adapter.cpp
   src/bridge_adapters/tloz_adapter.cpp
   src/bridge_ipc.cpp
+  src/bug_report_client.cpp
   src/core_option_manager.cpp
   src/core_option_manager_utils.cpp
   src/host_io_utils.cpp
@@ -107,6 +121,9 @@ add_executable(sekaiemu_libretro_spike
   src/input_state.cpp
   src/input_state_config.cpp
   src/input_state_menu.cpp
+  src/imgui_runtime.cpp
+  src/imgui_tracker_renderer.cpp
+  src/layout_preview.cpp
   src/launch_options.cpp
   src/launcher.cpp
   src/legacy_bridge_commands.cpp
@@ -146,11 +163,16 @@ add_executable(sekaiemu_libretro_spike
   src/opengl_overlay_renderer.cpp
   src/opengl_video_utils.cpp
   src/runtime_chat_bridge.cpp
+  src/runtime_activity_feed_imgui.cpp
+  src/runtime_debug_log.cpp
   src/runtime_memory_server.cpp
+  src/runtime_memory_socket_utils.cpp
+  src/runtime_memory_utils.cpp
   src/runtime_chat_overlay.cpp
   src/runtime_frontend_settings.cpp
   src/runtime_loop.cpp
   src/runtime_menu.cpp
+  src/runtime_menu_imgui.cpp
   src/runtime_menu_core_settings.cpp
   src/runtime_menu_controls.cpp
   src/runtime_menu_main_page.cpp
@@ -176,17 +198,20 @@ target_include_directories(sekaiemu_libretro_spike
     ${SDL2_INCLUDE_DIRS}
     ${SDL2_IMAGE_INCLUDE_DIRS}
     ${LIBARCHIVE_INCLUDE_DIRS}
+    ${CURL_INCLUDE_DIRS}
     ${SEKAIEMU_LIBRETRO_INCLUDE_DIR}
+    ${SEKAIEMU_IMGUI_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/extern
 )
 
-target_compile_options(sekaiemu_libretro_spike PRIVATE ${SDL2_CFLAGS_OTHER} ${SDL2_IMAGE_CFLAGS_OTHER} ${LIBARCHIVE_CFLAGS_OTHER})
+target_compile_options(sekaiemu_libretro_spike PRIVATE ${SDL2_CFLAGS_OTHER} ${SDL2_IMAGE_CFLAGS_OTHER} ${LIBARCHIVE_CFLAGS_OTHER} ${CURL_CFLAGS_OTHER})
 
 target_link_libraries(sekaiemu_libretro_spike
   PRIVATE
     ${SDL2_LIBRARIES}
     ${SDL2_IMAGE_LIBRARIES}
     ${LIBARCHIVE_LIBRARIES}
+    ${CURL_LIBRARIES}
     OpenSSL::Crypto
     BZip2::BZip2
     OpenGL::GL
@@ -415,6 +440,8 @@ add_test(
 add_executable(runtime_memory_server_bizhawk_protocol_smoke
   src/runtime_memory_server_bizhawk_protocol_smoke.cpp
   src/runtime_memory_server.cpp
+  src/runtime_memory_socket_utils.cpp
+  src/runtime_memory_utils.cpp
   src/memory_domain_registry.cpp
   src/host_io_utils.cpp
 )

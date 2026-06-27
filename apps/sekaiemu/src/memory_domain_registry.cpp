@@ -43,9 +43,11 @@ const std::uint8_t* MemoryDomainRegistry::Resolve(const CoreApi& core,
   const auto region_name = NormalizeMemoryDomain(memory_domain);
   if (region_name == "system_ram" || region_name == "ram" || region_name == "wram" ||
       region_name == "save_ram" || region_name == "battery_ram" || region_name == "sram" ||
+      region_name == "cart_ram" || region_name == "cartram" ||
       region_name == "video_ram" || region_name == "vram") {
     unsigned region_id = RETRO_MEMORY_SYSTEM_RAM;
-    if (region_name == "save_ram" || region_name == "battery_ram" || region_name == "sram") {
+    if (region_name == "save_ram" || region_name == "battery_ram" || region_name == "sram" ||
+        region_name == "cart_ram" || region_name == "cartram") {
       region_id = RETRO_MEMORY_SAVE_RAM;
     } else if (region_name == "video_ram" || region_name == "vram") {
       region_id = RETRO_MEMORY_VIDEO_RAM;

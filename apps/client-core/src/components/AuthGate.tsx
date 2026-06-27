@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { apiFetchWithTimeout, apiUrl, API_BASE_URL, getDesktopToken, getDeviceId, setDesktopToken, setWebAuthCache } from "../services/api";
+import { isRuntimeLabCredentials, setRuntimeLabSession } from "../services/runtimeLab";
 import { hasSoloModeUrlFlag, setSoloModeEnabled } from "../services/soloMode";
 import AnimatedBackground from "./AnimatedBackground";
 import BootScreen from "./BootScreen";
 import UpdateNotesModal from "./UpdateNotesModal";
+import { emitUpdateAvailable } from "../services/toast";
 import { useI18n } from "../i18n";
 import { trace, traceError } from "../services/trace";
 
@@ -12,6 +14,8 @@ interface AuthGateProps {
 }
 
 type AuthStatus = "checking" | "authed" | "unauth" | "unreachable" | "noapi" | "update-required" | "launcher-repair";
+
+const SHOW_BETA4_SOLO_ENTRY = false;
 
 const compareVersions = (a: string, b: string) => {
   const parse = (v: string) => {
@@ -150,7 +154,6 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
   const [needsTwoFactor, setNeedsTwoFactor] = useState(false);
   const [loginBusy, setLoginBusy] = useState(false);
   const [updateHubOpen, setUpdateHubOpen] = useState(false);
-  const [updateNoticeVisible, setUpdateNoticeVisible] = useState(false);
   const [updateCheckError, setUpdateCheckError] = useState("");
   const [lastVersionCheckAt, setLastVersionCheckAt] = useState<number>(0);
   const [releaseInfo, setReleaseInfo] = useState<ReleaseLatestInfo | null>(null);
@@ -475,6 +478,11 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
   const runLauncherEntrypointGuard = useCallback(async (env?: Record<string, unknown> | null) => {
     const packaged = Boolean(env && env.app_is_packaged === true);
     const launchedByBootstrapper = Boolean(env && env.bootstrap_launch_token_valid === true);
+    const runtimeLabDirect = Boolean(env && env.runtime_lab_direct === true);
+    if (runtimeLabDirect) {
+      authTrace("launcher_guard_runtime_lab_bypass");
+      return false;
+    }
     if (!packaged || launchedByBootstrapper) return false;
 
     const bootstrapperPath = String((env && env.bootstrapper_path) || "").trim();
@@ -572,7 +580,6 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
         return;
       }
       if (eventName === "download-complete") {
-        setUpdateNoticeVisible(true);
         setUpdateDownload((prev) => ({
           ...prev,
           active: false,
@@ -678,22 +685,6 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
   }, []);
 
   const runStartupAutoUpdate = useCallback(async (env?: Record<string, unknown> | null) => {
-    if (!window.sekailink?.updaterDownloadAndApply) {
-      authTrace("startup_update_skipped", { reason: "updater_unavailable" });
-      return false;
-    }
-    const canApplyManagedUpdate = Boolean(
-      env &&
-      ((env.client_update_bundle_supported === true) || String(env.bootstrap_install_dir || "").trim())
-    );
-    if (!canApplyManagedUpdate) {
-      authTrace("startup_update_skipped", {
-        reason: "managed_update_unavailable",
-        hasEnv: Boolean(env),
-        platform: String((env && env.platform) || ""),
-      });
-      return false;
-    }
     setBootLabel(t("auth.boot_check_version"));
     setBootProgress(0.18);
     const checked = await checkReleaseLatest(env);
@@ -703,31 +694,15 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
     }
     const info = (checked as any).info as ReleaseLatestInfo;
     const options = buildUpdateOptions(info);
-    if (!options) {
-      authTrace("startup_update_missing_options", { version: String(info.version || "") });
-      return false;
-    }
-    const marker = `${String(info.version || "")}|${String(options.downloadUrl || "")}`;
-    if (!marker.trim() || autoUpdateAttemptRef.current === marker) {
-      authTrace("startup_update_skipped", { reason: "duplicate_or_empty_marker" });
-      return false;
-    }
-    autoUpdateAttemptRef.current = marker;
+    const downloadUrl = options ? String(options.downloadUrl || "") : "";
+    const marker = `${String(info.version || "")}|${downloadUrl}`;
+    if (marker.trim()) autoUpdateAttemptRef.current = marker;
     setUpdateAvailable(true);
-    setUpdateNoticeVisible(true);
-    setBootLabel(t("auth.boot_updating"));
-    setBootProgress(0.25);
-    const result = await window.sekailink.updaterDownloadAndApply(options);
-    if (!result?.ok) {
-      const error = String(result?.error || "auto_update_failed");
-      setUpdateDownload((prev) => ({ ...prev, active: false, error }));
-      setUpdateCheckError(t("auth.auto_update_failed", { error }));
-      authTrace("startup_update_failed", { error });
-      return false;
-    }
-    setBootLabel(t("auth.boot_restarting"));
-    setBootProgress(1);
-    return true;
+    authTrace("startup_update_notice_only", {
+      version: String(info.version || ""),
+      hasDownload: Boolean(downloadUrl),
+    });
+    return false;
   }, [buildUpdateOptions, checkReleaseLatest, t]);
 
   useEffect(() => {
@@ -809,9 +784,10 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
     const latest = String(releaseInfo?.version || versionInfo?.latest || "").trim();
     updateNoticeShownRef.current = true;
     if (latest) updateNoticeVersionRef.current = latest;
-    setUpdateNoticeVisible(true);
-    const timer = window.setTimeout(() => setUpdateNoticeVisible(false), 9000);
-    return () => window.clearTimeout(timer);
+    emitUpdateAvailable({
+      version: latest,
+      message: latest ? `A new version is available ${latest}!` : "A new version is available!",
+    });
   }, [releaseInfo?.version, status, updateAvailable, versionInfo?.latest]);
 
   useEffect(() => {
@@ -895,6 +871,20 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
       setAuthError("Email/nom d'utilisateur et mot de passe requis.");
       return;
     }
+    if (isRuntimeLabCredentials(nextIdentity, password)) {
+      setRuntimeLabSession(true);
+      setDesktopToken(null);
+      setWebAuthCache(null);
+      setSoloModeEnabled(false);
+      setPassword("");
+      setTwoFactorCode("");
+      setNeedsTwoFactor(false);
+      setAuthError("");
+      setStatus("authed");
+      authTrace("runtime_lab_login_authed");
+      return;
+    }
+    setRuntimeLabSession(false);
     setLoginBusy(true);
     setAuthError("");
     authTrace("native_login_start", { hasTwoFactor: Boolean(twoFactorCode.trim()) });
@@ -956,6 +946,7 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
   };
 
   const startUpdateDownload = useCallback(async (info?: ReleaseLatestInfo | null) => {
+    void info;
     setUpdateDownload((prev) => ({
       ...prev,
       active: true,
@@ -965,43 +956,28 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
       receivedBytes: 0,
       totalBytes: 0,
     }));
-    if (!window.sekailink?.updaterDownloadAndApply) {
+    if (!window.sekailink?.updaterLaunchBootstrapperAndQuit) {
       setUpdateDownload((prev) => ({
         ...prev,
         active: false,
-        error: "updater_not_supported",
+        error: "bootloader_launch_not_supported",
       }));
       return;
     }
-    let latestInfo = info || releaseInfo;
-    if (!latestInfo) {
-      const checked = await checkReleaseLatest();
-      latestInfo = (checked as any)?.info || null;
-    }
-    const options = buildUpdateOptions(latestInfo);
-    if (!options) {
-      setUpdateDownload((prev) => ({
-        ...prev,
-        active: false,
-        error: "update_manifest_missing_download",
-      }));
-      return;
-    }
-    const result = await window.sekailink.updaterDownloadAndApply(options);
+    const result = await window.sekailink.updaterLaunchBootstrapperAndQuit();
     if (!result?.ok) {
       setUpdateDownload((prev) => ({
         ...prev,
         active: false,
-        error: String(result?.error || "update_apply_failed"),
+        error: String(result?.error || "bootloader_launch_failed"),
       }));
       return;
     }
     setUpdateDownload((prev) => ({
       ...prev,
       active: false,
-      path: String(result.path || ""),
     }));
-  }, [buildUpdateOptions, checkReleaseLatest, releaseInfo]);
+  }, []);
 
   const installDownloadedUpdate = useCallback(async () => {
     await startUpdateDownload();
@@ -1245,24 +1221,14 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
   }
 
   if (status === "authed") {
-    const updaterVisible = updateAvailable || Boolean(updateDownload.path) || Boolean(updateDownload.error) || incrementalSync.active || incrementalSync.changed > 0 || !!incrementalSync.error;
+    const updaterVisible = Boolean(updateDownload.path) || Boolean(updateDownload.error) || incrementalSync.active || incrementalSync.changed > 0 || !!incrementalSync.error;
     return (
       <>
         {updaterVisible && (
           <div className="skl-update-hub">
-            {updateNoticeVisible && (
-              <div className="skl-update-toast">
-                <strong>{t("auth.update_available")}</strong>
-                <span>{t("auth.version_ready", { version: releaseInfo?.version || versionInfo?.latest || t("auth.new_release") })}</span>
-                <button className="skl-btn ghost" type="button" onClick={() => setUpdateHubOpen(true)}>
-                  {t("common.open")}
-                </button>
-              </div>
-            )}
-            <button className={`skl-update-fab${updateAvailable ? " has-update" : ""}`} type="button" onClick={() => setUpdateHubOpen((prev) => !prev)}>
+            <button className="skl-update-fab" type="button" onClick={() => setUpdateHubOpen((prev) => !prev)}>
               <span className="skl-update-fab-icon">Up</span>
               <span className="skl-update-fab-label">{t("auth.update")}</span>
-              {updateAvailable && <span className="skl-update-dot"></span>}
             </button>
             {updateHubOpen && (
               <div className="skl-update-popover">
@@ -1445,21 +1411,21 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
                 </button>
               </div>
             </form>
-            <div className="skl-solo-mode-card">
-              <div>
-                <strong>Mode Solo</strong>
-                <span>Entrer dans la Library locale sans login. Les fonctions online demanderont une connexion plus tard.</span>
+            {SHOW_BETA4_SOLO_ENTRY && (
+              <div className="skl-solo-mode-card">
+                <div>
+                  <strong>Mode Solo</strong>
+                  <span>Entrer dans la Library locale sans login. Les fonctions online demanderont une connexion plus tard.</span>
+                </div>
+                <button className="skl-btn ghost" type="button" onClick={enterSoloMode}>
+                  Entrer en Solo
+                </button>
               </div>
-              <button className="skl-btn ghost" type="button" onClick={enterSoloMode}>
-                Entrer en Solo
-              </button>
-            </div>
+            )}
             <div className="skl-auth-web-links">
               <button type="button" onClick={() => void openWebsite(forgotPasswordUrl)}>Mot de passe oublié ?</button>
-              <span aria-hidden="true">/</span>
               <button type="button" onClick={() => void openWebsite(registerUrl)}>S'inscrire</button>
             </div>
-            <p className="skl-auth-hint">Même API que le panneau web SekaiLink. Aucun login Discord requis.</p>
             <div className="skl-boot-version">v{appVersion}</div>
           </div>
         </div>

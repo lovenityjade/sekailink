@@ -113,9 +113,10 @@ describe("runtime manifests", () => {
     expect(builder).toContain("afterPack: scripts/electron-after-pack.cjs");
     expect(builder).toContain("createDesktopShortcut: false");
     expect(builder).toContain("createStartMenuShortcut: false");
-    expect(afterPack).toContain("SekaiLink-bootstrapper.cmd");
-    expect(afterPack).toContain("sekailink-bootstrapper.sh");
-    expect(nsisInclude).toContain("SekaiLink-bootstrapper.cmd");
+    expect(afterPack).toContain("native_bootloader_artifacts_missing");
+    expect(afterPack).toContain("SekaiLink Bootloader.exe");
+    expect(afterPack).toContain("sekailink-bootloader");
+    expect(nsisInclude).toContain("SekaiLink Bootloader\\SekaiLink Bootloader.exe");
     expect(packageJson.scripts["electron:pack:update-bundles"]).toBe("node scripts/package-update-bundles.mjs");
   });
 

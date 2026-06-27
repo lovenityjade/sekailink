@@ -1,0 +1,143 @@
+{
+    "versions": [
+        {
+            "package_version": "1.7.0.2",
+            "download_url": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker/releases/download/1.7.0.2/SoM-Open-Mode-Tracker-v1_7_0_2.zip",
+            "sha256": "9a7b69188b9ddee082fd468c4627ee91e1fd6bc83a17dbc7787bb6fdac1b9e82",
+            "changelog": [
+                "Added AP support",
+                "(Hopefully) better in-game check"
+            ]
+        },
+        {
+            "package_version": "1.6.1.1",
+            "download_url": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker/releases/download/1.6.1.1/SoM-Open-Mode-Tracker-v1_6_1_1.zip",
+            "sha256": "45f1a407bcba5eb8bcbacb338f8d074a83cca0ee47b76506868de8d704f7ca15",
+            "changelog": [
+                "Added element state to item name for magic orbs"
+            ]
+        },
+        {
+            "package_version": "1.6.1.0",
+            "download_url": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker/releases/download/1.6.1.0/SoM-Open-Mode-Tracker-v1_6_1_0.zip",
+            "sha256": "0845f2462f31e59f8bd019b2909be7a89dcbbcd2a391467a6fed95d4aea9b6b7",
+            "changelog": [
+                "Added the ability to mark elements to be needed for Grand Palace by right-clicking the element",
+                "Fix magic orbs not being marked as completable when not having all character but all needed elements in some cases",
+                "Logic rewrite"
+            ]
+        },
+        {
+            "package_version": "1.6.0.4",
+            "download_url": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker/releases/download/1.6.0.4/SoM-Open-Mode-Tracker-v1_6_0_4.zip",
+            "sha256": "8603f6265495ea36c79c2210868fdcdb899a2d9ea2b9670bd1130e99646bb47a",
+            "changelog": [
+                "Added the ability to mark elements to be not needed for Grand Palace by right-clicking the element"
+            ]
+        },
+        {
+            "package_version": "1.6.0.3",
+            "download_url": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker/releases/download/1.6.0.3/SoM-Open-Mode-Tracker-v1_6_0_3.zip",
+            "sha256": "23b14bcc75a2790bf052ca932ea3a5ab963734d388637abecff9dbd9f5edf120",
+            "changelog": [
+                "Added vanilla boss names to boss location names",
+                "Fixed access for Moon Palace on drum logic mode"
+            ]
+        },
+        {
+            "package_version": "1.6.0.2",
+            "download_url": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker/releases/download/1.6.0.2/SoM-Open-Mode-Tracker-v1_6_0_2.zip",
+            "sha256": "66521a833117fd187c41266742579072832803da80e445708d2a72fea1960d66",
+            "changelog": [
+                "Fixed missing access rule on sword pedestal"
+            ]
+        },
+        {
+            "package_version": "1.6.0.1",
+            "download_url": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker/releases/download/1.6.0.1/SoM-Open-Mode-Tracker-v1_6_0_1.zip",
+            "sha256": "659226218f6fe36355c75f81c260dc37f8ce5fe8bd974434bc8b565ef0fa6ff0",
+            "changelog": [
+                "Added missing location Potos Sword Pedestal for Flamie Drum in logic",
+                "Fixed wrong access rules for Gold City",
+                "Fixed hint access rules for Flamie Drum in logic"
+            ]
+        },
+        {
+            "package_version": "1.6.0.0",
+            "download_url": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker/releases/download/1.6.0.0/SoM-Open-Mode-Tracker-v1_6_0_0.zip",
+            "sha256": "a4ef994840de35fb65eb1720c7e241f4dcb2b36e0f2061d14f05cb0803b6cf90",
+            "changelog": [
+                "Added support for Flamie Drum in logic",
+                "Added support for automatic pack update via PopTracker"
+            ]
+        },
+        {
+            "package_version": "1.5.0.5",
+            "download_url": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker/releases/download/1.5.0.5/SoM-Open-Mode-Tracker-v1_5_0_5.zip",
+            "sha256": "4b51e5b93423afa826e1adf9c620ca14bfc20535c42787d10d7a2da6f0c1181d",
+            "changelog": [
+                "magic orbs now always activate if all possible elements and characters are collected even if no element for the orb has been selected"
+            ]
+        },
+        {
+            "package_version": "1.5.0.4",
+            "download_url": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker/releases/download/1.5.0.4/SoM-Open-Mode-Tracker-v1_5_0_4.zip",
+            "sha256": "936e83bb7bfcbf9eb7fbb8cbecbdb86c3e27857d84d1fff90453309d34d7d3f6",
+            "changelog": [
+                "fixed a bug where checked locations did not reset properly, most notably Elinee's Castle",
+                "fixed layout for new PopTracker version"
+            ]
+        },
+        {
+            "package_version": "1.5.0.3",
+            "download_url": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker/releases/download/1.5.0.3/SoM-Open-Mode-Tracker-v1_5_0_3.zip",
+            "sha256": "6e6901f04e1e0352429a680666805f2e2b9c64be905a3534ee17d4b29ab83856",
+            "changelog": [
+                "magic orbs now show up as done on the location in boy-only runs",
+                "the mana tree check is now hidden on MTR",
+                "(hopefully) fixed an autotracking bug where Kakkara got checked when obtaining the sea hare's tail",
+                "adjusted autotracking for new address mapping in PopTracker v0.19.0+"
+            ]
+        },
+        {
+            "package_version": "1.5.0.2",
+            "download_url": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker/releases/download/1.5.0.2/SoM-Open-Mode-Tracker-v1_5_0_2.zip",
+            "sha256": "4b51e5b93423afa826e1adf9c620ca14bfc20535c42787d10d7a2da6f0c1181d",
+            "changelog": [
+                "Fix magic orb logic bug",
+                "Fix crash on EmoTracker (role rando features are not supported on EmoTracker tho)"
+            ]
+        },
+        {
+            "package_version": "1.5.0.0",
+            "download_url": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker/releases/download/1.5.0.0/SoM-Open-Mode-Tracker-1_5_0_0.zip",
+            "sha256": "753cf3a97a2a99c8ce4ffd603370c03866e0ba51798794e0d9d31efe5b9b56ef",
+            "changelog": [
+                "Added role randomizer features",
+                "Color coded magic orb headers and added short headers to broadcast view (Thanks CTG!)",
+                "the old headers are still available in the pack. just append __alt to the end of the image file names of the headers"
+            ]
+        },
+        {
+            "package_version": "1.3.0.0",
+            "download_url": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker/releases/download/1.3.0.0/SoM-Open-Mode-Tracker-1.3.0.0.zip",
+            "sha256": "4de18f30d9aa5ce06aee328b2367130cda1dc303b5ad9ea9612c94dcf68df560",
+            "changelog": [
+                "Added autotracking support (PopTracker Only)",
+                "Added support for the girl being able to destroy salamando and sylphid orbs",
+                "Multiple smaller logic fixes"
+            ]
+        },
+        {
+            "package_version": "1.2.0.0",
+            "download_url": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker/releases/download/1.2.0.0/SoM-Open-Mode-Tracker-1.2.0.0.zip",
+            "sha256": "5de6112162d21ecae3af840d000b050bff932061e207ed6a923a7e772fdf4cce",
+            "changelog": [
+                "Added hint support",
+                "Added random char support",
+                "Added support for changing the amount of seeds need to beat the game",
+                "Multiple fixes"
+            ]
+        }
+    ]
+}

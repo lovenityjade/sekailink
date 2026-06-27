@@ -75,6 +75,9 @@ void ApplyRuntimeMenuAction(RuntimeMenuAction action,
     case RuntimeMenuAction::RestartBridge:
       restart_bridge();
       break;
+    case RuntimeMenuAction::ChangeGame:
+      running = false;
+      break;
     case RuntimeMenuAction::CloseMenu:
       core_option_manager.DiscardPendingChanges();
       runtime_menu.Close();

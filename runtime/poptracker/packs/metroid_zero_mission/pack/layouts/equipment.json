@@ -1,0 +1,19 @@
+{
+    "equipment": {
+        "type": "array",
+        "orientation": "vertical",
+        "margin": "6,6",
+        "content": [
+            {
+                "type": "itemgrid",
+                "item_margin": "4, 4",
+                "margin": "0, 0",
+                "h_alignment": "left",
+                "rows": [
+                    ["Morph Ball", "Bomb", "Power Grip", "Speed Booster", "Hi-Jump", "Spring Ball", "Screw Attack", "Space Jump", "Varia Suit", "Gravity Suit", "Fully Powered Suit"],
+                    ["Long Beam", "Charge Beam", "Ice Beam", "Wave Beam", "Plasma Beam", "Energy Tank", "Missile Tank", "Super Missile Tank", "Power Bomb Tank", "Metroid DNA", "Wall Jump"]
+                ]
+            }
+        ]
+    }
+}

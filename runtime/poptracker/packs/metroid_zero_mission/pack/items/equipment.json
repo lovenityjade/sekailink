@@ -1,0 +1,150 @@
+[
+    {
+        "name": "Energy Tank",
+        "codes": "Energy Tank",
+        "img": "images/items/EnergyTank.png",
+        "type": "consumable",
+        "max_quantity": 12,
+        "overlay_background": "000000",
+        "overlay_font_size": 12
+    },
+    {
+        "name": "Missile Tank",
+        "codes": "Missile Tank",
+        "img": "images/items/MissileTank.png",
+        "type": "consumable",
+        "max_quantity": 50,
+        "overlay_background": "000000",
+        "overlay_font_size": 12
+    },
+    {
+        "name": "Super Missile Tank",
+        "codes": "Super Missile Tank",
+        "img": "images/items/SuperMissileTank.png",
+        "type": "consumable",
+        "max_quantity": 15,
+        "overlay_background": "000000",
+        "overlay_font_size": 12
+    },
+    {
+        "name": "Power Bomb Tank",
+        "codes": "Power Bomb Tank",
+        "img": "images/items/PowerBombTank.png",
+        "type": "consumable",
+        "max_quantity": 9,
+        "overlay_background": "000000",
+        "overlay_font_size": 12
+    },
+    {
+        "name": "Long Beam",
+        "codes": "Long Beam",
+        "img": "images/items/LongBeam.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Charge Beam",
+        "codes": "Charge Beam",
+        "img": "images/items/ChargeBeam.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Ice Beam",
+        "codes": "Ice Beam",
+        "img": "images/items/IceBeam.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Wave Beam",
+        "codes": "Wave Beam",
+        "img": "images/items/WaveBeam.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Plasma Beam",
+        "codes": "Plasma Beam",
+        "img": "images/items/PlasmaBeam.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Bomb",
+        "codes": "Bomb",
+        "img": "images/items/Bomb.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Varia Suit",
+        "codes": "Varia Suit",
+        "img": "images/items/VariaSuit.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Gravity Suit",
+        "codes": "Gravity Suit",
+        "img": "images/items/GravitySuit.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Morph Ball",
+        "codes": "Morph Ball",
+        "img": "images/items/MorphBall.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Speed Booster",
+        "codes": "Speed Booster",
+        "img": "images/items/SpeedBooster.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Hi-Jump",
+        "codes": "Hi-Jump",
+        "img": "images/items/HiJump.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Screw Attack",
+        "codes": "Screw Attack",
+        "img": "images/items/ScrewAttack.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Space Jump",
+        "codes": "Space Jump",
+        "img": "images/items/SpaceJump.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Power Grip",
+        "codes": "Power Grip",
+        "img": "images/items/PowerGrip.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Fully Powered Suit",
+        "codes": "Fully Powered Suit",
+        "img": "images/items/FullyPoweredSuit.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Wall Jump",
+        "codes": "Wall Jump",
+        "img": "images/items/SamusLeg.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Spring Ball",
+        "codes": "Spring Ball",
+        "img": "images/items/SpringBall.png",
+        "type": "toggle"
+    },
+    {
+        "name": "Metroid DNA",
+        "codes": "tempdisabled",
+        "notes": "Original code was 'Metroid DNA'.",
+        "img": "images/items/MetroidDNA.png",
+        "type": "consumable",
+        "max_quantity": 25,
+        "overlay_background": "000000",
+        "overlay_font_size": 12
+    }
+]

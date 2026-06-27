@@ -287,7 +287,7 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
       generation_response = nlohmann::json::object();
     }
     const auto status_running = [](const std::string& value) {
-      return value == "queued" || value == "in_progress" || value == "running";
+      return value == "queued" || value == "starting" || value == "in_progress" || value == "running";
     };
     const auto status_completed = [](const std::string& value) {
       return value == "completed" || value == "success" || value == "succeeded" ||
@@ -392,11 +392,109 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
             {"room_status", response_string(generation_response, "room_status")},
             {"room_host", response_string(generation_response, "room_host")},
             {"room_runtime_log", response_string(generation_response, "room_runtime_log")},
+            {"room_runtime_error", response_string(generation_response, "room_runtime_error")},
+            {"room_runtime_alive", generation_response.value("room_runtime_alive", false)},
+            {"room_runtime_pid", generation_response.value("room_runtime_pid", 0)},
             {"output_dir", output_dir},
             {"players", players},
             {"response", generation_response},
             {"created_at", created_at},
             {"updated_at", updated_at},
+        }.dump()};
+  }
+  if (parts.size() == 4 && parts[2] == "generation" && parts[3] == "reset" && method == "POST") {
+    if (config_.sqlite_path.empty()) {
+      return {200, nlohmann::json{{"ok", true}, {"status", "idle"}, {"reset", false}}.dump()};
+    }
+    std::unique_lock lock(store_mutex_);
+    sqlite3* db = nullptr;
+    if (sqlite3_open(config_.sqlite_path.string().c_str(), &db) != SQLITE_OK || db == nullptr) {
+      if (db) sqlite3_close(db);
+      return {500, R"({"ok":false,"error":"generation_store_open_failed"})"};
+    }
+    auto close_db = [&]() {
+      if (db != nullptr) {
+        sqlite3_close(db);
+        db = nullptr;
+      }
+    };
+    ensure_lobby_generation_state_table(db);
+    sqlite3_stmt* stmt = nullptr;
+    if (sqlite3_prepare_v2(
+            db,
+            "SELECT generation_id, status, room_url, error, response_json FROM lobby_generation_state WHERE lobby_id = ? LIMIT 1;",
+            -1,
+            &stmt,
+            nullptr) != SQLITE_OK) {
+      close_db();
+      return {500, R"({"ok":false,"error":"generation_state_prepare_failed"})"};
+    }
+    sqlite3_bind_text(stmt, 1, lobby_id.c_str(), -1, SQLITE_TRANSIENT);
+    if (sqlite3_step(stmt) != SQLITE_ROW) {
+      sqlite3_finalize(stmt);
+      close_db();
+      return {200, nlohmann::json{{"ok", true}, {"status", "idle"}, {"reset", false}}.dump()};
+    }
+    const auto generation_id = sqlite_column_string(stmt, 0);
+    const auto status = sqlite_column_string(stmt, 1);
+    const auto room_url = sqlite_column_string(stmt, 2);
+    const auto error = sqlite_column_string(stmt, 3);
+    const auto response_json = sqlite_column_string(stmt, 4);
+    sqlite3_finalize(stmt);
+
+    nlohmann::json generation_response = nlohmann::json::object();
+    try {
+      generation_response = nlohmann::json::parse(response_json);
+      if (!generation_response.is_object()) generation_response = nlohmann::json::object();
+    } catch (...) {
+      generation_response = nlohmann::json::object();
+    }
+    const auto response_string = [](const nlohmann::json& data, const char* key) {
+      if (!data.contains(key) || !data.at(key).is_string()) return std::string();
+      return data.at(key).get<std::string>();
+    };
+    const auto artifact_path = response_string(generation_response, "artifact_path");
+    auto sync_package_path = response_string(generation_response, "sync_package_path");
+    if (sync_package_path.empty()) sync_package_path = artifact_path;
+    const auto running = status == "queued" || status == "starting" || status == "in_progress" || status == "running";
+    const auto successful = status == "completed" || status == "success" || status == "succeeded" ||
+                            !room_url.empty() || !sync_package_path.empty();
+    const auto failed = status == "failed" || status == "error" || status == "cancelled" || !error.empty() ||
+                        generation_response.value("ok", true) == false;
+    if (running || successful || !failed) {
+      close_db();
+      return {
+          409,
+          nlohmann::json{
+              {"ok", false},
+              {"error", "generation_reset_refused"},
+              {"status", status},
+              {"generation_id", generation_id},
+              {"message", "Only failed generation states can be reset."},
+          }.dump()};
+    }
+
+    sqlite3_stmt* delete_stmt = nullptr;
+    if (sqlite3_prepare_v2(db, "DELETE FROM lobby_generation_state WHERE lobby_id = ?;", -1, &delete_stmt, nullptr) != SQLITE_OK) {
+      close_db();
+      return {500, R"({"ok":false,"error":"generation_reset_prepare_failed"})"};
+    }
+    sqlite3_bind_text(delete_stmt, 1, lobby_id.c_str(), -1, SQLITE_TRANSIENT);
+    const auto delete_step = sqlite3_step(delete_stmt);
+    sqlite3_finalize(delete_stmt);
+    if (delete_step != SQLITE_DONE) {
+      close_db();
+      return {500, R"({"ok":false,"error":"generation_reset_failed"})"};
+    }
+    close_db();
+    return {
+        200,
+        nlohmann::json{
+            {"ok", true},
+            {"reset", true},
+            {"status", "idle"},
+            {"lobby_id", lobby_id},
+            {"generation_id", generation_id},
         }.dump()};
   }
   if (parts.size() == 3 && parts[2] == "host-status" && method == "GET") {
@@ -919,6 +1017,95 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
         ");");
     ensure_lobby_generation_state_table(db);
 
+    sqlite3_stmt* existing_generation_stmt = nullptr;
+    if (sqlite3_prepare_v2(
+            db,
+            "SELECT generation_id, status, room_url, error, players_json, response_json, created_at, updated_at "
+            "FROM lobby_generation_state WHERE lobby_id = ? LIMIT 1;",
+            -1,
+            &existing_generation_stmt,
+            nullptr) == SQLITE_OK) {
+      sqlite3_bind_text(existing_generation_stmt, 1, lobby_id.c_str(), -1, SQLITE_TRANSIENT);
+      if (sqlite3_step(existing_generation_stmt) == SQLITE_ROW) {
+        const auto existing_generation_id = sqlite_column_string(existing_generation_stmt, 0);
+        const auto existing_status = sqlite_column_string(existing_generation_stmt, 1);
+        const auto existing_room_url = sqlite_column_string(existing_generation_stmt, 2);
+        const auto existing_error = sqlite_column_string(existing_generation_stmt, 3);
+        const auto existing_players_json = sqlite_column_string(existing_generation_stmt, 4);
+        const auto existing_response_json = sqlite_column_string(existing_generation_stmt, 5);
+        const auto existing_created_at = sqlite_column_string(existing_generation_stmt, 6);
+        const auto existing_updated_at = sqlite_column_string(existing_generation_stmt, 7);
+        sqlite3_finalize(existing_generation_stmt);
+        nlohmann::json existing_response = nlohmann::json::object();
+        nlohmann::json existing_players = nlohmann::json::array();
+        try {
+          existing_response = nlohmann::json::parse(existing_response_json);
+          if (!existing_response.is_object()) existing_response = nlohmann::json::object();
+        } catch (...) {
+          existing_response = nlohmann::json::object();
+        }
+        try {
+          existing_players = nlohmann::json::parse(existing_players_json);
+          if (!existing_players.is_array()) existing_players = nlohmann::json::array();
+        } catch (...) {
+          existing_players = nlohmann::json::array();
+        }
+        const auto existing_response_string = [](const nlohmann::json& data, const char* key) {
+          if (!data.contains(key) || !data.at(key).is_string()) return std::string();
+          return data.at(key).get<std::string>();
+        };
+        const auto existing_response_array = [](const nlohmann::json& data, const char* key) {
+          if (!data.contains(key) || !data.at(key).is_array()) return nlohmann::json::array();
+          return data.at(key);
+        };
+        const auto existing_artifact_path = existing_response_string(existing_response, "artifact_path");
+        auto existing_sync_package_path = existing_response_string(existing_response, "sync_package_path");
+        if (existing_sync_package_path.empty()) existing_sync_package_path = existing_artifact_path;
+        const auto existing_running =
+            existing_status == "queued" || existing_status == "starting" ||
+            existing_status == "in_progress" || existing_status == "running";
+        const auto existing_completed =
+            existing_status == "completed" || existing_status == "success" || existing_status == "succeeded";
+        if (existing_running || existing_completed || !existing_room_url.empty() || !existing_sync_package_path.empty()) {
+          close_db();
+          return {
+              202,
+              nlohmann::json{
+                  {"ok", true},
+                  {"lobby_id", lobby_id},
+                  {"generation_id", existing_generation_id},
+                  {"status", existing_status},
+                  {"running", existing_running},
+                  {"completed", existing_completed},
+                  {"room_url", existing_room_url.empty() && !existing_sync_package_path.empty() ? "/rooms/" + lobby_id : existing_room_url},
+                  {"error", existing_error},
+                  {"artifact_path", existing_artifact_path},
+                  {"artifact_ready", !existing_artifact_path.empty()},
+                  {"sync_package_path", existing_sync_package_path},
+                  {"sync_package_ready", !existing_sync_package_path.empty()},
+                  {"sync_entries", existing_response_array(existing_response, "sync_entries")},
+                  {"launch_entries", existing_response_array(existing_response, "launch_entries")},
+                  {"room_status", existing_response_string(existing_response, "room_status")},
+                  {"room_host", existing_response_string(existing_response, "room_host")},
+                  {"room_runtime_log", existing_response_string(existing_response, "room_runtime_log")},
+                  {"room_runtime_error", existing_response_string(existing_response, "room_runtime_error")},
+                  {"room_runtime_alive", existing_response.value("room_runtime_alive", false)},
+                  {"room_runtime_pid", existing_response.value("room_runtime_pid", 0)},
+                  {"output_dir", existing_response_string(existing_response, "output_dir")},
+                  {"locked", true},
+                  {"existing_generation", true},
+                  {"players", existing_players},
+                  {"response", existing_response},
+                  {"created_at", existing_created_at},
+                  {"updated_at", existing_updated_at},
+                  {"message", "Generation is already active for this lobby."},
+              }.dump()};
+        }
+      } else {
+        sqlite3_finalize(existing_generation_stmt);
+      }
+    }
+
     nlohmann::json players = nlohmann::json::array();
     nlohmann::json generation_players = nlohmann::json::array();
     auto seed_game_display_name = [&](const std::string& game_key, const std::string& fallback) {
@@ -1159,7 +1346,7 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
             {"lobby_id", lobby_id},
             {"generation_id", job_id},
             {"status", generation_status},
-            {"running", generation_status == "queued" || generation_status == "in_progress" || generation_status == "running"},
+            {"running", generation_status == "queued" || generation_status == "starting" || generation_status == "in_progress" || generation_status == "running"},
             {"completed", generation_status == "completed" || generation_status == "success" || generation_status == "succeeded"},
             {"room_url", room_url},
             {"error", generation_error},
@@ -1172,6 +1359,9 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
             {"room_status", response_string(generation_response, "room_status")},
             {"room_host", response_string(generation_response, "room_host")},
             {"room_runtime_log", response_string(generation_response, "room_runtime_log")},
+            {"room_runtime_error", response_string(generation_response, "room_runtime_error")},
+            {"room_runtime_alive", generation_response.value("room_runtime_alive", false)},
+            {"room_runtime_pid", generation_response.value("room_runtime_pid", 0)},
             {"output_dir", output_dir},
             {"locked", true},
             {"players", players},

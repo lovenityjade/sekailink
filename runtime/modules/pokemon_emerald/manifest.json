@@ -1,0 +1,45 @@
+{
+  "game_id": "pokemon_emerald",
+  "display_name": "Pokemon Emerald",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apemerald"
+  ],
+  "patch_world_module": "worlds.pokemon_emerald",
+  "ap_world": "pokemon_emerald",
+  "required_roms": [
+    "pokemon_emerald"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "pokemon_emerald",
+    "world": "pokemon_emerald",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/pokemon_emerald/client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".gba"
+    ],
+    "md5": [
+      "605b89b67018abcea91e693a4dd25be3"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "gba",
+    "ap_game": "Pokemon Emerald"
+  },
+  "tracker_pack_uid": "https://github.com/seto10987/Archipelago-Emerald-AP-Tracker",
+  "tracker_web_url": "",
+  "tracker_asset_regex": "\\.zip$",
+  "support_status": "not_available",
+  "availability_status": "unavailable_gba_pending_tester",
+  "compatibility_notes": "Temporarily unavailable for BETA-3 launch: runtime connects and receives, but check send behavior still needs a focused Emerald tester/regression pass."
+}

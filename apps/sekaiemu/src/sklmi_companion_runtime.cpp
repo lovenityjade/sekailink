@@ -403,6 +403,9 @@ void SklmiCompanionRuntime::Tick(std::string& last_error) {
   started_ = false;
   last_exit_detail_ = "SKLMI companion runtime exited unexpectedly with code " +
                       std::to_string(static_cast<unsigned long>(exit_code)) + ".";
+  if (!companion_log_path_.empty()) {
+    last_exit_detail_ += " See companion log: " + companion_log_path_.string();
+  }
   last_error = last_exit_detail_;
 #else
   if (!started_ || child_pid_ <= 0) {
@@ -427,6 +430,9 @@ void SklmiCompanionRuntime::Tick(std::string& last_error) {
                         std::to_string(WTERMSIG(status)) + ".";
   } else {
     last_exit_detail_ = "SKLMI companion runtime exited unexpectedly.";
+  }
+  if (!companion_log_path_.empty()) {
+    last_exit_detail_ += " See companion log: " + companion_log_path_.string();
   }
   last_error = last_exit_detail_;
 #endif

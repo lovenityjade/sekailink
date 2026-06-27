@@ -2,6 +2,7 @@
 #include "sekailink_server/room_state.hpp"
 
 #ifndef _WIN32
+#include <fcntl.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -9,6 +10,9 @@
 
 #include <algorithm>
 #include <cctype>
+#include <cstdlib>
+#include <filesystem>
+#include <fstream>
 #include <stdexcept>
 
 namespace sekailink_server {
@@ -27,6 +31,35 @@ std::string replace_all(std::string value, const std::string& needle, const std:
 std::string lower(std::string value) {
   std::transform(value.begin(), value.end(), value.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
   return value;
+}
+
+std::filesystem::path generation_log_path(const GenerationJob& job) {
+  return job.output_dir / (job.job_id + ".generation.log");
+}
+
+std::string tail_text_file(const std::filesystem::path& path, std::size_t max_bytes = 4096) {
+  std::ifstream file(path, std::ios::binary);
+  if (!file) return "";
+  file.seekg(0, std::ios::end);
+  const auto end = file.tellg();
+  const auto size = static_cast<std::streamoff>(end);
+  if (size <= 0) return "";
+  const auto start = size > static_cast<std::streamoff>(max_bytes) ? size - static_cast<std::streamoff>(max_bytes) : std::streamoff{0};
+  file.seekg(start, std::ios::beg);
+  std::string text;
+  text.resize(static_cast<std::size_t>(size - start));
+  file.read(text.data(), static_cast<std::streamsize>(text.size()));
+  return text;
+}
+
+void write_generation_failure_log(const GenerationJob& job, const std::string& message) {
+  std::error_code ignored;
+  std::filesystem::create_directories(job.output_dir, ignored);
+  std::ofstream file(generation_log_path(job), std::ios::binary | std::ios::trunc);
+  if (!file) return;
+  file << "generation_preflight_failed: " << message << "\n";
+  file << "yaml_path=" << job.yaml_path.string() << "\n";
+  file << "output_dir=" << job.output_dir.string() << "\n";
 }
 
 }  // namespace
@@ -58,7 +91,7 @@ std::string generation_job_sort_field_name(GenerationJobSortField field) {
 }
 
 nlohmann::json to_json(const GenerationJob& job) {
-  return {
+  auto payload = nlohmann::json{
       {"job_id", job.job_id},
       {"requested_at", job.requested_at},
       {"started_at", job.started_at.has_value() ? nlohmann::json(*job.started_at) : nlohmann::json(nullptr)},
@@ -70,6 +103,15 @@ nlohmann::json to_json(const GenerationJob& job) {
       {"expected_artifact",
        job.expected_artifact.has_value() ? nlohmann::json(job.expected_artifact->string()) : nlohmann::json(nullptr)},
   };
+  const auto log_path = generation_log_path(job);
+  payload["log_path"] = log_path.string();
+  if (job.status == GenerationJobStatus::Failed) {
+    const auto detail = tail_text_file(log_path);
+    if (!detail.empty()) {
+      payload["error_detail"] = detail;
+    }
+  }
+  return payload;
 }
 
 GenerationService::GenerationService(GenerationServiceConfig config)
@@ -256,8 +298,21 @@ int GenerationService::run_job_process(const GenerationJob& job) const {
 #ifdef _WIN32
   throw std::runtime_error("generation_service_not_supported_on_windows_yet");
 #else
+  std::error_code ec;
+  if (!std::filesystem::exists(job.yaml_path, ec)) {
+    write_generation_failure_log(job, "yaml_path_missing");
+    return 2;
+  }
+  ec.clear();
+  std::filesystem::create_directories(job.output_dir, ec);
+  if (ec) {
+    write_generation_failure_log(job, "output_dir_create_failed:" + ec.message());
+    return 2;
+  }
+
   const auto argv_strings = build_argv(job);
   if (argv_strings.empty()) {
+    write_generation_failure_log(job, "empty_command_template");
     return 1;
   }
 
@@ -273,6 +328,18 @@ int GenerationService::run_job_process(const GenerationJob& job) const {
     return 1;
   }
   if (pid == 0) {
+    ::setenv("SKIP_REQUIREMENTS_UPDATE", "1", 0);
+    ::setenv("PYTHONNOUSERSITE", "1", 0);
+    ::setenv("SEKAILINK_DISABLE_SPEEDUPS", "1", 0);
+    const auto log_path = generation_log_path(job);
+    const int log_fd = ::open(log_path.c_str(), O_CREAT | O_WRONLY | O_TRUNC, 0644);
+    if (log_fd >= 0) {
+      ::dup2(log_fd, STDOUT_FILENO);
+      ::dup2(log_fd, STDERR_FILENO);
+      if (log_fd > STDERR_FILENO) {
+        ::close(log_fd);
+      }
+    }
     ::execvp(argv[0], argv.data());
     _exit(127);
   }

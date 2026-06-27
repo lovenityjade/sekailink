@@ -53,6 +53,26 @@ ChatApiServiceConfig load_chat_api_service_config(const std::filesystem::path& p
   if (data.contains("seed_config_host")) config.seed_config_host = data.at("seed_config_host").get<std::string>();
   if (data.contains("seed_config_port")) config.seed_config_port = static_cast<std::uint16_t>(data.at("seed_config_port").get<int>());
   if (data.contains("seed_config_user_token")) config.seed_config_user_token = trim(data.at("seed_config_user_token").get<std::string>());
+  if (data.contains("social_bots_host")) config.social_bots_host = data.at("social_bots_host").get<std::string>();
+  if (data.contains("social_bots_port")) config.social_bots_port = static_cast<std::uint16_t>(data.at("social_bots_port").get<int>());
+  if (data.contains("social_bots_control_api_key")) {
+    config.social_bots_control_api_key = trim(data.at("social_bots_control_api_key").get<std::string>());
+  }
+  if (config.social_bots_control_api_key.empty()) {
+    if (const char* key = std::getenv("SEKAILINK_SOCIAL_BOTS_API_KEY"); key && *key) {
+      config.social_bots_control_api_key = trim(key);
+    } else if (const char* legacy_key = std::getenv("SEKAILINK_BOT_CONTROL_API_KEY"); legacy_key && *legacy_key) {
+      config.social_bots_control_api_key = trim(legacy_key);
+    }
+  }
+  if (data.contains("room_admin_tool_token")) {
+    config.room_admin_tool_token = trim(data.at("room_admin_tool_token").get<std::string>());
+  }
+  if (config.room_admin_tool_token.empty()) {
+    if (const char* token = std::getenv("SEKAILINK_ROOM_ADMIN_TOOL_TOKEN"); token && *token) {
+      config.room_admin_tool_token = trim(token);
+    }
+  }
   if (data.contains("generation_handoff_root") && !data.at("generation_handoff_root").is_null()) {
     config.generation_handoff_root = data.at("generation_handoff_root").get<std::string>();
   }
@@ -79,6 +99,10 @@ nlohmann::json to_json(const ChatApiServiceConfig& config) {
       {"seed_config_host", config.seed_config_host},
       {"seed_config_port", config.seed_config_port},
       {"seed_config_configured", !config.seed_config_user_token.empty()},
+      {"social_bots_host", config.social_bots_host},
+      {"social_bots_port", config.social_bots_port},
+      {"social_bots_configured", !config.social_bots_control_api_key.empty()},
+      {"room_admin_tool_token_configured", !config.room_admin_tool_token.empty()},
       {"generation_handoff_configured", !config.generation_handoff_command.empty()},
       {"generation_handoff_root_configured", !config.generation_handoff_root.empty()},
       {"sqlite_configured", !config.sqlite_path.empty()},
@@ -124,9 +148,19 @@ void ChatApiService::initialize_store() const {
         "username TEXT,"
         "display_name TEXT,"
         "avatar_url TEXT,"
+        "role TEXT NOT NULL DEFAULT 'player',"
+        "ready INTEGER NOT NULL DEFAULT 0,"
+        "local_ready_known INTEGER NOT NULL DEFAULT 0,"
+        "local_ready INTEGER NOT NULL DEFAULT 0,"
+        "local_ready_note TEXT NOT NULL DEFAULT '',"
         "last_seen TEXT NOT NULL,"
         "PRIMARY KEY(channel_id, user_id)"
         ");");
+    sqlite_exec_allow_duplicate_column(db, "ALTER TABLE chat_presence ADD COLUMN role TEXT NOT NULL DEFAULT 'player';");
+    sqlite_exec_allow_duplicate_column(db, "ALTER TABLE chat_presence ADD COLUMN ready INTEGER NOT NULL DEFAULT 0;");
+    sqlite_exec_allow_duplicate_column(db, "ALTER TABLE chat_presence ADD COLUMN local_ready_known INTEGER NOT NULL DEFAULT 0;");
+    sqlite_exec_allow_duplicate_column(db, "ALTER TABLE chat_presence ADD COLUMN local_ready INTEGER NOT NULL DEFAULT 0;");
+    sqlite_exec_allow_duplicate_column(db, "ALTER TABLE chat_presence ADD COLUMN local_ready_note TEXT NOT NULL DEFAULT '';");
     sqlite_exec_checked(db, "CREATE INDEX IF NOT EXISTS idx_chat_presence_channel_last_seen ON chat_presence(channel_id, last_seen);");
     sqlite_exec_checked(
         db,
@@ -334,6 +368,29 @@ ChatApiHttpResponse ChatApiService::forward_to_seed_config(
 #endif
 }
 
+ChatApiHttpResponse ChatApiService::forward_to_social_bots(
+    const std::string& method,
+    const std::string& path,
+    const std::optional<nlohmann::json>& body) const {
+#ifdef _WIN32
+  (void)method;
+  (void)path;
+  (void)body;
+  return {502, R"({"ok":false,"error":"unsupported_platform"})"};
+#else
+  if (config_.social_bots_control_api_key.empty()) {
+    return {502, R"({"ok":false,"error":"social_bots_api_key_missing"})"};
+  }
+  return http_request(
+      config_.social_bots_host,
+      config_.social_bots_port,
+      method,
+      path,
+      {{"X-SekaiLink-Bot-Key", config_.social_bots_control_api_key}, {"X-SekaiLink-Client", "chat-api-bug-report"}},
+      body.has_value() ? body->dump() : "");
+#endif
+}
+
 ChatApiHttpResponse ChatApiService::handle_legacy_me(const nlohmann::json& identity) const {
   return {200, legacy_user_from_identity(identity).dump()};
 }
@@ -469,6 +526,7 @@ ChatApiHttpResponse ChatApiService::handle(
       parts[0] == "account" ||
       parts[0] == "auth" ||
       parts[0] == "support" ||
+      parts[0] == "room_admin_secrets" ||
       parts[0] == "room_status" ||
       parts[0] == "generation_artifacts" ||
       parts[0] == "static_tracker" ||

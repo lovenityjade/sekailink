@@ -1,5 +1,9 @@
 #include "runtime_loop.hpp"
 
+#include "imgui_runtime.hpp"
+
+#include <imgui.h>
+
 #include <algorithm>
 #include <cmath>
 
@@ -16,6 +20,18 @@ double ResolvePacingFrameRate(double core_fps) {
     return rounded;
   }
   return std::clamp(core_fps, 10.0, 240.0);
+}
+
+bool IsMouseUiEvent(const SDL_Event& event) {
+  switch (event.type) {
+    case SDL_MOUSEBUTTONDOWN:
+    case SDL_MOUSEBUTTONUP:
+    case SDL_MOUSEMOTION:
+    case SDL_MOUSEWHEEL:
+      return true;
+    default:
+      return false;
+  }
 }
 
 class FramePacer {
@@ -57,6 +73,14 @@ class FramePacer {
 void PumpRuntimeEvents(RuntimeLoopContext& context) {
   SDL_Event event;
   while (SDL_PollEvent(&event)) {
+    ProcessSekaiemuImGuiEvent(event);
+    if (context.on_runtime_debug_event && context.on_runtime_debug_event(event)) {
+      continue;
+    }
+    if (context.runtime_menu != nullptr && context.runtime_menu->Visible() && IsMouseUiEvent(event) &&
+        ImGui::GetCurrentContext() != nullptr && ImGui::GetIO().WantCaptureMouse) {
+      continue;
+    }
     switch (event.type) {
       case SDL_QUIT:
         *context.running = false;
@@ -288,6 +312,13 @@ int RunRuntimeLoop(RuntimeLoopContext& context) {
       context.on_tick_sklmi_companion();
     }
     context.on_update_menu_overlay();
+    if (context.runtime_menu && context.on_apply_menu_action) {
+      const auto pending_action = context.runtime_menu->ConsumePendingAction();
+      if (pending_action != RuntimeMenuAction::None) {
+        context.on_apply_menu_action(pending_action);
+        context.on_menu_visibility_changed(context.runtime_menu->Visible());
+      }
+    }
     context.on_present_frame();
     if (context.exit_code) {
       runtime_exit_code = *context.exit_code;

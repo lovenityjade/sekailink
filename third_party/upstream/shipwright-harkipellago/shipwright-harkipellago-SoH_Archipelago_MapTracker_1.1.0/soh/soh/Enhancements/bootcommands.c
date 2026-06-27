@@ -1,0 +1,23 @@
+#include <stddef.h>
+#include <stdbool.h>
+#include <libultraship/bridge.h>
+#include "bootcommands.h"
+#include "soh/cvar_prefixes.h"
+
+void BootCommands_Init() {
+    // Clears vars to prevent randomizer menu from being disabled
+    CVarClear(CVAR_GENERAL("RandoGenerating")); // Clear when a crash happened during rando seed generation
+    CVarClear(CVAR_GENERAL("NewSeedGenerated"));
+    CVarClear(CVAR_GENERAL("OnFileSelectNameEntry")); // Clear when soh is killed on the file name entry page
+    CVarClear(CVAR_GENERAL("BetterDebugWarpScreenMQMode"));
+    CVarClear(CVAR_GENERAL("BetterDebugWarpScreenMQModeScene"));
+
+    CVarClear(CVAR_REMOTE_ARCHIPELAGO("ConnectionStatus")); // Clear on boot to reset connection status
+    CVarClear(CVAR_REMOTE_ARCHIPELAGO("ConnectionStatusInGame"));
+    CVarClear(CVAR_REMOTE_ARCHIPELAGO("ConnectionStatusFadeStarted"));
+    CVarClear(CVAR_REMOTE_ARCHIPELAGO("ConnectionStatusFadeCount"));
+
+#if defined(__SWITCH__) || defined(__WIIU__)
+    CVarRegisterInteger(CVAR_IMGUI_CONTROLLER_NAV, 1); // always enable controller nav on switch/wii u
+#endif
+}

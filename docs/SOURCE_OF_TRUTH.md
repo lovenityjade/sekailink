@@ -5,7 +5,7 @@ Date: 2026-06-01
 This file exists because BETA-3 had two active Sekaiemu trees and the runtime started mixing
 old and new tracker behavior. From this point forward, use:
 
-- Canonical repo: `/home/thelovenityjade/DevSSD/sekailink-canonical`
+- Canonical repo: `/home/thelovenityjade/SekaiLink/canonical`
 - Sekaiemu source: `apps/sekaiemu`
 - Client Core source: `apps/client-core`
 - SKLMI source: `services/sklmi`

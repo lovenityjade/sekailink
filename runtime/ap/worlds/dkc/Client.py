@@ -77,6 +77,85 @@ class DKCSNIClient(SNIClient):
         self.current_map = 0
         self.barrel_label = None
 
+    async def handle_received_items(self, ctx: "SNIContext", dkc_ram: SnesData[RAM], runtime_safe: bool) -> bool:
+        from SNIClient import snes_buffered_write, snes_flush_writes, snes_read
+        from .Rom import unlock_data, currency_data, trap_data
+
+        brightness = int.from_bytes(dkc_ram.get(RAM.brightness), "little")
+        if brightness & 0x0F != 0x0F:
+            return False
+
+        recv_index = int.from_bytes(dkc_ram.get(RAM.recv_index), "little")
+        if recv_index >= len(ctx.items_received):
+            return False
+
+        item = ctx.items_received[recv_index]
+        if not runtime_safe and item.item not in unlock_data:
+            snes_logger.info("Deferring DKC item id %s until game state is stable", item.item)
+            return False
+        recv_index += 1
+        logging.info('Received %s from %s (%s) (%d/%d in list)' % (
+            color(ctx.item_names.lookup_in_game(item.item), 'red', 'bold'),
+            color(ctx.player_names[item.player], 'yellow'),
+            ctx.location_names.lookup_in_slot(item.location, item.player), recv_index, len(ctx.items_received)))
+
+        sfx = 0
+        # Give kongs
+        if item.item in {STARTING_ID + 0x0010, STARTING_ID + 0x0011}:
+            offset = unlock_data[item.item][0]
+            sfx = unlock_data[item.item][1]
+            count = await snes_read(ctx, DKC_SRAM + offset, 0x02)
+            if count is None:
+                return False
+            count = int.from_bytes(count, "little")
+            if item.item == STARTING_ID + 0x0010:
+                count |= 0x0001
+            else:
+                count |= 0x0002
+            count &= 0x00FF
+            snes_buffered_write(ctx, DKC_SRAM + offset, bytes([count]))
+
+        # Give items
+        elif item.item in unlock_data:
+            offset = unlock_data[item.item][0]
+            sfx = unlock_data[item.item][1]
+            snes_buffered_write(ctx, DKC_SRAM + offset, bytearray([0x01]))
+
+        # Give currency-like items
+        elif item.item in currency_data:
+            offset = currency_data[item.item][0]
+            if offset & 0x8000 == 0x8000:
+                addr = DKC_SRAM + (offset & 0x7FFF)
+            else:
+                addr = WRAM_START + offset
+            sfx = currency_data[item.item][1]
+            currency = await snes_read(ctx, addr, 0x01)
+            if currency is None:
+                return False
+            currency = min(int.from_bytes(currency, "little") + 1, 99)
+            snes_buffered_write(ctx, addr, currency.to_bytes(1, "little"))
+
+        # Give traps
+        elif item.item in trap_data:
+            offset = trap_data[item.item][0]
+            sfx = trap_data[item.item][1]
+            traps = await snes_read(ctx, DKC_SRAM + offset, 0x02)
+            if traps is None:
+                return False
+            traps = min(int.from_bytes(traps, "little") + 1, 150)
+            snes_buffered_write(ctx, DKC_SRAM + offset, bytes([traps]))
+            if "TrapLink" in ctx.tags and item.item in trap_value_to_name and ctx.slot is not None:
+                await self.send_trap_link(ctx, trap_value_to_name[item.item])
+        else:
+            snes_logger.info("Received unhandled DKC item id %s; advancing receive index", item.item)
+
+        if sfx and runtime_safe:
+            snes_buffered_write(ctx, DKC_PLAY_SFX, bytearray([sfx, 0x80]))
+
+        snes_buffered_write(ctx, DKC_RECV_INDEX, recv_index.to_bytes(2, "little"))
+        await snes_flush_writes(ctx)
+        return True
+
     async def validate_rom(self, ctx: "SNIContext"):
         dkc_data = await self.validation.read(ctx)
         if dkc_data is None:
@@ -137,8 +216,12 @@ class DKCSNIClient(SNIClient):
 
         # Mark valid game state after we set foot into the map
         nmi_pointer = int.from_bytes(dkc_ram.get(RAM.nmi_pointer), "little")
+        brightness = int.from_bytes(dkc_ram.get(RAM.brightness), "little")
         if nmi_pointer == 0xE6B1:
             self.game_state = True
+
+        runtime_safe = nmi_pointer != 0xE6B1 and brightness & 0x0F == 0x0F
+        await self.handle_received_items(ctx, dkc_ram, runtime_safe=runtime_safe)
             
         if not self.game_state:
             self.current_map = 0
@@ -150,7 +233,6 @@ class DKCSNIClient(SNIClient):
         new_checks = []
         current_level = int.from_bytes(dkc_ram.get(RAM.current_level), "little")
         loaded_level = int.from_bytes(dkc_ram.get(RAM.loaded_level), "little")
-        brightness = int.from_bytes(dkc_ram.get(RAM.brightness), "little")
         level_flags = bytearray(dkc_ram.get(RAM.stage_flags))
         sanity_flags = bytearray(dkc_ram.get(RAM.sanity_flags))
         dkc_settings = dkc_ram.get(RAM.settings)
@@ -165,10 +247,9 @@ class DKCSNIClient(SNIClient):
         balloons_as_checks = dkc_settings[0x23]
         bunches_as_checks = dkc_settings[0x24]
 
+        stable_level_state = nmi_pointer != 0xE6B1 and brightness & 0x0F == 0x0F
+
         for loc_name, data in location_id_to_level_id.items():
-            # Do not process locations if in a map or a transition
-            if nmi_pointer == 0xE6B1 or brightness & 0x0F != 0x0F:
-                break 
             loc_id = AutoWorldRegister.world_types[ctx.game].location_name_to_id[loc_name]
             if loc_id not in ctx.locations_checked:
                 loc_type = data[0]
@@ -178,7 +259,7 @@ class DKCSNIClient(SNIClient):
                     # Level clear
                     if level_flags[level_num] & 0x01:
                         new_checks.append(loc_id)
-                elif loc_type == 0x01 and kong_as_checks:
+                elif loc_type == 0x01 and kong_as_checks and stable_level_state:
                     # KONG
                     if level_num == current_level and kong_flags & 0x10 == 0x10:
                         new_checks.append(loc_id)
@@ -187,6 +268,8 @@ class DKCSNIClient(SNIClient):
                     bonus_mask = data[2]
                     if level_flags[level_num] & bonus_mask:
                         new_checks.append(loc_id)
+                elif not stable_level_state:
+                    continue
                 elif loc_type == 0x03 and tokens_as_checks:
                     # Tokens
                     flag = sanity_flags[data[2]]
@@ -203,12 +286,12 @@ class DKCSNIClient(SNIClient):
                     if level_num == current_level and flag & 0x02 == 0x02:
                         new_checks.append(loc_id)
 
-        for new_check_id in new_checks:
+        sent_checks = await ctx.check_locations(new_checks)
+        for new_check_id in sent_checks:
             ctx.locations_checked.add(new_check_id)
             location = ctx.location_names.lookup_in_game(new_check_id)
             snes_logger.info(
                 f'New Check: {location} ({len(ctx.locations_checked)}/{len(ctx.missing_locations) + len(ctx.checked_locations)})')
-            await ctx.send_msgs([{"cmd": 'LocationChecks', "locations": [new_check_id]}])
 
         # Trigger goal
         if loaded_level == 0x004C:
@@ -244,79 +327,6 @@ class DKCSNIClient(SNIClient):
                     [{"operation": "replace", "value": self.current_map}],
             }])
 
-        # Receive items
-        # Only receive items if we're at full brightness
-        if brightness & 0x0F == 0x0F:
-            from .Rom import unlock_data, currency_data, trap_data
-            recv_index = int.from_bytes(dkc_ram.get(RAM.recv_index), "little")
-
-            if recv_index < len(ctx.items_received):
-                item = ctx.items_received[recv_index]
-                recv_index += 1
-                sending_game = ctx.slot_info[item.player].game
-                logging.info('Received %s from %s (%s) (%d/%d in list)' % (
-                    color(ctx.item_names.lookup_in_game(item.item), 'red', 'bold'),
-                    color(ctx.player_names[item.player], 'yellow'),
-                    ctx.location_names.lookup_in_slot(item.location, item.player), recv_index, len(ctx.items_received)))
-                
-                sfx = 0
-                # Give kongs
-                if item.item in {STARTING_ID + 0x0010, STARTING_ID + 0x0011}:
-                    offset = unlock_data[item.item][0]
-                    sfx = unlock_data[item.item][1]
-                    count = await snes_read(ctx, DKC_SRAM + offset, 0x02)
-                    if count is None:
-                        recv_index -= 1
-                        return
-                    count = int.from_bytes(count, "little")
-                    if item.item == STARTING_ID + 0x0010:
-                        count |= 0x0001
-                    else:
-                        count |= 0x0002
-                    count &= 0x00FF
-                    snes_buffered_write(ctx, DKC_SRAM + offset, bytes([count]))
-
-                # Give items
-                elif item.item in unlock_data:
-                    offset = unlock_data[item.item][0]
-                    sfx = unlock_data[item.item][1]
-                    snes_buffered_write(ctx, DKC_SRAM + offset, bytearray([0x01]))
-                
-                # Give currency-like items
-                elif item.item in currency_data:
-                    offset = currency_data[item.item][0]
-                    if offset & 0x8000 == 0x8000:
-                        addr = DKC_SRAM + (offset & 0x7FFF)
-                    else:
-                        addr = WRAM_START + offset
-                    sfx = currency_data[item.item][1]
-                    currency = await snes_read(ctx, addr, 0x01)
-                    if currency is None:
-                        recv_index -= 1
-                        return
-                    currency = min(int.from_bytes(currency, "little") + 1, 99)
-                    snes_buffered_write(ctx, addr, currency.to_bytes(1, "little"))
-
-                # Give traps 
-                elif item.item in trap_data:
-                    offset = trap_data[item.item][0]
-                    sfx = trap_data[item.item][1]
-                    traps = await snes_read(ctx, DKC_SRAM + offset, 0x02)
-                    if traps is None:
-                        recv_index -= 1
-                        return
-                    traps = min(int.from_bytes(traps, "little") + 1, 150)
-                    snes_buffered_write(ctx, DKC_SRAM + offset, bytes([traps]))
-                    if "TrapLink" in ctx.tags and item.item in trap_value_to_name and ctx.slot is not None:
-                        await self.send_trap_link(ctx, trap_value_to_name[item.item])
-
-                if sfx:
-                    snes_buffered_write(ctx, DKC_PLAY_SFX, bytearray([sfx, 0x80]))
-                    
-                snes_buffered_write(ctx, DKC_RECV_INDEX, recv_index.to_bytes(2, "little"))
-
-                await snes_flush_writes(ctx)
-                
         # Handle collected locations
         if nmi_pointer == 0xE6B1:
             level_data_updated = False
@@ -432,6 +442,8 @@ class DKCSNIClient(SNIClient):
         await snes_flush_writes(ctx)
 
     async def handle_barrel_label(self, ctx: "SNIContext", dkc_ram: SnesData[RAM]):
+        if not ctx.ui:
+            return
         from kvui import MDLabel as Label
 
         if not self.barrel_label:

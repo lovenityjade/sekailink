@@ -158,6 +158,22 @@
       "notes": "PopTracker URL unresolved from source index."
     },
     {
+      "game_key": "mega_man_x2",
+      "display_name": "Mega Man X2",
+      "platform": "snes",
+      "archipelago_status": "core_verified",
+      "apworld_url": "https://github.com/TheLX5/Archipelago/releases?q=%22Mega+Man+X2%22&expanded=true",
+      "apworld_local_path": null,
+      "tracker_status": "tracker_optional",
+      "poptracker_url": null,
+      "web_tracker_url": null,
+      "setup_url": null,
+      "sklmi_manifest": null,
+      "sekaiemu_profile": null,
+      "tier": 2,
+      "notes": "SekaiLink runtime test confirmed bilateral item/check communication through the SNES/SNI path. Local APWorld/module source must be kept aligned when staged."
+    },
+    {
       "game_key": "secret_of_evermore",
       "display_name": "Secret of Evermore",
       "platform": "snes",
@@ -171,7 +187,7 @@
       "sklmi_manifest": null,
       "sekaiemu_profile": null,
       "tier": 0,
-      "notes": "Resolve local APWorld availability and tracker URL."
+      "notes": "Local APWorld is staged in runtime/ap/worlds/soe. Runtime uses the upstream Evermizer browser AP client through web_ap_client."
     },
     {
       "game_key": "tloz",
@@ -222,10 +238,26 @@
       "notes": "Tracker is non-blocking for initial platformer heartbeat; Universal Tracker is acceptable for early classification."
     },
     {
+      "game_key": "mega_man_battle_network_3",
+      "display_name": "Mega Man Battle Network 3",
+      "platform": "gba",
+      "archipelago_status": "not_available",
+      "apworld_url": "https://github.com/ArchipelagoMW/Archipelago",
+      "apworld_local_path": "runtime/ap/worlds/mmbn3",
+      "tracker_status": "local_downloaded",
+      "poptracker_url": "local:MMBN3_AP_Tracker.zip",
+      "web_tracker_url": null,
+      "setup_url": "https://archipelago.gg/tutorial/MegaMan%20Battle%20Network%203/setup/en",
+      "sklmi_manifest": null,
+      "sekaiemu_profile": null,
+      "tier": 1,
+      "notes": "Temporarily unavailable until a dedicated MMBN3 tester can validate the MMBN3Client/connector bridge flow."
+    },
+    {
       "game_key": "pokemon_emerald",
       "display_name": "Pokemon Emerald",
       "platform": "gba",
-      "archipelago_status": "core_verified",
+      "archipelago_status": "not_available",
       "apworld_url": "https://github.com/ArchipelagoMW/Archipelago",
       "apworld_local_path": "runtime/ap/worlds/pokemon_emerald",
       "tracker_status": "github_verified",
@@ -235,13 +267,13 @@
       "sklmi_manifest": null,
       "sekaiemu_profile": null,
       "tier": 1,
-      "notes": "Good GBA candidate after GBA runtime path validation."
+      "notes": "Temporarily unavailable for BETA-3 launch: runtime connects and receives, but check send behavior still needs a focused Emerald tester/regression pass."
     },
     {
       "game_key": "pokemon_frlg",
       "display_name": "Pokemon FireRed and LeafGreen",
       "platform": "gba",
-      "archipelago_status": "unknown",
+      "archipelago_status": "not_available",
       "apworld_url": null,
       "apworld_local_path": "runtime/ap/worlds/pokemon_frlg",
       "tracker_status": "github_via_source",
@@ -251,13 +283,13 @@
       "sklmi_manifest": null,
       "sekaiemu_profile": "runtime/profiles/firered-starter.profile",
       "tier": 1,
-      "notes": "Local APWorld and starter profile exist."
+      "notes": "Temporarily unavailable for BETA-3 launch: GBA support is frozen to confirmed bilateral games only until a focused tester validates this title."
     },
     {
       "game_key": "metroid_zero_mission",
       "display_name": "Metroid: Zero Mission",
       "platform": "gba",
-      "archipelago_status": "unknown",
+      "archipelago_status": "core_verified",
       "apworld_url": null,
       "apworld_local_path": "runtime/ap/worlds/mzm",
       "tracker_status": "github_via_source",
@@ -273,7 +305,7 @@
       "game_key": "pokemon_red_blue",
       "display_name": "Pokemon Red and Blue",
       "platform": "gb",
-      "archipelago_status": "core_verified",
+      "archipelago_status": "not_available",
       "apworld_url": "https://github.com/ArchipelagoMW/Archipelago",
       "apworld_local_path": "runtime/ap/worlds/pokemon_rb",
       "tracker_status": "github_via_source",
@@ -283,13 +315,13 @@
       "sklmi_manifest": null,
       "sekaiemu_profile": null,
       "tier": 1,
-      "notes": "GB runtime path must be validated separately."
+      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
     },
     {
       "game_key": "pokemon_crystal",
       "display_name": "Pokemon Crystal",
       "platform": "gbc",
-      "archipelago_status": "unknown",
+      "archipelago_status": "not_available",
       "apworld_url": null,
       "apworld_local_path": "runtime/ap/worlds/pokemon_crystal",
       "tracker_status": "github_via_source",
@@ -299,13 +331,13 @@
       "sklmi_manifest": null,
       "sekaiemu_profile": null,
       "tier": 1,
-      "notes": "Setup gist needs URL resolution."
+      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
     },
     {
       "game_key": "oracle_of_ages_seasons",
       "display_name": "The Legend of Zelda: Oracle of Ages / Oracle of Seasons",
       "platform": "gbc",
-      "archipelago_status": "unknown",
+      "archipelago_status": "not_available",
       "apworld_url": null,
       "apworld_local_path": "runtime/ap/worlds/tloz_oos",
       "tracker_status": "github_via_source",
@@ -315,7 +347,7 @@
       "sklmi_manifest": null,
       "sekaiemu_profile": null,
       "tier": 1,
-      "notes": "One local APWorld family covers both Oracle games."
+      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
     },
     {
       "game_key": "actraiser",
@@ -353,7 +385,7 @@
       "game_key": "super_mario_land_2",
       "display_name": "Super Mario Land 2: 6 Golden Coins",
       "platform": "gb",
-      "archipelago_status": "unknown",
+      "archipelago_status": "not_available",
       "apworld_url": null,
       "apworld_local_path": "runtime/ap/worlds/marioland2",
       "tracker_status": "tracker_optional",
@@ -363,13 +395,13 @@
       "sklmi_manifest": null,
       "sekaiemu_profile": null,
       "tier": 1,
-      "notes": "Platformer; missing PopTracker should not block initial runtime/AP heartbeat work."
+      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
     },
     {
       "game_key": "ladx",
       "display_name": "The Legend of Zelda: Link's Awakening DX",
       "platform": "gbc",
-      "archipelago_status": "unknown_beta",
+      "archipelago_status": "not_available",
       "apworld_url": null,
       "apworld_local_path": null,
       "tracker_status": "web_only",
@@ -379,7 +411,23 @@
       "sklmi_manifest": null,
       "sekaiemu_profile": "runtime/profiles/ladx-starter.profile",
       "tier": 1,
-      "notes": "Web tracker is confirmed by research; missing PopTracker is not a hard blocker."
+      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+    },
+    {
+      "game_key": "secret_of_mana",
+      "display_name": "Secret of Mana",
+      "platform": "snes",
+      "archipelago_status": "core_verified",
+      "apworld_url": null,
+      "apworld_local_path": "runtime/ap/worlds/som.apworld",
+      "tracker_status": "github_verified",
+      "poptracker_url": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker",
+      "web_tracker_url": null,
+      "setup_url": null,
+      "sklmi_manifest": null,
+      "sekaiemu_profile": null,
+      "tier": 2,
+      "notes": "SNI-compatible SNES game. APWorld is staged locally as som.apworld, uses .apsom patches, and runtime uses the upstream Evermizer browser AP client through web_ap_client. SekaiLink runtime test confirmed bilateral item/check communication; non-blocking graphics bug remains on the naming/save screen."
     }
   ]
 }

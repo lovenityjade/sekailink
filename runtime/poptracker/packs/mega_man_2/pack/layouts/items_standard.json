@@ -1,0 +1,31 @@
+{
+    "shared_item_grid": {
+        "type": "array",
+        "orientation": "vertical",
+        "margin": "0,0",
+        "content": [
+            {
+                "type": "array",
+                "orientation": "vertical",
+                "margin": "0,0",
+                "content": [
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "4, 5",
+                        "item_size": 64,
+                        "h_alignment": "left",
+                        "rows": [
+                            ["bubble_man_state", "air_man_state", "quick_man_state"],
+                            ["heat_man_state", "", "wood_man_state"],
+                            ["metal_man_state", "flash_man_state", "crash_man_state"],
+                            ["bubble_lead", "air_shooter","quick_boomerang"],
+                            ["atomic_fire", "", "leaf_shield"],
+                            ["metal_blade", "time_stopper", "crash_bomber"],
+                            ["item_1", "item_2", "item_3"]
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

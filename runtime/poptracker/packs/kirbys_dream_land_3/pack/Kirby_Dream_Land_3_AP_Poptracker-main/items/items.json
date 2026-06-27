@@ -1,0 +1,170 @@
+[
+    {
+        "name": "stages",
+        "type": "static",
+        "img": "images/stages/11.png",
+        "disabled_img_mods": "none",
+        "codes": "11"
+    },
+    {
+        "name": "Burning",
+        "type": "toggle",
+        "img": "images/items/Burning.png",
+        "codes": "burning"
+    },
+    {
+        "name": "Stone",
+        "type": "toggle",
+        "img": "images/items/Stone.png",
+        "codes": "stone"
+    },
+    {
+        "name": "Ice",
+        "type": "toggle",
+        "img": "images/items/Ice.png",
+        "codes": "ice"
+    },
+    {
+        "name": "Needle",
+        "type": "toggle",
+        "img": "images/items/Needle.png",
+        "codes": "needle"
+    },
+    {
+        "name": "Clean",
+        "type": "toggle",
+        "img": "images/items/Clean.png",
+        "codes": "clean"
+    },
+    {
+        "name": "Parasol",
+        "type": "toggle",
+        "img": "images/items/Parasol.png",
+        "codes": "parasol"
+    },
+    {
+        "name": "Spark",
+        "type": "toggle",
+        "img": "images/items/Spark.png",
+        "codes": "spark"
+    },
+    {
+        "name": "Cutter",
+        "type": "toggle",
+        "img": "images/items/Cutter.png",
+        "codes": "cutter"
+    },
+    {
+        "name": "Rick",
+        "type": "toggle",
+        "img": "images/items/Rick.png",
+        "codes": "rick"
+    },
+    {
+        "name": "Coo",
+        "type": "toggle",
+        "img": "images/items/Coo.png",
+        "codes": "coo"
+    },
+    {
+        "name": "Kine",
+        "type": "toggle",
+        "img": "images/items/Kine.png",
+        "codes": "kine"
+    },
+    {
+        "name": "Nago",
+        "type": "toggle",
+        "img": "images/items/Nago.png",
+        "codes": "nago"
+    },
+    {
+        "name": "ChuChu",
+        "type": "toggle",
+        "img": "images/items/ChuChu.png",
+        "codes": "chuchu"
+    },
+    {
+        "name": "Pitch",
+        "type": "toggle",
+        "img": "images/items/Pitch.png",
+        "codes": "pitch"
+    },
+    {
+        "name": "Heart Star",
+        "type": "consumable",
+        "img": "images/items/HeartStar.png",
+        "disabled_img": "images/items/HeartStar.png",
+        "codes": "heartstar",
+        "min_quantity": 0,
+        "max_quantity": 99,
+        "increment": 1,
+        "decrement": 1
+    },
+    {
+        "name": "Goal",
+        "type": "progressive",
+        "codes": "goal",
+        "allow_disabled": false,
+        "loop": true,
+        "stages": [
+            {
+                "img": "images/Zero.png",
+                "codes": "zero",
+                "name": "Zero",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/BossButch.png",
+                "codes": "bossbutch",
+                "name": "Boss Butch",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/MG5.png",
+                "codes": "mg5",
+                "name": "Super MG-5",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/Jumping.png",
+                "codes": "jumping",
+                "name": "Jumping",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Goal Speed",
+        "type": "progressive",
+        "img": "images/DarkMatter.png",
+        "codes": "fastgoal"
+    },
+    {
+        "name": "Consumable Checks",
+        "type": "toggle",
+        "img": "images/MaximTomato.png",
+        "codes": "consumables"
+    },
+    {
+        "name": "Starsanity",
+        "type": "toggle",
+        "img": "images/StarLarge.png",
+        "codes": "starsanity"
+    },
+    {
+        "name": "Go Mode",
+        "type": "toggle",
+        "img": "images/GoMode.png",
+        "codes": "gomode"
+    },
+    {
+        "name": "Stages Unlocked",
+        "type": "consumable",
+        "codes": "stages",
+        "min_quantity": 1,
+        "max_quantity": 35,
+        "img": "images/stages/11.png"
+    }
+
+]

@@ -1,6 +1,6 @@
 {
   "name": "sekailink-client",
-  "version": "0.3.1-prebeta3.20260605.13",
+  "version": "0.3.1-prebeta3.20260613.2",
   "description": "SekaiLink desktop client (Archipelago-focused).",
   "author": "SekaiLink",
   "private": true,
@@ -16,8 +16,8 @@
     "runtime:verify:source": "node scripts/verify-runtime-bundle.mjs --root ../../runtime --platform linux-x64",
     "runtime:verify:linux": "node scripts/verify-runtime-bundle.mjs --root release/linux-unpacked/resources/runtime --platform linux-x64",
     "runtime:verify:win": "node scripts/verify-runtime-bundle.mjs --root release/win-unpacked/resources/runtime --platform win32-x64",
-    "electron:pack": "npm run build && node scripts/prepare-native-deps.mjs && electron-builder --linux && npm run runtime:verify:linux",
-    "electron:pack:win": "npm run build && node scripts/prepare-native-deps.mjs && electron-builder --win nsis && npm run runtime:verify:win",
+    "electron:pack": "npm run build && node scripts/prepare-native-deps.mjs && npm run bootstrapper:pack && electron-builder --linux && npm run runtime:verify:linux",
+    "electron:pack:win": "npm run build && node scripts/prepare-native-deps.mjs && npm run bootstrapper:pack && electron-builder --win nsis && npm run runtime:verify:win",
     "electron:pack:update-bundles": "node scripts/package-update-bundles.mjs",
     "bootstrapper:pack": "node scripts/package-bootstrapper.mjs",
     "headless:smoke": "bash ../../scripts/headless-smoke.sh --wrapper common",

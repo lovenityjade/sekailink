@@ -329,6 +329,11 @@ nlohmann::json legacy_lobby_from_runtime(const nlohmann::json& lobby) {
   const auto presence_count = json_int_or(lobby, "presence_count", 0);
   const auto owner = json_string_or(lobby, "owner_username");
   const auto updated_at = json_string_or(lobby, "updated_at");
+  const auto room_type = json_string_or(metadata, "room_type", json_string_or(metadata, "mode", json_string_or(lobby, "room_type")));
+  const auto async_lobby = room_type == "async" ||
+                           (metadata.contains("asynchronous") && metadata.at("asynchronous").is_boolean() && metadata.at("asynchronous").get<bool>()) ||
+                           (metadata.contains("is_async") && metadata.at("is_async").is_boolean() && metadata.at("is_async").get<bool>()) ||
+                           (lobby.contains("async_state") && !lobby.at("async_state").is_null());
   nlohmann::json result = {
       {"id", lobby_id},
       {"lobby_id", lobby_id},
@@ -345,8 +350,12 @@ nlohmann::json legacy_lobby_from_runtime(const nlohmann::json& lobby) {
       {"created_at", json_string_or(lobby, "created_at")},
       {"updated_at", updated_at},
       {"last_activity", json_string_or(lobby, "last_activity_at", updated_at)},
+      {"asynchronous", async_lobby},
+      {"is_async", async_lobby},
+      {"room_type", async_lobby ? std::string("async") : std::string("active")},
       {"metadata", metadata},
   };
+  if (lobby.contains("async_state")) result["async_state"] = lobby.at("async_state");
   for (const auto& key : {"game", "mode", "release_mode", "language", "tags", "games"}) {
     if (metadata.contains(key)) result[key] = metadata.at(key);
   }
@@ -552,6 +561,8 @@ int run_process_wait(const std::vector<std::string>& args) {
     argv.reserve(args.size() + 1);
     for (const auto& arg : args) argv.push_back(const_cast<char*>(arg.c_str()));
     argv.push_back(nullptr);
+    ::setenv("SKIP_REQUIREMENTS_UPDATE", "1", 0);
+    ::setenv("PYTHONNOUSERSITE", "1", 0);
     execvp(argv[0], argv.data());
     _exit(127);
   }

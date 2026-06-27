@@ -1,0 +1,46 @@
+{
+  "game_id": "pokemon_crystal",
+  "display_name": "Pokemon Crystal",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apcrystal"
+  ],
+  "patch_world_module": "worlds.pokemon_crystal",
+  "ap_world": "pokemon_crystal",
+  "required_roms": [
+    "pokemon_crystal"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "pokemon_crystal",
+    "world": "pokemon_crystal",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/pokemon_crystal/client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".gbc",
+      ".gb"
+    ],
+    "md5": [
+      "9f2922b235a5eeb78d65594e82ef5dde",
+      "301899b8087289a6436b0a241fbbb474"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "gbc",
+    "ap_game": "Pokemon Crystal"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "",
+  "support_status": "not_available",
+  "availability_status": "unavailable_gb_gbc_pending_tester",
+  "compatibility_notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+}

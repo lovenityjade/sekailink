@@ -3,8 +3,23 @@
   "display_name": "Nintendo Entertainment System",
   "primary_core": null,
   "core_paths": {},
+  "sekailink_validation_status": "frozen_validated",
+  "validated_at": "2026-06-25",
+  "validated_scope": [
+    "Client Core launch path",
+    "Sekaiemu memory exposure",
+    "generic BizHawk-style bridge",
+    "Archipelago room communication",
+    "multiworld item flow"
+  ],
+  "validated_fixtures": [
+    "The Legend of Zelda",
+    "Mega Man 2",
+    "Mega Man 3",
+    "Zelda II: The Adventure of Link"
+  ],
   "notes": [
-    "NES runtime support is indexed for planning. Core/runtime packaging must be validated before certification."
+    "NES runtime support is frozen as validated for BETA-3 after successful single-game and multiworld tests.",
+    "Do not modify the NES core bridge unless a reproducible regression appears with logs."
   ]
 }
-

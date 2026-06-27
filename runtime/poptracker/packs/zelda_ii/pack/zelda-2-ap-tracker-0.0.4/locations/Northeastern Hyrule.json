@@ -1,0 +1,164 @@
+[
+    {
+        "name": "Northeastern Hyrule",
+        "chest_unopened_img": "/images/items/close.png",
+        "chest_opened_img": "/images/items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "@Eastern Hyrule, ^$candle", "@Eastern Hyrule, boots"
+        ],
+        "children": [
+            {
+                "name": "Northeastern Hyrule",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Sage of Darunia",
+                        "access_rules": ["child"],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Darunia Swordsman",
+                        "access_rules": ["jumpspell"],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "1236",
+                        "y": "467"
+                    },
+                    {
+                        "map": "East Hyrule",
+                        "x": "85",
+                        "y": "90"
+                    }
+                ]
+            },
+            {
+                "name": "Northeastern Hyrule​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Northeastern Beach",
+                        "access_rules": [],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "1956",
+                        "y": "643"
+                    },
+                    {
+                        "map": "East Hyrule",
+                        "x": "805",
+                        "y": "266"
+                    }
+                ]
+            },
+            {
+                "name": "Northeastern Hyrule​​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Maze Island Left Hole",
+                        "access_rules": [],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "642",
+                        "y": "1651"
+                    },
+                    {
+                        "map": "Island Maze",
+                        "x": "75",
+                        "y": "429"
+                    }
+                ]
+            },
+            {
+                "name": "Northeastern Hyrule​​​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Maze Island Path",
+                        "access_rules": [],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "754",
+                        "y": "1459"
+                    },
+                    {
+                        "map": "Island Maze",
+                        "x": "187",
+                        "y": "237"
+                    }
+                ]
+            },
+            {
+                "name": "Northeastern Hyrule​​​​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Maze Island Right Hole",
+                        "access_rules": ["^$candle"],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "898",
+                        "y": "1683"
+                    },
+                    {
+                        "map": "Island Maze",
+                        "x": "331",
+                        "y": "461"
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -106,7 +106,9 @@ void WriteZipFromDirectory(const fs::path& archive_path, const fs::path& root) {
   }
   archive_write_add_filter_none(writer);
   archive_write_set_format_zip(writer);
-  if (archive_write_open_filename(writer, archive_path.c_str()) != ARCHIVE_OK) {
+  const auto archive_path_u8 = archive_path.u8string();
+  const std::string archive_path_text(archive_path_u8.begin(), archive_path_u8.end());
+  if (archive_write_open_filename(writer, archive_path_text.c_str()) != ARCHIVE_OK) {
     const std::string error =
         archive_error_string(writer) != nullptr ? archive_error_string(writer) : "archive_write_open_failed";
     archive_write_free(writer);

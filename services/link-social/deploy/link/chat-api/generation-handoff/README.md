@@ -88,6 +88,28 @@ database-backed config snapshots, prepared upstream world support, ROM/runtime
 setup when a game needs it, and optional tracker/runtime metadata. Link should
 not need a new server route or game-specific generation branch for each game.
 
+## Room Runtime Admin Password
+
+When the handoff starts an Archipelago `MultiServer`, it now supplies
+`--server_password` so admin tools can use `!admin login ...` followed by server
+commands such as `!admin /send <slot> <item>`.
+
+Default behavior:
+
+- a unique password is generated per generation state;
+- the normal `/api/room_status/<room_id>` response does not expose it;
+- `/api/room_admin_secrets/<room_id>` can retrieve it only when the chat API is
+  configured with `room_admin_tool_token` or `SEKAILINK_ROOM_ADMIN_TOOL_TOKEN`.
+
+For lab runs that need a fixed password, set:
+
+```bash
+SEKAILINK_ROOM_RUNTIME_SERVER_PASSWORD=replace-lab-password
+```
+
+If `SEKAILINK_ROOM_RUNTIME_COMMAND` overrides the default command, it can use the
+`{server_password}` placeholder.
+
 If the upstream AP/MWGG environment is too expensive or noisy to load fully, the
 runtime may set `SEKAILINK_WORLD_FILTER` as a deployment allowlist. The first
 showcase can scope it to `alttp`; later showcases can expand it to a

@@ -14,6 +14,12 @@ if TYPE_CHECKING:
     from worlds._bizhawk.context import BizHawkClientContext
 
 EXPECTED_ROM_NAME = "LEGEND OF ZELDA2"
+Z2_WRAM_CANDIDATES = (
+    ("WRAM", 0x0000),
+    ("SRAM", 0x0000),
+    ("Battery RAM", 0x0000),
+    ("System Bus", 0x6000),
+)
 
 
 class Zelda2Client(BizHawkClient):
@@ -71,6 +77,23 @@ class Zelda2Client(BizHawkClient):
         if "tags" not in args:
             return
 
+    async def read_z2_wram(self, ctx: "BizHawkClientContext", address: int, size: int) -> bytes:
+        for domain, offset in Z2_WRAM_CANDIDATES:
+            try:
+                return (await bizhawk.read(ctx.bizhawk_ctx, [(address + offset, size, domain)]))[0]
+            except (bizhawk.RequestFailedError, bizhawk.ConnectorError, ExceptionGroup):
+                continue
+        raise bizhawk.RequestFailedError(f"Could not read Zelda II WRAM at {address:#x}")
+
+    async def write_z2_wram(self, ctx: "BizHawkClientContext", address: int, data: bytes) -> None:
+        for domain, offset in Z2_WRAM_CANDIDATES:
+            try:
+                await bizhawk.write(ctx.bizhawk_ctx, [(address + offset, data, domain)])
+                return
+            except (bizhawk.RequestFailedError, bizhawk.ConnectorError, ExceptionGroup):
+                continue
+        raise bizhawk.RequestFailedError(f"Could not write Zelda II WRAM at {address:#x}")
+
     async def game_watcher(self, ctx: "BizHawkClientContext") -> None:
         from CommonClient import logger
 
@@ -88,65 +111,66 @@ class Zelda2Client(BizHawkClient):
         if ctx.server is None or ctx.server.socket.closed or ctx.slot_data is None:
             return
 
-        read_state = await bizhawk.read(ctx.bizhawk_ctx, [(0x1A10, 1, "WRAM"), # Item that the server has sent
-                                                            (0x0600, 0xDF, "RAM"), # Table of flags for locations
-                                                            (0x0736, 1, "RAM"), # Game state
-                                                            (0x1A18, 2, "WRAM"), #NPC checks, stored separately
-                                                            (0x076C, 1, "RAM"), # State I read for the goal
-                                                            (0x1A1C, 2, "WRAM"), # total number of items gotten from the server
-                                                            (0x074C, 1, "RAM")]) # dialogue box state
-
-        currently_obtained_item = int.from_bytes(read_state[0], "little")
-        loc_array = bytearray(read_state[1])
-        game_state = int.from_bytes(read_state[2], "little")
-        npc_check_field = bytearray(read_state[3])
-        goal_trigger = int.from_bytes(read_state[4], "little")
-        total_received_items = int.from_bytes(read_state[5], "little")
-        textbox_active = int.from_bytes(read_state[6], "little")
+        ram_state = await bizhawk.read(ctx.bizhawk_ctx, [(0x0600, 0xDF, "RAM"), # Table of flags for locations
+                                                        (0x0736, 1, "RAM"), # Game state
+                                                        (0x076C, 1, "RAM"), # State I read for the goal
+                                                        (0x074C, 1, "RAM")]) # dialogue box state
+        currently_obtained_item = int.from_bytes(await self.read_z2_wram(ctx, 0x1A10, 1), "little")
+        npc_check_field = bytearray(await self.read_z2_wram(ctx, 0x1A18, 2))
+        total_received_items = int.from_bytes(await self.read_z2_wram(ctx, 0x1A1C, 2), "little")
+        loc_array = bytearray(ram_state[0])
+        game_state = int.from_bytes(ram_state[1], "little")
+        goal_trigger = int.from_bytes(ram_state[2], "little")
+        textbox_active = int.from_bytes(ram_state[3], "little")
 
         # is_dead = int.from_bytes(read_state[4], "little")
 
-        if game_state not in [0x0B, 0x05]: # Are we in side-scroll mode?
-            return
+        if total_received_items < len(ctx.items_received) and currently_obtained_item == 0x00:
+            item = ctx.items_received[total_received_items]
+            total_received_items += 1
+
+            await self.write_z2_wram(ctx, 0x1A10, bytes([item.item]))
+            await self.write_z2_wram(ctx, 0x1A1C, bytes([total_received_items]))
 
         new_checks = []
+        known_checks = ctx.checked_locations | ctx.locations_checked
+        server_locations = getattr(ctx, "server_locations", set()) or set()
 
-        # This needs a significant rework. 
-        # Format should be [offset, bit] where bit is which bit gets unflipped when the location is checked...
-        for location_id in self.location_map:
-            if location_id not in ctx.locations_checked: 
-                location = loc_array[self.location_map[location_id][0]]
-                bitmask = 1 << (self.location_map[location_id][1])
-                if not location & bitmask:
-                    new_checks.append(location_id)
+        def add_check(location_id: int) -> None:
+            if location_id in known_checks:
+                return
+            if server_locations and location_id not in server_locations:
+                return
+            new_checks.append(location_id)
 
         for location_id in self.npc_locations:
-            if location_id not in ctx.locations_checked:
+            if location_id not in known_checks:
                 location = npc_check_field[self.npc_locations[location_id][0]]
                 bitmask = 1 << (self.npc_locations[location_id][1])
                 if location & bitmask:
-                    new_checks.append(location_id)
-                
+                    add_check(location_id)
+
+        # This needs a significant rework. 
+        # Format should be [offset, bit] where bit is which bit gets unflipped when the location is checked...
+        if game_state in [0x0B, 0x05]: # Are we in side-scroll mode?
+            for location_id in self.location_map:
+                if location_id not in known_checks:
+                    location = loc_array[self.location_map[location_id][0]]
+                    bitmask = 1 << (self.location_map[location_id][1])
+                    if not location & bitmask:
+                        add_check(location_id)
+
            # if location_id in ctx.checked_locations:
                # loc_array[loc_pointer] = 0  Collect behavior. Do later
-        await bizhawk.write(ctx.bizhawk_ctx, [(0x0600, loc_array, "RAM")])
+            await bizhawk.write(ctx.bizhawk_ctx, [(0x0600, loc_array, "RAM")])
                 
         for new_check_id in new_checks:
             ctx.locations_checked.add(new_check_id)
             location = ctx.location_names.lookup_in_slot(new_check_id)
             await ctx.send_msgs([{"cmd": "LocationChecks", "locations": [new_check_id]}])
 
-        if total_received_items < len(ctx.items_received) and currently_obtained_item == 0x00:
-            item = ctx.items_received[total_received_items]
-            total_received_items += 1
-
-            await bizhawk.write(ctx.bizhawk_ctx, [(0x1A10, bytes([item.item]), "WRAM")])
-            await bizhawk.write(ctx.bizhawk_ctx, [(0x1A1C, bytes([total_received_items]), "WRAM")])
-
         if not ctx.finished_game and goal_trigger == 0x04:
             await ctx.send_msgs([{
                 "cmd": "StatusUpdate",
                 "status": ClientStatus.CLIENT_GOAL
             }])
-
-

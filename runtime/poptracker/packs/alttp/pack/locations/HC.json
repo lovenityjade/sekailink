@@ -1,0 +1,304 @@
+[
+    {
+        "name": "Hyrule Castle",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "access_rules": [
+            "^$CanReach|HC_main_entrance_inside",
+            "^$CanReach|HC_left_entrance_inside",
+            "^$CanReach|HC_right_entrance_inside"
+        ],
+        "children": [
+            {
+                "name": "Map Chest",
+                "access_rules": [
+                    "^$CanReach|HC_map_chest_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Map Chest",
+                        "access_rules": [
+                            "^$CanReach|HC - Map Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "HC",
+                        "x": 190,
+                        "y": 40,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Boomerang Chest",
+                "access_rules": [
+                    "^$CanReach|HC_boomerang_chest_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Boomerang Chest",
+                        "access_rules": [
+                            "^$CanReach|HC - Boomerang Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "HC",
+                        "x": 95,
+                        "y": 100,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Zelda's Chest",
+                "access_rules": [
+                    "^$CanReach|HC_zeldas_cell, ^$CanReach|HC_ball_guard_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Zelda's Chest",
+                        "access_rules": [
+                            "^$CanReach|HC - Zelda's Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "HC",
+                        "x": 135,
+                        "y": 17,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Map Guard Key Drop",
+                "access_rules": [
+                    "^$CanReach|HC_map_chest_room"
+                ],
+                "visibility_rules": ["key_drop_shuffle"],
+                "sections": [
+                    {
+                        "name": "Map Guard Key Drop",
+                        "access_rules": [
+                            "^$CanReach|HC - Map Guard Key Drop"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "HC",
+                        "x": 200,
+                        "y": 30,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Boomerang Guard Key Drop",
+                "access_rules": [
+                    "^$CanReach|HC_boomerang_chest_room"
+                ],
+                "visibility_rules": ["key_drop_shuffle"],
+                "sections": [
+                    {
+                        "name": "Boomerang Guard Key Drop",
+                        "access_rules": [
+                            "^$CanReach|HC - Booomerang Guard Key Drop"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "HC",
+                        "x": 105,
+                        "y": 105,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Big Key Drop",
+                "access_rules": [
+                    "^$CanReach|HC_ball_guard_room"
+                ],
+                "visibility_rules": ["key_drop_shuffle"],
+                "sections": [
+                    {
+                        "name": "Big Key Drop",
+                        "access_rules": [
+                            "^$CanReach|HC - Big Key"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "HC",
+                        "x": 155,
+                        "y": 43,
+                        "size": 6
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Castle Escape",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "access_rules": [
+            "^$CanReach|CE_stairs_inside",
+            "^$CanReach|Sanctuary_entrance_inside",
+            "^$CanReach|CE_dropdown_entrance_inside"
+        ],
+        "children": [
+            {
+                "name": "Dark Cross",
+                "access_rules": [
+                    "^$CanReach|CE_dark_cross"
+                ],
+                "sections": [
+                    {
+                        "name": "Dark Cross",
+                        "access_rules": [
+                            "^$CanReach|CE - Dark Cross"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "CE",
+                        "x": 345,
+                        "y": 120,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Secret Passage Left",
+                "access_rules": [
+                    "^$CanReach|CE_secret_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Secret Passage Left",
+                        "access_rules": [
+                            "^$CanReach|CE - Secret Room Left"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "CE",
+                        "x": 125,
+                        "y": 70,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Secret Passage Middle",
+                "access_rules": [
+                    "^$CanReach|CE_secret_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Secret Passage Middle",
+                        "access_rules": [
+                            "^$CanReach|CE - Secret Room Center"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "CE",
+                        "x": 133,
+                        "y": 70,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Secret Passage Right",
+                "access_rules": [
+                    "^$CanReach|CE_secret_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Secret Passage Right",
+                        "access_rules": [
+                            "^$CanReach|CE - Secret Room Right"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "CE",
+                        "x": 141,
+                        "y": 70,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Key Rat Key Drop",
+                "visibility_rules": ["key_drop_shuffle"],
+                "access_rules": [
+                    "^$CanReach|CE_rat_key_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Key Rat Key Drop",
+                        "access_rules": [
+                            "^$CanReach|CE - Rat Key Drop"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "CE",
+                        "x": 133,
+                        "y": 175,
+                        "size": 6
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Sanctuary",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "access_rules": [
+            "^$CanReach|Sanctuary_entrance_inside"
+        ],
+        "children": [
+            {
+                "name": "Sanctuary Chest",
+                "access_rules": [
+                    "^$CanReach|Sanctuary_entrance_inside"
+                ],
+                "sections": [
+                    {
+                        "name": "Sanctuary Chest",
+                        "access_rules": [
+                            "^$CanReach|Sanctuary Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "CE",
+                        "x": 35,
+                        "y": 190,
+                        "size": 6
+                    }
+                ]
+            }
+        ]
+    }
+]

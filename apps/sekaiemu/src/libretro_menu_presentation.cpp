@@ -1,6 +1,8 @@
 #include "libretro_menu_presentation.hpp"
 
+#include "imgui_tracker_renderer.hpp"
 #include "overlay_canvas.hpp"
+#include "runtime_activity_feed_imgui.hpp"
 #include "runtime_menu_save_slots.hpp"
 
 #include <algorithm>
@@ -41,7 +43,7 @@ void UpdateMenuOverlayForHost(VideoBackend* video_backend,
                               CoreOptionManager& core_option_manager,
                               InputState& input_state,
                               const BridgeRuntimeStatus& bridge_status,
-                              const TrackerRuntime* tracker_runtime,
+                              TrackerRuntime* tracker_runtime,
                               const SaveStateManager& save_state_manager,
                               const VideoGeometry& geometry,
                               const std::string& core_name,
@@ -51,32 +53,71 @@ void UpdateMenuOverlayForHost(VideoBackend* video_backend,
                               int master_volume_percent,
                               bool chat_overlay_enabled,
                               bool notifications_enabled,
-                              bool bridge_terminal_enabled) {
+                              bool bridge_terminal_enabled,
+                              const std::function<void(std::string_view)>& send_chat_command) {
   if (!video_backend) {
     return;
   }
   if (!runtime_menu.Visible()) {
-    render_tracker_presentation();
+    if (tracker_runtime != nullptr) {
+      const auto mode = tracker_runtime->UiState().display_mode;
+      const bool show_tracker_screen = tracker_runtime->UiState().show_tracker_screen;
+      const unsigned sidebar_width =
+          show_tracker_screen && mode == TrackerDisplayMode::SplitScreen
+              ? std::max(360u, (geometry.height == 0 ? 224u : geometry.height) * 2u)
+              : 0u;
+      video_backend->SetTrackerSidebarLayout(show_tracker_screen && mode == TrackerDisplayMode::SplitScreen,
+                                             sidebar_width,
+                                             geometry);
+      video_backend->SetImGuiDrawCallback([tracker_runtime, &runtime_menu, &send_chat_command]() {
+        if (tracker_runtime->UiState().show_tracker_screen) {
+          RenderTrackerImGui(*tracker_runtime);
+        }
+        RenderRuntimeActivityFeedImGui(*tracker_runtime);
+        RenderRuntimeContextMenuImGui(runtime_menu, tracker_runtime, send_chat_command);
+      });
+    } else {
+      video_backend->SetTrackerSidebarLayout(false, 0, geometry);
+      video_backend->SetImGuiDrawCallback([&runtime_menu, &send_chat_command]() {
+        RenderRuntimeContextMenuImGui(runtime_menu, nullptr, send_chat_command);
+      });
+    }
+    video_backend->ClearOverlay();
+    if (render_tracker_presentation) {
+      render_tracker_presentation();
+    }
     return;
   }
 
   tracker_window_presenter.Shutdown();
-  const auto [menu_width, menu_height] = MenuCanvasDimensions(geometry);
-  OverlayCanvas canvas(menu_width, menu_height);
+  video_backend->SetTrackerSidebarLayout(false, 0, geometry);
   const auto save_slots = LoadSaveStateSlotMenuInfos(save_state_manager);
-  runtime_menu.Render(canvas,
-                      core_option_manager,
-                      input_state,
-                      bridge_status,
-                      tracker_runtime,
-                      save_slots,
-                      core_name,
-                      game_name,
-                      master_volume_percent,
-                      chat_overlay_enabled,
-                      notifications_enabled,
-                      bridge_terminal_enabled);
-  video_backend->UploadOverlayFrame(canvas.Data(), canvas.Width(), canvas.Height());
+  video_backend->ClearOverlay();
+  const BridgeRuntimeStatus bridge_status_snapshot = bridge_status;
+  video_backend->SetImGuiDrawCallback([&runtime_menu,
+                                       &core_option_manager,
+                                       &input_state,
+                                       bridge_status_snapshot,
+                                       tracker_runtime,
+                                       save_slots,
+                                       core_name,
+                                       game_name,
+                                       master_volume_percent,
+                                       chat_overlay_enabled,
+                                       notifications_enabled,
+                                       bridge_terminal_enabled]() mutable {
+    runtime_menu.RenderImGui(core_option_manager,
+                             input_state,
+                             bridge_status_snapshot,
+                             tracker_runtime,
+                             save_slots,
+                             core_name,
+                             game_name,
+                             master_volume_percent,
+                             chat_overlay_enabled,
+                             notifications_enabled,
+                             bridge_terminal_enabled);
+  });
 }
 
 }  // namespace sekaiemu::spike

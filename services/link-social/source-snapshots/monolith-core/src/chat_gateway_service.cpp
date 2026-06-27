@@ -128,23 +128,6 @@ std::string sanitize_irc_text(std::string value, std::size_t max_len) {
   return value;
 }
 
-std::string json_text_or(const nlohmann::json& object, const char* key, const std::string& fallback, std::size_t max_len) {
-  if (!object.is_object() || !object.contains(key) || !object.at(key).is_string()) return fallback;
-  const auto value = sanitize_irc_text(object.at(key).get<std::string>(), max_len);
-  return value.empty() ? fallback : value;
-}
-
-std::string short_stable_suffix(std::string_view value) {
-  std::uint32_t hash = 2166136261u;
-  for (unsigned char c : value) {
-    hash ^= c;
-    hash *= 16777619u;
-  }
-  std::ostringstream out;
-  out << std::hex << std::setfill('0') << std::setw(6) << (hash & 0xFFFFFFu);
-  return out.str();
-}
-
 std::string sanitize_nick(std::string value) {
   value = sanitize_irc_text(value, 24);
   std::string out;
@@ -307,9 +290,6 @@ struct ChatGatewayService::IrcSession {
   std::string avatar_url;
   std::string role;
   bool ready = false;
-  bool local_ready_known = false;
-  bool local_ready = false;
-  std::string local_ready_note;
   mutable std::mutex write_mutex;
   std::atomic<bool> stop_requested{false};
   std::thread reader;
@@ -410,9 +390,6 @@ nlohmann::json ChatGatewayService::handle_list_presence(const std::string& chann
           {"avatar_url", session->avatar_url},
           {"role", session->role},
           {"ready", session->ready},
-          {"local_ready_known", session->local_ready_known},
-          {"local_ready", session->local_ready},
-          {"local_ready_note", session->local_ready_note},
           {"last_seen", utc_now_iso8601()},
       };
     }
@@ -497,8 +474,8 @@ void ChatGatewayService::remember_message(const std::string& channel_id, const s
 nlohmann::json ChatGatewayService::handle_send_message(const std::string& channel_id, const nlohmann::json& body) const {
   if (!is_safe_channel_id(channel_id)) return {{"ok", false}, {"error", "invalid_channel"}};
   if (!body.is_object()) return {{"ok", false}, {"error", "invalid_body"}};
-  const auto author = json_text_or(body, "author", "SekaiLink", 80);
-  const auto content = json_text_or(body, "content", "", 400);
+  const auto author = sanitize_irc_text(body.value("author", "SekaiLink"), 80);
+  const auto content = sanitize_irc_text(body.value("content", ""), 400);
   if (content.empty()) return {{"ok", false}, {"error", "empty_message"}};
   std::string error;
   const auto has_identity = body.contains("user_id") && body.at("user_id").is_string() && !trim(body.at("user_id").get<std::string>()).empty();
@@ -529,10 +506,7 @@ bool ChatGatewayService::ensure_irc_presence(const std::string& channel_id, cons
   const auto avatar_url = sanitize_irc_text(body.value("avatar_url", std::string{}), 1024);
   const auto role = sanitize_irc_text(body.value("role", std::string("player")), 32);
   const auto ready = body.value("ready", false);
-  const auto local_ready_known = body.value("local_ready_known", body.contains("local_ready"));
-  const auto local_ready = body.value("local_ready", false);
-  const auto local_ready_note = sanitize_irc_text(body.value("local_ready_note", std::string{}), 180);
-  const auto nick = sanitize_nick("u" + raw_user_id + "_" + short_stable_suffix(channel_id));
+  const auto nick = sanitize_nick("u" + raw_user_id);
   const auto channel = irc_channel_name(channel_id);
   const auto key = channel_id + "\n" + raw_user_id;
 
@@ -548,9 +522,6 @@ bool ChatGatewayService::ensure_irc_presence(const std::string& channel_id, cons
         existing->avatar_url = avatar_url;
         existing->role = role;
         existing->ready = ready;
-        existing->local_ready_known = local_ready_known;
-        existing->local_ready = local_ready;
-        existing->local_ready_note = local_ready_note;
         existing->last_seen = std::chrono::steady_clock::now();
       }
     }
@@ -611,9 +582,6 @@ bool ChatGatewayService::ensure_irc_presence(const std::string& channel_id, cons
   session->avatar_url = avatar_url;
   session->role = role;
   session->ready = ready;
-  session->local_ready_known = local_ready_known;
-  session->local_ready = local_ready;
-  session->local_ready_note = local_ready_note;
   session->last_seen = std::chrono::steady_clock::now();
   session->reader = std::thread([session]() {
     std::string buffer;
@@ -696,7 +664,7 @@ bool ChatGatewayService::send_persistent_irc_message(const std::string& channel_
   if (!ensure_irc_presence(channel_id, body, error)) return false;
   const auto raw_user_id = sanitize_irc_text(body.value("user_id", std::string{}), 80);
   const auto key = channel_id + "\n" + raw_user_id;
-  const auto content = json_text_or(body, "content", "", 400);
+  const auto content = sanitize_irc_text(body.value("content", ""), 400);
   if (content.empty()) {
     error = "empty_message";
     return false;

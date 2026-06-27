@@ -1,0 +1,45 @@
+{
+  "game_id": "ocarina_of_time",
+  "display_name": "Ocarina of Time",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apz5"
+  ],
+  "patch_world_module": "worlds.oot",
+  "ap_world": "oot",
+  "required_roms": [
+    "ocarina_of_time"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "oot",
+  "archipelago_client": {
+    "game_key": "ocarina_of_time",
+    "world": "oot",
+    "wrapper": "oot",
+    "client_file": "worlds/oot/Client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".z64",
+      ".n64",
+      ".v64"
+    ],
+    "md5": [
+      "5bd1fe107bf8106b2ab6650abecd54d6"
+    ],
+    "sha1": [
+      "ad69c91157f6705e8ab06c79fe08aad47bb57ba7"
+    ]
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "n64",
+    "ap_game": "Ocarina of Time"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": ""
+}

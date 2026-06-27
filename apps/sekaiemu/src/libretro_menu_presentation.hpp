@@ -10,6 +10,7 @@
 
 #include <functional>
 #include <string>
+#include <string_view>
 
 namespace sekaiemu::spike {
 
@@ -25,7 +26,7 @@ void UpdateMenuOverlayForHost(VideoBackend* video_backend,
                               CoreOptionManager& core_option_manager,
                               InputState& input_state,
                               const BridgeRuntimeStatus& bridge_status,
-                              const TrackerRuntime* tracker_runtime,
+                              TrackerRuntime* tracker_runtime,
                               const SaveStateManager& save_state_manager,
                               const VideoGeometry& geometry,
                               const std::string& core_name,
@@ -35,6 +36,7 @@ void UpdateMenuOverlayForHost(VideoBackend* video_backend,
                               int master_volume_percent,
                               bool chat_overlay_enabled,
                               bool notifications_enabled,
-                              bool bridge_terminal_enabled);
+                              bool bridge_terminal_enabled,
+                              const std::function<void(std::string_view)>& send_chat_command);
 
 }  // namespace sekaiemu::spike

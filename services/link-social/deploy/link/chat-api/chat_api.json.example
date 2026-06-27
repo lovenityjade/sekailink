@@ -12,6 +12,7 @@
   "seed_config_host": "127.0.0.1",
   "seed_config_port": 19106,
   "seed_config_user_token": "replace-nexus-seed-config-user-token",
+  "room_admin_tool_token": "replace-room-admin-tool-token",
   "sqlite_path": "/opt/sekailink/link/chat-api/data/chat_api.sqlite3",
   "generation_handoff_root": "/opt/sekailink/link/chat-api/data/generation-handoff",
   "generation_handoff_command": [

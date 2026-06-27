@@ -16,8 +16,10 @@ export interface SeedEntry {
   game_key?: string;
   player_name?: string;
   custom?: boolean;
+  created_at?: string;
   updated_at?: string;
   source?: string;
+  description?: string;
   values?: Record<string, unknown>;
 }
 
@@ -71,6 +73,14 @@ const seedOptionsCache = new Map<string, TimedCache<SeedOptionsSchema>>();
 const seedsCache = new Map<string, TimedCache<SeedEntry[]>>();
 
 const cacheKey = (value: string) => value || "__all__";
+
+const firstGamesPayload = (payload: any): Array<any> => {
+  if (Array.isArray(payload?.games)) return payload.games;
+  if (Array.isArray(payload?.items)) return payload.items;
+  if (Array.isArray(payload?.data)) return payload.data;
+  if (Array.isArray(payload)) return payload;
+  return [];
+};
 
 export const invalidateSeedConfigCaches = (scope: "all" | "seeds" | "games" | "options" = "all") => {
   if (scope === "all" || scope === "games") {
@@ -146,9 +156,40 @@ export const normalizeGameKey = (value: unknown) =>
     .replace(/[^a-z0-9]+/g, "_")
     .replace(/^_+|_+$/g, "");
 
+const SEED_GAME_KEY_ALIASES: Record<string, string> = {
+  chrono_trigger_jets_of_time: "chrono_trigger",
+  final_fantasy_iv_free_enterprise: "final_fantasy_iv",
+  final_fantasy_v_career_day: "final_fantasy_v",
+  kirby_s_dream_land_3: "kirbys_dream_land_3",
+  ladx: "links_awakening_dx",
+  links_awakening_dx_beta: "links_awakening_dx",
+  link_s_awakening_dx: "links_awakening_dx",
+  the_legend_of_zelda_link_s_awakening_dx: "links_awakening_dx",
+  the_legend_of_zelda_links_awakening_dx: "links_awakening_dx",
+  lufia_ii_ancient_cave: "lufia_ii",
+  luigi_s_mansion: "luigis_mansion",
+  mario_and_luigi_superstar_saga: "mario_luigi_superstar_saga",
+  mega_man_battle_network_3_blue: "mega_man_battle_network_3",
+  paper_mario_the_thousand_year_door: "thousand_year_door",
+  pokemon_firered_and_leafgreen: "pokemon_firered",
+  pokemon_fire_red_and_leaf_green: "pokemon_firered",
+  pokemon_red_and_blue: "pokemon_red_blue",
+  secret_of_evermore: "secret_of_evermore",
+  the_legend_of_zelda_oracle_of_ages: "oracle_of_ages",
+  the_legend_of_zelda_oracle_of_seasons: "oracle_of_seasons",
+  the_legend_of_zelda_a_link_to_the_past: "a_link_to_the_past",
+  the_legend_of_zelda_twilight_princess: "twilight_princess",
+  zelda_ii_the_adventure_of_link: "zelda_ii",
+};
+
+const SEED_GAME_SERVER_KEY_ALIASES: Record<string, string[]> = {
+  zelda_ii: ["zelda_ii_the_adventure_of_link"],
+};
+
 export const canonicalSeedGameKey = (value: unknown) => {
   let normalized = normalizeGameKey(value);
   if (normalized.startsWith("linkedworld_")) normalized = normalized.slice("linkedworld_".length);
+  if (normalized.startsWith("multiworldgg_")) normalized = normalized.slice("multiworldgg_".length);
   normalized = normalized.replace(/_v\d+$/, "");
   if (
     normalized === "alttp" ||
@@ -158,8 +199,10 @@ export const canonicalSeedGameKey = (value: unknown) => {
   ) {
     return "a_link_to_the_past";
   }
-  return normalized;
+  return SEED_GAME_KEY_ALIASES[normalized] || normalized;
 };
+
+const seedGameServerKeys = (gameKey: string) => [gameKey, ...(SEED_GAME_SERVER_KEY_ALIASES[gameKey] || [])];
 
 export const isShowcaseGame = (value: unknown) => SHOWCASE_GAME_KEYS.has(normalizeGameKey(value));
 
@@ -175,8 +218,19 @@ export const listSeedGames = async (): Promise<SeedGameEntry[]> => {
   }
   trace("seed-config", "list_games_start");
   seedGamesCache.inFlight = (async () => {
-    const data = await apiJson<{ games?: Array<any> }>("/api/client/games");
-    const games = Array.isArray(data?.games) ? data.games : [];
+    const seedConfigGames = await apiJson<any>("/api/seed-configs/games")
+      .then(firstGamesPayload)
+      .catch((error) => {
+        trace("seed-config", "list_games_seed_config_failed", { error: String(error?.message || error) }, "warn");
+        return [];
+      });
+    const clientGames = await apiJson<any>("/api/client/games")
+      .then(firstGamesPayload)
+      .catch((error) => {
+        trace("seed-config", "list_games_client_catalog_failed", { error: String(error?.message || error) }, "warn");
+        return [];
+      });
+    const games = [...seedConfigGames, ...clientGames];
     const mapped = games
       .map((game) => {
         const gameKey = String(game?.game_key || game?.game_id || game?.linkedworld_id || "").trim();
@@ -193,9 +247,17 @@ export const listSeedGames = async (): Promise<SeedGameEntry[]> => {
         } satisfies SeedGameEntry;
       })
       .filter(Boolean) as SeedGameEntry[];
-    const showcase = mapped.filter((game) => isShowcaseGame(game.game_key) || isShowcaseGame(game.display_name));
-    trace("seed-config", "list_games_success", { count: mapped.length, showcaseCount: showcase.length });
-    const next = showcase.length ? showcase : [ALTTP_SHOWCASE_GAME];
+    const deduped = Array.from(
+      new Map(mapped.map((game) => [canonicalSeedGameKey(game.game_key || game.display_name), game])).values(),
+    ).sort((a, b) => a.display_name.localeCompare(b.display_name));
+    trace("seed-config", "list_games_success", {
+      count: mapped.length,
+      seedConfigSourceCount: seedConfigGames.length,
+      clientCatalogSourceCount: clientGames.length,
+      seedConfigCount: deduped.length,
+      showcaseCount: deduped.filter((game) => isShowcaseGame(game.game_key) || isShowcaseGame(game.display_name)).length,
+    });
+    const next = deduped.length ? deduped : [ALTTP_SHOWCASE_GAME];
     seedGamesCache.value = next;
     seedGamesCache.expiresAt = Date.now() + SEED_GAMES_CACHE_TTL_MS;
     return next;
@@ -208,6 +270,30 @@ export const listSeedGames = async (): Promise<SeedGameEntry[]> => {
   } finally {
     seedGamesCache.inFlight = undefined;
   }
+};
+
+const firstArrayPayload = (payload: any): Array<any> => {
+  if (Array.isArray(payload?.yamls)) return payload.yamls;
+  if (Array.isArray(payload?.configs)) return payload.configs;
+  if (Array.isArray(payload?.seeds)) return payload.seeds;
+  if (Array.isArray(payload?.items)) return payload.items;
+  if (Array.isArray(payload?.data)) return payload.data;
+  if (Array.isArray(payload)) return payload;
+  return [];
+};
+
+const normalizeSeedValues = (entry: any): Record<string, unknown> | undefined => {
+  const raw = entry?.values ?? entry?.config_values ?? entry?.values_json;
+  if (raw && typeof raw === "object" && !Array.isArray(raw)) return raw;
+  if (typeof raw === "string" && raw.trim()) {
+    try {
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) return parsed;
+    } catch {
+      // Leave malformed legacy values unset; the title/source still identify the seed.
+    }
+  }
+  return undefined;
 };
 
 export const listSeeds = async (game?: SeedGameEntry, options: { force?: boolean } = {}): Promise<SeedEntry[]> => {
@@ -227,12 +313,13 @@ export const listSeeds = async (game?: SeedGameEntry, options: { force?: boolean
   const entry = cached || { expiresAt: 0 };
   seedsCache.set(key, entry);
   entry.inFlight = (async () => {
-    const data = await apiJson<{ yamls?: Array<any>; configs?: Array<any> }>("/api/yamls");
-    const all = Array.isArray(data?.yamls) ? data.yamls : Array.isArray(data?.configs) ? data.configs : [];
+    const data = await apiJson<any>("/api/yamls");
+    const all = firstArrayPayload(data);
     const seeds = all
       .map((entry) => {
         const gameDisplay = String(entry?.game_display_name || entry?.game || entry?.display_name || "Unknown");
         const rawGameKey = String(entry?.game_key || entry?.linkedworld_id || gameDisplay || "");
+        const values = normalizeSeedValues(entry);
         return {
           id: String(entry?.id || entry?.yaml_id || entry?.config_id || ""),
           title: String(entry?.title || entry?.name || "Untitled Seed"),
@@ -240,9 +327,11 @@ export const listSeeds = async (game?: SeedGameEntry, options: { force?: boolean
           game_key: canonicalSeedGameKey(rawGameKey),
           player_name: String(entry?.player_name || ""),
           custom: Boolean(entry?.custom),
+          created_at: typeof entry?.created_at === "string" ? entry.created_at : "",
           updated_at: typeof entry?.updated_at === "string" ? entry.updated_at : "",
-          source: typeof entry?.source === "string" ? entry.source : "",
-          values: entry?.values && typeof entry.values === "object" && !Array.isArray(entry.values) ? entry.values : undefined,
+          source: typeof entry?.source === "string" ? entry.source : typeof entry?.mode === "string" ? entry.mode : "",
+          description: typeof entry?.description === "string" ? entry.description : "",
+          values,
         };
       })
       .filter((entry) => entry.id)
@@ -307,7 +396,21 @@ export const listSeedOptions = async (game: SeedGameEntry): Promise<SeedOptionsS
   const entry = cached || { expiresAt: 0 };
   seedOptionsCache.set(gameKey, entry);
   entry.inFlight = (async () => {
-    const data = await apiJson<{ game?: any }>(`/api/seed-configs/games/${encodeURIComponent(gameKey)}/options`);
+    let data: { game?: any } | undefined;
+    let lastError: unknown;
+    for (const serverKey of seedGameServerKeys(gameKey)) {
+      try {
+        data = await apiJson<{ game?: any }>(`/api/seed-configs/games/${encodeURIComponent(serverKey)}/options`);
+        if (serverKey !== gameKey) {
+          trace("seed-config", "list_options_alias_hit", { gameKey, serverKey });
+        }
+        break;
+      } catch (error) {
+        lastError = error;
+        trace("seed-config", "list_options_alias_failed", { gameKey, serverKey, error: String((error as any)?.message || error) }, "warn");
+      }
+    }
+    if (!data) throw lastError;
     const payload = data?.game || {};
     const options = Array.isArray(payload?.options)
       ? (payload.options.map(normalizeOption).filter(Boolean) as SeedOptionDefinition[])
@@ -371,6 +474,30 @@ const buildEasyValues = (choices: EasySeedChoice[]) => {
   return values;
 };
 
+const buildAdvancedYaml = (
+  game: SeedGameEntry,
+  title: string,
+  playerName: string,
+  values: Record<string, unknown>
+) => {
+  const safeValues = values && typeof values === "object" && !Array.isArray(values) ? values : {};
+  const lines = [
+    `name: ${safePlayerName(playerName)}`,
+    `game: ${JSON.stringify(game.display_name)}`,
+    "description: Created from SekaiLink Advanced seed form.",
+    "sekailink:",
+    `  title: ${JSON.stringify(title.trim() || "Advanced Showcase Seed")}`,
+    "  mode: advanced",
+    "  editor: advanced_form",
+    `${game.display_name}:`,
+  ];
+  for (const [key, value] of Object.entries(safeValues)) {
+    lines.push(`  ${key}: ${JSON.stringify(value)}`);
+  }
+  lines.push("");
+  return lines.join("\n");
+};
+
 export const createEasySeed = async (
   game: SeedGameEntry,
   title: string,
@@ -395,6 +522,9 @@ export const createEasySeed = async (
       values,
       content,
       easy_choices: choices.map((choice) => choice.id),
+      source: "easy",
+      mode: "easy",
+      description: "Created from SekaiLink Easy Mode choices.",
     }),
   });
   const data = await response.json().catch(() => ({}));
@@ -411,7 +541,10 @@ export const createEasySeed = async (
     game_key: canonicalSeedGameKey(game.game_key || game.display_name),
     player_name: safePlayerName(playerName),
     custom: true,
-    source: "nexus.seed_config_api",
+    created_at: typeof saved?.created_at === "string" ? saved.created_at : "",
+    updated_at: typeof saved?.updated_at === "string" ? saved.updated_at : "",
+    source: "easy",
+    description: "Created from SekaiLink Easy Mode choices.",
     values,
   };
   trace("seed-config", "create_easy_seed_success", { seedId: seed.id, title: seed.title, gameKey: seed.game_key });
@@ -426,43 +559,62 @@ export const createAdvancedSeed = async (
   values: Record<string, unknown>
 ): Promise<SeedEntry> => {
   const seedTitle = title.trim() || "Advanced Showcase Seed";
+  const advancedValues = values || {};
   trace("seed-config", "create_advanced_seed_start", {
     gameKey: game.game_key,
     title: seedTitle,
-    valueCount: Object.keys(values || {}).length,
+    valueCount: Object.keys(advancedValues || {}).length,
   });
-  const response = await apiFetch("/api/yamls/new", {
+  const body = {
+    title: seedTitle,
+    name: seedTitle,
+    game: game.display_name,
+    game_key: canonicalSeedGameKey(game.game_key || game.display_name),
+    player_name: safePlayerName(playerName),
+    values: advancedValues,
+    source: "advanced",
+    mode: "advanced",
+    description: "Created from SekaiLink Advanced seed form.",
+  };
+  let response = await apiFetch("/api/seed-configs", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      title: seedTitle,
-      game: game.display_name,
-      game_key: canonicalSeedGameKey(game.game_key || game.display_name),
-      player_name: safePlayerName(playerName),
-      values,
-      description: "Created from SekaiLink Advanced seed form.",
-    }),
+    body: JSON.stringify(body),
   });
-  const data = await response.json().catch(() => ({}));
+  let data = await response.json().catch(() => ({}));
+  if (response.status === 404 || data?.error === "not_found" || data?.error === "route_not_found") {
+    const content = buildAdvancedYaml(game, seedTitle, playerName, advancedValues);
+    response = await apiFetch("/api/yamls/new", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...body, content }),
+    });
+    data = await response.json().catch(() => ({}));
+  }
   if (!response.ok) {
     const issueText = Array.isArray(data?.issues)
       ? data.issues
           .map((issue: any) => `${issue?.option_key || "option"}: ${issue?.detail || issue?.code || "invalid"}`)
           .join("; ")
       : "";
-    const error = String(issueText || data?.error || "Unable to create seed.");
+    const detail = typeof data?.detail === "string" ? data.detail : "";
+    const error = String(issueText || detail || data?.error || "Unable to create seed.");
     trace("seed-config", "create_advanced_seed_failed", { status: response.status, error }, "warn");
     throw new Error(error);
   }
-  const saved = data?.yaml || data;
+  const saved = data?.seed || data?.yaml || data?.config || data;
   const seed = {
-    id: String(saved?.id || data?.id || ""),
-    title: String(saved?.title || seedTitle),
-    game: String(saved?.game || game.display_name),
-    game_key: canonicalSeedGameKey(game.game_key || game.display_name),
-    player_name: safePlayerName(playerName),
+    id: String(saved?.id || saved?.config_id || data?.id || ""),
+    title: String(saved?.title || saved?.name || seedTitle),
+    game: String(saved?.game || saved?.game_display_name || game.display_name),
+    game_key: canonicalSeedGameKey(saved?.game_key || game.game_key || game.display_name),
+    player_name: String(saved?.player_name || safePlayerName(playerName)),
     custom: true,
-    values,
+    created_at: typeof saved?.created_at === "string" ? saved.created_at : "",
+    updated_at: typeof saved?.updated_at === "string" ? saved.updated_at : "",
+    source: typeof saved?.source === "string" ? saved.source : "advanced",
+    description: "Created from SekaiLink Advanced seed form.",
+    values: normalizeSeedValues(saved) || advancedValues,
   };
   trace("seed-config", "create_advanced_seed_success", { seedId: seed.id, title: seed.title, gameKey: seed.game_key });
   invalidateSeedConfigCaches("seeds");

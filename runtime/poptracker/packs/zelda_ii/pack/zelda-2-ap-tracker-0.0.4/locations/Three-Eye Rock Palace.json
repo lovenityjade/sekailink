@@ -1,0 +1,97 @@
+[
+    {
+        "name": "Three-Eye Rock Palace",
+        "chest_unopened_img": "/images/items/close.png",
+        "chest_opened_img": "/images/items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "@Southeastern Hyrule, flute"
+        ],
+        "sections": [
+            {
+                "name": "Three-Eye Rock Palace: 1F Block Mountain",
+                "access_rules": ["handyglove"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Three-Eye Rock Palace: 1F Enclosed Item",
+                "access_rules": ["handyglove, jumpspell, upthrust"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Three-Eye Rock Palace: Middle Pit",
+                "access_rules": ["^$key|threeeyerock|1|1"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Three-Eye Rock Palace: Bottom Pit",
+                "access_rules": ["^$key|threeeyerock|1|1"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Three-Eye Rock Palace: Block Stairs",
+                "access_rules": ["^$key|threeeyerock|9|9, handyglove"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Three-Eye Rock Palace: Pit of Sadness",
+                "access_rules": ["^$key|threeeyerock|9|9, handyglove"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Three-Eye Rock Palace: Return of Helmethead",
+                "access_rules": ["^$key|threeeyerock|9|9, handyglove"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Three-Eye Rock Palace: Pedestal Item",
+                "access_rules": ["^$key|threeeyerock|9|9, handyglove"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Three-Eye Rock Palace: Helmethead III: The Revengening",
+                "access_rules": ["^$key|threeeyerock|9|9, handyglove, fairyspell"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Three-Eye Rock Palace: Basement Block Mountain",
+                "access_rules": ["^$key|threeeyerock|9|9, handyglove, fairyspell"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Three-Eye Rock Palace: Pit Hall",
+                "access_rules": ["^$key|threeeyerock|9|9, handyglove, fairyspell"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Three-Eye Rock Palace: Barba Drop",
+                "access_rules": ["^$key|threeeyerock|9|9, handyglove, fairyspell"],
+                "visibility_rules": [],
+                "item_count": 1
+            }
+        ],
+        "map_locations": [
+            {
+                "map": "Overworld",
+                "x": "1908",
+                "y": "1571"
+            },
+            {
+                "map": "East Hyrule",
+                "x": "757",
+                "y": "1194"
+            }
+        ]
+    }
+]

@@ -22,9 +22,12 @@ struct BridgeRuntimeStatus {
   std::string ap_path;
   std::string ap_slot_name;
   std::string runtime_memory_socket_path;
+  std::string sekaiemu_log_path;
   std::string legacy_bridge_socket_path;
   std::string manifest_path;
   std::string room_state_path;
+  std::string tracker_snapshot_path;
+  std::string tracker_command_log_path;
   std::string runtime_state_root;
   std::string trace_log_path;
   std::string companion_log_path;

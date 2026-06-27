@@ -70,6 +70,9 @@ void DrawMapPins(OverlayCanvas& canvas,
     }
     const auto state_id = pin.location_id.empty() ? pin.id : pin.location_id;
     const bool checked = pin.has_explicit_checked ? pin.checked : checked_ids.find(state_id) != checked_ids.end();
+    if (checked) {
+      continue;
+    }
     const int px = ResolveMapCoordinate(pin.x, target_x, target_width, source_width);
     const int py = ResolveMapCoordinate(pin.y, target_y, target_height, source_height);
     DrawPinMarker(canvas, palette, px, py, pin, checked);

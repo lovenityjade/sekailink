@@ -56,8 +56,8 @@ int main() {
       host.tracker_snapshot_path != fs::path("/tmp/tracker.snapshot.json") ||
       host.tracker_command_log_path != fs::path("/tmp/tracker.commands.jsonl") ||
       host.tracker_assets_root != fs::path("/tmp/tracker-assets") ||
-      !host.tracker_required) {
-    std::cerr << "launch_options_host_mapping_failed\n";
+      host.tracker_required) {
+    std::cerr << "launch_options_host_tracker_companion_fields_failed\n";
     return 1;
   }
 

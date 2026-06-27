@@ -37,6 +37,27 @@ if typing.TYPE_CHECKING:
 logger = logging.getLogger("Client")
 
 
+def sekailink_socket_closed(socket: typing.Any) -> bool:
+    """Compatibility guard for websockets versions with or without `.closed`."""
+    if socket is None:
+        return True
+    if hasattr(socket, "closed"):
+        return bool(getattr(socket, "closed"))
+    state = getattr(socket, "state", None)
+    if state is not None and str(state).upper().endswith("CLOSED"):
+        return True
+    return False
+
+
+def sekailink_socket_open(socket: typing.Any) -> bool:
+    """Compatibility guard for websockets versions with or without `.open`."""
+    if socket is None:
+        return False
+    if hasattr(socket, "open"):
+        return bool(getattr(socket, "open"))
+    return not sekailink_socket_closed(socket)
+
+
 @Utils.cache_argsless
 def get_ssl_context():
     import certifi
@@ -476,7 +497,7 @@ class CommonContext:
             self.disconnected_intentionally = True
             if self.cancel_autoreconnect():
                 logger.info("Cancelled auto-reconnect.")
-        if self.server and not self.server.socket.closed:
+        if self.server and not sekailink_socket_closed(self.server.socket):
             await self.server.socket.close()
         if self.server_task is not None:
             await self.server_task
@@ -485,7 +506,7 @@ class CommonContext:
 
     async def send_msgs(self, msgs: typing.List[typing.Any]) -> None:
         """ `msgs` JSON serializable """
-        if not self.server or not self.server.socket.open or self.server.socket.closed:
+        if not self.server or not sekailink_socket_open(self.server.socket) or sekailink_socket_closed(self.server.socket):
             return
         await self.server.socket.send(encode(msgs))
 
@@ -619,7 +640,7 @@ class CommonContext:
         self.username = None
         self.password = None
         self.cancel_autoreconnect()
-        if self.server and not self.server.socket.closed:
+        if self.server and not sekailink_socket_closed(self.server.socket):
             await self.server.socket.close()
         if self.server_task:
             await self.server_task
@@ -756,7 +777,7 @@ class CommonContext:
             self.tags.add("DeathLink")
         else:
             self.tags -= {"DeathLink"}
-        if old_tags != self.tags and self.server and not self.server.socket.closed:
+        if old_tags != self.tags and self.server and not sekailink_socket_closed(self.server.socket):
             await self.send_msgs([{"cmd": "ConnectUpdate", "tags": self.tags}])
 
     def gui_error(self, title: str, text: typing.Union[Exception, str]) -> typing.Optional["kvui.MessageBox"]:

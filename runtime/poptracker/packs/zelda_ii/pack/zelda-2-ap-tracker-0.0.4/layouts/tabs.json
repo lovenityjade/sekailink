@@ -1,0 +1,133 @@
+{
+    "tabbed_maps": {
+        "type": "tabbed",
+        "tabs": [
+            {
+                "title": "Overworld",
+                "content": {
+                    "type": "map",
+                    "maps": [
+                        "Overworld"
+                    ]
+                }
+            },
+            {
+                "title": "Detailed",
+                "content": {
+                    "type": "tabbed",
+                    "dock": "top",
+                    "tabs": [
+                        {
+                            "title": "West Hyrule",
+                            "content": {
+                                "type": "map",
+                                "maps": [
+                                    "West Hyrule"
+                                ]
+                            }
+                        },
+                        {
+                            "title": "Death Mountain",
+                            "content": {
+                                "type": "map",
+                                "maps": [
+                                    "Death Mountain"
+                                ]
+                            }
+                        },
+                        {
+                            "title": "East Hyrule",
+                            "content": {
+                                "type": "map",
+                                "maps": [
+                                    "East Hyrule"
+                                ]
+                            }
+                        },
+                        {
+                            "title": "Island Maze",
+                            "content": {
+                                "type": "map",
+                                "maps": [
+                                    "Island Maze"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Palaces",
+                "content": {
+                    "type": "tabbed",
+                    "dock": "top",
+                    "tabs": [
+                        {
+                            "title": "Parapa Palace",
+                            "content": {
+                                "type": "map",
+                                "maps": [
+                                    "Parapa Palace"
+                                ]
+                            }
+                        },
+                        {
+                            "title": "Midoro Palace",
+                            "content": {
+                                "type": "map",
+                                "maps": [
+                                    "Midoro Palace"
+                                ]
+                            }
+                        },
+                        {
+                            "title": "Island Palace",
+                            "content": {
+                                "type": "map",
+                                "maps": [
+                                    "Island Palace"
+                                ]
+                            }
+                        },
+                        {
+                            "title": "Maze Palace",
+                            "content": {
+                                "type": "map",
+                                "maps": [
+                                    "Maze Palace"
+                                ]
+                            }
+                        },
+                        {
+                            "title": "Palace on the Sea",
+                            "content": {
+                                "type": "map",
+                                "maps": [
+                                    "Palace on the Sea"
+                                ]
+                            }
+                        },
+                        {
+                            "title": "Three-Eye Rock Palace",
+                            "content": {
+                                "type": "map",
+                                "maps": [
+                                    "Three-Eye Rock Palace"
+                                ]
+                            }
+                        },
+                        {
+                            "title": "Great Palace",
+                            "content": {
+                                "type": "map",
+                                "maps": [
+                                    "Great Palace"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

@@ -49,6 +49,8 @@ struct LaunchRequest {
   bool input_script_quit_after_end = false;
   bool load_state_on_start = false;
   bool probe_only = false;
+  bool layout_preview = false;
+  bool start_fullscreen = false;
 };
 
 struct CliParseResult {

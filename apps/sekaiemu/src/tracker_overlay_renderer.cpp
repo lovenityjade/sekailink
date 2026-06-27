@@ -38,6 +38,36 @@ bool SnapshotIsTrackerError(const TrackerRuntime& runtime) {
          !SnapshotStatusString(runtime, "error").empty();
 }
 
+bool SnapshotIsTrackerLoading(const TrackerRuntime& runtime) {
+  return SnapshotStatusString(runtime, "state") == "loading";
+}
+
+void DrawTrackerLoading(OverlayCanvas& canvas,
+                        const UiPalette& palette,
+                        const TrackerRuntime& runtime,
+                        int x,
+                        int y,
+                        int width,
+                        int height) {
+  const auto message = SnapshotStatusString(runtime, "message");
+  DrawSectionBox(canvas, palette, x, y, width, height);
+  canvas.DrawText(x + 10, y + 12, "LOADING TRACKER...", palette.accent, 2);
+  canvas.DrawWrappedText(x + 10,
+                         y + 44,
+                         std::max(80, width - 20),
+                         message.empty() ? "Loading tracker..." : message,
+                         palette.text_primary,
+                         1,
+                         5);
+  canvas.DrawWrappedText(x + 10,
+                         y + std::max(96, height - 54),
+                         std::max(80, width - 20),
+                         "Gameplay can continue while Sekaiemu prepares tracker data.",
+                         palette.text_secondary,
+                         1,
+                         5);
+}
+
 void DrawTrackerError(OverlayCanvas& canvas,
                       const UiPalette& palette,
                       const TrackerRuntime& runtime,
@@ -259,6 +289,10 @@ void RenderTrackerPanel(OverlayCanvas& canvas,
 
   if (SnapshotIsTrackerError(runtime)) {
     DrawTrackerError(canvas, palette, runtime, body_x, body_y, body_width, body_height);
+    return;
+  }
+  if (SnapshotIsTrackerLoading(runtime)) {
+    DrawTrackerLoading(canvas, palette, runtime, body_x, body_y, body_width, body_height);
     return;
   }
 

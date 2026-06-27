@@ -63,6 +63,7 @@ struct RuntimeLoopContext {
   std::function<void()> on_backspace_chat_input;
   std::function<void()> on_autocomplete_chat_input;
   std::function<void(std::string_view)> on_append_chat_input;
+  std::function<bool(const SDL_Event&)> on_runtime_debug_event;
   std::function<void()> on_present_frame;
   std::function<void()> on_update_menu_overlay;
   std::function<void()> on_reset_core;

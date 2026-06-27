@@ -2,7 +2,7 @@ import { Plus, Search, Edit, Trash2, Copy, Filter, Zap, FileText, Check, AlertCi
 import { useCallback, useEffect, useState } from 'react';
 import AdvancedConfigModal from './AdvancedConfigModal';
 import GameSelectionModal from './GameSelectionModal';
-import { ErrorModal } from './FeedbackModal';
+import { ErrorModal, LoadingModal } from './FeedbackModal';
 import { apiFetch, apiCurrentUser } from '../../services/api';
 import { trace, traceError } from '../../services/trace';
 import {
@@ -16,7 +16,7 @@ import {
   type SeedGameEntry,
 } from '../../services/seedConfig';
 
-type ConfigSource = 'easy' | 'advanced';
+type ConfigSource = 'pulse' | 'easy' | 'advanced';
 type ConfigStatus = 'valid' | 'draft' | 'error';
 
 interface SeedConfig {
@@ -54,30 +54,45 @@ export default function LibraryPage({ onNavigateToEasyConfig }: LibraryPageProps
   const [playerName, setPlayerName] = useState('Player');
 
   const mapSeed = (seed: SeedEntry): SeedConfig => {
-    const source = String(seed.source || '').toLowerCase();
-    const isEasy = source.includes('easy') || source.includes('pulse');
-    const date = String(seed.updated_at || '').slice(0, 10) || new Date().toISOString().slice(0, 10);
+    const sourceText = [
+      seed.source,
+      seed.description,
+      seed.title,
+      (seed.values as any)?.sekailink?.mode,
+      (seed.values as any)?.mode,
+    ].map((value) => String(value || '').toLowerCase()).join(' ');
+    const source: ConfigSource = sourceText.includes('pulse')
+      ? 'pulse'
+      : sourceText.includes('easy')
+        ? 'easy'
+        : 'advanced';
+    const createdAt = String(seed.created_at || '').slice(0, 10) || 'Unknown';
+    const modifiedAt = String(seed.updated_at || '').slice(0, 10) || createdAt;
     return {
       id: seed.id,
       name: seed.title || 'Untitled Seed',
       game: seed.game || seed.game_key || 'Unknown',
-      source: isEasy ? 'easy' : 'advanced',
+      source,
       status: 'valid',
-      createdAt: date,
-      lastModified: date,
-      description: isEasy ? 'Pulse-created seed configuration' : 'Advanced seed configuration',
+      createdAt,
+      lastModified: modifiedAt,
+      description: seed.description || (source === 'pulse'
+        ? 'Pulse-created seed configuration'
+        : source === 'easy'
+          ? 'Easy Mode seed configuration'
+          : 'Advanced seed configuration'),
       gameKey: seed.game_key,
       values: seed.values,
     };
   };
 
-  const loadLibrary = useCallback(async () => {
+  const loadLibrary = useCallback(async (options: { forceSeeds?: boolean } = {}) => {
     setLoading(true);
     trace('library-page', 'load_start');
     try {
       const [nextGames, nextSeeds, user] = await Promise.all([
         listSeedGames(),
-        listSeeds(),
+        listSeeds(undefined, { force: Boolean(options.forceSeeds) }),
         apiCurrentUser().catch(() => null),
       ]);
       setGames(nextGames.length ? nextGames : [ALTTP_SHOWCASE_GAME]);
@@ -97,6 +112,15 @@ export default function LibraryPage({ onNavigateToEasyConfig }: LibraryPageProps
     }
   }, []);
 
+  const mergeSavedSeedIntoLibrary = useCallback((seed: SeedEntry) => {
+    const mapped = mapSeed(seed);
+    setConfigs((current) => {
+      const exists = current.some((config) => config.id === mapped.id);
+      if (exists) return current.map((config) => (config.id === mapped.id ? mapped : config));
+      return [mapped, ...current];
+    });
+  }, []);
+
   useEffect(() => {
     void loadLibrary();
   }, [loadLibrary]);
@@ -112,7 +136,7 @@ export default function LibraryPage({ onNavigateToEasyConfig }: LibraryPageProps
 
   const stats = {
     total: configs.length,
-    easy: configs.filter(c => c.source === 'easy').length,
+    easy: configs.filter(c => c.source === 'easy' || c.source === 'pulse').length,
     advanced: configs.filter(c => c.source === 'advanced').length,
     valid: configs.filter(c => c.status === 'valid').length,
   };
@@ -290,6 +314,7 @@ export default function LibraryPage({ onNavigateToEasyConfig }: LibraryPageProps
           className="px-4 py-3 bg-[#1c1d22] border-2 border-[#2a2b30] rounded-lg text-white focus:border-[#4ecdc4] outline-none transition-colors"
         >
           <option value="all">All Sources</option>
+          <option value="pulse">Pulse</option>
           <option value="easy">Easy Mode</option>
           <option value="advanced">Advanced Mode</option>
         </select>
@@ -323,9 +348,13 @@ export default function LibraryPage({ onNavigateToEasyConfig }: LibraryPageProps
                     <div className="flex items-center gap-3 mb-2">
                       <h3 className="text-lg font-bold">{config.name}</h3>
                       <span className={`px-2 py-0.5 rounded text-xs font-bold ${
-                        config.source === 'easy' ? 'bg-[#4ecdc4]/20 text-[#4ecdc4]' : 'bg-[#aa96da]/20 text-[#aa96da]'
+                        config.source === 'pulse'
+                          ? 'bg-[#f381ff]/20 text-[#f381ff]'
+                          : config.source === 'easy'
+                            ? 'bg-[#4ecdc4]/20 text-[#4ecdc4]'
+                            : 'bg-[#aa96da]/20 text-[#aa96da]'
                       }`}>
-                        {config.source === 'easy' ? 'EASY' : 'ADVANCED'}
+                        {config.source === 'pulse' ? 'PULSE' : config.source === 'easy' ? 'EASY' : 'ADVANCED'}
                       </span>
                       <span className={`flex items-center gap-1.5 px-2 py-0.5 rounded text-xs font-bold ${statusConfig.bg} ${statusConfig.color}`}>
                         {statusConfig.icon}
@@ -416,8 +445,9 @@ export default function LibraryPage({ onNavigateToEasyConfig }: LibraryPageProps
           onSave={async (config) => {
             const { name, game: _game, source: _source, ...values } = config;
             try {
+              let savedSeed: SeedEntry;
               if (editingConfig) {
-                await replaceAdvancedSeed(
+                savedSeed = await replaceAdvancedSeed(
                   editingConfig.id,
                   selectedGame,
                   String(name || editingConfig.name || 'Advanced Seed'),
@@ -425,9 +455,10 @@ export default function LibraryPage({ onNavigateToEasyConfig }: LibraryPageProps
                   values,
                 );
               } else {
-                await createAdvancedSeed(selectedGame, String(name || 'Advanced Seed'), playerName, values);
+                savedSeed = await createAdvancedSeed(selectedGame, String(name || 'Advanced Seed'), playerName, values);
               }
-              await loadLibrary();
+              await loadLibrary({ forceSeeds: true });
+              mergeSavedSeedIntoLibrary(savedSeed);
               setShowAdvancedConfig(false);
               setEditingConfig(null);
               setError('');
@@ -457,6 +488,12 @@ export default function LibraryPage({ onNavigateToEasyConfig }: LibraryPageProps
           message={error}
           code="LIBRARY_ACTION_FAILED"
           onClose={() => setError('')}
+        />
+      )}
+      {loading && (
+        <LoadingModal
+          title="Loading Library"
+          message="Loading your games and seed configs..."
         />
       )}
     </div>

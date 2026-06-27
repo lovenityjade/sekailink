@@ -1075,6 +1075,88 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
             {"updated_at", updated_at},
         }.dump()};
   }
+  if (parts.size() == 4 && parts[2] == "generation" && parts[3] == "reset" && method == "POST") {
+    if (config_.sqlite_path.empty()) {
+      return {200, nlohmann::json{{"ok", true}, {"status", "idle"}, {"reset", false}}.dump()};
+    }
+    std::scoped_lock lock(store_mutex_);
+    sqlite3* db = nullptr;
+    if (sqlite3_open(config_.sqlite_path.string().c_str(), &db) != SQLITE_OK || db == nullptr) {
+      if (db) sqlite3_close(db);
+      return {500, R"({"ok":false,"error":"generation_store_open_failed"})"};
+    }
+    auto close_db = [&]() { sqlite3_close(db); };
+    sqlite_exec_checked(
+        db,
+        "CREATE TABLE IF NOT EXISTS lobby_generation_state ("
+        "lobby_id TEXT PRIMARY KEY,"
+        "generation_id TEXT NOT NULL,"
+        "status TEXT NOT NULL,"
+        "room_url TEXT NOT NULL DEFAULT '',"
+        "error TEXT NOT NULL DEFAULT '',"
+        "players_json TEXT NOT NULL DEFAULT '[]',"
+        "created_at TEXT NOT NULL,"
+        "updated_at TEXT NOT NULL"
+        ");");
+    sqlite3_stmt* stmt = nullptr;
+    if (sqlite3_prepare_v2(
+            db,
+            "SELECT generation_id, status, room_url, error FROM lobby_generation_state WHERE lobby_id = ? LIMIT 1;",
+            -1,
+            &stmt,
+            nullptr) != SQLITE_OK) {
+      close_db();
+      return {500, R"({"ok":false,"error":"generation_state_prepare_failed"})"};
+    }
+    sqlite3_bind_text(stmt, 1, lobby_id.c_str(), -1, SQLITE_TRANSIENT);
+    if (sqlite3_step(stmt) != SQLITE_ROW) {
+      sqlite3_finalize(stmt);
+      close_db();
+      return {200, nlohmann::json{{"ok", true}, {"status", "idle"}, {"reset", false}}.dump()};
+    }
+    const auto generation_id = sqlite_column_string(stmt, 0);
+    const auto status = lower(sqlite_column_string(stmt, 1));
+    const auto room_url = sqlite_column_string(stmt, 2);
+    const auto error = sqlite_column_string(stmt, 3);
+    sqlite3_finalize(stmt);
+
+    const auto running = status == "queued" || status == "starting" || status == "in_progress" || status == "running";
+    const auto successful = status == "completed" || status == "success" || status == "succeeded" || !room_url.empty();
+    const auto failed = status == "failed" || status == "error" || status == "cancelled" || !error.empty();
+    if (running || successful || !failed) {
+      close_db();
+      return {
+          409,
+          nlohmann::json{
+              {"ok", false},
+              {"error", "generation_reset_refused"},
+              {"message", "Only failed generation states can be reset."},
+              {"status", status},
+          }.dump()};
+    }
+
+    sqlite3_stmt* delete_stmt = nullptr;
+    if (sqlite3_prepare_v2(db, "DELETE FROM lobby_generation_state WHERE lobby_id = ?;", -1, &delete_stmt, nullptr) != SQLITE_OK) {
+      close_db();
+      return {500, R"({"ok":false,"error":"generation_reset_prepare_failed"})"};
+    }
+    sqlite3_bind_text(delete_stmt, 1, lobby_id.c_str(), -1, SQLITE_TRANSIENT);
+    const auto delete_step = sqlite3_step(delete_stmt);
+    sqlite3_finalize(delete_stmt);
+    close_db();
+    if (delete_step != SQLITE_DONE) {
+      return {500, R"({"ok":false,"error":"generation_reset_failed"})"};
+    }
+    return {
+        200,
+        nlohmann::json{
+            {"ok", true},
+            {"reset", true},
+            {"status", "idle"},
+            {"lobby_id", lobby_id},
+            {"generation_id", generation_id},
+        }.dump()};
+  }
   if (parts.size() == 3 && parts[2] == "host-status" && method == "GET") {
     return {200, nlohmann::json{{"ok", true}, {"host_absent", false}, {"host_absent_seconds", 0}, {"candidate_name", ""}, {"vote_count", 0}, {"vote_needed", 0}}.dump()};
   }

@@ -90,6 +90,16 @@ nlohmann::json BuildTrackerErrorSnapshot(std::string code, std::string message) 
   };
 }
 
+nlohmann::json BuildTrackerLoadingSnapshot(std::string message) {
+  return nlohmann::json{
+      {"schema", "sekailink.tracker.snapshot.v1"},
+      {"status",
+       {{"state", "loading"},
+        {"message", std::move(message)}}},
+      {"summary", {{"checked", 0}, {"total", 0}}},
+  };
+}
+
 void RefreshTrackerAssetResolverForHost(const HostOptions& options,
                                         const std::optional<TrackerBundle>& tracker_bundle,
                                         const TrackerRuntime* tracker_runtime,
@@ -121,11 +131,11 @@ bool InitializeTrackerRuntimeForHost(const HostOptions& options,
                                      bool& tracker_dirty,
                                      bool& tracker_active,
                                      std::string& last_error) {
+  if (!options.tracker_required) {
+    return true;
+  }
   if (options.tracker_bundle_path.empty() && options.tracker_snapshot_path.empty() &&
       options.tracker_pack_path.empty()) {
-    if (!options.tracker_required) {
-      return true;
-    }
     tracker_runtime.ApplyServerSnapshot(BuildTrackerErrorSnapshot(
         "tracker_missing",
         "No compatible tracker pack or snapshot was provided. Legacy tracker fallback is disabled."));
@@ -144,6 +154,15 @@ bool InitializeTrackerRuntimeForHost(const HostOptions& options,
               << "\n";
     return true;
   }
+
+  tracker_runtime.ApplyServerSnapshot(BuildTrackerLoadingSnapshot("Loading tracker..."));
+  RefreshTrackerAssetResolverForHost(options, tracker_bundle, &tracker_runtime, asset_resolver);
+  tracker_state_path = ResolveTrackerStatePathForHost(options);
+  tracker_snapshot_path = ResolveTrackerSnapshotPathForHost(options, sklmi_companion_runtime);
+  tracker_command_log_path = ResolveTrackerCommandLogPathForHost(options, sklmi_companion_runtime);
+  last_mutation_serial = tracker_runtime.MutationSerial();
+  tracker_dirty = true;
+  tracker_active = true;
 
   try {
     if (!options.tracker_bundle_path.empty()) {
@@ -170,7 +189,16 @@ bool InitializeTrackerRuntimeForHost(const HostOptions& options,
               << " state=" << tracker_state_path << "\n";
   } catch (const std::exception& exception) {
     last_error = std::string("tracker_initialize_failed: ") + exception.what();
-    return false;
+    tracker_runtime.ApplyServerSnapshot(BuildTrackerErrorSnapshot(
+        "tracker_initialize_failed",
+        exception.what()));
+    RefreshTrackerAssetResolverForHost(options, tracker_bundle, &tracker_runtime, asset_resolver);
+    last_mutation_serial = tracker_runtime.MutationSerial();
+    tracker_dirty = true;
+    tracker_active = true;
+    std::cerr << "[sekaiemu-libretro-spike] tracker runtime active: error="
+              << last_error << "\n";
+    return true;
   }
   return true;
 }

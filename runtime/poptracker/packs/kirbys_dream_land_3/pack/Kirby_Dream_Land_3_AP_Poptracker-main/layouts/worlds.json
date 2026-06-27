@@ -1,0 +1,22 @@
+{
+    "worlds": {
+        "type": "dock",
+        "content": [
+            {
+                "type": "map",
+                "maps": [
+                    "World1",
+                    "World2",
+                    "World3"
+                ]
+            },
+            {
+                "type": "map",
+                "maps": [
+                    "World4",
+                    "World5"
+                ]
+            }
+        ]
+    }
+}

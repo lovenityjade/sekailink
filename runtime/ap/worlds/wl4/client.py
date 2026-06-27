@@ -15,6 +15,12 @@ from .locations import get_level_locations, location_name_to_id, location_table
 if TYPE_CHECKING:
     from worlds._bizhawk.context import BizHawkClientContext, BizHawkContext
 
+try:
+    from apclient_events import emit as sekailink_emit
+except Exception:
+    def sekailink_emit(*_args, **_kwargs):
+        return None
+
 
 # These flags are communicated to the tracker as a bitfield in this order, from
 # least to most significant bit.
@@ -324,10 +330,15 @@ class WL4Client(BizHawkClient):
         locations: set[int] = set()
         events: dict[str, bool] = {}
         messages: list[dict] = []
+        inventory_location_count = 0
+        live_location_count = 0
+        pending_scout_count = 0
 
         for passage, levels in zip(Passage, inventory, strict=True):
             for level, status_bits in enumerate(levels):
-                locations.update(self.get_collected_locations(client_ctx, passage, level, status_bits >> 8))
+                level_locations = set(self.get_collected_locations(client_ctx, passage, level, status_bits >> 8))
+                inventory_location_count += len(level_locations)
+                locations.update(level_locations)
                 if level > 4:
                     continue
                 level_name = LEVEL_CLEAR_FLAGS[passage * 5 + level]
@@ -339,10 +350,12 @@ class WL4Client(BizHawkClient):
             if level < BOSS_LEVEL:
                 known, unknown = self.get_or_scout_locations(
                     client_ctx, self.get_collected_locations(client_ctx, Passage(passage), level, collection))
-                locations.update(item.location for item in known if item.player == client_ctx.slot)
+                live_location_count = len(known)
+                pending_scout_count = len(unknown)
+                locations.update(item.location for item in known)
                 messages.append({
                     "cmd": "LocationScouts",
-                    "locations": unknown,
+                    "locations": list(unknown),
                     "create_as_hint": False,
                 })
 
@@ -350,7 +363,7 @@ class WL4Client(BizHawkClient):
             self.local_checked_locations = locations
             messages.append({
                 "cmd": "LocationChecks",
-                "locations": locations
+                "locations": sorted(locations)
             })
 
         if self.local_set_events != events and client_ctx.slot is not None:
@@ -368,6 +381,16 @@ class WL4Client(BizHawkClient):
             self.local_set_events = events
 
         if messages:
+            sekailink_emit(
+                "wl4_location_debug",
+                main=main,
+                collection_available=collection_result is not None,
+                inventory_location_count=inventory_location_count,
+                live_location_count=live_location_count,
+                pending_scout_count=pending_scout_count,
+                outgoing_location_count=len(locations),
+                outgoing_messages=[message.get("cmd") for message in messages],
+            )
             await client_ctx.send_msgs(messages)
 
     async def handle_hints(self, client_ctx: BizHawkClientContext):
@@ -399,7 +422,7 @@ class WL4Client(BizHawkClient):
             self.local_hinted_locations.update(locations)
             await client_ctx.send_msgs([{
                 "cmd": "LocationScouts",
-                "locations": locations,
+                "locations": sorted(locations),
                 "create_as_hint": CREATE_HINT_ONLY_NEW
             }])
 

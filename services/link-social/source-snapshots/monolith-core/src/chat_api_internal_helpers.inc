@@ -175,12 +175,15 @@ nlohmann::json read_json_file_object(const std::filesystem::path& path) {
 nlohmann::json select_release_manifest_entry(
     const nlohmann::json& manifest,
     const std::string& channel,
-    const std::string& platform) {
+    const std::string& platform,
+    const std::string& build = "") {
   const auto matches_request = [&](const nlohmann::json& entry) {
     const auto entry_channel = first_string_limited(entry, {"channel"}, "", 80);
     const auto entry_platform = first_string_limited(entry, {"platform"}, "", 80);
+    const auto entry_build = first_string_limited(entry, {"build"}, "", 80);
     if (!channel.empty() && !entry_channel.empty() && entry_channel != channel) return false;
     if (!platform.empty() && !entry_platform.empty() && entry_platform != platform) return false;
+    if (!build.empty() && !entry_build.empty() && entry_build != build) return false;
     return true;
   };
   if (manifest.contains("releases") && manifest.at("releases").is_array()) {
@@ -326,6 +329,11 @@ nlohmann::json legacy_lobby_from_runtime(const nlohmann::json& lobby) {
   const auto presence_count = json_int_or(lobby, "presence_count", 0);
   const auto owner = json_string_or(lobby, "owner_username");
   const auto updated_at = json_string_or(lobby, "updated_at");
+  const auto room_type = json_string_or(metadata, "room_type", json_string_or(metadata, "mode", json_string_or(lobby, "room_type")));
+  const auto async_lobby = room_type == "async" ||
+                           (metadata.contains("asynchronous") && metadata.at("asynchronous").is_boolean() && metadata.at("asynchronous").get<bool>()) ||
+                           (metadata.contains("is_async") && metadata.at("is_async").is_boolean() && metadata.at("is_async").get<bool>()) ||
+                           (lobby.contains("async_state") && !lobby.at("async_state").is_null());
   nlohmann::json result = {
       {"id", lobby_id},
       {"lobby_id", lobby_id},
@@ -342,8 +350,12 @@ nlohmann::json legacy_lobby_from_runtime(const nlohmann::json& lobby) {
       {"created_at", json_string_or(lobby, "created_at")},
       {"updated_at", updated_at},
       {"last_activity", json_string_or(lobby, "last_activity_at", updated_at)},
+      {"asynchronous", async_lobby},
+      {"is_async", async_lobby},
+      {"room_type", async_lobby ? std::string("async") : std::string("active")},
       {"metadata", metadata},
   };
+  if (lobby.contains("async_state")) result["async_state"] = lobby.at("async_state");
   for (const auto& key : {"game", "mode", "release_mode", "language", "tags", "games"}) {
     if (metadata.contains(key)) result[key] = metadata.at(key);
   }
@@ -549,6 +561,8 @@ int run_process_wait(const std::vector<std::string>& args) {
     argv.reserve(args.size() + 1);
     for (const auto& arg : args) argv.push_back(const_cast<char*>(arg.c_str()));
     argv.push_back(nullptr);
+    ::setenv("SKIP_REQUIREMENTS_UPDATE", "1", 0);
+    ::setenv("PYTHONNOUSERSITE", "1", 0);
     execvp(argv[0], argv.data());
     _exit(127);
   }
@@ -643,6 +657,15 @@ void sqlite_exec_checked(sqlite3* db, const char* sql) {
     sqlite3_free(error);
     throw std::runtime_error(message);
   }
+}
+
+void sqlite_exec_allow_duplicate_column(sqlite3* db, const char* sql) {
+  char* error = nullptr;
+  if (sqlite3_exec(db, sql, nullptr, nullptr, &error) == SQLITE_OK) return;
+  std::string message = error ? error : "sqlite_exec_failed";
+  sqlite3_free(error);
+  if (message.find("duplicate column name") != std::string::npos) return;
+  throw std::runtime_error(message);
 }
 
 std::string sqlite_column_string(sqlite3_stmt* stmt, int column) {

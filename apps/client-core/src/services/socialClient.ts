@@ -9,6 +9,10 @@ export interface SocialProfile {
   avatar_url: string;
   status: string;
   presence_status?: string;
+  role?: string;
+  permissions?: string[];
+  patreon_tier?: string;
+  patreon_is_supporter?: boolean;
 }
 
 export interface SocialRequest extends SocialProfile {
@@ -34,8 +38,28 @@ export interface SocialSnapshot {
   incoming: SocialRequest[];
   outgoing: SocialRequest[];
   unreadCount: number;
+  unreadByUser: Record<string, number>;
   presenceStatus: string;
 }
+
+export const normalizePresenceStatus = (value: unknown, fallback = "offline") => {
+  const normalized = String(value ?? "").trim().toLowerCase();
+  if (normalized === "online" || normalized === "dnd" || normalized === "busy" || normalized === "afk") return normalized;
+  if (normalized === "offline" || normalized === "appear-offline" || normalized === "invisible") return "offline";
+  return fallback;
+};
+
+export const isPresenceOnline = (value: unknown) => {
+  const normalized = normalizePresenceStatus(value, "offline");
+  return normalized === "online" || normalized === "dnd" || normalized === "busy" || normalized === "afk";
+};
+
+export const presenceStatusLabel = (value: unknown) => {
+  const normalized = normalizePresenceStatus(value, "offline");
+  if (normalized === "dnd" || normalized === "busy") return "Busy";
+  if (normalized === "afk") return "AFK";
+  return normalized === "online" ? "Online" : "Offline";
+};
 
 const normalizeProfile = (raw: any): SocialProfile | null => {
   if (!raw || typeof raw !== "object") return null;
@@ -43,7 +67,7 @@ const normalizeProfile = (raw: any): SocialProfile | null => {
   const username = String(raw.username || raw.name || userId || "").trim();
   const displayName = String(raw.display_name || raw.global_name || raw.name || username || userId || "").trim();
   if (!userId && !username && !displayName) return null;
-  const status = String(raw.presence_status || raw.status || "offline").trim() || "offline";
+  const status = normalizePresenceStatus(raw.presence_status ?? raw.status ?? (raw.is_online ? "online" : "offline"), "offline");
   return {
     user_id: userId || username || displayName,
     username,
@@ -51,7 +75,11 @@ const normalizeProfile = (raw: any): SocialProfile | null => {
     name: displayName || username || userId,
     avatar_url: apiAssetUrl(raw.avatar_url),
     status,
-    presence_status: typeof raw.presence_status === "string" ? raw.presence_status : undefined,
+    presence_status: status,
+    role: typeof raw.role === "string" ? raw.role : "",
+    permissions: Array.isArray(raw.permissions) ? raw.permissions.map((entry: unknown) => String(entry)) : [],
+    patreon_tier: typeof raw.patreon_tier === "string" ? raw.patreon_tier : "",
+    patreon_is_supporter: Boolean(raw.patreon_is_supporter),
   };
 };
 
@@ -95,10 +123,11 @@ const safeJson = async <T>(path: string, fallback: T): Promise<T> => {
 
 export const listSocialSnapshot = async (): Promise<SocialSnapshot> => {
   trace("social-client", "snapshot_start");
-  const [friendsData, requestsData, unreadData, settingsData] = await Promise.all([
+  const [friendsData, requestsData, unreadData, unreadByUserData, settingsData] = await Promise.all([
     safeJson<{ friends?: any[] }>("/api/social/friends", { friends: [] }),
     safeJson<{ incoming?: any[]; outgoing?: any[] }>("/api/social/requests", { incoming: [], outgoing: [] }),
     safeJson<{ count?: number; unread_count?: number }>("/api/social/unread-count", { count: 0, unread_count: 0 }),
+    safeJson<{ unread?: any[]; unread_by_user?: Record<string, number> }>("/api/social/unread-by-user", { unread: [], unread_by_user: {} }),
     safeJson<{ presence_status?: string; settings?: { presence_status?: string } }>("/api/social/settings", { presence_status: "online" }),
   ]);
   const friends = (Array.isArray(friendsData.friends) ? friendsData.friends : [])
@@ -111,12 +140,27 @@ export const listSocialSnapshot = async (): Promise<SocialSnapshot> => {
     .map(normalizeRequest)
     .filter(Boolean) as SocialRequest[];
   const unreadCount = Number(unreadData.unread_count ?? unreadData.count ?? 0);
+  const unreadByUser: Record<string, number> = {};
+  if (Array.isArray(unreadByUserData.unread)) {
+    for (const row of unreadByUserData.unread) {
+      const userId = String(row?.user_id || row?.from_id || "").trim();
+      const count = Number(row?.count || row?.unread_count || 0);
+      if (userId && Number.isFinite(count) && count > 0) unreadByUser[userId] = count;
+    }
+  }
+  if (unreadByUserData.unread_by_user && typeof unreadByUserData.unread_by_user === "object") {
+    for (const [userId, value] of Object.entries(unreadByUserData.unread_by_user)) {
+      const count = Number(value);
+      if (userId && Number.isFinite(count) && count > 0) unreadByUser[userId] = count;
+    }
+  }
   const presenceStatus = String(settingsData.settings?.presence_status || settingsData.presence_status || "online");
   trace("social-client", "snapshot_success", {
     friends: friends.length,
     incoming: incoming.length,
     outgoing: outgoing.length,
     unreadCount,
+    unreadThreads: Object.keys(unreadByUser).length,
     presenceStatus,
   });
   return {
@@ -124,6 +168,7 @@ export const listSocialSnapshot = async (): Promise<SocialSnapshot> => {
     incoming,
     outgoing,
     unreadCount: Number.isFinite(unreadCount) ? unreadCount : 0,
+    unreadByUser,
     presenceStatus,
   };
 };
@@ -160,6 +205,26 @@ export const sendSocialFriendRequest = async (userId: string) => {
   trace("social-client", "friend_request_success", { userId });
 };
 
+export const removeSocialFriend = async (userId: string) => {
+  trace("social-client", "friend_remove_start", { userId });
+  await apiJson<{ ok?: boolean }>("/api/social/friends/remove", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ user_id: userId }),
+  });
+  trace("social-client", "friend_remove_success", { userId });
+};
+
+export const blockSocialUser = async (userId: string) => {
+  trace("social-client", "block_start", { userId });
+  await apiJson<{ ok?: boolean }>("/api/social/blocks", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ user_id: userId }),
+  });
+  trace("social-client", "block_success", { userId });
+};
+
 export const respondSocialFriendRequest = async (requestId: number, action: "accept" | "decline") => {
   trace("social-client", "friend_request_respond_start", { requestId, action });
   await apiJson<{ ok?: boolean }>("/api/social/friends/respond", {
@@ -176,6 +241,17 @@ export const loadDirectMessages = async (userId: string): Promise<SocialDirectMe
   const messages = normalizeMessages(data);
   trace("social-client", "dm_load_success", { userId, count: messages.length });
   return messages;
+};
+
+export const markDirectMessagesRead = async (userId: string): Promise<void> => {
+  if (!userId) return;
+  trace("social-client", "dm_mark_read_start", { userId });
+  await apiJson<{ ok?: boolean }>("/api/social/messages/read", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ user_id: userId }),
+  });
+  trace("social-client", "dm_mark_read_success", { userId });
 };
 
 export const sendDirectMessage = async (userId: string, content: string): Promise<SocialDirectMessage | null> => {

@@ -112,6 +112,9 @@ void ProfileBridge::Tick(const ProfileBridgeCallbacks& callbacks) {
                 << " (0x" << std::hex << std::uppercase << check.location_id << std::dec << ")";
           callbacks.trace(trace.str());
         }
+        if (callbacks.location_triggered) {
+          callbacks.location_triggered(check.location_id, check.name);
+        }
       }
     }
     watched_region_snapshot_ = current_snapshot;

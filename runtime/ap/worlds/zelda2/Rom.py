@@ -3,6 +3,7 @@ import os
 import Utils
 import typing
 import struct
+from settings import get_settings
 from worlds.Files import APProcedurePatch, APTokenMixin, APTokenTypes, APPatchExtension
 from typing import TYPE_CHECKING, Optional
 from logging import warning
@@ -239,9 +240,8 @@ def get_base_rom_bytes(file_name: str = "") -> bytes:
 
 
 def get_base_rom_path(file_name: str = "") -> str:
-    options: Utils.OptionsType = Utils.get_options()
     if not file_name:
-        file_name = options["zelda2_options"]["rom_file"]
+        file_name = get_settings()["zelda2_options"]["rom_file"]
     if not os.path.exists(file_name):
         file_name = Utils.user_path(file_name)
     return file_name

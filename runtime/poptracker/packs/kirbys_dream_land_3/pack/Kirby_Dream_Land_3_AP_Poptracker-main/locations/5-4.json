@@ -1,0 +1,71 @@
+[
+    {
+        "name": "5-4",
+        "children":
+        [
+            {
+                "name": "Star 1",
+                "chest_unopened_img": "images/StarSmall.png",
+                "chest_opened_img": "images/StarSmallDim.png",
+                "visibility_rules": ["Starsanity"],
+                "access_rules": ["Burning"],
+                "map_locations":
+                [
+                    {
+                        "map": "5-4",
+                        "x": "1297",
+                        "y": "1344"
+                    }
+                ],
+                "sections":
+                [
+                    {
+                        "name": "Star 1",
+                    }
+                ]
+            },
+            {
+                "name": "Star 2",
+                "chest_unopened_img": "images/StarSmall.png",
+                "chest_opened_img": "images/StarSmallDim.png",
+                "visibility_rules": ["Starsanity"],
+                "access_rules": ["Burning"],
+                "map_locations":
+                [
+                    {
+                        "map": "5-4",
+                        "x": "1104",
+                        "y": "1344"
+                    }
+                ],
+                "sections":
+                [
+                    {
+                        "name": "Star 2",
+                    }
+                ]
+            },
+            {
+                "name": "Star 3",
+                "chest_unopened_img": "images/StarSmall.png",
+                "chest_opened_img": "images/StarSmallDim.png",
+                "visibility_rules": ["Starsanity"],
+                "access_rules": ["Burning"],
+                "map_locations":
+                [
+                    {
+                        "map": "5-4",
+                        "x": "791",
+                        "y": "2662"
+                    }
+                ],
+                "sections":
+                [
+                    {
+                        "name": "Star 3",
+                    }
+                ]
+            }
+        ]
+    }
+]

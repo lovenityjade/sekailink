@@ -12,6 +12,7 @@ struct HostOptions {
   std::filesystem::path game_path;
   std::filesystem::path system_directory;
   std::filesystem::path save_directory;
+  std::filesystem::path log_directory;
   std::filesystem::path profile_path;
   std::filesystem::path memory_socket_path;
   std::filesystem::path sklmi_runtime_path;

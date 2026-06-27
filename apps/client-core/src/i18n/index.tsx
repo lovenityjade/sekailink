@@ -5,15 +5,16 @@ import es from "./locales/es.json";
 import ja from "./locales/ja.json";
 import zhCN from "./locales/zh-CN.json";
 import zhTW from "./locales/zh-TW.json";
+import { redesignLiteralBundles } from "./redesignLiterals";
 import { LocaleCode, Messages, SUPPORTED_LOCALES } from "./types";
 
 const STORAGE_KEY = "skl_locale";
 
 const bundles: Record<LocaleCode, Messages> = {
-  en,
-  fr,
+  en: { ...en, ...redesignLiteralBundles.en },
+  fr: { ...fr, ...redesignLiteralBundles.fr },
   es,
-  ja,
+  ja: { ...ja, ...redesignLiteralBundles.ja },
   "zh-CN": zhCN,
   "zh-TW": zhTW,
 };
@@ -47,7 +48,7 @@ export const localeLabelKey: Record<LocaleCode, string> = {
   "zh-TW": "lang.chinese_traditional",
 };
 
-const normalizeLocale = (value?: string | null): LocaleCode => {
+export const normalizeLocale = (value?: string | null): LocaleCode => {
   const v = String(value || "").trim();
   if ((SUPPORTED_LOCALES as readonly string[]).includes(v)) return v as LocaleCode;
   if (v.toLowerCase().startsWith("fr")) return "fr";
@@ -140,10 +141,13 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
     applyNode(document);
     const observer = new MutationObserver((mutations) => {
       for (const m of mutations) {
+        if (m.type === "characterData" && m.target.parentNode) {
+          applyNode(m.target.parentNode);
+        }
         m.addedNodes.forEach((n) => applyNode(n));
       }
     });
-    observer.observe(document.body, { childList: true, subtree: true });
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
     return () => observer.disconnect();
   }, [locale]);
 

@@ -1,5 +1,64 @@
 # Local Changelog
 
+## 2026-06-25
+
+- Split SKLMI bridge runtime helper logic into
+  `api_bridge_runtime_helpers.hpp`. Room metadata descriptions, room item
+  tracker events, read snapshots, context matching, and FireRed dynamic
+  read/write helpers are now separate from the session classes, keeping
+  `api_bridge_runtime.cpp` under the 800-line maintenance limit.
+
+## 2026-06-17
+
+- Added passive Archipelago client wrapper metadata to SKLMI bridge manifests:
+  - `archipelago_client_wrapper.enabled`
+  - `game_key`, `game`, `platform`, `world`
+  - `wrapper`, `module`, `client_file`, `status`
+  - `requires`
+- Added manifest validation for wrapper family names and required entry points.
+- Added runtime trace event `archipelago_client_wrapper` so wrapper intent is
+  visible in SKLMI JSONL logs and bug-report log tails.
+- Added `archipelago_client_wrapper` to SKLMI bug-report `app_info` for easier
+  filtering/debugging in Nexus/Discord reports.
+- Added `sekailink_sklmi_archipelago_client_wrapper_manifest_smoke` to protect
+  the wrapper metadata parse/validation contract.
+
+## 2026-06-11
+
+- Added automatic SKLMI runtime bug-report submission for tracker initialization,
+  manifest loading, memory provider connection, tracker snapshot publication,
+  and room/session start or tick failures using the shared
+  `/api/client/bug-report` payload contract.
+- SKLMI bug reports now include the trace log tail, runtime mode, bridge ID,
+  linkedworld ID, core profile, and player alias when available.
+
+## 2026-06-10
+
+- Added the first generic BizHawk/Sekaiemu runtime manifests for non-SNES
+  starter targets:
+  - `tloz.phase1.json` for NES `system_ram` checks.
+  - `ladx.phase1.json` for GB/GBC `system_ram` checks.
+  - `firered.phase1.json` for GBA `gba_system_bus` checks and room-controlled
+    receive queue delivery.
+- Extended SKLMI manifest checks with `dynamic_source:
+  firered_saveblock1_flag`, matching Sekaiemu's existing FireRed logic:
+  overworld-gated reads, SaveBlock1 pointer resolution, then dynamic flag byte
+  evaluation.
+- Extended SKLMI room-controlled injections with `dynamic_source:
+  firered_item_queue`, matching the existing Sekaiemu FireRed receive queue:
+  item, progress, pending, and display fields are written only when the game is
+  in a safe overworld state and the queue is not busy.
+- Added `sekailink_sklmi_generic_bizhawk_manifest_smoke`, which loads the real
+  manifests and proves:
+  - NES TLoZ check detection.
+  - GB/GBC LADX check detection.
+  - GBA FireRed dynamic flag detection plus room item delivery into the AP
+    receive queue.
+- Revalidated the targeted SKLMI path with:
+  - `ctest --test-dir /tmp/sklmi-generic-bizhawk-build -R
+    'sekailink_sklmi_(smoke|legacy_manifest_smoke|generic_bizhawk_manifest_smoke|runtime_socket_smoke|unix_socket_smoke)$'
+    --output-on-failure`
+
 ## 2026-05-24
 
 - Reduced SKLMI runtime frame pressure by batching manifest check reads into
@@ -149,7 +208,7 @@
 - corrected `sekailink_sklmi_runtime` so the tracker-facing `room.state` file
   is now the live metadata surface consumed by `Sekaiemu`, while bridge state
   remains under `--runtime-state`
-# 2026-05-21
+## 2026-05-21
 
 - Improved Archipelago room item responsiveness for realtime tests:
   - `RoomSynchronizedRuntimeSession` now drains inbound room items before the

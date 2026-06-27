@@ -548,11 +548,11 @@ class SMWorld(World):
         # sort all player data by player id so that the game can look up a player's data reasonably quickly when
         # the client sends an ap playerid to the game
         for i, playerid in enumerate(sorted(playerIdSet)):
-            playername = self.multiworld.player_name[playerid] if playerid != 0 else "Archipelago"
+            playername = self.multiworld.player_name[playerid] if playerid != 0 else "Sekailink"
             playerIdForRom = playerid
             if playerid > SM_ROM_MAX_PLAYERID:
                 # note, playerIdForRom = 0 is not unique so the game cannot look it up.
-                # instead it will display the player received-from as "Archipelago"
+                # instead it will display the player received-from as the server name
                 playerIdForRom = 0
                 if playerid == self.player:
                     raise Exception(f"SM rom cannot fit enough bits to represent self player id {playerid}")

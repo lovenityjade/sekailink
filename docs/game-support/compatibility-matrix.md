@@ -3,6 +3,49 @@
 Initial matrix imported from `/home/thelovenityjade/deep-research-report.md`
 and cross-checked against local SekaiLink paths where possible.
 
+## Runtime Freeze - Bilateral Confirmed
+
+Date: 2026-06-26
+
+These games are confirmed bidirectional in current BETA-3 runtime tests:
+checks travel from game to server, and received items travel from server back
+to the game. Treat these paths as frozen. Do not modify their runtime,
+wrapper, bridge, launch, or tracker integration paths unless a new
+reproducible regression log is attached.
+
+SNES/SNI compatibility is established for the BETA-3 runtime lane as of
+2026-06-26. This means the SNES core/system path is no longer the active
+blocker; future SNES failures should be treated as regression reports or
+game-specific adapter debt, not as proof that the generic SNES/SNI lane is
+unproven.
+
+| Platform | Game | Runtime path | Status | Notes |
+|---|---|---|---|---|
+| snes | The Legend of Zelda: A Link to the Past | Sekaiemu + Archipelago/SNI path | frozen_confirmed | Checks and items confirmed both directions. |
+| snes | Donkey Kong Country | Sekaiemu + Archipelago/SNI path | frozen_confirmed | Checks and items confirmed both directions. |
+| snes | Donkey Kong Country 2 | Sekaiemu + Archipelago/SNI path | frozen_confirmed | Checks and items confirmed both directions. |
+| snes | EarthBound | Sekaiemu + Archipelago/SNI path | frozen_confirmed | Checks and items confirmed both directions. |
+| snes | Kirby's Dream Land 3 | Sekaiemu + Archipelago/SNI path | frozen_confirmed | Checks and items confirmed both directions. |
+| snes | Lufia II Ancient Cave | Sekaiemu + Archipelago/SNI path | frozen_confirmed | Checks and items confirmed both directions. Roguelike-style Ancient Cave flow. |
+| snes | Mega Man X2 | Sekaiemu + Snes9x + Archipelago/SNI path | frozen_confirmed | Checks and items confirmed both directions. Confirms the MMX/Cx4-style Snes9x lane as usable for BETA-3 runtime tests. |
+| snes | Secret of Mana | Sekaiemu + Snes9x + Evermizer SoM web AP client/SNI path | frozen_confirmed_with_visual_debt | Checks and items confirmed both directions. Non-blocking graphics bug remains on naming/save screen; gameplay continues after Start input and the runtime path is frozen. |
+| snes | SMZ3 | Sekaiemu + Archipelago/SNI path | frozen_confirmed | Checks and items confirmed both directions. |
+| snes | Super Mario World | Sekaiemu + Archipelago/SNI path | frozen_confirmed | Checks and items confirmed both directions. |
+| snes | Super Metroid | Sekaiemu + Archipelago/SNI path | frozen_confirmed | Checks and items confirmed both directions. |
+
+## Deferred SNES Follow-Ups
+
+| Platform | Game | Runtime path | Status | Notes |
+|---|---|---|---|---|
+| snes | Mega Man X3 | Sekaiemu + Snes9x + Archipelago/SNI path | deferred_optional_validation | bsnes-mercury loads the Cx4 firmware but produces a fully black framebuffer for both vanilla USA and AP-patched MMX3. Snes9x produces non-black frames. MMX2 already validates the MMX/Cx4-style lane for the SNES freeze; MMX3 can be validated later without reopening generic SNES/SNI. |
+| snes | Secret of Evermore | Sekaiemu + Snes9x + Evermizer web AP client/SNI path | deferred_web_client_validation | Uses module-level `core_id: snes9x` to match the Evermizer browser-client runtime path. Validate separately from SoM, but do not reopen generic SNES/SNI for it. |
+
+## Temporarily Unavailable
+
+| Platform | Game | Runtime path | Status | Notes |
+|---|---|---|---|---|
+| gba | Final Fantasy Tactics Advance | Sekaiemu + GBA BizHawk wrapper path | unavailable_unable_to_test | Client connection was observed, but item/check transactions were not verified. Manual checks depend on FFTA mission reward flow, so this needs a dedicated tester familiar with the game before it is exposed again. |
+
 ## Priority Interpretation
 
 Best immediate SekaiLink targets:
@@ -66,7 +109,7 @@ Best immediate SekaiLink targets:
 | nes | Spelunker | GitHub APWorld | PopTracker confirmed by source | none |
 | gb/gbc | Super Mario Land 2 | GitHub APWorld and PopTracker | APWorld Discord, setup GitHub | `runtime/ap/worlds/marioland2` |
 | gb/gbc | Link's Awakening DX | PopTracker | core + beta APWorld + Magpie web tracker | local profile only |
-| gba | Final Fantasy Tactics Advance | PopTracker | APWorld confirmed, setup Discord | `runtime/ap/worlds/ffta` |
+| gba | Final Fantasy Tactics Advance | PopTracker | APWorld confirmed, setup Discord | `runtime/ap/worlds/ffta`; temporarily not available in Client Core because runtime transactions are unable to test manually |
 | gba | Fire Emblem: The Sacred Stones | PopTracker | APWorld/setup confirmed | none |
 
 ## Tracker Optional Or Non-Blocking

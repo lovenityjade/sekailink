@@ -26,18 +26,34 @@ ChatApiHttpResponse ChatApiService::handle_social(
         {"display_name", user_id},
         {"name", user_id},
         {"avatar_url", ""},
-        {"status", "online"},
+        {"status", "offline"},
+        {"presence_status", "offline"},
+        {"is_online", false},
+        {"last_seen", ""},
     };
     sqlite3_stmt* stmt = nullptr;
-    if (sqlite3_prepare_v2(db, "SELECT username, display_name, avatar_url FROM social_profiles WHERE user_id = ?;", -1, &stmt, nullptr) == SQLITE_OK) {
+    const char* sql =
+        "SELECT p.username, p.display_name, p.avatar_url, p.updated_at, COALESCE(s.presence_status, 'offline'), "
+        "COALESCE(strftime('%s', 'now') - strftime('%s', p.updated_at), 999999) "
+        "FROM social_profiles p LEFT JOIN social_settings s ON s.user_id = p.user_id WHERE p.user_id = ?;";
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) == SQLITE_OK) {
       sqlite3_bind_text(stmt, 1, user_id.c_str(), -1, SQLITE_TRANSIENT);
       if (sqlite3_step(stmt) == SQLITE_ROW) {
         const auto username = sqlite_column_string(stmt, 0);
         const auto display_name = sqlite_column_string(stmt, 1);
+        const auto last_seen = sqlite_column_string(stmt, 3);
+        const auto preferred_status = lower(sqlite_column_string(stmt, 4));
+        const auto age_seconds = sqlite3_column_int64(stmt, 5);
+        const auto active_recently = age_seconds >= 0 && age_seconds <= 45;
+        const auto visible_status = active_recently && preferred_status != "offline" && preferred_status != "appear-offline" ? preferred_status : "offline";
         out["username"] = username;
         out["display_name"] = display_name;
         out["name"] = display_name.empty() ? username : display_name;
         out["avatar_url"] = sqlite_column_string(stmt, 2);
+        out["last_seen"] = last_seen;
+        out["status"] = visible_status;
+        out["presence_status"] = visible_status;
+        out["is_online"] = visible_status != "offline";
       }
       sqlite3_finalize(stmt);
     }
@@ -272,6 +288,26 @@ ChatApiHttpResponse ChatApiService::handle_social(
     close_db();
     return {200, nlohmann::json{{"ok", true}, {"count", unread}, {"unread_count", unread}}.dump()};
   }
+  if (method == "GET" && parts.size() == 2 && parts[1] == "unread-by-user") {
+    nlohmann::json unread = nlohmann::json::array();
+    nlohmann::json unread_by_user = nlohmann::json::object();
+    sqlite3_stmt* stmt = nullptr;
+    const char* sql =
+        "SELECT from_id, COUNT(*) FROM social_dm_messages "
+        "WHERE to_id = ? AND read_at IS NULL GROUP BY from_id ORDER BY COUNT(*) DESC, from_id LIMIT 250;";
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) == SQLITE_OK) {
+      sqlite3_bind_text(stmt, 1, me.c_str(), -1, SQLITE_TRANSIENT);
+      while (sqlite3_step(stmt) == SQLITE_ROW) {
+        const auto from_id = sqlite_column_string(stmt, 0);
+        const auto count = sqlite3_column_int(stmt, 1);
+        unread.push_back({{"user_id", from_id}, {"from_id", from_id}, {"count", count}, {"unread_count", count}});
+        unread_by_user[from_id] = count;
+      }
+      sqlite3_finalize(stmt);
+    }
+    close_db();
+    return {200, nlohmann::json{{"ok", true}, {"unread", unread}, {"unread_by_user", unread_by_user}}.dump()};
+  }
   if (method == "GET" && parts.size() == 2 && parts[1] == "messages") {
     const auto target = sanitized_text(query_value(raw_path, "user_id"), 80);
     nlohmann::json messages = nlohmann::json::array();
@@ -343,9 +379,11 @@ ChatApiHttpResponse ChatApiService::handle_social(
     if (!q.empty()) {
       sqlite3_stmt* stmt = nullptr;
       const char* sql =
-          "SELECT user_id, username, display_name, avatar_url FROM social_profiles "
-          "WHERE user_id != ? AND (lower(username) LIKE ? OR lower(display_name) LIKE ?) "
-          "ORDER BY lower(display_name), lower(username) LIMIT 20;";
+          "SELECT p.user_id, p.username, p.display_name, p.avatar_url, p.updated_at, COALESCE(s.presence_status, 'offline'), "
+          "COALESCE(strftime('%s', 'now') - strftime('%s', p.updated_at), 999999) "
+          "FROM social_profiles p LEFT JOIN social_settings s ON s.user_id = p.user_id "
+          "WHERE p.user_id != ? AND (lower(p.username) LIKE ? OR lower(p.display_name) LIKE ?) "
+          "ORDER BY lower(p.display_name), lower(p.username) LIMIT 20;";
       if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) == SQLITE_OK) {
         const auto pattern = "%" + q + "%";
         sqlite3_bind_text(stmt, 1, me.c_str(), -1, SQLITE_TRANSIENT);
@@ -354,12 +392,20 @@ ChatApiHttpResponse ChatApiService::handle_social(
         while (sqlite3_step(stmt) == SQLITE_ROW) {
           const auto username = sqlite_column_string(stmt, 1);
           const auto display_name = sqlite_column_string(stmt, 2);
+          const auto preferred_status = lower(sqlite_column_string(stmt, 5));
+          const auto age_seconds = sqlite3_column_int64(stmt, 6);
+          const auto active_recently = age_seconds >= 0 && age_seconds <= 45;
+          const auto visible_status = active_recently && preferred_status != "offline" && preferred_status != "appear-offline" ? preferred_status : "offline";
           users.push_back({
               {"user_id", sqlite_column_string(stmt, 0)},
               {"username", username},
               {"display_name", display_name},
               {"name", display_name.empty() ? username : display_name},
               {"avatar_url", sqlite_column_string(stmt, 3)},
+              {"last_seen", sqlite_column_string(stmt, 4)},
+              {"status", visible_status},
+              {"presence_status", visible_status},
+              {"is_online", visible_status != "offline"},
           });
         }
         sqlite3_finalize(stmt);

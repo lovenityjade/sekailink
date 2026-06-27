@@ -425,7 +425,13 @@ std::optional<RoomChatMessage> MakeLogMessageFromPrintJson(
         message.id = id;
         message.author = "SYSTEM";
         message.text = std::move(text);
-        message.kind = (print_type == "Join" || print_type == "Part") ? "connection" : "system";
+        if (print_type == "Join" || print_type == "Part") {
+            message.kind = "connection";
+        } else if (print_type == "Hint") {
+            message.kind = "hint";
+        } else {
+            message.kind = "system";
+        }
         return message;
     }
 
@@ -616,6 +622,12 @@ bool ArchipelagoRoomClient::process_packet(std::string_view packet_view, std::st
     if (cmd == "RoomInfo") {
         if (const auto seed = detail::extract_string_field(command_packet, "seed_name"); seed.has_value()) {
             metadata_["seed_name"] = *seed;
+        }
+        if (const auto hint_cost = detail::extract_uint_field(command_packet, "hint_cost"); hint_cost.has_value()) {
+            metadata_["hint_cost"] = std::to_string(*hint_cost);
+        }
+        if (const auto check_points = detail::extract_uint_field(command_packet, "location_check_points"); check_points.has_value()) {
+            metadata_["location_check_points"] = std::to_string(*check_points);
         }
         if (!data_package_request_sent_ && !send_data_package_request(error)) {
             return false;

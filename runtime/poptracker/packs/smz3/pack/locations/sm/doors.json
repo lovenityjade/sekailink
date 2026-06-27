@@ -1,0 +1,1 @@
+[{"name":"CanOpenCrateriaSurfaceDoor","access_rules":["@CanUsePowerBombs"]},{"name":"CanOpenBombTorizoDoor","access_rules":["@CanOpenRedDoors"]},{"name":"CanOpenMoatDoor","access_rules":["@CanUsePowerBombs"]},{"name":"CanOpenIceBeamDoor","access_rules":["super"]},{"name":"CanOpenCathedralDoor","access_rules":["super"]},{"name":"CanAccessCrocomire","access_rules":["super"]}]

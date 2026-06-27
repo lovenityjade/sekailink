@@ -1,0 +1,282 @@
+{
+    "options": {
+        "type": "dock",
+        "background": "#000000",
+        "content": [
+            {
+                "type": "array",
+                "dock": "left",
+                "orientation": "vertical",
+                "margin": "0, 0, 0, 0",
+                "content": [
+                    {
+                        "type": "array",
+                        "orientation": "horizontal",
+                        "margin": "6, 0, 130, 0",
+                        "content": [
+                            {
+                                "type": "item",
+                                "item": "goal",
+                                "max_height": 32,
+                                "max_width": 32,
+                                "margin": "4"
+                            },
+                            {
+                                "type": "text",
+                                "text": "Goal",
+                                "v_alignment": "center"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "array",
+                        "orientation": "horizontal",
+                        "margin": "6, 0, 0, 0",
+                        "content": [
+                            {
+                                "type": "item",
+                                "item": "metroid_dna_required",
+                                "max_height": 32,
+                                "max_width": 32,
+                                "margin": "4"
+                            },
+                            {
+                                "type": "text",
+                                "text": "Metroid DNA Required",
+                                "v_alignment": "center"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "array",
+                        "orientation": "horizontal",
+                        "margin": "6, 0, 0, 0",
+                        "content": [
+                            {
+                                "type": "item",
+                                "item": "metroid_dna_available",
+                                "max_height": 32,
+                                "max_width": 32,
+                                "margin": "4"
+                            },
+                            {
+                                "type": "text",
+                                "text": "Metroid DNA Available",
+                                "v_alignment": "center"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "array",
+                        "orientation": "horizontal",
+                        "margin": "6, 0, 0, 0",
+                        "content": [
+                            {
+                                "type": "item",
+                                "item": "game_difficulty",
+                                "max_height": 32,
+                                "max_width": 32,
+                                "margin": "4"
+                            },
+                            {
+                                "type": "text",
+                                "text": "Game Difficulty",
+                                "v_alignment": "center"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "array",
+                        "orientation": "horizontal",
+                        "margin": "6, 0, 0, 0",
+                        "content": [
+                            {
+                                "type": "item",
+                                "item": "logic_difficulty",
+                                "max_height": 32,
+                                "max_width": 32,
+                                "margin": "4"
+                            },
+                            {
+                                "type": "text",
+                                "text": "Logic Difficulty",
+                                "v_alignment": "center"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "array",
+                        "orientation": "horizontal",
+                        "margin": "6, 0, 0, 0",
+                        "content": [
+                            {
+                                "type": "item",
+                                "item": "combat_logic_difficulty",
+                                "max_height": 32,
+                                "max_width": 32,
+                                "margin": "4"
+                            },
+                            {
+                                "type": "text",
+                                "text": "Combat Logic Difficulty",
+                                "v_alignment": "center"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "array",
+                        "orientation": "horizontal",
+                        "margin": "6, 0, 0, 0",
+                        "content": [
+                            {
+                                "type": "item",
+                                "item": "chozodia_access",
+                                "max_height": 32,
+                                "max_width": 32,
+                                "margin": "4"
+                            },
+                            {
+                                "type": "text",
+                                "text": "Chozodia Access",
+                                "v_alignment": "center"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "array",
+                "orientation": "vertical",
+                "margin": "0, 0, 0, 0",
+                "content": [
+                    {
+                        "type": "array",
+                        "orientation": "horizontal",
+                        "content": [
+                            {
+                                "type": "item",
+                                "item": "unknown_items_usable",
+                                "max_height": 32,
+                                "max_width": 32,
+                                "margin": "4"
+                            },
+                            {
+                                "type": "text",
+                                "text": "Fully Powered Suit",
+                                "v_alignment": "center"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "array",
+                        "orientation": "horizontal",
+                        "content": [
+                            {
+                                "type": "item",
+                                "item": "ibj_in_logic",
+                                "max_height": 32,
+                                "max_width": 32,
+                                "margin": "4"
+                            },
+                            {
+                                "type": "text",
+                                "text": "IBJ In Logic",
+                                "v_alignment": "center"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "array",
+                        "orientation": "horizontal",
+                        "content": [
+                            {
+                                "type": "item",
+                                "item": "hazard_runs",
+                                "max_height": 32,
+                                "max_width": 32,
+                                "margin": "4"
+                            },
+                            {
+                                "type": "text",
+                                "text": "Hazard Runs",
+                                "v_alignment": "center"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "array",
+                        "orientation": "horizontal",
+                        "content": [
+                            {
+                                "type": "item",
+                                "item": "walljumps",
+                                "max_height": 32,
+                                "max_width": 32,
+                                "margin": "4"
+                            },
+                            {
+                                "type": "text",
+                                "text": "Walljumps",
+                                "v_alignment": "center"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "array",
+                        "orientation": "horizontal",
+                        "content": [
+                            {
+                                "type": "item",
+                                "item": "tricky_shinesparks",
+                                "max_height": 32,
+                                "max_width": 32,
+                                "margin": "4"
+                            },
+                            {
+                                "type": "text",
+                                "text": "Tricky Shinesparks",
+                                "v_alignment": "center"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "array",
+                        "orientation": "horizontal",
+                        "content": [
+                            {
+                                "type": "item",
+                                "item": "remote_items",
+                                "max_height": 32,
+                                "max_width": 32,
+                                "margin": "4"
+                            },
+                            {
+                                "type": "text",
+                                "text": "Remote Items",
+                                "v_alignment": "center"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "array",
+                        "orientation": "horizontal",
+                        "content": [
+                            {
+                                "type": "item",
+                                "item": "auto_switch_tabs",
+                                "max_height": 32,
+                                "max_width": 32,
+                                "margin": "4"
+                            },
+                            {
+                                "type": "text",
+                                "text": "Automatically Switch Tabs",
+                                "v_alignment": "center"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -44,6 +44,7 @@ enum class RuntimeMenuAction {
   ResetCoreSettingsToDefaults,
   RestartBridge,
   ToggleBridgeTerminal,
+  ChangeGame,
   CloseMenu,
   QuitRuntime,
 };
@@ -111,6 +112,19 @@ class RuntimeMenu {
               bool chat_overlay_enabled,
               bool notifications_enabled,
               bool bridge_terminal_enabled);
+  void RenderImGui(const CoreOptionManager& core_options,
+                   InputState& input_state,
+                   const BridgeRuntimeStatus& bridge_status,
+                   const TrackerRuntime* tracker_runtime,
+                   const std::vector<SaveStateSlotMenuInfo>& save_slots,
+                   std::string_view core_name,
+                   std::string_view game_name,
+                   int master_volume_percent,
+                   bool chat_overlay_enabled,
+                   bool notifications_enabled,
+                   bool bridge_terminal_enabled);
+  RuntimeMenuAction ConsumePendingAction();
+  void QueueAction(RuntimeMenuAction action) { pending_action_ = action; }
 
  private:
   enum class MainSlotMode {
@@ -128,6 +142,7 @@ class RuntimeMenu {
   int selected_index_ = 0;
   int scroll_offset_ = 0;
   int visible_rows_ = 8;
+  RuntimeMenuAction pending_action_ = RuntimeMenuAction::None;
 };
 
 }  // namespace sekaiemu::spike

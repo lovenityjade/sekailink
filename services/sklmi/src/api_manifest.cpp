@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
+#include <regex>
 #include <sstream>
 
 namespace sekailink::sklmi {
@@ -16,6 +17,50 @@ bool is_allowed_write_source(std::string_view source) {
 bool domain_declared(const CoreProfileManifest& core_profile, std::string_view domain_id) {
     return core_profile.domain_ids.empty() ||
            std::find(core_profile.domain_ids.begin(), core_profile.domain_ids.end(), domain_id) != core_profile.domain_ids.end();
+}
+
+bool is_allowed_archipelago_wrapper(std::string_view wrapper) {
+    return wrapper.empty() || wrapper == "text" || wrapper == "bizhawk" || wrapper == "sni" ||
+           wrapper == "oot" || wrapper == "dolphin" || wrapper == "module";
+}
+
+std::vector<std::string> extract_string_array_field(const std::string& text, const std::string& key) {
+    std::vector<std::string> values;
+    const auto key_pos = text.find("\"" + key + "\"");
+    if (key_pos == std::string::npos) return values;
+    const auto open = text.find('[', key_pos);
+    if (open == std::string::npos) return values;
+    const auto close = text.find(']', open);
+    if (close == std::string::npos) return values;
+    const auto body = text.substr(open + 1, close - open - 1);
+    const std::regex string_pattern("\"([^\"]*)\"");
+    for (std::sregex_iterator it(body.begin(), body.end(), string_pattern), end; it != end; ++it) {
+        if (it->size() > 1) values.push_back((*it)[1].str());
+    }
+    return values;
+}
+
+ArchipelagoClientWrapperConfig parse_archipelago_client_wrapper(const std::string& parse_source) {
+    ArchipelagoClientWrapperConfig config;
+    auto block = detail::extract_object_field_block(parse_source, "archipelago_client_wrapper");
+    if (!block.has_value()) block = detail::extract_object_field_block(parse_source, "archipelago_client");
+    if (!block.has_value()) block = detail::extract_object_field_block(parse_source, "ap_client_wrapper");
+    if (!block.has_value()) return config;
+
+    config.enabled = detail::extract_bool_field(*block, "enabled").value_or(true);
+    config.game_key = detail::extract_string_field(*block, "game_key")
+                          .value_or(detail::extract_string_field(*block, "gameKey").value_or(""));
+    config.game = detail::extract_string_field(*block, "game").value_or("");
+    config.platform = detail::extract_string_field(*block, "platform").value_or("");
+    config.world = detail::extract_string_field(*block, "world").value_or("");
+    config.wrapper = detail::extract_string_field(*block, "wrapper")
+                         .value_or(detail::extract_string_field(*block, "kind").value_or(""));
+    config.module = detail::extract_string_field(*block, "module").value_or("");
+    config.client_file = detail::extract_string_field(*block, "client_file")
+                             .value_or(detail::extract_string_field(*block, "clientFile").value_or(""));
+    config.status = detail::extract_string_field(*block, "status").value_or("");
+    config.dependency_hints = extract_string_array_field(*block, "requires");
+    return config;
 }
 
 std::optional<BridgeManifest> parse_bridge_manifest_text(const std::string& text,
@@ -72,11 +117,15 @@ std::optional<BridgeManifest> parse_bridge_manifest_text(const std::string& text
         manifest.core_profile.name = "legacy.default";
     }
 
+    manifest.archipelago_client_wrapper = parse_archipelago_client_wrapper(parse_source);
+
     for (const auto& block : detail::extract_object_blocks(parse_source, "checks")) {
         WatchRule rule;
         rule.domain_id = detail::extract_string_field(block, "domain_id").value_or("");
         rule.address = detail::extract_uint_field(block, "address").value_or(0);
         rule.size = detail::extract_uint_field(block, "size").value_or(1);
+        rule.dynamic_source = detail::extract_string_field(block, "dynamic_source").value_or("");
+        rule.dynamic_flag_id = detail::extract_uint_field(block, "dynamic_flag_id");
         if (const auto compare = detail::extract_string_field(block, "compare")) {
             const auto parsed = parse_compare_op(*compare);
             if (!parsed.has_value()) {
@@ -153,6 +202,7 @@ std::optional<BridgeManifest> parse_bridge_manifest_text(const std::string& text
         rule.address = detail::extract_uint_field(block, "address").value_or(0);
         rule.size = detail::extract_uint_field(block, "size").value_or(1);
         rule.value_u64 = detail::extract_uint_field(block, "value_u64").value_or(0);
+        rule.dynamic_source = detail::extract_string_field(block, "dynamic_source").value_or("");
         rule.item_id = detail::extract_uint_field(block, "item_id").value_or(0);
         rule.item_name = detail::extract_string_field(block, "item_name").value_or("");
         rule.event_key = detail::extract_string_field(block, "event_key").value_or("");
@@ -211,6 +261,30 @@ bool validate_bridge_manifest(const BridgeManifest& manifest, std::string* error
         if (error) *error = "manifest_missing_bridge_rules";
         return false;
     }
+    const auto& wrapper = manifest.archipelago_client_wrapper;
+    if (wrapper.enabled) {
+        if (!is_allowed_archipelago_wrapper(wrapper.wrapper)) {
+            if (error) *error = "manifest_client_wrapper_invalid_wrapper";
+            return false;
+        }
+        if (wrapper.game_key.empty() && wrapper.game.empty()) {
+            if (error) *error = "manifest_client_wrapper_missing_game";
+            return false;
+        }
+        if (wrapper.world.empty()) {
+            if (error) *error = "manifest_client_wrapper_missing_world";
+            return false;
+        }
+        if (wrapper.wrapper.empty()) {
+            if (error) *error = "manifest_client_wrapper_missing_wrapper";
+            return false;
+        }
+        if ((wrapper.wrapper == "module" || wrapper.wrapper == "dolphin") &&
+            wrapper.module.empty() && wrapper.client_file.empty() && wrapper.status != "generator_only") {
+            if (error) *error = "manifest_client_wrapper_missing_entry_point";
+            return false;
+        }
+    }
 
     for (const auto& rule : manifest.checks) {
         if (rule.domain_id.empty()) {
@@ -221,7 +295,15 @@ bool validate_bridge_manifest(const BridgeManifest& manifest, std::string* error
             if (error) *error = "manifest_check_unknown_domain";
             return false;
         }
-        if (rule.size == 0 || rule.size > 8) {
+        if (!rule.dynamic_source.empty() && rule.dynamic_source != "firered_saveblock1_flag") {
+            if (error) *error = "manifest_check_invalid_dynamic_source";
+            return false;
+        }
+        if (!rule.dynamic_source.empty() && !rule.dynamic_flag_id.has_value()) {
+            if (error) *error = "manifest_check_missing_dynamic_flag_id";
+            return false;
+        }
+        if (rule.dynamic_source.empty() && (rule.size == 0 || rule.size > 8)) {
             if (error) *error = "manifest_check_invalid_size";
             return false;
         }
@@ -276,6 +358,21 @@ bool validate_bridge_manifest(const BridgeManifest& manifest, std::string* error
         if (detail::default_injection_event_key(rule).empty()) {
             if (error) *error = "manifest_action_missing_identity";
             return false;
+        }
+        if (!rule.dynamic_source.empty() && rule.dynamic_source != "firered_item_queue") {
+            if (error) *error = "manifest_action_invalid_dynamic_source";
+            return false;
+        }
+        if (!rule.dynamic_source.empty()) {
+            if (rule.domain_id.empty()) {
+                if (error) *error = "manifest_action_invalid_dynamic_write";
+                return false;
+            }
+            if (!domain_declared(manifest.core_profile, rule.domain_id)) {
+                if (error) *error = "manifest_action_unknown_domain";
+                return false;
+            }
+            continue;
         }
         if (rule.writes.empty()) {
             if (rule.domain_id.empty() || rule.size == 0 || rule.size > 8) {

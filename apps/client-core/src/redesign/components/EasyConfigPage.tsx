@@ -21,6 +21,91 @@ const completeAnswers: PulseAnswer[] = [
   { id: 'restart', label: 'Start over' },
 ];
 
+const summarizeValue = (value: unknown): string => {
+  if (Array.isArray(value)) return value.map(summarizeValue).join(', ');
+  if (value && typeof value === 'object') return JSON.stringify(value);
+  if (typeof value === 'boolean') return value ? 'On' : 'Off';
+  return String(value ?? '');
+};
+
+const settingLabel = (key: string): string =>
+  key
+    .replace(/[_-]+/g, ' ')
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+
+const describeChoice = (key: string, value: unknown): string => {
+  const text = summarizeValue(value).replace(/[_-]+/g, ' ').trim();
+  if (!text) return '';
+  const normalized = text.toLowerCase();
+  if (key === 'goal') {
+    if (normalized.includes('triforce')) return 'un objectif de chasse aux morceaux de Triforce';
+    if (normalized.includes('pedestal')) return 'un objectif alternatif autour du pedestal';
+    if (normalized.includes('ganon') || normalized.includes('final')) return 'un objectif classique vers le boss final';
+    return `un objectif ${text}`;
+  }
+  if (key === 'mode') {
+    if (normalized.includes('open')) return 'un depart ouvert pour reduire les blocages du debut';
+    if (normalized.includes('standard')) return 'un depart plus proche de la structure originale';
+    return `un depart ${text}`;
+  }
+  if (key === 'accessibility') {
+    if (normalized.includes('minimal')) return 'une logique plus permissive qui peut demander plus de routing';
+    if (normalized.includes('items')) return 'une accessibilite centree sur les items importants';
+    return `une accessibilite ${text}`;
+  }
+  if (key.includes('key') || key.includes('map') || key.includes('compass')) {
+    if (normalized.includes('own world') || normalized.includes('any world') || normalized.includes('keysanity')) {
+      return 'des items de donjon plus melanges, donc un tracker plus important';
+    }
+    if (normalized.includes('original dungeon') || normalized.includes('vanilla')) {
+      return 'des items de donjon gardes plus pres de leur structure normale';
+    }
+  }
+  if (key === 'hints') return normalized === 'on' || normalized === 'true' ? 'des indices actives' : 'des indices desactives';
+  if (key === 'progression_balancing') return `un progression balancing regle a ${text}`;
+  if (key.includes('crystals_needed')) return `${text} cristaux requis pour une partie de la fin`;
+  if (key.includes('triforce_pieces_required')) return `${text} morceaux requis`;
+  return `${settingLabel(key)}: ${text}`;
+};
+
+const buildSeedParagraph = (session: PulseSeedSession | null): string => {
+  if (!session?.complete) return '';
+  const gameName = session.game_name || 'ce jeu';
+  const values = session.seed?.values && typeof session.seed.values === 'object' ? session.seed.values : null;
+  if (!values) {
+    return `Pulse a termine les 5 questions pour ${gameName}, mais le module de resume n'a pas renvoye les valeurs detaillees. La seed peut quand meme etre creee avec les reponses enregistrees; si ce n'est pas ce que tu voulais, recommence la demande aupres de Pulse.`;
+  }
+  const priorityKeys = [
+    'goal',
+    'mode',
+    'accessibility',
+    'progression_balancing',
+    'big_key_shuffle',
+    'small_key_shuffle',
+    'map_shuffle',
+    'compass_shuffle',
+    'key_drop_shuffle',
+    'hints',
+    'crystals_needed_for_gt',
+    'crystals_needed_for_ganon',
+    'triforce_pieces_required',
+  ];
+  const descriptions: string[] = [];
+  const seen = new Set<string>();
+  for (const key of priorityKeys) {
+    if (!Object.prototype.hasOwnProperty.call(values, key)) continue;
+    const description = describeChoice(key, (values as Record<string, unknown>)[key]);
+    if (!description || seen.has(description)) continue;
+    seen.add(description);
+    descriptions.push(description);
+    if (descriptions.length >= 5) break;
+  }
+  if (!descriptions.length) {
+    return `Pulse a prepare une configuration ${gameName} avec les choix enregistres pendant les 5 questions. Relis le nom et les settings ci-dessous avant de creer la seed; tu peux recommencer si le resultat ne correspond pas a ton intention.`;
+  }
+  return `Pulse a prepare une configuration ${gameName} avec ${descriptions.join(', ')}. Ce resume est la traduction humaine des settings qui seront sauvegardes; si le style de run ne correspond pas a ce que tu voulais, retourne poser une nouvelle demande a Pulse avant de creer la seed.`;
+};
+
 export default function EasyConfigPage({ game = ALTTP_SHOWCASE_GAME, onBack, onComplete }: EasyConfigPageProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [session, setSession] = useState<PulseSeedSession | null>(null);
@@ -29,12 +114,14 @@ export default function EasyConfigPage({ game = ALTTP_SHOWCASE_GAME, onBack, onC
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [seedTitle, setSeedTitle] = useState('');
 
   const startSession = async () => {
     setLoading(true);
     setSubmitting(false);
     setError('');
     setCurrentQuestionIndex(0);
+    setSeedTitle('');
     trace('easy-config-page', 'session_start', { gameKey: game.game_key, gameName: game.display_name });
     try {
       const next = await startPulseSeedSession(game);
@@ -59,6 +146,17 @@ export default function EasyConfigPage({ game = ALTTP_SHOWCASE_GAME, onBack, onC
   }, [game.game_key]);
 
   const currentAnswers = session?.complete ? completeAnswers : session?.question?.answers || [];
+  useEffect(() => {
+    if (!session?.complete || seedTitle.trim()) return;
+    setSeedTitle(session.title || `Pulse ${session.game_name} Seed`);
+  }, [seedTitle, session?.complete, session?.game_name, session?.title]);
+
+  const generatedSettingsSummary = session?.complete && session.seed?.values && typeof session.seed.values === 'object'
+    ? Object.entries(session.seed.values)
+        .filter(([, value]) => value !== undefined && value !== null && summarizeValue(value).trim())
+        .slice(0, 10)
+    : [];
+  const generatedSeedParagraph = buildSeedParagraph(session);
   const fullText = loading
     ? "Pulse is waking up the live configuration assistant..."
     : error
@@ -99,7 +197,7 @@ export default function EasyConfigPage({ game = ALTTP_SHOWCASE_GAME, onBack, onC
         setError('');
         trace('easy-config-page', 'confirm_start', { sessionId: session.session_id });
         try {
-          const seed = await confirmPulseSeedSession(session);
+          const seed = await confirmPulseSeedSession(session, seedTitle);
           trace('easy-config-page', 'confirm_success', { sessionId: session.session_id, seedId: seed.id, title: seed.title });
           onComplete(seed);
           onBack();
@@ -183,6 +281,27 @@ export default function EasyConfigPage({ game = ALTTP_SHOWCASE_GAME, onBack, onC
           {/* Answer Options */}
           <div className="space-y-3">
             <div className="text-sm font-bold text-[#8e8f94] mb-3">Choose your answer:</div>
+            {session?.complete && !error && (
+              <div className="rounded-xl border border-[#4ecdc4]/30 bg-[#10151a]/95 p-4 space-y-3">
+                <div>
+                  <label className="text-xs uppercase text-[#8e8f94] font-bold">Seed name</label>
+                  <input
+                    value={seedTitle}
+                    onChange={(event) => setSeedTitle(event.target.value)}
+                    className="mt-2 w-full rounded-lg border-2 border-[#2a2b30] bg-[#0e0f13] px-4 py-3 text-white outline-none focus:border-[#4ecdc4]"
+                    placeholder="Name this seed"
+                  />
+                </div>
+                <p className="text-sm text-[#8e8f94]">
+                  Read Pulse's summary before creating the seed. If it does not match the run you want, start over and answer Pulse differently.
+                </p>
+                {generatedSeedParagraph && (
+                  <p className="rounded-lg border border-[#2a2b30] bg-[#0f1015] px-4 py-3 text-sm leading-relaxed text-[#d7f7f4]">
+                    {generatedSeedParagraph}
+                  </p>
+                )}
+              </div>
+            )}
             {(error ? [{ id: 'retry', label: 'Try again' } satisfies PulseAnswer] : currentAnswers).map((answer, index) => (
               <button
                 key={answer.id || index}
@@ -205,6 +324,20 @@ export default function EasyConfigPage({ game = ALTTP_SHOWCASE_GAME, onBack, onC
               </button>
             ))}
           </div>
+
+          {generatedSettingsSummary.length > 0 && (
+            <div className="bg-[#15161b]/90 border border-[#4ecdc4]/35 rounded-xl p-4 shadow-xl">
+              <div className="text-sm font-bold text-[#4ecdc4] mb-3">Generated settings summary</div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {generatedSettingsSummary.map(([key, value]) => (
+                  <div key={key} className="rounded-lg bg-[#0f1015] border border-[#2a2b30] px-3 py-2">
+                    <div className="text-[11px] uppercase tracking-wide text-[#8e8f94]">{settingLabel(key)}</div>
+                    <div className="text-sm text-white break-words">{summarizeValue(value)}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Progress Indicator */}
           <div className="flex gap-2 justify-center mt-6">

@@ -1,0 +1,395 @@
+[  
+  {
+    "name": "Sword",
+    "type": "toggle",
+    "img": "images/items/sword.png",
+    "codes": "sword"
+  },
+  {
+    "name": "White Sword",
+    "type": "toggle",
+    "img": "images/items/sword2.png",
+    "codes": "sword2"
+  },
+  {
+    "name": "Magical Sword",
+    "type": "toggle",
+    "img": "images/items/sword3.png",
+    "codes": "sword3"
+  },
+  {
+    "name": "Magical Shield",
+    "type": "toggle",
+    "img": "images/items/shield2.png",
+    "codes": "shield2"
+  },
+  {
+    "name": "Blue Candle",
+    "type": "toggle",
+    "img": "images/items/bluecandle.png",
+    "codes": "candle"
+  },
+  {
+    "name": "Red Candle",
+    "type": "toggle",
+    "img": "images/items/redcandle.png",
+    "codes": "candle2"
+  },
+  {
+    "name": "Candles",
+    "type": "composite_toggle",
+    "item_left": "candle",
+    "item_right": "candle2",
+    "codes": "bothcandles",
+    "images": [
+      {
+        "left": false,
+        "right": false,
+        "img": "images/items/bothcandles_a.png"
+      },
+      {
+        "left": true,
+        "right": false,
+        "img": "images/items/bothcandles_b.png"
+      },
+      {
+        "left": false,
+        "right": true,
+        "img": "images/items/bothcandles_c.png"
+      },
+      {
+        "left": true,
+        "right": true,
+        "img": "images/items/bothcandles_d.png"
+      }
+    ]
+  },
+  {
+    "name": "Boomerang",
+    "type": "toggle",
+    "img": "images/items/boomerang.png",
+    "codes": "boomerang"
+  },
+  {
+    "name": "Magic Boomerang",
+    "type": "toggle",
+    "img": "images/items/boomerang2.png",
+    "codes": "boomerang2"
+  },
+  {
+    "name": "Boomerangs",
+    "type": "composite_toggle",
+    "item_left": "boomerang",
+    "item_right": "boomerang2",
+    "codes": "bothboomers",
+    "images": [
+      {
+        "left": false,
+        "right": false,
+        "img": "images/items/bothboomerangs_a.png"
+      },
+      {
+        "left": true,
+        "right": false,
+        "img": "images/items/bothboomerangs_b.png"
+      },
+      {
+        "left": false,
+        "right": true,
+        "img": "images/items/bothboomerangs_c.png"
+      },
+      {
+        "left": true,
+        "right": true,
+        "img": "images/items/bothboomerangs_d.png"
+      }
+    ]
+  },
+  {
+    "name": "Bomb",
+    "type": "toggle",
+    "img": "images/items/bomb.png",
+    "codes": "bomb"
+  },
+  {
+    "name": "Bow",
+    "type": "toggle",
+    "img": "images/items/bow.png",
+    "codes": "bow"
+  },
+  {
+    "name": "Recorder",
+    "type": "toggle",
+    "img": "images/items/flute.png",
+    "codes": "flute"
+  },
+  {
+    "name": "Food",
+    "type": "toggle",
+    "img": "images/items/food.png",
+    "codes": "food"
+  },
+  {
+    "name": "Letter",
+    "type": "toggle",
+    "img": "images/items/letter.png",
+    "codes": "letter"
+  },
+  {
+    "name": "Magic Rod",
+    "type": "toggle",
+    "img": "images/items/magicrod.png",
+    "codes": "magicrod"
+  },
+  {
+    "name": "Book of Magic",
+    "type": "toggle",
+    "img": "images/items/magicbook.png",
+    "codes": "magicbook"
+  },
+  {
+    "name": "Power Bracelet",
+    "type": "toggle",
+    "img": "images/items/bracelet.png",
+    "codes": "bracelet"
+  },
+  {
+    "name": "Magical Key",
+    "type": "toggle",
+    "img": "images/items/magickey.png",
+    "codes": "magickey"
+  },
+  {
+    "name": "Raft",
+    "type": "toggle",
+    "img": "images/items/raft.png",
+    "codes": "raft"
+  },
+  {
+    "name": "Stepladder",
+    "type": "toggle",
+    "img": "images/items/ladder.png",
+    "codes": "ladder"
+  },
+  {
+    "name": "Blue Ring",
+    "type": "toggle",
+    "img": "images/items/bluering.png",
+    "codes": "bluering"
+  },
+  {
+    "name": "Red Ring",
+    "type": "toggle",
+    "img": "images/items/redring.png",
+    "codes": "redring"
+  },
+  {
+    "name": "Blue/Red Ring",
+    "type": "composite_toggle",
+    "item_left": "bluering",
+    "item_right": "redring",
+    "codes": "bothrings",
+    "images": [
+      {
+        "left": false,
+        "right": false,
+        "img": "images/items/bothrings_a.png"
+      },
+      {
+        "left": true,
+        "right": false,
+        "img": "images/items/bothrings_b.png"
+      },
+      {
+        "left": false,
+        "right": true,
+        "img": "images/items/bothrings_c.png"
+      },
+      {
+        "left": true,
+        "right": true,
+        "img": "images/items/bothrings_d.png"
+      }
+    ]
+  },
+  {
+    "name": "Arrows",
+    "type": "toggle",
+    "img": "images/items/arrow.png",
+    "codes": "arrow"
+  },
+  {
+    "name": "Silver Arrows",
+    "type": "toggle",
+    "img": "images/items/arrow2.png",
+    "codes": "arrow2"
+  },
+  {
+    "name": "Arrows/Silver Arrows",
+    "type": "composite_toggle",
+    "item_left": "arrow",
+    "item_right": "arrow2",
+    "codes": "botharrows",
+    "images": [
+      {
+        "left": false,
+        "right": false,
+        "img": "images/items/botharrows_a.png"
+      },
+      {
+        "left": true,
+        "right": false,
+        "img": "images/items/botharrows_b.png"
+      },
+      {
+        "left": false,
+        "right": true,
+        "img": "images/items/botharrows_c.png"
+      },
+      {
+        "left": true,
+        "right": true,
+        "img": "images/items/botharrows_d.png"
+      }
+    ]
+  },
+  {
+    "name": "Small Key",
+    "type": "consumable",
+    "img": "images/items/smallkey.png",
+    "max_quantity": 45,
+    "increment": 1,
+    "decrement": 1,
+    "initial_quantity": 0,
+    "overlay_background": "#000000",
+    "overlay_font_size": 12,
+    "codes": "smallkey"
+  },
+  {
+    "name": "Triforce Pieces",
+    "type": "consumable",
+    "img": "images/items/triforce.png",
+    "max_quantity": 8,
+    "increment": 1,
+    "decrement": 1,
+    "initial_quantity": 0,
+    "overlay_background": "#000000",
+    "overlay_font_size": 12,
+    "codes": "triforce"
+  },
+  {
+    "name": "Heart Containers",
+    "type": "consumable",
+    "img": "images/items/heart.png",
+    "max_quantity": 13,
+    "increment": 1,
+    "decrement": 1,
+    "initial_quantity": 0,
+    "overlay_background": "#000000",
+    "overlay_font_size": 12,
+    "allow_disabled": true,
+    "codes": "heart"
+  },
+  {
+    "name": "Starting Position",
+    "type": "progressive",
+    "allow_disabled": false,
+    "loop": true,
+    "stages": [
+      {
+        "img": "images/items/safe.png",
+        "codes": "safe",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/items/unsafe.png",
+        "codes": "unsafe",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/items/dangerous.png",
+        "codes": "dangerous",
+        "inherit_codes": true
+      }
+    ]
+  },
+  {
+    "name": "Expanded Pool",
+    "type": "progressive",
+    "allow_disabled": false,
+    "loop": true,
+    "stages": [
+      {
+        "img": "images/items/pooltrue.png",
+        "codes": "pooltrue",
+        "inherit_codes": false
+      },
+      {
+        "img": "images/items/poolfalse.png",
+        "codes": "poolfalse",
+        "inherit_codes": false
+      }
+    ]
+  },
+  {
+    "name": "Starting Position Button",
+    "type": "toggle",
+    "img": "images/items/positionbutton.png",
+    "codes": "positionbutton",
+    "allow_disabled": false
+  },
+  {
+    "name": "Expanded Pool Button",
+    "type": "toggle",
+    "img": "images/items/poolbutton.png",
+    "codes": "poolbutton",
+    "allow_disabled": false
+  },
+  {
+    "name": "Zelda",
+    "type": "toggle",
+    "img": "images/icons/Zelda.png",
+    "codes": "zelda"
+  },
+  {
+    "name": "Ganon",
+    "type": "toggle",
+    "img": "images/icons/Ganon.png",
+    "codes": "ganon"
+  },
+  {
+    "name": "Shield Shop",
+    "type": "toggle",
+    "img": "images/icons/shieldshop.png",
+    "codes": "shieldshop",
+    "allow_disabled": false
+  },
+  {
+    "name": "Potion Shop",
+    "type": "toggle",
+    "img": "images/icons/potionshop.png",
+    "codes": "potionshop",
+    "allow_disabled": false
+  },
+  {
+    "name": "Candle Shop",
+    "type": "toggle",
+    "img": "images/icons/candleshop.png",
+    "codes": "candleshop",
+    "allow_disabled": false
+  },
+  {
+    "name": "Arrow Shop",
+    "type": "toggle",
+    "img": "images/icons/arrowshop.png",
+    "codes": "arrowshop",
+    "allow_disabled": false
+  },
+  {
+    "name": "Blue Ring Shop",
+    "type": "toggle",
+    "img": "images/icons/ringshop.png",
+    "codes": "ringshop",
+    "allow_disabled": false
+  }
+]

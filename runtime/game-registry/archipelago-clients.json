@@ -1,0 +1,615 @@
+{
+  "schema_version": 1,
+  "updated": "2026-06-17",
+  "purpose": "Archipelago client/APWorld wrappers that SekaiLink can run with its portable Python runtime.",
+  "notes": [
+    "Generated from SekaiLink Client Core game catalog assets plus local APWorld sources.",
+    "The wrapper starts upstream Archipelago client code silently and exposes JSON events to SekaiLink.",
+    "Game logic remains in the APWorld/client. SekaiLink does not reimplement item/check memory behavior here.",
+    "generator_only entries have an APWorld but no direct memory client wrapper in this pass.",
+    "missing_local_apworld entries are kept in excluded until a source is provided."
+  ],
+  "wrapper_families": {
+    "sni": {
+      "script": "sniclient_wrapper.py",
+      "transport": "SNI websocket bridge",
+      "default_endpoint": "ws://127.0.0.1:23074"
+    },
+    "bizhawk": {
+      "script": "bizhawkclient_wrapper.py",
+      "transport": "Archipelago generic BizHawk Lua socket",
+      "default_endpoint": "127.0.0.1:43055-43059"
+    },
+    "oot": {
+      "script": "ootclient_wrapper.py",
+      "transport": "Ocarina of Time N64 Lua connector",
+      "default_endpoint": "connector_oot.lua"
+    },
+    "dolphin": {
+      "script": "dolphinclient_wrapper.py",
+      "transport": "dolphin-memory-engine Python hook",
+      "default_endpoint": "running Dolphin process"
+    },
+    "module": {
+      "script": "moduleclient_wrapper.py",
+      "transport": "game-specific upstream Archipelago client module",
+      "default_endpoint": "client-defined"
+    },
+    "text": {
+      "script": "commonclient_wrapper.py",
+      "transport": "Archipelago websocket only",
+      "default_endpoint": "room server"
+    }
+  },
+  "clients": [
+    {
+      "game_key": "a_link_to_the_past",
+      "game": "A Link to the Past",
+      "platform": "SNES",
+      "world": "alttp",
+      "wrapper": "sni",
+      "client_file": "worlds/alttp/Client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "chrono_trigger",
+      "game": "Chrono Trigger",
+      "platform": "SNES",
+      "world": "ctjot",
+      "wrapper": "sni",
+      "client_file": "worlds/ctjot/Client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "donkey_kong_country",
+      "game": "Donkey Kong Country",
+      "platform": "SNES",
+      "world": "dkc",
+      "wrapper": "sni",
+      "client_file": "worlds/dkc/Client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "donkey_kong_country_2",
+      "game": "Donkey Kong Country 2",
+      "platform": "SNES",
+      "world": "dkc2",
+      "wrapper": "sni",
+      "client_file": "worlds/dkc2/Client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "donkey_kong_country_3",
+      "game": "Donkey Kong Country 3",
+      "platform": "SNES",
+      "world": "dkc3",
+      "wrapper": "sni",
+      "client_file": "worlds/dkc3/Client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "earthbound",
+      "game": "EarthBound",
+      "platform": "SNES",
+      "world": "earthbound",
+      "wrapper": "sni",
+      "client_file": "worlds/earthbound/Client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "final_fantasy_iv",
+      "game": "Final Fantasy IV Free Enterprise",
+      "platform": "SNES",
+      "world": "ff4fe",
+      "wrapper": "sni",
+      "client_file": "worlds/ff4fe/Client.py",
+      "status": "special_setup_required"
+    },
+    {
+      "game_key": "final_fantasy_mystic_quest",
+      "game": "Final Fantasy Mystic Quest",
+      "platform": "SNES",
+      "world": "ffmq",
+      "wrapper": "sni",
+      "client_file": "worlds/ffmq/Client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "final_fantasy_v",
+      "game": "Final Fantasy V Career Day",
+      "platform": "SNES",
+      "world": "ffvcd",
+      "wrapper": "sni",
+      "client_file": "worlds/ffvcd/client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "kirbys_dream_land_3",
+      "game": "Kirby's Dream Land 3",
+      "platform": "SNES",
+      "world": "kdl3",
+      "wrapper": "sni",
+      "client_file": "worlds/kdl3/client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "lufia_ii",
+      "game": "Lufia II Ancient Cave",
+      "platform": "SNES",
+      "world": "lufia2ac",
+      "wrapper": "sni",
+      "client_file": "worlds/lufia2ac/Client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "mega_man_x3",
+      "game": "Mega Man X3",
+      "platform": "SNES",
+      "world": "mmx3",
+      "wrapper": "sni",
+      "client_file": "worlds/mmx3/Client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "super_mario_world",
+      "game": "Super Mario World",
+      "platform": "SNES",
+      "world": "smw",
+      "wrapper": "sni",
+      "client_file": "worlds/smw/Client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "super_metroid",
+      "game": "Super Metroid",
+      "platform": "SNES",
+      "world": "sm",
+      "wrapper": "sni",
+      "client_file": "worlds/sm/Client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "smz3",
+      "game": "SMZ3",
+      "platform": "SNES",
+      "world": "smz3",
+      "wrapper": "sni",
+      "client_file": "worlds/smz3/Client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "final_fantasy",
+      "game": "Final Fantasy",
+      "platform": "NES",
+      "world": "ff1",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/ff1/Client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "mega_man_2",
+      "game": "Mega Man 2",
+      "platform": "NES",
+      "world": "mm2",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/mm2/client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "mega_man_3",
+      "game": "Mega Man 3",
+      "platform": "NES",
+      "world": "mm3",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/mm3/client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "the_legend_of_zelda",
+      "game": "The Legend of Zelda",
+      "platform": "NES",
+      "world": "tloz",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/tloz/Client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "zelda_ii",
+      "game": "Zelda II: The Adventure of Link",
+      "platform": "NES",
+      "world": "zelda2",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/zelda2/Client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "final_fantasy_tactics_advance",
+      "game": "Final Fantasy Tactics Advance",
+      "platform": "GBA",
+      "world": "ffta",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/ffta/client.py",
+      "status": "runtime_unavailable",
+      "notes": "Temporarily unavailable: client connection was observed, but item/check transactions are unable to test manually because checks depend on FFTA mission reward flow. Needs a dedicated FFTA tester before re-enabling."
+    },
+    {
+      "game_key": "mario_luigi_superstar_saga",
+      "game": "Mario & Luigi: Superstar Saga",
+      "platform": "GBA",
+      "world": "mlss",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/mlss/Client.py",
+      "status": "runtime_unavailable",
+      "notes": "Temporarily unavailable for BETA-3 launch: GBA support is frozen to confirmed bilateral games only until a focused tester validates this title."
+    },
+    {
+      "game_key": "metroid_fusion",
+      "game": "Metroid Fusion",
+      "platform": "GBA",
+      "world": "metroidfusion",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/metroidfusion/Client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "metroid_zero_mission",
+      "game": "Metroid: Zero Mission",
+      "platform": "GBA",
+      "world": "mzm",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/mzm/client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "oracle_of_ages",
+      "game": "The Legend of Zelda - Oracle of Ages",
+      "platform": "GBC",
+      "world": "tloz_ooa",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/tloz_ooa/Client.py",
+      "status": "runtime_unavailable",
+      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+    },
+    {
+      "game_key": "oracle_of_seasons",
+      "game": "The Legend of Zelda - Oracle of Seasons",
+      "platform": "GBC",
+      "world": "tloz_oos",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/tloz_oos/Client.py",
+      "status": "runtime_unavailable",
+      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+    },
+    {
+      "game_key": "pokemon_crystal",
+      "game": "Pokemon Crystal",
+      "platform": "GBC",
+      "world": "pokemon_crystal",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/pokemon_crystal/client.py",
+      "status": "runtime_unavailable",
+      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+    },
+    {
+      "game_key": "pokemon_emerald",
+      "game": "Pokemon Emerald",
+      "platform": "GBA",
+      "world": "pokemon_emerald",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/pokemon_emerald/client.py",
+      "status": "runtime_unavailable",
+      "notes": "Temporarily unavailable for BETA-3 launch: runtime connects and receives, but check send behavior still needs a focused Emerald tester/regression pass."
+    },
+    {
+      "game_key": "pokemon_firered",
+      "game": "Pokemon FireRed and LeafGreen",
+      "platform": "GBA",
+      "world": "pokemon_frlg",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/pokemon_frlg/client.py",
+      "status": "runtime_unavailable",
+      "notes": "Temporarily unavailable for BETA-3 launch: GBA support is frozen to confirmed bilateral games only until a focused tester validates this title."
+    },
+    {
+      "game_key": "pokemon_red_blue",
+      "game": "Pokemon Red and Blue",
+      "platform": "GB",
+      "world": "pokemon_rb",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/pokemon_rb/client.py",
+      "status": "runtime_unavailable",
+      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+    },
+    {
+      "game_key": "super_mario_land_2",
+      "game": "Super Mario Land 2",
+      "platform": "GB",
+      "world": "marioland2",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/marioland2/client.py",
+      "status": "runtime_unavailable",
+      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+    },
+    {
+      "game_key": "the_minish_cap",
+      "game": "The Minish Cap",
+      "platform": "GBA",
+      "world": "tmc",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/tmc/client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "wario_land",
+      "game": "Wario Land",
+      "platform": "GB",
+      "world": "wl",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/wl/Client.py",
+      "status": "runtime_unavailable",
+      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+    },
+    {
+      "game_key": "wario_land_4",
+      "game": "Wario Land 4",
+      "platform": "GBA",
+      "world": "wl4",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/wl4/client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "donkey_kong_64",
+      "game": "Donkey Kong 64",
+      "platform": "N64",
+      "world": "dk64",
+      "wrapper": "module",
+      "client_file": "worlds/dk64/archipelago/DK64Client.py",
+      "status": "enabled",
+      "module": "worlds.dk64.archipelago.DK64Client",
+      "requires": [
+        "game-specific connector/module runtime"
+      ]
+    },
+    {
+      "game_key": "ocarina_of_time",
+      "game": "Ocarina of Time",
+      "platform": "N64",
+      "world": "oot",
+      "wrapper": "oot",
+      "client_file": "worlds/oot/Client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "a_link_between_worlds",
+      "game": "A Link Between Worlds",
+      "platform": "3DS",
+      "world": "albw",
+      "wrapper": "module",
+      "client_file": "worlds/albw/Client.py",
+      "status": "enabled",
+      "module": "worlds.albw.Client",
+      "requires": [
+        "game-specific connector/module runtime"
+      ]
+    },
+    {
+      "game_key": "links_awakening_dx",
+      "game": "Link's Awakening DX",
+      "platform": "GBC",
+      "world": "ladx_beta",
+      "wrapper": "module",
+      "client_file": "worlds/ladx_beta/LinksAwakeningClient.py",
+      "status": "runtime_unavailable",
+      "module": "worlds.ladx_beta.LinksAwakeningClient",
+      "requires": [
+        "game-specific connector/module runtime"
+      ],
+      "memory_bridge": "retroarch_udp",
+      "retroarch_port": 55355,
+      "pass_patch": false,
+      "pass_slot": false,
+      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+    },
+    {
+      "game_key": "mario_kart_double_dash",
+      "game": "Mario Kart: Double Dash!!",
+      "platform": "GameCube",
+      "world": "mario_kart_double_dash",
+      "wrapper": "dolphin",
+      "client_file": "worlds/mario_kart_double_dash/mkdd_client.py",
+      "status": "enabled",
+      "module": "worlds.mario_kart_double_dash.mkdd_client",
+      "requires": [
+        "dolphin_memory_engine",
+        "running Dolphin process"
+      ]
+    },
+    {
+      "game_key": "metroid_prime",
+      "game": "Metroid Prime",
+      "platform": "GameCube",
+      "world": "metroidprime",
+      "wrapper": "dolphin",
+      "client_file": "worlds/metroidprime/MetroidPrimeClient.py",
+      "status": "enabled",
+      "module": "worlds.metroidprime.MetroidPrimeClient",
+      "requires": [
+        "dolphin_memory_engine",
+        "running Dolphin process"
+      ]
+    },
+    {
+      "game_key": "skyward_sword",
+      "game": "Skyward Sword",
+      "platform": "Wii",
+      "world": "ss",
+      "wrapper": "dolphin",
+      "client_file": "worlds/ss/SSClient.py",
+      "status": "enabled",
+      "module": "worlds.ss.SSClient",
+      "requires": [
+        "dolphin_memory_engine",
+        "running Dolphin process"
+      ]
+    },
+    {
+      "game_key": "super_mario_sunshine",
+      "game": "Super Mario Sunshine",
+      "platform": "GameCube",
+      "world": "sms",
+      "wrapper": "dolphin",
+      "client_file": "worlds/sms/SMSClient.py",
+      "status": "enabled",
+      "module": "worlds.sms.SMSClient",
+      "requires": [
+        "dolphin_memory_engine",
+        "running Dolphin process"
+      ]
+    },
+    {
+      "game_key": "the_wind_waker",
+      "game": "The Wind Waker",
+      "platform": "GameCube",
+      "world": "tww",
+      "wrapper": "dolphin",
+      "client_file": "worlds/tww/TWWClient.py",
+      "status": "enabled",
+      "module": "worlds.tww.TWWClient",
+      "requires": [
+        "dolphin_memory_engine",
+        "running Dolphin process"
+      ]
+    },
+    {
+      "game_key": "thousand_year_door",
+      "game": "Paper Mario: The Thousand-Year Door",
+      "platform": "GameCube",
+      "world": "ttyd",
+      "wrapper": "dolphin",
+      "client_file": "worlds/ttyd/TTYDClient.py",
+      "status": "enabled",
+      "module": "worlds.ttyd.TTYDClient",
+      "requires": [
+        "dolphin_memory_engine",
+        "running Dolphin process"
+      ]
+    },
+    {
+      "game_key": "twilight_princess",
+      "game": "The Legend of Zelda: Twilight Princess",
+      "platform": "GameCube/Wii",
+      "world": "tp",
+      "wrapper": "dolphin",
+      "client_file": "worlds/tp/TPClient.py",
+      "status": "enabled",
+      "module": "worlds.tp.TPClient",
+      "requires": [
+        "dolphin_memory_engine",
+        "running Dolphin process"
+      ]
+    },
+    {
+      "game_key": "luigis_mansion",
+      "game": "Luigi's Mansion",
+      "platform": "GameCube",
+      "world": "luigismansion",
+      "wrapper": "dolphin",
+      "client_file": "worlds/luigismansion/LMClient.py",
+      "status": "enabled",
+      "module": "worlds.luigismansion.LMClient",
+      "requires": [
+        "dolphin_memory_engine",
+        "running Dolphin process"
+      ]
+    },
+    {
+      "game_key": "paper_mario",
+      "game": "Paper Mario",
+      "platform": "N64",
+      "world": "papermario",
+      "wrapper": "bizhawk",
+      "client_file": "worlds/papermario/client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "star_fox_64",
+      "game": "Star Fox 64",
+      "platform": "N64",
+      "world": "star_fox_64",
+      "wrapper": "module",
+      "client_file": "worlds/star_fox_64/client.py",
+      "status": "enabled",
+      "module": "worlds.star_fox_64.client",
+      "requires": [
+        "game-specific N64 socket connector"
+      ]
+    },
+    {
+      "game_key": "tetris_attack",
+      "game": "Tetris Attack",
+      "platform": "SNES",
+      "world": "tetrisattack",
+      "wrapper": "sni",
+      "client_file": "worlds/tetrisattack/Client.py",
+      "status": "enabled"
+    },
+    {
+      "game_key": "majoras_mask",
+      "game": "Majora's Mask Recompiled",
+      "platform": "N64/PC",
+      "world": "mm_recomp",
+      "wrapper": "text",
+      "client_file": "worlds/mm_recomp/__init__.py",
+      "status": "generator_only"
+    },
+    {
+      "game_key": "secret_of_mana",
+      "game": "Secret of Mana",
+      "platform": "SNES",
+      "world": "som",
+      "wrapper": "web_ap_client",
+      "client_file": "third_party/upstream/ap-soeclient",
+      "status": "enabled",
+      "notes": "Uses the upstream Evermizer browser AP client through SekaiLink's web_ap_client wrapper; do not route through the generic Python SNI wrapper."
+    },
+    {
+      "game_key": "mega_man_battle_network_3",
+      "game": "Mega Man Battle Network 3",
+      "platform": "GBA",
+      "world": "mmbn3",
+      "wrapper": "mmbn3",
+      "client_file": "MMBN3Client.py",
+      "status": "runtime_unavailable",
+      "notes": "Temporarily unavailable until a dedicated MMBN3 tester can validate the MMBN3Client/connector bridge flow."
+    },
+    {
+      "game_key": "secret_of_evermore",
+      "game": "Secret of Evermore",
+      "platform": "SNES",
+      "world": "soe",
+      "wrapper": "web_ap_client",
+      "client_file": "third_party/upstream/ap-soeclient",
+      "status": "enabled",
+      "notes": "Uses the upstream Evermizer browser AP client through SekaiLink's web_ap_client wrapper."
+    },
+    {
+      "game_key": "super_mario_64",
+      "game": "Super Mario 64",
+      "platform": "N64/PC",
+      "world": "sm64ex",
+      "wrapper": "text",
+      "client_file": "worlds/sm64ex/__init__.py",
+      "status": "generator_only"
+    }
+  ],
+  "excluded": [
+    {
+      "game_key": "final_fantasy_vi",
+      "game": "Final Fantasy VI",
+      "platform": "SNES",
+      "world": "ffvi",
+      "reason": "No local APWorld source found from SekaiLink Client Core game assets during 2026-06-17 import pass."
+    }
+  ]
+}

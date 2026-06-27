@@ -1,0 +1,641 @@
+[
+    {
+        "name": "Level 5",
+        "overlay_background": "#66000000",
+        "children": [
+            {
+                "name": "5-1",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Iceberg 1 - Complete",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Iceberg 1 - Kogoesou",
+                        "item_count": 1,
+                        "access_rules": [
+                            "Burning"
+                        ]
+                    },
+                    {
+                        "name": "Stars",
+                        "chest_unopened_img": "images/StarLarge.png",
+                        "chest_opened_img": "images/StarLargeDim.png",
+                        "clear_as_group": false,
+                        "visibility_rules": ["Starsanity"],
+                        "access_rules": [],
+                        "item_count": 6
+                    },
+                    {
+                        "name": "Star 6",
+                        "ref": "5-1/Star 6/Star 6",
+                    },
+                    {
+                        "name": "Star 5",
+                        "ref": "5-1/Star 5/Star 5",
+                    },
+                    {
+                        "name": "Star 4",
+                        "ref": "5-1/Star 4/Star 4",
+                    },
+                    {
+                        "name": "Star 3",
+                        "ref": "5-1/Star 3/Star 3",
+                    },
+                    {
+                        "name": "Star 2",
+                        "ref": "5-1/Star 2/Star 2",
+                    },
+                    {
+                        "name": "Star 1",
+                        "ref": "5-1/Star 1/Star 1",
+                    },
+                ],
+                "map_locations": [
+                    {
+                        "map": "World5",
+                        "x": 68,
+                        "y": 149
+                    }
+                ]
+            },            
+            {
+                "name": "5-2",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Iceberg 2 - Complete",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Iceberg 2 - Samus",
+                        "item_count": 1,
+                        "access_rules": [
+                            "Ice"
+                        ]
+                    },
+                    {
+                        "name": "Stars",
+                        "chest_unopened_img": "images/StarLarge.png",
+                        "chest_opened_img": "images/StarLargeDim.png",
+                        "clear_as_group": false,
+                        "visibility_rules": ["Starsanity"],
+                        "access_rules": [],
+                        "item_count": 19
+                    },
+                    {
+                        "name": "Star 3",
+                        "ref": "5-2/Star 3/Star 3",
+                    },
+                    {
+                        "name": "Star 1",
+                        "ref": "5-2/Star 1/Star 1",
+                    },
+                    {
+                        "name": "Star 2",
+                        "ref": "5-2/Star 2/Star 2",
+                    },
+                    {
+                        "name": "Star 4",
+                        "ref": "5-2/Star 4/Star 4",
+                    },
+                    {
+                        "name": "Star 5",
+                        "ref": "5-2/Star 5/Star 5",
+                    },
+                    {
+                        "name": "Star 7",
+                        "ref": "5-2/Star 7/Star 7",
+                    },
+                    {
+                        "name": "Star 6",
+                        "ref": "5-2/Star 6/Star 6",
+                    },
+                    {
+                        "name": "Star 8",
+                        "ref": "5-2/Star 8/Star 8",
+                    },
+                    {
+                        "name": "Star 12",
+                        "ref": "5-2/Star 12/Star 12",
+                    },
+                    {
+                        "name": "Star 13",
+                        "ref": "5-2/Star 13/Star 13",
+                    },
+                    {
+                        "name": "Star 15 (Block)",
+                        "ref": "5-2/Star 15 (Block)/Star 15",
+                    },
+                    {
+                        "name": "Star 14 (Block)",
+                        "ref": "5-2/Star 14 (Block)/Star 14",
+                    },
+                    {
+                        "name": "Star 16 (Block)",
+                        "ref": "5-2/Star 16 (Block)/Star 16",
+                    },
+                    {
+                        "name": "Star 11",
+                        "ref": "5-2/Star 11/Star 11",
+                    },
+                    {
+                        "name": "Star 10",
+                        "ref": "5-2/Star 10/Star 10",
+                    },
+                    {
+                        "name": "Star 9",
+                        "ref": "5-2/Star 9/Star 9",
+                    },
+                    {
+                        "name": "Star 19 (Block)",
+                        "ref": "5-2/Star 19 (Block)/Star 19",
+                    },
+                    {
+                        "name": "Star 17 (Block)",
+                        "ref": "5-2/Star 17 (Block)/Star 17",
+                    },
+                    {
+                        "name": "Star 18 (Block)",
+                        "ref": "5-2/Star 18 (Block)/Star 18",
+                    },
+                ],
+                "map_locations": [
+                    {
+                        "map": "World5",
+                        "x": 92,
+                        "y": 149
+                    }
+                ]
+            },            
+            {
+                "name": "5-3",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Iceberg 3 - Complete",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Iceberg 3 - Chef Kawasaki",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Iceberg 3 - Maxim Tomato (Ceiling)",
+                        "chest_unopened_img": "images/MaximTomato.png",
+                        "chest_opened_img": "images/MaximTomatoDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules": [
+                        ]
+                    },
+                    {
+                        "name": "Stars",
+                        "chest_unopened_img": "images/StarLarge.png",
+                        "chest_opened_img": "images/StarLargeDim.png",
+                        "clear_as_group": false,
+                        "visibility_rules": ["Starsanity"],
+                        "access_rules": [],
+                        "item_count": 21
+                    },
+                    {
+                        "name": "Star 1",
+                        "ref": "5-3/Star 1/Star 1",
+                    },
+                    {
+                        "name": "Star 2",
+                        "ref": "5-3/Star 2/Star 2",
+                    },
+                    {
+                        "name": "Star 3",
+                        "ref": "5-3/Star 3/Star 3",
+                    },
+                    {
+                        "name": "Star 7",
+                        "ref": "5-3/Star 7/Star 7",
+                    },
+                    {
+                        "name": "Star 4",
+                        "ref": "5-3/Star 4/Star 4",
+                    },
+                    {
+                        "name": "Star 8",
+                        "ref": "5-3/Star 8/Star 8",
+                    },
+                    {
+                        "name": "Star 9",
+                        "ref": "5-3/Star 9/Star 9",
+                    },
+                    {
+                        "name": "Star 5",
+                        "ref": "5-3/Star 5/Star 5",
+                    },
+                    {
+                        "name": "Star 10",
+                        "ref": "5-3/Star 10/Star 10",
+                    },
+                    {
+                        "name": "Star 6",
+                        "ref": "5-3/Star 6/Star 6",
+                    },
+                    {
+                        "name": "Star 15",
+                        "ref": "5-3/Star 15/Star 15",
+                    },
+                    {
+                        "name": "Star 16",
+                        "ref": "5-3/Star 16/Star 16",
+                    },
+                    {
+                        "name": "Star 17",
+                        "ref": "5-3/Star 17/Star 17",
+                    },
+                    {
+                        "name": "Star 13",
+                        "ref": "5-3/Star 13/Star 13",
+                    },
+                    {
+                        "name": "Star 14",
+                        "ref": "5-3/Star 14/Star 14",
+                    },
+                    {
+                        "name": "Star 11",
+                        "ref": "5-3/Star 11/Star 11",
+                    },
+                    {
+                        "name": "Star 12",
+                        "ref": "5-3/Star 12/Star 12",
+                    },
+                    {
+                        "name": "Star 18",
+                        "ref": "5-3/Star 18/Star 18",
+                    },
+                    {
+                        "name": "Star 20",
+                        "ref": "5-3/Star 20/Star 20",
+                    },
+                    {
+                        "name": "Star 21",
+                        "ref": "5-3/Star 21/Star 21",
+                    },
+                    {
+                        "name": "Star 19",
+                        "ref": "5-3/Star 19/Star 19",
+                    },
+                ],
+                "map_locations": [
+                    {
+                        "map": "World5",
+                        "x": 116,
+                        "y": 149
+                    }
+                ]
+            },            
+            {
+                "name": "5-4",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Iceberg 4 - Complete",
+                        "item_count": 1,
+                        "access_rules":[
+                            "Burning"
+                        ]
+                    },
+                    {
+                        "name": "Iceberg 4 - Name",
+                        "item_count": 1,
+                        "access_rules": [
+                            "Coo,ChuChu,Burning"
+                        ]
+                    },
+                    {
+                        "name": "Stars",
+                        "chest_unopened_img": "images/StarLarge.png",
+                        "chest_opened_img": "images/StarLargeDim.png",
+                        "clear_as_group": false,
+                        "visibility_rules": ["Starsanity"],
+                        "access_rules": ["Burning"],
+                        "item_count": 3
+                    },
+                    {
+                        "name": "Star 1",
+                        "ref": "5-4/Star 1/Star 1",
+                    },
+                    {
+                        "name": "Star 2",
+                        "ref": "5-4/Star 2/Star 2",
+                    },
+                    {
+                        "name": "Star 3",
+                        "ref": "5-4/Star 3/Star 3",
+                    },
+                ],
+                "map_locations": [
+                    {
+                        "map": "World5",
+                        "x": 140,
+                        "y": 149
+                    }
+                ]
+            },            
+            {
+                "name": "5-5",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Iceberg 5 - Complete",
+                        "item_count": 1,
+                        "access_rules":[
+                        ]
+                    },
+                    {
+                        "name": "Iceberg 5 - Shiro",
+                        "item_count": 1,
+                        "access_rules": [
+                            "Nago"
+                        ]
+                    },
+                    {
+                        "name": "Iceberg 5 - 1-Up (Boulder)",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules":[
+                        ]
+                    },
+                    {
+                        "name": "Iceberg 5 - 1-Up (Floor)",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules":[
+                        ]
+                    },
+                    {
+                        "name": "Iceberg 5 - 1-Up (Peloo)",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules":[
+                        ]
+                    },
+                    {
+                        "name": "Stars",
+                        "chest_unopened_img": "images/StarLarge.png",
+                        "chest_opened_img": "images/StarLargeDim.png",
+                        "clear_as_group": false,
+                        "visibility_rules": ["Starsanity"],
+                        "access_rules": [],
+                        "item_count": 34
+                    },
+                    {
+                        "name": "Star 1",
+                        "ref": "5-5/Star 1/Star 1",
+                    },
+                    {
+                        "name": "Star 2",
+                        "ref": "5-5/Star 2/Star 2",
+                    },
+                    {
+                        "name": "Star 3",
+                        "ref": "5-5/Star 3/Star 3",
+                    },
+                    {
+                        "name": "Star 4",
+                        "ref": "5-5/Star 4/Star 4",
+                    },
+                    {
+                        "name": "Star 5",
+                        "ref": "5-5/Star 5/Star 5",
+                    },
+                    {
+                        "name": "Star 6",
+                        "ref": "5-5/Star 6/Star 6",
+                    },
+                    {
+                        "name": "Star 7",
+                        "ref": "5-5/Star 7/Star 7",
+                    },
+                    {
+                        "name": "Star 8",
+                        "ref": "5-5/Star 8/Star 8",
+                    },
+                    {
+                        "name": "Star 9",
+                        "ref": "5-5/Star 9/Star 9",
+                    },
+                    {
+                        "name": "Star 10",
+                        "ref": "5-5/Star 10/Star 10",
+                    },
+                    {
+                        "name": "Star 11",
+                        "ref": "5-5/Star 11/Star 11",
+                    },
+                    {
+                        "name": "Star 12",
+                        "ref": "5-5/Star 12/Star 12",
+                    },
+                    {
+                        "name": "Star 13",
+                        "ref": "5-5/Star 13/Star 13",
+                    },
+                    {
+                        "name": "Star 14",
+                        "ref": "5-5/Star 14/Star 14",
+                    },
+                    {
+                        "name": "Star 15",
+                        "ref": "5-5/Star 15/Star 15",
+                    },
+                    {
+                        "name": "Star 16",
+                        "ref": "5-5/Star 16/Star 16",
+                    },
+                    {
+                        "name": "Star 17",
+                        "ref": "5-5/Star 17/Star 17",
+                    },
+                    {
+                        "name": "Star 18",
+                        "ref": "5-5/Star 18/Star 18",
+                    },
+                    {
+                        "name": "Star 20",
+                        "ref": "5-5/Star 20/Star 20",
+                    },
+                    {
+                        "name": "Star 19",
+                        "ref": "5-5/Star 19/Star 19",
+                    },
+                    {
+                        "name": "Star 24",
+                        "ref": "5-5/Star 24/Star 24",
+                    },
+                    {
+                        "name": "Star 21",
+                        "ref": "5-5/Star 21/Star 21",
+                    },
+                    {
+                        "name": "Star 23",
+                        "ref": "5-5/Star 23/Star 23",
+                    },
+                    {
+                        "name": "Star 22",
+                        "ref": "5-5/Star 22/Star 22",
+                    },
+                    {
+                        "name": "Star 25",
+                        "ref": "5-5/Star 25/Star 25",
+                    },
+                    {
+                        "name": "Star 33",
+                        "ref": "5-5/Star 33/Star 33",
+                    },
+                    {
+                        "name": "Star 34",
+                        "ref": "5-5/Star 34/Star 34",
+                    },
+                    {
+                        "name": "Star 32",
+                        "ref": "5-5/Star 32/Star 32",
+                    },
+                    {
+                        "name": "Star 31",
+                        "ref": "5-5/Star 31/Star 31",
+                    },
+                    {
+                        "name": "Star 29",
+                        "ref": "5-5/Star 29/Star 29",
+                    },
+                    {
+                        "name": "Star 28",
+                        "ref": "5-5/Star 28/Star 28",
+                    },
+                    {
+                        "name": "Star 30",
+                        "ref": "5-5/Star 30/Star 30",
+                    },
+                    {
+                        "name": "Star 27",
+                        "ref": "5-5/Star 27/Star 27",
+                    },
+                    {
+                        "name": "Star 26",
+                        "ref": "5-5/Star 26/Star 26",
+                    },
+                ],
+                "map_locations": [
+                    {
+                        "map": "World5",
+                        "x": 164,
+                        "y": 149
+                    }
+                ]
+            },            
+            {
+                "name": "5-6",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Iceberg 6 - Complete",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Iceberg 6 - Angel",
+                        "item_count": 1,
+                        "access_rules":[
+                            "Burning,Stone,Ice,Needle,Clean,Parasol,Spark,Cutter"
+                        ]
+                    },
+                    {
+                        "name": "Iceberg 6 - 1-Up (Middle)",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules":[
+                        ]
+                    },
+                    {
+                        "name": "Iceberg 6 - Maxim Tomato (Left)",
+                        "chest_unopened_img": "images/MaximTomato.png",
+                        "chest_opened_img": "images/MaximTomatoDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules":[
+                        ]
+                    },
+                    {
+                        "name": "Stars",
+                        "chest_unopened_img": "images/StarLarge.png",
+                        "chest_opened_img": "images/StarLargeDim.png",
+                        "clear_as_group": false,
+                        "visibility_rules": ["Starsanity"],
+                        "access_rules": [],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Star 1 (right)",
+                        "ref": "5-6/Star 1 (right)/Star 1",
+                    },
+                ],
+                "map_locations": [
+                    {
+                        "map": "World5",
+                        "x": 188,
+                        "y": 149
+                    }
+                ]
+            },
+            {
+                "name": "5-7",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Iceberg - Boss (Dedede) Purified",
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "World5",
+                        "x": 212,
+                        "y": 149
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -6,6 +6,9 @@ repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 blocked_patterns=(
   "/home/thelovenityjade/Projects/Sekaiemu-Libretro-Spike-Codex"
   "/home/thelovenityjade/DevSSD/sekailink-beta-3-final"
+  "/home/thelovenityjade/DevSSD/sekailink-canonical"
+  "/home/thelovenityjade/DevSSD/_sekailink_quarantine"
+  "/home/thelovenityjade/DevSSD/sekailink-legacy-quarantine-2026-05-17"
   "/home/thelovenityjade/SekaiLinkDev"
 )
 

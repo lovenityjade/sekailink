@@ -42,15 +42,31 @@ type RoomSessionLaunchOptions<TGeneration extends RoomServerGeneration> = {
   playerName?: string;
   playerAlias?: string;
   apGameName?: string;
+  trackerVariant?: string;
   playersByName: Map<string, number>;
   password?: string;
   forceTrackerVariantPrompt?: boolean;
   lobbyId?: string;
   onLaunchBegin?: () => void;
+  multiGameEntries?: Array<{
+    id?: string;
+    label?: string;
+    configName?: string;
+    downloadUrl?: string;
+    apGameName?: string;
+    slot?: string;
+    playerAlias?: string;
+    trackerVariant?: string;
+  }>;
 };
 
 const normalizeDownloadUrls = (downloadUrls?: string | string[]) =>
   Array.isArray(downloadUrls) ? downloadUrls : downloadUrls ? [downloadUrls] : [];
+
+const listKnownRoomSlots = (roomStatus?: RoomServerStatus | null) =>
+  (roomStatus?.players || [])
+    .map((player) => String(player?.name || "").trim())
+    .filter(Boolean);
 
 export const executeRoomSessionLaunch = async <TGeneration extends RoomServerGeneration>({
   downloadUrls,
@@ -62,11 +78,13 @@ export const executeRoomSessionLaunch = async <TGeneration extends RoomServerGen
   playerName,
   playerAlias,
   apGameName: preferredApGameName,
+  trackerVariant,
   playersByName,
   password,
   forceTrackerVariantPrompt,
   lobbyId,
   onLaunchBegin,
+  multiGameEntries,
 }: RoomSessionLaunchOptions<TGeneration>): Promise<RoomSessionLaunchOutcome> => {
   const urls = normalizeDownloadUrls(downloadUrls);
   const slot = String(playerName || "").trim();
@@ -95,6 +113,15 @@ export const executeRoomSessionLaunch = async <TGeneration extends RoomServerGen
   }
 
   const slotId = resolvePlayerSlotId(playersByName, slot);
+  const knownSlots = listKnownRoomSlots(roomLaunchContext.roomStatus);
+  const slotExists = knownSlots.some((knownSlot) => knownSlot === slot);
+  if (knownSlots.length > 0 && !slotExists) {
+    return {
+      ok: false,
+      surface: "toast",
+      message: `Invalid launch slot "${slot}". Expected: ${knownSlots.join(", ")}.`,
+    };
+  }
   const apGameName = String(preferredApGameName || "").trim() || resolvePlayerApGameName(roomLaunchContext.roomStatus, slotId, slot);
 
   const runSingleLaunch = async (downloadUrl: string) => {
@@ -106,6 +133,7 @@ export const executeRoomSessionLaunch = async <TGeneration extends RoomServerGen
       playerAlias,
       password,
       apGameName,
+      trackerVariant,
       forceTrackerVariantPrompt,
       chatBridge: lobbyId
         ? {
@@ -113,6 +141,7 @@ export const executeRoomSessionLaunch = async <TGeneration extends RoomServerGen
             lobbyId,
           }
         : undefined,
+      multiGameEntries,
     });
   };
 

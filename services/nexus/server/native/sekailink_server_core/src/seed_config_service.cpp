@@ -60,6 +60,59 @@ std::optional<double> number_rule(const nlohmann::json& rules, const char* key) 
   return rules.at(key).get<double>();
 }
 
+std::optional<double> number_rule_any(const nlohmann::json& rules, const char* primary, const char* alternate) {
+  if (const auto value = number_rule(rules, primary); value.has_value()) {
+    return value;
+  }
+  return number_rule(rules, alternate);
+}
+
+std::string effective_option_type(const SeedConfigOptionDefinition& definition) {
+  if (definition.default_value.is_object()) {
+    return "object";
+  }
+  if (definition.default_value.is_array()) {
+    return "array";
+  }
+  return definition.type;
+}
+
+nlohmann::json zero_like(const nlohmann::json& value) {
+  if (value.is_number()) return 0;
+  if (value.is_boolean()) return false;
+  if (value.is_array()) return nlohmann::json::array();
+  if (value.is_object()) return nlohmann::json::object();
+  if (value.is_null()) return nullptr;
+  return "";
+}
+
+nlohmann::json normalize_structured_option_value(const SeedConfigOptionDefinition& definition, const nlohmann::json& value) {
+  if (definition.default_value.is_object()) {
+    if (value.is_object()) return value;
+    if (value.is_string()) {
+      const auto selected = value.get<std::string>();
+      if (definition.default_value.contains(selected)) {
+        auto normalized = nlohmann::json::object();
+        for (const auto& [key, default_entry] : definition.default_value.items()) {
+          normalized[key] = zero_like(default_entry);
+        }
+        const auto& default_entry = definition.default_value.at(selected);
+        normalized[selected] = default_entry.is_number() && default_entry.get<double>() > 0 ? default_entry : nlohmann::json(1);
+        return normalized;
+      }
+    }
+    return definition.default_value;
+  }
+  if (definition.default_value.is_array()) {
+    if (value.is_array()) return value;
+    if (value.is_string() && !value.get<std::string>().empty()) {
+      return nlohmann::json::array({value});
+    }
+    return definition.default_value;
+  }
+  return value;
+}
+
 }  // namespace
 
 SeedConfigValidationResult validate_seed_config_values(
@@ -97,44 +150,47 @@ SeedConfigValidationResult validate_seed_config_values(
     const auto& definition = *it->second;
     seen.insert(definition.option_key);
 
+    const auto normalized_value = normalize_structured_option_value(definition, value);
+    const auto effective_type = effective_option_type(definition);
+
     bool type_ok = false;
-    if (definition.type == "string") {
-      type_ok = value.is_string();
-    } else if (definition.type == "integer") {
-      type_ok = is_integer_number(value);
-    } else if (definition.type == "number") {
-      type_ok = value.is_number();
-    } else if (definition.type == "boolean") {
-      type_ok = value.is_boolean();
-    } else if (definition.type == "enum") {
-      type_ok = choice_allowed(definition, value);
-    } else if (definition.type == "array") {
-      type_ok = value.is_array();
-    } else if (definition.type == "object") {
-      type_ok = value.is_object();
+    if (effective_type == "string") {
+      type_ok = normalized_value.is_string();
+    } else if (effective_type == "integer") {
+      type_ok = is_integer_number(normalized_value);
+    } else if (effective_type == "number") {
+      type_ok = normalized_value.is_number();
+    } else if (effective_type == "boolean") {
+      type_ok = normalized_value.is_boolean();
+    } else if (effective_type == "enum") {
+      type_ok = choice_allowed(definition, normalized_value);
+    } else if (effective_type == "array") {
+      type_ok = normalized_value.is_array();
+    } else if (effective_type == "object") {
+      type_ok = normalized_value.is_object();
     } else {
-      append_issue(result.issues, definition.option_key, "unsupported_type", definition.type);
+      append_issue(result.issues, definition.option_key, "unsupported_type", effective_type);
       continue;
     }
 
     if (!type_ok) {
-      append_issue(result.issues, definition.option_key, "invalid_type", "value does not match option type " + definition.type);
+      append_issue(result.issues, definition.option_key, "invalid_type", "value does not match option type " + effective_type);
       continue;
     }
-    if (definition.type == "integer" || definition.type == "number") {
-      const auto numeric = value.get<double>();
-      const auto min = number_rule(definition.validation_rules, "range_start");
-      const auto max = number_rule(definition.validation_rules, "range_end");
+    if (effective_type == "integer" || effective_type == "number") {
+      const auto numeric = normalized_value.get<double>();
+      const auto min = number_rule_any(definition.validation_rules, "range_start", "minimum");
+      const auto max = number_rule_any(definition.validation_rules, "range_end", "maximum");
       if (min.has_value() && numeric < *min) {
-        append_issue(result.issues, definition.option_key, "below_minimum", "value is below APWorld range_start");
+        append_issue(result.issues, definition.option_key, "below_minimum", "value is below APWorld minimum");
         continue;
       }
       if (max.has_value() && numeric > *max) {
-        append_issue(result.issues, definition.option_key, "above_maximum", "value is above APWorld range_end");
+        append_issue(result.issues, definition.option_key, "above_maximum", "value is above APWorld maximum");
         continue;
       }
     }
-    result.canonical_values[definition.option_key] = value;
+    result.canonical_values[definition.option_key] = normalized_value;
   }
 
   for (const auto& definition : definitions) {
@@ -189,7 +245,7 @@ std::string export_seed_config_yaml(
     if (it == canonical_values.end()) {
       continue;
     }
-    out << definition.yaml_key << ": " << yaml_scalar(*it) << "\n";
+    out << definition.yaml_key << ": " << yaml_scalar(normalize_structured_option_value(definition, *it)) << "\n";
   }
   return out.str();
 }

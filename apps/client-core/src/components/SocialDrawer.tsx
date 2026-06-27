@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { apiAssetUrl, apiFetch, isUsableAvatarUrl } from "../services/api";
 import { useSfx } from "../hooks/useSfx";
-import { emitToast } from "@/services/toast";
+import { emitToast, SOCIAL_OPEN_DM_EVENT } from "@/services/toast";
 import { useI18n } from "../i18n";
+import { isPresenceOnline, normalizePresenceStatus } from "../services/socialClient";
 
 interface SocialDrawerProps {
   open: boolean;
@@ -14,6 +15,7 @@ interface Friend {
   display_name: string;
   avatar_url?: string;
   status?: string;
+  presence_status?: string;
   is_online?: boolean;
 }
 
@@ -57,6 +59,19 @@ const SocialDrawer: React.FC<SocialDrawerProps> = ({ open, onClose }) => {
 
   const normalizeAvatar = useCallback((value?: string) => {
     return isUsableAvatarUrl(value) ? apiAssetUrl(value) : "";
+  }, []);
+
+  const friendStatusLabel = useCallback((status?: string) => {
+    const normalized = normalizePresenceStatus(status, "offline");
+    if (normalized === "online") return t("social.status.online");
+    if (normalized === "dnd" || normalized === "busy" || normalized === "afk") return t("social.status.dnd");
+    return t("social.status.offline");
+  }, [t]);
+
+  const friendStatusClass = useCallback((status?: string) => {
+    const normalized = normalizePresenceStatus(status, "offline");
+    if (normalized === "dnd" || normalized === "busy" || normalized === "afk") return "dnd";
+    return normalized === "online" ? "online" : "offline";
   }, []);
 
   const normalizeDirectMessages = useCallback((rawMessages: any[], conversationId: string): DirectMessage[] => {
@@ -106,15 +121,22 @@ const SocialDrawer: React.FC<SocialDrawerProps> = ({ open, onClose }) => {
       if (!res.ok) return;
       const data = await res.json();
       const list = Array.isArray(data.friends) ? data.friends : [];
-      setFriends(list.map((friend: Friend) => ({ ...friend, avatar_url: normalizeAvatar(friend.avatar_url) })));
+      setFriends(list.map((friend: Friend) => {
+        const status = normalizePresenceStatus(friend?.presence_status ?? friend?.status ?? (friend?.is_online ? "online" : "offline"), "offline");
+        return {
+          ...friend,
+          status,
+          presence_status: status,
+          avatar_url: normalizeAvatar(friend.avatar_url),
+        };
+      }));
       const nextMap = new Map<string, string>();
       const nextSeen = new Map<string, number>();
       const now = Date.now();
       for (const friend of list) {
         const userId = String(friend?.user_id || "").trim();
         if (!userId) continue;
-        const statusRaw = String(friend?.status || (friend?.is_online ? "online" : "offline")).toLowerCase();
-        const status = statusRaw === "online" || statusRaw === "dnd" ? statusRaw : "offline";
+        const status = normalizePresenceStatus(friend?.presence_status ?? friend?.status ?? (friend?.is_online ? "online" : "offline"), "offline");
         nextMap.set(userId, status);
         nextSeen.set(userId, now);
       }
@@ -187,8 +209,21 @@ const SocialDrawer: React.FC<SocialDrawerProps> = ({ open, onClose }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ user_id: userId })
     });
-    loadUnread();
+    setUnreadCount((prev) => Math.max(0, prev - 1));
+    void loadUnread();
   }, [loadUnread, normalizeDirectMessages, play]);
+
+  useEffect(() => {
+    const onOpenDm = (event: Event) => {
+      const detail = (event as CustomEvent<{ userId?: string; name?: string }>).detail || {};
+      const userId = String(detail.userId || "").trim();
+      if (!userId) return;
+      const friend = friends.find((entry) => entry.user_id === userId);
+      void openConversation(userId, String(detail.name || friend?.display_name || userId));
+    };
+    window.addEventListener(SOCIAL_OPEN_DM_EVENT, onOpenDm as EventListener);
+    return () => window.removeEventListener(SOCIAL_OPEN_DM_EVENT, onOpenDm as EventListener);
+  }, [friends, openConversation]);
 
   const refreshConversation = useCallback(async () => {
     if (!activeConversationRef.current || !pmOpen) return;
@@ -203,7 +238,8 @@ const SocialDrawer: React.FC<SocialDrawerProps> = ({ open, onClose }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id: userId })
       });
-      loadUnread();
+      setUnreadCount((prev) => Math.max(0, prev - 1));
+      void loadUnread();
     } catch {
       // Keep the current local conversation visible if polling misses once.
     }
@@ -275,7 +311,7 @@ const SocialDrawer: React.FC<SocialDrawerProps> = ({ open, onClose }) => {
     const badge = document.getElementById("skl-friends-badge");
     const count = document.getElementById("skl-friends-count");
     if (count) {
-      const online = friends.filter((friend) => friend.status === "online").length;
+      const online = friends.filter((friend) => isPresenceOnline(friend.status)).length;
       count.textContent = `${online}/${friends.length}`;
     }
     if (badge) {
@@ -303,7 +339,7 @@ const SocialDrawer: React.FC<SocialDrawerProps> = ({ open, onClose }) => {
     return source ? source.slice(0, 1).toUpperCase() : "?";
   }, [activeConversationName]);
 
-  const onlineCount = useMemo(() => friends.filter((friend) => friend.status === "online").length, [friends]);
+  const onlineCount = useMemo(() => friends.filter((friend) => isPresenceOnline(friend.status)).length, [friends]);
 
   return (
     <>
@@ -349,8 +385,8 @@ const SocialDrawer: React.FC<SocialDrawerProps> = ({ open, onClose }) => {
                   <div className="skl-friend-info">
                     <div className="skl-friend-name">{friend.display_name}</div>
                     <div className="skl-friend-status">
-                      <span className={`skl-status-dot ${friend.status || "offline"}`}></span>
-                      {friend.status === "online" ? t("social.status.online") : friend.status === "dnd" ? t("social.status.dnd") : t("social.status.offline")}
+                      <span className={`skl-status-dot ${friendStatusClass(friend.status)}`}></span>
+                      {friendStatusLabel(friend.status)}
                     </div>
                   </div>
                   <div className="skl-friend-actions">

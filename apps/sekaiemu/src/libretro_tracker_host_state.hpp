@@ -20,6 +20,7 @@ std::filesystem::path ResolveTrackerSnapshotPathForHost(const HostOptions& optio
 std::filesystem::path ResolveTrackerCommandLogPathForHost(const HostOptions& options,
                                                           const SklmiCompanionRuntime& runtime);
 nlohmann::json BuildTrackerErrorSnapshot(std::string code, std::string message);
+nlohmann::json BuildTrackerLoadingSnapshot(std::string message);
 void RefreshTrackerAssetResolverForHost(const HostOptions& options,
                                         const std::optional<TrackerBundle>& tracker_bundle,
                                         const TrackerRuntime* tracker_runtime,

@@ -483,30 +483,37 @@ body.app-ui {
 
 .skl-auth-web-links {
     display: inline-flex;
-    gap: 10px;
+    gap: 18px;
     align-items: center;
     justify-content: center;
     color: rgba(200, 255, 224, 0.42);
     font-size: 13px;
+    margin-top: 2px;
     position: relative;
     z-index: 1;
     -webkit-app-region: no-drag;
 }
 
 .skl-auth-web-links button {
-    border: 0;
-    padding: 0;
-    background: transparent;
+    border: 1px solid rgba(0, 255, 200, 0.34);
+    border-radius: 999px;
+    padding: 8px 18px;
+    background: rgba(0, 255, 200, 0.045);
     color: var(--accent);
     font: inherit;
     font-weight: 700;
     cursor: pointer;
     text-decoration: none;
+    min-width: 142px;
+    transition: border-color 0.16s ease, color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
 }
 
 .skl-auth-web-links button:hover {
+    border-color: rgba(0, 255, 200, 0.62);
+    background: rgba(0, 255, 200, 0.09);
     color: var(--accent-2);
-    text-decoration: underline;
+    box-shadow: 0 0 18px rgba(0, 255, 200, 0.1);
+    text-decoration: none;
 }
 
 .skl-solo-mode-card {

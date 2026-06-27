@@ -13,9 +13,10 @@ export default function CreateLobbyModal({ onClose, onCreateSuccess }: CreateLob
   const [roomName, setRoomName] = useState('');
   const [description, setDescription] = useState('');
   const [password, setPassword] = useState('');
-  const [maxPlayers, setMaxPlayers] = useState('50');
+  const [maxPlayers, setMaxPlayers] = useState('5');
   const [spoiler, setSpoiler] = useState('off');
   const [itemCheat, setItemCheat] = useState(false);
+  const [asynchronous, setAsynchronous] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
 
@@ -30,6 +31,7 @@ export default function CreateLobbyModal({ onClose, onCreateSuccess }: CreateLob
       maxPlayers,
       spoiler,
       itemCheat,
+      asynchronous,
     });
     try {
       const result = await createLobby({
@@ -39,6 +41,7 @@ export default function CreateLobbyModal({ onClose, onCreateSuccess }: CreateLob
         max_players: maxPlayers,
         spoiler,
         item_cheat: itemCheat,
+        asynchronous,
       });
       onClose();
       onCreateSuccess?.(result.lobbyId, name);
@@ -166,6 +169,30 @@ export default function CreateLobbyModal({ onClose, onCreateSuccess }: CreateLob
                 </select>
               </div>
             </div>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-semibold text-[#e6edf3] mb-3">LOBBY LIFETIME</h3>
+            <button
+              type="button"
+              onClick={() => setAsynchronous((value) => !value)}
+              className={`w-full p-4 border-2 rounded-lg text-left transition-colors ${
+                asynchronous ? 'border-[#aa96da] bg-[#aa96da]/10' : 'border-[#2a2b30] bg-[#0d1117] hover:border-[#aa96da]'
+              }`}
+            >
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <div className="font-semibold text-white">Asynchronous</div>
+                  <p className="mt-1 text-xs text-[#8e8f94]">
+                    Active lobbies expire after inactivity. Async lobbies stay until the host closes them or every participant reaches goal.
+                  </p>
+                  <p className="mt-2 text-xs text-[#aa96da]">Patreon Tier 2/3 gate will be enforced by Nexus.</p>
+                </div>
+                <div className={`w-12 h-6 border-2 transition-all ${asynchronous ? 'bg-[#aa96da] border-[#aa96da]' : 'bg-[#2a2b30] border-[#2a2b30]'}`}>
+                  <div className={`mt-0.5 w-4 h-4 bg-[#0d1117] transition-all ${asynchronous ? 'ml-6' : 'ml-0.5'}`} />
+                </div>
+              </div>
+            </button>
           </div>
 
           {/* Host Tools */}

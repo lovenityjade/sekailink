@@ -1,0 +1,96 @@
+[
+    {
+        "name": "Crystals required for Great Palace",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 6,
+        "increment": 1,
+        "initial_quantity": 0,
+        "allow_disabled": true,
+        "img": "/images/items/crystal.png",
+        "overlay_background": "#000000",
+        "codes": "opt_crystals"
+    },
+    {
+        "name": "Candle Required",
+        "type": "progressive",
+        "loop": true,
+        "allow_disabled": false,
+        "initial_stage_idx": 1,
+        "stages": [
+            {
+                "name": "Candle is not required for Caves",
+                "img": "images/items/candle.png",
+                "img_mods": "@disabled",
+                "codes": "opt_candle, opt_candle_false"
+            },
+            {
+                "name": "Candle is required for Caves",
+                "img": "images/items/candle.png",
+                "codes": "opt_candle, opt_candle_true",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Cross Required",
+        "type": "progressive",
+        "loop": true,
+        "allow_disabled": false,
+        "initial_stage_idx": 1,
+        "stages": [
+            {
+                "name": "Cross is not required for Old Kasuto or Death Valley",
+                "img": "images/items/cross.png",
+                "img_mods": "@disabled",
+                "codes": "opt_cross, opt_cross_false"
+            },
+            {
+                "name": "Cross is required for Old Kasuto or Death Valley",
+                "img": "images/items/cross.png",
+                "codes": "opt_cross, opt_cross_true",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Early Boulder",
+        "type": "progressive",
+        "loop": true,
+        "allow_disabled": false,
+        "stages": [
+            {
+                "name": "Boulder is present",
+                "img": "images/items/boulder.png",
+                "codes": "opt_boulder, opt_boulder_false"
+            },
+            {
+                "name": "Boulder is removed",
+                "img": "images/items/boulder.png",
+                "codes": "opt_boulder, opt_boulder_true",
+                "img_mods": "@disabled",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Better Boots",
+        "type": "progressive",
+        "loop": true,
+        "allow_disabled": false,
+        "stages": [
+            {
+                "name": "Better Boots is disabled",
+                "img": "images/items/boots.png",
+                "img_mods": "@disabled",
+                "codes": "opt_boots, opt_boots_false"
+            },
+            {
+                "name": "You are Jesus",
+                "img": "images/items/boots.png",
+                "codes": "opt_boots, opt_boots_true",
+                "inherit_codes": false
+            }
+        ]
+    }
+]

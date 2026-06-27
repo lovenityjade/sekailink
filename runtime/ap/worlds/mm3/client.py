@@ -731,37 +731,38 @@ class MegaMan3Client(BizHawkClient):
         await write(ctx.bizhawk_ctx, writes)
 
         new_checks = []
+        known_checks = ctx.checked_locations | ctx.locations_checked
+        server_locations = getattr(ctx, "server_locations", set()) or set()
+
+        def add_check(location_id: int) -> None:
+            if location_id in known_checks:
+                return
+            if server_locations and location_id not in server_locations:
+                return
+            new_checks.append(location_id)
+
         # check for locations
         for i in range(8):
             flag = 1 << i
             if robot_masters_defeated[0] & flag:
-                rbm_id = 0x0001 + i
-                if rbm_id not in ctx.checked_locations:
-                    new_checks.append(rbm_id)
-                wep_id = 0x0101 + i
-                if wep_id not in ctx.checked_locations:
-                    new_checks.append(wep_id)
+                add_check(0x0001 + i)
+                add_check(0x0101 + i)
             if doc_robo_defeated[0] & flag:
-                doc_id = 0x0010 + MM3_DOC_REMAP[i]
-                if doc_id not in ctx.checked_locations:
-                    new_checks.append(doc_id)
+                add_check(0x0010 + MM3_DOC_REMAP[i])
 
         for i in range(2):
             flag = 1 << i
             if rush_acquired[0] & flag:
-                itm_id = 0x0111 + i
-                if itm_id not in ctx.checked_locations:
-                    new_checks.append(itm_id)
+                add_check(0x0111 + i)
 
         for i in (0, 1, 2, 4):
             # Wily 4 does not have a boss check
             boss_id = 0x0009 + i
             if completed_stages[0] & (1 << i) != 0:
-                if boss_id not in ctx.checked_locations:
-                    new_checks.append(boss_id)
+                add_check(boss_id)
         
-        if completed_stages[0] & 0x80 and 0x000F not in ctx.checked_locations:
-            new_checks.append(0x000F)
+        if completed_stages[0] & 0x80:
+            add_check(0x000F)
 
         if bar_state[0] == 0x80:  # currently in stage
             if (prog_state[0] > 0x00 and current_stage[0] >= 8) or prog_state[0] == 0x00:
@@ -769,10 +770,9 @@ class MegaMan3Client(BizHawkClient):
                 # it doesn't clean the consumable table and he doesn't have any anyways
                 for consumable in MM3_CONSUMABLE_TABLE[current_stage[0]]:
                     consumable_info = MM3_CONSUMABLE_TABLE[current_stage[0]][consumable]
-                    if consumable not in ctx.checked_locations:
-                        is_checked = consumable_checks[consumable_info[0]] & (1 << consumable_info[1])
-                        if is_checked:
-                            new_checks.append(consumable)
+                    is_checked = consumable_checks[consumable_info[0]] & (1 << consumable_info[1])
+                    if is_checked:
+                        add_check(consumable)
 
         for new_check_id in new_checks:
             ctx.locations_checked.add(new_check_id)

@@ -1,0 +1,68 @@
+{
+  "game_id": "smz3",
+  "display_name": "SMZ3",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apsmz3"
+  ],
+  "patch_world_module": "worlds.smz3",
+  "ap_world": "smz3",
+  "required_roms": [
+    "alttp",
+    "super_metroid"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "sni",
+  "archipelago_client": {
+    "game_key": "smz3",
+    "world": "smz3",
+    "wrapper": "sni",
+    "client_file": "worlds/smz3/Client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "snes",
+    "ap_game": "SMZ3"
+  },
+  "tracker_pack_uid": "https://github.com/dessyreqt/smz3-ap-tracker",
+  "tracker_web_url": "",
+  "tracker_asset_regex": "\\.zip$",
+  "default_tracker_variant": "standard",
+  "tracker_status": "github_verified",
+  "multi_rom_requirements": {
+    "alttp": {
+      "display_name": "Zelda no Densetsu - Kamigami no Triforce (Japan) 1.0",
+      "extensions": [
+        ".sfc",
+        ".smc"
+      ],
+      "md5": [
+        "03a63945398191337e896e5771f77173"
+      ]
+    },
+    "super_metroid": {
+      "display_name": "Super Metroid (Japan, USA)",
+      "extensions": [
+        ".sfc",
+        ".smc"
+      ],
+      "md5": [
+        "21f3e98df4780ee1c667b84e57d88675"
+      ]
+    }
+  },
+  "compatibility_notes": "SMZ3 is a two-ROM patch flow: ALttP Japan 1.0 plus Super Metroid Japan/USA. Do not treat it as a single SMZ3 base ROM.",
+  "tracker_pack_path": "poptracker/packs/smz3/pack"
+}

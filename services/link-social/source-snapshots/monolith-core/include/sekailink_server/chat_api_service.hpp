@@ -27,6 +27,10 @@ struct ChatApiServiceConfig {
   std::string seed_config_host = "127.0.0.1";
   std::uint16_t seed_config_port = 19106;
   std::string seed_config_user_token;
+  std::string social_bots_host = "127.0.0.1";
+  std::uint16_t social_bots_port = 8095;
+  std::string social_bots_control_api_key;
+  std::string room_admin_tool_token;
   std::filesystem::path generation_handoff_root;
   std::vector<std::string> generation_handoff_command;
   std::filesystem::path sqlite_path;
@@ -81,6 +85,10 @@ class ChatApiService {
       const std::string& path,
       const std::optional<nlohmann::json>& body) const;
   [[nodiscard]] ChatApiHttpResponse forward_to_seed_config(
+      const std::string& method,
+      const std::string& path,
+      const std::optional<nlohmann::json>& body) const;
+  [[nodiscard]] ChatApiHttpResponse forward_to_social_bots(
       const std::string& method,
       const std::string& path,
       const std::optional<nlohmann::json>& body) const;

@@ -9,6 +9,7 @@
 
 #include <algorithm>
 #include <cctype>
+#include <cstdlib>
 #include <stdexcept>
 
 namespace sekailink_server {
@@ -273,6 +274,7 @@ int GenerationService::run_job_process(const GenerationJob& job) const {
     return 1;
   }
   if (pid == 0) {
+    ::setenv("SKIP_REQUIREMENTS_UPDATE", "1", 0);
     ::execvp(argv[0], argv.data());
     _exit(127);
   }

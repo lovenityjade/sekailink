@@ -1,0 +1,54 @@
+{
+  "game_id": "mega_man_battle_network_3",
+  "display_name": "Mega Man Battle Network 3",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apbn3"
+  ],
+  "patch_world_module": "worlds.mmbn3",
+  "ap_world": "mmbn3",
+  "required_roms": [
+    "mega_man_battle_network_3"
+  ],
+  "aliases": [
+    "mmbn3",
+    "megaman_battle_network_3",
+    "mega_man_battle_network_3_blue",
+    "mega_man_battle_network_3_blue_version"
+  ],
+  "client_mode": "mmbn3",
+  "ap_client": "mmbn3",
+  "lua_connector": "lua/connector.lua",
+  "archipelago_client": {
+    "game_key": "mega_man_battle_network_3",
+    "world": "mmbn3",
+    "wrapper": "mmbn3",
+    "client_file": "MMBN3Client.py",
+    "lua_connector": "connector_mmbn3.lua"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".gba"
+    ],
+    "md5": [
+      "6fe31df0144759b34ad666badaacc442"
+    ],
+    "sha1": [
+      "3d21905b6e860d39a00ba643779776de4c73c411"
+    ]
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "gba",
+    "ap_game": "Mega Man Battle Network 3"
+  },
+  "tracker_pack_uid": "local:MMBN3_AP_Tracker.zip",
+  "tracker_web_url": "",
+  "support_status": "not_available",
+  "availability_status": "unavailable_gba_pending_tester",
+  "compatibility_notes": "Temporarily unavailable until a dedicated MMBN3 tester can validate the MMBN3Client/connector bridge flow."
+}

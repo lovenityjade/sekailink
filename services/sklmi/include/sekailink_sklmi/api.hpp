@@ -269,6 +269,8 @@ struct WatchRule {
     std::string domain_id;
     std::uint64_t address = 0;
     std::uint64_t size = 1;
+    std::string dynamic_source;
+    std::optional<std::uint64_t> dynamic_flag_id;
     CompareOp compare = CompareOp::equals;
     std::uint64_t operand_u64 = 0;
     EventType event_type = EventType::location_checked;
@@ -312,6 +314,7 @@ struct InjectRule {
     std::uint64_t address = 0;
     std::uint64_t value_u64 = 0;
     std::uint64_t size = 1;
+    std::string dynamic_source;
     std::string event_key;
     std::string mapped_value;
     std::uint64_t item_id = 0;
@@ -325,6 +328,19 @@ struct CoreProfileManifest {
     std::vector<std::string> domain_ids;
 };
 
+struct ArchipelagoClientWrapperConfig {
+    bool enabled = false;
+    std::string game_key;
+    std::string game;
+    std::string platform;
+    std::string world;
+    std::string wrapper;
+    std::string module;
+    std::string client_file;
+    std::string status;
+    std::vector<std::string> dependency_hints;
+};
+
 struct BridgeManifest {
     std::string contract_version;
     std::string linkedworld_id;
@@ -334,6 +350,7 @@ struct BridgeManifest {
     std::string source_module;
     std::string module;
     CoreProfileManifest core_profile;
+    ArchipelagoClientWrapperConfig archipelago_client_wrapper;
     std::string state_file;
     std::uint64_t poll_interval_ms = 16;
     std::vector<WatchRule> checks;

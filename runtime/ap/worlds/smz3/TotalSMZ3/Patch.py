@@ -570,7 +570,7 @@ class Patch:
         self.patches.append((Snes(0x1C8000), self.stringTable.GetPaddedBytes()))
 
     def WritePlayerNames(self):
-        self.patches += [(0x385000 + (0 * 16), self.PlayerNameBytes("Archipelago"))]
+        self.patches += [(0x385000 + (0 * 16), self.PlayerNameBytes("Sekailink"))]
         self.patches += [(0x385000 + (id * 16), self.PlayerNameBytes(name)) for name, id in self.playerNames.items() if id < 256]
 
     def PlayerNameBytes(self, name: str):

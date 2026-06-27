@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <cstring>
 #include <iostream>
+#include <utility>
 
 namespace sekaiemu::spike {
 
@@ -30,6 +31,71 @@ std::uint8_t Expand5(std::uint16_t value) {
 
 std::uint8_t Expand6(std::uint16_t value) {
   return static_cast<std::uint8_t>((value * 255u) / 63u);
+}
+
+std::size_t BytesPerPixel(retro_pixel_format pixel_format) {
+  switch (pixel_format) {
+    case RETRO_PIXEL_FORMAT_RGB565:
+    case RETRO_PIXEL_FORMAT_0RGB1555:
+      return 2;
+    case RETRO_PIXEL_FORMAT_XRGB8888:
+    default:
+      return 4;
+  }
+}
+
+bool IsVisiblePixel(const std::uint8_t* source, retro_pixel_format pixel_format) {
+  if (pixel_format == RETRO_PIXEL_FORMAT_RGB565 || pixel_format == RETRO_PIXEL_FORMAT_0RGB1555) {
+    return ReadU16(source) != 0;
+  }
+  return (ReadU32(source) & 0x00ffffffu) != 0;
+}
+
+std::size_t CountVisiblePixels(const void* data,
+                               unsigned start_x,
+                               unsigned width,
+                               unsigned height,
+                               std::size_t pitch,
+                               retro_pixel_format pixel_format) {
+  if (!data || width == 0 || height == 0) {
+    return 0;
+  }
+  const auto bytes_per_pixel = BytesPerPixel(pixel_format);
+  const auto* rows = static_cast<const std::uint8_t*>(data);
+  std::size_t visible = 0;
+  for (unsigned y = 0; y < height; ++y) {
+    const auto* row = rows + static_cast<std::size_t>(y) * pitch;
+    for (unsigned x = 0; x < width; ++x) {
+      if (IsVisiblePixel(row + static_cast<std::size_t>(start_x + x) * bytes_per_pixel, pixel_format)) {
+        ++visible;
+      }
+    }
+  }
+  return visible;
+}
+
+unsigned ResolveSoftwareFrameWidth(const void* data,
+                                   unsigned callback_width,
+                                   unsigned height,
+                                   std::size_t pitch,
+                                   retro_pixel_format pixel_format) {
+  const auto bytes_per_pixel = BytesPerPixel(pixel_format);
+  if (!data || callback_width == 0 || height == 0 || bytes_per_pixel == 0) {
+    return callback_width;
+  }
+  const auto stride_width = static_cast<unsigned>(pitch / bytes_per_pixel);
+  if (stride_width <= callback_width || stride_width > 1024 || stride_width < callback_width * 2u) {
+    return callback_width;
+  }
+
+  const auto left_visible = CountVisiblePixels(data, 0, callback_width, height, pitch, pixel_format);
+  const auto right_visible = CountVisiblePixels(data, callback_width, callback_width, height, pitch, pixel_format);
+  const auto left_dark_threshold = static_cast<std::size_t>(callback_width) * height / 64u;
+  const auto right_visible_threshold = static_cast<std::size_t>(callback_width) * height / 128u;
+  if (left_visible <= left_dark_threshold && right_visible > right_visible_threshold) {
+    return callback_width * 2u;
+  }
+  return callback_width;
 }
 
 void ConvertSoftwareFrameToRgba(const void* data,
@@ -102,8 +168,41 @@ bool OpenGlVideoBackend::UploadSoftwareFrame(const void* data,
   }
 
   SDL_GL_MakeCurrent(window_, gl_context_);
-  if (geometry_.width != width || geometry_.height != height) {
-    geometry_.width = width;
+  const auto bytes_per_pixel = BytesPerPixel(geometry_.pixel_format);
+  const auto stride_width = bytes_per_pixel > 0 ? static_cast<unsigned>(pitch / bytes_per_pixel) : width;
+  if (stride_width > width &&
+      (!stride_probe_logged_ || stride_probe_sample_count_ < 8 || !stride_probe_visible_logged_)) {
+    const auto left_visible = CountVisiblePixels(data, 0, width, height, pitch, geometry_.pixel_format);
+    const auto right_visible = stride_width >= width * 2u
+      ? CountVisiblePixels(data, width, width, height, pitch, geometry_.pixel_format)
+      : 0u;
+    const bool has_visible_pixels = left_visible > 0 || right_visible > 0;
+    const bool should_log_sample = !stride_probe_logged_ || stride_probe_sample_count_ < 8 || has_visible_pixels;
+    if (should_log_sample) {
+      std::cerr << "[sekaiemu-libretro-spike] software frame stride probe callback="
+                << width << " stride_width=" << stride_width
+                << " height=" << height
+                << " pitch=" << pitch
+                << " left_visible=" << left_visible
+                << " right_visible=" << right_visible
+                << " sample=" << stride_probe_sample_count_ << "\n";
+    }
+    stride_probe_logged_ = true;
+    if (has_visible_pixels) {
+      stride_probe_visible_logged_ = true;
+    } else {
+      ++stride_probe_sample_count_;
+    }
+  }
+  const unsigned display_width = ResolveSoftwareFrameWidth(data, width, height, pitch, geometry_.pixel_format);
+  if (display_width != width && !stride_width_logged_) {
+    std::cerr << "[sekaiemu-libretro-spike] software frame widened from callback width "
+              << width << " to stride width " << display_width
+              << " pitch=" << pitch << "\n";
+    stride_width_logged_ = true;
+  }
+  if (geometry_.width != display_width || geometry_.height != height) {
+    geometry_.width = display_width;
     geometry_.height = height;
     DestroyCoreFramebufferResources();
   }
@@ -115,14 +214,14 @@ bool OpenGlVideoBackend::UploadSoftwareFrame(const void* data,
     return false;
   }
 
-  ConvertSoftwareFrameToRgba(data, width, height, pitch, geometry_.pixel_format, software_frame_rgba_);
+  ConvertSoftwareFrameToRgba(data, display_width, height, pitch, geometry_.pixel_format, software_frame_rgba_);
   glBindTexture(GL_TEXTURE_2D, core_color_texture_);
   glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
   glTexSubImage2D(GL_TEXTURE_2D,
                   0,
                   0,
                   0,
-                  static_cast<GLsizei>(width),
+                  static_cast<GLsizei>(display_width),
                   static_cast<GLsizei>(height),
                   GL_RGBA,
                   GL_UNSIGNED_BYTE,
@@ -243,8 +342,13 @@ bool OpenGlVideoBackend::ToggleFullscreen(std::string& error) {
   return true;
 }
 
+void OpenGlVideoBackend::SetImGuiDrawCallback(std::function<void()> callback) {
+  imgui_draw_callback_ = std::move(callback);
+  frame_ready_ = true;
+}
+
 void OpenGlVideoBackend::Present() {
-  if (!window_ || !gl_context_ || (!frame_ready_ && !overlay_ready_)) {
+  if (!window_ || !gl_context_ || (!frame_ready_ && !overlay_ready_ && !imgui_draw_callback_)) {
     return;
   }
 
@@ -269,6 +373,12 @@ void OpenGlVideoBackend::Present() {
   if (chat_overlay_ready_) {
     DrawChatOverlay();
   }
+  if (imgui_draw_callback_) {
+    std::string imgui_error;
+    if (imgui_runtime_.Initialize(window_, gl_context_, imgui_error)) {
+      imgui_runtime_.Render(imgui_draw_callback_);
+    }
+  }
   SDL_GL_SwapWindow(window_);
   frame_ready_ = false;
 }
@@ -280,6 +390,7 @@ void OpenGlVideoBackend::Shutdown() {
 
   overlay_renderer_.Destroy();
   chat_overlay_renderer_.Destroy();
+  imgui_runtime_.Shutdown();
   DestroyCoreFramebufferResources();
 
   if (hw_context_ready_ && hw_callback_.context_destroy) {
@@ -306,6 +417,7 @@ void OpenGlVideoBackend::Shutdown() {
   chat_overlay_ready_ = false;
   chat_overlay_pixels_dirty_ = false;
   chat_overlay_pixels_.clear();
+  imgui_draw_callback_ = nullptr;
 }
 
 bool OpenGlVideoBackend::SupportsHardwareContext(retro_hw_context_type context_type) const {
@@ -426,6 +538,13 @@ void OpenGlVideoBackend::ApplyWindowSizing(const VideoGeometry& geometry) {
 
   if (tracker_sidebar_enabled_ && !menu_visible_) {
     target_width += static_cast<int>(tracker_sidebar_width_);
+  }
+
+  int current_width = 0;
+  int current_height = 0;
+  SDL_GetWindowSize(window_, &current_width, &current_height);
+  if (current_width >= target_width && current_height >= target_height) {
+    return;
   }
 
   SDL_SetWindowSize(window_, target_width, target_height);

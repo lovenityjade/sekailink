@@ -1,0 +1,1086 @@
+[
+    {
+        "name": "Level 2",
+        "overlay_background": "#66000000",
+        "children": [
+            {
+                "name": "2-1",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Ripple Field 1 - Complete",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Ripple Field 1 - Kamuribana",
+                        "item_count": 1,
+                        "access_rules": [
+                            "Pitch,Clean"
+                        ]
+                    },
+                    {
+                        "name": "Stars",
+                        "chest_unopened_img": "images/StarLarge.png",
+                        "chest_opened_img": "images/StarLargeDim.png",
+                        "clear_as_group": false,
+                        "visibility_rules": ["Starsanity"],
+                        "access_rules": [],
+                        "item_count": 19
+                    },
+                    {
+                        "name": "Star 5",
+                        "ref": "2-1/Star 5/Star 5",
+                    },
+                    {
+                        "name": "Star 1",
+                        "ref": "2-1/Star 1/Star 1",
+                    },
+                    {
+                        "name": "Star 2",
+                        "ref": "2-1/Star 2/Star 2",
+                    },
+                    {
+                        "name": "Star 3",
+                        "ref": "2-1/Star 3/Star 3",
+                    },
+                    {
+                        "name": "Star 4",
+                        "ref": "2-1/Star 4/Star 4",
+                    },
+                    {
+                        "name": "Star 6",
+                        "ref": "2-1/Star 6/Star 6",
+                    },
+                    {
+                        "name": "Star 17",
+                        "ref": "2-1/Star 17/Star 17",
+                    },
+                    {
+                        "name": "Star 18",
+                        "ref": "2-1/Star 18/Star 18",
+                    },
+                    {
+                        "name": "Star 19",
+                        "ref": "2-1/Star 19/Star 19",
+                    },
+                    {
+                        "name": "Star 11",
+                        "ref": "2-1/Star 11/Star 11",
+                    },
+                    {
+                        "name": "Star 12",
+                        "ref": "2-1/Star 12/Star 12",
+                    },
+                    {
+                        "name": "Star 13",
+                        "ref": "2-1/Star 13/Star 13",
+                    },
+                    {
+                        "name": "Star 14",
+                        "ref": "2-1/Star 14/Star 14",
+                    },
+                    {
+                        "name": "Star 15",
+                        "ref": "2-1/Star 15/Star 15",
+                    },
+                    {
+                        "name": "Star 16",
+                        "ref": "2-1/Star 16/Star 16",
+                    },
+                    {
+                        "name": "Star 9",
+                        "ref": "2-1/Star 9/Star 9",
+                    },
+                    {
+                        "name": "Star 7",
+                        "ref": "2-1/Star 7/Star 7",
+                    },
+                    {
+                        "name": "Star 8",
+                        "ref": "2-1/Star 8/Star 8",
+                    },
+                    {
+                        "name": "Star 10",
+                        "ref": "2-1/Star 10/Star 10",
+                    },
+                ],
+                "map_locations": [
+                    {
+                        "map": "World2",
+                        "x": 68,
+                        "y": 149
+                    }
+                ]
+            },
+            {
+                "name": "2-2",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Ripple Field 2 - Complete",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Ripple Field 2 - Bakasa",
+                        "item_count": 1,
+                        "access_rules": [
+                            "Kine,Parasol","[Kine],Coo,Parasol"
+                        ]
+                    },
+                    {
+                        "name": "Ripple Field 2 - 1-Up (Currents)",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules": [
+                            "Kine"
+                        ]
+                    },
+                    {
+                        "name": "Ripple Field 2 - Maxim Tomato (Currents)",
+                        "chest_unopened_img": "images/MaximTomato.png",
+                        "chest_opened_img": "images/MaximTomatoDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules": [
+                            "Kine"
+                        ]
+                    },
+                    {
+                        "name": "Stars",
+                        "chest_unopened_img": "images/StarLarge.png",
+                        "chest_opened_img": "images/StarLargeDim.png",
+                        "clear_as_group": false,
+                        "visibility_rules": ["Starsanity"],
+                        "access_rules": ["Kine"],
+                        "item_count": 17
+                    },
+                    {
+                        "name": "Star 2",
+                        "ref": "2-2/Star 2/Star 2",
+                    },
+                    {
+                        "name": "Star 3",
+                        "ref": "2-2/Star 3/Star 3",
+                    },
+                    {
+                        "name": "Star 1",
+                        "ref": "2-2/Star 1/Star 1",
+                    },
+                    {
+                        "name": "Star 4",
+                        "ref": "2-2/Star 4/Star 4",
+                    },
+                    {
+                        "name": "Star 9",
+                        "ref": "2-2/Star 9/Star 9",
+                    },
+                    {
+                        "name": "Star 10",
+                        "ref": "2-2/Star 10/Star 10",
+                    },
+                    {
+                        "name": "Star 11",
+                        "ref": "2-2/Star 11/Star 11",
+                    },
+                    {
+                        "name": "Star 12",
+                        "ref": "2-2/Star 12/Star 12",
+                    },
+                    {
+                        "name": "Star 13",
+                        "ref": "2-2/Star 13/Star 13",
+                    },
+                    {
+                        "name": "Star 14",
+                        "ref": "2-2/Star 14/Star 14",
+                    },
+                    {
+                        "name": "Star 15",
+                        "ref": "2-2/Star 15/Star 15",
+                    },
+                    {
+                        "name": "Star 16",
+                        "ref": "2-2/Star 16/Star 16",
+                    },
+                    {
+                        "name": "Star 17 (Currents)",
+                        "ref": "2-2/Star 17 (Currents)/Star 17",
+                    },
+                    {
+                        "name": "Star 7",
+                        "ref": "2-2/Star 7/Star 7",
+                    },
+                    {
+                        "name": "Star 6",
+                        "ref": "2-2/Star 6/Star 6",
+                    },
+                    {
+                        "name": "Star 8",
+                        "ref": "2-2/Star 8/Star 8",
+                    },
+                    {
+                        "name": "Star 5",
+                        "ref": "2-2/Star 5/Star 5",
+                    },
+                ],
+                "map_locations": [
+                    {
+                        "map": "World2",
+                        "x": 92,
+                        "y": 149
+                    }
+                ]
+            },
+            {
+                "name": "2-3",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Ripple Field 3 - Complete",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Ripple Field 3 - Elieel",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Ripple Field 3 - 1-Up (Cutter | Spark)",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules": [
+                            "Cutter",
+                            "Spark"
+                        ]
+                    },
+                    {
+                        "name": "Ripple Field 3 - Maxim Tomato (Cove)",
+                        "chest_unopened_img": "images/MaximTomato.png",
+                        "chest_opened_img": "images/MaximTomatoDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules": [
+                        ]
+                    },
+                    {
+                        "name": "Stars",
+                        "chest_unopened_img": "images/StarLarge.png",
+                        "chest_opened_img": "images/StarLargeDim.png",
+                        "clear_as_group": false,
+                        "visibility_rules": ["Starsanity"],
+                        "access_rules": [],
+                        "item_count": 21
+                    },
+                    {
+                        "name": "Star 1",
+                        "ref": "2-3/Star 1/Star 1",
+                    },
+                    {
+                        "name": "Star 3",
+                        "ref": "2-3/Star 3/Star 3",
+                    },
+                    {
+                        "name": "Star 4",
+                        "ref": "2-3/Star 4/Star 4",
+                    },
+                    {
+                        "name": "Star 2",
+                        "ref": "2-3/Star 2/Star 2",
+                    },
+                    {
+                        "name": "Star 5 (Block)",
+                        "ref": "2-3/Star 5 (Block)/Star 5",
+                    },
+                    {
+                        "name": "Star 10",
+                        "ref": "2-3/Star 10/Star 10",
+                    },
+                    {
+                        "name": "Star 11",
+                        "ref": "2-3/Star 11/Star 11",
+                    },
+                    {
+                        "name": "Star 9",
+                        "ref": "2-3/Star 9/Star 9",
+                    },
+                    {
+                        "name": "Star 6",
+                        "ref": "2-3/Star 6/Star 6",
+                    },
+                    {
+                        "name": "Star 7",
+                        "ref": "2-3/Star 7/Star 7",
+                    },
+                    {
+                        "name": "Star 8",
+                        "ref": "2-3/Star 8/Star 8",
+                    },
+                    {
+                        "name": "Star 15 (bottom)",
+                        "ref": "2-3/Star 15 (bottom)/Star 15",
+                    },
+                    {
+                        "name": "Star 18 (bottom)",
+                        "ref": "2-3/Star 18 (bottom)/Star 18",
+                    },
+                    {
+                        "name": "Star 19",
+                        "ref": "2-3/Star 19/Star 19",
+                    },
+                    {
+                        "name": "Star 20",
+                        "ref": "2-3/Star 20/Star 20",
+                    },
+                    {
+                        "name": "Star 21",
+                        "ref": "2-3/Star 21/Star 21",
+                    },
+                    {
+                        "name": "Star 17 (Block)",
+                        "ref": "2-3/Star 17 (Block)/Star 17",
+                    },
+                    {
+                        "name": "Star 16 (Block)",
+                        "ref": "2-3/Star 16 (Block)/Star 16",
+                    },
+                    {
+                        "name": "Star 14",
+                        "ref": "2-3/Star 14/Star 14",
+                    },
+                    {
+                        "name": "Star 12",
+                        "ref": "2-3/Star 12/Star 12",
+                    },
+                    {
+                        "name": "Star 13",
+                        "ref": "2-3/Star 13/Star 13",
+                    },
+                ],
+                "map_locations": [
+                    {
+                        "map": "World2",
+                        "x": 116,
+                        "y": 149
+                    }
+                ]
+            },
+            {
+                "name": "2-4",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Ripple Field 4 - Complete",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Ripple Field 4 - Mama Toad",
+                        "item_count": 1,
+                        "access_rules": [
+                            "Needle"
+                        ]
+                    },
+                    {
+                        "name": "Ripple Field 4 - Maxim Tomato (Dark Room)",
+                        "chest_unopened_img": "images/MaximTomato.png",
+                        "chest_opened_img": "images/MaximTomatoDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ]
+                    },
+                    {
+                        "name": "Ripple Field 4 - 1-Up (Stone)",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules":[
+                            "Stone"
+                        ]
+                    },
+                    {
+                        "name": "Ripple Field 4 - Maxim Tomato (Stone)",
+                        "chest_unopened_img": "images/MaximTomato.png",
+                        "chest_opened_img": "images/MaximTomatoDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules":[
+                            "Stone"
+                        ]
+                    },
+                    {
+                        "name": "Stars",
+                        "chest_unopened_img": "images/StarLarge.png",
+                        "chest_opened_img": "images/StarLargeDim.png",
+                        "clear_as_group": false,
+                        "visibility_rules": ["Starsanity"],
+                        "access_rules": [],
+                        "item_count": 51
+                    },
+                    {
+                        "name": "Star 5",
+                        "ref": "2-4/Star 5/Star 5",
+                    },
+                    {
+                        "name": "Star 4",
+                        "ref": "2-4/Star 4/Star 4",
+                    },
+                    {
+                        "name": "Star 3",
+                        "ref": "2-4/Star 3/Star 3",
+                    },
+                    {
+                        "name": "Star 2",
+                        "ref": "2-4/Star 2/Star 2",
+                    },
+                    {
+                        "name": "Star 1",
+                        "ref": "2-4/Star 1/Star 1",
+                    },
+                    {
+                        "name": "Star 6",
+                        "ref": "2-4/Star 6/Star 6",
+                    },
+                    {
+                        "name": "Star 7",
+                        "ref": "2-4/Star 7/Star 7",
+                    },
+                    {
+                        "name": "Star 44 (Dark Room)",
+                        "ref": "2-4/Stars 44-51 (Dark Room)/Star 44",
+                    },
+                    {
+                        "name": "Star 45 (Dark Room)",
+                        "ref": "2-4/Stars 44-51 (Dark Room)/Star 45",
+                    },
+                    {
+                        "name": "Star 46 (Dark Room)",
+                        "ref": "2-4/Stars 44-51 (Dark Room)/Star 46",
+                    },
+                    {
+                        "name": "Star 47 (Dark Room)",
+                        "ref": "2-4/Stars 44-51 (Dark Room)/Star 47",
+                    },
+                    {
+                        "name": "Star 48 (Dark Room)",
+                        "ref": "2-4/Stars 44-51 (Dark Room)/Star 48",
+                    },
+                    {
+                        "name": "Star 49 (Dark Room)",
+                        "ref": "2-4/Stars 44-51 (Dark Room)/Star 49",
+                    },
+                    {
+                        "name": "Star 50 (Dark Room)",
+                        "ref": "2-4/Stars 44-51 (Dark Room)/Star 50",
+                    },
+                    {
+                        "name": "Star 51 (Dark Room)",
+                        "ref": "2-4/Stars 44-51 (Dark Room)/Star 51",
+                    },
+                    {
+                        "name": "Star 26 (Block)",
+                        "ref": "2-4/Star 26 (Block)/Star 26",
+                    },
+                    {
+                        "name": "Star 27 (Block)",
+                        "ref": "2-4/Star 27 (Block)/Star 27",
+                    },
+                    {
+                        "name": "Star 28 (Block)",
+                        "ref": "2-4/Star 28 (Block)/Star 28",
+                    },
+                    {
+                        "name": "Star 23",
+                        "ref": "2-4/Star 23/Star 23",
+                    },
+                    {
+                        "name": "Star 22",
+                        "ref": "2-4/Star 22/Star 22",
+                    },
+                    {
+                        "name": "Star 24",
+                        "ref": "2-4/Star 24/Star 24",
+                    },
+                    {
+                        "name": "Star 25",
+                        "ref": "2-4/Star 25/Star 25",
+                    },
+                    {
+                        "name": "Star 15",
+                        "ref": "2-4/Stars 15-21/Star 15",
+                    },
+                    {
+                        "name": "Star 16",
+                        "ref": "2-4/Stars 15-21/Star 16",
+                    },
+                    {
+                        "name": "Star 17",
+                        "ref": "2-4/Stars 15-21/Star 17",
+                    },
+                    {
+                        "name": "Star 18",
+                        "ref": "2-4/Stars 15-21/Star 18",
+                    },
+                    {
+                        "name": "Star 19",
+                        "ref": "2-4/Stars 15-21/Star 19",
+                    },
+                    {
+                        "name": "Star 20",
+                        "ref": "2-4/Stars 15-21/Star 20",
+                    },
+                    {
+                        "name": "Star 21",
+                        "ref": "2-4/Stars 15-21/Star 21",
+                    },
+                    {
+                        "name": "Star 8",
+                        "ref": "2-4/Stars 8-14/Star 8",
+                    },
+                    {
+                        "name": "Star 9",
+                        "ref": "2-4/Stars 8-14/Star 9",
+                    },
+                    {
+                        "name": "Star 10",
+                        "ref": "2-4/Stars 8-14/Star 10",
+                    },
+                    {
+                        "name": "Star 11",
+                        "ref": "2-4/Stars 8-14/Star 11",
+                    },
+                    {
+                        "name": "Star 12",
+                        "ref": "2-4/Stars 8-14/Star 12",
+                    },
+                    {
+                        "name": "Star 13",
+                        "ref": "2-4/Stars 8-14/Star 13",
+                    },
+                    {
+                        "name": "Star 14",
+                        "ref": "2-4/Stars 8-14/Star 14",
+                    },
+                    {
+                        "name": "Star 29",
+                        "ref": "2-4/Star 29/Star 29",
+                    },
+                    {
+                        "name": "Star 30",
+                        "ref": "2-4/Star 30/Star 30",
+                    },
+                    {
+                        "name": "Star 31",
+                        "ref": "2-4/Star 31/Star 31",
+                    },
+                    {
+                        "name": "Star 32",
+                        "ref": "2-4/Star 32/Star 32",
+                    },
+                    {
+                        "name": "Star 33",
+                        "ref": "2-4/Star 33/Star 33",
+                    },
+                    {
+                        "name": "Star 34",
+                        "ref": "2-4/Star 34/Star 34",
+                    },
+                    {
+                        "name": "Star 35",
+                        "ref": "2-4/Star 35/Star 35",
+                    },
+                    {
+                        "name": "Star 36",
+                        "ref": "2-4/Star 36/Star 36",
+                    },
+                    {
+                        "name": "Star 37",
+                        "ref": "2-4/Star 37/Star 37",
+                    },
+                    {
+                        "name": "Star 38",
+                        "ref": "2-4/Star 38/Star 38",
+                    },
+                    {
+                        "name": "Star 39",
+                        "ref": "2-4/Star 39/Star 39",
+                    },
+                    {
+                        "name": "Star 40",
+                        "ref": "2-4/Star 40/Star 40",
+                    },
+                    {
+                        "name": "Star 41",
+                        "ref": "2-4/Star 41/Star 41",
+                    },
+                    {
+                        "name": "Star 42",
+                        "ref": "2-4/Star 42/Star 42",
+                    },
+                    {
+                        "name": "Star 43",
+                        "ref": "2-4/Star 43/Star 43",
+                    },
+                ],
+                "map_locations": [
+                    {
+                        "map": "World2",
+                        "x": 140,
+                        "y": 149
+                    }
+                ]
+            },
+            {
+                "name": "2-5",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Ripple Field 5 - Complete",
+                        "item_count": 1,
+                        "access_rules":[
+                            "Kine"
+                        ]
+                    },
+                    {
+                        "name": "Ripple Field 5 - Mama Pitch",
+                        "item_count": 1,
+                        "access_rules": [
+                            "Kine,Burning,Stone,Pitch"
+                        ]
+                    },
+                    {
+                        "name": "Ripple Field 5 - Maxim Tomato (Exit)",
+                        "chest_unopened_img": "images/MaximTomato.png",
+                        "chest_opened_img": "images/MaximTomatoDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules":[
+                            "Kine"
+                        ]
+                    },{
+                        "name": "Ripple Field 5 - 1-Up (Currents)",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules":[
+                            "Kine,Burning,Stone"
+                        ]
+                    },
+                    {
+                        "name": "Ripple Field 5 - Maxim Tomato (Currents)",
+                        "chest_unopened_img": "images/MaximTomato.png",
+                        "chest_opened_img": "images/MaximTomatoDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules":[
+                            "Kine,Burning,Stone"
+                        ]
+                    },
+                    {
+                        "name": "Stars",
+                        "chest_unopened_img": "images/StarLarge.png",
+                        "chest_opened_img": "images/StarLargeDim.png",
+                        "clear_as_group": false,
+                        "visibility_rules": ["Starsanity"],
+                        "access_rules": ["Kine,Burning,Stone"],
+                        "item_count": 51
+                    },
+                    {
+                        "name": "Star 6",
+                        "ref": "2-5/Star 6/Star 6",
+                    },
+                    {
+                        "name": "Star 1",
+                        "ref": "2-5/Star 1/Star 1",
+                    },
+                    {
+                        "name": "Star 2",
+                        "ref": "2-5/Star 2/Star 2",
+                    },
+                    {
+                        "name": "Star 3",
+                        "ref": "2-5/Star 3/Star 3",
+                    },
+                    {
+                        "name": "Star 4",
+                        "ref": "2-5/Star 4/Star 4",
+                    },
+                    {
+                        "name": "Star 5",
+                        "ref": "2-5/Star 5/Star 5",
+                    },
+                    {
+                        "name": "Star 18",
+                        "ref": "2-5/Star 18/Star 18",
+                    },
+                    {
+                        "name": "Star 19",
+                        "ref": "2-5/Star 19/Star 19",
+                    },
+                    {
+                        "name": "Star 20",
+                        "ref": "2-5/Star 20/Star 20",
+                    },
+                    {
+                        "name": "Star 21",
+                        "ref": "2-5/Star 21/Star 21",
+                    },
+                    {
+                        "name": "Star 22",
+                        "ref": "2-5/Star 22/Star 22",
+                    },
+                    {
+                        "name": "Star 23",
+                        "ref": "2-5/Star 23/Star 23",
+                    },
+                    {
+                        "name": "Star 24",
+                        "ref": "2-5/Star 24/Star 24",
+                    },
+                    {
+                        "name": "Star 25",
+                        "ref": "2-5/Star 25/Star 25",
+                    },
+                    {
+                        "name": "Star 26",
+                        "ref": "2-5/Star 26/Star 26",
+                    },
+                    {
+                        "name": "Star 27",
+                        "ref": "2-5/Star 27/Star 27",
+                    },
+                    {
+                        "name": "Star 28",
+                        "ref": "2-5/Star 28/Star 28",
+                    },
+                    {
+                        "name": "Star 29",
+                        "ref": "2-5/Star 29/Star 29",
+                    },
+                    {
+                        "name": "Star 30",
+                        "ref": "2-5/Star 30/Star 30",
+                    },
+                    {
+                        "name": "Star 31",
+                        "ref": "2-5/Star 31/Star 31",
+                    },
+                    {
+                        "name": "Star 38",
+                        "ref": "2-5/Star 38/Star 38",
+                    },
+                    {
+                        "name": "Star 39",
+                        "ref": "2-5/Star 39/Star 39",
+                    },
+                    {
+                        "name": "Star 40",
+                        "ref": "2-5/Star 40/Star 40",
+                    },
+                    {
+                        "name": "Star 41",
+                        "ref": "2-5/Star 41/Star 41",
+                    },
+                    {
+                        "name": "Star 42",
+                        "ref": "2-5/Star 42/Star 42",
+                    },
+                    {
+                        "name": "Star 50",
+                        "ref": "2-5/Star 50/Star 50",
+                    },
+                    {
+                        "name": "Star 51",
+                        "ref": "2-5/Star 51/Star 51",
+                    },
+                    {
+                        "name": "Star 46 (Stone Block (Burning))",
+                        "ref": "2-5/Star 46 (Stone Block (Burning))/Star 46",
+                    },
+                    {
+                        "name": "Star 47 (Stone Block (Burning))",
+                        "ref": "2-5/Star 47 (Stone Block (Burning))/Star 47",
+                    },
+                    {
+                        "name": "Star 48 (Stone Block (Burning))",
+                        "ref": "2-5/Star 48 (Stone Block (Burning))/Star 48",
+                    },
+                    {
+                        "name": "Star 49 (Block)",
+                        "ref": "2-5/Star 49 (Block)/Star 49",
+                    },
+                    {
+                        "name": "Star 32",
+                        "ref": "2-5/Star 32/Star 32",
+                    },
+                    {
+                        "name": "Star 33",
+                        "ref": "2-5/Star 33/Star 33",
+                    },
+                    {
+                        "name": "Star 34",
+                        "ref": "2-5/Star 34/Star 34",
+                    },
+                    {
+                        "name": "Star 35",
+                        "ref": "2-5/Star 35/Star 35",
+                    },
+                    {
+                        "name": "Star 36",
+                        "ref": "2-5/Star 36/Star 36",
+                    },
+                    {
+                        "name": "Star 37",
+                        "ref": "2-5/Star 37/Star 37",
+                    },
+                    {
+                        "name": "Star 7",
+                        "ref": "2-5/Star 7/Star 7",
+                    },
+                    {
+                        "name": "Star 8",
+                        "ref": "2-5/Star 8/Star 8",
+                    },
+                    {
+                        "name": "Star 9",
+                        "ref": "2-5/Star 9/Star 9",
+                    },
+                    {
+                        "name": "Star 10",
+                        "ref": "2-5/Star 10/Star 10",
+                    },
+                    {
+                        "name": "Star 11",
+                        "ref": "2-5/Star 11/Star 11",
+                    },
+                    {
+                        "name": "Star 12",
+                        "ref": "2-5/Star 12/Star 12",
+                    },
+                    {
+                        "name": "Star 13",
+                        "ref": "2-5/Star 13/Star 13",
+                    },
+                    {
+                        "name": "Star 14",
+                        "ref": "2-5/Star 14/Star 14",
+                    },
+                    {
+                        "name": "Star 15",
+                        "ref": "2-5/Star 15/Star 15",
+                    },
+                    {
+                        "name": "Star 16",
+                        "ref": "2-5/Star 16/Star 16",
+                    },
+                    {
+                        "name": "Star 17",
+                        "ref": "2-5/Star 17/Star 17",
+                    },
+                    {
+                        "name": "Star 43",
+                        "ref": "2-5/Star 43/Star 43",
+                    },
+                    {
+                        "name": "Star 45",
+                        "ref": "2-5/Star 45/Star 45",
+                    },
+                    {
+                        "name": "Star 44",
+                        "ref": "2-5/Star 44/Star 44",
+                    },
+                ],
+                "map_locations": [
+                    {
+                        "map": "World2",
+                        "x": 164,
+                        "y": 149
+                    }
+                ]
+            },
+            {
+                "name": "2-6",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Ripple Field 6 - Complete",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Ripple Field 6 - HB-002",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Stars",
+                        "chest_unopened_img": "images/StarLarge.png",
+                        "chest_opened_img": "images/StarLargeDim.png",
+                        "clear_as_group": false,
+                        "visibility_rules": ["Starsanity"],
+                        "access_rules": [],
+                        "item_count": 23
+                    },
+                    {
+                        "name": "Star 8 (Block)",
+                        "ref": "2-6/Star 8 (Block)/Star 8",
+                    },
+                    {
+                        "name": "Star 9 (Block)",
+                        "ref": "2-6/Star 9 (Block)/Star 9",
+                    },
+                    {
+                        "name": "Star 10 (Block)",
+                        "ref": "2-6/Star 10 (Block)/Star 10",
+                    },
+                    {
+                        "name": "Star 11 (Block)",
+                        "ref": "2-6/Star 11 (Block)/Star 11",
+                    },
+                    {
+                        "name": "Star 12 (Block)",
+                        "ref": "2-6/Star 12 (Block)/Star 12",
+                    },
+                    {
+                        "name": "Star 13 (Block)",
+                        "ref": "2-6/Star 13 (Block)/Star 13",
+                    },
+                    {
+                        "name": "Star 14 (Block)",
+                        "ref": "2-6/Star 14 (Block)/Star 14",
+                    },
+                    {
+                        "name": "Star 7 (Block)",
+                        "ref": "2-6/Star 7 (Block)/Star 7",
+                    },
+                    {
+                        "name": "Star 5 (Block)",
+                        "ref": "2-6/Star 5 (Block)/Star 5",
+                    },
+                    {
+                        "name": "Star 1 (Block)",
+                        "ref": "2-6/Star 1 (Block)/Star 1",
+                    },
+                    {
+                        "name": "Star 3 (Block)",
+                        "ref": "2-6/Star 3 (Block)/Star 3",
+                    },
+                    {
+                        "name": "Star 4",
+                        "ref": "2-6/Star 4/Star 4",
+                    },
+                    {
+                        "name": "Star 2 (Block)",
+                        "ref": "2-6/Star 2 (Block)/Star 2",
+                    },
+                    {
+                        "name": "Star 6 (Block)",
+                        "ref": "2-6/Star 6 (Block)/Star 6",
+                    },
+                    {
+                        "name": "Star 15 (Block)",
+                        "ref": "2-6/Star 15 (Block)/Star 15",
+                    },
+                    {
+                        "name": "Star 16 (Block)",
+                        "ref": "2-6/Star 16 (Block)/Star 16",
+                    },
+                    {
+                        "name": "Star 19 (Block)",
+                        "ref": "2-6/Star 19 (Block)/Star 19",
+                    },
+                    {
+                        "name": "Star 17 (Block)",
+                        "ref": "2-6/Star 17 (Block)/Star 17",
+                    },
+                    {
+                        "name": "Star 18 (Block)",
+                        "ref": "2-6/Star 18 (Block)/Star 18",
+                    },
+                    {
+                        "name": "Star 22 (Block)",
+                        "ref": "2-6/Star 22 (Block)/Star 22",
+                    },
+                    {
+                        "name": "Star 21 (Block)",
+                        "ref": "2-6/Star 21 (Block)/Star 21",
+                    },
+                    {
+                        "name": "Star 20 (Block)",
+                        "ref": "2-6/Star 20 (Block)/Star 20",
+                    },
+                    {
+                        "name": "Star 23 (Block)",
+                        "ref": "2-6/Star 23 (Block)/Star 23",
+                    },
+                ],
+                "map_locations": [
+                    {
+                        "map": "World2",
+                        "x": 188,
+                        "y": 149
+                    }
+                ]
+            },
+            {
+                "name": "2-7",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Ripple Field - Boss (Acro) Purified",
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "World2",
+                        "x": 212,
+                        "y": 149
+                    }
+                ]
+            }
+        ]
+    }
+]

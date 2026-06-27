@@ -1,0 +1,2755 @@
+[
+    {
+        "name": "Stages",
+        "chest_opened_img": "images/icons/chest_opened.png",
+        "children": [
+            {
+                "name": "Hunter Base",
+                "access_rules": [],
+                "sections": [
+                    {
+                        "name": "HP Pickup 1 (Right of first ladder)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 2 (Bottom of falling spike balls section)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Mac",
+                        "chest_unopened_img": "images/icons/mac.png",
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Maoh the Giant",
+                        "chest_unopened_img": "images/icons/moah.png",
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Stage Clear",
+                        "chest_unopened_img": "images/icons/moah.png",
+                        "visibility_rules": [],
+                        "access_rules": []
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 144,
+                        "y": 49
+                    }
+                ]
+            },
+            {
+                "name": "Blizzard Buffalo",
+                "access_rules": ["blizzard_buffalo_1"],
+                "sections": [
+                    {
+                        "name": "Heart Tank",
+                        "chest_unopened_img": "images/icons/heart.png",
+                        "access_rules": ["tornado_fang", "ride_chimera", "ride_kangaroo"]
+                    },
+                    {
+                        "name": "HP Pickup 1 (Roof after first ladder)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 2 (Before Bit & Byte room)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 3 (Top of slope in dark room)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 4 (After dark room)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Sub Tank",
+                        "chest_unopened_img": "images/icons/subtank.png",
+                        "access_rules": ["legs1"]
+                    },
+                    {
+                        "name": "Legs Capsule",
+                        "chest_unopened_img": "images/icons/capsule.png",
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 5 (Before boss room)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Blizzard Buffalo",
+                        "chest_unopened_img": "images/icons/blizzardbuffalo.png",
+                        "access_rules": [
+                            "$has_weakness_for|Blizzard Buffalo",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Stage Clear",
+                        "chest_unopened_img": "images/icons/blizzardbuffalo.png",
+                        "access_rules": [
+                            "$has_weakness_for|Blizzard Buffalo",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 98,
+                        "y": 49
+                    }
+                ]
+            },
+            {
+                "name": "Toxic Seahorse",
+                "access_rules": ["toxic_seahorse_1"],
+                "sections": [
+                    {
+                        "name": "HP Pickup 1 (Bottom of falling water section)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 2 (In moving water)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Heart Tank",
+                        "chest_unopened_img": "images/icons/heart.png",
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Kangaroo Ride Armor",
+                        "chest_unopened_img": "images/icons/ridekangaroo.png",
+                        "access_rules": ["legs1,ride_frog", "[legs1],frost_shield,$can_charge"]
+                    },
+                    {
+                        "name": "Leg Chip Capsule",
+                        "chest_unopened_img": "images/icons/capsule.png",
+                        "access_rules": ["ride_frog", "frost_shield,$can_charge"]
+                    },
+                    {
+                        "name": "Hotareeca",
+                        "chest_unopened_img": "images/icons/hotareeca.png",
+                        "access_rules": [
+                            "$has_weakness_for|Hotareeca",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "HP Pickup 3 (After Hotareeca room)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": [
+                            "$has_weakness_for|Hotareeca",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Toxic Seahorse",
+                        "chest_unopened_img": "images/icons/toxicseahorse.png",
+                        "access_rules": [
+                            "$has_weakness_for|Hotareeca,$has_weakness_for|Toxic Seahorse",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Stage Clear",
+                        "chest_unopened_img": "images/icons/toxicseahorse.png",
+                        "access_rules": [
+                            "$has_weakness_for|Hotareeca,$has_weakness_for|Toxic Seahorse",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 242,
+                        "y": 49
+                    }
+                ]
+            },
+            {
+                "name": "Tunnel Rhino",
+                "access_rules": ["tunnel_rhino_1"],
+                "sections": [
+                    {
+                        "name": "Heart Tank",
+                        "chest_unopened_img": "images/icons/heart.png",
+                        "access_rules": ["$can_charge,triad_thunder"]
+                    },
+                    {
+                        "name": "Sub Tank",
+                        "chest_unopened_img": "images/icons/subtank.png",
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Weapon Energy Pickup (Before Bit & Byte room)",
+                        "chest_unopened_img": "images/icons/large_energy.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup (Before falling rocks section)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Helmet Capsule",
+                        "chest_unopened_img": "images/icons/capsule.png",
+                        "access_rules": ["$can_charge,triad_thunder"]
+                    },
+                    {
+                        "name": "Hell Crusher",
+                        "chest_unopened_img": "images/icons/hellcrusher.png",
+                        "access_rules": [
+                            "$has_weakness_for|Hell Crusher",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Tunnel Rhino",
+                        "chest_unopened_img": "images/icons/tunnelrhino.png",
+                        "access_rules": [
+                            "$has_weakness_for|Hell Crusher,$has_weakness_for|Tunnel Rhino",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Stage Clear",
+                        "chest_unopened_img": "images/icons/tunnelrhino.png",
+                        "access_rules": [
+                            "$has_weakness_for|Hell Crusher,$has_weakness_for|Tunnel Rhino",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 194,
+                        "y": 201
+                    }
+                ]
+            },
+            {
+                "name": "Volt Catfish",
+                "access_rules": ["volt_catfish_1"],
+                "sections": [
+                    {
+                        "name": "HP Pickup 1 (In first elevator)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 2 (In first elevator)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Heart Tank",
+                        "chest_unopened_img": "images/icons/heart.png",
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Body Capsule",
+                        "chest_unopened_img": "images/icons/capsule.png",
+                        "access_rules": ["$can_charge,gravity_well"]
+                    },
+                    {
+                        "name": "Weapon Energy Pickup 1 (Left of Sub Tank)",
+                        "chest_unopened_img": "images/icons/large_energy.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": ["ride_chimera", "ride_frog", "ride_kangaroo", "ride_hawk"]
+                    },
+                    {
+                        "name": "Weapon Energy Pickup 2 (Right of Sub Tank)",
+                        "chest_unopened_img": "images/icons/large_energy.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": ["ride_chimera", "ride_frog", "ride_kangaroo", "ride_hawk"]
+                    },
+                    {
+                        "name": "Sub Tank",
+                        "chest_unopened_img": "images/icons/subtank.png",
+                        "access_rules": ["ride_chimera", "ride_frog", "ride_kangaroo", "ride_hawk"]
+                    },
+                    {
+                        "name": "HP Pickup 3 (Right of Sub Tank)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": ["ride_chimera", "ride_frog", "ride_kangaroo", "ride_hawk"]
+                    },
+                    {
+                        "name": "HP Pickup 4 (Left of Sub Tank)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": ["ride_chimera", "ride_frog", "ride_kangaroo", "ride_hawk"]
+                    },
+                    {
+                        "name": "HP Pickup 5 (In power plant section)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Weapon Energy Pickup 3 (In power plant section)",
+                        "chest_unopened_img": "images/icons/large_energy.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Volt Catfish",
+                        "chest_unopened_img": "images/icons/voltcatfish.png",
+                        "access_rules": [
+                            "$has_weakness_for|Volt Catfish",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Stage Clear",
+                        "chest_unopened_img": "images/icons/voltcatfish.png",
+                        "access_rules": [
+                            "$has_weakness_for|Volt Catfish",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 50,
+                        "y": 201
+                    }
+                ]
+            },
+            {
+                "name": "Crush Crawfish",
+                "access_rules": ["crush_crawfish_1"],
+                "sections": [
+                    {
+                        "name": "Hawk Ride Armor",
+                        "chest_unopened_img": "images/icons/ridehawk.png",
+                        "access_rules": ["$can_charge,triad_thunder"]
+                    },
+                    {
+                        "name": "HP Pickup 1 (Top of third crane)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 2 (Below third crane)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Heart Tank",
+                        "chest_unopened_img": "images/icons/heart.png",
+                        "access_rules": ["ride_chimera", "ride_frog", "ride_kangaroo", "ride_hawk"]
+                    },
+                    {
+                        "name": "Body Chip Capsule",
+                        "chest_unopened_img": "images/icons/capsule.png",
+                        "access_rules": ["ride_chimera", "ride_frog", "ride_kangaroo", "ride_hawk"]
+                    },
+                    {
+                        "name": "HP Pickup 3 (After Bit & Byte room)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 4 (Before ship)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Weapon Energy Pickup (Top left of conveyor belts section)",
+                        "chest_unopened_img": "images/icons/large_energy.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 5 (Bottom left of conveyor belts section)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 6 (Bottom left of conveyor belts section)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+
+                    {
+                        "name": "1up Pickup 1 (Top right of conveyor belts section)",
+                        "chest_unopened_img": "images/icons/extralife.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": ["tornado_fang"]
+                    },
+                    {
+                        "name": "1up Pickup 2 (Top right of conveyor belts section)",
+                        "chest_unopened_img": "images/icons/extralife.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": ["tornado_fang"]
+                    },
+
+                    {
+                        "name": "Crush Crawfish",
+                        "chest_unopened_img": "images/icons/crushcrawfish.png",
+                        "access_rules": [
+                            "$has_weakness_for|Crush Crawfish",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Stage Clear",
+                        "chest_unopened_img": "images/icons/crushcrawfish.png",
+                        "access_rules": [
+                            "$has_weakness_for|Crush Crawfish",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 99,
+                        "y": 201
+                    }
+                ]
+            },
+            {
+                "name": "Neon Tiger",
+                "access_rules": ["neon_tiger_1"],
+                "sections": [
+                    {
+                        "name": "HP Pickup 1 (Below first ladder)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 2 (Below Sub Tank)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Sub Tank",
+                        "chest_unopened_img": "images/icons/subtank.png",
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Arms Capsule",
+                        "chest_unopened_img": "images/icons/capsule.png",
+                        "access_rules": ["legs1,tornado_fang"]
+                    },
+                    {
+                        "name": "HP Pickup 3 (Before Worm Seeker-R room)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Worm Seeker-R",
+                        "chest_unopened_img": "images/icons/worm.png",
+                        "access_rules": [
+                            "$has_weakness_for|Worm Seeker-R",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Heart Tank",
+                        "chest_unopened_img": "images/icons/heart.png",
+                        "access_rules": [
+                            "$has_weakness_for|Worm Seeker-R",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Neon Tiger",
+                        "chest_unopened_img": "images/icons/neontiger.png",
+                        "access_rules": [
+                            "$has_weakness_for|Worm Seeker-R,$has_weakness_for|Neon Tiger",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Stage Clear",
+                        "chest_unopened_img": "images/icons/neontiger.png",
+                        "access_rules": [
+                            "$has_weakness_for|Worm Seeker-R,$has_weakness_for|Neon Tiger",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 242,
+                        "y": 201
+                    }
+                ]
+            },
+            {
+                "name": "Gravity Beetle",
+                "access_rules": ["gravity_beetle_1"],
+                "sections": [
+                    
+                    {
+                        "name": "Heart Tank",
+                        "chest_unopened_img": "images/icons/heart.png",
+                        "access_rules": ["blast_hornet_2"]
+                    },
+                    {
+                        "name": "HP Pickup 1 (In cranes and boxes room)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Frog Ride Armor",
+                        "chest_unopened_img": "images/icons/ridefrog.png",
+                        "access_rules": ["legs1"]
+                    },
+                    {
+                        "name": "HP Pickup 2 (Before elevator)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 3 (In elevator)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Weapon Energy Pickup 1 (In elevator)",
+                        "chest_unopened_img": "images/icons/large_energy.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 4 (In elevator)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "1up Pickup (In elevator)",
+                        "chest_unopened_img": "images/icons/extralife.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 5 (In elevator)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Weapon Energy Pickup 2 (In elevator)",
+                        "chest_unopened_img": "images/icons/large_energy.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 6 (After falling missiles)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Arms Chip Capsule",
+                        "chest_unopened_img": "images/icons/capsule.png",
+                        "access_rules": ["ride_chimera", "ride_kangaroo", "ride_hawk"]
+                    },
+                    {
+                        "name": "Gravity Beetle",
+                        "chest_unopened_img": "images/icons/gravitybeetle.png",
+                        "access_rules": [
+                            "$has_weakness_for|Gravity Beetle",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Stage Clear",
+                        "chest_unopened_img": "images/icons/gravitybeetle.png",
+                        "access_rules": [
+                            "$has_weakness_for|Gravity Beetle",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 194,
+                        "y": 49
+                    }
+                ]
+            },
+            {
+                "name": "Blast Hornet",
+                "access_rules": ["blast_hornet_1"],
+                "sections": [
+                    {
+                        "name": "Helmet Chip Capsule",
+                        "chest_unopened_img": "images/icons/capsule.png",
+                        "access_rules": ["legs2", "legs1,ride_hawk"]
+                    },
+                    {
+                        "name": "HP Pickup 1 (Bottom left of conveyor belts section)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Shurikein",
+                        "chest_unopened_img": "images/icons/shurikein.png",
+                        "access_rules": [
+                            "$has_weakness_for|Shurikein",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Chimera Ride Armor",
+                        "chest_unopened_img": "images/icons/ridechimera.png",
+                        "access_rules": [
+                            "tornado_fang,$has_weakness_for|Shurikein",
+                            "tornado_fang,$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "HP Pickup 2 (Hidden in left wall of third hangar)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": [
+                            "$has_weakness_for|Shurikein",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Heart Tank",
+                        "chest_unopened_img": "images/icons/heart.png",
+                        "access_rules": [
+                            "legs1,$has_weakness_for|Shurikein",
+                            "legs1,$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Blast Hornet",
+                        "chest_unopened_img": "images/icons/blasthornet.png",
+                        "access_rules": [
+                            "$has_weakness_for|Shurikein,$has_weakness_for|Blast Hornet",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Stage Clear",
+                        "chest_unopened_img": "images/icons/blasthornet.png",
+                        "access_rules": [
+                            "$has_weakness_for|Shurikein,$has_weakness_for|Blast Hornet",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 50,
+                        "y": 49
+                    }
+                ]
+            },
+            {
+                "name": "Dr. Doppler's Lab 1",
+                "access_rules": ["drdoppler_state_1"],
+                "sections": [
+                    {
+                        "name": "Weapon Energy Pickup (Before REX-2000 room)",
+                        "chest_unopened_img": "images/icons/large_energy.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 1 (Before REX-2000 room)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "REX-2000",
+                        "chest_unopened_img": "images/icons/rex2000.png",
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 2 (Below Ride Armor pad)",
+                        "chest_unopened_img": "images/icons/large_energy.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Dr. Doppler's Lab 1 Boss",
+                        "chest_unopened_img": "images/icons/chest.png",
+                        "access_rules": [
+                            "$has_weakness_for|Press Disposer",
+                            "$has_weakness_for|Godkarmachine",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 113,
+                        "y": 173
+                    }
+                ]
+            },
+            {
+                "name": "Dr. Doppler's Lab 2",
+                "access_rules": ["$are_doppler_two_and_three_open", "$doppler_1_cleared"],
+                "sections": [
+                    {
+                        "name": "Dr. Doppler's Lab 2 Boss",
+                        "chest_unopened_img": "images/icons/chest.png",
+                        "access_rules": [
+                            "$has_weakness_for|Dr. Doppler's Lab 2 Boss",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 128,
+                        "y": 173
+                    }
+                ]
+            },
+            {
+                "name": "Dr. Doppler's Lab 3",
+                "access_rules": ["$are_doppler_two_and_three_open", "$doppler_2_cleared"],
+                "sections": [
+                    {
+                        "name": "Blizzard Buffalo (Rematch)",
+                        "chest_unopened_img": "images/icons/blizzardbuffalo.png",
+                        "visibility_rules":["$refights_required"],
+                        "access_rules": [
+                            "$has_weakness_for|Blizzard Buffalo",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Toxic Seahorse (Rematch)",
+                        "visibility_rules":["$refights_required"],
+                        "chest_unopened_img": "images/icons/toxicseahorse.png",
+                        "access_rules": [
+                            "$has_weakness_for|Toxic Seahorse",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Tunnel Rhino (Rematch)",
+                        "visibility_rules":["$refights_required"],
+                        "chest_unopened_img": "images/icons/tunnelrhino.png",
+                        "access_rules": [
+                            "$has_weakness_for|Tunnel Rhino",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Volt Catfish (Rematch)",
+                        "visibility_rules":["$refights_required"],
+                        "chest_unopened_img": "images/icons/voltcatfish.png",
+                        "access_rules": [
+                            "$has_weakness_for|Volt Catfish",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Crush Crawfish (Rematch)",
+                        "visibility_rules":["$refights_required"],
+                        "chest_unopened_img": "images/icons/crushcrawfish.png",
+                        "access_rules": [
+                            "$has_weakness_for|Crush Crawfish",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Neon Tiger (Rematch)",
+                        "visibility_rules":["$refights_required"],
+                        "chest_unopened_img": "images/icons/neontiger.png",
+                        "access_rules": [
+                            "$has_weakness_for|Neon Tiger",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Gravity Beetle (Rematch)",
+                        "visibility_rules":["$refights_required"],
+                        "chest_unopened_img": "images/icons/gravitybeetle.png",
+                        "access_rules": [
+                            "$has_weakness_for|Gravity Beetle",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "Blast Hornet (Rematch)",
+                        "visibility_rules":["$refights_required"],
+                        "chest_unopened_img": "images/icons/blasthornet.png",
+                        "access_rules": [
+                            "$has_weakness_for|Blast Hornet",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "HP Pickup (Before Dr. Doppler room)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": ["$rematch_quota_met"]
+                    },
+                    {
+                        "name": "Dr. Doppler",
+                        "chest_unopened_img": "images/icons/drdoppler.png",
+                        "access_rules": ["$rematch_quota_met,$boss_other_damage_possible,[$boss_weaknesses_not_required]", "$rematch_quota_met,$has_weakness_for|Doppler"]
+                        
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 143,
+                        "y": 173
+                    }
+                ]
+            },
+            {
+                "name": "Dr. Doppler's Lab 4",
+                "access_rules": ["doppler_1_cleared,doppler_2_cleared,doppler_3_cleared"],
+                "sections": [
+                    {
+                        "name": "Sigma",
+                        "chest_unopened_img": "images/icons/kaisersigma.png",
+                        "access_rules": [
+                            "$has_weakness_for|Kaiser Sigma",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 143,
+                        "y": 201
+                    }
+                ]
+            },
+            {
+                "name": "Vile's Stage",
+                "access_rules": ["vile_state_1"],
+                "sections": [
+                    {
+                        "name": "HP Pickup 1 (In first elevator)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 2 (In first elevator)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 3 (In first elevator)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "HP Pickup 4 (In first elevator)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Weapon Energy Pickup (Below boss room)",
+                        "chest_unopened_img": "images/icons/large_energy.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": []
+                    },
+                    
+                    {
+                        "name": "Vile",
+                        "chest_unopened_img": "images/icons/vile.png",
+                        "access_rules": [
+                            "$has_weakness_for|Vile",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "HP Pickup 5 (After boss room)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": [
+                            "$has_weakness_for|Vile",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "HP Pickup 6 (After boss)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": [
+                            "$has_weakness_for|Vile",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "HP Pickup 7 (After boss)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": [
+                            "$has_weakness_for|Vile",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "1up Pickup (After boss)",
+                        "chest_unopened_img": "images/icons/extralife.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": [
+                            "$has_weakness_for|Vile",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+
+                    {
+                        "name": "HP Pickup 8 (In second elevator)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": [
+                            "$has_weakness_for|Vile",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    },
+                    {
+                        "name": "HP Pickup 9 (Before falling platforms section)",
+                        "chest_unopened_img": "images/icons/large_hp.png",
+                        "visibility_rules": [ "pickupsanity_on" ],
+                        "access_rules": [
+                            "$has_weakness_for|Vile",
+                            "$boss_other_damage_possible,[$boss_weaknesses_not_required]"
+                        ]
+                    }
+                    
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 51,
+                        "y": 125
+                    },
+                    {
+                        "map": "blizzard_buffalo",
+                        "x": 1828,
+                        "y": 699
+                    },
+                    {
+                        "map": "volt_catfish",
+                        "x": 292,
+                        "y": 1226
+                    },
+                    {
+                        "map": "crush_crawfish",
+                        "x": 1444,
+                        "y": 706
+                    }
+                ]
+            },
+            {
+                "name": "Bit",
+                "access_rules": [],
+                "sections": [
+                    {
+                        "name": "Bit",
+                        "chest_unopened_img": "images/icons/bit.png",
+                        "hosted_item": "bit_state_2",
+                        "access_rules": ["bit_state_1,$boss_other_damage_possible,[$boss_weaknesses_not_required]", "bit_state_1,$has_weakness_for|Bit"]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 186,
+                        "y": 125
+                    }
+                ]
+            },
+            {
+                "name": "Byte",
+                "access_rules": [],
+                "sections": [
+                    {
+                        "name": "Byte",
+                        "chest_unopened_img": "images/icons/byte.png",
+                        "hosted_item": "byte_state_2",
+                        "access_rules": ["byte_state_1,$boss_other_damage_possible,[$boss_weaknesses_not_required]", "byte_state_1,$has_weakness_for|Byte"]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 234,
+                        "y": 125
+                    }
+                ]
+            },
+            {
+                "name": "Bit & Byte",
+                "sections": [
+                    {
+                        "ref": "Stages/Bit/Bit",
+                        "name": "Bit"
+                    },
+                    {
+                        "ref": "Stages/Byte/Byte",
+                        "name": "Byte"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "blizzard_buffalo",
+                        "x": 1343,
+                        "y": 442
+                    },
+                    {
+                        "map": "toxic_seahorse",
+                        "x": 959,
+                        "y": 183
+                    },
+                    {
+                        "map": "tunnel_rhino",
+                        "x": 1082,
+                        "y": 570
+                    },
+                    {
+                        "map": "volt_catfish",
+                        "x": 1214,
+                        "y": 310
+                    },
+                    {
+                        "map": "crush_crawfish",
+                        "x": 1086,
+                        "y": 560
+                    },
+                    {
+                        "map": "neon_tiger",
+                        "x": 677,
+                        "y": 463
+                    },
+                    {
+                        "map": "gravity_beetle",
+                        "x": 1084,
+                        "y": 994
+                    },
+                    {
+                        "map": "blast_hornet",
+                        "x": 703,
+                        "y": 865
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Hunter Base",
+        "children": [
+            {
+                "name": "Mac",
+                "sections": [
+                    {
+                        "ref": "Stages/Hunter Base/Mac"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "hunter_base",
+                        "x": 1212,
+                        "y": 187
+                    }
+                ]
+            },
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Hunter Base/Maoh the Giant",
+                        "name": "Moah the Giant"
+                    },
+                    {
+                        "ref": "Stages/Hunter Base/Stage Clear",
+                        "name": "Stage Clear"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "hunter_base",
+                        "x": 1532,
+                        "y": 27
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 1 (Right of first ladder)",
+                "sections": [
+                    {
+                        "ref": "Stages/Hunter Base/HP Pickup 1 (Right of first ladder)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "hunter_base",
+                        "x": 488,
+                        "y": 443
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 2 (Bottom of falling spike balls section)",
+                "sections": [
+                    {
+                        "ref": "Stages/Hunter Base/HP Pickup 2 (Bottom of falling spike balls section)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "hunter_base",
+                        "x": 1621,
+                        "y": 588
+                    }
+                ]
+                
+            }
+        ]
+    },
+    {
+        "name": "Blizzard Buffalo",
+        "children": [
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Blizzard Buffalo/Blizzard Buffalo",
+                        "name": "Blizzard Buffalo"
+                    },
+                    {
+                        "ref": "Stages/Blizzard Buffalo/Stage Clear",
+                        "name": "Stage Clear"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "blizzard_buffalo",
+                        "x": 982,
+                        "y": 696
+                    }
+                ]
+            },
+            {
+                "name": "Heart Tank",
+                "sections": [
+                    {
+                        "ref": "Stages/Blizzard Buffalo/Heart Tank"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "blizzard_buffalo",
+                        "x": 802,
+                        "y": 203
+                    }
+                ]
+            },
+            {
+                "name": "Sub Tank",
+                "sections": [
+                    {
+                        "ref": "Stages/Blizzard Buffalo/Sub Tank"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "blizzard_buffalo",
+                        "x": 1847,
+                        "y": 132
+                    }
+                ]
+            },
+            {
+                "name": "Legs Capsule",
+                "sections": [
+                    {
+                        "ref": "Stages/Blizzard Buffalo/Legs Capsule"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "blizzard_buffalo",
+                        "x": 686,
+                        "y": 585
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 1 (Roof after first ladder)",
+                "sections": [
+                    {
+                        "ref": "Stages/Blizzard Buffalo/HP Pickup 1 (Roof after first ladder)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "blizzard_buffalo",
+                        "x": 1226,
+                        "y": 44
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 2 (Before Bit & Byte room)",
+                "sections": [
+                    {
+                        "ref": "Stages/Blizzard Buffalo/HP Pickup 2 (Before Bit & Byte room)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "blizzard_buffalo",
+                        "x": 1128,
+                        "y": 357
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 3 (Top of slope in dark room)",
+                "sections": [
+                    {
+                        "ref": "Stages/Blizzard Buffalo/HP Pickup 3 (Top of slope in dark room)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "blizzard_buffalo",
+                        "x": 1640,
+                        "y": 476
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 4 (After dark room)",
+                "sections": [
+                    {
+                        "ref": "Stages/Blizzard Buffalo/HP Pickup 4 (After dark room)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "blizzard_buffalo",
+                        "x": 1896,
+                        "y": 340
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 5 (Before boss room)",
+                "sections": [
+                    {
+                        "ref": "Stages/Blizzard Buffalo/HP Pickup 5 (Before boss room)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "blizzard_buffalo",
+                        "x": 310,
+                        "y": 721
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Toxic Seahorse",
+        "children": [
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Toxic Seahorse/Toxic Seahorse",
+                        "name": "Toxic Seahorse"
+                    },
+                    {
+                        "ref": "Stages/Toxic Seahorse/Stage Clear",
+                        "name": "Stage Clear"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "toxic_seahorse",
+                        "x": 1166,
+                        "y": 1038
+                    }
+                ]
+            },
+            {
+                "name": "Hotareeca",
+                "sections": [
+                    {
+                        "ref": "Stages/Toxic Seahorse/Hotareeca"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "toxic_seahorse",
+                        "x": 269,
+                        "y": 1164
+                    }
+                ]
+            },
+            {
+                "name": "Heart Tank",
+                "sections": [
+                    {
+                        "ref": "Stages/Toxic Seahorse/Heart Tank"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "toxic_seahorse",
+                        "x": 745,
+                        "y": 73
+                    }
+                ]
+            },
+            {
+                "name": "Kangaroo Ride Armor",
+                "sections": [
+                    {
+                        "ref": "Stages/Toxic Seahorse/Kangaroo Ride Armor"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "toxic_seahorse",
+                        "x": 1303,
+                        "y": 299
+                    }
+                ]
+            },
+            {
+                "name": "Leg Chip Capsule",
+                "sections": [
+                    {
+                        "ref": "Stages/Toxic Seahorse/Leg Chip Capsule"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "toxic_seahorse",
+                        "x": 313,
+                        "y": 777
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 1 (Bottom of falling water section)",
+                "sections": [
+                    {
+                        "ref": "Stages/Toxic Seahorse/HP Pickup 1 (Bottom of falling water section)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "toxic_seahorse",
+                        "x": 748,
+                        "y": 469
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 2 (In moving water)",
+                "sections": [
+                    {
+                        "ref": "Stages/Toxic Seahorse/HP Pickup 2 (In moving water)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "toxic_seahorse",
+                        "x": 739,
+                        "y": 334
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 3 (After Hotareeca room)",
+                "sections": [
+                    {
+                        "ref": "Stages/Toxic Seahorse/HP Pickup 3 (After Hotareeca room)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "toxic_seahorse",
+                        "x": 354,
+                        "y": 994
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Tunnel Rhino",
+        "children": [
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Tunnel Rhino/Tunnel Rhino",
+                        "name": "Tunnel Rhino"
+                    },
+                    {
+                        "ref": "Stages/Tunnel Rhino/Stage Clear",
+                        "name": "Stage Clear"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "tunnel_rhino",
+                        "x": 2007,
+                        "y": 582
+                    }
+                ]
+            },
+            {
+                "name": "Hell Crusher",
+                "sections": [
+                    {
+                        "ref": "Stages/Tunnel Rhino/Hell Crusher"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "tunnel_rhino",
+                        "x": 1986,
+                        "y": 439
+                    }
+                ]
+            },
+            {
+                "name": "Heart Tank",
+                "sections": [
+                    {
+                        "ref": "Stages/Tunnel Rhino/Heart Tank"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "tunnel_rhino",
+                        "x": 879,
+                        "y": 683
+                    }
+                ]
+            },
+            {
+                "name": "Sub Tank",
+                "sections": [
+                    {
+                        "ref": "Stages/Tunnel Rhino/Sub Tank"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "tunnel_rhino",
+                        "x": 1008,
+                        "y": 282
+                    }
+                ]
+            },
+            {
+                "name": "Helmet Capsule",
+                "sections": [
+                    {
+                        "ref": "Stages/Tunnel Rhino/Helmet Capsule"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "tunnel_rhino",
+                        "x": 1650,
+                        "y": 68
+                    }
+                ]
+            },
+            {
+                "name": "Weapon Energy Pickup (Before Bit & Byte room)",
+                "sections": [
+                    {
+                        "ref": "Stages/Tunnel Rhino/Weapon Energy Pickup (Before Bit & Byte room)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "tunnel_rhino",
+                        "x": 991,
+                        "y": 492
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup (Before falling rocks section)",
+                "sections": [
+                    {
+                        "ref": "Stages/Tunnel Rhino/HP Pickup (Before falling rocks section)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "tunnel_rhino",
+                        "x": 1432,
+                        "y": 444
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Volt Catfish",
+        "children": [
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Volt Catfish/Volt Catfish",
+                        "name": "Volt Catfish"
+                    },
+                    {
+                        "ref": "Stages/Volt Catfish/Stage Clear",
+                        "name": "Stage Clear"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "volt_catfish",
+                        "x": 1600,
+                        "y": 1201
+                    }
+                ]
+            },
+            {
+                "name": "Heart Tank",
+                "sections": [
+                    {
+                        "ref": "Stages/Volt Catfish/Heart Tank"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "volt_catfish",
+                        "x": 747,
+                        "y": 475
+                    }
+                ]
+            },
+            {
+                "name": "Body Capsule",
+                "sections": [
+                    {
+                        "ref": "Stages/Volt Catfish/Body Capsule"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "volt_catfish",
+                        "x": 492,
+                        "y": 68
+                    }
+                ]
+            },
+            {
+                "name": "Sub Tank Area",
+                "sections": [
+                    {
+                        "ref": "Stages/Volt Catfish/Weapon Energy Pickup 1 (Left of Sub Tank)",
+                        "name": "Weapon Energy Pickup 1 (Left of Sub Tank)"
+                    },
+                    {
+                        "ref": "Stages/Volt Catfish/Weapon Energy Pickup 2 (Right of Sub Tank)",
+                        "name": "Weapon Energy Pickup 2 (Right of Sub Tank)"
+                    },
+                    {
+                        "ref": "Stages/Volt Catfish/Sub Tank",
+                        "name": "Sub Tank"
+                    },
+                    {
+                        "ref": "Stages/Volt Catfish/HP Pickup 3 (Right of Sub Tank)",
+                        "name": "HP Pickup 3 (Right of Sub Tank)"
+                    },
+                    {
+                        "ref": "Stages/Volt Catfish/HP Pickup 4 (Left of Sub Tank)",
+                        "name": "HP Pickup 4 (Left of Sub Tank)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "volt_catfish",
+                        "x": 1344,
+                        "y": 699
+                    }
+                ]
+            },
+            {
+                "name": "Power Plant Section",
+                "sections": [
+                    {
+                        "ref": "Stages/Volt Catfish/Weapon Energy Pickup 3 (In power plant section)",
+                        "name": "Weapon Energy Pickup 3 (In power plant section)"
+                    },
+                    {
+                        "ref": "Stages/Volt Catfish/HP Pickup 5 (In power plant section)",
+                        "name": "HP Pickup 5 (In power plant section)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "volt_catfish",
+                        "x": 1066,
+                        "y": 836
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 1 (In first elevator)",
+                "sections": [
+                    {
+                        "ref": "Stages/Volt Catfish/HP Pickup 1 (In first elevator)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "volt_catfish",
+                        "x": 676,
+                        "y": 989
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 2 (In first elevator)",
+                "sections": [
+                    {
+                        "ref": "Stages/Volt Catfish/HP Pickup 2 (In first elevator)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "volt_catfish",
+                        "x": 676,
+                        "y": 916
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Crush Crawfish",
+        "children": [
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Crush Crawfish/Crush Crawfish",
+                        "name": "Crush Crawfish"
+                    },
+                    {
+                        "ref": "Stages/Crush Crawfish/Stage Clear",
+                        "name": "Stage Clear"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "crush_crawfish",
+                        "x": 1228,
+                        "y": 750
+                    }
+                ]
+            },
+            {
+                "name": "Heart Tank",
+                "sections": [
+                    {
+                        "ref": "Stages/Crush Crawfish/Heart Tank"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "crush_crawfish",
+                        "x": 743,
+                        "y": 467
+                    }
+                ]
+            },
+            {
+                "name": "Hawk Ride Armor",
+                "sections": [
+                    {
+                        "ref": "Stages/Crush Crawfish/Hawk Ride Armor"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "crush_crawfish",
+                        "x": 359,
+                        "y": 340
+                    }
+                ]
+            },
+            {
+                "name": "Body Chip Capsule",
+                "sections": [
+                    {
+                        "ref": "Stages/Crush Crawfish/Body Chip Capsule"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "crush_crawfish",
+                        "x": 543,
+                        "y": 707
+                    }
+                ]
+            },
+            {
+                "name": "Conveyor Section 1ups",
+                "sections": [
+                    {
+                        "ref": "Stages/Crush Crawfish/1up Pickup 1 (Top right of conveyor belts section)",
+                        "name": "1up Pickup 1 (Top right of conveyor belts section)"
+                    },
+                    {
+                        "ref": "Stages/Crush Crawfish/1up Pickup 2 (Top right of conveyor belts section)",
+                        "name": "1up Pickup 2 (Top right of conveyor belts section)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "crush_crawfish",
+                        "x": 752,
+                        "y": 1155
+                    }
+                ]
+            },
+            {
+                "name": "Weapon Energy Pickup (Top left of conveyor belts section)",
+                "sections": [
+                    {
+                        "ref": "Stages/Crush Crawfish/Weapon Energy Pickup (Top left of conveyor belts section)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "crush_crawfish",
+                        "x": 292,
+                        "y": 1130
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 1 (Top of third crane)",
+                "sections": [
+                    {
+                        "ref": "Stages/Crush Crawfish/HP Pickup 1 (Top of third crane)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "crush_crawfish",
+                        "x": 454,
+                        "y": 37
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 2 (Below third crane)",
+                "sections": [
+                    {
+                        "ref": "Stages/Crush Crawfish/HP Pickup 2 (Below third crane)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "crush_crawfish",
+                        "x": 488,
+                        "y": 108
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 3 (After Bit & Byte room)",
+                "sections": [
+                    {
+                        "ref": "Stages/Crush Crawfish/HP Pickup 3 (After Bit & Byte room)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "crush_crawfish",
+                        "x": 1431,
+                        "y": 604
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 4 (Before ship)",
+                "sections": [
+                    {
+                        "ref": "Stages/Crush Crawfish/HP Pickup 4 (Before ship)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "crush_crawfish",
+                        "x": 1642,
+                        "y": 732
+                    }
+                ]
+            },
+            {
+                "name": "Conveyor Section HP",
+                "sections": [
+                    {
+                        "ref": "Stages/Crush Crawfish/HP Pickup 5 (Bottom left of conveyor belts section)",
+                        "name": "HP Pickup 5 (Bottom left of conveyor belts section)"
+                    },
+                    {
+                        "ref": "Stages/Crush Crawfish/HP Pickup 6 (Bottom left of conveyor belts section)",
+                        "name": "HP Pickup 6 (Bottom left of conveyor belts section)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "crush_crawfish",
+                        "x": 297,
+                        "y": 1283
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Neon Tiger",
+        "children": [
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Neon Tiger/Neon Tiger",
+                        "name": "Neon Tiger"
+                    },
+                    {
+                        "ref": "Stages/Neon Tiger/Stage Clear",
+                        "name": "Stage Clear"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "neon_tiger",
+                        "x": 1703,
+                        "y": 843
+                    }
+                ]
+            },
+            {
+                "name": "Worm Seeker-R",
+                "sections": [
+                    {
+                        "ref": "Stages/Neon Tiger/Worm Seeker-R"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "neon_tiger",
+                        "x": 1216,
+                        "y": 312
+                    }
+                ]
+            },
+            {
+                "name": "Heart Tank",
+                "sections": [
+                    {
+                        "ref": "Stages/Neon Tiger/Heart Tank"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "neon_tiger",
+                        "x": 1494,
+                        "y": 719
+                    }
+                ]
+            },
+            {
+                "name": "Sub Tank",
+                "sections": [
+                    {
+                        "ref": "Stages/Neon Tiger/Sub Tank"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "neon_tiger",
+                        "x": 999,
+                        "y": 162
+                    }
+                ]
+            },
+            {
+                "name": "Arms Capsule",
+                "sections": [
+                    {
+                        "ref": "Stages/Neon Tiger/Arms Capsule"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "neon_tiger",
+                        "x": 1379,
+                        "y": 68
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 1 (Below first ladder)",
+                "sections": [
+                    {
+                        "ref": "Stages/Neon Tiger/HP Pickup 1 (Below first ladder)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "neon_tiger",
+                        "x": 584,
+                        "y": 236
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 2 (Below Sub Tank)",
+                "sections": [
+                    {
+                        "ref": "Stages/Neon Tiger/HP Pickup 2 (Below Sub Tank)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "neon_tiger",
+                        "x": 1000,
+                        "y": 309
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 3 (Before Worm Seeker-R room)",
+                "sections": [
+                    {
+                        "ref": "Stages/Neon Tiger/HP Pickup 3 (Before Worm Seeker-R room)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "neon_tiger",
+                        "x": 1040,
+                        "y": 220
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Gravity Beetle",
+        "children": [
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Gravity Beetle/Gravity Beetle",
+                        "name": "Gravity Beetle"
+                    },
+                    {
+                        "ref": "Stages/Gravity Beetle/Stage Clear",
+                        "name": "Stage Clear"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "gravity_beetle",
+                        "x": 1218,
+                        "y": 55
+                    }
+                ]
+            },
+            {
+                "name": "Heart Tank",
+                "sections": [
+                    {
+                        "ref": "Stages/Gravity Beetle/Heart Tank"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "gravity_beetle",
+                        "x": 536,
+                        "y": 1122
+                    }
+                ]
+            },
+            {
+                "name": "Frog Ride Armor",
+                "sections": [
+                    {
+                        "ref": "Stages/Gravity Beetle/Frog Ride Armor"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "gravity_beetle",
+                        "x": 1183,
+                        "y": 787
+                    }
+                ]
+            },
+            {
+                "name": "Arms Chip Capsule",
+                "sections": [
+                    {
+                        "ref": "Stages/Gravity Beetle/Arms Chip Capsule"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "gravity_beetle",
+                        "x": 1259,
+                        "y": 451
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 1 (In cranes and boxes room)",
+                "sections": [
+                    {
+                        "ref": "Stages/Gravity Beetle/HP Pickup 1 (In cranes and boxes room)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "gravity_beetle",
+                        "x": 790,
+                        "y": 1204
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 2 (Before elevator)",
+                "sections": [
+                    {
+                        "ref": "Stages/Gravity Beetle/HP Pickup 2 (Before elevator)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "gravity_beetle",
+                        "x": 1911,
+                        "y": 611
+                    }
+                ]
+            },
+            {
+                "name": "Elevator Ledge 1",
+                "sections": [
+                    {
+                        "ref": "Stages/Gravity Beetle/HP Pickup 3 (In elevator)",
+                        "name": "HP Pickup 3 (In elevator)"
+                    },
+                    {
+                        "ref": "Stages/Gravity Beetle/Weapon Energy Pickup 1 (In elevator)",
+                        "name": "Weapon Energy Pickup 1 (In elevator)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "gravity_beetle",
+                        "x": 2153,
+                        "y": 651
+                    }
+                ]
+            },
+            {
+                "name": "Elevator Ledge 2",
+                "sections": [
+                    {
+                        "ref": "Stages/Gravity Beetle/HP Pickup 4 (In elevator)",
+                        "name": "HP Pickup 4 (In elevator)"
+                    },
+                    {
+                        "ref": "Stages/Gravity Beetle/1up Pickup (In elevator)",
+                        "name": "1up Pickup (In elevator)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "gravity_beetle",
+                        "x": 2071,
+                        "y": 504
+                    }
+                ]
+            },
+            {
+                "name": "Elevator Ledge 3",
+                "sections": [
+                    {
+                        "ref": "Stages/Gravity Beetle/HP Pickup 5 (In elevator)",
+                        "name": "HP Pickup 5 (In elevator)"
+                    },
+                    {
+                        "ref": "Stages/Gravity Beetle/Weapon Energy Pickup 2 (In elevator)",
+                        "name": "Weapon Energy Pickup 2 (In elevator)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "gravity_beetle",
+                        "x": 2151,
+                        "y": 397
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 6 (After falling missiles)",
+                "sections": [
+                    {
+                        "ref": "Stages/Gravity Beetle/HP Pickup 6 (After falling missiles)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "gravity_beetle",
+                        "x": 535,
+                        "y": 436
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Blast Hornet",
+        "children": [
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Blast Hornet/Blast Hornet",
+                        "name": "Blast Hornet"
+                    },
+                    {
+                        "ref": "Stages/Blast Hornet/Stage Clear",
+                        "name": "Stage Clear"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "blast_hornet",
+                        "x": 1727,
+                        "y": 1243
+                    }
+                ]
+            },
+            {
+                "name": "Shurikein",
+                "sections": [
+                    {
+                        "ref": "Stages/Blast Hornet/Shurikein"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "blast_hornet",
+                        "x": 1216,
+                        "y": 563
+                    }
+                ]
+            },
+            {
+                "name": "Heart Tank",
+                "sections": [
+                    {
+                        "ref": "Stages/Blast Hornet/Heart Tank"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "blast_hornet",
+                        "x": 625,
+                        "y": 722
+                    }
+                ]
+            },
+            {
+                "name": "Chimera Ride Armor",
+                "sections": [
+                    {
+                        "ref": "Stages/Blast Hornet/Chimera Ride Armor"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "blast_hornet",
+                        "x": 1743,
+                        "y": 810
+                    }
+                ]
+            },
+            {
+                "name": "Helmet Chip Capsule",
+                "sections": [
+                    {
+                        "ref": "Stages/Blast Hornet/Helmet Chip Capsule"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "blast_hornet",
+                        "x": 1120,
+                        "y": 188
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 1 (Bottom left of conveyor belts section)",
+                "sections": [
+                    {
+                        "ref": "Stages/Blast Hornet/HP Pickup 1 (Bottom left of conveyor belts section)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "blast_hornet",
+                        "x": 795,
+                        "y": 595
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 2 (Hidden in left wall of third hangar)",
+                "sections": [
+                    {
+                        "ref": "Stages/Blast Hornet/HP Pickup 2 (Hidden in left wall of third hangar)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "blast_hornet",
+                        "x": 1992,
+                        "y": 590
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Dr. Doppler's Lab 1",
+        "children": [
+            {
+                "name": "Ledge",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Doppler's Lab 1/Weapon Energy Pickup (Before REX-2000 room)",
+                        "name": "Weapon Energy Pickup (Before REX-2000 room)"
+                    },
+                    {
+                        "ref": "Stages/Dr. Doppler's Lab 1/HP Pickup 1 (Before REX-2000 room)",
+                        "name": "HP Pickup 1 (Before REX-2000 room)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "doppler_lab_1",
+                        "x": 979,
+                        "y": 268
+                    }
+                ]
+            },
+            {
+                "name": "REX-2000",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Doppler's Lab 1/REX-2000"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "doppler_lab_1",
+                        "x": 1280,
+                        "y": 185
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 2 (Below Ride Armor pad)",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Doppler's Lab 1/HP Pickup 2 (Below Ride Armor pad)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "doppler_lab_1",
+                        "x": 1776,
+                        "y": 124
+                    }
+                ]
+            },
+            {
+                "name": "Dr. Doppler's Lab 1 Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Doppler's Lab 1/Dr. Doppler's Lab 1 Boss"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "doppler_lab_1",
+                        "x": 2416,
+                        "y": 687
+                    },
+                    {
+                        "map": "doppler_lab_1",
+                        "x": 2416,
+                        "y": 821
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Dr. Doppler's Lab 2",
+        "children": [
+            {
+                "name": "Dr. Doppler's Lab 2 Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Doppler's Lab 2/Dr. Doppler's Lab 2 Boss"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "doppler_lab_2",
+                        "x": 2175,
+                        "y": 117
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Dr. Doppler's Lab 3",
+        "children": [
+            {
+                "name": "Blizzard Buffalo (Rematch)",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Doppler's Lab 3/Blizzard Buffalo (Rematch)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "doppler_lab_3",
+                        "x": 244,
+                        "y": 444
+                    }
+                ]
+            },
+            {
+                "name": "Toxic Seahorse (Rematch)",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Doppler's Lab 3/Toxic Seahorse (Rematch)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "doppler_lab_3",
+                        "x": 387,
+                        "y": 444
+                    }
+                ]
+            },
+            {
+                "name": "Tunnel Rhino (Rematch)",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Doppler's Lab 3/Tunnel Rhino (Rematch)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "doppler_lab_3",
+                        "x": 355,
+                        "y": 542
+                    }
+                ]
+            },
+            {
+                "name": "Volt Catfish (Rematch)",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Doppler's Lab 3/Volt Catfish (Rematch)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "doppler_lab_3",
+                        "x": 204,
+                        "y": 524
+                    }
+                ]
+            },
+            {
+                "name": "Crush Crawfish (Rematch)",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Doppler's Lab 3/Crush Crawfish (Rematch)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "doppler_lab_3",
+                        "x": 428,
+                        "y": 524
+                    }
+                ]
+            },
+            {
+                "name": "Neon Tiger (Rematch)",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Doppler's Lab 3/Neon Tiger (Rematch)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "doppler_lab_3",
+                        "x": 468,
+                        "y": 468
+                    }
+                ]
+            },
+            {
+                "name": "Gravity Beetle (Rematch)",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Doppler's Lab 3/Gravity Beetle (Rematch)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "doppler_lab_3",
+                        "x": 276,
+                        "y": 542
+                    }
+                ]
+            },
+            {
+                "name": "Blast Hornet (Rematch)",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Doppler's Lab 3/Blast Hornet (Rematch)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "doppler_lab_3",
+                        "x": 163,
+                        "y": 468
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup (Before Dr. Doppler room)",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Doppler's Lab 3/HP Pickup (Before Dr. Doppler room)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "doppler_lab_3",
+                        "x": 920,
+                        "y": 477
+                    }
+                ]
+            },
+            {
+                "name": "Dr. Doppler",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Doppler's Lab 3/Dr. Doppler"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "doppler_lab_3",
+                        "x": 1215,
+                        "y": 439
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Dr. Doppler's Lab 4",
+        "children": [
+            {
+                "name": "Sigma",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Doppler's Lab 4/Sigma"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "doppler_lab_4",
+                        "x": 831,
+                        "y": 558
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Vile's Stage",
+        "children": [
+            {
+                "name": "Vile",
+                "sections": [
+                    {
+                        "ref": "Stages/Vile's Stage/Vile"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "vile",
+                        "x": 959,
+                        "y": 186
+                    }
+                ]
+            },
+            {
+                "name": "Weapon Energy Pickup (Below boss room)",
+                "sections": [
+                    {
+                        "ref": "Stages/Vile's Stage/Weapon Energy Pickup (Below boss room)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "vile",
+                        "x": 743,
+                        "y": 284
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 1 (In first elevator)",
+                "sections": [
+                    {
+                        "ref": "Stages/Vile's Stage/HP Pickup 1 (In first elevator)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "vile",
+                        "x": 472,
+                        "y": 613
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 2 (In first elevator)",
+                "sections": [
+                    {
+                        "ref": "Stages/Vile's Stage/HP Pickup 2 (In first elevator)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "vile",
+                        "x": 424,
+                        "y": 533
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 3 (In first elevator)",
+                "sections": [
+                    {
+                        "ref": "Stages/Vile's Stage/HP Pickup 3 (In first elevator)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "vile",
+                        "x": 472,
+                        "y": 452
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 4 (In first elevator)",
+                "sections": [
+                    {
+                        "ref": "Stages/Vile's Stage/HP Pickup 4 (In first elevator)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "vile",
+                        "x": 424,
+                        "y": 372
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 5 (After boss room)",
+                "sections": [
+                    {
+                        "ref": "Stages/Vile's Stage/HP Pickup 5 (After boss room)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "vile",
+                        "x": 1256,
+                        "y": 181
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 6 (After boss)",
+                "sections": [
+                    {
+                        "ref": "Stages/Vile's Stage/HP Pickup 6 (After boss)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "vile",
+                        "x": 1175,
+                        "y": 292
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 7 (After boss)",
+                "sections": [
+                    {
+                        "ref": "Stages/Vile's Stage/HP Pickup 7 (After boss)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "vile",
+                        "x": 1175,
+                        "y": 372
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 8 (In second elevator)",
+                "sections": [
+                    {
+                        "ref": "Stages/Vile's Stage/HP Pickup 8 (In second elevator)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "vile",
+                        "x": 1404,
+                        "y": 475
+                    }
+                ]
+            },
+            {
+                "name": "HP Pickup 9 (Before falling platforms section)",
+                "sections": [
+                    {
+                        "ref": "Stages/Vile's Stage/HP Pickup 9 (Before falling platforms section)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "vile",
+                        "x": 1484,
+                        "y": 60
+                    }
+                ]
+            },
+            {
+                "name": "1up Pickup (After boss)",
+                "sections": [
+                    {
+                        "ref": "Stages/Vile's Stage/1up Pickup (After boss)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "vile",
+                        "x": 1239,
+                        "y": 387
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -2,6 +2,7 @@
 
 #include "host_io_utils.hpp"
 
+#include <algorithm>
 #include <cstring>
 #include <fstream>
 #include <iostream>
@@ -63,8 +64,9 @@ bool SaveStateManager::LoadBattery(const CoreApi& core, std::string& error) cons
     return false;
   }
   if (bytes.size() != size) {
-    error = "Battery save size does not match core memory size.";
-    return false;
+    std::memset(data, 0xFF, size);
+    std::memcpy(data, bytes.data(), std::min<std::size_t>(bytes.size(), size));
+    return true;
   }
 
   std::memcpy(data, bytes.data(), size);

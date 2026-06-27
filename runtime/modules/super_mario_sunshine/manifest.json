@@ -1,0 +1,40 @@
+{
+  "game_id": "super_mario_sunshine",
+  "display_name": "Super Mario Sunshine",
+  "emu": "dolphin",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apsms"
+  ],
+  "patch_world_module": "worlds.sms",
+  "ap_world": "sms",
+  "required_roms": [
+    "super_mario_sunshine"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "dolphin",
+  "archipelago_client": {
+    "game_key": "super_mario_sunshine",
+    "world": "sms",
+    "wrapper": "dolphin",
+    "client_file": "worlds/sms/SMSClient.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".iso",
+      ".rvz",
+      ".gcm"
+    ],
+    "md5": [],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "ap_game": "Super Mario Sunshine"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": ""
+}

@@ -1,0 +1,48 @@
+{
+  "game_id": "metroid_fusion",
+  "display_name": "Metroid Fusion",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apmetfus"
+  ],
+  "patch_world_module": "worlds.metroidfusion",
+  "ap_world": "metroidfusion",
+  "required_roms": [
+    "metroid_fusion"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "metroid_fusion",
+    "world": "metroidfusion",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/metroidfusion/Client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".gba"
+    ],
+    "md5": [
+      "af5040fc0f579800151ee2a683e2e5b5"
+    ],
+    "sha1": [
+      "ca33f4348c2c05dd330d37b97e2c5a69531dfe87"
+    ]
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "gba",
+    "ap_game": "Metroid Fusion"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "",
+  "support_status": "supported",
+  "availability_status": "available_beta3_confirmed",
+  "compatibility_notes": "BETA-3 confirmed bilateral item/check communication.",
+  "tracker_pack_path": "poptracker/packs/metroid_fusion/pack",
+  "default_tracker_variant": "standard"
+}

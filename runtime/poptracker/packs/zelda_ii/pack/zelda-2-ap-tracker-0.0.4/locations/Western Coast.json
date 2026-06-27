@@ -1,0 +1,109 @@
+[
+    {
+        "name": "Western Coast",
+        "chest_unopened_img": "/images/items/close.png",
+        "chest_opened_img": "/images/items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "@Island Palace, ^$candle",
+            "@Western Hyrule, hammer",
+            "@Eastern Hyrule, raft",
+            "@Death Mountain"
+        ],
+        "children": [
+            {
+                "name": "Western Coast",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Graveyard Item",
+                        "access_rules": [],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "794",
+                        "y": "1011"
+                    },
+                    {
+                        "map": "West Hyrule",
+                        "x": "794",
+                        "y": "1008"
+                    }
+                ]
+            },
+            {
+                "name": "Western Coast​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Graveyard Beach Secret",
+                        "access_rules": [],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "634",
+                        "y": "1171"
+                    },
+                    {
+                        "map": "West Hyrule",
+                        "x": "634",
+                        "y": "1168"
+                    }
+                ]
+            },
+            {
+                "name": "Western Coast​​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Sage of Mido",
+                        "access_rules": ["wateroflife"],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Mido Swordsman",
+                        "access_rules": ["$high"],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "986",
+                        "y": "739"
+                    },
+                    {
+                        "map": "West Hyrule",
+                        "x": "986",
+                        "y": "736"
+                    }
+                ]
+            }
+        ]
+    }
+]
