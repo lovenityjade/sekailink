@@ -67,6 +67,35 @@ const commandOutput = (cmd, args, options = {}) => {
   return String(res.stdout || "");
 };
 
+const commandPath = (cmd) => {
+  const lookup = process.platform === "win32" ? "where" : "which";
+  return commandOutput(lookup, [cmd])
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .find(Boolean) || "";
+};
+
+const toMsysPath = (value) => {
+  if (process.platform !== "win32") return value;
+  const normalized = String(value || "").replaceAll("\\", "/");
+  const match = normalized.match(/^([A-Za-z]):\/(.*)$/);
+  if (!match) return value;
+  return `/${match[1].toLowerCase()}/${match[2]}`;
+};
+
+const cmakePathArgs = (args) => {
+  const cmake = commandPath("cmake").replaceAll("\\", "/").toLowerCase();
+  const cmakeIsMsys = process.platform === "win32" && cmake.includes("/msys64/usr/bin/");
+  if (!cmakeIsMsys) return args;
+  return args.map((arg) => {
+    const value = String(arg);
+    if (value.startsWith("-DSEKAILINK_MSYS2_UCRT_ROOT=")) {
+      return `-DSEKAILINK_MSYS2_UCRT_ROOT=${toMsysPath(value.slice("-DSEKAILINK_MSYS2_UCRT_ROOT=".length))}`;
+    }
+    return toMsysPath(value);
+  });
+};
+
 const copyFile = (source, target) => {
   fs.mkdirSync(path.dirname(target), { recursive: true });
   fs.copyFileSync(source, target);
@@ -120,13 +149,13 @@ const tarGzFiles = (items, outPath) => {
 
 const buildLinux = () => {
   fs.rmSync(linuxBuildDir, { recursive: true, force: true });
-  run("cmake", ["-S", nativeDir, "-B", linuxBuildDir, "-DCMAKE_BUILD_TYPE=Release"]);
-  run("cmake", ["--build", linuxBuildDir, "-j4"]);
+  run("cmake", cmakePathArgs(["-S", nativeDir, "-B", linuxBuildDir, "-DCMAKE_BUILD_TYPE=Release"]));
+  run("cmake", cmakePathArgs(["--build", linuxBuildDir, "-j4"]));
 };
 
 const buildWindows = () => {
   fs.rmSync(winBuildDir, { recursive: true, force: true });
-  run("cmake", [
+  run("cmake", cmakePathArgs([
     "-S", nativeDir,
     "-B", winBuildDir,
     "-DCMAKE_BUILD_TYPE=Release",
@@ -134,8 +163,8 @@ const buildWindows = () => {
     "-DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc",
     "-DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++",
     `-DSEKAILINK_MSYS2_UCRT_ROOT=${msysRoot}`,
-  ]);
-  run("cmake", ["--build", winBuildDir, "-j4"]);
+  ]));
+  run("cmake", cmakePathArgs(["--build", winBuildDir, "-j4"]));
 };
 
 const systemDll = (name) => {

@@ -7,6 +7,10 @@
 - Existing `test` and `stable` requests are compatibility aliases for `canonical`.
 - A build is considered `canari` until it is explicitly approved for Canonical promotion.
 - Reverting to Canonical writes the preference immediately, then the bootloader downloads Canonical on the next restart.
+- Every Windows patch/update must include the full packaged runtime DLL closure.
+  Do not ship "client-only" Windows bundles with DLLs omitted: the bootloader may
+  install that bundle over an older install where the needed dependency is absent.
+  `apps/client-core/scripts/windows-runtime-contract.mjs` is the source of truth.
 
 ## CDN Layout
 

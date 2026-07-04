@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { windowsRuntimeRequiredDirs, windowsRuntimeRequiredFiles } from "./windows-runtime-contract.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -104,6 +105,26 @@ const zipDirectory = (sourceDir, outPath) => {
   zipWithPython(sourceDir, outPath);
 };
 
+const verifyWindowsRuntimeSource = (bundle) => {
+  if (bundle.key !== "win-x64") return;
+  const platformRoot = path.join(bundle.source, "resources", "runtime", "platforms", "win32-x64");
+  const missingFiles = windowsRuntimeRequiredFiles.filter((relativePath) => {
+    const filePath = path.join(platformRoot, relativePath);
+    return !fs.existsSync(filePath) || !fs.statSync(filePath).isFile();
+  });
+  const missingDirs = windowsRuntimeRequiredDirs.filter((relativePath) => {
+    const dirPath = path.join(platformRoot, relativePath);
+    return !fs.existsSync(dirPath) || !fs.statSync(dirPath).isDirectory();
+  });
+  if (missingFiles.length || missingDirs.length) {
+    const details = [
+      ...missingFiles.map((relativePath) => `file:${relativePath}`),
+      ...missingDirs.map((relativePath) => `dir:${relativePath}`),
+    ].join(", ");
+    throw new Error(`windows_runtime_contract_incomplete:${details}`);
+  }
+};
+
 const releases = [];
 const artifacts = [];
 
@@ -116,6 +137,7 @@ for (const bundle of bundles) {
     log(`skip ${bundle.key}: missing ${bundle.source}`);
     continue;
   }
+  verifyWindowsRuntimeSource(bundle);
   const fileName = `SekaiLink-client-${releaseVersion}-${bundle.key}.zip`;
   const outPath = path.join(outputRoot, fileName);
   log(`zipping ${bundle.key}: ${bundle.source}`);

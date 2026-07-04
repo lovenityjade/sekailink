@@ -9,6 +9,12 @@ import { redesignLiteralBundles } from "./redesignLiterals";
 import { LocaleCode, Messages, SUPPORTED_LOCALES } from "./types";
 
 const STORAGE_KEY = "skl_locale";
+const CLIENT_LOCALES: readonly LocaleCode[] = ["en", "fr"];
+
+const normalizeClientLocale = (value?: string | null): LocaleCode => {
+  const normalized = normalizeLocale(value);
+  return normalized === "fr" ? "fr" : "en";
+};
 
 const bundles: Record<LocaleCode, Messages> = {
   en: { ...en, ...redesignLiteralBundles.en },
@@ -70,7 +76,7 @@ const I18nContext = React.createContext<I18nContextType>({
   locale: "en",
   setLocale: () => undefined,
   t: (key, params) => format(bundles.en?.[key] ?? key, params),
-  locales: SUPPORTED_LOCALES,
+  locales: CLIENT_LOCALES,
 });
 
 const format = (template: string, params?: Record<string, string | number>) => {
@@ -81,15 +87,16 @@ const format = (template: string, params?: Record<string, string | number>) => {
 export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [locale, setLocaleState] = React.useState<LocaleCode>(() => {
     const stored = typeof window !== "undefined" ? window.localStorage.getItem(STORAGE_KEY) : null;
-    if (stored) return normalizeLocale(stored);
+    if (stored) return normalizeClientLocale(stored);
     const lang = typeof navigator !== "undefined" ? navigator.language : "en";
-    return normalizeLocale(lang);
+    return normalizeClientLocale(lang);
   });
 
   const setLocale = React.useCallback((next: LocaleCode) => {
-    setLocaleState(next);
+    const normalized = normalizeClientLocale(next);
+    setLocaleState(normalized);
     try {
-      window.localStorage.setItem(STORAGE_KEY, next);
+      window.localStorage.setItem(STORAGE_KEY, normalized);
     } catch (_err) {
       // ignore
     }
@@ -100,7 +107,11 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return format(msg, params);
   }, [locale]);
 
-  const value = React.useMemo<I18nContextType>(() => ({ locale, setLocale, t, locales: SUPPORTED_LOCALES }), [locale, setLocale, t]);
+  const value = React.useMemo<I18nContextType>(() => ({ locale, setLocale, t, locales: CLIENT_LOCALES }), [locale, setLocale, t]);
+
+  React.useEffect(() => {
+    document.documentElement.lang = locale;
+  }, [locale]);
 
   React.useEffect(() => {
     const applyNode = (root: Node) => {

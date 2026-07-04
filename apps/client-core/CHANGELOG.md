@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-07-04
+
+- Homogenized Client Core language behavior around the explicit French/English
+  selector. The runtime i18n provider now normalizes stored/browser language to
+  supported Client Core locales only, updates the document language, and keeps
+  visible redesign literals aligned while navigating.
+- Removed the inactive Japanese choice from Settings until that translation is
+  complete, preventing the client from mixing unsupported language surfaces.
+- Hardened Windows patch/update packaging: every Windows update bundle must now
+  contain the full runtime DLL closure from `windows-runtime-contract.mjs`, and
+  update packaging fails fast if any required DLL/runtime file is missing.
+
 ## 2026-07-03
 
 - Prepared hotfix `0.3.1-prebeta3.20260703.2` for Windows. Rebuilt and bundled

@@ -269,7 +269,7 @@ const defaultCoreSettings = (): CoreSettingsValues =>
 
 const normalizeClientLocale = (value?: string | null): LocaleCode => {
   const normalized = normalizeLocale(value);
-  return normalized === 'fr' || normalized === 'ja' ? normalized : 'en';
+  return normalized === 'fr' ? 'fr' : 'en';
 };
 
 const normalizeRomKey = (value?: string | null) =>
@@ -1369,8 +1369,7 @@ export default function SettingsPage() {
                 <SelectRow label={t('UI Language')} value={language} onChange={changeLanguage} options={[
                   ['fr', t('Français')],
                   ['en', t('English')],
-                  ['ja', t('日本語')],
-                ]} description={t('First boot uses the system language. Translation cleanup is tracked as part of the BETA-3 pass.')} />
+                ]} description={t('Choose French or English. The full interface follows this setting on restart and while navigating.')} />
                 <SelectRow label={t('UI Theme')} value={theme} onChange={changeTheme} options={[
                   ['default', t('SekaiLink Default')],
                   ['light', t('Light')],
