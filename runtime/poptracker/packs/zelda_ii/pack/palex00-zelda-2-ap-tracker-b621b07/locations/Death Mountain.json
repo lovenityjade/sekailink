@@ -1,0 +1,159 @@
+[
+    {
+        "name": "Death Mountain",
+        "chest_unopened_img": "/images/items/close.png",
+        "chest_opened_img": "/images/items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "@Western Hyrule, bagusletter", "@Western Hyrule, fairyspell", "@Western Hyrule, $better_boots",
+            "@Western Coast"
+        ],
+        "children": [
+            {
+                "name": "Death Mountain",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Death Mountain Platforms",
+                        "access_rules": ["^$candle, jumpspell"],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "314",
+                        "y": "1715"
+                    },
+                    {
+                        "map": "Death Mountain",
+                        "x": "283",
+                        "y": "487"
+                    }
+                ]
+            },
+            {
+                "name": "Death Mountain​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Death Mountain Staircase",
+                        "access_rules": ["^$candle"],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "330",
+                        "y": "1731"
+                    },
+                    {
+                        "map": "Death Mountain",
+                        "x": "315",
+                        "y": "487"
+                    }
+                ]
+            },
+            {
+                "name": "Death Mountain​​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Death Mountain Boulder Pit",
+                        "access_rules": ["^$candle, hammer"],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "186",
+                        "y": "1699"
+                    },
+                    {
+                        "map": "Death Mountain",
+                        "x": "155",
+                        "y": "471"
+                    }
+                ]
+            },
+            {
+                "name": "Death Mountain​​​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Death Mountain Ending Item",
+                        "access_rules": ["^$candle"],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "218",
+                        "y": "1699"
+                    },
+                    {
+                        "map": "Death Mountain",
+                        "x": "187",
+                        "y": "471"
+                    }
+                ]
+            },
+            {
+                "name": "Death Mountain​​​​",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Death Mountain East-Facing Dead End",
+                        "access_rules": ["^$candle"],
+                        "visibility_rules": [],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "250",
+                        "y": "1699"
+                    },
+                    {
+                        "map": "Death Mountain",
+                        "x": "195",
+                        "y": "471"
+                    }
+                ]
+            }
+        ]
+    }
+]

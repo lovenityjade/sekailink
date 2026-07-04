@@ -1,0 +1,15 @@
+{
+  "http_port": 19094,
+  "listen_host": "149.202.61.90",
+  "auth_token": "replace-nexus-room-query-token",
+  "projection_backend": "mysql",
+  "projection_target": "sekailink_room_projection",
+  "mysql": {
+    "host": "127.0.0.1",
+    "user": "sekailink_projection",
+    "password": "replace-nexus-mysql-password",
+    "database": "sekailink_room_projection",
+    "port": 3306
+  },
+  "state_path": "/opt/sekailink/nexus/api-gateway/data/nexus_room_query_state.json"
+}

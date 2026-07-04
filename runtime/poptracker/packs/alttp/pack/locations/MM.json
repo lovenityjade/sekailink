@@ -1,0 +1,259 @@
+[
+    {
+        "name": "Misery Mire",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "access_rules": [
+            "^$CanReach|MM_entrance_inside"
+        ],
+        "children": [
+            {
+                "name": "Spikes Pot Key",
+                "access_rules": [
+                    "^$CanReach|MM_spike_room"
+                ],
+                "visibility_rules": ["key_drop_shuffle"],
+                "sections": [
+                    {
+                        "name": "Spikes Pot Key",
+                        "access_rules": [
+                            "^$CanReach|MM - Spike Key Drop"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MM",
+                        "x": 367,
+                        "y": 89,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Fishbone Pot Key",
+                "access_rules": [
+                    "^$CanReach|MM_fishbone_room"
+                ],
+                "visibility_rules": ["key_drop_shuffle"],
+                "sections": [
+                    {
+                        "name": "Fishbone Pot Key",
+                        "access_rules": [
+                            "^$CanReach|MM - Fishbone Key Drop"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MM",
+                        "x": 521,
+                        "y": 282,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Conveyor Crystal Key Drop",
+                "access_rules": [
+                    "^$CanReach|MM_conveyor_crystal_room"
+                ],
+                "visibility_rules": ["key_drop_shuffle"],
+                "sections": [
+                    {
+                        "name": "Conveyor Crystal Key Drop",
+                        "access_rules": [
+                            "^$CanReach|MM - Conveyor Crystal Key Drop"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MM",
+                        "x": 185,
+                        "y": 240,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Bridge Chest",
+                "access_rules": [
+                    "^$CanReach|MM - Bridge Chest"
+                ],
+                "sections": [
+                    {
+                        "name": "Bridge Chest",
+                        "access_rules": [
+                            "^$CanReach|MM - Bridge Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MM",
+                        "x": 720,
+                        "y": 292,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Main Lobby",
+                "access_rules": [
+                    "^$CanReach|MM_main_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Main Lobby",
+                        "access_rules": [
+                            "^$CanReach|MM - Main Lobby Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MM",
+                        "x": 300,
+                        "y": 155,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Compass Chest",
+                "access_rules": [
+                    "^$CanReach|MM_compass_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Compass Chest",
+                        "access_rules": [
+                            "^$CanReach|MM - Comapss Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MM",
+                        "x": 130,
+                        "y": 165,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Big Key Chest",
+                "access_rules": [
+                    "^$CanReach|MM_big_key_chest"
+                ],
+                "sections": [
+                    {
+                        "name": "Big Key Chest",
+                        "access_rules": [
+                            "^$CanReach|MM - Big Key Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MM",
+                        "x": 195,
+                        "y": 360,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Spike Chest",
+                "access_rules": [
+                    "^$CanReach|MM_spike_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Spike Chest",
+                        "access_rules": [
+                            "^$CanReach|MM - Spike Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MM",
+                        "x": 395,
+                        "y": 105,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Map Chest",
+                "access_rules": [
+                    "^$CanReach|MM_map_room_top_left"
+                ],
+                "sections": [
+                    {
+                        "name": "Map Chest",
+                        "access_rules": [
+                            "^$CanReach|MM - Map Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MM",
+                        "x": 370,
+                        "y": 170,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Big Chest",
+                "access_rules": [
+                    "^$CanReach|MM_big_chest_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Big Chest",
+                        "access_rules": [
+                            "^$CanReach|MM - Big Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MM",
+                        "x": 450,
+                        "y": 155,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Boss",
+                "access_rules": [
+                    "^$CanReach|MM_boss_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Boss Item",
+                        "access_rules": [
+                            "^$CanReach|MM - Boss"
+                        ],
+                        "item_count": 1,
+                        "hosted_item": "mm_boss, miserymire"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MM",
+                        "x": 465,
+                        "y": 40,
+                        "size": 6
+                    }
+                ]
+            }
+        ]
+    }
+]

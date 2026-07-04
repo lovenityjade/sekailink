@@ -1,0 +1,252 @@
+{
+  "metadata_id": "alttp-item-icon-metadata-v1",
+  "linkedworld_id": "alttp",
+  "status": "repo-owned-semantic-icon-bindings-with-placeholder-assets",
+  "purpose": "Declare item-slot icon semantics for LinkedWorld/Sekaiemu tracker rendering without copying PopTracker runtime code, Lua, or third-party art.",
+  "source_refs": [
+    "item-slots.complete.json",
+    "surface.complete.json",
+    "tracker/tracker.manifest.json"
+  ],
+  "asset_policy": {
+    "current_icon_asset_status": "missing-real-assets",
+    "placeholder_strategy": "render semantic glyphs or repo-owned generated placeholders from icon_key and group_id",
+    "missing_source": "Real PopTracker-style ALTTP item icon art is not present in this repo. Historical reference UID remains https://github.com/StripesOO7/alttp-ap-poptracker-pack, but no third-party art or executable tracker code is vendored here.",
+    "allowed_runtime_behavior": "Consumers may render their own icons from these semantic keys; this file is data only."
+  },
+  "icon_groups": [
+    {
+      "group_id": "combat",
+      "default_palette": "red-gold"
+    },
+    {
+      "group_id": "mobility",
+      "default_palette": "blue-gold"
+    },
+    {
+      "group_id": "utility",
+      "default_palette": "green-gold"
+    },
+    {
+      "group_id": "magic",
+      "default_palette": "violet-gold"
+    },
+    {
+      "group_id": "dungeon_items",
+      "default_palette": "stone-gold"
+    },
+    {
+      "group_id": "goal_progress",
+      "default_palette": "crystal-gold"
+    },
+    {
+      "group_id": "resources",
+      "default_palette": "amber"
+    },
+    {
+      "group_id": "consumables",
+      "default_palette": "rose"
+    },
+    {
+      "group_id": "filler_traps",
+      "default_palette": "gray"
+    }
+  ],
+  "slot_icon_bindings": [
+    {
+      "slot_id": "bow",
+      "icon_key": "item.bow",
+      "render_hint": "progressive-stage"
+    },
+    {
+      "slot_id": "sword",
+      "icon_key": "item.sword",
+      "render_hint": "progressive-stage"
+    },
+    {
+      "slot_id": "shield",
+      "icon_key": "item.shield",
+      "render_hint": "progressive-stage"
+    },
+    {
+      "slot_id": "mail",
+      "icon_key": "item.mail",
+      "render_hint": "progressive-stage"
+    },
+    {
+      "slot_id": "boomerang",
+      "icon_key": "item.boomerang",
+      "render_hint": "variant-toggle"
+    },
+    {
+      "slot_id": "hookshot",
+      "icon_key": "item.hookshot",
+      "render_hint": "toggle"
+    },
+    {
+      "slot_id": "boots",
+      "icon_key": "item.pegasus_boots",
+      "render_hint": "toggle"
+    },
+    {
+      "slot_id": "glove",
+      "icon_key": "item.glove",
+      "render_hint": "progressive-stage"
+    },
+    {
+      "slot_id": "flippers",
+      "icon_key": "item.flippers",
+      "render_hint": "toggle"
+    },
+    {
+      "slot_id": "moon_pearl",
+      "icon_key": "item.moon_pearl",
+      "render_hint": "toggle"
+    },
+    {
+      "slot_id": "magic_mirror",
+      "icon_key": "item.magic_mirror",
+      "render_hint": "toggle"
+    },
+    {
+      "slot_id": "hammer",
+      "icon_key": "item.hammer",
+      "render_hint": "toggle"
+    },
+    {
+      "slot_id": "lamp",
+      "icon_key": "item.lamp",
+      "render_hint": "toggle"
+    },
+    {
+      "slot_id": "book",
+      "icon_key": "item.book_of_mudora",
+      "render_hint": "toggle"
+    },
+    {
+      "slot_id": "bottle",
+      "icon_key": "item.bottle",
+      "render_hint": "variant-family"
+    },
+    {
+      "slot_id": "flute",
+      "icon_key": "item.flute",
+      "render_hint": "stateful-toggle"
+    },
+    {
+      "slot_id": "shovel",
+      "icon_key": "item.shovel",
+      "render_hint": "toggle"
+    },
+    {
+      "slot_id": "mushroom",
+      "icon_key": "item.mushroom",
+      "render_hint": "toggle"
+    },
+    {
+      "slot_id": "powder",
+      "icon_key": "item.magic_powder",
+      "render_hint": "toggle"
+    },
+    {
+      "slot_id": "fire_rod",
+      "icon_key": "item.fire_rod",
+      "render_hint": "toggle"
+    },
+    {
+      "slot_id": "ice_rod",
+      "icon_key": "item.ice_rod",
+      "render_hint": "toggle"
+    },
+    {
+      "slot_id": "somaria",
+      "icon_key": "item.cane_somaria",
+      "render_hint": "toggle"
+    },
+    {
+      "slot_id": "byrna",
+      "icon_key": "item.cane_byrna",
+      "render_hint": "toggle"
+    },
+    {
+      "slot_id": "cape",
+      "icon_key": "item.cape",
+      "render_hint": "toggle"
+    },
+    {
+      "slot_id": "medallions",
+      "icon_key": "item.medallions",
+      "render_hint": "multi-toggle"
+    },
+    {
+      "slot_id": "dungeon_items",
+      "icon_key": "item.dungeon_items",
+      "render_hint": "family-grid"
+    },
+    {
+      "slot_id": "goal_items",
+      "icon_key": "item.goal_progress",
+      "render_hint": "family-grid"
+    },
+    {
+      "slot_id": "magic_upgrades",
+      "icon_key": "item.magic_upgrade",
+      "render_hint": "upgrade-family"
+    },
+    {
+      "slot_id": "arrows",
+      "icon_key": "item.arrows",
+      "render_hint": "countable-resource"
+    },
+    {
+      "slot_id": "bombs",
+      "icon_key": "item.bombs",
+      "render_hint": "countable-resource"
+    },
+    {
+      "slot_id": "capacity_upgrades",
+      "icon_key": "item.capacity_upgrade",
+      "render_hint": "upgrade-family"
+    },
+    {
+      "slot_id": "rupees",
+      "icon_key": "item.rupees",
+      "render_hint": "currency-family"
+    },
+    {
+      "slot_id": "potions",
+      "icon_key": "item.potions",
+      "render_hint": "variant-family"
+    },
+    {
+      "slot_id": "health_pickups",
+      "icon_key": "item.health",
+      "render_hint": "health-family"
+    },
+    {
+      "slot_id": "magic_pickups",
+      "icon_key": "item.magic_pickup",
+      "render_hint": "magic-family"
+    },
+    {
+      "slot_id": "clocks",
+      "icon_key": "item.clock",
+      "render_hint": "timer-family"
+    },
+    {
+      "slot_id": "traps",
+      "icon_key": "item.trap",
+      "render_hint": "trap-family"
+    },
+    {
+      "slot_id": "rng_and_misc",
+      "icon_key": "item.misc_pickup",
+      "render_hint": "misc-family"
+    }
+  ],
+  "deltas": {
+    "slot_icon_bindings": 38,
+    "icon_groups": 9,
+    "real_icon_assets_present": 0
+  }
+}

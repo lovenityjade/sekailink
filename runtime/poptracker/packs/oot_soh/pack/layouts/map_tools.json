@@ -1,0 +1,53 @@
+{
+  "shared_map_tools": {
+    "type": "array",
+    "orientation": "vertical",
+    "margin": "0,0,10,0",
+    "content": [
+      {
+        "type": "itemgrid",
+        "item_margin": "2,2",
+        "h_alignment": "left",
+        "item_h_alignment": "center",
+        "item_v_alignment": "center",
+        "item_height": 54,
+        "item_width": 54,
+        "margin": "0,5,0,0",
+        "rows": [["setting_show_checks"]]
+      },
+      {
+        "type": "itemgrid",
+        "item_margin": "0,0",
+        "h_alignment": "left",
+        "item_h_alignment": "center",
+        "item_v_alignment": "center",
+        "item_height": 34,
+        "item_width": 60,
+        "margin": "0,6,0,0",
+        "rows": [["setting_split_map"]]
+      },
+      {
+        "type": "itemgrid",
+        "item_margin": "0,0",
+        "h_alignment": "left",
+        "item_h_alignment": "center",
+        "item_v_alignment": "center",
+        "item_height": 32,
+        "item_width": 59,
+        "margin": "0,8,0,0",
+        "rows": [["setting_auto_tab"]]
+      },
+      {
+        "type": "itemgrid",
+        "item_margin": "12,12",
+        "h_alignment": "left",
+        "item_h_alignment": "center",
+        "item_v_alignment": "center",
+        "item_height": 29,
+        "item_width": 29,
+        "margin": "2,-3,0,0",
+        "rows": [["setting_show_out_of_logic_checks"]]
+      }
+    ]
+  }
+}

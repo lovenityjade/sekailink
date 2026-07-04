@@ -1,0 +1,330 @@
+[
+    {
+        "name": "Overworld",
+        "chest_unopened_img": "/images/items/close.png",
+        "chest_opened_img": "/images/items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            " "
+        ],
+        "children": [
+            {
+                "name": "Death Mountain",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Death Mountain - Death Mountain Platforms",
+                        "ref": "Death Mountain/Death Mountain/Death Mountain Platforms"
+                    },
+                    {
+                        "name": "Death Mountain​ - Death Mountain Staircase",
+                        "ref": "Death Mountain/Death Mountain​/Death Mountain Staircase"
+                    },
+                    {
+                        "name": "Death Mountain​​ - Death Mountain Boulder Pit",
+                        "ref": "Death Mountain/Death Mountain​​/Death Mountain Boulder Pit"
+                    },
+                    {
+                        "name": "Death Mountain​​​ - Death Mountain Ending Item",
+                        "ref": "Death Mountain/Death Mountain​​​/Death Mountain Ending Item"
+                    },
+                    {
+                        "name": "Death Mountain​​​​ - Death Mountain East-Facing Dead End",
+                        "ref": "Death Mountain/Death Mountain​​​​/Death Mountain East-Facing Dead End"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "1922",
+                        "y": "611",
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Eastern Hyrule",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Eastern Hyrule - Eastern Forest",
+                        "ref": "Eastern Hyrule/Eastern Hyrule/Eastern Forest"
+                    },
+                    {
+                        "name": "Eastern Hyrule​ - Sage of Nabooru",
+                        "ref": "Eastern Hyrule/Eastern Hyrule​/Sage of Nabooru"
+                    },
+                    {
+                        "name": "Eastern Hyrule​​ - Eastern Cave",
+                        "ref": "Eastern Hyrule/Eastern Hyrule​​/Eastern Cave"
+                    },
+                    {
+                        "name": "Eastern Hyrule​​​ - Eastern Peninsula Secret",
+                        "ref": "Eastern Hyrule/Eastern Hyrule​​​/Eastern Peninsula Secret"
+                    },
+                    {
+                        "name": "Eastern Hyrule​​​​ - Eastern Beach Secret",
+                        "ref": "Eastern Hyrule/Eastern Hyrule​​​​/Eastern Beach Secret"
+                    },
+                    {
+                        "name": "Eastern Hyrule​​​​​ - Ocean Item",
+                        "ref": "Eastern Hyrule/Eastern Hyrule​​​​​/Ocean Item"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "1332",
+                        "y": "890",
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Northeastern Hyrule",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Northeastern Hyrule - Sage of Darunia",
+                        "ref": "Northeastern Hyrule/Northeastern Hyrule/Sage of Darunia"
+                    },
+                    {
+                        "name": "Northeastern Hyrule - Darunia Swordsman",
+                        "ref": "Northeastern Hyrule/Northeastern Hyrule/Darunia Swordsman"
+                    },
+                    {
+                        "name": "Northeastern Hyrule​ - Northeastern Beach",
+                        "ref": "Northeastern Hyrule/Northeastern Hyrule​/Northeastern Beach"
+                    },
+                    {
+                        "name": "Northeastern Hyrule​​ - Maze Island Left Hole",
+                        "ref": "Northeastern Hyrule/Northeastern Hyrule​​/Maze Island Left Hole"
+                    },
+                    {
+                        "name": "Northeastern Hyrule​​​ - Maze Island Path",
+                        "ref": "Northeastern Hyrule/Northeastern Hyrule​​​/Maze Island Path"
+                    },
+                    {
+                        "name": "Northeastern Hyrule​​​​ - Maze Island Right Hole",
+                        "ref": "Northeastern Hyrule/Northeastern Hyrule​​​​/Maze Island Right Hole"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "1388",
+                        "y": "1363",
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Northwestern Hyrule",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Northwestern Hyrule - Northern Desert Cave",
+                        "ref": "Northwestern Hyrule/Northwestern Hyrule/Northern Desert Cave"
+                    },
+                    {
+                        "name": "Northwestern Hyrule​ - Northwestern Forest Item",
+                        "ref": "Northwestern Hyrule/Northwestern Hyrule​/Northwestern Forest Item"
+                    },
+                    {
+                        "name": "Northwestern Hyrule​​ - North Castle Cave",
+                        "ref": "Northwestern Hyrule/Northwestern Hyrule​​/North Castle Cave"
+                    },
+                    {
+                        "name": "Northwestern Hyrule​​​ - Sage of Rauru",
+                        "ref": "Northwestern Hyrule/Northwestern Hyrule​​​/Sage of Rauru"
+                    },
+                    {
+                        "name": "Northwestern Hyrule​​​​ - Sage of Ruto",
+                        "ref": "Northwestern Hyrule/Northwestern Hyrule​​​​/Sage of Ruto"
+                    },
+                    {
+                        "name": "Northwestern Hyrule​​​​​ - Tantari Coast Item",
+                        "ref": "Northwestern Hyrule/Northwestern Hyrule​​​​​/Tantari Coast Item"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "998",
+                        "y": "1490",
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Southeastern Hyrule",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Southeastern Hyrule - Southeastern Swamp",
+                        "ref": "Southeastern Hyrule/Southeastern Hyrule/Southeastern Swamp"
+                    },
+                    {
+                        "name": "Southeastern Hyrule​ - Southeastern Swamp Cave",
+                        "ref": "Southeastern Hyrule/Southeastern Hyrule​/Southeastern Swamp Cave"
+                    },
+                    {
+                        "name": "Southeastern Hyrule​​ - Southeastern Coast Item",
+                        "ref": "Southeastern Hyrule/Southeastern Hyrule​​/Southeastern Coast Item"
+                    },
+                    {
+                        "name": "Southeastern Hyrule​​​ - Southeastern Forest Item",
+                        "ref": "Southeastern Hyrule/Southeastern Hyrule​​​/Southeastern Forest Item"
+                    },
+                    {
+                        "name": "Southeastern Hyrule​​​​ - Death Valley Entrance",
+                        "ref": "Southeastern Hyrule/Southeastern Hyrule​​​​/Death Valley Entrance"
+                    },
+                    {
+                        "name": "Southeastern Hyrule​​​​​ - Death Valley Midway Item",
+                        "ref": "Southeastern Hyrule/Southeastern Hyrule​​​​​/Death Valley Midway Item"
+                    },
+                    {
+                        "name": "Southeastern Hyrule​​​​​​ - Sage of Kasuto",
+                        "ref": "Southeastern Hyrule/Southeastern Hyrule​​​​​​/Sage of Kasuto"
+                    },
+                    {
+                        "name": "Southeastern Hyrule​​​​​​​ - Sage of New Kasuto",
+                        "ref": "Southeastern Hyrule/Southeastern Hyrule​​​​​​​/Sage of New Kasuto"
+                    },
+                    {
+                        "name": "Southeastern Hyrule​​​​​​​ - New Kasuto Shrine",
+                        "ref": "Southeastern Hyrule/Southeastern Hyrule​​​​​​​/New Kasuto Shrine"
+                    },
+                    {
+                        "name": "Southeastern Hyrule​​​​​​​ - New Kasuto House",
+                        "ref": "Southeastern Hyrule/Southeastern Hyrule​​​​​​​/New Kasuto House"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "487",
+                        "y": "1378",
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Western Coast",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Western Coast - Graveyard Item",
+                        "ref": "Western Coast/Western Coast/Graveyard Item"
+                    },
+                    {
+                        "name": "Western Coast​ - Graveyard Beach Secret",
+                        "ref": "Western Coast/Western Coast​/Graveyard Beach Secret"
+                    },
+                    {
+                        "name": "Western Coast​​ - Sage of Mido",
+                        "ref": "Western Coast/Western Coast​​/Sage of Mido"
+                    },
+                    {
+                        "name": "Western Coast​​ - Mido Swordsman",
+                        "ref": "Western Coast/Western Coast​​/Mido Swordsman"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "1336",
+                        "y": "1960",
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Western Hyrule",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Western Hyrule - Western Swamp Cave",
+                        "ref": "Western Hyrule/Western Hyrule/Western Swamp Cave"
+                    },
+                    {
+                        "name": "Western Hyrule​ - Western Swamp Hidden Item",
+                        "ref": "Western Hyrule/Western Hyrule​/Western Swamp Hidden Item"
+                    },
+                    {
+                        "name": "Western Hyrule​​ - Gift from Bagu",
+                        "ref": "Western Hyrule/Western Hyrule​​/Gift from Bagu"
+                    },
+                    {
+                        "name": "Western Hyrule​​​ - Midoro Swamp Pathway Item",
+                        "ref": "Western Hyrule/Western Hyrule​​​/Midoro Swamp Pathway Item"
+                    },
+                    {
+                        "name": "Western Hyrule​​​​ - Midoro Swamp Hidden Item",
+                        "ref": "Western Hyrule/Western Hyrule​​​​/Midoro Swamp Hidden Item"
+                    },
+                    {
+                        "name": "Western Hyrule​​​​​ - Clear Cave South of Rauru",
+                        "ref": "Western Hyrule/Western Hyrule​​​​​/Clear Cave South of Rauru"
+                    },
+                    {
+                        "name": "Western Hyrule​​​​​​ - Blocked Cave South of Rauru",
+                        "ref": "Western Hyrule/Western Hyrule​​​​​​/Blocked Cave South of Rauru"
+                    },
+                    {
+                        "name": "Western Hyrule​​​​​​​ - Sage of Saria",
+                        "ref": "Western Hyrule/Western Hyrule​​​​​​​/Sage of Saria"
+                    },
+                    {
+                        "name": "Western Hyrule​​​​​​​​ - Forest Near Saria",
+                        "ref": "Western Hyrule/Western Hyrule​​​​​​​​/Forest Near Saria"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Overworld",
+                        "x": "2337",
+                        "y": "929",
+                        "size": 6
+                    }
+                ]
+            }
+        ]
+    }
+]

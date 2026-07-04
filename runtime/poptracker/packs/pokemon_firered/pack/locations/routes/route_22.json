@@ -1,0 +1,63 @@
+[
+  {
+    "name": "Route 22",
+    "children": [
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Routes/Route 22/Land Encounters",
+            "name": "Land Encounters"
+          },
+          {
+            "ref": "Routes/Route 22/Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Routes/Route 22/Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Routes/Route 22/Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Routes/Route 22/Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_22",
+            "x": 752,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Rival",
+        "sections": [
+          {
+            "ref": "Routes/Route 22/Defeat Rival (Event)",
+            "name": "Defeat Rival (Event)"
+          },
+          {
+            "ref": "Routes/Route 22/Early Rival Reward",
+            "name": "Early Reward"
+          },
+          {
+            "ref": "Routes/Route 22/Late Rival Reward",
+            "name": "Late Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_22",
+            "x": 408,
+            "y": 88
+          }
+        ]
+      }
+    ]
+  }
+]

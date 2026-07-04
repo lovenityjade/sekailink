@@ -1,0 +1,598 @@
+.skl-game-manager-wrap {
+    max-width: 1200px;
+    margin: 32px auto;
+    padding: 0 24px;
+}
+
+.skl-game-manager {
+    min-height: 400px;
+}
+
+.skl-game-manager .skl-gm-tabs,
+.skl-game-manager .skl-gm-panel {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.skl-game-manager .skl-gm-tabs {
+    padding-top: 16px;
+}
+
+.skl-game-manager .skl-gm-panel {
+    padding-bottom: 20px;
+}
+
+.skl-gm-header h1 {
+    margin: 0 0 6px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: #00ffc8;
+    text-shadow: 0 0 16px rgba(0, 255, 200, 0.3);
+}
+
+.skl-gm-header p {
+    margin: 0 0 12px;
+    color: rgba(200, 255, 224, 0.45);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+}
+
+.skl-gm-header:empty {
+    display: none;
+}
+
+/* ── Search bar (flat, inline) ── */
+.skl-gm-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 0 12px;
+    border-bottom: 1px solid rgba(0, 255, 200, 0.06);
+    margin-bottom: 16px;
+    color: rgba(200, 255, 224, 0.25);
+}
+
+.skl-gm-search svg {
+    flex-shrink: 0;
+    opacity: 0.4;
+}
+
+.skl-gm-search input {
+    border: none;
+    background: transparent;
+    padding: 0;
+    min-width: 0;
+    flex: 1;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    color: rgba(200, 255, 224, 0.70);
+    letter-spacing: 0.04em;
+    outline: none;
+}
+
+.skl-gm-search input::placeholder {
+    color: rgba(200, 255, 224, 0.20);
+}
+
+.skl-gm-search input::-webkit-search-cancel-button {
+    display: none;
+}
+
+.skl-gm-search-clear {
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: rgba(200, 255, 224, 0.25);
+    cursor: pointer;
+    padding: 0;
+    transition: color 100ms ease;
+}
+
+.skl-gm-search-clear:hover {
+    color: rgba(0, 255, 200, 0.60);
+}
+
+.skl-gm-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+}
+
+.skl-gm-tab {
+    padding: 10px 18px;
+    border: 1px solid transparent;
+    border-bottom: 1px solid rgba(0, 255, 200, 0.08);
+    background: transparent;
+    color: rgba(200, 255, 224, 0.35);
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 120ms ease;
+    clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%, 0 6px);
+}
+
+.skl-gm-tab.active {
+    background: rgba(0, 0, 0, 0.25);
+    border-top: 1px solid rgba(0, 255, 200, 0.15);
+    border-left: 1px solid rgba(0, 255, 200, 0.15);
+    border-right: 1px solid rgba(0, 255, 200, 0.15);
+    border-bottom: 1px solid transparent;
+    color: #00ffc8;
+    text-shadow: 0 0 12px rgba(0, 255, 200, 0.4);
+}
+
+.skl-gm-tab:hover:not(.active) {
+    color: rgba(200, 255, 224, 0.60);
+}
+
+.skl-gm-tab-icon {
+    width: 15px;
+    height: 15px;
+    opacity: 0.9;
+}
+
+.skl-gm-tab.active .skl-gm-tab-icon {
+    opacity: 1;
+}
+
+.skl-gm-panel {
+    display: none;
+}
+
+.skl-gm-panel.active {
+    display: block;
+}
+
+.skl-gm-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.skl-gm-section-header h2 {
+    margin: 0;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(200, 255, 224, 0.60);
+}
+
+.skl-gm-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.skl-editor-lang-toggle {
+    display: inline-flex;
+    gap: 8px;
+}
+
+.skl-gm-select {
+    min-width: 220px;
+    padding: 8px 10px;
+    border: 1px solid rgba(0, 255, 200, 0.12);
+    background: rgba(5, 5, 8, 0.50);
+    color: rgba(200, 255, 224, 0.70);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px);
+}
+
+.skl-gm-editor {
+    position: relative;
+    border: 1px solid rgba(0, 255, 200, 0.10);
+    background: rgba(5, 5, 8, 0.50);
+    min-height: 420px;
+    overflow: hidden;
+    clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+}
+
+.skl-gm-code-editor {
+    width: 100%;
+    height: 70vh;
+    min-height: 420px;
+    max-height: 70vh;
+    overflow: auto !important;
+    line-height: 1.5;
+    tab-size: 2;
+}
+
+.skl-gm-editor-preview,
+.skl-gm-editor-input {
+    height: 70vh !important;
+    min-height: 420px !important;
+    max-height: 70vh !important;
+    white-space: pre;
+    overflow: auto !important;
+    box-sizing: border-box;
+}
+
+.skl-gm-editor-input {
+    outline: none;
+    border: none;
+    background: transparent;
+    color: rgba(200, 255, 224, 0.80);
+    font-family: 'Fira Code', 'Share Tech Mono', monospace;
+    width: 100%;
+    overflow: auto !important;
+    white-space: pre !important;
+    caret-color: #00ffc8;
+}
+
+.skl-gm-editor-preview {
+    margin: 0;
+    pointer-events: none;
+    overflow: auto !important;
+}
+
+.yaml-key {
+    color: #9ef3ce;
+}
+
+.yaml-string {
+    color: #ffd9a0;
+}
+
+.yaml-number {
+    color: #92c5ff;
+}
+
+.yaml-boolean {
+    color: #ffb3b3;
+}
+
+.yaml-comment {
+    color: rgba(170, 190, 180, 0.6);
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: rgba(170, 190, 180, 0.66);
+}
+
+.token.punctuation {
+    color: rgba(206, 246, 236, 0.78);
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+    color: #8cf7d3;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+    color: #ffd7a0;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+    color: #9ed8ff;
+}
+
+.token.keyword,
+.token.atrule,
+.token.attr-value {
+    color: #9bb6ff;
+}
+
+.token.function,
+.token.class-name {
+    color: #f7d47c;
+}
+
+.skl-gm-editor-actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.yaml-badge.ready {
+    background: rgba(0, 255, 200, 0.12);
+    border: 1px solid rgba(0, 255, 200, 0.30);
+    color: rgba(0, 255, 200, 0.80);
+}
+
+.yaml-badge.pending {
+    background: rgba(255, 180, 80, 0.12);
+    border: 1px solid rgba(255, 180, 80, 0.25);
+    color: rgba(255, 180, 80, 0.80);
+}
+
+.skl-setup-panel {
+    margin-top: 10px;
+    padding: 12px 14px;
+    border: 1px solid rgba(0, 255, 200, 0.10);
+    background: rgba(5, 5, 8, 0.40);
+    clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px);
+}
+
+.skl-setup-header {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #00ffc8;
+    letter-spacing: 0.06em;
+}
+
+.skl-setup-steps {
+    display: grid;
+    gap: 4px;
+    font-size: 0.9rem;
+    font-family: 'Share Tech Mono', monospace;
+    color: rgba(200, 255, 224, 0.50);
+}
+
+.skl-setup-steps .ready {
+    color: rgba(0, 255, 200, 0.70);
+}
+
+.skl-setup-steps .missing {
+    color: rgba(255, 180, 80, 0.70);
+}
+
+.skl-setup-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.skl-setup-status {
+    color: rgba(200, 255, 224, 0.45);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+}
+
+.yaml-game-card {
+    position: relative;
+}
+
+.yaml-game-readiness {
+    display: grid;
+    gap: 4px;
+    padding: 8px 10px 10px;
+    border-top: 1px solid rgba(0, 255, 200, 0.08);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 255, 200, 0.04));
+}
+
+.yaml-game-readiness.ready {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 255, 200, 0.05));
+}
+
+.yaml-game-readiness.missing {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(255, 180, 80, 0.06));
+}
+
+.yaml-game-readiness-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(220, 255, 240, 0.88);
+}
+
+.yaml-game-readiness.ready .yaml-game-readiness-label {
+    color: rgba(0, 255, 200, 0.88);
+}
+
+.yaml-game-readiness.missing .yaml-game-readiness-label {
+    color: rgba(255, 206, 138, 0.92);
+}
+
+.yaml-game-readiness-note {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    line-height: 1.45;
+    color: rgba(200, 255, 224, 0.58);
+}
+
+.yaml-game-setup {
+    margin-top: 8px;
+    width: 100%;
+    border: 1px solid rgba(0, 255, 200, 0.15);
+    background: rgba(5, 5, 8, 0.50);
+    color: rgba(200, 255, 224, 0.70);
+    font-family: 'Share Tech Mono', monospace;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 6px 10px;
+    cursor: pointer;
+    clip-path: polygon(4px 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px), 0 4px);
+}
+
+.yaml-game-setup:hover {
+    border-color: rgba(0, 255, 200, 0.30);
+    background: rgba(0, 255, 200, 0.08);
+}
+
+/* ── YAML Listbox ── */
+
+.skl-yaml-listbox {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow-y: auto;
+    max-height: 65vh;
+}
+
+.skl-yaml-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: background 100ms ease;
+    position: relative;
+    border-left: 2px solid transparent;
+}
+
+.skl-yaml-item:hover {
+    background: rgba(0, 255, 200, 0.04);
+}
+
+.skl-yaml-item.selected {
+    background: rgba(0, 255, 200, 0.06);
+    border-left-color: #00ffc8;
+}
+
+.skl-yaml-indicator {
+    width: 6px;
+    height: 6px;
+    background: rgba(200, 255, 224, 0.12);
+    flex-shrink: 0;
+}
+
+.skl-yaml-item.selected .skl-yaml-indicator {
+    background: #00ffc8;
+    box-shadow: 0 0 6px rgba(0, 255, 200, 0.5);
+}
+
+.skl-yaml-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.skl-yaml-name {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: rgba(200, 255, 224, 0.80);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.skl-yaml-item.selected .skl-yaml-name {
+    color: #00ffc8;
+    text-shadow: 0 0 8px rgba(0, 255, 200, 0.25);
+}
+
+.skl-yaml-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    padding: 1px 6px;
+    background: rgba(255, 180, 80, 0.12);
+    border: 1px solid rgba(255, 180, 80, 0.25);
+    color: rgba(255, 180, 80, 0.80);
+}
+
+.skl-yaml-detail {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: rgba(200, 255, 224, 0.30);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.skl-yaml-toolbar {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 120ms ease;
+}
+
+.skl-yaml-item:hover .skl-yaml-toolbar {
+    opacity: 1;
+}
+
+.skl-yaml-toolbar button {
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: rgba(200, 255, 224, 0.30);
+    cursor: pointer;
+    transition: color 100ms ease, background 100ms ease;
+    padding: 0;
+}
+
+.skl-yaml-toolbar button:hover {
+    background: rgba(0, 255, 200, 0.08);
+    color: rgba(0, 255, 200, 0.80);
+}
+
+.skl-yaml-toolbar .skl-yaml-btn-danger:hover {
+    background: rgba(255, 80, 80, 0.10);
+    color: rgba(255, 100, 100, 0.80);
+}
+
+.skl-yaml-empty {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 24px 16px;
+    justify-content: center;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: rgba(200, 255, 224, 0.25);
+    letter-spacing: 0.04em;
+}
+
+/* ── Listbox separator lines ── */
+.skl-yaml-item + .skl-yaml-item {
+    border-top: 1px solid rgba(0, 255, 200, 0.04);
+}
+
+@media (max-width: 900px) {
+    .skl-game-manager {
+        padding: 20px;
+    }
+    .skl-gm-code-editor,
+    .skl-gm-editor-preview,
+    .skl-gm-editor-input,
+    .skl-gm-editor textarea {
+        height: 320px !important;
+        min-height: 320px !important;
+        max-height: 320px !important;
+    }
+    .skl-yaml-toolbar {
+        opacity: 1;
+    }
+}

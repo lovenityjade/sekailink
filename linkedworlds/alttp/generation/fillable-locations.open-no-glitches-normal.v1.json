@@ -1,0 +1,1011 @@
+{
+  "schema_version": "sekailink-fillable-locations-v1",
+  "game_key": "alttp",
+  "option_profile": "open-no-glitches-normal",
+  "status": "explicit-selection-audited-non-authorizing",
+  "source_locations_ref": "tracker/location-groups.complete.json",
+  "item_pool_ref": "generation/item-pool.normal.v1.json",
+  "expected_fillable_count": 153,
+  "location_identity": [
+    "location_id",
+    "event_key",
+    "location_name",
+    "group_id"
+  ],
+  "sets": {
+    "main_pool_fillable": [
+      {
+        "location_id": 1573194,
+        "event_key": "0x18014A",
+        "location_name": "Flute Spot",
+        "group_id": "light_world_surface"
+      },
+      {
+        "location_id": 1573189,
+        "event_key": "0x180145",
+        "location_name": "Sunken Treasure",
+        "group_id": "light_world_surface"
+      },
+      {
+        "location_id": 1573193,
+        "event_key": "0x180149",
+        "location_name": "Zora's Ledge",
+        "group_id": "light_world_surface"
+      },
+      {
+        "location_id": 1573188,
+        "event_key": "0x180144",
+        "location_name": "Lake Hylia Island",
+        "group_id": "light_world_surface"
+      },
+      {
+        "location_id": 1573186,
+        "event_key": "0x180142",
+        "location_name": "Maze Race",
+        "group_id": "light_world_surface"
+      },
+      {
+        "location_id": 1573187,
+        "event_key": "0x180143",
+        "location_name": "Desert Ledge",
+        "group_id": "light_world_surface"
+      },
+      {
+        "location_id": 166320,
+        "event_key": "0x289B0",
+        "location_name": "Master Sword Pedestal",
+        "group_id": "light_world_surface"
+      },
+      {
+        "location_id": 1573184,
+        "event_key": "0x180140",
+        "location_name": "Spectacle Rock",
+        "group_id": "light_world_surface"
+      },
+      {
+        "location_id": 1573191,
+        "event_key": "0x180147",
+        "location_name": "Pyramid",
+        "group_id": "dark_world_surface"
+      },
+      {
+        "location_id": 1573192,
+        "event_key": "0x180148",
+        "location_name": "Digging Game",
+        "group_id": "dark_world_surface"
+      },
+      {
+        "location_id": 1573190,
+        "event_key": "0x180146",
+        "location_name": "Bumper Cave Ledge",
+        "group_id": "dark_world_surface"
+      },
+      {
+        "location_id": 1573185,
+        "event_key": "0x180141",
+        "location_name": "Floating Island",
+        "group_id": "dark_world_surface"
+      },
+      {
+        "location_id": 1572883,
+        "event_key": "0x180013",
+        "location_name": "Mushroom",
+        "group_id": "world_npc_checks"
+      },
+      {
+        "location_id": 975299,
+        "event_key": "0xEE1C3",
+        "location_name": "King Zora",
+        "group_id": "world_npc_checks"
+      },
+      {
+        "location_id": 193020,
+        "event_key": "0x2F1FC",
+        "location_name": "Sahasrahla",
+        "group_id": "world_npc_checks"
+      },
+      {
+        "location_id": 1572906,
+        "event_key": "0x18002A",
+        "location_name": "Blacksmith",
+        "group_id": "world_npc_checks"
+      },
+      {
+        "location_id": 1572885,
+        "event_key": "0x180015",
+        "location_name": "Magic Bat",
+        "group_id": "world_npc_checks"
+      },
+      {
+        "location_id": 211407,
+        "event_key": "0x339CF",
+        "location_name": "Sick Kid",
+        "group_id": "world_npc_checks"
+      },
+      {
+        "location_id": 1572882,
+        "event_key": "0x180012",
+        "location_name": "Library",
+        "group_id": "world_npc_checks"
+      },
+      {
+        "location_id": 1572884,
+        "event_key": "0x180014",
+        "location_name": "Potion Shop",
+        "group_id": "world_npc_checks"
+      },
+      {
+        "location_id": 1010170,
+        "event_key": "0xF69FA",
+        "location_name": "Old Man",
+        "group_id": "world_npc_checks"
+      },
+      {
+        "location_id": 1572886,
+        "event_key": "0x180016",
+        "location_name": "Ether Tablet",
+        "group_id": "world_npc_checks"
+      },
+      {
+        "location_id": 975237,
+        "event_key": "0xEE185",
+        "location_name": "Catfish",
+        "group_id": "world_npc_checks"
+      },
+      {
+        "location_id": 209095,
+        "event_key": "0x330C7",
+        "location_name": "Stumpy",
+        "group_id": "world_npc_checks"
+      },
+      {
+        "location_id": 1572887,
+        "event_key": "0x180017",
+        "location_name": "Bombos Tablet",
+        "group_id": "world_npc_checks"
+      },
+      {
+        "location_id": 191256,
+        "event_key": "0x2EB18",
+        "location_name": "Bottle Merchant",
+        "group_id": "misc_checks"
+      },
+      {
+        "location_id": 212328,
+        "event_key": "0x33D68",
+        "location_name": "Purple Chest",
+        "group_id": "misc_checks"
+      },
+      {
+        "location_id": 188229,
+        "event_key": "0x2DF45",
+        "location_name": "Link's Uncle",
+        "group_id": "misc_checks"
+      },
+      {
+        "location_id": 212605,
+        "event_key": "0x33E7D",
+        "location_name": "Hobo",
+        "group_id": "misc_checks"
+      },
+      {
+        "location_id": 60175,
+        "event_key": "0xEB0F",
+        "location_name": "Blind's Hideout - Top",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 60178,
+        "event_key": "0xEB12",
+        "location_name": "Blind's Hideout - Left",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 60181,
+        "event_key": "0xEB15",
+        "location_name": "Blind's Hideout - Right",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 60184,
+        "event_key": "0xEB18",
+        "location_name": "Blind's Hideout - Far Left",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 60187,
+        "event_key": "0xEB1B",
+        "location_name": "Blind's Hideout - Far Right",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 59761,
+        "event_key": "0xE971",
+        "location_name": "Secret Passage",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 59824,
+        "event_key": "0xE9B0",
+        "location_name": "Waterfall Fairy - Left",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 59857,
+        "event_key": "0xE9D1",
+        "location_name": "Waterfall Fairy - Right",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 59770,
+        "event_key": "0xE97A",
+        "location_name": "King's Tomb",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 59788,
+        "event_key": "0xE98C",
+        "location_name": "Floodgate Chest",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 59836,
+        "event_key": "0xE9BC",
+        "location_name": "Link's House",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 59854,
+        "event_key": "0xE9CE",
+        "location_name": "Kakariko Tavern",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 59881,
+        "event_key": "0xE9E9",
+        "location_name": "Chicken House",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 59890,
+        "event_key": "0xE9F2",
+        "location_name": "Aginah's Cave",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 60034,
+        "event_key": "0xEA82",
+        "location_name": "Sahasrahla's Hut - Left",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 60037,
+        "event_key": "0xEA85",
+        "location_name": "Sahasrahla's Hut - Middle",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 60040,
+        "event_key": "0xEA88",
+        "location_name": "Sahasrahla's Hut - Right",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 60046,
+        "event_key": "0xEA8E",
+        "location_name": "Kakariko Well - Top",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 60049,
+        "event_key": "0xEA91",
+        "location_name": "Kakariko Well - Left",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 60052,
+        "event_key": "0xEA94",
+        "location_name": "Kakariko Well - Middle",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 60055,
+        "event_key": "0xEA97",
+        "location_name": "Kakariko Well - Right",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 60058,
+        "event_key": "0xEA9A",
+        "location_name": "Kakariko Well - Bottom",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 1572864,
+        "event_key": "0x180000",
+        "location_name": "Lost Woods Hideout",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 1572865,
+        "event_key": "0x180001",
+        "location_name": "Lumberjack Tree",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 1572867,
+        "event_key": "0x180003",
+        "location_name": "Cave 45",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 1572868,
+        "event_key": "0x180004",
+        "location_name": "Graveyard Cave",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 1572869,
+        "event_key": "0x180005",
+        "location_name": "Checkerboard Cave",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 60226,
+        "event_key": "0xEB42",
+        "location_name": "Mini Moldorm Cave - Far Left",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 60229,
+        "event_key": "0xEB45",
+        "location_name": "Mini Moldorm Cave - Left",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 60232,
+        "event_key": "0xEB48",
+        "location_name": "Mini Moldorm Cave - Right",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 60235,
+        "event_key": "0xEB4B",
+        "location_name": "Mini Moldorm Cave - Far Right",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 1572880,
+        "event_key": "0x180010",
+        "location_name": "Mini Moldorm Cave - Generous Guy",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 60238,
+        "event_key": "0xEB4E",
+        "location_name": "Ice Rod Cave",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 60223,
+        "event_key": "0xEB3F",
+        "location_name": "Bonk Rock Cave",
+        "group_id": "light_world_caves"
+      },
+      {
+        "location_id": 1572866,
+        "event_key": "0x180002",
+        "location_name": "Spectacle Rock Cave",
+        "group_id": "mountain_caves"
+      },
+      {
+        "location_id": 60202,
+        "event_key": "0xEB2A",
+        "location_name": "Paradox Cave Lower - Far Left",
+        "group_id": "mountain_caves"
+      },
+      {
+        "location_id": 60205,
+        "event_key": "0xEB2D",
+        "location_name": "Paradox Cave Lower - Left",
+        "group_id": "mountain_caves"
+      },
+      {
+        "location_id": 60208,
+        "event_key": "0xEB30",
+        "location_name": "Paradox Cave Lower - Right",
+        "group_id": "mountain_caves"
+      },
+      {
+        "location_id": 60211,
+        "event_key": "0xEB33",
+        "location_name": "Paradox Cave Lower - Far Right",
+        "group_id": "mountain_caves"
+      },
+      {
+        "location_id": 60214,
+        "event_key": "0xEB36",
+        "location_name": "Paradox Cave Lower - Middle",
+        "group_id": "mountain_caves"
+      },
+      {
+        "location_id": 60217,
+        "event_key": "0xEB39",
+        "location_name": "Paradox Cave Upper - Left",
+        "group_id": "mountain_caves"
+      },
+      {
+        "location_id": 60220,
+        "event_key": "0xEB3C",
+        "location_name": "Paradox Cave Upper - Right",
+        "group_id": "mountain_caves"
+      },
+      {
+        "location_id": 59839,
+        "event_key": "0xE9BF",
+        "location_name": "Spiral Cave",
+        "group_id": "mountain_caves"
+      },
+      {
+        "location_id": 60028,
+        "event_key": "0xEA7C",
+        "location_name": "Superbunny Cave - Top",
+        "group_id": "mountain_caves"
+      },
+      {
+        "location_id": 60031,
+        "event_key": "0xEA7F",
+        "location_name": "Superbunny Cave - Bottom",
+        "group_id": "mountain_caves"
+      },
+      {
+        "location_id": 60043,
+        "event_key": "0xEA8B",
+        "location_name": "Spike Cave",
+        "group_id": "mountain_caves"
+      },
+      {
+        "location_id": 60241,
+        "event_key": "0xEB51",
+        "location_name": "Hookshot Cave - Top Right",
+        "group_id": "mountain_caves"
+      },
+      {
+        "location_id": 60244,
+        "event_key": "0xEB54",
+        "location_name": "Hookshot Cave - Top Left",
+        "group_id": "mountain_caves"
+      },
+      {
+        "location_id": 60250,
+        "event_key": "0xEB5A",
+        "location_name": "Hookshot Cave - Bottom Right",
+        "group_id": "mountain_caves"
+      },
+      {
+        "location_id": 60247,
+        "event_key": "0xEB57",
+        "location_name": "Hookshot Cave - Bottom Left",
+        "group_id": "mountain_caves"
+      },
+      {
+        "location_id": 59845,
+        "event_key": "0xE9C5",
+        "location_name": "Mimic Cave",
+        "group_id": "mountain_caves"
+      },
+      {
+        "location_id": 60190,
+        "event_key": "0xEB1E",
+        "location_name": "Hype Cave - Top",
+        "group_id": "dark_world_caves"
+      },
+      {
+        "location_id": 60193,
+        "event_key": "0xEB21",
+        "location_name": "Hype Cave - Middle Right",
+        "group_id": "dark_world_caves"
+      },
+      {
+        "location_id": 60196,
+        "event_key": "0xEB24",
+        "location_name": "Hype Cave - Middle Left",
+        "group_id": "dark_world_caves"
+      },
+      {
+        "location_id": 60199,
+        "event_key": "0xEB27",
+        "location_name": "Hype Cave - Bottom",
+        "group_id": "dark_world_caves"
+      },
+      {
+        "location_id": 1572881,
+        "event_key": "0x180011",
+        "location_name": "Hype Cave - Generous Guy",
+        "group_id": "dark_world_caves"
+      },
+      {
+        "location_id": 1572870,
+        "event_key": "0x180006",
+        "location_name": "Peg Cave",
+        "group_id": "dark_world_caves"
+      },
+      {
+        "location_id": 59776,
+        "event_key": "0xE980",
+        "location_name": "Pyramid Fairy - Left",
+        "group_id": "dark_world_caves"
+      },
+      {
+        "location_id": 59779,
+        "event_key": "0xE983",
+        "location_name": "Pyramid Fairy - Right",
+        "group_id": "dark_world_caves"
+      },
+      {
+        "location_id": 59884,
+        "event_key": "0xE9EC",
+        "location_name": "Brewery",
+        "group_id": "dark_world_caves"
+      },
+      {
+        "location_id": 59887,
+        "event_key": "0xE9EF",
+        "location_name": "C-Shaped House",
+        "group_id": "dark_world_caves"
+      },
+      {
+        "location_id": 60840,
+        "event_key": "0xEDA8",
+        "location_name": "Chest Game",
+        "group_id": "dark_world_caves"
+      },
+      {
+        "location_id": 60019,
+        "event_key": "0xEA73",
+        "location_name": "Mire Shed - Left",
+        "group_id": "dark_world_caves"
+      },
+      {
+        "location_id": 60022,
+        "event_key": "0xEA76",
+        "location_name": "Mire Shed - Right",
+        "group_id": "dark_world_caves"
+      },
+      {
+        "location_id": 59764,
+        "event_key": "0xE974",
+        "location_name": "Hyrule Castle - Boomerang Chest",
+        "group_id": "hyrule_castle_and_escape"
+      },
+      {
+        "location_id": 60169,
+        "event_key": "0xEB09",
+        "location_name": "Hyrule Castle - Zelda's Chest",
+        "group_id": "hyrule_castle_and_escape"
+      },
+      {
+        "location_id": 59758,
+        "event_key": "0xE96E",
+        "location_name": "Sewers - Dark Cross",
+        "group_id": "hyrule_castle_and_escape"
+      },
+      {
+        "location_id": 60253,
+        "event_key": "0xEB5D",
+        "location_name": "Sewers - Secret Room - Left",
+        "group_id": "hyrule_castle_and_escape"
+      },
+      {
+        "location_id": 60256,
+        "event_key": "0xEB60",
+        "location_name": "Sewers - Secret Room - Middle",
+        "group_id": "hyrule_castle_and_escape"
+      },
+      {
+        "location_id": 60259,
+        "event_key": "0xEB63",
+        "location_name": "Sewers - Secret Room - Right",
+        "group_id": "hyrule_castle_and_escape"
+      },
+      {
+        "location_id": 60025,
+        "event_key": "0xEA79",
+        "location_name": "Sanctuary",
+        "group_id": "hyrule_castle_and_escape"
+      },
+      {
+        "location_id": 59773,
+        "event_key": "0xE97D",
+        "location_name": "Eastern Palace - Big Chest",
+        "group_id": "eastern_palace"
+      },
+      {
+        "location_id": 59791,
+        "event_key": "0xE98F",
+        "location_name": "Desert Palace - Big Chest",
+        "group_id": "desert_palace"
+      },
+      {
+        "location_id": 59896,
+        "event_key": "0xE9F8",
+        "location_name": "Tower of Hera - Big Chest",
+        "group_id": "tower_of_hera"
+      },
+      {
+        "location_id": 59980,
+        "event_key": "0xEA4C",
+        "location_name": "Palace of Darkness - Dark Basement - Left",
+        "group_id": "palace_of_darkness"
+      },
+      {
+        "location_id": 59983,
+        "event_key": "0xEA4F",
+        "location_name": "Palace of Darkness - Dark Basement - Right",
+        "group_id": "palace_of_darkness"
+      },
+      {
+        "location_id": 59989,
+        "event_key": "0xEA55",
+        "location_name": "Palace of Darkness - Dark Maze - Top",
+        "group_id": "palace_of_darkness"
+      },
+      {
+        "location_id": 59992,
+        "event_key": "0xEA58",
+        "location_name": "Palace of Darkness - Dark Maze - Bottom",
+        "group_id": "palace_of_darkness"
+      },
+      {
+        "location_id": 59968,
+        "event_key": "0xEA40",
+        "location_name": "Palace of Darkness - Big Chest",
+        "group_id": "palace_of_darkness"
+      },
+      {
+        "location_id": 59785,
+        "event_key": "0xE989",
+        "location_name": "Swamp Palace - Big Chest",
+        "group_id": "swamp_palace"
+      },
+      {
+        "location_id": 60073,
+        "event_key": "0xEAA9",
+        "location_name": "Swamp Palace - Flooded Room - Left",
+        "group_id": "swamp_palace"
+      },
+      {
+        "location_id": 60076,
+        "event_key": "0xEAAC",
+        "location_name": "Swamp Palace - Flooded Room - Right",
+        "group_id": "swamp_palace"
+      },
+      {
+        "location_id": 60079,
+        "event_key": "0xEAAF",
+        "location_name": "Swamp Palace - Waterfall Room",
+        "group_id": "swamp_palace"
+      },
+      {
+        "location_id": 59800,
+        "event_key": "0xE998",
+        "location_name": "Skull Woods - Big Chest",
+        "group_id": "skull_woods"
+      },
+      {
+        "location_id": 59848,
+        "event_key": "0xE9C8",
+        "location_name": "Skull Woods - Pinball Room",
+        "group_id": "skull_woods"
+      },
+      {
+        "location_id": 59902,
+        "event_key": "0xE9FE",
+        "location_name": "Skull Woods - Bridge Room",
+        "group_id": "skull_woods"
+      },
+      {
+        "location_id": 59917,
+        "event_key": "0xEA0D",
+        "location_name": "Thieves' Town - Attic",
+        "group_id": "thieves_town"
+      },
+      {
+        "location_id": 59920,
+        "event_key": "0xEA10",
+        "location_name": "Thieves' Town - Big Chest",
+        "group_id": "thieves_town"
+      },
+      {
+        "location_id": 59923,
+        "event_key": "0xEA13",
+        "location_name": "Thieves' Town - Blind's Cell",
+        "group_id": "thieves_town"
+      },
+      {
+        "location_id": 59818,
+        "event_key": "0xE9AA",
+        "location_name": "Ice Palace - Big Chest",
+        "group_id": "ice_palace"
+      },
+      {
+        "location_id": 59872,
+        "event_key": "0xE9E0",
+        "location_name": "Ice Palace - Spike Room",
+        "group_id": "ice_palace"
+      },
+      {
+        "location_id": 60007,
+        "event_key": "0xEA67",
+        "location_name": "Misery Mire - Big Chest",
+        "group_id": "misery_mire"
+      },
+      {
+        "location_id": 60001,
+        "event_key": "0xEA61",
+        "location_name": "Misery Mire - Bridge Chest",
+        "group_id": "misery_mire"
+      },
+      {
+        "location_id": 59866,
+        "event_key": "0xE9DA",
+        "location_name": "Misery Mire - Spike Chest",
+        "group_id": "misery_mire"
+      },
+      {
+        "location_id": 59932,
+        "event_key": "0xEA1C",
+        "location_name": "Turtle Rock - Roller Room - Left",
+        "group_id": "turtle_rock"
+      },
+      {
+        "location_id": 59935,
+        "event_key": "0xEA1F",
+        "location_name": "Turtle Rock - Roller Room - Right",
+        "group_id": "turtle_rock"
+      },
+      {
+        "location_id": 59929,
+        "event_key": "0xEA19",
+        "location_name": "Turtle Rock - Big Chest",
+        "group_id": "turtle_rock"
+      },
+      {
+        "location_id": 59956,
+        "event_key": "0xEA34",
+        "location_name": "Turtle Rock - Crystaroller Room",
+        "group_id": "turtle_rock"
+      },
+      {
+        "location_id": 59953,
+        "event_key": "0xEA31",
+        "location_name": "Turtle Rock - Eye Bridge - Bottom Left",
+        "group_id": "turtle_rock"
+      },
+      {
+        "location_id": 59950,
+        "event_key": "0xEA2E",
+        "location_name": "Turtle Rock - Eye Bridge - Bottom Right",
+        "group_id": "turtle_rock"
+      },
+      {
+        "location_id": 59947,
+        "event_key": "0xEA2B",
+        "location_name": "Turtle Rock - Eye Bridge - Top Left",
+        "group_id": "turtle_rock"
+      },
+      {
+        "location_id": 59944,
+        "event_key": "0xEA28",
+        "location_name": "Turtle Rock - Eye Bridge - Top Right",
+        "group_id": "turtle_rock"
+      },
+      {
+        "location_id": 60121,
+        "event_key": "0xEAD9",
+        "location_name": "Ganons Tower - Hope Room - Left",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60124,
+        "event_key": "0xEADC",
+        "location_name": "Ganons Tower - Hope Room - Right",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60133,
+        "event_key": "0xEAE5",
+        "location_name": "Ganons Tower - Compass Room - Top Left",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60136,
+        "event_key": "0xEAE8",
+        "location_name": "Ganons Tower - Compass Room - Top Right",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60139,
+        "event_key": "0xEAEB",
+        "location_name": "Ganons Tower - Compass Room - Bottom Left",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60142,
+        "event_key": "0xEAEE",
+        "location_name": "Ganons Tower - Compass Room - Bottom Right",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60088,
+        "event_key": "0xEAB8",
+        "location_name": "Ganons Tower - DMs Room - Top Left",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60091,
+        "event_key": "0xEABB",
+        "location_name": "Ganons Tower - DMs Room - Top Right",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60094,
+        "event_key": "0xEABE",
+        "location_name": "Ganons Tower - DMs Room - Bottom Left",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60097,
+        "event_key": "0xEAC1",
+        "location_name": "Ganons Tower - DMs Room - Bottom Right",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60100,
+        "event_key": "0xEAC4",
+        "location_name": "Ganons Tower - Randomizer Room - Top Left",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60103,
+        "event_key": "0xEAC7",
+        "location_name": "Ganons Tower - Randomizer Room - Top Right",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60106,
+        "event_key": "0xEACA",
+        "location_name": "Ganons Tower - Randomizer Room - Bottom Left",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60109,
+        "event_key": "0xEACD",
+        "location_name": "Ganons Tower - Randomizer Room - Bottom Right",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60127,
+        "event_key": "0xEADF",
+        "location_name": "Ganons Tower - Bob's Chest",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60118,
+        "event_key": "0xEAD6",
+        "location_name": "Ganons Tower - Big Chest",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60148,
+        "event_key": "0xEAF4",
+        "location_name": "Ganons Tower - Big Key Room - Left",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60151,
+        "event_key": "0xEAF7",
+        "location_name": "Ganons Tower - Big Key Room - Right",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60157,
+        "event_key": "0xEAFD",
+        "location_name": "Ganons Tower - Mini Helmasaur Room - Left",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60160,
+        "event_key": "0xEB00",
+        "location_name": "Ganons Tower - Mini Helmasaur Room - Right",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60163,
+        "event_key": "0xEB03",
+        "location_name": "Ganons Tower - Pre-Moldorm Chest",
+        "group_id": "ganons_tower"
+      },
+      {
+        "location_id": 60166,
+        "event_key": "0xEB06",
+        "location_name": "Ganons Tower - Validation Chest",
+        "group_id": "ganons_tower"
+      }
+    ],
+    "reserved_or_locked": [],
+    "tracker_only": []
+  },
+  "risk_audit": {
+    "status": "consumed-authorizing-by-native-placement-readiness-probe",
+    "blocks_can_place_items_until_audited": false,
+    "blocks_can_place_items_until_native_semantics": false,
+    "placement_constraints_ref": {
+      "file": "generation/placement.open-no-glitches.v1.json",
+      "path": "$.risk_audit_completion",
+      "status": "consumed-authorizing-by-generic-native-probe"
+    },
+    "audit_authorizes": {
+      "explicit_fillable_selection": true,
+      "risk_audit_reporting": true,
+      "native_placement": true
+    },
+    "location_tags_pending": [],
+    "location_tags_consumed": [
+      { "location_id": 166320, "tags": ["pedestal_goal_sensitive", "prize_gated"] },
+      { "location_id": 1572884, "tags": ["fetch_trade", "delayed_item_exchange", "mushroom_required"] },
+      { "location_id": 1572886, "tags": ["tablet", "book_required", "sword_tier_required"] },
+      { "location_id": 1572887, "tags": ["tablet", "book_required", "sword_tier_required"] },
+      { "location_id": 975299, "tags": ["priced_npc", "rupee_economy"] },
+      { "location_id": 191256, "tags": ["priced_npc", "rupee_economy"] },
+      { "location_id": 212328, "tags": ["escort_fetch_check", "moon_pearl_required", "titan_mitts_required"] },
+      { "location_id": 212605, "tags": ["water_npc_misc", "flippers_or_access_required"] },
+      { "location_id": 59773, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+      { "location_id": 59791, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+      { "location_id": 59896, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+      { "location_id": 59968, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+      { "location_id": 59785, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+      { "location_id": 59800, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+      { "location_id": 59920, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+      { "location_id": 59818, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+      { "location_id": 60007, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+      { "location_id": 59929, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] },
+      { "location_id": 60118, "tags": ["big_key_locked_chest", "dungeon_deep_logic"] }
+    ],
+    "notes": [
+      "These tags are consumed by placement.open-no-glitches as explicit placement constraints.",
+      "The passed native placement readiness probe authorizes this risk audit for the default open/no-glitches normal profile.",
+      "Big chest, NPC priced/fetch/tablet/pedestal, and dungeon-deep tags remain represented as explicit constraints instead of tracker-only inference."
+    ]
+  },
+  "selection_policy": {
+    "must_be_explicit_before_gate": true,
+    "exclude_groups": [
+      "shop_checks"
+    ],
+    "exclude_families": [
+      "shopsanity",
+      "take_any",
+      "capacity_upgrade",
+      "key_drop",
+      "pot_key",
+      "reward_prize",
+      "dungeon_item_original_dungeon"
+    ],
+    "notes": [
+      "The tracker surface currently exposes 286 checks, but the normal item pool has 153 items.",
+      "Worlds must consume this file, not infer fillability from tracker/location-groups.complete.json.",
+      "main_pool_fillable is materialized as an audited 153-entry explicit set and is authorized for native placement by the passed native placement readiness probe.",
+      "Selection excludes the shop_checks group plus identifiable Take-Any, capacity upgrade, key-drop, pot-key, boss/reward-only, and dungeon-item-original-dungeon candidates."
+    ]
+  },
+  "validation": {
+    "pool_count_expression": "sum(item_pool.items[].count)",
+    "expected_pool_count": 153,
+    "must_equal": "expected_fillable_count",
+    "blocks_can_place_items_until_explicit": false,
+    "blocks_can_place_items_until_audited": false,
+    "blocks_can_place_items_until_native_placement_semantics": false,
+    "selection_status": "explicit-selection-audited; count-valid, risk-audit-crosswalked, and authorized by native placement readiness probe"
+  }
+}

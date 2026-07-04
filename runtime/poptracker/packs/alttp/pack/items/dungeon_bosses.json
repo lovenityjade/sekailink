@@ -1,0 +1,689 @@
+[
+  // Eastern Palace
+  {
+    "name": "Eastern Palace Boss",
+    "type": "progressive_toggle",
+    "capturable": false,
+    "initial_stage_idx": 1,
+    "stages": [
+      {
+        "img": "images/items/unknown.png",
+        "codes": "ep_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Armos_Knights_Sprite.jpg",
+        "codes": "ep_boss"
+      },
+      {
+        "img": "images/bosses/Lanmola-ALTTP-Sprite.jpg",
+        "codes": "ep_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Moldorm_Sprite.jpg",
+        "codes": "ep_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Helmasaur_King_Sprite.jpg",
+        "codes": "ep_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Arrghus_Solo_Sprite.jpg",
+        "codes": "ep_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Mothula_Sprite.jpg",
+        "codes": "ep_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Blind_the_Thief_Sprite.jpg",
+        "codes": "ep_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Kholdstare_Sprite.png",
+        "codes": "ep_boss"
+      },
+      {
+        "img": "images/bosses/Vitreouseyes.png",
+        "codes": "ep_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Trinexx_Sprite.jpg",
+        "codes": "ep_boss"
+      }
+    ]
+  },
+  // Desert Palace
+  {
+    "name": "Desert Palace Boss",
+    "capturable": false,
+    "type": "progressive_toggle",
+    "initial_stage_idx": 2,
+    "stages": [
+      {
+        "img": "images/items/unknown.png",
+        "codes": "dp_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Armos_Knights_Sprite.jpg",
+        "codes": "dp_boss"
+      },
+      {
+        "img": "images/bosses/Lanmola-ALTTP-Sprite.jpg",
+        "codes": "dp_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Moldorm_Sprite.jpg",
+        "codes": "dp_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Helmasaur_King_Sprite.jpg",
+        "codes": "dp_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Arrghus_Solo_Sprite.jpg",
+        "codes": "dp_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Mothula_Sprite.jpg",
+        "codes": "dp_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Blind_the_Thief_Sprite.jpg",
+        "codes": "dp_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Kholdstare_Sprite.png",
+        "codes": "dp_boss"
+      },
+      {
+        "img": "images/bosses/Vitreouseyes.png",
+        "codes": "dp_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Trinexx_Sprite.jpg",
+        "codes": "dp_boss"
+      }
+    ]
+  },
+  // Tower of Hera
+  {
+    "name": "Tower of Hera Boss",
+    "capturable": false,
+    "type": "progressive_toggle",
+    "initial_stage_idx": 3,
+    "stages": [
+      {
+        "img": "images/items/unknown.png",
+        "codes": "toh_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Armos_Knights_Sprite.jpg",
+        "codes": "toh_boss"
+      },
+      {
+        "img": "images/bosses/Lanmola-ALTTP-Sprite.jpg",
+        "codes": "toh_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Moldorm_Sprite.jpg",
+        "codes": "toh_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Helmasaur_King_Sprite.jpg",
+        "codes": "toh_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Arrghus_Solo_Sprite.jpg",
+        "codes": "toh_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Mothula_Sprite.jpg",
+        "codes": "toh_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Blind_the_Thief_Sprite.jpg",
+        "codes": "toh_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Kholdstare_Sprite.png",
+        "codes": "toh_boss"
+      },
+      {
+        "img": "images/bosses/Vitreouseyes.png",
+        "codes": "toh_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Trinexx_Sprite.jpg",
+        "codes": "toh_boss"
+      }
+    ]
+  },
+  // Palace of Darkness
+  {
+    "name": "Palace of Darkness Boss",
+    "capturable": false,
+    "type": "progressive_toggle",
+    "initial_stage_idx": 4,
+    "stages": [
+      {
+        "img": "images/items/unknown.png",
+        "codes": "pod_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Armos_Knights_Sprite.jpg",
+        "codes": "pod_boss"
+      },
+      {
+        "img": "images/bosses/Lanmola-ALTTP-Sprite.jpg",
+        "codes": "pod_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Moldorm_Sprite.jpg",
+        "codes": "pod_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Helmasaur_King_Sprite.jpg",
+        "codes": "pod_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Arrghus_Solo_Sprite.jpg",
+        "codes": "pod_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Mothula_Sprite.jpg",
+        "codes": "pod_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Blind_the_Thief_Sprite.jpg",
+        "codes": "pod_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Kholdstare_Sprite.png",
+        "codes": "pod_boss"
+      },
+      {
+        "img": "images/bosses/Vitreouseyes.png",
+        "codes": "pod_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Trinexx_Sprite.jpg",
+        "codes": "pod_boss"
+      }
+    ]
+  },
+  // Swamp Palace
+  {
+    "name": "Swamp Palace Boss",
+    "capturable": false,
+    "type": "progressive_toggle",
+    "initial_stage_idx": 5,
+    "stages": [
+      {
+        "img": "images/items/unknown.png",
+        "codes": "sp_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Armos_Knights_Sprite.jpg",
+        "codes": "sp_boss"
+      },
+      {
+        "img": "images/bosses/Lanmola-ALTTP-Sprite.jpg",
+        "codes": "sp_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Moldorm_Sprite.jpg",
+        "codes": "sp_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Helmasaur_King_Sprite.jpg",
+        "codes": "sp_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Arrghus_Solo_Sprite.jpg",
+        "codes": "sp_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Mothula_Sprite.jpg",
+        "codes": "sp_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Blind_the_Thief_Sprite.jpg",
+        "codes": "sp_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Kholdstare_Sprite.png",
+        "codes": "sp_boss"
+      },
+      {
+        "img": "images/bosses/Vitreouseyes.png",
+        "codes": "sp_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Trinexx_Sprite.jpg",
+        "codes": "sp_boss"
+      }
+    ]
+  },
+  // Skull Woods
+  {
+    "name": "Skull Woods Boss",
+    "capturable": false,
+    "type": "progressive_toggle",
+    "initial_stage_idx": 6,
+    "stages": [
+      {
+        "img": "images/items/unknown.png",
+        "codes": "sw_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Armos_Knights_Sprite.jpg",
+        "codes": "sw_boss"
+      },
+      {
+        "img": "images/bosses/Lanmola-ALTTP-Sprite.jpg",
+        "codes": "sw_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Moldorm_Sprite.jpg",
+        "codes": "sw_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Helmasaur_King_Sprite.jpg",
+        "codes": "sw_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Arrghus_Solo_Sprite.jpg",
+        "codes": "sw_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Mothula_Sprite.jpg",
+        "codes": "sw_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Blind_the_Thief_Sprite.jpg",
+        "codes": "sw_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Kholdstare_Sprite.png",
+        "codes": "sw_boss"
+      },
+      {
+        "img": "images/bosses/Vitreouseyes.png",
+        "codes": "sw_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Trinexx_Sprite.jpg",
+        "codes": "sw_boss"
+      }
+    ]
+  },
+  // Thieve's Town
+  {
+    "name": "Thieves Town Boss",
+    "capturable": false,
+    "type": "progressive_toggle",
+    "initial_stage_idx": 7,
+    "stages": [
+      {
+        "img": "images/items/unknown.png",
+        "codes": "tt_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Armos_Knights_Sprite.jpg",
+        "codes": "tt_boss"
+      },
+      {
+        "img": "images/bosses/Lanmola-ALTTP-Sprite.jpg",
+        "codes": "tt_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Moldorm_Sprite.jpg",
+        "codes": "tt_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Helmasaur_King_Sprite.jpg",
+        "codes": "tt_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Arrghus_Solo_Sprite.jpg",
+        "codes": "tt_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Mothula_Sprite.jpg",
+        "codes": "tt_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Blind_the_Thief_Sprite.jpg",
+        "codes": "tt_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Kholdstare_Sprite.png",
+        "codes": "tt_boss"
+      },
+      {
+        "img": "images/bosses/Vitreouseyes.png",
+        "codes": "tt_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Trinexx_Sprite.jpg",
+        "codes": "tt_boss"
+      }
+    ]
+  },
+  // Ice Palace
+  {
+    "name": "Ice Palace Boss",
+    "capturable": false,
+    "type": "progressive_toggle",
+    "initial_stage_idx": 8,
+    "stages": [
+      {
+        "img": "images/items/unknown.png",
+        "codes": "ip_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Armos_Knights_Sprite.jpg",
+        "codes": "ip_boss"
+      },
+      {
+        "img": "images/bosses/Lanmola-ALTTP-Sprite.jpg",
+        "codes": "ip_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Moldorm_Sprite.jpg",
+        "codes": "ip_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Helmasaur_King_Sprite.jpg",
+        "codes": "ip_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Arrghus_Solo_Sprite.jpg",
+        "codes": "ip_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Mothula_Sprite.jpg",
+        "codes": "ip_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Blind_the_Thief_Sprite.jpg",
+        "codes": "ip_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Kholdstare_Sprite.png",
+        "codes": "ip_boss"
+      },
+      {
+        "img": "images/bosses/Vitreouseyes.png",
+        "codes": "ip_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Trinexx_Sprite.jpg",
+        "codes": "ip_boss"
+      }
+    ]
+  },
+  // Misery Mire
+  {
+    "name": "Misery Mire Boss",
+    "capturable": false,
+    "type": "progressive_toggle",
+    "initial_stage_idx": 9,
+    "stages": [
+      {
+        "img": "images/items/unknown.png",
+        "codes": "mm_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Armos_Knights_Sprite.jpg",
+        "codes": "mm_boss"
+      },
+      {
+        "img": "images/bosses/Lanmola-ALTTP-Sprite.jpg",
+        "codes": "mm_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Moldorm_Sprite.jpg",
+        "codes": "mm_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Helmasaur_King_Sprite.jpg",
+        "codes": "mm_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Arrghus_Solo_Sprite.jpg",
+        "codes": "mm_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Mothula_Sprite.jpg",
+        "codes": "mm_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Blind_the_Thief_Sprite.jpg",
+        "codes": "mm_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Kholdstare_Sprite.png",
+        "codes": "mm_boss"
+      },
+      {
+        "img": "images/bosses/Vitreouseyes.png",
+        "codes": "mm_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Trinexx_Sprite.jpg",
+        "codes": "mm_boss"
+      }
+    ]
+  },
+  // Turtle Rock
+  {
+    "name": "Turtle Rock Boss",
+    "capturable": false,
+    "type": "progressive_toggle",
+    "initial_stage_idx": 10,
+    "stages": [
+      {
+        "img": "images/items/unknown.png",
+        "codes": "tr_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Armos_Knights_Sprite.jpg",
+        "codes": "tr_boss"
+      },
+      {
+        "img": "images/bosses/Lanmola-ALTTP-Sprite.jpg",
+        "codes": "tr_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Moldorm_Sprite.jpg",
+        "codes": "tr_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Helmasaur_King_Sprite.jpg",
+        "codes": "tr_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Arrghus_Solo_Sprite.jpg",
+        "codes": "tr_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Mothula_Sprite.jpg",
+        "codes": "tr_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Blind_the_Thief_Sprite.jpg",
+        "codes": "tr_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Kholdstare_Sprite.png",
+        "codes": "tr_boss"
+      },
+      {
+        "img": "images/bosses/Vitreouseyes.png",
+        "codes": "tr_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Trinexx_Sprite.jpg",
+        "codes": "tr_boss"
+      }
+    ]
+  },
+  // Ganons Tower
+  {
+    "name": "Ganons Tower Boss",
+    "capturable": false,
+    "type": "progressive_toggle",
+    "initial_stage_idx": 3,
+    "stages": [
+      {
+        "img": "images/items/unknown.png",
+        "codes": "gt_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Armos_Knights_Sprite.jpg",
+        "codes": "gt_boss"
+      },
+      {
+        "img": "images/bosses/Lanmola-ALTTP-Sprite.jpg",
+        "codes": "gt_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Moldorm_Sprite.jpg",
+        "codes": "gt_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Helmasaur_King_Sprite.jpg",
+        "codes": "gt_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Arrghus_Solo_Sprite.jpg",
+        "codes": "gt_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Mothula_Sprite.jpg",
+        "codes": "gt_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Blind_the_Thief_Sprite.jpg",
+        "codes": "gt_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Kholdstare_Sprite.png",
+        "codes": "gt_boss"
+      },
+      {
+        "img": "images/bosses/Vitreouseyes.png",
+        "codes": "gt_boss"
+      },
+      {
+        "img": "images/bosses/ALttP_Trinexx_Sprite.jpg",
+        "codes": "gt_boss"
+      }
+    ]
+  },
+  {
+    "name": "Ganons Tower Boss on Ice",
+    "capturable": false,
+    "type": "progressive_toggle",
+    "initial_stage_idx": 1,
+    "stages": [
+      {
+        "img": "images/items/unknown.png",
+        "codes": "gt_ice"
+      },
+      {
+        "img": "images/bosses/ALttP_Armos_Knights_Sprite.jpg",
+        "codes": "gt_ice"
+      },
+      {
+        "img": "images/bosses/Lanmola-ALTTP-Sprite.jpg",
+        "codes": "gt_ice"
+      },
+      {
+        "img": "images/bosses/ALttP_Moldorm_Sprite.jpg",
+        "codes": "gt_ice"
+      },
+      {
+        "img": "images/bosses/ALttP_Helmasaur_King_Sprite.jpg",
+        "codes": "gt_ice"
+      },
+      {
+        "img": "images/bosses/ALttP_Arrghus_Solo_Sprite.jpg",
+        "codes": "gt_ice"
+      },
+      {
+        "img": "images/bosses/ALttP_Mothula_Sprite.jpg",
+        "codes": "gt_ice"
+      },
+      {
+        "img": "images/bosses/ALttP_Blind_the_Thief_Sprite.jpg",
+        "codes": "gt_ice"
+      },
+      {
+        "img": "images/bosses/ALttP_Kholdstare_Sprite.png",
+        "codes": "gt_ice"
+      },
+      {
+        "img": "images/bosses/Vitreouseyes.png",
+        "codes": "gt_ice"
+      },
+      {
+        "img": "images/bosses/ALttP_Trinexx_Sprite.jpg",
+        "codes": "gt_ice"
+      }
+    ]
+  },
+  {
+    "name": "Ganons Tower Lanmo refight",
+    "capturable": false,
+    "type": "progressive_toggle",
+    "initial_stage_idx": 2,
+    "stages": [
+      {
+        "img": "images/items/unknown.png",
+        "codes": "gt_lanmo"
+      },
+      {
+        "img": "images/bosses/ALttP_Armos_Knights_Sprite.jpg",
+        "codes": "gt_lanmo"
+      },
+      {
+        "img": "images/bosses/Lanmola-ALTTP-Sprite.jpg",
+        "codes": "gt_lanmo"
+      },
+      {
+        "img": "images/bosses/ALttP_Moldorm_Sprite.jpg",
+        "codes": "gt_lanmo"
+      },
+      {
+        "img": "images/bosses/ALttP_Helmasaur_King_Sprite.jpg",
+        "codes": "gt_lanmo"
+      },
+      {
+        "img": "images/bosses/ALttP_Arrghus_Solo_Sprite.jpg",
+        "codes": "gt_lanmo"
+      },
+      {
+        "img": "images/bosses/ALttP_Mothula_Sprite.jpg",
+        "codes": "gt_lanmo"
+      },
+      {
+        "img": "images/bosses/ALttP_Blind_the_Thief_Sprite.jpg",
+        "codes": "gt_lanmo"
+      },
+      {
+        "img": "images/bosses/ALttP_Kholdstare_Sprite.png",
+        "codes": "gt_lanmo"
+      },
+      {
+        "img": "images/bosses/Vitreouseyes.png",
+        "codes": "gt_lanmo"
+      },
+      {
+        "img": "images/bosses/ALttP_Trinexx_Sprite.jpg",
+        "codes": "gt_lanmo"
+      }
+    ]
+  }
+]

@@ -1,0 +1,149 @@
+{
+  "main_item_layout": {
+    "type": "dock",
+    "dock": "top",
+    "v_alignment": "stretch",
+    "content": [
+      {
+        "type": "group",
+        "header": "Items",
+        "dock": "left",
+        "content": {
+          "type": "layout",
+          "key": "item_grid"
+        }
+      },
+      {
+        "type": "group",
+        "header": "Extra Items",
+        "dock": "left",
+        "content": {
+          "type": "layout",
+          "key": "extra_item_grid"
+        }
+      },
+      {
+        "type": "group",
+        "header": "Fly Unlocks",
+        "dock": "left",
+        "content": {
+          "type": "layout",
+          "key": "fly_unlock_grid"
+        }
+      },
+      {
+        "type": "group",
+        "header": "Events",
+        "dock": "left",
+        "content": {
+          "type": "layout",
+          "key": "event_grid"
+        }
+      },
+      {
+        "type": "group",
+        "header": "Settings",
+        "dock": "left",
+        "content": {
+          "type": "layout",
+          "key": "pack_settings_grid"
+        }
+      }
+    ]
+  },
+  "main_item_layout_vertical": {
+    "type": "dock",
+    "dock": "top",
+    "v_alignment": "stretch",
+    "content": [
+      {
+        "type": "group",
+        "header": "Items",
+        "dock": "top",
+        "content": {
+          "type": "layout",
+          "key": "item_grid"
+        }
+      },
+      {
+        "type": "group",
+        "header": "Extra Items",
+        "dock": "top",
+        "content": {
+          "type": "layout",
+          "key": "extra_item_grid_vertical"
+        }
+      },
+      {
+        "type": "group",
+        "header": "Fly Unlocks",
+        "dock": "top",
+        "content": {
+          "type": "layout",
+          "key": "fly_unlock_grid_vertical"
+        }
+      },
+      {
+        "type": "group",
+        "header": "Events",
+        "dock": "top",
+        "content": {
+          "type": "layout",
+          "key": "event_grid"
+        }
+      },
+      {
+        "type": "group",
+        "header": "Settings",
+        "dock": "left",
+        "content": {
+          "type": "layout",
+          "key": "pack_settings_grid_vertical"
+        }
+      }
+    ]
+  },
+  "main_item_layout_broadcast": {
+    "type": "dock",
+    "dock": "top",
+    "v_alignment": "stretch",
+    "content": [
+      {
+        "type": "group",
+        "header": "Items",
+        "dock": "top",
+        "content": {
+          "type": "layout",
+          "key": "item_grid"
+        }
+      },
+      {
+        "type": "group",
+        "header": "Extra Items",
+        "dock": "top",
+        "content": {
+          "type": "layout",
+          "key": "extra_item_grid_vertical"
+        }
+      },
+      {
+        "type": "group",
+        "header": "Fly Unlocks",
+        "dock": "top",
+        "content": {
+          "type": "layout",
+          "key": "fly_unlock_grid_vertical"
+        }
+      },
+      {
+        "type": "group",
+        "header": "Events",
+        "dock": "top",
+        "content": {
+          "type": "layout",
+          "key": "event_grid"
+        }
+      }
+    ]
+  }
+}

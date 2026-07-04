@@ -1,0 +1,823 @@
+[
+  {
+    "name": "S.S. Anne Exterior",
+    "children": [
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/Exterior - Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Dungeons/S.S. Anne/Exterior - Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Dungeons/S.S. Anne/Exterior - Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Dungeons/S.S. Anne/Exterior - Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_exterior",
+            "x": 704,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "East Pier Hidden Item",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/Exterior - East Pier Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_exterior",
+            "x": 536,
+            "y": 456
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "S.S. Anne 1F Corridor",
+    "children": [
+      {
+        "name": "Kitchen",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/Kitchen - Item",
+            "name": "Item"
+          },
+          {
+            "ref": "Dungeons/S.S. Anne/Kitchen - Trash Can Hidden Item (Top)",
+            "name": "Trash Can Hidden Item (Top)"
+          },
+          {
+            "ref": "Dungeons/S.S. Anne/Kitchen - Trash Can Hidden Item (Center)",
+            "name": "Trash Can Hidden Item (Center)"
+          },
+          {
+            "ref": "Dungeons/S.S. Anne/Kitchen - Trash Can Hidden Item (Bottom)",
+            "name": "Trash Can Hidden Item (Bottom)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_1f_corridor",
+            "x": 40,
+            "y": 312
+          }
+        ]
+      },
+      {
+        "name": "Room 2",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/1F Room 2 - Youngster Tyler Reward",
+            "name": "Youngster Tyler Reward"
+          },
+          {
+            "ref": "Dungeons/S.S. Anne/1F Room 2 - Lass Ann Reward",
+            "name": "Lass Ann Reward"
+          },
+          {
+            "ref": "Dungeons/S.S. Anne/1F Room 2 - Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_1f_corridor",
+            "x": 136,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Room 5",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/1F Room 5 - Gentleman Arthur Reward",
+            "name": "Gentleman Arthur Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_1f_corridor",
+            "x": 280,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Room 7",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/1F Room 7 - Gentleman Thomas Reward",
+            "name": "Gentleman Thomas Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_1f_corridor",
+            "x": 376,
+            "y": 184
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "S.S. Anne Kitchen",
+    "children": [
+      {
+        "name": "Item",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/Kitchen - Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_kitchen",
+            "x": 24,
+            "y": 168
+          }
+        ]
+      },
+      {
+        "name": "Trash Can Hidden Item (Top)",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/Kitchen - Trash Can Hidden Item (Top)",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_kitchen",
+            "x": 232,
+            "y": 72
+          }
+        ]
+      },
+      {
+        "name": "Trash Can Hidden Item (Middle)",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/Kitchen - Trash Can Hidden Item (Middle)",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_kitchen",
+            "x": 232,
+            "y": 104
+          }
+        ]
+      },
+      {
+        "name": "Trash Can Hidden Item (Bottom)",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/Kitchen - Trash Can Hidden Item (Bottom)",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_kitchen",
+            "x": 232,
+            "y": 136
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "S.S. Anne 1F Room 2",
+    "children": [
+      {
+        "name": "Youngster Tyler",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/1F Room 2 - Youngster Tyler Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_1f_room_2",
+            "x": 8,
+            "y": 72
+          }
+        ]
+      },
+      {
+        "name": "Lass Ann",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/1F Room 2 - Lass Ann Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_1f_room_2",
+            "x": 88,
+            "y": 56
+          }
+        ]
+      },
+      {
+        "name": "Item",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/1F Room 2 - Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_1f_room_2",
+            "x": 88,
+            "y": 120
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "S.S. Anne 1F Room 5",
+    "children": [
+      {
+        "name": "Gentleman Arthur",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/1F Room 5 - Gentleman Arthur Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_1f_room_5",
+            "x": 40,
+            "y": 104
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "S.S. Anne 1F Room 7",
+    "children": [
+      {
+        "name": "Gentleman Thomas",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/1F Room 7 - Gentleman Thomas Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_1f_room_7",
+            "x": 72,
+            "y": 56
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "S.S. Anne B1F Corridor",
+    "children": [
+      {
+        "name": "Trash Can Hidden Item",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Corridor - Trash Can Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_b1f_corridor",
+            "x": 344,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Room 1",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Room 1 - Sailor Phillip Reward",
+            "name": "Sailor Phillip Reward"
+          },
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Room 1 - Fisherman Barny Reward",
+            "name": "Fisherman Barny Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_b1f_corridor",
+            "x": 40,
+            "y": 40
+          }
+        ]
+      },
+      {
+        "name": "Room 2",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Room 2 - Sailor Huey Reward",
+            "name": "Sailor Huey Reward"
+          },
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Room 2 - Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_b1f_corridor",
+            "x": 104,
+            "y": 40
+          }
+        ]
+      },
+      {
+        "name": "Room 3",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Room 3 - Sailor Dylan Reward",
+            "name": "Sailor Dylan Reward"
+          },
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Room 3 - Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_b1f_corridor",
+            "x": 168,
+            "y": 40
+          }
+        ]
+      },
+      {
+        "name": "Room 4",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Room 4 - Sailor Leonard Reward",
+            "name": "Sailor Leonard Reward"
+          },
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Room 4 - Sailor Duncan Reward",
+            "name": "Sailor Duncan Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_b1f_corridor",
+            "x": 232,
+            "y": 40
+          }
+        ]
+      },
+      {
+        "name": "Room 5",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Room 5 - Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_b1f_corridor",
+            "x": 296,
+            "y": 40
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "S.S. Anne B1F Room 1",
+    "children": [
+      {
+        "name": "Sailor Phillip",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Room 1 - Sailor Phillip Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_b1f_room_1",
+            "x": 56,
+            "y": 40
+          }
+        ]
+      },
+      {
+        "name": "Fisherman Barny",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Room 1 - Fisherman Barny Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_b1f_room_1",
+            "x": 88,
+            "y": 40
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "S.S. Anne B1F Room 2",
+    "children": [
+      {
+        "name": "Sailor Huey",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Room 2 - Sailor Huey Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_b1f_room_2",
+            "x": 56,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Item",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Room 2 - Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_b1f_room_2",
+            "x": 56,
+            "y": 40
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "S.S. Anne B1F Room 3",
+    "children": [
+      {
+        "name": "Sailor Dylan",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Room 3 - Sailor Dylan Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_b1f_room_3",
+            "x": 72,
+            "y": 72
+          }
+        ]
+      },
+      {
+        "name": "Item",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Room 3 - Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_b1f_room_3",
+            "x": 24,
+            "y": 88
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "S.S. Anne B1F Room 4",
+    "children": [
+      {
+        "name": "Sailor Leonard",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Room 4 - Sailor Leonard Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_b1f_room_4",
+            "x": 40,
+            "y": 104
+          }
+        ]
+      },
+      {
+        "name": "Sailor Duncan",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Room 4 - Sailor Duncan Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_b1f_room_4",
+            "x": 56,
+            "y": 56
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "S.S. Anne B1F Room 5",
+    "children": [
+      {
+        "name": "Item",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/B1F Room 5 - Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_b1f_room_5",
+            "x": 40,
+            "y": 40
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "S.S. Anne 2F Corridor",
+    "children": [
+      {
+        "name": "Room 2",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/2F Room 2 - Fisherman Dale Reward",
+            "name": "Fisherman Dale Reward"
+          },
+          {
+            "ref": "Dungeons/S.S. Anne/2F Room 2 - Gentleman Brooks Reward",
+            "name": "Gentleman Brooks Reward"
+          },
+          {
+            "ref": "Dungeons/S.S. Anne/2F Room 2 - Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_2f_corridor",
+            "x": 168,
+            "y": 168
+          }
+        ]
+      },
+      {
+        "name": "Room 4",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/2F Room 4 - Gentleman Lamar Reward",
+            "name": "Gentleman Lamar Reward"
+          },
+          {
+            "ref": "Dungeons/S.S. Anne/2F Room 4 - Lass Dawn Reward",
+            "name": "Lass Dawn Reward"
+          },
+          {
+            "ref": "Dungeons/S.S. Anne/2F Room 4 - Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_2f_corridor",
+            "x": 296,
+            "y": 168
+          }
+        ]
+      },
+      {
+        "name": "Rival",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/2F Corridor - Rival Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_2f_corridor",
+            "x": 488,
+            "y": 40
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "S.S. Anne 2F Room 2",
+    "children": [
+      {
+        "name": "Fisherman Dale",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/2F Room 2 - Fisherman Dale Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_2f_room_2",
+            "x": 88,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Gentleman Brooks",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/2F Room 2 - Gentleman Brooks Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_2f_room_2",
+            "x": 24,
+            "y": 72
+          }
+        ]
+      },
+      {
+        "name": "Item",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/2F Room 2 - Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_2f_room_2",
+            "x": 56,
+            "y": 56
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "S.S. Anne 2F Room 4",
+    "children": [
+      {
+        "name": "Gentleman Lamar",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/2F Room 4 - Gentleman Lamar Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_2f_room_4",
+            "x": 8,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Lass Dawn",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/2F Room 4 - Lass Dawn Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_2f_room_4",
+            "x": 56,
+            "y": 56
+          }
+        ]
+      },
+      {
+        "name": "Item",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/2F Room 4 - Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_2f_room_4",
+            "x": 40,
+            "y": 72
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "S.S. Anne Deck",
+    "children": [
+      {
+        "name": "Sailor Trevor",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/Deck - Sailor Trevor Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_deck",
+            "x": 200,
+            "y": 168
+          }
+        ]
+      },
+      {
+        "name": "Sailor Edmond",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/Deck - Sailor Edmond Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_deck",
+            "x": 104,
+            "y": 152
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "S.S. Anne Captain's Office",
+    "children": [
+      {
+        "name": "Captain",
+        "sections": [
+          {
+            "ref": "Dungeons/S.S. Anne/Captain's Office - Captain Gift",
+            "name": "Gift"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ss_anne_captains_office",
+            "x": 88,
+            "y": 72
+          }
+        ]
+      }
+    ]
+  }
+]

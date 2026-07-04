@@ -1,0 +1,404 @@
+[
+	{
+		"name": "Western Coast",
+		"chest_unopened_img": "images/labels/chest.png",
+		"chest_opened_img": "images/labels/chestopen.png",
+		"color": "#00ff08",
+		"children": [
+			{
+				"name": "See the Season",
+				"visibility_rules": [
+					"defaultseasonsoff",
+					"singularity_random"
+				],
+				"sections": [
+					{
+						"name": "Western Coast",
+						"access_rules": ["{^$CanReach|WesternCoastFindSeason}"],
+						"chest_unopened_img": "images/labels/season_icons.png",
+						"chest_opened_img": "images/labels/season_icons_disabled.png"
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 567,
+						"y": 1603,
+						"shape": "diamond"
+					}
+				]
+			},
+			{
+				"name": "Enter D0",
+				"visibility_rules": ["ShuffleDungeonOn"],
+				"sections": [
+					{
+						"name": "Hero's Cave",
+						"access_rules": ["{^$CanReach|HerosCave}"],
+						"chest_unopened_img": "images/labels/dungeon_eye.png",
+						"chest_opened_img": "images/labels/dungeon_eye_disabled.png",
+						"inspectable_sequence_break": true
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 648,
+						"y": 1750,
+						"shape": "trapezoid"
+					}
+				]
+			},
+			{
+				"name": "Hero's Cave",
+				"access_rules": ["^$CanReach|HerosCaveFoyer"],
+				"sections": [
+					{
+						"name": "Exit the Dungeon",
+						"ref": "Hero's Cave/Exit the Dungeon/"
+					},
+					{
+						"name": "Topmost Chest",
+						"ref": "Hero's Cave/Topmost Chest/"
+					},
+					{
+						"name": "Item in Basement Under Keese Room",
+						"ref": "Hero's Cave/Item in Basement Under Keese Room/"
+					},
+					{
+						"name": "Final Chest",
+						"ref": "Hero's Cave/Final Chest/"
+					},
+					{
+						"name": "Alternative Entrance Chest",
+						"ref": "Hero's Cave/Alternative Entrance Chest/"
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 712,
+						"y": 1750
+					}
+				]
+			},
+			{
+				"name": "Enter D0 (Linked)",
+				"visibility_rules": ["linked_cave_on"],
+				"sections": [
+					{
+						"name": "Hero's Cave (Linked)",
+						"access_rules": ["{^$CanReach|LinkedCave}"],
+						"chest_unopened_img": "images/labels/dungeon_eye.png",
+						"chest_opened_img": "images/labels/dungeon_eye_disabled.png",
+						"inspectable_sequence_break": true
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 2440,
+						"y": 1602,
+						"shape": "trapezoid",
+						"restrict_visibility_rules": ["linked_cave_desert"]
+					}
+				]
+			},
+			{
+				"name": "Hero's Cave (Linked)",
+				"visibility_rules": ["linked_cave_on"],
+				"sections": [
+					{
+						"name": "Exit the Dungeon",
+						"ref": "Hero's Cave (Linked)/Exit the Dungeon/"
+					},
+					{
+						"name": "Alternative Entrance Chest",
+						"ref": "Hero's Cave (Linked)/Alternative Entrance Chest/"
+					},
+					{
+						"name": "First Reward",
+						"ref": "Hero's Cave (Linked)/First Reward/1F"
+					},
+					{
+						"name": "Checkerboard Drop",
+						"ref": "Hero's Cave (Linked)/Checkerboard Drop/2F"
+					},
+					{
+						"name": "Second Reward",
+						"ref": "Hero's Cave (Linked)/Second Reward/2F"
+					},
+					{
+						"name": "Torch Chest",
+						"ref": "Hero's Cave (Linked)/Torch Chest/3F"
+					},
+					{
+						"name": "Flooded Room Drop",
+						"ref": "Hero's Cave (Linked)/Flooded Room Drop/3F"
+					},
+					{
+						"name": "Third Reward",
+						"ref": "Hero's Cave (Linked)/Third Reward/3F"
+					},
+					{
+						"name": "Fourth Reward",
+						"ref": "Hero's Cave (Linked)/Fourth Reward/4F"
+					},
+					{
+						"name": "Gauntlet",
+						"ref": "Hero's Cave (Linked)/Gauntlet/5F"
+					},
+					{
+						"name": "Boomerang Maze",
+						"ref": "Hero's Cave (Linked)/Boomerang Maze/5F"
+					},
+					{
+						"name": "Final Reward",
+						"ref": "Hero's Cave (Linked)/Final Reward/"
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 2504,
+						"y": 1602,
+						"restrict_visibility_rules": ["linked_cave_desert"]
+					},
+					{
+						"map": "holodrum",
+						"x": 776,
+						"y": 1750,
+						"restrict_visibility_rules": ["linked_cave_hero"]
+					}
+				]
+			},
+			{
+				"name": "Maple",
+				"sections": [
+					{
+						"name": "Lon Lon Egg Trade",
+						"access_rules": ["^$CanReach|Maple"]
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 723,
+						"y": 1603
+					}
+				]
+			},
+			{
+				"name": "The Black Beast",
+				"sections": [{"access_rules": ["^$CanReach|BlackBeast"]}],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 728,
+						"y": 1990
+					}
+				]
+			},
+			{
+				"name": "Golden Darknut",
+				"sections": [
+					{
+						"name": "Spring",
+						"access_rules": ["^$CanReach|GoldenDarknutKill"],
+						"hosted_item": "golden_darknut"
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 890,
+						"y": 1704,
+						"shape": "diamond"
+					}
+				]
+			},
+			{
+				"name": "Western Coast: Chest on Beach",
+				"sections": [{"access_rules": ["^$CanReach|WesternCoastChest"]}],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 504,
+						"y": 1816
+					}
+				]
+			},
+			{
+				"name": "Western Coast Gasha Spot",
+				"visibility_rules": ["^$CanSeeGasha|1"],
+				"sections": [
+					{
+						"name": "Near Graveyard",
+						"chest_unopened_img": "images/items/gasha_spot.png",
+						"chest_opened_img": "images/items/gasha_spot_gray.png",
+						"access_rules": ["^$CanReach|WesternCoastGasha"]
+					},
+					{
+						"name": "Harvested",
+						"chest_unopened_img": "images/items/gasha_nut.png",
+						"chest_opened_img": "images/items/gasha_nut_gray.png",
+						"access_rules": ["^$HasPlanted|@Western Coast/Western Coast Gasha Spot/Near Graveyard"]
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 40,
+						"y": 1960
+					}
+				]
+			},
+			{
+				"name": "Western Coast: Chest in House",
+				"sections": [{"access_rules": ["^$CanReach|WesternCoastHouseChest"]}],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 404,
+						"y": 1704
+					}
+				]
+			},
+			{
+				"name": "Western Coast Old Man",
+				"visibility_rules": ["old_men_locations"],
+				"sections": [
+					{
+						"name": "Western Coast: Old Man",
+						"hosted_item": "event_coast_oldman",
+						"access_rules": ["^$CanReach|WesternCoastOldMan"]
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 340,
+						"y": 1688
+					}
+				]
+			},
+			{
+				"name": "Graveyard Secret",
+				"sections": [
+					{
+						"name": "Color Challenge",
+						"visibility_rules": ["secrets_on"],
+						"access_rules": ["^$CanReach|GraveyardSecret"]
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 72,
+						"y": 1816
+					}
+				]
+			},
+			{
+				"name": "Graveyard Mushroom Item",
+				"sections": [{"access_rules": ["^$CanReach|GraveyardHP"]}],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 184,
+						"y": 1688
+					}
+				]
+			},
+			{
+				"name": "Enter D7",
+				"visibility_rules": ["ShuffleDungeonOn"],
+				"sections": [
+					{
+						"name": "Explorer's Crypt",
+						"access_rules": ["{^$CanReach|ExplorersCrypt}"],
+						"chest_unopened_img": "images/labels/dungeon_eye.png",
+						"chest_opened_img": "images/labels/dungeon_eye_disabled.png",
+						"inspectable_sequence_break": true
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 72,
+						"y": 1762,
+						"shape": "trapezoid"
+					}
+				]
+			},
+			{
+				"name": "Explorer's Crypt",
+				"sections": [
+					{
+						"name": "Wild Ember Seeds (1F)",
+						"ref": "Explorer's Crypt/Wild Ember Seeds/1F"
+					},
+					{
+						"name": "Chest Behind Cracked Wall (1F)",
+						"ref": "Explorer's Crypt/Chest Behind Cracked Wall/1F"
+					},
+					{
+						"name": "Chest in Wizzrobe Room (1F)",
+						"ref": "Explorer's Crypt/Chest in Wizzrobe Room/1F"
+					},
+					{
+						"name": "Chest Right of Entrance (1F)",
+						"ref": "Explorer's Crypt/Chest Right of Entrance/1F"
+					},
+					{
+						"name": "Zol Button Drop (B1F)",
+						"ref": "Explorer's Crypt/Zol Button Drop/B1F"
+					},
+					{
+						"name": "Armos Puzzle Drop (B2F)",
+						"ref": "Explorer's Crypt/Armos Puzzle Drop/B2F"
+					},
+					{
+						"name": "Chest Connected to Magnet Ball Button (B1F)",
+						"ref": "Explorer's Crypt/Chest Connected to Magnet Ball Button/B1F"
+					},
+					{
+						"name": "Quicksand Chest Near Second Poe (1F)",
+						"ref": "Explorer's Crypt/Quicksand Chest Near Second Poe/1F"
+					},
+					{
+						"name": "Fast Moving Platform Chest (B1F)",
+						"ref": "Explorer's Crypt/Fast Moving Platform Chest/B1F"
+					},
+					{
+						"name": "Stair Maze Chest (B2F)",
+						"ref": "Explorer's Crypt/Stair Maze Chest/B2F"
+					},
+					{
+						"name": "Drop in Room North of Stair Maze (B2F)",
+						"ref": "Explorer's Crypt/Drop in Room North of Stair Maze/B2F"
+					},
+					{
+						"name": "Jumping Stalfos Room Chest (B1F)",
+						"ref": "Explorer's Crypt/Jumping Stalfos Room Chest/B1F"
+					},
+					{
+						"name": "Boss Reward (B1F)",
+						"ref": "Explorer's Crypt/Boss Reward/Gleeok"
+					},
+					{
+						"name": "Seed of Life",
+						"ref": "Explorer's Crypt/Seed of Life/Essence"
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 72,
+						"y": 1700
+					}
+				]
+			}
+		]
+	}
+]

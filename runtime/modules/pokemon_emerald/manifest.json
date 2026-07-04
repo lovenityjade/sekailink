@@ -1,0 +1,46 @@
+{
+  "game_id": "pokemon_emerald",
+  "display_name": "Pokemon Emerald",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apemerald"
+  ],
+  "patch_world_module": "worlds.pokemon_emerald",
+  "ap_world": "pokemon_emerald",
+  "required_roms": [
+    "pokemon_emerald"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "pokemon_emerald",
+    "world": "pokemon_emerald",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/pokemon_emerald/client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".gba"
+    ],
+    "md5": [
+      "605b89b67018abcea91e693a4dd25be3"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "gba",
+    "ap_game": "Pokemon Emerald"
+  },
+  "tracker_pack_uid": "https://github.com/seto10987/Archipelago-Emerald-AP-Tracker",
+  "tracker_web_url": "https://github.com/seto10987/Archipelago-Emerald-AP-Tracker/releases/latest",
+  "tracker_asset_regex": "\\.zip$",
+  "support_status": "canari_test",
+  "availability_status": "available_canari_test",
+  "compatibility_notes": "Canari test frozen: Linux bilateral send/reception confirmed through Sekaiemu/mGBA with the BizHawk-compatible runtime memory bridge. Windows validation is still required before Canonical promotion.",
+  "tracker_pack_path": "poptracker/packs/pokemon_emerald/pack/seto10987-Archipelago-Emerald-AP-Tracker-7c8db82"
+}

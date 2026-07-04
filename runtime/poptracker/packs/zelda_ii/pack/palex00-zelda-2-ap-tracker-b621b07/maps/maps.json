@@ -1,0 +1,76 @@
+[
+    {
+        "name": "Overworld",
+        "location_size": 32,
+        "location_border_thickness": 1,
+        "img": "images/maps/overworld.png"
+    },
+    {
+        "name": "West Hyrule",
+        "location_size": 24,
+        "location_border_thickness": 1,
+        "img": "images/maps/west_hyrule.png"
+    },
+    {
+        "name": "East Hyrule",
+        "location_size": 24,
+        "location_border_thickness": 1,
+        "img": "images/maps/east_hyrule.png"
+    },
+    {
+        "name": "Death Mountain",
+        "location_size": 24,
+        "location_border_thickness": 1,
+        "img": "images/maps/death_mountain.png"
+    },
+    {
+        "name": "Island Maze",
+        "location_size": 16,
+        "location_border_thickness": 1,
+        "img": "images/maps/island_maze.png"
+    },
+    
+    
+    {
+        "name": "Great Palace",
+        "location_size": 24,
+        "location_border_thickness": 1,
+        "img": "images/maps/Great Palace.png"
+    },
+    {
+        "name": "Island Palace",
+        "location_size": 24,
+        "location_border_thickness": 1,
+        "img": "images/maps/Island Palace.png"
+    },
+    {
+        "name": "Maze Palace",
+        "location_size": 24,
+        "location_border_thickness": 1,
+        "img": "images/maps/Maze Palace.png"
+    },
+    {
+        "name": "Midoro Palace",
+        "location_size": 24,
+        "location_border_thickness": 1,
+        "img": "images/maps/Midoro Palace.png"
+    },
+    {
+        "name": "Palace on the Sea",
+        "location_size": 24,
+        "location_border_thickness": 1,
+        "img": "images/maps/Palace on the Sea.png"
+    },
+    {
+        "name": "Parapa Palace",
+        "location_size": 24,
+        "location_border_thickness": 1,
+        "img": "images/maps/Parapa Palace.png"
+    },
+    {
+        "name": "Three-Eye Rock Palace",
+        "location_size": 24,
+        "location_border_thickness": 1,
+        "img": "images/maps/Three-Eye Rock Palace.png"
+    }
+]

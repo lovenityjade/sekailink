@@ -1,0 +1,3388 @@
+[
+  {
+    "name": "World",
+    "children": [
+
+      {
+        "name": "Northern Onett",
+        "access_rules": ["@Onett,policebadge","normalstart"],
+        "children": [
+          {
+            "name": "Ness's House",
+            "sections": [
+              {
+                "name": "Tracy's Room Present",
+                "item_count": 1
+              },
+              {
+                "name": "Tracy Gift",
+                "access_rules": ["Ness"],
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "onett",
+                "x": 1886,
+                "y": 340
+              }
+            ]
+          },
+          {
+            "name": "Pokey's House",
+            "sections": [
+              {
+                "name": "Buzz Buzz",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "onett",
+                "x": 1631,
+                "y": 339
+              }
+            ]
+          },
+          {
+            "name": "Lier X. Agerate's House",
+            "sections": [
+              {
+                "name": "Mani-Mani Statue",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "onett",
+                "x": 1068,
+                "y": 123
+              }
+            ]
+          },
+          {
+            "name": "Onett Hilltop",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "onett",
+                "x": 1135,
+                "y": 424
+              }
+            ]
+          },
+          {
+            "name": "Onett Meteor",
+            "sections": [
+              {
+                "name": "Meteor Item",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "onett",
+                "x": 1312,
+                "y": 143
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Onett",
+        "access_rules": ["onettwarp","onettstart","@Twoson,policebadge","normalstart"],
+        "children": [
+          {
+            "name": "Library",
+            "sections": [
+              {
+                "name": "Front Desk",
+                "item_count": 1
+              },
+              {
+                "name": "Bookshelf",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "onett",
+                "x": 1368,
+                "y": 860
+              }
+            ]
+          },
+          {
+            "name": "Burger Shop",
+            "sections": [
+              {
+                "name": "Trashcan",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "onett",
+                "x": 1056,
+                "y": 1130
+              }
+            ]
+          },
+          {
+            "name": "Onett Drugstore",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Right Counter",
+                "clear_as_group": false,
+                "item_count": 5
+              },
+              {
+                "name": "Left Counter",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "onett",
+                "x": 840,
+                "y": 1125
+              }
+            ]
+          },
+          {
+            "name": "Onett Burger Shop",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Counter",
+                "clear_as_group": false,
+                "item_count": 4
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "onett",
+                "x": 975,
+                "y": 1128
+              }
+            ]
+          },
+          {
+            "name": "Onett Bakery",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Counter",
+                "clear_as_group": false,
+                "item_count": 4
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "onett",
+                "x": 1096,
+                "y": 1732
+              }
+            ]
+          },
+          {
+            "name": "Treehouse",
+            "sections": [
+              {
+                "name": "Cap Guy Item",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "onett",
+                "x": 1257,
+                "y": 652
+              }
+            ]
+          },
+          {
+            "name": "Road to Twoson",
+            "access_rules": "policebadge",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "onett",
+                "x": 936,
+                "y": 2000
+              }
+            ]
+          },
+          {
+            "name": "Onett Hotel",
+            "sections": [
+              {
+                "name": "Trashcan",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "onett",
+                "x": 1440,
+                "y": 1409
+              }
+            ]
+          },
+          {
+            "name": "Onett Arcade",
+            "sections": [
+              {
+                "name": "Trashcan",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "onett",
+                "x": 759,
+                "y": 1730
+              }
+            ]
+          },
+          {
+            "name": "Onett City Hall",
+            "sections": [
+              {
+                "name": "Sharks Reward",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "onett",
+                "x": 896,
+                "y": 1328
+              },
+              {
+                "map": "onett",
+                "x": 847,
+                "y": 1613
+              }
+            ]
+          },
+          {
+            "name": "Onett - Traveling Entertainer",
+            "access_rules": "shackkey",
+            "sections": [
+              {
+                "name": "Item",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "onett",
+                "x": 672,
+                "y": 598
+              }
+            ]
+          },
+          {
+            "name": "Giant Step",
+            "access_rules": "shackkey",
+            "sections": [
+              {
+                "name": "1F Present",
+                "item_count": 1
+              },
+              {
+                "name": "2F Present",
+                "item_count": 1
+              },
+              {
+                "name": "3F Present",
+                "item_count": 1
+              },
+              {
+                "name": "Sanctuary",
+                "item_count": 0,
+                "hosted_item": "giantstep"
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "onett",
+                "x": 656,
+                "y": 490
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Twoson",
+        "access_rules": ["twosonwarp","twosonstart","@Onett,policebadge","@Threed,@Grapefruit Falls,flyhoney","@Happy-Happy Village,pencileraser","@Happy-Happy Village,franklinbadge"],
+        "children": [
+          {
+            "name": "Punk-Sure",
+            "sections": [
+              {
+                "name": "Bike Rental",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "twoson",
+                "x": 570,
+                "y": 622
+              }
+            ]
+          },
+          {
+            "name": "Twoson - Burglin Park",
+            "sections": [
+              {
+                "name": "Antique Shop",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "twoson",
+                "x": 623,
+                "y": 1061
+              }
+            ]
+          },
+          {
+            "name": "Twoson - Everdred's House",
+            "access_rules": "Paula",
+            "sections": [
+              {
+                "name": "Secret Meeting",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "twoson",
+                "x": 424,
+                "y": 1012
+              }
+            ]
+          },
+          {
+            "name": "Twoson - Paula's House",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              },
+              {
+                "name": "Mother Gift",
+                "access_rules": "Paula",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "twoson",
+                "x": 1191,
+                "y": 1165
+              }
+            ]
+          },
+          {
+            "name": "Twoson - Apple Kid's House",
+            "sections": [
+              {
+                "name": "Trashcan",
+                "item_count": 1
+              },
+              {
+                "name": "Mouse",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "twoson",
+                "x": 983,
+                "y": 1452
+              }
+            ]
+          },
+          {
+            "name": "Twoson - South Road",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "twoson",
+                "x": 457,
+                "y": 1968
+              }
+            ]
+          },
+          {
+            "name": "Twoson - Orange Kid's House",
+            "sections": [
+              {
+                "name": "Investment",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "twoson",
+                "x": 1047,
+                "y": 1387
+              }
+            ]
+          },
+          {
+            "name": "Twoson - Park Apple Kid",
+            "sections": [
+              {
+                "name": "Invention",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "twoson",
+                "x": 376,
+                "y": 1184
+              }
+            ]
+          },
+          {
+            "name": "Twoson - Hospital",
+            "access_rules": "insignificantitem",
+            "sections": [
+              {
+                "name": "Insignificant Reward",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "twoson",
+                "x": 1336,
+                "y": 361
+              }
+            ]
+          },
+          {
+            "name": "Twoson Department Store",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Burger Shop",
+                "clear_as_group": false,
+                "item_count": 4
+              },
+              {
+                "name": "Bakery",
+                "clear_as_group": false,
+                "item_count": 4
+              },
+              {
+                "name": "Top Floor - Right Counter",
+                "clear_as_group": false,
+                "item_count": 6
+              },
+              {
+                "name": "Top Floor - Left Counter",
+                "clear_as_group": false,
+                "item_count": 2
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "twoson",
+                "x": 752,
+                "y": 648
+              }
+            ]
+          },
+          {
+            "name": "Burglin Park Junk Shop",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Junk Shop",
+                "clear_as_group": false,
+                "item_count": 6
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "twoson",
+                "x": 544,
+                "y": 1065
+              }
+            ]
+          },
+          {
+            "name": "Burglin Park Bread Shop",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Bread Shop",
+                "clear_as_group": false,
+                "item_count": 6
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "twoson",
+                "x": 680,
+                "y": 1087
+              }
+            ]
+          },
+          {
+            "name": "Burglin Park Banana Stand",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Shop Slot",
+                "clear_as_group": false,
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "twoson",
+                "x": 504,
+                "y": 1151
+              }
+            ]
+          }
+        ]
+      },
+      {"name": "Twoson/Scaraba",
+      "access_rules": ["@Twoson", "@Scaraba"],
+      "children": [
+          {
+            "name": "Common Condiment Shop",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Shop Slots",
+                "clear_as_group": false,
+                "item_count": 7
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "twoson",
+                "x": 672,
+                "y": 943
+              },
+              {
+                "map": "scaraba",
+                "x": 552,
+                "y": 337
+              }
+            ]
+          }
+      ]
+    
+    },
+      {
+        "name": "Peaceful Rest Valley Connection",
+        "access_rules": ["@Twoson,pencileraser","@Happy-Happy Village"],
+        "children": [
+          {
+            "name": "Peaceful Rest Valley",
+            "sections": [
+              {
+                "name": "Split Hill Present",
+                "item_count": 1
+              },
+              {
+                "name": "Hill Nook Present",
+                "item_count": 1
+              },
+              {
+                "name": "South of Bridge Present",
+                "item_count": 1
+              },
+              {
+                "name": "Dead End Present",
+                "item_count": 1
+              },
+              {
+                "name": "River Overlook Present",
+                "item_count": 1
+              },
+              {
+                "name": "North Side Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "twoson",
+                "x": 2543,
+                "y": 1261
+              },
+              {
+                "map": "happyhappy",
+                "x": 197,
+                "y": 79
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Happy-Happy Village",
+        "access_rules": ["happywarp","@Peaceful Rest Valley Connection","happyhappystart"],
+        "children": [
+          {
+            "name": "Village Entrance",
+            "sections": [
+              {
+                "name": "Donation Lady",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "happyhappy",
+                "x": 311,
+                "y": 295
+              }
+            ]
+          },
+          {
+            "name": "Happy-Happy Headquarters",
+            "sections": [
+              {
+                "name": "Right Present",
+                "item_count": 1
+              },
+              {
+                "name": "Left Present",
+                "item_count": 1
+              },
+              {
+                "name": "Defeat Carpainter",
+                "access_rules": "franklinbadge",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "happyhappy",
+                "x": 512,
+                "y": 389
+              }
+            ]
+          },
+          {
+            "name": "Happy-Happy Drugstore",
+            "visibility_rules":"shopson",
+            "sections": [
+              {
+                "name": "Right Counter",
+                "clear_as_group": false,
+                "item_count": 5
+              },
+              {
+                "name": "Left Counter",
+                "clear_as_group": false,
+                "item_count": 7
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "happyhappy",
+                "x": 792,
+                "y": 101
+              }
+            ]
+          },
+          {
+            "name": "Lilliput Steps",
+            "access_rules": ["freesancoff", "freesancon, tinykey"],
+            "sections": [
+              {
+                "name": "Southwest Pool Present",
+                "item_count": 1
+              },
+              {
+                "name": "East Cliff Present",
+                "item_count": 1
+              },
+              {
+                "name": "North Stream Present",
+                "item_count": 1
+              },
+              {
+                "name": "Sanctuary",
+                "hosted_item": "lilliputsteps",
+                "item_count": 0
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "happyhappy",
+                "x": 881,
+                "y": 210
+              }
+            ]
+          },
+          {
+            "name": "Village Outskirts",
+            "sections": [
+              {
+                "name": "Prisoner Item",
+                "item_count": 1
+              },
+              {
+                "name": "Prisoner Rescued",
+                "access_rules": "cabinkey",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "happyhappy",
+                "x": 704,
+                "y": 102
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Threed",
+        "access_rules": ["threedwarp","threedstart","@Twoson,wadofbills","@Fourside,diamond","@Dusty Dunes Desert, @Grapefruit Falls, flyhoney","@Twoson, @Grapefruit Falls, flyhoney"],
+        "children": [
+          {
+            "name": "Boogey Tent",
+            "sections": [
+              {
+                "name": "Trashcan",
+                "access_rules": "Jeff",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "threed",
+                "x": 1055,
+                "y": 1418
+              }
+            ]
+          },
+          {
+            "name": "Cemetery",
+            "sections": [
+              {
+                "name": "Trashcan",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "threed",
+                "x": 511,
+                "y": 346
+              }
+            ]
+          },
+          {
+            "name": "Threed Downtown",
+            "sections": [
+              {
+                "name": "Trashcan",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "threed",
+                "x": 919,
+                "y": 1138
+              }
+            ]
+          },
+          {
+            "name": "Threed East Side",
+            "sections": [
+              {
+                "name": "Trashcan",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "threed",
+                "x": 1719,
+                "y": 1162
+              }
+            ]
+          },
+          {
+            "name": "Threed Hint Shack",
+            "sections": [
+              {
+                "name": "Trashcan",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "threed",
+                "x": 1960,
+                "y": 321
+              }
+            ]
+          },
+          {
+            "name": "Threed Hospital",
+            "sections": [
+              {
+                "name": "Room Drawer",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "threed",
+                "x": 1283,
+                "y": 1118
+              }
+            ]
+          },
+          {
+            "name": "Zombie Prison",
+            "access_rules": "badkeymachine",
+            "sections": [
+              {
+                "name": "Prisoner",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "threed",
+                "x": 1668,
+                "y": 373
+              }
+            ]
+          },
+          {
+            "name": "Threed Drugstore",
+            "visibility_rules":"shopson",
+            "sections": [
+              {
+                "name": "Right Counter",
+                "clear_as_group": false,
+                "item_count": 5
+              },
+              {
+                "name": "Left Counter",
+                "clear_as_group": false,
+                "item_count": 5
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "threed",
+                "x": 875,
+                "y": 1125
+              }
+            ]
+          },
+          {
+            "name": "Threed Arms Dealer",
+            "visibility_rules":"shopson",
+            "sections": [
+              {
+                "name": "Arms Dealer",
+                "clear_as_group": false,
+                "item_count": 4
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "threed",
+                "x": 1039,
+                "y": 1054
+              }
+            ]
+          },
+          {
+            "name": "Threed Bakery",
+            "visibility_rules":"shopson",
+            "sections": [
+              {
+                "name": "Counter",
+                "clear_as_group": false,
+                "item_count": 7
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "threed",
+                "x": 1424,
+                "y": 1125
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Grapefruit Falls",
+        "access_rules": ["@Saturn Valley","@Threed,zombiepaper"],
+        "children": [
+          {
+            "name": "Falls South",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "grapefruitfalls",
+                "x": 471,
+                "y": 1528
+              }
+            ]
+          },
+          {
+            "name": "Falls North",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "grapefruitfalls",
+                "x": 479,
+                "y": 704
+              }
+            ]
+          },
+          {
+            "name": "Hiker",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Shop Slots",
+                "clear_as_group": false,
+                "item_count": 3
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "grapefruitfalls",
+                "x": 248,
+                "y": 2169
+              }
+            ]
+          },
+          {
+            "name": "Threed Underground",
+            "access_rules": ["@Threed,zombiepaper","@Grapefruit Falls"],
+            "sections": [
+              {
+                "name": "Left Coffin",
+                "item_count": 1
+              },
+              {
+                "name": "Right Coffin",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "threed",
+                "x": 899,
+                "y": 144
+              },
+              {
+                "map": "grapefruitfalls",
+                "x": 183,
+                "y": 2209
+              }
+            ]
+          },
+          {
+            "name": "Saturn Cave",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "grapefruitfalls",
+                "x": 619,
+                "y": 545
+              },
+              {
+                "map": "saturnvalley",
+                "x": 203,
+                "y": 776
+              }
+            ]
+          },
+          {
+            "name": "Belch's Factory",
+            "access_rules": "flyhoney",
+            "sections": [
+              {
+                "name": "Top Right Room Trashcan",
+                "item_count": 1
+              },
+              {
+                "name": "Pit Room Trashcan 1",
+                "item_count": 1
+              },
+
+              {
+                "name": "Pit Room Trashcan 2",
+                "item_count": 1
+              },
+              {
+                "name": "Balcony Trashcan 1",
+                "item_count": 1
+              },
+              {
+                "name": "Balcony Trashcan 2",
+                "item_count": 1
+              },
+              {
+                "name": "Balcony Trashcan 3",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "grapefruitfalls",
+                "x": 225,
+                "y": 120
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Saturn Valley",
+        "access_rules": ["valleywarp","saturnvalleystart","@Grapefruit Falls"],
+        "children": [
+          {
+            "name": "Lonely Ladder",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "saturnvalley",
+                "x": 495,
+                "y": 368
+              }
+            ]
+          },
+          {
+            "name": "Saturn Valley Trash Cave",
+            "sections": [
+              {
+                "name": "Trashcan 1",
+                "item_count": 1
+              },
+              {
+                "name": "Trashcan 2",
+                "item_count": 1
+              },
+              {
+                "name": "Trashcan 3",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "saturnvalley",
+                "x": 363,
+                "y": 330
+              }
+            ]
+          },
+          {
+            "name": "Upper Saturn Valley",
+            "access_rules": "flyhoney",
+            "sections": [
+              {
+                "name": "Coffee",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "saturnvalley",
+                "x": 566,
+                "y": 208
+              }
+            ]
+          },
+          {
+            "name": "Saturn Hangout",
+            "access_rules": "flyhoney",
+            "sections": [
+              {
+                "name": "Post-Belch Gift 1",
+                "item_count": 1
+              },
+              {
+                "name": "Post-Belch Gift 2",
+                "item_count": 1
+              },
+              {
+                "name": "Post-Belch Gift 3",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "saturnvalley",
+                "x": 175,
+                "y": 375
+              }
+            ]
+          },
+          {
+            "name": "Saturn Valley Shop",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Center Saturn",
+                "clear_as_group": false,
+                "item_count": 5
+              },
+              {
+                "name": "Post-Belch Saturn",
+                "access_rules": "flyhoney",
+                "clear_as_group": false,
+                "item_count": 4
+              },
+              {
+                "name": "Top Saturn",
+                "clear_as_group": false,
+                "item_count": 7
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "saturnvalley",
+                "x": 224,
+                "y": 244
+              }
+            ]
+          },
+          {
+            "name": "Milky Well",
+            "access_rules": "flyhoney",
+            "sections": [
+              {
+                "name": "Cave Present",
+                "item_count": 1
+              },
+              {
+                "name": "Sanctuary",
+                "hosted_item": "milkywell",
+                "item_count": 0
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "saturnvalley",
+                "x": 555,
+                "y": 129
+              }
+            ]
+          },
+          {
+            "name": "Cave of the Past",
+            "access_rules": "meteoritepiece",
+            "sections": [
+              {
+                "name": "Star Master",
+                "item_count": 1
+              },
+              {
+                "name": "Broken Phase Distorter",
+                "item_count": 1
+              },
+              {
+                "name": "Past Present",
+                "access_rules":"earth",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "saturnvalley",
+                "x": 383,
+                "y": 439
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Dusty Dunes Desert",
+        "access_rules": ["desertwarp","@Threed,@Grapefruit Falls,flyhoney","@Fourside"],
+        "children": [
+          {
+            "name": "Northwest Dunes",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dustydunes",
+                "x": 207,
+                "y": 456
+              }
+            ]
+          },
+          {
+            "name": "Dusty Dunes Drugstore",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Counter",
+                "clear_as_group": false,
+                "item_count": 5
+              },
+              {
+                "name": "Left Guy",
+                "clear_as_group": false,
+                "item_count": 7
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dustydunes",
+                "x": 133,
+                "y": 1239
+              }
+            ]
+          },
+          {
+            "name": "Dusty Dunes Arms Dealer",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Shop",
+                "clear_as_group": false,
+                "item_count": 4
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dustydunes",
+                "x": 199,
+                "y": 1126
+              }
+            ]
+          },
+          {
+            "name": "Southern Dunes",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dustydunes",
+                "x": 1327,
+                "y": 1137
+              }
+            ]
+          },
+          {
+            "name": "Rock Enclosure",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dustydunes",
+                "x": 1839,
+                "y": 929
+              }
+            ]
+          },
+          {
+            "name": "Black Sesame",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dustydunes",
+                "x": 919,
+                "y": 120
+              }
+            ]
+          },
+          {
+            "name": "Oasis",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dustydunes",
+                "x": 1143,
+                "y": 592
+              }
+            ]
+          },
+          {
+            "name": "Northeast Dunes",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dustydunes",
+                "x": 2391,
+                "y": 176
+              }
+            ]
+          },
+          {
+            "name": "North Dunes",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dustydunes",
+                "x": 1815,
+                "y": 113
+              }
+            ]
+          },
+          {
+            "name": "Dusty Dunes Shiny Spot",
+            "sections": [
+              {
+                "name": "Items",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dustydunes",
+                "x": 1791,
+                "y": 231
+              }
+            ]
+          },
+          {
+            "name": "Dusty Dunes East Peninsula",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dustydunes",
+                "x": 2791,
+                "y": 600
+              }
+            ]
+          },
+          {
+            "name": "Dusty Dunes Miner",
+            "access_rules": "permit",
+            "sections": [
+              {
+                "name": "Mole Reward",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dustydunes",
+                "x": 2296,
+                "y": 957
+              }
+            ]
+          },
+          {
+            "name": "Dusty Dunes Mine Area",
+            "access_rules": "permit",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Food Cart",
+                "clear_as_group":false,
+                "item_count": 7
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dustydunes",
+                "x": 2520,
+                "y": 824
+              }
+            ]
+          },
+          {
+            "name": "Gold Mine",
+            "access_rules": "permit",
+            "sections": [
+              {
+                "name": "Mouse Crossroad Present 1",
+                "item_count": 1
+              },
+              {
+                "name": "Mouse Crossroad Present 2",
+                "item_count": 1
+              },
+              {
+                "name": "B1F Lonely Mole Present",
+                "item_count": 1
+              },
+              {
+                "name": "South Hall Present",
+                "item_count": 1
+              },
+              {
+                "name": "South Corner Present",
+                "item_count": 1
+              },
+              {
+                "name": "South Mole Present 1",
+                "item_count": 1
+              },
+              {
+                "name": "South Mole Present 2",
+                "item_count": 1
+              },
+              {
+                "name": "North Crossroad Detour Present",
+                "item_count": 1
+              },
+              {
+                "name": "North Mole Present",
+                "item_count": 1
+              },
+              {
+                "name": "West Mole Present",
+                "item_count": 1
+              },
+              {
+                "name": "B1F Isolated Present",
+                "item_count": 1
+              },
+              {
+                "name": "West Crossroad Detour Present",
+                "item_count": 1
+              },
+              {
+                "name": "B1F Junction Present",
+                "item_count": 1
+              },
+              {
+                "name": "B1F Junction Mole Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dustydunes",
+                "x": 2398,
+                "y": 922
+              }
+            ]
+          },
+          {
+            "name": "Monkey Caves",
+            "access_rules": "kingbanana",
+            "sections": [
+              {
+                "name": "1F Right Chest",
+                "item_count": 1
+              },
+              {
+                "name": "1F Left Chest",
+                "item_count": 1
+              },
+              {
+                "name": "West 2F Left Chest",
+                "access_rules": ["[@Twoson]","[@Threed]","monkeyfree"],
+                "item_count": 1
+              },
+              {
+                "name": "West 2F Right Chest 1",
+                "item_count": 1
+              },
+              {
+                "name": "West 2F Right Chest 2",
+                "item_count": 1
+              },
+              {
+                "name": "East 2F Left Chest",
+                "access_rules": ["[@Twoson]","[@Threed]","monkeyfree"],
+                "item_count": 1
+              },
+              {
+                "name": "East 2F Right Chest",
+                "item_count": 1
+              },
+              {
+                "name": "East West 3F Right Chest 1",
+                "access_rules": ["[@Twoson]","[@Threed]","monkeyfree"],
+                "item_count": 1
+              },
+              {
+                "name": "East West 3F Right Chest 2",
+                "access_rules": ["[@Twoson]","[@Threed]","monkeyfree"],
+                "item_count": 1
+              },
+              {
+                "name": "West End Chest",
+                "item_count": 1
+              },
+              {
+                "name": "West Trashcan",
+                "item_count": 1
+              },
+              {
+                "name": "East End Chest",
+                "access_rules": ["[@Twoson]","[@Threed]","monkeyfree"],
+                "item_count": 1
+              },
+              {
+                "name": "East Trashcan",
+                "access_rules": ["[@Twoson]","[@Threed]","monkeyfree"],
+                "item_count": 1
+              },
+              {
+                "name": "Bow Monkey",
+                "item_count": 1
+              },
+              {
+                "name": "Talah Rama Item",
+                "access_rules": ["pencileraser,[@Twoson]","[@Threed],pencileraser","monkeyfree,pencileraser"],
+                "item_count": 1
+              },
+              {
+                "name": "Monkey PSI",
+                "access_rules": ["pencileraser,[@Twoson]","[@Threed],pencileraser","monkeyfree,pencileraser"],
+                "item_count": 1
+              },
+              {
+                "name": "Talah Rama Left Chest",
+                "access_rules": ["pencileraser,[@Twoson]","[@Threed],pencileraser","monkeyfree,pencileraser"],
+                "item_count": 1
+              },
+              {
+                "name": "Talah Rama Right Chest",
+                "access_rules": ["pencileraser,[@Twoson]","[@Threed],pencileraser","monkeyfree,pencileraser"],
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dustydunes",
+                "x": 275,
+                "y": 1004
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Fourside",
+        "access_rules": ["foursidewarp","foursidestart","@Dusty Dunes Desert"],
+        "children": [
+          {
+            "name": "Topolla Theater",
+            "access_rules": "diamond",
+            "sections": [
+              {
+                "name": "Venus Gift",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "fourside",
+                "x": 959,
+                "y": 1260
+              }
+            ]
+          },
+          {
+            "name": "Moonside",
+            "sections": [
+              {
+                "name": "Two Trees Present",
+                "item_count": 1
+              },
+              {
+                "name": "East Island Present",
+                "item_count": 1
+              },
+              {
+                "name": "Businessman Present",
+                "item_count": 1
+              },
+              {
+                "name": "West Island Present",
+                "item_count": 1
+              },
+              {
+                "name": "Hospital Present",
+                "item_count": 1
+              },
+              {
+                "name": "Hotel Shop",
+                "visibility_rules":"shopson",
+                "clear_as_group":false,
+                "item_count": 5
+              },
+              {
+                "name": "Moonside Reward",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "fourside",
+                "x": 547,
+                "y": 527
+              }
+            ]
+          },
+          {
+            "name": "Fourside Bakery",
+            "sections": [
+              {
+                "name": "Return Contact Lens",
+                "access_rules": "lens",
+                "item_count": 1
+              },
+              {
+                "name": "Counter",
+                "visibility_rules": "shopson",
+                "clear_as_group": false,
+                "item_count": 6
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "fourside",
+                "x": 1415,
+                "y": 1395
+              }
+            ]
+          },
+          {
+            "name": "Fourside Department Store",
+            "sections": [
+              {
+                "name": "Blackout Reward",
+                "access_rules": "Jeff",
+                "item_count": 1
+              },
+              {
+                "name": "Tool Shop",
+                "visibility_rules": "shopson",
+                "clear_as_group": false,
+                "item_count": 7
+              },
+              {
+                "name": "Shop Shop",
+                "visibility_rules": "shopson",
+                "clear_as_group": false,
+                "item_count": 4
+              },
+              {
+                "name": "Food Shop",
+                "visibility_rules": "shopson",
+                "clear_as_group": false,
+                "item_count": 5
+              },
+              {
+                "name": "2F Condiment Cart",
+                "visibility_rules": "shopson",
+                "clear_as_group": false,
+                "item_count": 7
+              },
+              {
+                "name": "Toy Shop",
+                "visibility_rules": "shopson",
+                "clear_as_group": false,
+                "item_count": 6
+              },
+              {
+                "name": "Sporting Shop",
+                "visibility_rules": "shopson",
+                "clear_as_group": false,
+                "item_count": 4
+              },
+              {
+                "name": "Burger Shop",
+                "visibility_rules": "shopson",
+                "clear_as_group": false,
+                "item_count": 5
+              },
+              {
+                "name": "Arms Dealer",
+                "visibility_rules": "shopson",
+                "clear_as_group": false,
+                "item_count": 5
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "fourside",
+                "x": 1570,
+                "y": 952
+              }
+            ]
+          },
+          {
+            "name": "Fourside North",
+            "sections": [
+              {
+                "name": "Junk Shop",
+                "visibility_rules": "shopson",
+                "clear_as_group": false,
+                "item_count": 4
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "fourside",
+                "x": 1843,
+                "y": 436
+              }
+            ]
+          },
+          {
+            "name": "Magnet Hill",
+            "access_rules": "signedbanana",
+            "sections": [
+              {
+                "name": "West Trashcan",
+                "item_count": 1
+              },
+              {
+                "name": "First Door Trashcan",
+                "item_count": 1
+              },
+              {
+                "name": "Barrel Trashcan",
+                "item_count": 1
+              },
+              {
+                "name": "Second Room Dead End Trashcan",
+                "item_count": 1
+              },
+              {
+                "name": "Final Room Trashcan",
+                "item_count": 1
+              },
+              {
+                "name": "Sanctuary",
+                "hosted_item": "magnethill",
+                "item_count": 0
+              },
+              {
+                "name": "Sanctuary Chest",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "fourside",
+                "x": 1170,
+                "y": 953
+              },
+              {
+                "map": "fourside",
+                "x": 1899,
+                "y": 785
+              }
+            ]
+          },
+          {
+            "name": "Monotoli Building",
+            "access_rules": "yogurtdispenser",
+            "sections": [
+              {
+                "name": "One Table Present",
+                "item_count": 1
+              },
+              {
+                "name": "Two Table Present",
+                "item_count": 1
+              },
+              {
+                "name": "Electra Gift",
+                "item_count": 1
+              },
+              {
+                "name": "Monotoli Item",
+                "item_count": 1
+              },
+              {
+                "name": "Monotoli Prisoner",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "fourside",
+                "x": 1412,
+                "y": 785
+              }
+            ]
+          }
+
+        ]
+      },
+      {
+        "name": "Winters",
+        "access_rules": ["winterswarp","wintersstart", "@Threed, badkeymachine, engine"],
+        "children": [
+          {
+            "name": "Snow Wood Boarding School",
+            "access_rules": "letter",
+            "sections": [
+              {
+                "name": "Present Room 1",
+                "item_count": 1
+              },
+              {
+                "name": "Present Room 2",
+                "item_count": 1
+              },
+              {
+                "name": "Present Room 3",
+                "item_count": 1
+              },
+              {
+                "name": "Present Room 4",
+                "item_count": 1
+              },
+              {
+                "name": "Present Room 5",
+                "item_count": 1
+              },
+              {
+                "name": "Present Room 6",
+                "item_count": 1
+              },
+              {
+                "name": "Present Room 7",
+                "item_count": 1
+              },
+              {
+                "name": "Top Right Locker",
+                "access_rules": "lockerkey",
+                "item_count": 1
+              },
+              {
+                "name": "Top Left Locker",
+                "access_rules": "lockerkey",
+                "item_count": 1
+              },
+              {
+                "name": "Bottom Right Locker",
+                "access_rules": "lockerkey",
+                "item_count": 1
+              },
+              {
+                "name": "Bottom Left Locker",
+                "access_rules": "lockerkey",
+                "item_count": 1
+              },
+              {
+                "name": "Maxwell Item",
+                "item_count": 1
+              },
+              {
+                "name": "Bedroom Character",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "winters",
+                "x": 495,
+                "y": 136
+              }
+            ]
+          },
+          {
+            "name": "Winters Drugstore",
+            "sections": [
+              {
+                "name": "Bubblegum Saleswoman",
+                "item_count": 1
+              },
+              {
+                "name": "Counter",
+                "visibility_rules": "shopson",
+                "clear_as_group": false,
+                "item_count": 7
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "winters",
+                "x": 703,
+                "y": 273
+              }
+            ]
+          },
+          {
+            "name": "Brickroad Maze",
+            "access_rules": ["pakofbubblegum","@Threed, badkeymachine, engine"],
+            "sections": [
+              {
+                "name": "Top Path Present",
+                "item_count": 1
+              },
+              {
+                "name": "Guarded Present",
+                "item_count": 1
+              },
+              {
+                "name": "Out of the Way Present",
+                "item_count": 1
+              },
+              {
+                "name": "Alcove Present",
+                "item_count": 1
+              },
+              {
+                "name": "Exit Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "winters",
+                "x": 1808,
+                "y": 1313
+              },
+              {
+                "map": "winters",
+                "x": 1711,
+                "y": 1348
+              }
+            ]
+          },
+          {
+            "name": "Rainy Circle",
+            "access_rules": ["pakofbubblegum","@Threed, badkeymachine, engine"],
+            "sections": [
+              {
+                "name": "Isolated Present",
+                "item_count": 1
+              },
+              {
+                "name": "East Cliff Present",
+                "item_count": 1
+              },
+              {
+                "name": "Near Ropes Present",
+                "item_count": 1
+              },
+              {
+                "name": "Sanctuary",
+                "hosted_item": "rainycircle",
+                "item_count": 0
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "winters",
+                "x": 1456,
+                "y": 929
+              },
+              {
+                "map": "winters",
+                "x": 1680,
+                "y": 1537
+              }
+            ]
+          },
+          {
+            "name": "Andonuts Lab",
+            "access_rules": ["pakofbubblegum","@Threed, badkeymachine, engine"],
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              },
+              {
+                "name": "Mouse",
+                "item_count": 1
+              },
+              {
+                "name": "Caveman Shop",
+                "visibility_rules":"shopson",
+                "clear_as_group": false,
+                "item_count": 5
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "winters",
+                "x": 1351,
+                "y": 1548
+              }
+            ]
+          },
+          {
+            "name": "Stonehenge Base",
+            "access_rules": ["pakofbubblegum, erasereraser","@Threed, badkeymachine, engine, erasereraser"],
+            "sections": [
+              {
+                "name": "Purple Maze Present",
+                "item_count": 1
+              },
+              {
+                "name": "Dead End Present",
+                "item_count": 1
+              },
+              {
+                "name": "Maze Exit Present",
+                "item_count": 1
+              },
+              {
+                "name": "Bridge East Balcony Present",
+                "item_count": 1
+              },
+              {
+                "name": "Bridge Lower Present",
+                "item_count": 1
+              },
+              {
+                "name": "Flashing Room Right Present",
+                "item_count": 1
+              },
+              {
+                "name": "Flashing Room Center Present",
+                "item_count": 1
+              },
+              {
+                "name": "Flashing Room Upper Present",
+                "item_count": 1
+              },
+              {
+                "name": "Mr. Saturn",
+                "item_count": 1
+              },
+              {
+                "name": "Tony",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "winters",
+                "x": 1367,
+                "y": 1116
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Summers",
+        "access_rules": ["summerswarp","summersstart"],
+        "children": [
+          {
+            "name": "Museum",
+            "access_rules": "tinyruby",
+            "sections": [
+              {
+                "name": "Curator Gift",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "summers",
+                "x": 1909,
+                "y": 131
+              }
+            ]
+          },
+          {
+            "name": "Beach Cart",
+            "sections": [
+              {
+                "name": "Magic Cake",
+                "item_count": 1
+              },
+              {
+                "name": "Post-Cake Shop Slot",
+                "visibility_rules": "shopson",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "summers",
+                "x": 1071,
+                "y": 291
+              }
+            ]
+          },
+          {
+            "name": "Summers Beach",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Cart",
+                "clear_as_group": false,
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "summers",
+                "x": 1943,
+                "y": 373
+              }
+            ]
+          },
+          {
+            "name": "Summers Shop",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Counter",
+                "clear_as_group": false,
+                "item_count": 7
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "summers",
+                "x": 1215,
+                "y": 148
+              }
+            ]
+          },
+          {
+            "name": "Summers Harbor Shop",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Counter",
+                "clear_as_group": false,
+                "item_count": 7
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "summers",
+                "x": 2230,
+                "y": 255
+              }
+            ]
+          },
+          {
+            "name": "Summers Restaurant",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Counter",
+                "clear_as_group": false,
+                "item_count": 6
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "summers",
+                "x": 834,
+                "y": 149
+              }
+            ]
+          }
+
+        ]
+      },
+      {
+        "name": "Dalaam",
+        "access_rules": ["dalaamwarp","dalaamstart"],
+        "children": [
+          {
+            "name": "Dalaam Palace",
+            "sections": [
+              {
+                "name": "Throne Room Chest 1",
+                "item_count": 1
+              },
+              {
+                "name": "Throne Room Chest 2",
+                "item_count": 1
+              },
+              {
+                "name": "Throne Room Chest 3",
+                "item_count": 1
+              },
+              {
+                "name": "Throne Character",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dalaam",
+                "x": 464,
+                "y": 198
+              }
+            ]
+          },
+          {
+            "name": "Dalaam Clifftop",
+            "access_rules": "Poo",
+            "sections": [
+              {
+                "name": "Trial of Mu",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dalaam",
+                "x": 892,
+                "y": 489
+              }
+            ]
+          },
+          {
+            "name": "Dalaam Restaurant",
+            "sections": [
+              {
+                "name": "Chest 1",
+                "item_count": 1
+              },
+              {
+                "name": "Chest 2",
+                "item_count": 1
+              },
+              {
+                "name": "Shop",
+                "access_rules": ["[@Onett]","[@Twoson]","[@Threed]","[@Happy-Happy Village]","[@Magicant]","[@Saturn Valley]","[@Fourside]","[@Summers]","[@Scaraba]","[@Winters]"],
+                "visibility_rules":"shopson",
+                "clear_as_group":false,
+                "item_count": 4
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dalaam",
+                "x": 194,
+                "y": 599
+              }
+            ]
+          },
+          {
+            "name": "Dalaam Do Do Guy House",
+            "sections": [
+              {
+                "name": "Chest",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dalaam",
+                "x": 323,
+                "y": 663
+              }
+            ]
+          },
+          {
+            "name": "Dalaam Upper House",
+            "sections": [
+              {
+                "name": "Chest",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dalaam",
+                "x": 259,
+                "y": 407
+              }
+            ]
+          },
+          {
+            "name": "Pink Cloud",
+            "access_rules": "carrotkey",
+            "sections": [
+              {
+                "name": "Three Holes Present",
+                "item_count": 1
+              },
+              {
+                "name": "Left Hole Present",
+                "item_count": 1
+              },
+              {
+                "name": "Ground Floor Present",
+                "item_count": 1
+              },
+              {
+                "name": "Sanctuary",
+                "hosted_item": "pinkcloud",
+                "item_count": 0
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "dalaam",
+                "x": 239,
+                "y": 832
+              }
+            ]
+          }
+
+        ]
+      },
+      {
+        "name": "Scaraba",
+        "access_rules": ["scarabawarp","scarabastart","@Summers"],
+        "children": [
+          {
+            "name": "Bazaar",
+            "sections": [
+              {
+                "name": "Snake Bag Salesman",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "scaraba",
+                "x": 600,
+                "y": 380
+              }
+            ]
+          },
+          {
+            "name": "Scaraba Shop",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Counter",
+                "clear_as_group": false,
+                "item_count": 6
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "scaraba",
+                "x": 618,
+                "y": 242
+              }
+            ]
+          },
+          {
+            "name": "Red Snake Carpet",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Shop Slots",
+                "clear_as_group": false,
+                "item_count": 3
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "scaraba",
+                "x": 584,
+                "y": 292
+              }
+            ]
+          },
+          {
+            "name": "Bottom Left Carpet",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Shop Slots",
+                "clear_as_group": false,
+                "item_count": 6
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "scaraba",
+                "x": 520,
+                "y": 391
+              }
+            ]
+          },
+          {
+            "name": "Scaraba Hotel",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Arms Dealer",
+                "clear_as_group": false,
+                "item_count": 4
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "scaraba",
+                "x": 210,
+                "y": 282
+              }
+            ]
+          },
+          {
+            "name": "Delicacy Carpet",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Shop Slots",
+                "clear_as_group": false,
+                "item_count": 7
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "scaraba",
+                "x": 567,
+                "y": 425
+              }
+            ]
+          },
+          {
+            "name": "Pyramid",
+            "access_rules": "hieroglyph",
+            "sections": [
+              {
+                "name": "Anteroom Sarcophagus",
+                "item_count": 1
+              },
+              {
+                "name": "Northwest Door Sarcophagus",
+                "item_count": 1
+              },
+              {
+                "name": "Hallway Sarcophagus 1",
+                "item_count": 1
+              },
+              {
+                "name": "Hallway Sarcophagus 2",
+                "item_count": 1
+              },
+              {
+                "name": "Switch Sarcophagus",
+                "item_count": 1
+              },
+              {
+                "name": "Pedestal",
+                "item_count": 1
+              },
+              {
+                "name": "Exit Sarcophagus",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "scaraba",
+                "x": 766,
+                "y": 1044
+              },
+              {
+                "map": "scaraba",
+                "x": 703,
+                "y": 1621
+              }
+            ]
+          },
+          {
+            "name": "Pyramid Exit",
+            "access_rules": "hieroglyph",
+            "sections": [
+              {
+                "name": "Star Master",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "scaraba",
+                "x": 668,
+                "y": 1700
+              }
+            ]
+          },
+          {
+            "name": "South Scaraba",
+            "access_rules": "hieroglyph",
+            "sections": [
+              {
+                "name": "Key Holder",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "scaraba",
+                "x": 615,
+                "y": 1567
+              }
+            ]
+          },
+          {
+            "name": "Water Peddler",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Shop Slot",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "scaraba",
+                "x": 695,
+                "y": 920
+              }
+            ]
+          },
+          {
+            "name": "Camel Shop",
+            "visibility_rules": "shopson",
+            "access_rules": "hieroglyph",
+            "sections": [
+              {
+                "name": "Shop Slot",
+                "clear_as_group": false,
+                "item_count": 7
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "scaraba",
+                "x": 656,
+                "y": 1488
+              }
+            ]
+          },
+          {
+            "name": "Dungeon Man",
+            "access_rules": ["hieroglyph,towerkey"],
+            "sections": [
+              {
+                "name": "1F Dead End Present",
+                "item_count": 1
+              },
+              {
+                "name": "1F Long Walk Present",
+                "item_count": 1
+              },
+              {
+                "name": "1F Disappointing Present",
+                "item_count": 1
+              },
+              {
+                "name": "1F Opinion Present",
+                "item_count": 1
+              },
+              {
+                "name": "1F Signless Present",
+                "item_count": 1
+              },
+              {
+                "name": "2F Unnecessary Billboard Present",
+                "item_count": 1
+              },
+              {
+                "name": "2F Dungeon Exploration Present",
+                "item_count": 1
+              },
+              {
+                "name": "2F South Ledge Present",
+                "item_count": 1
+              },
+              {
+                "name": "2F North Alcove Present",
+                "item_count": 1
+              },
+              {
+                "name": "3F Present",
+                "item_count": 1
+              },
+              {
+                "name": "Really Long Backtrack Present",
+                "item_count": 1
+              },
+              {
+                "name": "1F Exit Ledge Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "scaraba",
+                "x": 464,
+                "y": 1819
+              }
+            ]
+          }
+
+        ]
+      },
+      {
+        "name": "Deep Darkness",
+        "access_rules": ["darkwarp","deepdarknessstart","@Dungeon Man","@Tenda Village,hawkeye,shynessbook"],
+        "children": [
+          {
+            "name": "Safe Zone",
+            "sections": [
+              {
+                "name": "Teleporting Monkey",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "deepdarkness",
+                "x": 1821,
+                "y": 231
+              }
+            ]
+          },
+          {
+            "name": "Light Swamp",
+            "sections": [
+              {
+                "name": "Crest of Darkness Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "deepdarkness",
+                "x": 1672,
+                "y": 658
+              }
+            ]
+          },
+                    {
+            "name": "Weird Businessman",
+            "access_rules": ["[@Onett]","[@Twoson]","[@Threed]","[@Happy-Happy Village]","[@Magicant]","[@Saturn Valley]","[@Fourside]","[@Summers]","[@Scaraba]","[@Winters]"],
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Shop Slots",
+                "clear_as_group": false,
+                "item_count": 7
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "deepdarkness",
+                "x": 1592,
+                "y": 175
+              }
+            ]
+          },
+          {
+            "name": "Deep Darkness Arms Dealer",
+            "access_rules": ["[@Onett]","[@Twoson]","[@Threed]","[@Happy-Happy Village]","[@Magicant]","[@Saturn Valley]","[@Fourside]","[@Summers]","[@Scaraba]","[@Winters]"],
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Shop Slots",
+                "clear_as_group": false,
+                "item_count": 4
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "deepdarkness",
+                "x": 1751,
+                "y": 423
+              }
+            ]
+          },
+          {
+            "name": "Middle Island",
+            "access_rules": "hawkeye",
+            "sections": [
+              {
+                "name": "Helicopter Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "deepdarkness",
+                "x": 1063,
+                "y": 881
+              }
+            ]
+          },
+          {
+            "name": "Alcove Island",
+            "access_rules": "hawkeye",
+            "sections": [
+              {
+                "name": "Yellow Bird Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "deepdarkness",
+                "x": 887,
+                "y": 802
+              }
+            ]
+          },
+          {
+            "name": "Center Swamp",
+            "access_rules": "hawkeye",
+            "sections": [
+              {
+                "name": "Swamp Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "deepdarkness",
+                "x": 1231,
+                "y": 690
+              }
+            ]
+          },
+          {
+            "name": "Corner Island",
+            "access_rules": "hawkeye",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "deepdarkness",
+                "x": 175,
+                "y": 1114
+              }
+            ]
+          },
+          {
+            "name": "Safe Alcove",
+            "access_rules": "hawkeye",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "deepdarkness",
+                "x": 503,
+                "y": 521
+              }
+            ]
+          },
+          {
+            "name": "North Alcove Truffle",
+            "access_rules": "[pignose]",
+            "sections": [
+              {
+                "name": "Truffle",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "deepdarkness",
+                "x": 1276,
+                "y": 484
+              }
+            ]
+          },
+          {
+            "name": "Entrance Truffle",
+            "access_rules": "[pignose]",
+            "sections": [
+              {
+                "name": "Truffle",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "deepdarkness",
+                "x": 1788,
+                "y": 354
+              }
+            ]
+          },
+          {
+            "name": "Corner Truffle",
+            "access_rules": ["[pignose],hawkeye"],
+            "sections": [
+              {
+                "name": "Truffle",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "deepdarkness",
+                "x": 497,
+                "y": 1013
+              }
+            ]
+          },
+          {
+            "name": "Present Swamp",
+            "access_rules": ["[pignose],hawkeye"],
+            "sections": [
+              {
+                "name": "Truffle",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "deepdarkness",
+                "x": 1069,
+                "y": 594
+              }
+            ]
+          },
+          {
+            "name": "Village Truffle",
+            "access_rules": ["[pignose],hawkeye"],
+            "sections": [
+              {
+                "name": "Truffle",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "deepdarkness",
+                "x": 731,
+                "y": 160
+              }
+            ]
+          },
+          {
+            "name": "Master Barf",
+            "access_rules": "hawkeye",
+            "sections": [
+              {
+                "name": "Character",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "deepdarkness",
+                "x": 735,
+                "y": 689
+              }
+            ]
+          }
+
+        ]
+      },
+      {
+        "name": "Tenda Village",
+        "access_rules": ["tendawarp","tendavillagestart","@Deep Darkness, hawkeye"],
+        "children": [
+          {
+            "name": "Weird Junk Area",
+            "sections": [
+              {
+                "name": "Trashcan",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "tendavillage",
+                "x": 607,
+                "y": 349
+              }
+            ]
+          },
+          {
+            "name": "Tenda Chief",
+            "access_rules":"shynessbook",
+            "sections": [
+              {
+                "name": "Gift 1",
+                "item_count": 1
+              },
+              {
+                "name": "Gift 2",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "tendavillage",
+                "x": 463,
+                "y": 348
+              }
+            ]
+          },
+          {
+            "name": "Tenda Tea",
+            "access_rules":"shynessbook",
+            "sections": [
+              {
+                "name": "Drink It",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "tendavillage",
+                "x": 352,
+                "y": 341
+              }
+            ]
+          },
+          {
+            "name": "Lumine Hall",
+            "access_rules":"shynessbook",
+            "sections": [
+              {
+                "name": "B1F Non-Talkative Rock Present",
+                "item_count": 1
+              },
+              {
+                "name": "1F North Path Present",
+                "item_count": 1
+              },
+              {
+                "name": "B1F Thankful Rock Corner Present",
+                "item_count": 1
+              },
+              {
+                "name": "B1F Thankful Rock Junction Present",
+                "item_count": 1
+              },
+              {
+                "name": "1F Above Belly Button Present",
+                "item_count": 1
+              },
+              {
+                "name": "B1F Belly Button Present",
+                "item_count": 1
+              },
+              {
+                "name": "1F Near Exit Present",
+                "item_count": 1
+              },
+              {
+                "name": "1F Dead End Present",
+                "item_count": 1
+              },
+              {
+                "name": "B1F West Alcove Present",
+                "item_count": 1
+              },
+              {
+                "name": "Sanctuary",
+                "hosted_item": "luminehall",
+                "item_count": 0
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "tendavillage",
+                "x": 159,
+                "y": 407
+              }
+            ]
+          }
+
+        ]
+      },
+      {
+        "name": "Lost Underworld",
+        "access_rules": ["underwarp","understart","@Tenda Village, shynessbook"],
+        "children": [
+          {
+            "name": "Tenda Camp",
+            "access_rules": "tendakraut",
+            "sections": [
+              {
+                "name": "Talking Rock",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "underworld",
+                "x": 561,
+                "y": 305
+              }
+            ]
+          },
+          {
+            "name": "Tenda Shop",
+            "access_rules": "tendakraut",
+            "visibility_rules": "shopson",
+            "sections": [
+              {
+                "name": "Shop Slots",
+                "access_rules": ["[@Onett]","[@Twoson]","[@Threed]","[@Happy-Happy Village]","[@Magicant]","[@Saturn Valley]","[@Fourside]","[@Summers]","[@Scaraba]","[@Winters]"],
+                "clear_as_group": false,
+                "item_count": 7
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "underworld",
+                "x": 497,
+                "y": 317
+              }
+            ]
+          },
+          {
+            "name": "Underworld East",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "underworld",
+                "x": 1184,
+                "y": 595
+              }
+            ]
+          },
+          {
+            "name": "Underworld Northeast",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "underworld",
+                "x": 1048,
+                "y": 164
+              }
+            ]
+          },
+          {
+            "name": "Underworld Near Tribe",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "underworld",
+                "x": 744,
+                "y": 116
+              }
+            ]
+          },
+          {
+            "name": "Underworld Southwest",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "underworld",
+                "x": 296,
+                "y": 524
+              }
+            ]
+          },
+          {
+            "name": "Underworld Evacuation Area",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "underworld",
+                "x": 600,
+                "y": 492
+              }
+            ]
+          },
+          {
+            "name": "Fire Spring",
+            "access_rules": ["freesancoff", "freesancon, lavapants"],
+            "sections": [
+              {
+                "name": "1st Cave Present",
+                "item_count": 1
+              },
+              {
+                "name": "East Edge Present",
+                "item_count": 1
+              },
+              {
+                "name": "Volcano Present",
+                "item_count": 1
+              },
+              {
+                "name": "Lone Cave Present",
+                "item_count": 1
+              },
+              {
+                "name": "Upper Volcano Present",
+                "item_count": 1
+              },
+              {
+                "name": "Sanctuary",
+                "hosted_item":"firespring",
+                "item_count": 0
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "underworld",
+                "x": 73,
+                "y": 794
+              }
+            ]
+          }
+          
+
+        ]
+      },
+      {
+        "name": "Magicant",
+        "access_rules": ["magicwarp","magicantstart"],
+        "children": [
+          {
+            "name": "Magicant Sea Area",
+            "sections": [
+              {
+                "name": "Gift to Yourself",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "magicant",
+                "x": 1167,
+                "y": 486
+              }
+            ]
+          },
+          {
+            "name": "Magicant Ness Area",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "magicant",
+                "x": 1135,
+                "y": 490
+              }
+            ]
+          },
+          {
+            "name": "Magicant Town Area",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "magicant",
+                "x": 100,
+                "y": 1070
+              }
+            ]
+          },
+          {
+            "name": "Magicant Shop",
+            "visibility_rules":"shopson",
+            "sections": [
+              {
+                "name": "Pudding & Pendant",
+                "clear_as_group": false,
+                "item_count": 2
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "magicant",
+                "x": 1243,
+                "y": 1109
+              }
+            ]
+          },
+          {
+            "name": "Magicant Lonely Area",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "magicant",
+                "x": 1087,
+                "y": 240
+              }
+            ]
+          },
+          {
+            "name": "Magicant North Side",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "magicant",
+                "x": 607,
+                "y": 50
+              }
+            ]
+          },
+          {
+            "name": "Magicant Hills",
+            "sections": [
+              {
+                "name": "Present",
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "magicant",
+                "x": 455,
+                "y": 386
+              }
+            ]
+          },
+          {
+            "name": "Sea of Eden",
+            "sections": [
+              {
+                "name": "Ness's Nightmare",
+                "access_rules": ["Ness"],
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "magicant",
+                "x": 689,
+                "y": 325
+              }
+            ]
+          }
+          
+
+        ]
+      }
+                    
+
+        ]
+      }
+
+
+    ]

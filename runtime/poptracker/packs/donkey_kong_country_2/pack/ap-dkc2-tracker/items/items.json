@@ -1,0 +1,399 @@
+[
+    {
+        "name": "Climb",
+        "type": "toggle",
+        "img": "images/items/climb.png",
+        "img_mods": "",
+        "codes": "climb"
+    },
+    {
+        "name": "The Flying Krock Access",
+        "type": "toggle",
+        "img": "images/items/theflyingkrockaccess.png",
+        "img_mods": "",
+        "codes": "theflyingkrockaccess"
+    },
+    {
+        "name": "Squawks",
+        "type": "toggle",
+        "img": "images/items/squawks.png",
+        "img_mods": "",
+        "codes": "squawks"
+    },
+    {
+        "name": "reversetrap",
+        "type": "toggle",
+        "img": "images/items/reversetrap.png",
+        "img_mods": "",
+        "codes": "reversetrap"
+    },
+    {
+        "name": "freezetrap",
+        "type": "toggle",
+        "img": "images/items/freezetrap.png",
+        "img_mods": "",
+        "codes": "freezetrap"
+    },
+    {
+        "name": "Glimmer",
+        "type": "toggle",
+        "img": "images/items/glimmer.png",
+        "img_mods": "",
+        "codes": "glimmer"
+    },
+    {
+        "name": "Swim",
+        "type": "toggle",
+        "img": "images/items/swim.png",
+        "img_mods": "",
+        "codes": "swim"
+    },
+    {
+        "name": "Diddy",
+        "type": "toggle",
+        "img": "images/items/diddy.png",
+        "img_mods": "",
+        "codes": "diddy"
+    },
+    {
+        "name": "Lost World Access (Krem Quay)",
+        "type": "toggle",
+        "img": "images/items/lostworldaccess(kremquay).png",
+        "img_mods": "",
+        "codes": "lostworldaccesskremquay"
+    },
+    {
+        "name": "Team Attack",
+        "type": "toggle",
+        "img": "images/items/teamattack.png",
+        "img_mods": "",
+        "codes": "teamattack"
+    },
+    {
+        "name": "Rambi",
+        "type": "toggle",
+        "img": "images/items/rambi.png",
+        "img_mods": "",
+        "codes": "rambi"
+    },
+    {
+        "name": "Rattly",
+        "type": "toggle",
+        "img": "images/items/rattly.png",
+        "img_mods": "",
+        "codes": "rattly"
+    },
+    {
+        "name": "Cartwheel",
+        "type": "toggle",
+        "img": "images/items/cartwheel.png",
+        "img_mods": "",
+        "codes": "cartwheel"
+    },
+    {
+        "name": "Helicopter Spin",
+        "type": "toggle",
+        "img": "images/items/helicopterspin.png",
+        "img_mods": "",
+        "codes": "helicopterspin"
+    },
+    {
+        "name": "K. Rool's Keep Access",
+        "type": "toggle",
+        "img": "images/items/k.roolskeepaccess.png",
+        "img_mods": "",
+        "codes": "kroolskeepaccess"
+    },
+    {
+        "name": "Skull Kart",
+        "type": "toggle",
+        "img": "images/items/skullkart.png",
+        "img_mods": "",
+        "codes": "skullkart"
+    },
+    {
+        "name": "Lost World Access (Krazy Kremland)",
+        "type": "toggle",
+        "img": "images/items/lostworldaccess(krazykremland).png",
+        "img_mods": "",
+        "codes": "lostworldaccesskrazykremland"
+    },
+    {
+        "name": "Krem Quay Access",
+        "type": "toggle",
+        "img": "images/items/kremquayaccess.png",
+        "img_mods": "",
+        "codes": "kremquayaccess"
+    },
+    {
+        "name": "dkcoin",
+        "type": "toggle",
+        "img": "images/items/dkcoin.png",
+        "img_mods": "",
+        "codes": "dkcoin"
+    },
+    {
+        "name": "Lost World Rock",
+        "type": "consumable",
+        "img": "images/items/lostworldrock.png",
+        "img_mods": "",
+        "initial_quantity": 0,
+        "min_quantity": 0,
+        "max_quantity": 10,
+        "increment": 1,
+        "overlay_font_size": 14,
+        "codes": "lostworldrock"
+    },
+    {
+        "name": "Boss Tokens",
+        "type": "consumable",
+        "img": "images/checks/kremkoin.png",
+        "img_mods": "",
+        "initial_quantity": 0,
+        "min_quantity": 0,
+        "max_quantity": 10,
+        "increment": 1,
+        "overlay_font_size": 14,
+        "codes": "bosstoken"
+    },
+    {
+        "name": "Gangplank Galleon Access",
+        "type": "toggle",
+        "img": "images/items/gangplankgalleonaccess.png",
+        "img_mods": "",
+        "codes": "gangplankgalleonaccess"
+    },
+    {
+        "name": "Cling",
+        "type": "toggle",
+        "img": "images/items/cling.png",
+        "img_mods": "",
+        "codes": "cling"
+    },
+    {
+        "name": "Exclamation Barrels",
+        "type": "toggle",
+        "img": "images/items/exclamationbarrels.png",
+        "img_mods": "",
+        "codes": "exclamationbarrels"
+    },
+    {
+        "name": "Controllable Barrels",
+        "type": "toggle",
+        "img": "images/items/controllablebarrels.png",
+        "img_mods": "",
+        "codes": "controllablebarrels"
+    },
+    {
+        "name": "Lost World Access (Gloomy Gulch)",
+        "type": "toggle",
+        "img": "images/items/lostworldaccess(gloomygulch).png",
+        "img_mods": "",
+        "codes": "lostworldaccessgloomygulch"
+    },
+    {
+        "name": "Enguarde",
+        "type": "toggle",
+        "img": "images/items/enguarde.png",
+        "img_mods": "",
+        "codes": "enguarde"
+    },
+    {
+        "name": "Lost World Access (K. Rool's Keep)",
+        "type": "toggle",
+        "img": "images/items/lostworldaccess(k.roolskeep).png",
+        "img_mods": "",
+        "codes": "lostworldaccesskroolskeep"
+    },
+    {
+        "name": "Lost World Access (Crocodile Cauldron)",
+        "type": "toggle",
+        "img": "images/items/lostworldaccess(crocodilecauldron).png",
+        "img_mods": "",
+        "codes": "lostworldaccesscrocodilecauldron"
+    },
+    {
+        "name": "Dixie",
+        "type": "toggle",
+        "img": "images/items/dixie.png",
+        "img_mods": "",
+        "codes": "dixie"
+    },
+    {
+        "name": "kremkoins",
+        "type": "toggle",
+        "img": "images/items/kremkoins.png",
+        "img_mods": "",
+        "codes": "kremkoins"
+    },
+    {
+        "name": "Kong Barrels",
+        "type": "toggle",
+        "img": "images/items/kongbarrels.png",
+        "img_mods": "",
+        "codes": "kongbarrels"
+    },
+    {
+        "name": "Warp Barrels",
+        "type": "toggle",
+        "img": "images/items/warpbarrels.png",
+        "img_mods": "",
+        "codes": "warpbarrels"
+    },
+    {
+        "name": "Clapper",
+        "type": "toggle",
+        "img": "images/items/clapper.png",
+        "img_mods": "",
+        "codes": "clapper"
+    },
+    {
+        "name": "Krazy Kremland Access",
+        "type": "toggle",
+        "img": "images/items/krazykremlandaccess.png",
+        "img_mods": "",
+        "codes": "krazykremlandaccess"
+    },
+    {
+        "name": "Barrel Kannons",
+        "type": "toggle",
+        "img": "images/items/barrelkannons.png",
+        "img_mods": "",
+        "codes": "barrelkannons"
+    },
+    {
+        "name": "Gloomy Gulch Access",
+        "type": "toggle",
+        "img": "images/items/gloomygulchaccess.png",
+        "img_mods": "",
+        "codes": "gloomygulchaccess"
+    },
+    {
+        "name": "Carry",
+        "type": "toggle",
+        "img": "images/items/carry.png",
+        "img_mods": "",
+        "codes": "carry"
+    },
+    {
+        "name": "Squitter",
+        "type": "toggle",
+        "img": "images/items/squitter.png",
+        "img_mods": "",
+        "codes": "squitter"
+    },
+    {
+        "name": "Crocodile Cauldron Access",
+        "type": "toggle",
+        "img": "images/items/crocodilecauldronaccess.png",
+        "img_mods": "",
+        "codes": "crocodilecauldronaccess"
+    },
+    {
+        "name": "Difficulty",
+        "codes": "Logic",
+        "initial_stage_idx": 0,
+        "allow_disabled": "false",
+        "type": "progressive",
+        "stages": [
+          {
+            "img": "images/settings/easy.png",
+            "inherit_codes": "false",
+            "codes": "EASY"
+          },
+          {
+            "img": "images/settings/normal.png",
+            "inherit_codes": "false",
+            "codes": "NORMAL"
+          },
+          {
+            "img": "images/settings/hard.png",
+            "inherit_codes": "false",
+            "codes": "HARD"
+          }
+        ]
+      },
+      {
+        "name": "Swanky Checks On",
+        "type": "toggle",
+        "img": "images/settings/swankycheck.png",
+        "codes": "swankychecks"
+      },
+      {
+        "name": "KONG Checks On",
+        "type": "toggle",
+        "img": "images/settings/kongcheck.png",
+        "codes": "kongchecks"
+      },
+      {
+        "name": "DK Coin Checks On",
+        "type": "toggle",
+        "img": "images/settings/dkcoincheck.png",
+        "codes": "dkcoinchecks"
+      },
+      {
+        "name": "Goal",
+        "codes": "goal",
+        "allow_disabled": "false",
+        "type": "progressive",
+        "stages": [
+          {
+            "img": "images/settings/kroolgoal.png",
+            "inherit_codes": "false",
+            "codes": "flyingkrockgoal"
+          },
+          {
+            "img": "images/settings/lostworldgoal.png",
+            "inherit_codes": "false",
+            "codes": "lostworldgoal"
+          },
+          {
+            "img": "images/settings/kompletionist.png",
+            "inherit_codes": "false",
+            "codes": "kompletionist"
+          }
+        ]
+      },
+      {
+        "name": "Lost World Rocks Needed",
+        "type": "consumable",
+        "img": "images/settings/lostworldrocksneeded.png",
+        "img_mods": "",
+        "initial_quantity": 0,
+        "min_quantity": 0,
+        "max_quantity": 11,
+        "increment": 1,
+        "overlay_font_size": 14,
+        "codes": "lostworldrocksrequired"
+    },
+    {
+        "name": "Boss Tokens Needed",
+        "type": "consumable",
+        "img": "images/settings/bosstokencheck.png",
+        "img_mods": "",
+        "initial_quantity": 0,
+        "min_quantity": 0,
+        "max_quantity": 6,
+        "increment": 1,
+        "overlay_font_size": 14,
+        "codes": "bosstokensrequired"
+    },
+    {
+        "name": "Banana Coin Checks On",
+        "type": "toggle",
+        "img": "images/settings/coinsanity.png",
+        "codes": "coinsanity"
+      },
+      {
+        "name": "Balloon Checks On",
+        "type": "toggle",
+        "img": "images/settings/balloonsanity.png",
+        "codes": "balloonsanity"
+      },
+      {
+        "name": "Banana Bunch Checks On",
+        "type": "toggle",
+        "img": "images/settings/bananasanity.png",
+        "codes": "bananasanity"
+      }
+]

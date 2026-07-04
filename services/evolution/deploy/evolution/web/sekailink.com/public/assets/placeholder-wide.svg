@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#030508"/>
+      <stop offset="50%" stop-color="#0a1218"/>
+      <stop offset="100%" stop-color="#030508"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#0d9488" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <ellipse cx="600" cy="400" rx="400" ry="180" fill="url(#glow)"/>
+  <text x="600" y="340" text-anchor="middle" fill="#334155" font-family="system-ui,sans-serif" font-size="28" font-weight="600">Placeholder visuel</text>
+  <text x="600" y="380" text-anchor="middle" fill="#1e3a4a" font-family="system-ui,sans-serif" font-size="16">Capture client · à remplacer</text>
+</svg>

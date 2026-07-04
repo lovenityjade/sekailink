@@ -1,0 +1,39 @@
+[
+  {
+    "name": "Ember Spa",
+    "children": [
+      {
+        "name": "Rock Smash Man",
+        "sections": [
+          {
+            "ref": "Islands/Ember Spa/Rock Smash Man Gift",
+            "name": "Gift"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ember_spa",
+            "x": 168,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Black Belt",
+        "sections": [
+          {
+            "ref": "Islands/Ember Spa/Black Belt Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "ember_spa",
+            "x": 104,
+            "y": 136
+          }
+        ]
+      }
+    ]
+  }
+]

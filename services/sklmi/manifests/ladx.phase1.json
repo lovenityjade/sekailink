@@ -1,0 +1,61 @@
+{
+  "id": "ladx",
+  "type": "linkedworld",
+  "version": "0.2.0-beta3-runtime",
+  "sklmi": {
+    "contract_version": "1.0",
+    "bridge_id": "ladx-phase1",
+    "driver_instance_id": "ladx-sekaiemu-runtime",
+    "core_profile": {
+      "name": "gb_gbc_v1",
+      "domains": [
+        { "id": "system_ram" }
+      ]
+    },
+    "module": "sekaiemu",
+    "state_file": "ladx.phase1.bridge.state",
+    "poll_interval_ms": 16,
+    "checks": [
+      {
+        "domain_id": "system_ram",
+        "address": "0xDAA3",
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": "0x20",
+        "event_type": "location_checked",
+        "location_id": 10000675,
+        "location_name": "Tarin's Gift"
+      },
+      {
+        "domain_id": "system_ram",
+        "address": "0xDAA4",
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": "0x10",
+        "event_type": "location_checked",
+        "location_id": 10000676,
+        "location_name": "Well Heart Piece"
+      },
+      {
+        "domain_id": "system_ram",
+        "address": "0xDABE",
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": "0x10",
+        "event_type": "location_checked",
+        "location_id": 10000702,
+        "location_name": "Dream Hut West"
+      },
+      {
+        "domain_id": "system_ram",
+        "address": "0xDABF",
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": "0x10",
+        "event_type": "location_checked",
+        "location_id": 10000703,
+        "location_name": "Dream Hut East"
+      }
+    ]
+  }
+}

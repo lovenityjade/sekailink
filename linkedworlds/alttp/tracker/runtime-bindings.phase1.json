@@ -1,0 +1,3947 @@
+{
+  "binding_set_id": "alttp-runtime-core-live",
+  "linkedworld_id": "alttp",
+  "status": "runtime-surface-expanded-canonical",
+  "bridge_ref": "bridge/sklmi.phase1.json",
+  "successor_surface_ref": "tracker/default.bundle/surface.complete.json",
+  "coverage_note": "This file now tracks the current runtime live bridge on the legacy phase1 path with the full ALTTP client-read check surface plus explicit shop slots and all int-coded ALTTP receive items. Tracker node ids remain pending until pack import is finalized.",
+  "tracker_surface": {
+    "layout_mode": "side-by-side",
+    "left_panel": "game",
+    "right_panel": "tracker",
+    "sections": [
+      {
+        "section_id": "map",
+        "description": "Location-facing map view for checks tied to overworld or room semantics"
+      },
+      {
+        "section_id": "inventory",
+        "description": "Item-facing inventory view for received or collected progression"
+      },
+      {
+        "section_id": "status",
+        "description": "Seed and room metadata visible to the player during runtime"
+      }
+    ]
+  },
+  "source_refs": [
+    "source-snapshots/sklmi.phase1.current.json",
+    "sklmi/tests/sklmi_alttp_golden_main.cpp",
+    "bridge/sklmi.phase1.json"
+  ],
+  "seed_metadata_bindings": [
+    {
+      "metadata_key": "seed_id",
+      "tracker_semantic_id": "status.seed_id"
+    },
+    {
+      "metadata_key": "seed_hash",
+      "tracker_semantic_id": "status.seed_hash"
+    },
+    {
+      "metadata_key": "slot_name",
+      "tracker_semantic_id": "status.slot_name"
+    },
+    {
+      "metadata_key": "player_alias",
+      "tracker_semantic_id": "status.player_alias"
+    },
+    {
+      "metadata_key": "tracker_variant",
+      "tracker_semantic_id": "status.tracker_variant"
+    },
+    {
+      "metadata_key": "goal",
+      "tracker_semantic_id": "status.goal",
+      "optional": true
+    },
+    {
+      "metadata_key": "mode",
+      "tracker_semantic_id": "status.mode",
+      "optional": true
+    }
+  ],
+  "location_bindings": [
+    {
+      "event_key": "0xEB0F",
+      "event_type": "location_checked",
+      "location_id": 60175,
+      "location_name": "Blind's Hideout - Top",
+      "tracker_semantic_id": "location.blinds_hideout_top",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB12",
+      "event_type": "location_checked",
+      "location_id": 60178,
+      "location_name": "Blind's Hideout - Left",
+      "tracker_semantic_id": "location.blinds_hideout_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB15",
+      "event_type": "location_checked",
+      "location_id": 60181,
+      "location_name": "Blind's Hideout - Right",
+      "tracker_semantic_id": "location.blinds_hideout_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB18",
+      "event_type": "location_checked",
+      "location_id": 60184,
+      "location_name": "Blind's Hideout - Far Left",
+      "tracker_semantic_id": "location.blinds_hideout_far_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB1B",
+      "event_type": "location_checked",
+      "location_id": 60187,
+      "location_name": "Blind's Hideout - Far Right",
+      "tracker_semantic_id": "location.blinds_hideout_far_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE971",
+      "event_type": "location_checked",
+      "location_id": 59761,
+      "location_name": "Secret Passage",
+      "tracker_semantic_id": "location.secret_passage",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9B0",
+      "event_type": "location_checked",
+      "location_id": 59824,
+      "location_name": "Waterfall Fairy - Left",
+      "tracker_semantic_id": "location.waterfall_fairy_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9D1",
+      "event_type": "location_checked",
+      "location_id": 59857,
+      "location_name": "Waterfall Fairy - Right",
+      "tracker_semantic_id": "location.waterfall_fairy_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE97A",
+      "event_type": "location_checked",
+      "location_id": 59770,
+      "location_name": "King's Tomb",
+      "tracker_semantic_id": "location.kings_tomb",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE98C",
+      "event_type": "location_checked",
+      "location_id": 59788,
+      "location_name": "Floodgate Chest",
+      "tracker_semantic_id": "location.floodgate_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9BC",
+      "event_type": "location_checked",
+      "location_id": 59836,
+      "location_name": "Link's House",
+      "tracker_semantic_id": "location.links_house",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9CE",
+      "event_type": "location_checked",
+      "location_id": 59854,
+      "location_name": "Kakariko Tavern",
+      "tracker_semantic_id": "location.kakariko_tavern",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9E9",
+      "event_type": "location_checked",
+      "location_id": 59881,
+      "location_name": "Chicken House",
+      "tracker_semantic_id": "location.chicken_house",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9F2",
+      "event_type": "location_checked",
+      "location_id": 59890,
+      "location_name": "Aginah's Cave",
+      "tracker_semantic_id": "location.aginahs_cave",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA82",
+      "event_type": "location_checked",
+      "location_id": 60034,
+      "location_name": "Sahasrahla's Hut - Left",
+      "tracker_semantic_id": "location.sahasrahlas_hut_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA85",
+      "event_type": "location_checked",
+      "location_id": 60037,
+      "location_name": "Sahasrahla's Hut - Middle",
+      "tracker_semantic_id": "location.sahasrahlas_hut_middle",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA88",
+      "event_type": "location_checked",
+      "location_id": 60040,
+      "location_name": "Sahasrahla's Hut - Right",
+      "tracker_semantic_id": "location.sahasrahlas_hut_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA8E",
+      "event_type": "location_checked",
+      "location_id": 60046,
+      "location_name": "Kakariko Well - Top",
+      "tracker_semantic_id": "location.kakariko_well_top",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA91",
+      "event_type": "location_checked",
+      "location_id": 60049,
+      "location_name": "Kakariko Well - Left",
+      "tracker_semantic_id": "location.kakariko_well_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA94",
+      "event_type": "location_checked",
+      "location_id": 60052,
+      "location_name": "Kakariko Well - Middle",
+      "tracker_semantic_id": "location.kakariko_well_middle",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA97",
+      "event_type": "location_checked",
+      "location_id": 60055,
+      "location_name": "Kakariko Well - Right",
+      "tracker_semantic_id": "location.kakariko_well_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA9A",
+      "event_type": "location_checked",
+      "location_id": 60058,
+      "location_name": "Kakariko Well - Bottom",
+      "tracker_semantic_id": "location.kakariko_well_bottom",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180000",
+      "event_type": "location_checked",
+      "location_id": 1572864,
+      "location_name": "Lost Woods Hideout",
+      "tracker_semantic_id": "location.lost_woods_hideout",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180001",
+      "event_type": "location_checked",
+      "location_id": 1572865,
+      "location_name": "Lumberjack Tree",
+      "tracker_semantic_id": "location.lumberjack_tree",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180003",
+      "event_type": "location_checked",
+      "location_id": 1572867,
+      "location_name": "Cave 45",
+      "tracker_semantic_id": "location.cave_45",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180004",
+      "event_type": "location_checked",
+      "location_id": 1572868,
+      "location_name": "Graveyard Cave",
+      "tracker_semantic_id": "location.graveyard_cave",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180005",
+      "event_type": "location_checked",
+      "location_id": 1572869,
+      "location_name": "Checkerboard Cave",
+      "tracker_semantic_id": "location.checkerboard_cave",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB42",
+      "event_type": "location_checked",
+      "location_id": 60226,
+      "location_name": "Mini Moldorm Cave - Far Left",
+      "tracker_semantic_id": "location.mini_moldorm_cave_far_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB45",
+      "event_type": "location_checked",
+      "location_id": 60229,
+      "location_name": "Mini Moldorm Cave - Left",
+      "tracker_semantic_id": "location.mini_moldorm_cave_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB48",
+      "event_type": "location_checked",
+      "location_id": 60232,
+      "location_name": "Mini Moldorm Cave - Right",
+      "tracker_semantic_id": "location.mini_moldorm_cave_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB4B",
+      "event_type": "location_checked",
+      "location_id": 60235,
+      "location_name": "Mini Moldorm Cave - Far Right",
+      "tracker_semantic_id": "location.mini_moldorm_cave_far_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180010",
+      "event_type": "location_checked",
+      "location_id": 1572880,
+      "location_name": "Mini Moldorm Cave - Generous Guy",
+      "tracker_semantic_id": "location.mini_moldorm_cave_generous_guy",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB4E",
+      "event_type": "location_checked",
+      "location_id": 60238,
+      "location_name": "Ice Rod Cave",
+      "tracker_semantic_id": "location.ice_rod_cave",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB3F",
+      "event_type": "location_checked",
+      "location_id": 60223,
+      "location_name": "Bonk Rock Cave",
+      "tracker_semantic_id": "location.bonk_rock_cave",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE98F",
+      "event_type": "location_checked",
+      "location_id": 59791,
+      "location_name": "Desert Palace - Big Chest",
+      "tracker_semantic_id": "location.desert_palace_big_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180160",
+      "event_type": "location_checked",
+      "location_id": 1573216,
+      "location_name": "Desert Palace - Torch",
+      "tracker_semantic_id": "location.desert_palace_torch",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9B6",
+      "event_type": "location_checked",
+      "location_id": 59830,
+      "location_name": "Desert Palace - Map Chest",
+      "tracker_semantic_id": "location.desert_palace_map_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9CB",
+      "event_type": "location_checked",
+      "location_id": 59851,
+      "location_name": "Desert Palace - Compass Chest",
+      "tracker_semantic_id": "location.desert_palace_compass_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9C2",
+      "event_type": "location_checked",
+      "location_id": 59842,
+      "location_name": "Desert Palace - Big Key Chest",
+      "tracker_semantic_id": "location.desert_palace_big_key_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140031",
+      "event_type": "location_checked",
+      "location_id": 1310769,
+      "location_name": "Desert Palace - Desert Tiles 1 Pot Key",
+      "tracker_semantic_id": "location.desert_palace_desert_tiles_1_pot_key",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x14002B",
+      "event_type": "location_checked",
+      "location_id": 1310763,
+      "location_name": "Desert Palace - Beamos Hall Pot Key",
+      "tracker_semantic_id": "location.desert_palace_beamos_hall_pot_key",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140028",
+      "event_type": "location_checked",
+      "location_id": 1310760,
+      "location_name": "Desert Palace - Desert Tiles 2 Pot Key",
+      "tracker_semantic_id": "location.desert_palace_desert_tiles_2_pot_key",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180151",
+      "event_type": "location_checked",
+      "location_id": 1573201,
+      "location_name": "Desert Palace - Boss",
+      "tracker_semantic_id": "location.desert_palace_boss",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE977",
+      "event_type": "location_checked",
+      "location_id": 59767,
+      "location_name": "Eastern Palace - Compass Chest",
+      "tracker_semantic_id": "location.eastern_palace_compass_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE97D",
+      "event_type": "location_checked",
+      "location_id": 59773,
+      "location_name": "Eastern Palace - Big Chest",
+      "tracker_semantic_id": "location.eastern_palace_big_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x14005B",
+      "event_type": "location_checked",
+      "location_id": 1310811,
+      "location_name": "Eastern Palace - Dark Square Pot Key",
+      "tracker_semantic_id": "location.eastern_palace_dark_square_pot_key",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140049",
+      "event_type": "location_checked",
+      "location_id": 1310793,
+      "location_name": "Eastern Palace - Dark Eyegore Key Drop",
+      "tracker_semantic_id": "location.eastern_palace_dark_eyegore_key_drop",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9B3",
+      "event_type": "location_checked",
+      "location_id": 59827,
+      "location_name": "Eastern Palace - Cannonball Chest",
+      "tracker_semantic_id": "location.eastern_palace_cannonball_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9B9",
+      "event_type": "location_checked",
+      "location_id": 59833,
+      "location_name": "Eastern Palace - Big Key Chest",
+      "tracker_semantic_id": "location.eastern_palace_big_key_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9F5",
+      "event_type": "location_checked",
+      "location_id": 59893,
+      "location_name": "Eastern Palace - Map Chest",
+      "tracker_semantic_id": "location.eastern_palace_map_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180150",
+      "event_type": "location_checked",
+      "location_id": 1573200,
+      "location_name": "Eastern Palace - Boss",
+      "tracker_semantic_id": "location.eastern_palace_boss",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE974",
+      "event_type": "location_checked",
+      "location_id": 59764,
+      "location_name": "Hyrule Castle - Boomerang Chest",
+      "tracker_semantic_id": "location.hyrule_castle_boomerang_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140034",
+      "event_type": "location_checked",
+      "location_id": 1310772,
+      "location_name": "Hyrule Castle - Boomerang Guard Key Drop",
+      "tracker_semantic_id": "location.hyrule_castle_boomerang_guard_key_drop",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB0C",
+      "event_type": "location_checked",
+      "location_id": 60172,
+      "location_name": "Hyrule Castle - Map Chest",
+      "tracker_semantic_id": "location.hyrule_castle_map_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140037",
+      "event_type": "location_checked",
+      "location_id": 1310775,
+      "location_name": "Hyrule Castle - Map Guard Key Drop",
+      "tracker_semantic_id": "location.hyrule_castle_map_guard_key_drop",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB09",
+      "event_type": "location_checked",
+      "location_id": 60169,
+      "location_name": "Hyrule Castle - Zelda's Chest",
+      "tracker_semantic_id": "location.hyrule_castle_zeldas_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x14003D",
+      "event_type": "location_checked",
+      "location_id": 1310781,
+      "location_name": "Hyrule Castle - Big Key Drop",
+      "tracker_semantic_id": "location.hyrule_castle_big_key_drop",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE96E",
+      "event_type": "location_checked",
+      "location_id": 59758,
+      "location_name": "Sewers - Dark Cross",
+      "tracker_semantic_id": "location.sewers_dark_cross",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x14000D",
+      "event_type": "location_checked",
+      "location_id": 1310733,
+      "location_name": "Sewers - Key Rat Key Drop",
+      "tracker_semantic_id": "location.sewers_key_rat_key_drop",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB5D",
+      "event_type": "location_checked",
+      "location_id": 60253,
+      "location_name": "Sewers - Secret Room - Left",
+      "tracker_semantic_id": "location.sewers_secret_room_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB60",
+      "event_type": "location_checked",
+      "location_id": 60256,
+      "location_name": "Sewers - Secret Room - Middle",
+      "tracker_semantic_id": "location.sewers_secret_room_middle",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB63",
+      "event_type": "location_checked",
+      "location_id": 60259,
+      "location_name": "Sewers - Secret Room - Right",
+      "tracker_semantic_id": "location.sewers_secret_room_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA79",
+      "event_type": "location_checked",
+      "location_id": 60025,
+      "location_name": "Sanctuary",
+      "tracker_semantic_id": "location.sanctuary",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAB5",
+      "event_type": "location_checked",
+      "location_id": 60085,
+      "location_name": "Castle Tower - Room 03",
+      "tracker_semantic_id": "location.castle_tower_room_03",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAB2",
+      "event_type": "location_checked",
+      "location_id": 60082,
+      "location_name": "Castle Tower - Dark Maze",
+      "tracker_semantic_id": "location.castle_tower_dark_maze",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140061",
+      "event_type": "location_checked",
+      "location_id": 1310817,
+      "location_name": "Castle Tower - Dark Archer Key Drop",
+      "tracker_semantic_id": "location.castle_tower_dark_archer_key_drop",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140052",
+      "event_type": "location_checked",
+      "location_id": 1310802,
+      "location_name": "Castle Tower - Circle of Pots Key Drop",
+      "tracker_semantic_id": "location.castle_tower_circle_of_pots_key_drop",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180002",
+      "event_type": "location_checked",
+      "location_id": 1572866,
+      "location_name": "Spectacle Rock Cave",
+      "tracker_semantic_id": "location.spectacle_rock_cave",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB2A",
+      "event_type": "location_checked",
+      "location_id": 60202,
+      "location_name": "Paradox Cave Lower - Far Left",
+      "tracker_semantic_id": "location.paradox_cave_lower_far_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB2D",
+      "event_type": "location_checked",
+      "location_id": 60205,
+      "location_name": "Paradox Cave Lower - Left",
+      "tracker_semantic_id": "location.paradox_cave_lower_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB30",
+      "event_type": "location_checked",
+      "location_id": 60208,
+      "location_name": "Paradox Cave Lower - Right",
+      "tracker_semantic_id": "location.paradox_cave_lower_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB33",
+      "event_type": "location_checked",
+      "location_id": 60211,
+      "location_name": "Paradox Cave Lower - Far Right",
+      "tracker_semantic_id": "location.paradox_cave_lower_far_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB36",
+      "event_type": "location_checked",
+      "location_id": 60214,
+      "location_name": "Paradox Cave Lower - Middle",
+      "tracker_semantic_id": "location.paradox_cave_lower_middle",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB39",
+      "event_type": "location_checked",
+      "location_id": 60217,
+      "location_name": "Paradox Cave Upper - Left",
+      "tracker_semantic_id": "location.paradox_cave_upper_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB3C",
+      "event_type": "location_checked",
+      "location_id": 60220,
+      "location_name": "Paradox Cave Upper - Right",
+      "tracker_semantic_id": "location.paradox_cave_upper_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9BF",
+      "event_type": "location_checked",
+      "location_id": 59839,
+      "location_name": "Spiral Cave",
+      "tracker_semantic_id": "location.spiral_cave",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180162",
+      "event_type": "location_checked",
+      "location_id": 1573218,
+      "location_name": "Tower of Hera - Basement Cage",
+      "tracker_semantic_id": "location.tower_of_hera_basement_cage",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9AD",
+      "event_type": "location_checked",
+      "location_id": 59821,
+      "location_name": "Tower of Hera - Map Chest",
+      "tracker_semantic_id": "location.tower_of_hera_map_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9E6",
+      "event_type": "location_checked",
+      "location_id": 59878,
+      "location_name": "Tower of Hera - Big Key Chest",
+      "tracker_semantic_id": "location.tower_of_hera_big_key_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9FB",
+      "event_type": "location_checked",
+      "location_id": 59899,
+      "location_name": "Tower of Hera - Compass Chest",
+      "tracker_semantic_id": "location.tower_of_hera_compass_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9F8",
+      "event_type": "location_checked",
+      "location_id": 59896,
+      "location_name": "Tower of Hera - Big Chest",
+      "tracker_semantic_id": "location.tower_of_hera_big_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180152",
+      "event_type": "location_checked",
+      "location_id": 1573202,
+      "location_name": "Tower of Hera - Boss",
+      "tracker_semantic_id": "location.tower_of_hera_boss",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB1E",
+      "event_type": "location_checked",
+      "location_id": 60190,
+      "location_name": "Hype Cave - Top",
+      "tracker_semantic_id": "location.hype_cave_top",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB21",
+      "event_type": "location_checked",
+      "location_id": 60193,
+      "location_name": "Hype Cave - Middle Right",
+      "tracker_semantic_id": "location.hype_cave_middle_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB24",
+      "event_type": "location_checked",
+      "location_id": 60196,
+      "location_name": "Hype Cave - Middle Left",
+      "tracker_semantic_id": "location.hype_cave_middle_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB27",
+      "event_type": "location_checked",
+      "location_id": 60199,
+      "location_name": "Hype Cave - Bottom",
+      "tracker_semantic_id": "location.hype_cave_bottom",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180011",
+      "event_type": "location_checked",
+      "location_id": 1572881,
+      "location_name": "Hype Cave - Generous Guy",
+      "tracker_semantic_id": "location.hype_cave_generous_guy",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180006",
+      "event_type": "location_checked",
+      "location_id": 1572870,
+      "location_name": "Peg Cave",
+      "tracker_semantic_id": "location.peg_cave",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE980",
+      "event_type": "location_checked",
+      "location_id": 59776,
+      "location_name": "Pyramid Fairy - Left",
+      "tracker_semantic_id": "location.pyramid_fairy_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE983",
+      "event_type": "location_checked",
+      "location_id": 59779,
+      "location_name": "Pyramid Fairy - Right",
+      "tracker_semantic_id": "location.pyramid_fairy_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9EC",
+      "event_type": "location_checked",
+      "location_id": 59884,
+      "location_name": "Brewery",
+      "tracker_semantic_id": "location.brewery",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9EF",
+      "event_type": "location_checked",
+      "location_id": 59887,
+      "location_name": "C-Shaped House",
+      "tracker_semantic_id": "location.c_shaped_house",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEDA8",
+      "event_type": "location_checked",
+      "location_id": 60840,
+      "location_name": "Chest Game",
+      "tracker_semantic_id": "location.chest_game",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA73",
+      "event_type": "location_checked",
+      "location_id": 60019,
+      "location_name": "Mire Shed - Left",
+      "tracker_semantic_id": "location.mire_shed_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA76",
+      "event_type": "location_checked",
+      "location_id": 60022,
+      "location_name": "Mire Shed - Right",
+      "tracker_semantic_id": "location.mire_shed_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA7C",
+      "event_type": "location_checked",
+      "location_id": 60028,
+      "location_name": "Superbunny Cave - Top",
+      "tracker_semantic_id": "location.superbunny_cave_top",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA7F",
+      "event_type": "location_checked",
+      "location_id": 60031,
+      "location_name": "Superbunny Cave - Bottom",
+      "tracker_semantic_id": "location.superbunny_cave_bottom",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA8B",
+      "event_type": "location_checked",
+      "location_id": 60043,
+      "location_name": "Spike Cave",
+      "tracker_semantic_id": "location.spike_cave",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB51",
+      "event_type": "location_checked",
+      "location_id": 60241,
+      "location_name": "Hookshot Cave - Top Right",
+      "tracker_semantic_id": "location.hookshot_cave_top_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB54",
+      "event_type": "location_checked",
+      "location_id": 60244,
+      "location_name": "Hookshot Cave - Top Left",
+      "tracker_semantic_id": "location.hookshot_cave_top_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB5A",
+      "event_type": "location_checked",
+      "location_id": 60250,
+      "location_name": "Hookshot Cave - Bottom Right",
+      "tracker_semantic_id": "location.hookshot_cave_bottom_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB57",
+      "event_type": "location_checked",
+      "location_id": 60247,
+      "location_name": "Hookshot Cave - Bottom Left",
+      "tracker_semantic_id": "location.hookshot_cave_bottom_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9C5",
+      "event_type": "location_checked",
+      "location_id": 59845,
+      "location_name": "Mimic Cave",
+      "tracker_semantic_id": "location.mimic_cave",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA9D",
+      "event_type": "location_checked",
+      "location_id": 60061,
+      "location_name": "Swamp Palace - Entrance",
+      "tracker_semantic_id": "location.swamp_palace_entrance",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE986",
+      "event_type": "location_checked",
+      "location_id": 59782,
+      "location_name": "Swamp Palace - Map Chest",
+      "tracker_semantic_id": "location.swamp_palace_map_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140019",
+      "event_type": "location_checked",
+      "location_id": 1310745,
+      "location_name": "Swamp Palace - Pot Row Pot Key",
+      "tracker_semantic_id": "location.swamp_palace_pot_row_pot_key",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140016",
+      "event_type": "location_checked",
+      "location_id": 1310742,
+      "location_name": "Swamp Palace - Trench 1 Pot Key",
+      "tracker_semantic_id": "location.swamp_palace_trench_1_pot_key",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140013",
+      "event_type": "location_checked",
+      "location_id": 1310739,
+      "location_name": "Swamp Palace - Hookshot Pot Key",
+      "tracker_semantic_id": "location.swamp_palace_hookshot_pot_key",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE989",
+      "event_type": "location_checked",
+      "location_id": 59785,
+      "location_name": "Swamp Palace - Big Chest",
+      "tracker_semantic_id": "location.swamp_palace_big_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAA0",
+      "event_type": "location_checked",
+      "location_id": 60064,
+      "location_name": "Swamp Palace - Compass Chest",
+      "tracker_semantic_id": "location.swamp_palace_compass_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140010",
+      "event_type": "location_checked",
+      "location_id": 1310736,
+      "location_name": "Swamp Palace - Trench 2 Pot Key",
+      "tracker_semantic_id": "location.swamp_palace_trench_2_pot_key",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAA6",
+      "event_type": "location_checked",
+      "location_id": 60070,
+      "location_name": "Swamp Palace - Big Key Chest",
+      "tracker_semantic_id": "location.swamp_palace_big_key_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAA3",
+      "event_type": "location_checked",
+      "location_id": 60067,
+      "location_name": "Swamp Palace - West Chest",
+      "tracker_semantic_id": "location.swamp_palace_west_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAA9",
+      "event_type": "location_checked",
+      "location_id": 60073,
+      "location_name": "Swamp Palace - Flooded Room - Left",
+      "tracker_semantic_id": "location.swamp_palace_flooded_room_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAAC",
+      "event_type": "location_checked",
+      "location_id": 60076,
+      "location_name": "Swamp Palace - Flooded Room - Right",
+      "tracker_semantic_id": "location.swamp_palace_flooded_room_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAAF",
+      "event_type": "location_checked",
+      "location_id": 60079,
+      "location_name": "Swamp Palace - Waterfall Room",
+      "tracker_semantic_id": "location.swamp_palace_waterfall_room",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x14000A",
+      "event_type": "location_checked",
+      "location_id": 1310730,
+      "location_name": "Swamp Palace - Waterway Pot Key",
+      "tracker_semantic_id": "location.swamp_palace_waterway_pot_key",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180154",
+      "event_type": "location_checked",
+      "location_id": 1573204,
+      "location_name": "Swamp Palace - Boss",
+      "tracker_semantic_id": "location.swamp_palace_boss",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA04",
+      "event_type": "location_checked",
+      "location_id": 59908,
+      "location_name": "Thieves' Town - Big Key Chest",
+      "tracker_semantic_id": "location.thieves_town_big_key_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA01",
+      "event_type": "location_checked",
+      "location_id": 59905,
+      "location_name": "Thieves' Town - Map Chest",
+      "tracker_semantic_id": "location.thieves_town_map_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA07",
+      "event_type": "location_checked",
+      "location_id": 59911,
+      "location_name": "Thieves' Town - Compass Chest",
+      "tracker_semantic_id": "location.thieves_town_compass_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA0A",
+      "event_type": "location_checked",
+      "location_id": 59914,
+      "location_name": "Thieves' Town - Ambush Chest",
+      "tracker_semantic_id": "location.thieves_town_ambush_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x14005E",
+      "event_type": "location_checked",
+      "location_id": 1310814,
+      "location_name": "Thieves' Town - Hallway Pot Key",
+      "tracker_semantic_id": "location.thieves_town_hallway_pot_key",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x14004F",
+      "event_type": "location_checked",
+      "location_id": 1310799,
+      "location_name": "Thieves' Town - Spike Switch Pot Key",
+      "tracker_semantic_id": "location.thieves_town_spike_switch_pot_key",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA0D",
+      "event_type": "location_checked",
+      "location_id": 59917,
+      "location_name": "Thieves' Town - Attic",
+      "tracker_semantic_id": "location.thieves_town_attic",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA10",
+      "event_type": "location_checked",
+      "location_id": 59920,
+      "location_name": "Thieves' Town - Big Chest",
+      "tracker_semantic_id": "location.thieves_town_big_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA13",
+      "event_type": "location_checked",
+      "location_id": 59923,
+      "location_name": "Thieves' Town - Blind's Cell",
+      "tracker_semantic_id": "location.thieves_town_blinds_cell",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180156",
+      "event_type": "location_checked",
+      "location_id": 1573206,
+      "location_name": "Thieves' Town - Boss",
+      "tracker_semantic_id": "location.thieves_town_boss",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE992",
+      "event_type": "location_checked",
+      "location_id": 59794,
+      "location_name": "Skull Woods - Compass Chest",
+      "tracker_semantic_id": "location.skull_woods_compass_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE99B",
+      "event_type": "location_checked",
+      "location_id": 59803,
+      "location_name": "Skull Woods - Map Chest",
+      "tracker_semantic_id": "location.skull_woods_map_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE998",
+      "event_type": "location_checked",
+      "location_id": 59800,
+      "location_name": "Skull Woods - Big Chest",
+      "tracker_semantic_id": "location.skull_woods_big_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9A1",
+      "event_type": "location_checked",
+      "location_id": 59809,
+      "location_name": "Skull Woods - Pot Prison",
+      "tracker_semantic_id": "location.skull_woods_pot_prison",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9C8",
+      "event_type": "location_checked",
+      "location_id": 59848,
+      "location_name": "Skull Woods - Pinball Room",
+      "tracker_semantic_id": "location.skull_woods_pinball_room",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE99E",
+      "event_type": "location_checked",
+      "location_id": 59806,
+      "location_name": "Skull Woods - Big Key Chest",
+      "tracker_semantic_id": "location.skull_woods_big_key_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x14002E",
+      "event_type": "location_checked",
+      "location_id": 1310766,
+      "location_name": "Skull Woods - West Lobby Pot Key",
+      "tracker_semantic_id": "location.skull_woods_west_lobby_pot_key",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9FE",
+      "event_type": "location_checked",
+      "location_id": 59902,
+      "location_name": "Skull Woods - Bridge Room",
+      "tracker_semantic_id": "location.skull_woods_bridge_room",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x14001C",
+      "event_type": "location_checked",
+      "location_id": 1310748,
+      "location_name": "Skull Woods - Spike Corner Key Drop",
+      "tracker_semantic_id": "location.skull_woods_spike_corner_key_drop",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180155",
+      "event_type": "location_checked",
+      "location_id": 1573205,
+      "location_name": "Skull Woods - Boss",
+      "tracker_semantic_id": "location.skull_woods_boss",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140004",
+      "event_type": "location_checked",
+      "location_id": 1310724,
+      "location_name": "Ice Palace - Jelly Key Drop",
+      "tracker_semantic_id": "location.ice_palace_jelly_key_drop",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9D4",
+      "event_type": "location_checked",
+      "location_id": 59860,
+      "location_name": "Ice Palace - Compass Chest",
+      "tracker_semantic_id": "location.ice_palace_compass_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140022",
+      "event_type": "location_checked",
+      "location_id": 1310754,
+      "location_name": "Ice Palace - Conveyor Key Drop",
+      "tracker_semantic_id": "location.ice_palace_conveyor_key_drop",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE995",
+      "event_type": "location_checked",
+      "location_id": 59797,
+      "location_name": "Ice Palace - Freezor Chest",
+      "tracker_semantic_id": "location.ice_palace_freezor_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9AA",
+      "event_type": "location_checked",
+      "location_id": 59818,
+      "location_name": "Ice Palace - Big Chest",
+      "tracker_semantic_id": "location.ice_palace_big_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9E3",
+      "event_type": "location_checked",
+      "location_id": 59875,
+      "location_name": "Ice Palace - Iced T Room",
+      "tracker_semantic_id": "location.ice_palace_iced_t_room",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140046",
+      "event_type": "location_checked",
+      "location_id": 1310790,
+      "location_name": "Ice Palace - Many Pots Pot Key",
+      "tracker_semantic_id": "location.ice_palace_many_pots_pot_key",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9E0",
+      "event_type": "location_checked",
+      "location_id": 59872,
+      "location_name": "Ice Palace - Spike Room",
+      "tracker_semantic_id": "location.ice_palace_spike_room",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9A4",
+      "event_type": "location_checked",
+      "location_id": 59812,
+      "location_name": "Ice Palace - Big Key Chest",
+      "tracker_semantic_id": "location.ice_palace_big_key_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140025",
+      "event_type": "location_checked",
+      "location_id": 1310757,
+      "location_name": "Ice Palace - Hammer Block Key Drop",
+      "tracker_semantic_id": "location.ice_palace_hammer_block_key_drop",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9DD",
+      "event_type": "location_checked",
+      "location_id": 59869,
+      "location_name": "Ice Palace - Map Chest",
+      "tracker_semantic_id": "location.ice_palace_map_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180157",
+      "event_type": "location_checked",
+      "location_id": 1573207,
+      "location_name": "Ice Palace - Boss",
+      "tracker_semantic_id": "location.ice_palace_boss",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA67",
+      "event_type": "location_checked",
+      "location_id": 60007,
+      "location_name": "Misery Mire - Big Chest",
+      "tracker_semantic_id": "location.misery_mire_big_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA6A",
+      "event_type": "location_checked",
+      "location_id": 60010,
+      "location_name": "Misery Mire - Map Chest",
+      "tracker_semantic_id": "location.misery_mire_map_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA5E",
+      "event_type": "location_checked",
+      "location_id": 59998,
+      "location_name": "Misery Mire - Main Lobby",
+      "tracker_semantic_id": "location.misery_mire_main_lobby",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA61",
+      "event_type": "location_checked",
+      "location_id": 60001,
+      "location_name": "Misery Mire - Bridge Chest",
+      "tracker_semantic_id": "location.misery_mire_bridge_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140055",
+      "event_type": "location_checked",
+      "location_id": 1310805,
+      "location_name": "Misery Mire - Spikes Pot Key",
+      "tracker_semantic_id": "location.misery_mire_spikes_pot_key",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xE9DA",
+      "event_type": "location_checked",
+      "location_id": 59866,
+      "location_name": "Misery Mire - Spike Chest",
+      "tracker_semantic_id": "location.misery_mire_spike_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x14004C",
+      "event_type": "location_checked",
+      "location_id": 1310796,
+      "location_name": "Misery Mire - Fishbone Pot Key",
+      "tracker_semantic_id": "location.misery_mire_fishbone_pot_key",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140064",
+      "event_type": "location_checked",
+      "location_id": 1310820,
+      "location_name": "Misery Mire - Conveyor Crystal Key Drop",
+      "tracker_semantic_id": "location.misery_mire_conveyor_crystal_key_drop",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA64",
+      "event_type": "location_checked",
+      "location_id": 60004,
+      "location_name": "Misery Mire - Compass Chest",
+      "tracker_semantic_id": "location.misery_mire_compass_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA6D",
+      "event_type": "location_checked",
+      "location_id": 60013,
+      "location_name": "Misery Mire - Big Key Chest",
+      "tracker_semantic_id": "location.misery_mire_big_key_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180158",
+      "event_type": "location_checked",
+      "location_id": 1573208,
+      "location_name": "Misery Mire - Boss",
+      "tracker_semantic_id": "location.misery_mire_boss",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA22",
+      "event_type": "location_checked",
+      "location_id": 59938,
+      "location_name": "Turtle Rock - Compass Chest",
+      "tracker_semantic_id": "location.turtle_rock_compass_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA1C",
+      "event_type": "location_checked",
+      "location_id": 59932,
+      "location_name": "Turtle Rock - Roller Room - Left",
+      "tracker_semantic_id": "location.turtle_rock_roller_room_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA1F",
+      "event_type": "location_checked",
+      "location_id": 59935,
+      "location_name": "Turtle Rock - Roller Room - Right",
+      "tracker_semantic_id": "location.turtle_rock_roller_room_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140058",
+      "event_type": "location_checked",
+      "location_id": 1310808,
+      "location_name": "Turtle Rock - Pokey 1 Key Drop",
+      "tracker_semantic_id": "location.turtle_rock_pokey_1_key_drop",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA16",
+      "event_type": "location_checked",
+      "location_id": 59926,
+      "location_name": "Turtle Rock - Chain Chomps",
+      "tracker_semantic_id": "location.turtle_rock_chain_chomps",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140007",
+      "event_type": "location_checked",
+      "location_id": 1310727,
+      "location_name": "Turtle Rock - Pokey 2 Key Drop",
+      "tracker_semantic_id": "location.turtle_rock_pokey_2_key_drop",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA25",
+      "event_type": "location_checked",
+      "location_id": 59941,
+      "location_name": "Turtle Rock - Big Key Chest",
+      "tracker_semantic_id": "location.turtle_rock_big_key_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA19",
+      "event_type": "location_checked",
+      "location_id": 59929,
+      "location_name": "Turtle Rock - Big Chest",
+      "tracker_semantic_id": "location.turtle_rock_big_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA34",
+      "event_type": "location_checked",
+      "location_id": 59956,
+      "location_name": "Turtle Rock - Crystaroller Room",
+      "tracker_semantic_id": "location.turtle_rock_crystaroller_room",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA31",
+      "event_type": "location_checked",
+      "location_id": 59953,
+      "location_name": "Turtle Rock - Eye Bridge - Bottom Left",
+      "tracker_semantic_id": "location.turtle_rock_eye_bridge_bottom_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA2E",
+      "event_type": "location_checked",
+      "location_id": 59950,
+      "location_name": "Turtle Rock - Eye Bridge - Bottom Right",
+      "tracker_semantic_id": "location.turtle_rock_eye_bridge_bottom_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA2B",
+      "event_type": "location_checked",
+      "location_id": 59947,
+      "location_name": "Turtle Rock - Eye Bridge - Top Left",
+      "tracker_semantic_id": "location.turtle_rock_eye_bridge_top_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA28",
+      "event_type": "location_checked",
+      "location_id": 59944,
+      "location_name": "Turtle Rock - Eye Bridge - Top Right",
+      "tracker_semantic_id": "location.turtle_rock_eye_bridge_top_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180159",
+      "event_type": "location_checked",
+      "location_id": 1573209,
+      "location_name": "Turtle Rock - Boss",
+      "tracker_semantic_id": "location.turtle_rock_boss",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA5B",
+      "event_type": "location_checked",
+      "location_id": 59995,
+      "location_name": "Palace of Darkness - Shooter Room",
+      "tracker_semantic_id": "location.palace_of_darkness_shooter_room",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA3D",
+      "event_type": "location_checked",
+      "location_id": 59965,
+      "location_name": "Palace of Darkness - The Arena - Bridge",
+      "tracker_semantic_id": "location.palace_of_darkness_the_arena_bridge",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA49",
+      "event_type": "location_checked",
+      "location_id": 59977,
+      "location_name": "Palace of Darkness - Stalfos Basement",
+      "tracker_semantic_id": "location.palace_of_darkness_stalfos_basement",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA37",
+      "event_type": "location_checked",
+      "location_id": 59959,
+      "location_name": "Palace of Darkness - Big Key Chest",
+      "tracker_semantic_id": "location.palace_of_darkness_big_key_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA3A",
+      "event_type": "location_checked",
+      "location_id": 59962,
+      "location_name": "Palace of Darkness - The Arena - Ledge",
+      "tracker_semantic_id": "location.palace_of_darkness_the_arena_ledge",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA52",
+      "event_type": "location_checked",
+      "location_id": 59986,
+      "location_name": "Palace of Darkness - Map Chest",
+      "tracker_semantic_id": "location.palace_of_darkness_map_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA43",
+      "event_type": "location_checked",
+      "location_id": 59971,
+      "location_name": "Palace of Darkness - Compass Chest",
+      "tracker_semantic_id": "location.palace_of_darkness_compass_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA4C",
+      "event_type": "location_checked",
+      "location_id": 59980,
+      "location_name": "Palace of Darkness - Dark Basement - Left",
+      "tracker_semantic_id": "location.palace_of_darkness_dark_basement_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA4F",
+      "event_type": "location_checked",
+      "location_id": 59983,
+      "location_name": "Palace of Darkness - Dark Basement - Right",
+      "tracker_semantic_id": "location.palace_of_darkness_dark_basement_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA55",
+      "event_type": "location_checked",
+      "location_id": 59989,
+      "location_name": "Palace of Darkness - Dark Maze - Top",
+      "tracker_semantic_id": "location.palace_of_darkness_dark_maze_top",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA58",
+      "event_type": "location_checked",
+      "location_id": 59992,
+      "location_name": "Palace of Darkness - Dark Maze - Bottom",
+      "tracker_semantic_id": "location.palace_of_darkness_dark_maze_bottom",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA40",
+      "event_type": "location_checked",
+      "location_id": 59968,
+      "location_name": "Palace of Darkness - Big Chest",
+      "tracker_semantic_id": "location.palace_of_darkness_big_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEA46",
+      "event_type": "location_checked",
+      "location_id": 59974,
+      "location_name": "Palace of Darkness - Harmless Hellway",
+      "tracker_semantic_id": "location.palace_of_darkness_harmless_hellway",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180153",
+      "event_type": "location_checked",
+      "location_id": 1573203,
+      "location_name": "Palace of Darkness - Boss",
+      "tracker_semantic_id": "location.palace_of_darkness_boss",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140040",
+      "event_type": "location_checked",
+      "location_id": 1310784,
+      "location_name": "Ganons Tower - Conveyor Cross Pot Key",
+      "tracker_semantic_id": "location.ganons_tower_conveyor_cross_pot_key",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180161",
+      "event_type": "location_checked",
+      "location_id": 1573217,
+      "location_name": "Ganons Tower - Bob's Torch",
+      "tracker_semantic_id": "location.ganons_tower_bobs_torch",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAD9",
+      "event_type": "location_checked",
+      "location_id": 60121,
+      "location_name": "Ganons Tower - Hope Room - Left",
+      "tracker_semantic_id": "location.ganons_tower_hope_room_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEADC",
+      "event_type": "location_checked",
+      "location_id": 60124,
+      "location_name": "Ganons Tower - Hope Room - Right",
+      "tracker_semantic_id": "location.ganons_tower_hope_room_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAE2",
+      "event_type": "location_checked",
+      "location_id": 60130,
+      "location_name": "Ganons Tower - Tile Room",
+      "tracker_semantic_id": "location.ganons_tower_tile_room",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAE5",
+      "event_type": "location_checked",
+      "location_id": 60133,
+      "location_name": "Ganons Tower - Compass Room - Top Left",
+      "tracker_semantic_id": "location.ganons_tower_compass_room_top_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAE8",
+      "event_type": "location_checked",
+      "location_id": 60136,
+      "location_name": "Ganons Tower - Compass Room - Top Right",
+      "tracker_semantic_id": "location.ganons_tower_compass_room_top_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAEB",
+      "event_type": "location_checked",
+      "location_id": 60139,
+      "location_name": "Ganons Tower - Compass Room - Bottom Left",
+      "tracker_semantic_id": "location.ganons_tower_compass_room_bottom_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAEE",
+      "event_type": "location_checked",
+      "location_id": 60142,
+      "location_name": "Ganons Tower - Compass Room - Bottom Right",
+      "tracker_semantic_id": "location.ganons_tower_compass_room_bottom_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x14003A",
+      "event_type": "location_checked",
+      "location_id": 1310778,
+      "location_name": "Ganons Tower - Conveyor Star Pits Pot Key",
+      "tracker_semantic_id": "location.ganons_tower_conveyor_star_pits_pot_key",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAB8",
+      "event_type": "location_checked",
+      "location_id": 60088,
+      "location_name": "Ganons Tower - DMs Room - Top Left",
+      "tracker_semantic_id": "location.ganons_tower_dms_room_top_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEABB",
+      "event_type": "location_checked",
+      "location_id": 60091,
+      "location_name": "Ganons Tower - DMs Room - Top Right",
+      "tracker_semantic_id": "location.ganons_tower_dms_room_top_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEABE",
+      "event_type": "location_checked",
+      "location_id": 60094,
+      "location_name": "Ganons Tower - DMs Room - Bottom Left",
+      "tracker_semantic_id": "location.ganons_tower_dms_room_bottom_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAC1",
+      "event_type": "location_checked",
+      "location_id": 60097,
+      "location_name": "Ganons Tower - DMs Room - Bottom Right",
+      "tracker_semantic_id": "location.ganons_tower_dms_room_bottom_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAD3",
+      "event_type": "location_checked",
+      "location_id": 60115,
+      "location_name": "Ganons Tower - Map Chest",
+      "tracker_semantic_id": "location.ganons_tower_map_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x140043",
+      "event_type": "location_checked",
+      "location_id": 1310787,
+      "location_name": "Ganons Tower - Double Switch Pot Key",
+      "tracker_semantic_id": "location.ganons_tower_double_switch_pot_key",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAD0",
+      "event_type": "location_checked",
+      "location_id": 60112,
+      "location_name": "Ganons Tower - Firesnake Room",
+      "tracker_semantic_id": "location.ganons_tower_firesnake_room",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAC4",
+      "event_type": "location_checked",
+      "location_id": 60100,
+      "location_name": "Ganons Tower - Randomizer Room - Top Left",
+      "tracker_semantic_id": "location.ganons_tower_randomizer_room_top_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAC7",
+      "event_type": "location_checked",
+      "location_id": 60103,
+      "location_name": "Ganons Tower - Randomizer Room - Top Right",
+      "tracker_semantic_id": "location.ganons_tower_randomizer_room_top_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEACA",
+      "event_type": "location_checked",
+      "location_id": 60106,
+      "location_name": "Ganons Tower - Randomizer Room - Bottom Left",
+      "tracker_semantic_id": "location.ganons_tower_randomizer_room_bottom_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEACD",
+      "event_type": "location_checked",
+      "location_id": 60109,
+      "location_name": "Ganons Tower - Randomizer Room - Bottom Right",
+      "tracker_semantic_id": "location.ganons_tower_randomizer_room_bottom_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEADF",
+      "event_type": "location_checked",
+      "location_id": 60127,
+      "location_name": "Ganons Tower - Bob's Chest",
+      "tracker_semantic_id": "location.ganons_tower_bobs_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAD6",
+      "event_type": "location_checked",
+      "location_id": 60118,
+      "location_name": "Ganons Tower - Big Chest",
+      "tracker_semantic_id": "location.ganons_tower_big_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAF4",
+      "event_type": "location_checked",
+      "location_id": 60148,
+      "location_name": "Ganons Tower - Big Key Room - Left",
+      "tracker_semantic_id": "location.ganons_tower_big_key_room_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAF7",
+      "event_type": "location_checked",
+      "location_id": 60151,
+      "location_name": "Ganons Tower - Big Key Room - Right",
+      "tracker_semantic_id": "location.ganons_tower_big_key_room_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAF1",
+      "event_type": "location_checked",
+      "location_id": 60145,
+      "location_name": "Ganons Tower - Big Key Chest",
+      "tracker_semantic_id": "location.ganons_tower_big_key_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEAFD",
+      "event_type": "location_checked",
+      "location_id": 60157,
+      "location_name": "Ganons Tower - Mini Helmasaur Room - Left",
+      "tracker_semantic_id": "location.ganons_tower_mini_helmasaur_room_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB00",
+      "event_type": "location_checked",
+      "location_id": 60160,
+      "location_name": "Ganons Tower - Mini Helmasaur Room - Right",
+      "tracker_semantic_id": "location.ganons_tower_mini_helmasaur_room_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x14001F",
+      "event_type": "location_checked",
+      "location_id": 1310751,
+      "location_name": "Ganons Tower - Mini Helmasaur Key Drop",
+      "tracker_semantic_id": "location.ganons_tower_mini_helmasaur_key_drop",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB03",
+      "event_type": "location_checked",
+      "location_id": 60163,
+      "location_name": "Ganons Tower - Pre-Moldorm Chest",
+      "tracker_semantic_id": "location.ganons_tower_pre_moldorm_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEB06",
+      "event_type": "location_checked",
+      "location_id": 60166,
+      "location_name": "Ganons Tower - Validation Chest",
+      "tracker_semantic_id": "location.ganons_tower_validation_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180013",
+      "event_type": "location_checked",
+      "location_id": 1572883,
+      "location_name": "Mushroom",
+      "tracker_semantic_id": "location.mushroom",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEE1C3",
+      "event_type": "location_checked",
+      "location_id": 975299,
+      "location_name": "King Zora",
+      "tracker_semantic_id": "location.king_zora",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x2F1FC",
+      "event_type": "location_checked",
+      "location_id": 193020,
+      "location_name": "Sahasrahla",
+      "tracker_semantic_id": "location.sahasrahla",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x18002A",
+      "event_type": "location_checked",
+      "location_id": 1572906,
+      "location_name": "Blacksmith",
+      "tracker_semantic_id": "location.blacksmith",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180015",
+      "event_type": "location_checked",
+      "location_id": 1572885,
+      "location_name": "Magic Bat",
+      "tracker_semantic_id": "location.magic_bat",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x339CF",
+      "event_type": "location_checked",
+      "location_id": 211407,
+      "location_name": "Sick Kid",
+      "tracker_semantic_id": "location.sick_kid",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180012",
+      "event_type": "location_checked",
+      "location_id": 1572882,
+      "location_name": "Library",
+      "tracker_semantic_id": "location.library",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180014",
+      "event_type": "location_checked",
+      "location_id": 1572884,
+      "location_name": "Potion Shop",
+      "tracker_semantic_id": "location.potion_shop",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xF69FA",
+      "event_type": "location_checked",
+      "location_id": 1010170,
+      "location_name": "Old Man",
+      "tracker_semantic_id": "location.old_man",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180016",
+      "event_type": "location_checked",
+      "location_id": 1572886,
+      "location_name": "Ether Tablet",
+      "tracker_semantic_id": "location.ether_tablet",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0xEE185",
+      "event_type": "location_checked",
+      "location_id": 975237,
+      "location_name": "Catfish",
+      "tracker_semantic_id": "location.catfish",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x330C7",
+      "event_type": "location_checked",
+      "location_id": 209095,
+      "location_name": "Stumpy",
+      "tracker_semantic_id": "location.stumpy",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180017",
+      "event_type": "location_checked",
+      "location_id": 1572887,
+      "location_name": "Bombos Tablet",
+      "tracker_semantic_id": "location.bombos_tablet",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x18014A",
+      "event_type": "location_checked",
+      "location_id": 1573194,
+      "location_name": "Flute Spot",
+      "tracker_semantic_id": "location.flute_spot",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180145",
+      "event_type": "location_checked",
+      "location_id": 1573189,
+      "location_name": "Sunken Treasure",
+      "tracker_semantic_id": "location.sunken_treasure",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180149",
+      "event_type": "location_checked",
+      "location_id": 1573193,
+      "location_name": "Zora's Ledge",
+      "tracker_semantic_id": "location.zoras_ledge",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180144",
+      "event_type": "location_checked",
+      "location_id": 1573188,
+      "location_name": "Lake Hylia Island",
+      "tracker_semantic_id": "location.lake_hylia_island",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180142",
+      "event_type": "location_checked",
+      "location_id": 1573186,
+      "location_name": "Maze Race",
+      "tracker_semantic_id": "location.maze_race",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180143",
+      "event_type": "location_checked",
+      "location_id": 1573187,
+      "location_name": "Desert Ledge",
+      "tracker_semantic_id": "location.desert_ledge",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x289B0",
+      "event_type": "location_checked",
+      "location_id": 166320,
+      "location_name": "Master Sword Pedestal",
+      "tracker_semantic_id": "location.master_sword_pedestal",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180140",
+      "event_type": "location_checked",
+      "location_id": 1573184,
+      "location_name": "Spectacle Rock",
+      "tracker_semantic_id": "location.spectacle_rock",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180147",
+      "event_type": "location_checked",
+      "location_id": 1573191,
+      "location_name": "Pyramid",
+      "tracker_semantic_id": "location.pyramid",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180148",
+      "event_type": "location_checked",
+      "location_id": 1573192,
+      "location_name": "Digging Game",
+      "tracker_semantic_id": "location.digging_game",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180146",
+      "event_type": "location_checked",
+      "location_id": 1573190,
+      "location_name": "Bumper Cave Ledge",
+      "tracker_semantic_id": "location.bumper_cave_ledge",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x180141",
+      "event_type": "location_checked",
+      "location_id": 1573185,
+      "location_name": "Floating Island",
+      "tracker_semantic_id": "location.floating_island",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x2EB18",
+      "event_type": "location_checked",
+      "location_id": 191256,
+      "location_name": "Bottle Merchant",
+      "tracker_semantic_id": "location.bottle_merchant",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x33D68",
+      "event_type": "location_checked",
+      "location_id": 212328,
+      "location_name": "Purple Chest",
+      "tracker_semantic_id": "location.purple_chest",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x2DF45",
+      "event_type": "location_checked",
+      "location_id": 188229,
+      "location_name": "Link's Uncle",
+      "tracker_semantic_id": "location.links_uncle",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x33E7D",
+      "event_type": "location_checked",
+      "location_id": 212605,
+      "location_name": "Hobo",
+      "tracker_semantic_id": "location.hobo",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400000",
+      "event_type": "location_checked",
+      "location_id": 4194304,
+      "location_name": "Cave Shop (Dark Death Mountain) Left",
+      "tracker_semantic_id": "location.cave_shop_dark_death_mountain_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400001",
+      "event_type": "location_checked",
+      "location_id": 4194305,
+      "location_name": "Cave Shop (Dark Death Mountain) Center",
+      "tracker_semantic_id": "location.cave_shop_dark_death_mountain_center",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400002",
+      "event_type": "location_checked",
+      "location_id": 4194306,
+      "location_name": "Cave Shop (Dark Death Mountain) Right",
+      "tracker_semantic_id": "location.cave_shop_dark_death_mountain_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400003",
+      "event_type": "location_checked",
+      "location_id": 4194307,
+      "location_name": "Red Shield Shop Left",
+      "tracker_semantic_id": "location.red_shield_shop_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400004",
+      "event_type": "location_checked",
+      "location_id": 4194308,
+      "location_name": "Red Shield Shop Center",
+      "tracker_semantic_id": "location.red_shield_shop_center",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400005",
+      "event_type": "location_checked",
+      "location_id": 4194309,
+      "location_name": "Red Shield Shop Right",
+      "tracker_semantic_id": "location.red_shield_shop_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400006",
+      "event_type": "location_checked",
+      "location_id": 4194310,
+      "location_name": "Dark Lake Hylia Shop Left",
+      "tracker_semantic_id": "location.dark_lake_hylia_shop_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400007",
+      "event_type": "location_checked",
+      "location_id": 4194311,
+      "location_name": "Dark Lake Hylia Shop Center",
+      "tracker_semantic_id": "location.dark_lake_hylia_shop_center",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400008",
+      "event_type": "location_checked",
+      "location_id": 4194312,
+      "location_name": "Dark Lake Hylia Shop Right",
+      "tracker_semantic_id": "location.dark_lake_hylia_shop_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400009",
+      "event_type": "location_checked",
+      "location_id": 4194313,
+      "location_name": "Dark World Lumberjack Shop Left",
+      "tracker_semantic_id": "location.dark_world_lumberjack_shop_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x40000A",
+      "event_type": "location_checked",
+      "location_id": 4194314,
+      "location_name": "Dark World Lumberjack Shop Center",
+      "tracker_semantic_id": "location.dark_world_lumberjack_shop_center",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x40000B",
+      "event_type": "location_checked",
+      "location_id": 4194315,
+      "location_name": "Dark World Lumberjack Shop Right",
+      "tracker_semantic_id": "location.dark_world_lumberjack_shop_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x40000C",
+      "event_type": "location_checked",
+      "location_id": 4194316,
+      "location_name": "Village of Outcasts Shop Left",
+      "tracker_semantic_id": "location.village_of_outcasts_shop_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x40000D",
+      "event_type": "location_checked",
+      "location_id": 4194317,
+      "location_name": "Village of Outcasts Shop Center",
+      "tracker_semantic_id": "location.village_of_outcasts_shop_center",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x40000E",
+      "event_type": "location_checked",
+      "location_id": 4194318,
+      "location_name": "Village of Outcasts Shop Right",
+      "tracker_semantic_id": "location.village_of_outcasts_shop_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x40000F",
+      "event_type": "location_checked",
+      "location_id": 4194319,
+      "location_name": "Dark World Potion Shop Left",
+      "tracker_semantic_id": "location.dark_world_potion_shop_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400010",
+      "event_type": "location_checked",
+      "location_id": 4194320,
+      "location_name": "Dark World Potion Shop Center",
+      "tracker_semantic_id": "location.dark_world_potion_shop_center",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400011",
+      "event_type": "location_checked",
+      "location_id": 4194321,
+      "location_name": "Dark World Potion Shop Right",
+      "tracker_semantic_id": "location.dark_world_potion_shop_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400012",
+      "event_type": "location_checked",
+      "location_id": 4194322,
+      "location_name": "Light World Death Mountain Shop Left",
+      "tracker_semantic_id": "location.light_world_death_mountain_shop_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400013",
+      "event_type": "location_checked",
+      "location_id": 4194323,
+      "location_name": "Light World Death Mountain Shop Center",
+      "tracker_semantic_id": "location.light_world_death_mountain_shop_center",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400014",
+      "event_type": "location_checked",
+      "location_id": 4194324,
+      "location_name": "Light World Death Mountain Shop Right",
+      "tracker_semantic_id": "location.light_world_death_mountain_shop_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400015",
+      "event_type": "location_checked",
+      "location_id": 4194325,
+      "location_name": "Kakariko Shop Left",
+      "tracker_semantic_id": "location.kakariko_shop_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400016",
+      "event_type": "location_checked",
+      "location_id": 4194326,
+      "location_name": "Kakariko Shop Center",
+      "tracker_semantic_id": "location.kakariko_shop_center",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400017",
+      "event_type": "location_checked",
+      "location_id": 4194327,
+      "location_name": "Kakariko Shop Right",
+      "tracker_semantic_id": "location.kakariko_shop_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400018",
+      "event_type": "location_checked",
+      "location_id": 4194328,
+      "location_name": "Cave Shop (Lake Hylia) Left",
+      "tracker_semantic_id": "location.cave_shop_lake_hylia_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400019",
+      "event_type": "location_checked",
+      "location_id": 4194329,
+      "location_name": "Cave Shop (Lake Hylia) Center",
+      "tracker_semantic_id": "location.cave_shop_lake_hylia_center",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x40001A",
+      "event_type": "location_checked",
+      "location_id": 4194330,
+      "location_name": "Cave Shop (Lake Hylia) Right",
+      "tracker_semantic_id": "location.cave_shop_lake_hylia_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x40001B",
+      "event_type": "location_checked",
+      "location_id": 4194331,
+      "location_name": "Potion Shop Left",
+      "tracker_semantic_id": "location.potion_shop_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x40001C",
+      "event_type": "location_checked",
+      "location_id": 4194332,
+      "location_name": "Potion Shop Center",
+      "tracker_semantic_id": "location.potion_shop_center",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x40001D",
+      "event_type": "location_checked",
+      "location_id": 4194333,
+      "location_name": "Potion Shop Right",
+      "tracker_semantic_id": "location.potion_shop_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x40001E",
+      "event_type": "location_checked",
+      "location_id": 4194334,
+      "location_name": "Capacity Upgrade Left",
+      "tracker_semantic_id": "location.capacity_upgrade_left",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x40001F",
+      "event_type": "location_checked",
+      "location_id": 4194335,
+      "location_name": "Capacity Upgrade Right",
+      "tracker_semantic_id": "location.capacity_upgrade_right",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400021",
+      "event_type": "location_checked",
+      "location_id": 4194337,
+      "location_name": "Old Man Sword Cave",
+      "tracker_semantic_id": "location.old_man_sword_cave",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400022",
+      "event_type": "location_checked",
+      "location_id": 4194338,
+      "location_name": "Take-Any #1",
+      "tracker_semantic_id": "location.take_any_1",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400023",
+      "event_type": "location_checked",
+      "location_id": 4194339,
+      "location_name": "Take-Any #2",
+      "tracker_semantic_id": "location.take_any_2",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400024",
+      "event_type": "location_checked",
+      "location_id": 4194340,
+      "location_name": "Take-Any #3",
+      "tracker_semantic_id": "location.take_any_3",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    },
+    {
+      "event_key": "0x400025",
+      "event_type": "location_checked",
+      "location_id": 4194341,
+      "location_name": "Take-Any #4",
+      "tracker_semantic_id": "location.take_any_4",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "map"
+    }
+  ],
+  "item_bindings": [
+    {
+      "event_key": "item.progressive_bow",
+      "event_type": "room_item_received",
+      "item_id": 100,
+      "item_name": "Progressive Bow",
+      "tracker_semantic_id": "item.progressive_bow",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.progressive_bow_alt",
+      "event_type": "room_item_received",
+      "item_id": 101,
+      "item_name": "Progressive Bow (Alt)",
+      "tracker_semantic_id": "item.progressive_bow_alt",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.silver_arrows",
+      "event_type": "room_item_received",
+      "item_id": 88,
+      "item_name": "Silver Arrows",
+      "tracker_semantic_id": "item.silver_arrows",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.silver_bow",
+      "event_type": "room_item_received",
+      "item_id": 59,
+      "item_name": "Silver Bow",
+      "tracker_semantic_id": "item.silver_bow",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.book_of_mudora",
+      "event_type": "room_item_received",
+      "item_id": 29,
+      "item_name": "Book of Mudora",
+      "tracker_semantic_id": "item.book_of_mudora",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.hammer",
+      "event_type": "room_item_received",
+      "item_id": 9,
+      "item_name": "Hammer",
+      "tracker_semantic_id": "item.hammer",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.hookshot",
+      "event_type": "room_item_received",
+      "item_id": 10,
+      "item_name": "Hookshot",
+      "tracker_semantic_id": "item.hookshot",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.magic_mirror",
+      "event_type": "room_item_received",
+      "item_id": 26,
+      "item_name": "Magic Mirror",
+      "tracker_semantic_id": "item.magic_mirror",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.flute",
+      "event_type": "room_item_received",
+      "item_id": 20,
+      "item_name": "Flute",
+      "tracker_semantic_id": "item.flute",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.pegasus_boots",
+      "event_type": "room_item_received",
+      "item_id": 75,
+      "item_name": "Pegasus Boots",
+      "tracker_semantic_id": "item.pegasus_boots",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.power_glove",
+      "event_type": "room_item_received",
+      "item_id": 27,
+      "item_name": "Power Glove",
+      "tracker_semantic_id": "item.power_glove",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.cape",
+      "event_type": "room_item_received",
+      "item_id": 25,
+      "item_name": "Cape",
+      "tracker_semantic_id": "item.cape",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.mushroom",
+      "event_type": "room_item_received",
+      "item_id": 41,
+      "item_name": "Mushroom",
+      "tracker_semantic_id": "item.mushroom",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.shovel",
+      "event_type": "room_item_received",
+      "item_id": 19,
+      "item_name": "Shovel",
+      "tracker_semantic_id": "item.shovel",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.lamp",
+      "event_type": "room_item_received",
+      "item_id": 18,
+      "item_name": "Lamp",
+      "tracker_semantic_id": "item.lamp",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.magic_powder",
+      "event_type": "room_item_received",
+      "item_id": 13,
+      "item_name": "Magic Powder",
+      "tracker_semantic_id": "item.magic_powder",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.moon_pearl",
+      "event_type": "room_item_received",
+      "item_id": 31,
+      "item_name": "Moon Pearl",
+      "tracker_semantic_id": "item.moon_pearl",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.cane_of_somaria",
+      "event_type": "room_item_received",
+      "item_id": 21,
+      "item_name": "Cane of Somaria",
+      "tracker_semantic_id": "item.cane_of_somaria",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.fire_rod",
+      "event_type": "room_item_received",
+      "item_id": 7,
+      "item_name": "Fire Rod",
+      "tracker_semantic_id": "item.fire_rod",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.flippers",
+      "event_type": "room_item_received",
+      "item_id": 30,
+      "item_name": "Flippers",
+      "tracker_semantic_id": "item.flippers",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.ice_rod",
+      "event_type": "room_item_received",
+      "item_id": 8,
+      "item_name": "Ice Rod",
+      "tracker_semantic_id": "item.ice_rod",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.titans_mitts",
+      "event_type": "room_item_received",
+      "item_id": 28,
+      "item_name": "Titans Mitts",
+      "tracker_semantic_id": "item.titans_mitts",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.bombos",
+      "event_type": "room_item_received",
+      "item_id": 15,
+      "item_name": "Bombos",
+      "tracker_semantic_id": "item.bombos",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.ether",
+      "event_type": "room_item_received",
+      "item_id": 16,
+      "item_name": "Ether",
+      "tracker_semantic_id": "item.ether",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.quake",
+      "event_type": "room_item_received",
+      "item_id": 17,
+      "item_name": "Quake",
+      "tracker_semantic_id": "item.quake",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.bottle",
+      "event_type": "room_item_received",
+      "item_id": 22,
+      "item_name": "Bottle",
+      "tracker_semantic_id": "item.bottle",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.bottle_red_potion",
+      "event_type": "room_item_received",
+      "item_id": 43,
+      "item_name": "Bottle (Red Potion)",
+      "tracker_semantic_id": "item.bottle_red_potion",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.bottle_green_potion",
+      "event_type": "room_item_received",
+      "item_id": 44,
+      "item_name": "Bottle (Green Potion)",
+      "tracker_semantic_id": "item.bottle_green_potion",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.bottle_blue_potion",
+      "event_type": "room_item_received",
+      "item_id": 45,
+      "item_name": "Bottle (Blue Potion)",
+      "tracker_semantic_id": "item.bottle_blue_potion",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.bottle_fairy",
+      "event_type": "room_item_received",
+      "item_id": 61,
+      "item_name": "Bottle (Fairy)",
+      "tracker_semantic_id": "item.bottle_fairy",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.bottle_bee",
+      "event_type": "room_item_received",
+      "item_id": 60,
+      "item_name": "Bottle (Bee)",
+      "tracker_semantic_id": "item.bottle_bee",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.bottle_good_bee",
+      "event_type": "room_item_received",
+      "item_id": 72,
+      "item_name": "Bottle (Good Bee)",
+      "tracker_semantic_id": "item.bottle_good_bee",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.master_sword",
+      "event_type": "room_item_received",
+      "item_id": 80,
+      "item_name": "Master Sword",
+      "tracker_semantic_id": "item.master_sword",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.tempered_sword",
+      "event_type": "room_item_received",
+      "item_id": 2,
+      "item_name": "Tempered Sword",
+      "tracker_semantic_id": "item.tempered_sword",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.fighter_sword",
+      "event_type": "room_item_received",
+      "item_id": 73,
+      "item_name": "Fighter Sword",
+      "tracker_semantic_id": "item.fighter_sword",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.golden_sword",
+      "event_type": "room_item_received",
+      "item_id": 3,
+      "item_name": "Golden Sword",
+      "tracker_semantic_id": "item.golden_sword",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.progressive_sword",
+      "event_type": "room_item_received",
+      "item_id": 94,
+      "item_name": "Progressive Sword",
+      "tracker_semantic_id": "item.progressive_sword",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.progressive_glove",
+      "event_type": "room_item_received",
+      "item_id": 97,
+      "item_name": "Progressive Glove",
+      "tracker_semantic_id": "item.progressive_glove",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.triforce",
+      "event_type": "room_item_received",
+      "item_id": 106,
+      "item_name": "Triforce",
+      "tracker_semantic_id": "item.triforce",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.power_star",
+      "event_type": "room_item_received",
+      "item_id": 107,
+      "item_name": "Power Star",
+      "tracker_semantic_id": "item.power_star",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.triforce_piece",
+      "event_type": "room_item_received",
+      "item_id": 108,
+      "item_name": "Triforce Piece",
+      "tracker_semantic_id": "item.triforce_piece",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.single_arrow",
+      "event_type": "room_item_received",
+      "item_id": 67,
+      "item_name": "Single Arrow",
+      "tracker_semantic_id": "item.single_arrow",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.arrows_10",
+      "event_type": "room_item_received",
+      "item_id": 68,
+      "item_name": "Arrows (10)",
+      "tracker_semantic_id": "item.arrows_10",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.arrow_upgrade_10",
+      "event_type": "room_item_received",
+      "item_id": 84,
+      "item_name": "Arrow Upgrade (+10)",
+      "tracker_semantic_id": "item.arrow_upgrade_10",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.arrow_upgrade_5",
+      "event_type": "room_item_received",
+      "item_id": 83,
+      "item_name": "Arrow Upgrade (+5)",
+      "tracker_semantic_id": "item.arrow_upgrade_5",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.arrow_upgrade_70",
+      "event_type": "room_item_received",
+      "item_id": 77,
+      "item_name": "Arrow Upgrade (70)",
+      "tracker_semantic_id": "item.arrow_upgrade_70",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.single_bomb",
+      "event_type": "room_item_received",
+      "item_id": 39,
+      "item_name": "Single Bomb",
+      "tracker_semantic_id": "item.single_bomb",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.bombs_3",
+      "event_type": "room_item_received",
+      "item_id": 40,
+      "item_name": "Bombs (3)",
+      "tracker_semantic_id": "item.bombs_3",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.bombs_10",
+      "event_type": "room_item_received",
+      "item_id": 49,
+      "item_name": "Bombs (10)",
+      "tracker_semantic_id": "item.bombs_10",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.bomb_upgrade_10",
+      "event_type": "room_item_received",
+      "item_id": 82,
+      "item_name": "Bomb Upgrade (+10)",
+      "tracker_semantic_id": "item.bomb_upgrade_10",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.bomb_upgrade_5",
+      "event_type": "room_item_received",
+      "item_id": 81,
+      "item_name": "Bomb Upgrade (+5)",
+      "tracker_semantic_id": "item.bomb_upgrade_5",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.bomb_upgrade_50",
+      "event_type": "room_item_received",
+      "item_id": 76,
+      "item_name": "Bomb Upgrade (50)",
+      "tracker_semantic_id": "item.bomb_upgrade_50",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.blue_mail",
+      "event_type": "room_item_received",
+      "item_id": 34,
+      "item_name": "Blue Mail",
+      "tracker_semantic_id": "item.blue_mail",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.red_mail",
+      "event_type": "room_item_received",
+      "item_id": 35,
+      "item_name": "Red Mail",
+      "tracker_semantic_id": "item.red_mail",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.progressive_mail",
+      "event_type": "room_item_received",
+      "item_id": 96,
+      "item_name": "Progressive Mail",
+      "tracker_semantic_id": "item.progressive_mail",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.blue_boomerang",
+      "event_type": "room_item_received",
+      "item_id": 12,
+      "item_name": "Blue Boomerang",
+      "tracker_semantic_id": "item.blue_boomerang",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.red_boomerang",
+      "event_type": "room_item_received",
+      "item_id": 42,
+      "item_name": "Red Boomerang",
+      "tracker_semantic_id": "item.red_boomerang",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.blue_shield",
+      "event_type": "room_item_received",
+      "item_id": 4,
+      "item_name": "Blue Shield",
+      "tracker_semantic_id": "item.blue_shield",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.red_shield",
+      "event_type": "room_item_received",
+      "item_id": 5,
+      "item_name": "Red Shield",
+      "tracker_semantic_id": "item.red_shield",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.mirror_shield",
+      "event_type": "room_item_received",
+      "item_id": 6,
+      "item_name": "Mirror Shield",
+      "tracker_semantic_id": "item.mirror_shield",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.progressive_shield",
+      "event_type": "room_item_received",
+      "item_id": 95,
+      "item_name": "Progressive Shield",
+      "tracker_semantic_id": "item.progressive_shield",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.bug_catching_net",
+      "event_type": "room_item_received",
+      "item_id": 33,
+      "item_name": "Bug Catching Net",
+      "tracker_semantic_id": "item.bug_catching_net",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.cane_of_byrna",
+      "event_type": "room_item_received",
+      "item_id": 24,
+      "item_name": "Cane of Byrna",
+      "tracker_semantic_id": "item.cane_of_byrna",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.boss_heart_container",
+      "event_type": "room_item_received",
+      "item_id": 62,
+      "item_name": "Boss Heart Container",
+      "tracker_semantic_id": "item.boss_heart_container",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.sanctuary_heart_container",
+      "event_type": "room_item_received",
+      "item_id": 63,
+      "item_name": "Sanctuary Heart Container",
+      "tracker_semantic_id": "item.sanctuary_heart_container",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.piece_of_heart",
+      "event_type": "room_item_received",
+      "item_id": 23,
+      "item_name": "Piece of Heart",
+      "tracker_semantic_id": "item.piece_of_heart",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.rupee_1",
+      "event_type": "room_item_received",
+      "item_id": 52,
+      "item_name": "Rupee (1)",
+      "tracker_semantic_id": "item.rupee_1",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.rupees_5",
+      "event_type": "room_item_received",
+      "item_id": 53,
+      "item_name": "Rupees (5)",
+      "tracker_semantic_id": "item.rupees_5",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.rupees_20",
+      "event_type": "room_item_received",
+      "item_id": 54,
+      "item_name": "Rupees (20)",
+      "tracker_semantic_id": "item.rupees_20",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.rupees_50",
+      "event_type": "room_item_received",
+      "item_id": 65,
+      "item_name": "Rupees (50)",
+      "tracker_semantic_id": "item.rupees_50",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.rupees_100",
+      "event_type": "room_item_received",
+      "item_id": 64,
+      "item_name": "Rupees (100)",
+      "tracker_semantic_id": "item.rupees_100",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.rupees_300",
+      "event_type": "room_item_received",
+      "item_id": 70,
+      "item_name": "Rupees (300)",
+      "tracker_semantic_id": "item.rupees_300",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.rupoor",
+      "event_type": "room_item_received",
+      "item_id": 89,
+      "item_name": "Rupoor",
+      "tracker_semantic_id": "item.rupoor",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.red_clock",
+      "event_type": "room_item_received",
+      "item_id": 91,
+      "item_name": "Red Clock",
+      "tracker_semantic_id": "item.red_clock",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.blue_clock",
+      "event_type": "room_item_received",
+      "item_id": 92,
+      "item_name": "Blue Clock",
+      "tracker_semantic_id": "item.blue_clock",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.green_clock",
+      "event_type": "room_item_received",
+      "item_id": 93,
+      "item_name": "Green Clock",
+      "tracker_semantic_id": "item.green_clock",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.single_rng",
+      "event_type": "room_item_received",
+      "item_id": 98,
+      "item_name": "Single RNG",
+      "tracker_semantic_id": "item.single_rng",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.multi_rng",
+      "event_type": "room_item_received",
+      "item_id": 99,
+      "item_name": "Multi RNG",
+      "tracker_semantic_id": "item.multi_rng",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.magic_upgrade_half",
+      "event_type": "room_item_received",
+      "item_id": 78,
+      "item_name": "Magic Upgrade (1/2)",
+      "tracker_semantic_id": "item.magic_upgrade_1_2",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.magic_upgrade_quarter",
+      "event_type": "room_item_received",
+      "item_id": 79,
+      "item_name": "Magic Upgrade (1/4)",
+      "tracker_semantic_id": "item.magic_upgrade_1_4",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.small_key_eastern_palace",
+      "event_type": "room_item_received",
+      "item_id": 162,
+      "item_name": "Small Key (Eastern Palace)",
+      "tracker_semantic_id": "item.small_key_eastern_palace",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.big_key_eastern_palace",
+      "event_type": "room_item_received",
+      "item_id": 157,
+      "item_name": "Big Key (Eastern Palace)",
+      "tracker_semantic_id": "item.big_key_eastern_palace",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.compass_eastern_palace",
+      "event_type": "room_item_received",
+      "item_id": 141,
+      "item_name": "Compass (Eastern Palace)",
+      "tracker_semantic_id": "item.compass_eastern_palace",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.map_eastern_palace",
+      "event_type": "room_item_received",
+      "item_id": 125,
+      "item_name": "Map (Eastern Palace)",
+      "tracker_semantic_id": "item.map_eastern_palace",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.small_key_desert_palace",
+      "event_type": "room_item_received",
+      "item_id": 163,
+      "item_name": "Small Key (Desert Palace)",
+      "tracker_semantic_id": "item.small_key_desert_palace",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.big_key_desert_palace",
+      "event_type": "room_item_received",
+      "item_id": 156,
+      "item_name": "Big Key (Desert Palace)",
+      "tracker_semantic_id": "item.big_key_desert_palace",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.compass_desert_palace",
+      "event_type": "room_item_received",
+      "item_id": 140,
+      "item_name": "Compass (Desert Palace)",
+      "tracker_semantic_id": "item.compass_desert_palace",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.map_desert_palace",
+      "event_type": "room_item_received",
+      "item_id": 124,
+      "item_name": "Map (Desert Palace)",
+      "tracker_semantic_id": "item.map_desert_palace",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.small_key_tower_of_hera",
+      "event_type": "room_item_received",
+      "item_id": 170,
+      "item_name": "Small Key (Tower of Hera)",
+      "tracker_semantic_id": "item.small_key_tower_of_hera",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.big_key_tower_of_hera",
+      "event_type": "room_item_received",
+      "item_id": 149,
+      "item_name": "Big Key (Tower of Hera)",
+      "tracker_semantic_id": "item.big_key_tower_of_hera",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.compass_tower_of_hera",
+      "event_type": "room_item_received",
+      "item_id": 133,
+      "item_name": "Compass (Tower of Hera)",
+      "tracker_semantic_id": "item.compass_tower_of_hera",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.map_tower_of_hera",
+      "event_type": "room_item_received",
+      "item_id": 117,
+      "item_name": "Map (Tower of Hera)",
+      "tracker_semantic_id": "item.map_tower_of_hera",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.small_key_hyrule_castle",
+      "event_type": "room_item_received",
+      "item_id": 160,
+      "item_name": "Small Key (Hyrule Castle)",
+      "tracker_semantic_id": "item.small_key_hyrule_castle",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.big_key_hyrule_castle",
+      "event_type": "room_item_received",
+      "item_id": 159,
+      "item_name": "Big Key (Hyrule Castle)",
+      "tracker_semantic_id": "item.big_key_hyrule_castle",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.compass_hyrule_castle",
+      "event_type": "room_item_received",
+      "item_id": 143,
+      "item_name": "Compass (Hyrule Castle)",
+      "tracker_semantic_id": "item.compass_hyrule_castle",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.map_hyrule_castle",
+      "event_type": "room_item_received",
+      "item_id": 127,
+      "item_name": "Map (Hyrule Castle)",
+      "tracker_semantic_id": "item.map_hyrule_castle",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.small_key_agahnims_tower",
+      "event_type": "room_item_received",
+      "item_id": 164,
+      "item_name": "Small Key (Agahnims Tower)",
+      "tracker_semantic_id": "item.small_key_agahnims_tower",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.big_key_agahnims_tower",
+      "event_type": "room_item_received",
+      "item_id": 155,
+      "item_name": "Big Key (Agahnims Tower)",
+      "tracker_semantic_id": "item.big_key_agahnims_tower",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.compass_agahnims_tower",
+      "event_type": "room_item_received",
+      "item_id": 139,
+      "item_name": "Compass (Agahnims Tower)",
+      "tracker_semantic_id": "item.compass_agahnims_tower",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.map_agahnims_tower",
+      "event_type": "room_item_received",
+      "item_id": 123,
+      "item_name": "Map (Agahnims Tower)",
+      "tracker_semantic_id": "item.map_agahnims_tower",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.small_key_palace_of_darkness",
+      "event_type": "room_item_received",
+      "item_id": 166,
+      "item_name": "Small Key (Palace of Darkness)",
+      "tracker_semantic_id": "item.small_key_palace_of_darkness",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.big_key_palace_of_darkness",
+      "event_type": "room_item_received",
+      "item_id": 153,
+      "item_name": "Big Key (Palace of Darkness)",
+      "tracker_semantic_id": "item.big_key_palace_of_darkness",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.compass_palace_of_darkness",
+      "event_type": "room_item_received",
+      "item_id": 137,
+      "item_name": "Compass (Palace of Darkness)",
+      "tracker_semantic_id": "item.compass_palace_of_darkness",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.map_palace_of_darkness",
+      "event_type": "room_item_received",
+      "item_id": 121,
+      "item_name": "Map (Palace of Darkness)",
+      "tracker_semantic_id": "item.map_palace_of_darkness",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.small_key_thieves_town",
+      "event_type": "room_item_received",
+      "item_id": 171,
+      "item_name": "Small Key (Thieves Town)",
+      "tracker_semantic_id": "item.small_key_thieves_town",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.big_key_thieves_town",
+      "event_type": "room_item_received",
+      "item_id": 148,
+      "item_name": "Big Key (Thieves Town)",
+      "tracker_semantic_id": "item.big_key_thieves_town",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.compass_thieves_town",
+      "event_type": "room_item_received",
+      "item_id": 132,
+      "item_name": "Compass (Thieves Town)",
+      "tracker_semantic_id": "item.compass_thieves_town",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.map_thieves_town",
+      "event_type": "room_item_received",
+      "item_id": 116,
+      "item_name": "Map (Thieves Town)",
+      "tracker_semantic_id": "item.map_thieves_town",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.small_key_skull_woods",
+      "event_type": "room_item_received",
+      "item_id": 168,
+      "item_name": "Small Key (Skull Woods)",
+      "tracker_semantic_id": "item.small_key_skull_woods",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.big_key_skull_woods",
+      "event_type": "room_item_received",
+      "item_id": 151,
+      "item_name": "Big Key (Skull Woods)",
+      "tracker_semantic_id": "item.big_key_skull_woods",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.compass_skull_woods",
+      "event_type": "room_item_received",
+      "item_id": 135,
+      "item_name": "Compass (Skull Woods)",
+      "tracker_semantic_id": "item.compass_skull_woods",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.map_skull_woods",
+      "event_type": "room_item_received",
+      "item_id": 119,
+      "item_name": "Map (Skull Woods)",
+      "tracker_semantic_id": "item.map_skull_woods",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.small_key_swamp_palace",
+      "event_type": "room_item_received",
+      "item_id": 165,
+      "item_name": "Small Key (Swamp Palace)",
+      "tracker_semantic_id": "item.small_key_swamp_palace",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.big_key_swamp_palace",
+      "event_type": "room_item_received",
+      "item_id": 154,
+      "item_name": "Big Key (Swamp Palace)",
+      "tracker_semantic_id": "item.big_key_swamp_palace",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.compass_swamp_palace",
+      "event_type": "room_item_received",
+      "item_id": 138,
+      "item_name": "Compass (Swamp Palace)",
+      "tracker_semantic_id": "item.compass_swamp_palace",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.map_swamp_palace",
+      "event_type": "room_item_received",
+      "item_id": 122,
+      "item_name": "Map (Swamp Palace)",
+      "tracker_semantic_id": "item.map_swamp_palace",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.small_key_ice_palace",
+      "event_type": "room_item_received",
+      "item_id": 169,
+      "item_name": "Small Key (Ice Palace)",
+      "tracker_semantic_id": "item.small_key_ice_palace",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.big_key_ice_palace",
+      "event_type": "room_item_received",
+      "item_id": 150,
+      "item_name": "Big Key (Ice Palace)",
+      "tracker_semantic_id": "item.big_key_ice_palace",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.compass_ice_palace",
+      "event_type": "room_item_received",
+      "item_id": 134,
+      "item_name": "Compass (Ice Palace)",
+      "tracker_semantic_id": "item.compass_ice_palace",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.map_ice_palace",
+      "event_type": "room_item_received",
+      "item_id": 118,
+      "item_name": "Map (Ice Palace)",
+      "tracker_semantic_id": "item.map_ice_palace",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.small_key_misery_mire",
+      "event_type": "room_item_received",
+      "item_id": 167,
+      "item_name": "Small Key (Misery Mire)",
+      "tracker_semantic_id": "item.small_key_misery_mire",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.big_key_misery_mire",
+      "event_type": "room_item_received",
+      "item_id": 152,
+      "item_name": "Big Key (Misery Mire)",
+      "tracker_semantic_id": "item.big_key_misery_mire",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.compass_misery_mire",
+      "event_type": "room_item_received",
+      "item_id": 136,
+      "item_name": "Compass (Misery Mire)",
+      "tracker_semantic_id": "item.compass_misery_mire",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.map_misery_mire",
+      "event_type": "room_item_received",
+      "item_id": 120,
+      "item_name": "Map (Misery Mire)",
+      "tracker_semantic_id": "item.map_misery_mire",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.small_key_turtle_rock",
+      "event_type": "room_item_received",
+      "item_id": 172,
+      "item_name": "Small Key (Turtle Rock)",
+      "tracker_semantic_id": "item.small_key_turtle_rock",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.big_key_turtle_rock",
+      "event_type": "room_item_received",
+      "item_id": 147,
+      "item_name": "Big Key (Turtle Rock)",
+      "tracker_semantic_id": "item.big_key_turtle_rock",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.compass_turtle_rock",
+      "event_type": "room_item_received",
+      "item_id": 131,
+      "item_name": "Compass (Turtle Rock)",
+      "tracker_semantic_id": "item.compass_turtle_rock",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.map_turtle_rock",
+      "event_type": "room_item_received",
+      "item_id": 115,
+      "item_name": "Map (Turtle Rock)",
+      "tracker_semantic_id": "item.map_turtle_rock",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.small_key_ganons_tower",
+      "event_type": "room_item_received",
+      "item_id": 173,
+      "item_name": "Small Key (Ganons Tower)",
+      "tracker_semantic_id": "item.small_key_ganons_tower",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.big_key_ganons_tower",
+      "event_type": "room_item_received",
+      "item_id": 146,
+      "item_name": "Big Key (Ganons Tower)",
+      "tracker_semantic_id": "item.big_key_ganons_tower",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.compass_ganons_tower",
+      "event_type": "room_item_received",
+      "item_id": 130,
+      "item_name": "Compass (Ganons Tower)",
+      "tracker_semantic_id": "item.compass_ganons_tower",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.map_ganons_tower",
+      "event_type": "room_item_received",
+      "item_id": 114,
+      "item_name": "Map (Ganons Tower)",
+      "tracker_semantic_id": "item.map_ganons_tower",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.small_key_universal",
+      "event_type": "room_item_received",
+      "item_id": 175,
+      "item_name": "Small Key (Universal)",
+      "tracker_semantic_id": "item.small_key_universal",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.nothing",
+      "event_type": "room_item_received",
+      "item_id": 90,
+      "item_name": "Nothing",
+      "tracker_semantic_id": "item.nothing",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.bee_trap",
+      "event_type": "room_item_received",
+      "item_id": 176,
+      "item_name": "Bee Trap",
+      "tracker_semantic_id": "item.bee_trap",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.faerie",
+      "event_type": "room_item_received",
+      "item_id": 177,
+      "item_name": "Faerie",
+      "tracker_semantic_id": "item.faerie",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.good_bee",
+      "event_type": "room_item_received",
+      "item_id": 178,
+      "item_name": "Good Bee",
+      "tracker_semantic_id": "item.good_bee",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.magic_jar",
+      "event_type": "room_item_received",
+      "item_id": 179,
+      "item_name": "Magic Jar",
+      "tracker_semantic_id": "item.magic_jar",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.apple",
+      "event_type": "room_item_received",
+      "item_id": 180,
+      "item_name": "Apple",
+      "tracker_semantic_id": "item.apple",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.red_potion",
+      "event_type": "room_item_received",
+      "item_id": 46,
+      "item_name": "Red Potion",
+      "tracker_semantic_id": "item.red_potion",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.green_potion",
+      "event_type": "room_item_received",
+      "item_id": 47,
+      "item_name": "Green Potion",
+      "tracker_semantic_id": "item.green_potion",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.blue_potion",
+      "event_type": "room_item_received",
+      "item_id": 48,
+      "item_name": "Blue Potion",
+      "tracker_semantic_id": "item.blue_potion",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.bee",
+      "event_type": "room_item_received",
+      "item_id": 14,
+      "item_name": "Bee",
+      "tracker_semantic_id": "item.bee",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.small_heart",
+      "event_type": "room_item_received",
+      "item_id": 66,
+      "item_name": "Small Heart",
+      "tracker_semantic_id": "item.small_heart",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    },
+    {
+      "event_key": "item.activated_flute",
+      "event_type": "room_item_received",
+      "item_id": 74,
+      "item_name": "Activated Flute",
+      "tracker_semantic_id": "item.activated_flute",
+      "tracker_node_id": "pending-pack-import",
+      "tracker_section": "inventory"
+    }
+  ]
+}

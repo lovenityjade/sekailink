@@ -1,0 +1,14 @@
+[Unit]
+Description=SekaiLink Link Lobby Runtime Tunnel
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/opt/sekailink/nexus/tunnel/run_link_lobby_runtime_tunnel.sh
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

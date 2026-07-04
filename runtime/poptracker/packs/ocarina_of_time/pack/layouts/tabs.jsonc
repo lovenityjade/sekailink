@@ -1,0 +1,778 @@
+{
+            "tabbed_maps_horizontal": {
+            "type": "tabbed",
+            "tabs": [
+                {
+                    "title": "Overworld",
+                    "content": {
+                        "type": "tabbed",
+                        "tabs": [
+                            {
+                                "title": "Overworld",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Overworld"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Kokiri Forest",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Kokiri Forest"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Lost Woods",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Lost Woods"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "SFM",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "SFM"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Hyrule Fields",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Hyrule Fields"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Lon Lon Ranch",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Lon Lon Ranch"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Market",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Market"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Temple of Time",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Temple of Time"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Hyrule Castle",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Hyrule Castle"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Ganons Castle",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Ganons Castle"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Kakariko",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Kakariko Village"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Graveyard",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Graveyard"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Dampe Race",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Dampe Race"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "DMT",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "DMT"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Goron City",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Goron City"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "DMC",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "DMC"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Lake Hylia",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Lake Hylia"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Zora River",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Zora River"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Zoras Domain",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Zoras Domain"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Zoras Fountain",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Zoras Fountain"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Gerudo Valley",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Gerudo Valley"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Gerudo Fortress",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Gerudo Fortress"
+                                    ]
+                                }
+                            },
+                            {
+                                "title": "Wasteland",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Wasteland"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Desert Colossus",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Desert Colossus"
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                
+                },
+                {
+                    "title": "Dungeons",
+                    "content": {
+                        "type": "tabbed",
+                        "tabs": [
+                            {
+                                "title": "Deku Tree",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Deku Tree"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Dodongos Cavern",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Dodongos Cavern"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Jabu Jabus Belly",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Jabu Jabus Belly"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Forest Temple",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Forest Temple"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Fire Temple",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Fire Temple"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Water Temple",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Water Temple"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Spirit Temple",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Spirit Temple"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Shadow Temple",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Shadow Temple"
+                                    ]
+                                }
+                            
+                            },
+                            
+                            {
+                                "title": "Bottom of the Well",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Bottom of the Well"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Gerudo Training Ground",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Gerudo Training Ground"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Ice Cavern",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Ice Cavern"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Ganons Tower",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Ganons Tower"
+                                    ]
+                                }
+                            
+                            }
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                        ]
+                    }
+                }
+            ]
+        },
+            "tabbed_maps_vertical": {
+            "type": "tabbed",
+            "tabs": [
+                {
+                    "title": "Overworld",
+                    "content": {
+                        "type": "tabbed",
+                        "tabs": [
+                            {
+                                "title": "Overworld",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Overworld"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Kokiri Forest",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Kokiri Forest"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Lost Woods",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Lost Woods"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "SFM",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "SFM"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Hyrule Fields",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Hyrule Fields"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Lon Lon Ranch",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Lon Lon Ranch"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Market",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Market"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Temple of Time",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Temple of Time"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Hyrule Castle",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Hyrule Castle"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Ganons Castle",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Ganons Castle"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Kakariko",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Kakariko Village"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Graveyard",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Graveyard"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Dampe Race",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Dampe Race"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "DMT",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "DMT"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Goron City",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Goron City"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "DMC",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "DMC"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Lake Hylia",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Lake Hylia"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Zora River",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Zora River"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Zoras Domain",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Zoras Domain"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Zoras Fountain",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Zoras Fountain"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Gerudo Valley",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Gerudo Valley"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Gerudo Fortress",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Gerudo Fortress"
+                                    ]
+                                }
+                            },
+                            {
+                                "title": "Wasteland",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Wasteland"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Desert Colossus",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Desert Colossus"
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                
+                },
+                {
+                    "title": "Dungeons",
+                    "content": {
+                        "type": "tabbed",
+                        "tabs": [
+                            {
+                                "title": "Deku Tree",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Deku Tree"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Dodongos Cavern",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Dodongos Cavern"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Jabu Jabus Belly",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Jabu Jabus Belly"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Forest Temple",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Forest Temple"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Fire Temple",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Fire Temple"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Water Temple",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Water Temple"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Spirit Temple",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Spirit Temple"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Shadow Temple",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Shadow Temple"
+                                    ]
+                                }
+                            
+                            },
+                            
+                            {
+                                "title": "Bottom of the Well",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Bottom of the Well"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Gerudo Training Ground",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Gerudo Training Ground"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Ice Cavern",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Ice Cavern"
+                                    ]
+                                }
+                            
+                            },
+                            {
+                                "title": "Ganons Tower",
+                                "content": {
+                                    "type": "map",
+                                    "maps": [
+                                        "Ganons Tower"
+                                    ]
+                                }
+                            
+                            }
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                        ]
+                    }
+                }
+            ]
+        }
+    }

@@ -1,0 +1,22 @@
+[Unit]
+Description=SekaiLink Nexus Identity Service
+After=network-online.target mariadb.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=sekailink
+Group=sekailink
+WorkingDirectory=/opt/sekailink/nexus/auth
+ExecStart=/opt/sekailink/nexus/auth/bin/sekailink_identity_service --config /opt/sekailink/nexus/auth/config/identity_service.json
+Restart=always
+RestartSec=2
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/sekailink/nexus/auth
+ReadWritePaths=/var/spool/postfix
+ReadWritePaths=/var/lib/postfix
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,22 @@
+[Unit]
+Description=SekaiLink Native Generation Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=sekailink
+Group=sekailink
+WorkingDirectory=/opt/sekailink/worlds/generation-server
+ExecStart=/opt/sekailink/worlds/generation-server/bin/sekailink_generation_server_service \
+  --config /opt/sekailink/worlds/generation-server/config/generation_server.json
+Restart=always
+RestartSec=2
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/sekailink/worlds/generation-server
+
+[Install]
+WantedBy=multi-user.target

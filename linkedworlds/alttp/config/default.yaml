@@ -1,0 +1,80 @@
+format_version: 1
+linkedworld_id: alttp
+display_name: A Link to the Past
+
+tracker:
+  pack_path: tracker/default.zip
+  bundle_source_manifest: tracker/default.bundle/manifest.json
+  surface_inventory_ref: tracker/default.bundle/surface.complete.json
+  location_groups_ref: tracker/default.bundle/location-groups.complete.json
+  item_slots_ref: tracker/default.bundle/item-slots.complete.json
+  dungeon_progress_ref: tracker/default.bundle/dungeon-progress.complete.json
+  room_metadata_ref: tracker/default.bundle/room-metadata.complete.json
+  slot_data_ref: tracker/default.bundle/slot-data.complete.json
+  tracker_flow_ref: tracker/default.bundle/tracker-flow.v1.json
+  variant: Map Tracker - AP
+  presentation_mode: side-by-side
+  left_panel: game
+  right_panel: tracker
+  sections:
+    - map
+    - inventory
+    - status
+
+runtime:
+  runner: snes
+  system: snes
+  bridge_ref: bridge/sklmi.phase1.json
+  preset_ref: presets/alttp.runtime-complete.side-by-side.json
+  keep_game_unstretched: true
+
+room_metadata:
+  room_metadata_ref: tracker/default.bundle/room-metadata.complete.json
+  slot_data_ref: tracker/default.bundle/slot-data.complete.json
+  required:
+    - seed_id
+    - seed_hash
+    - slot_name
+    - player_alias
+    - tracker_pack
+    - tracker_variant
+    - slot_data
+  optional:
+    - goal
+    - mode
+    - entrance_shuffle
+    - item_pool
+    - item_functionality
+    - dark_room_logic
+    - open_pyramid
+    - big_key_shuffle
+    - small_key_shuffle
+    - map_shuffle
+    - compass_shuffle
+  visible_slot_data_fields:
+    - goal
+    - mode
+    - entrance_shuffle
+    - item_pool
+    - item_functionality
+    - dark_room_logic
+    - open_pyramid
+    - big_key_shuffle
+    - small_key_shuffle
+    - key_drop_shuffle
+    - compass_shuffle
+    - map_shuffle
+    - dungeon_counters
+    - boss_shuffle
+    - crystals_needed_for_gt
+    - crystals_needed_for_ganon
+    - progressive
+    - swordless
+    - retro_bow
+    - retro_caves
+    - allow_collect
+
+notes:
+  - Clean-room-owned baseline YAML for ALTTP runtime packaging.
+  - Coherent with this repo's side-by-side contract and complete-run surface inventory.
+  - Not presented as a drop-in replacement for a third-party YAML file.

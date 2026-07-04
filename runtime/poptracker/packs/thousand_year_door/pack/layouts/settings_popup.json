@@ -1,0 +1,99 @@
+{
+    "settings_popup": {
+        "type": "array",
+        "margin": 5,
+        "content": [
+            {
+                "type": "group",
+                "header": "General Settings",
+                "header_background": "#3e4b57",
+                "content": [
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "2, 2",
+                        "h_alignment": "left",
+                        "item_h_alignment": "center",
+                        "item_v_alignment": "center",
+                        "item_height": 36,
+                        "item_width": 36,
+                        "rows": [
+                            [
+                                "piecesanity",
+                                "dazzle_rewards",
+                                "Pit_Items",
+                                "Tattlesanity",
+                                "DoorReq",
+                                "palace_skip",
+                                "open_westside",
+                                "Goal"
+                            ],
+                            [
+                                "",
+                                "",
+                                "HiddenOn",
+                                "GlitchedLogic",
+                                "AutoTabOn",
+                                "PlayerTrackOn"
+                            ]
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "group",
+                "header": "Limit Chapter Logic",
+                "header_background": "#3e4b57",
+                "content": [
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "2, 2",
+                        "h_alignment": "left",
+                        "item_h_alignment": "center",
+                        "item_v_alignment": "center",
+                        "item_height": 36,
+                        "item_width": 36,
+                        "rows": [
+                            [
+                                "Ch1",
+                                "Ch2",
+                                "Ch3",
+                                "Ch4",
+                                "Ch5",
+                                "Ch6",
+                                "Ch7",
+                                "Ch8"
+                            ]
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "group",
+                "header": "If you find a bug, please report it in the discord!",
+                "header_background": "#3e4b57",
+                "content": [
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "2, 2",
+                        "h_alignment": "left",
+                        "item_h_alignment": "center",
+                        "item_v_alignment": "center",
+                        "item_height": 36,
+                        "item_width": 36,
+                        "rows": [
+                            [
+                                "",
+                                "",
+                                "Discord",
+                                "Zobee",
+                                "Earth",
+                                "Pillar"
+                            ]
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
+

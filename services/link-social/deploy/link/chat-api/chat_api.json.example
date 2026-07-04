@@ -1,0 +1,27 @@
+{
+  "http_port": 19099,
+  "listen_host": "127.0.0.1",
+  "identity_host": "nexus.sekailink.com",
+  "identity_port": 19095,
+  "chat_gateway_host": "127.0.0.1",
+  "chat_gateway_port": 19098,
+  "chat_gateway_token": "replace-chat-gateway-token",
+  "lobby_runtime_host": "127.0.0.1",
+  "lobby_runtime_port": 19097,
+  "lobby_runtime_token": "replace-lobby-runtime-token",
+  "seed_config_host": "127.0.0.1",
+  "seed_config_port": 19106,
+  "seed_config_user_token": "replace-nexus-seed-config-user-token",
+  "room_admin_tool_token": "replace-room-admin-tool-token",
+  "sqlite_path": "/opt/sekailink/link/chat-api/data/chat_api.sqlite3",
+  "generation_handoff_root": "/opt/sekailink/link/chat-api/data/generation-handoff",
+  "generation_handoff_command": [
+    "/opt/sekailink/link/chat-api/generation-handoff/sekailink_generation_handoff.py",
+    "--request",
+    "{request_path}",
+    "--response",
+    "{response_path}",
+    "--spool-root",
+    "/opt/sekailink/link/chat-api/data/generation-spool"
+  ]
+}

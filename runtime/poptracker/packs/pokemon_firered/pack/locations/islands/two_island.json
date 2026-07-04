@@ -1,0 +1,175 @@
+[
+  {
+    "name": "Two Island Town",
+    "children": [
+      {
+        "name": "Visit",
+        "sections": [
+          {
+            "ref": "Islands/Two Island Town/Unlock Fly Destination"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "two_island",
+            "x": 12,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Pokémon Center",
+        "sections": [
+          {
+            "ref": "Islands/Two Island Town/PC Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "two_island",
+            "x": 344,
+            "y": 120
+          }
+        ]
+      },
+      {
+        "name": "Item Behind Cuttable Tree",
+        "sections": [
+          {
+            "ref": "Islands/Two Island Town/Item Behind Cuttable Tree",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "two_island",
+            "x": 632,
+            "y": 264
+          }
+        ]
+      },
+      {
+        "name": "Market Stall Clerk",
+        "sections": [
+          {
+            "ref": "Islands/Two Island Town/Buy Fresh Water (Event)",
+            "name": "Buy Fresh Water (Event)"
+          },
+          {
+            "ref": "Islands/Two Island Town/Buy Soda Pop (Event)",
+            "name": "Buy Soda Pop (Event)"
+          },
+          {
+            "ref": "Islands/Two Island Town/Buy Lemonade (Event)",
+            "name": "Buy Lemonade (Event)"
+          },
+          {
+            "ref": "Islands/Two Island Town/Market Stall Initial Items",
+            "name": "Market Stall Initial Items"
+          },
+          {
+            "ref": "Islands/Two Island Town/Market Stall First Expansion Items",
+            "name": "Market Stall First Expansion Items"
+          },
+          {
+            "ref": "Islands/Two Island Town/Market Stall Second Expansion Items",
+            "name": "Market Stall Second Expansion Items"
+          },
+          {
+            "ref": "Islands/Two Island Town/Market Stall Third Expansion Items",
+            "name": "Market Stall Third Expansion Items"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "two_island",
+            "x": 456,
+            "y": 72
+          }
+        ]
+      },
+      {
+        "name": "Beauty",
+        "sections": [
+          {
+            "ref": "Islands/Two Island Town/Beauty Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "two_island",
+            "x": 488,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Two Island Game Corner",
+        "sections": [
+          {
+            "ref": "Islands/Two Island Town/Deliver Meteorite (Event)",
+            "name": "Deliver Meteorite (Event)"
+          },
+          {
+            "ref": "Islands/Two Island Town/Lostelle's Dad Gift",
+            "name": "Lostelle's Dad Gift"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "two_island",
+            "x": 632,
+            "y": 152
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Two Island Pokémon Center 1F",
+    "children": [
+      {
+        "name": "PC",
+        "sections": [
+          {
+            "ref": "Islands/Two Island Town/PC Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "two_island_pokemon_center_1f",
+            "x": 184,
+            "y": 24
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Two Island Game Corner",
+    "children": [
+      {
+        "name": "Lostelle's Dad",
+        "sections": [
+          {
+            "ref": "Islands/Two Island Town/Deliver Meteorite (Event)",
+            "name": "Deliver Meteorite (Event)"
+          },
+          {
+            "ref": "Islands/Two Island Town/Lostelle's Dad Gift",
+            "name": "Gift"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "two_island_game_corner",
+            "x": 88,
+            "y": 88
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,562 @@
+[
+  {
+    "name": "Blank",
+    "type": "toggle",
+    "img": "images/icons/blank.png",
+    "disabled_img": "images/icons/blank.png",
+    "codes": "blank"
+  },
+  {
+    "name": "Crash Man Access Codes",
+    "type": "toggle",
+    "img": "images/icons/crashman.png",
+    "disabled_img": "images/icons/crashman_gray.png",
+    "codes": "crash_man_stage"
+  },
+  {
+    "name": "Metal Man Access Codes",
+    "type": "toggle",
+    "img": "images/icons/metalman.png",
+    "disabled_img": "images/icons/metalman_gray.png",
+    "codes": "metal_man_stage"
+  },
+  {
+    "name": "Quick Man Access Codes",
+    "type": "toggle",
+    "img": "images/icons/quickman.png",
+    "disabled_img": "images/icons/quickman_gray.png",
+    "codes": "quick_man_stage"
+  },
+  {
+    "name": "Bubble Man Access Codes",
+    "type": "toggle",
+    "img": "images/icons/bubbleman.png",
+    "disabled_img": "images/icons/bubbleman_gray.png",
+    "codes": "bubble_man_stage"
+  },
+  {
+    "name": "Heat Man Access Codes",
+    "type": "toggle",
+    "img": "images/icons/heatman.png",
+    "disabled_img": "images/icons/heatman_gray.png",
+    "codes": "heat_man_stage"
+  },
+  {
+    "name": "Wood Man Access Codes",
+    "type": "toggle",
+    "img": "images/icons/woodman.png",
+    "disabled_img": "images/icons/woodman_gray.png",
+    "codes": "wood_man_stage"
+  },
+  {
+    "name": "Flash Man Access Codes",
+    "type": "toggle",
+    "img": "images/icons/flashman.png",
+    "disabled_img": "images/icons/flashman_gray.png",
+    "codes": "flash_man_stage"
+  },
+  {
+    "name": "Air Man Access Codes",
+    "type": "toggle",
+    "img": "images/icons/airman.png",
+    "disabled_img": "images/icons/airman_gray.png",
+    "codes": "air_man_stage"
+  },
+  {
+    "name": "Crash Bomber",
+    "type": "toggle",
+    "img": "images/icons/crashbomber.png",
+    "disabled_img": "images/icons/crashbomber_gray.png",
+    "codes": "crash_bomber"
+  },
+  {
+    "name": "Metal Blade",
+    "type": "toggle",
+    "img": "images/icons/metalblade.png",
+    "disabled_img": "images/icons/metalblade_gray.png",
+    "codes": "metal_blade"
+  },
+  {
+    "name": "Quick Boomerang",
+    "type": "toggle",
+    "img": "images/icons/quickboomerang.png",
+    "disabled_img": "images/icons/quickboomerang_gray.png",
+    "codes": "quick_boomerang"
+  },
+  {
+    "name": "Bubble Lead",
+    "type": "toggle",
+    "img": "images/icons/bubblelead.png",
+    "disabled_img": "images/icons/bubblelead_gray.png",
+    "codes": "bubble_lead"
+  },
+  {
+    "name": "Atomic Fire",
+    "type": "toggle",
+    "img": "images/icons/atomicfire.png",
+    "disabled_img": "images/icons/atomicfire_gray.png",
+    "codes": "atomic_fire"
+  },
+  {
+    "name": "Leaf Shield",
+    "type": "toggle",
+    "img": "images/icons/leafshield.png",
+    "disabled_img": "images/icons/leafshield_gray.png",
+    "codes": "leaf_shield"
+  },
+  {
+    "name": "Time Stopper",
+    "type": "toggle",
+    "img": "images/icons/timestopper.png",
+    "disabled_img": "images/icons/timestopper_gray.png",
+    "codes": "time_stopper"
+  },
+  {
+    "name": "Air Shooter",
+    "type": "toggle",
+    "img": "images/icons/airshooter.png",
+    "disabled_img": "images/icons/airshooter_gray.png",
+    "codes": "air_shooter"
+  },
+  {
+    "name": "Item 1 - Propeller",
+    "type": "toggle",
+    "img": "images/icons/item1.png",
+    "disabled_img": "images/icons/item1_gray.png",
+    "codes": "item_1"
+  },
+  {
+    "name": "Item 2 - Rocket",
+    "type": "toggle",
+    "img": "images/icons/item2.png",
+    "disabled_img": "images/icons/item2_gray.png",
+    "codes": "item_2"
+  },
+  {
+    "name": "Item 3 - Bouncy",
+    "type": "toggle",
+    "img": "images/icons/item3.png",
+    "disabled_img": "images/icons/item3_gray.png",
+    "codes": "item_3"
+  },
+
+  {
+    "name": "Health Energy",
+    "type": "consumable",
+    "initial_quantity": 0,
+    "codes": "health_energy"
+  },
+  {
+    "name": "Weapon Energy",
+    "type": "consumable",
+    "initial_quantity": 0,
+    "codes": "weapon_energy"
+  },
+  {
+    "name": "1-Up",
+    "type": "consumable",
+    "initial_quantity": 0,
+    "codes": "one_up"
+  },
+  {
+    "name": "E-Tank",
+    "type": "consumable",
+    "initial_quantity": 0,
+    "codes": "e_tank"
+  },
+  {
+    "name": "Crash Man Cleared",
+    "type": "toggle",
+    "codes": "crash_man_cleared",
+    "img": "images/icons/crashman_x.png",
+    "disabled_img": "images/icons/crashman_gray.png"
+  },
+  {
+    "name": "Crash Man State",
+    "type": "progressive",
+    "loop": false,
+    "allow_disabled": false,
+    "codes": "crash_man_state",
+    "stages": [
+      {
+        "img": "images/icons/crashman_gray.png",
+        "name": "Crash Man Locked",
+        "codes": "crash_man_0",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/icons/crashman.png",
+        "name": "Crash Man Open",
+        "codes": "crash_man_1",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/icons/crashman_x.png",
+        "name": "Crash Man Defeated",
+        "codes": "crash_man_2",
+        "inherit_codes": true
+      }
+    ]
+  },
+  {
+    "name": "Metal Man Cleared",
+    "type": "toggle",
+    "codes": "metal_man_cleared",
+    "img": "images/icons/metalman_x.png",
+    "disabled_img": "images/icons/metalman_gray.png"
+  },
+  {
+    "name": "Metal Man State",
+    "type": "progressive",
+    "loop": false,
+    "allow_disabled": false,
+    "codes": "metal_man_state",
+    "stages": [
+      {
+        "img": "images/icons/metalman_gray.png",
+        "name": "Metal Man Locked",
+        "codes": "metal_man_0",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/icons/metalman.png",
+        "name": "Metal Man Open",
+        "codes": "metal_man_1",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/icons/metalman_x.png",
+        "name": "Metal Man Defeated",
+        "codes": "metal_man_2",
+        "inherit_codes": true
+      }
+    ]
+  },
+  {
+    "name": "Quick Man Cleared",
+    "type": "toggle",
+    "codes": "quick_man_cleared",
+    "img": "images/icons/quickman_x.png",
+    "disabled_img": "images/icons/quickman_gray.png"
+  },
+  {
+    "name": "Quick Man State",
+    "type": "progressive",
+    "loop": false,
+    "allow_disabled": false,
+    "codes": "quick_man_state",
+    "stages": [
+      {
+        "img": "images/icons/quickman_gray.png",
+        "name": "Quick Man Locked",
+        "codes": "quick_man_0",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/icons/quickman.png",
+        "name": "Quick Man Open",
+        "codes": "quick_man_1",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/icons/quickman_x.png",
+        "name": "Quick Man Defeated",
+        "codes": "quick_man_2",
+        "inherit_codes": true
+      }
+    ]
+  },
+  {
+    "name": "Bubble Man Cleared",
+    "type": "toggle",
+    "codes": "bubble_man_cleared",
+    "img": "images/icons/bubbleman_x.png",
+    "disabled_img": "images/icons/bubbleman_gray.png"
+  },
+  {
+    "name": "Bubble Man State",
+    "type": "progressive",
+    "loop": false,
+    "allow_disabled": false,
+    "codes": "bubble_man_state",
+    "stages": [
+      {
+        "img": "images/icons/bubbleman_gray.png",
+        "name": "Bubble Man Locked",
+        "codes": "bubble_man_0",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/icons/bubbleman.png",
+        "name": "Bubble Man Open",
+        "codes": "bubble_man_1",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/icons/bubbleman_x.png",
+        "name": "Bubble Man Defeated",
+        "codes": "bubble_man_2",
+        "inherit_codes": true
+      }
+    ]
+  },
+  {
+    "name": "Heat Man Cleared",
+    "type": "toggle",
+    "codes": "heat_man_cleared",
+    "img": "images/icons/heatman_x.png",
+    "disabled_img": "images/icons/heatman_gray.png"
+  },
+  {
+    "name": "Heat Man State",
+    "type": "progressive",
+    "loop": false,
+    "allow_disabled": false,
+    "codes": "heat_man_state",
+    "stages": [
+      {
+        "img": "images/icons/heatman_gray.png",
+        "name": "Heat Man Locked",
+        "codes": "heat_man_0",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/icons/heatman.png",
+        "name": "Heat Man Open",
+        "codes": "heat_man_1",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/icons/heatman_x.png",
+        "name": "Heat Man Defeated",
+        "codes": "heat_man_2",
+        "inherit_codes": true
+      }
+    ]
+  },
+  {
+    "name": "Wood Man Cleared",
+    "type": "toggle",
+    "codes": "wood_man_cleared",
+    "img": "images/icons/woodman_x.png",
+    "disabled_img": "images/icons/woodman_gray.png"
+  },
+  {
+    "name": "Wood Man State",
+    "type": "progressive",
+    "loop": false,
+    "allow_disabled": false,
+    "codes": "wood_man_state",
+    "stages": [
+      {
+        "img": "images/icons/woodman_gray.png",
+        "name": "Wood Man Locked",
+        "codes": "wood_man_0",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/icons/woodman.png",
+        "name": "Wood Man Open",
+        "codes": "wood_man_1",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/icons/woodman_x.png",
+        "name": "Wood Man Defeated",
+        "codes": "wood_man_2",
+        "inherit_codes": true
+      }
+    ]
+  },
+  {
+    "name": "Flash Man Cleared",
+    "type": "toggle",
+    "codes": "flash_man_cleared",
+    "img": "images/icons/flashman_x.png",
+    "disabled_img": "images/icons/flashman_gray.png"
+  },
+  {
+    "name": "Flash Man State",
+    "type": "progressive",
+    "loop": false,
+    "allow_disabled": false,
+    "codes": "flash_man_state",
+    "stages": [
+      {
+        "img": "images/icons/flashman_gray.png",
+        "name": "Flash Man Locked",
+        "codes": "flash_man_0",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/icons/flashman.png",
+        "name": "Flash Man Open",
+        "codes": "flash_man_1",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/icons/flashman_x.png",
+        "name": "Flash Man Defeated",
+        "codes": "flash_man_2",
+        "inherit_codes": true
+      }
+    ]
+  },
+  {
+    "name": "Air Man Cleared",
+    "type": "toggle",
+    "codes": "air_man_cleared",
+    "img": "images/icons/airman_x.png",
+    "disabled_img": "images/icons/airman_gray.png"
+  },
+  {
+    "name": "Air Man State",
+    "type": "progressive",
+    "loop": false,
+    "allow_disabled": false,
+    "codes": "air_man_state",
+    "stages": [
+      {
+        "img": "images/icons/airman_gray.png",
+        "name": "Air Man Locked",
+        "codes": "air_man_0",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/icons/airman.png",
+        "name": "Air Man Open",
+        "codes": "air_man_1",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/icons/airman_x.png",
+        "name": "Air Man Defeated",
+        "codes": "air_man_2",
+        "inherit_codes": true
+      }
+    ]
+  },
+  {
+    "name": "Wily 1 Cleared",
+    "type": "toggle",
+    "codes": "wily_1_cleared"
+  },
+  {
+    "name": "Wily 2 Cleared",
+    "type": "toggle",
+    "codes": "wily_2_cleared"
+  },
+  {
+    "name": "Wily 3 Cleared",
+    "type": "toggle",
+    "codes": "wily_3_cleared"
+  },
+  {
+    "name": "Wily 4 Cleared",
+    "type": "toggle",
+    "codes": "wily_4_cleared"
+  },
+  {
+    "name": "Wily 5 Cleared",
+    "type": "toggle",
+    "codes": "wily_5_cleared"
+  },
+
+  {
+    "name": "1-Ups and E-Tanks in pool",
+    "type": "progressive",
+    "loop": true,
+    "allow_disabled": false,
+    "stages": [
+      {
+        "img": "images/settings/etanks_off.png",
+        "name": "1-Ups and E-Tanks In Pool - Off",
+        "codes": "etanks,etanks_off",
+        "inherit_codes": false
+      },
+      {
+        "img": "images/settings/etanks_on.png",
+        "name": "1-Ups and E-Tanks In Pool - On",
+        "codes": "etanks,etanks_on"
+      }
+    ]
+  },
+  {
+    "name": "Energy Pickups In Pool",
+    "type": "progressive",
+    "loop": true,
+    "allow_disabled": false,
+    "stages": [
+      {
+        "img": "images/settings/energy_off.png",
+        "name": "Energy Pickups In Pool - Off",
+        "codes": "energypickups,energypickups_off",
+        "inherit_codes": false
+      },
+      {
+        "img": "images/settings/energy_on.png",
+        "name": "Energy Pickups In Pool - On",
+        "codes": "energypickups,energypickups_on"
+      }
+    ]
+  },
+  {
+    "name": "Logic Boss Unshuffled Weakness",
+    "type": "progressive",
+    "loop": true,
+    "allow_disabled": false,
+    "stages": [
+      {
+        "img": "images/settings/unshuffled_weaknesses_off.png",
+        "name": "Logic Boss Unshuffled Weakness - Off",
+        "codes": "logic_boss_unshuffled_weakness,logic_boss_unshuffled_weakness_off",
+        "inherit_codes": false
+      },
+      {
+        "img": "images/settings/unshuffled_weaknesses_on.png",
+        "name": "Logic Boss Unshuffled Weakness - On",
+        "codes": "logic_boss_unshuffled_weakness,logic_boss_unshuffled_weakness_on"
+      }
+    ]
+  },
+  {
+    "name": "Boss Weakness Strictness",
+    "type": "consumable",
+    "codes": "boss_weakness_strictness"
+  },
+  {
+    "name": "Auto Switch Tabs",
+    "type": "progressive",
+    "loop": true,
+    "allow_disabled": false,
+    "initial_stage_idx": 1,
+    "codes": "auto_tab_switch",
+    "stages": [
+      {
+        "img": "images/icons/tabswitch_gray.png",
+        "name": "Auto Switch Tabs - Off"
+      },
+      {
+        "img": "images/icons/tabswitch.png",
+        "name": "Auto Switch Tabs - On"
+      }
+    ]
+  },
+  {
+    "name": "Info - This Tracker Does Not Track Weaknesses",
+    "type": "progressive",
+    "loop": true,
+    "allow_disabled": false,
+    "codes": "setting_info",
+    "stages": [
+      {
+        "img": "images/settings/setting_info.png",
+        "name": "Info - This Tracker Does Not Track Weaknesses"
+      },
+      {
+        "img": "images/settings/setting_info.png",
+        "name": "Info - This Tracker Does Not Track Weaknesses"
+      }
+    ]
+  }
+]

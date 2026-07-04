@@ -1,0 +1,41 @@
+{
+  "game_id": "thousand_year_door",
+  "display_name": "Paper Mario: The Thousand-Year Door",
+  "emu": "dolphin",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apttyd"
+  ],
+  "patch_world_module": "worlds.ttyd",
+  "ap_world": "ttyd",
+  "required_roms": [
+    "thousand_year_door"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "dolphin",
+  "archipelago_client": {
+    "game_key": "thousand_year_door",
+    "world": "ttyd",
+    "wrapper": "dolphin",
+    "client_file": "worlds/ttyd/TTYDClient.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".iso",
+      ".rvz",
+      ".gcm"
+    ],
+    "md5": [],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "ap_game": "Paper Mario: The Thousand-Year Door"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "https://github.com/ZobeePlays/TTYD-Randomizer-AP-Tracker/releases/latest",
+  "tracker_pack_path": "poptracker/packs/thousand_year_door/pack"
+}

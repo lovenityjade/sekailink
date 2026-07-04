@@ -1,0 +1,1 @@
+sekailink ALL=(root) NOPASSWD: /usr/bin/systemctl start apache2.service, /usr/bin/systemctl stop apache2.service, /usr/bin/systemctl restart apache2.service, /usr/bin/systemctl start postfix.service, /usr/bin/systemctl stop postfix.service, /usr/bin/systemctl restart postfix.service

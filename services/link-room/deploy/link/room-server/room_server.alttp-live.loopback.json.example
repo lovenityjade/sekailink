@@ -1,0 +1,16 @@
+{
+  "tcp_port": 32071,
+  "http_port": 18081,
+  "audit_root": "/opt/sekailink/link/room-server/data/audit",
+  "projection_root": "/opt/sekailink/link/room-server/data/projection/room_projection.sqlite3",
+  "projection_backend": "sqlite",
+  "restore_from_audit": true,
+  "restore_from_projection": true,
+  "purge_expired_periodically": true,
+  "purge_interval_ms": 1000,
+  "auth_policy": {
+    "admin_token": null,
+    "runtime_token": null,
+    "client_report_token": null
+  }
+}

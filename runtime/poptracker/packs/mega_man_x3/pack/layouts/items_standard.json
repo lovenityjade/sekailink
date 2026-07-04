@@ -1,0 +1,33 @@
+{
+    "shared_item_grid": {
+        "type": "array",
+        "orientation": "vertical",
+        "margin": "0,0",
+        "content": [
+            {
+                "type": "array",
+                "orientation": "vertical",
+                "margin": "0,0",
+                "content": [
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "4, 5",
+                        "item_size": 50,
+                        "h_alignment": "left",
+                        "rows": [
+                            ["blast_hornet_state", "blizzard_buffalo_state", "gravity_beetle_state", "toxic_seahorse_state"],
+                            ["volt_catfish_state", "crush_crawfish_state", "tunnel_rhino_state", "neon_tiger_state"],
+                            ["vile_state", "bit_state", "byte_state", "drdoppler_state"],
+                            ["parasitic_bomb", "frost_shield", "gravity_well", "acid_burst"],
+                            ["triad_thunder", "spinning_blade", "tornado_fang", "ray_splasher"],
+                            ["ride_chimera", "ride_kangaroo", "ride_hawk", "ride_frog"],
+                            ["third_armor_helmet", "third_armor_body", "arms", "third_armor_legs"],
+                            ["heart_tank", "sub_tank", "z_saber","maverick_medal"],
+                            ["auto_tab_switch", "", "", ""]
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

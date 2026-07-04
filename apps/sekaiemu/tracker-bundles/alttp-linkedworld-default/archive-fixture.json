@@ -1,0 +1,85 @@
+{
+  "fixture_id": "alttp-linkedworld-default-poptracker-adapted-archive",
+  "linkedworld_id": "alttp",
+  "purpose": "Offline Sekaiemu fixture for validating the LinkedWorld ALTTP tracker directory bundle enriched with poptracker-adapted static assets.",
+  "source_archive": "generated from linkedworlds/alttp/tracker/default.bundle",
+  "source_bundle_directory": "linkedworlds/alttp/tracker/default.bundle",
+  "runtime_bundle_paths_current_sekaiemu": [
+    "linkedworlds/alttp/tracker/default.bundle",
+    "runtime/tracker-bundles/alttp-linkedworld-default"
+  ],
+  "archive_sha256": "18b5967d539295229e4c1cac273269dc8efb235d9ad1c30489efd2f1ac161d54",
+  "archive_size_bytes": 71801240,
+  "zip_summary": {
+    "entry_count": 1628,
+    "uncompressed_bytes": 111117277,
+    "compressed_bytes": 71412906,
+    "compression_ratio_percent": 35.7
+  },
+  "expected_root_entries": [
+    "manifest.json",
+    "surface.complete.json",
+    "location-groups.complete.json",
+    "item-slots.complete.json",
+    "dungeon-progress.complete.json",
+    "room-metadata.complete.json",
+    "slot-data.complete.json",
+    "tracker-flow.v1.json",
+    "item-icon-metadata.json",
+    "map-pin-metadata.json",
+    "settings-metadata.json",
+    "autotabbing-hints.json",
+    "NOTICE.md",
+    "README.md"
+  ],
+  "expected_native_map_images": [
+    "maps/light_world.ppm",
+    "maps/dark_world.ppm",
+    "maps/death_mountain.ppm",
+    "maps/hc_escape.ppm",
+    "maps/eastern_palace.ppm",
+    "maps/desert_palace.ppm",
+    "maps/tower_of_hera.ppm",
+    "maps/dark_dungeons.ppm",
+    "maps/ice_mire.ppm",
+    "maps/turtle_gt.ppm"
+  ],
+  "expected_poptracker_adapted_entries": [
+    "poptracker-adapted/manifest.json",
+    "poptracker-adapted/sekailink-adaptation.json",
+    "poptracker-adapted/LICENSE",
+    "poptracker-adapted/README.md",
+    "poptracker-adapted/items/items.json",
+    "poptracker-adapted/items/settings.json",
+    "poptracker-adapted/layouts/tracker.json",
+    "poptracker-adapted/locations/lightworld.json",
+    "poptracker-adapted/locations/darkworld.json",
+    "poptracker-adapted/maps/maps.json",
+    "poptracker-adapted/images/items/Hookshot.png",
+    "poptracker-adapted/images/maps/lttp_lightworld.png",
+    "poptracker-adapted/images/maps/lttp_darkworld.png",
+    "poptracker-adapted/images/dungeon/HC_escape.png"
+  ],
+  "observed_archive_file_type_counts": {
+    "ppm": 10,
+    "png": 911,
+    "jpg": 9,
+    "xcf": 616,
+    "json": 60
+  },
+  "poptracker_adaptation": {
+    "source_name": "alttp-ap-poptracker-pack",
+    "source_commit": "bff7a80d7cfb53de5c5b49923ddedb3344108b96",
+    "license": "MIT",
+    "runtime_exclusions": [
+      "PopTracker runtime embedding",
+      "SNI runtime embedding"
+    ]
+  },
+  "current_sekaiemu_runtime_expectations": [
+    "TrackerBundle::LoadFromPath accepts either the extracted directory or tracker/default.zip. Zip bundles are materialized into a local cache before loading.",
+    "Native map rendering decodes portable pixmap P3/P6 assets plus PNG, JPG/JPEG, and WebP through SDL2_image. Root maps/*.ppm and poptracker-adapted PNG/JPG assets are valid render targets.",
+    "Lua, PopTracker runtime, and SNI are intentionally out of scope for this fixture."
+  ],
+  "validated_on": "2026-05-10"
+}

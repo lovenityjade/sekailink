@@ -1,0 +1,288 @@
+
+
+[
+  {
+    "name": "SFM - hint",
+    "chest_unopened_img": "/images/items/close.png",
+    "chest_opened_img": "/images/items/open.png",
+    "overlay_background": "#000000",
+    "access_rules": [
+        "{}"
+    ],
+    "children": [
+        {
+            "name": "Near Forest Temple - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Song from Saria - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "sfm_near_forest_temple_song_from_saria"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Sheik in Forest - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "sfm_near_forest_temple_sheik_in_forest"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "SFM",
+                    "x": "1531",
+                    "y": "453",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Wolfos Grotto - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Chest - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "sfm_wolfos_grotto_chest"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "SFM",
+                    "x": "332",
+                    "y": "1008",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Storms Grotto - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Front Deku Scrub - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "sfm_storms_grotto_front_deku_scrub"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Rear Deku Scrub - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "sfm_storms_grotto_rear_deku_scrub"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Beehive - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "sfm_storms_grotto_beehive"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "SFM",
+                    "x": "1542",
+                    "y": "507",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        }
+    ],
+    "sections": [
+        {
+            "name": "GS Wall - hint",
+            "access_rules": [],
+            "visibility_rules": [
+                "sfm_gs_wall"
+            ],
+            "item_count": 1
+        }
+    ],
+    "map_locations": [
+        {
+            "map": "SFM",
+            "x": "907",
+            "y": "851",
+            "size": 22,
+                    "shape": "diamond"
+        }
+    ]
+},
+    {
+      "name": "SFM",
+      "chest_unopened_img": "/images/Items/close.png",
+      "chest_opened_img": "/images/Items/open.png",
+      "overlay_background": "#000000",
+      "access_rules": [
+        " "
+      ],
+      "children": [
+        {
+          "name": "Wolfos Grotto",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Chest",
+              "access_rules": [
+                "^$CanReach|Child SFM Wolfos Grotto Chest",
+                "^$CanReach|Adult SFM Wolfos Grotto Chest"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "SFM",
+              "x": 310,
+              "y": 979,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Storms Grotto",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Front Deku Scrub",
+              "access_rules": [
+                "^$CanReach|Child SFM Deku Scrub Grotto Front",
+                "^$CanReach|Adult SFM Deku Scrub Grotto Front"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_scrubs"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Rear Deku Scrub",
+              "access_rules": [
+                "^$CanReach|Child SFM Deku Scrub Grotto Rear",
+                "^$CanReach|Adult SFM Deku Scrub Grotto Rear"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_scrubs"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Beehive",
+              "access_rules": [
+                "^$CanReach|Child SFM Storms Grotto Beehive",
+                "^$CanReach|Adult SFM Storms Grotto Beehive"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_beehives"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "SFM",
+              "x": 1520,
+              "y": 485,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Near Forest Temple",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Song from Saria",
+              "access_rules": [
+                "^$CanReach|Child Song from Saria",
+                "^$CanReach|Adult Song from Saria"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Sheik in Forest",
+              "access_rules": [
+                "^$CanReach|Child Sheik in Forest",
+                "^$CanReach|Adult Sheik in Forest"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "SFM",
+              "x": 1509,
+              "y": 431,
+              "size": 24
+            }
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "name": "GS Wall",
+          "access_rules": [
+            "^$CanReach|Child SFM GS",
+            "^$CanReach|Adult SFM GS"
+          ],
+          "visibility_rules": [
+            "$Show|tokensanity|2"
+          ],
+          "item_count": 1
+        }
+      ],
+      "map_locations": [
+        {
+          "map": "SFM",
+          "x": 885,
+          "y": 829,
+          "size": 24
+        }
+      ]
+    }
+]

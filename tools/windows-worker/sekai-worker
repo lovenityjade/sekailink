@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+host="${SEKAILINK_WINDOWS_HOST:-sekailink-windows}"
+remote_script="${SEKAILINK_WINDOWS_WORKER:-D:\\SekaiLink\\scripts\\sekai-worker.ps1}"
+
+if [[ $# -eq 0 ]]; then
+  set -- status
+fi
+
+ssh "$host" "powershell -NoProfile -ExecutionPolicy Bypass -File '$remote_script' $*"

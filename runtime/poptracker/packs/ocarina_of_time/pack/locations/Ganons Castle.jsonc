@@ -1,0 +1,2271 @@
+[
+    {
+        "name": "Ganons Castle - hint",
+        "chest_unopened_img": "/images/items/close.png",
+        "chest_opened_img": "/images/items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "{}"
+        ],
+        "children": [
+            {
+                "name": "OGC - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Great Fairy Reward - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_ogc_great_fairy_reward"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "GS - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_ogc_gs"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": "1023",
+                        "y": "773",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Shadow Trial - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Recovery Heart 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_shadow_trial_recovery_heart_1"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Recovery Heart 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_shadow_trial_recovery_heart_2"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Recovery Heart 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_shadow_trial_recovery_heart_3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Like Like Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_shadow_trial_like_like_pot_1"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Like Like Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_shadow_trial_like_like_pot_2"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_shadow_trial_pot_1"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_shadow_trial_pot_2"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Front Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_shadow_trial_front_chest"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Golden Gauntlets Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_shadow_trial_golden_gauntlets_chest"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": "814",
+                        "y": "226",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Fire Trial - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Recovery Heart - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_fire_trial_recovery_heart"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_fire_trial_pot_1"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_fire_trial_pot_2"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": "446",
+                        "y": "329",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Spirit Trial - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Recovery Heart - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_spirit_trial_recovery_heart"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_spirit_trial_pot_1"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_spirit_trial_pot_2"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crystal Switch Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_spirit_trial_crystal_switch_chest"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Invisible Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_spirit_trial_invisible_chest"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": "472",
+                        "y": "805",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Water Trial - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_water_trial_pot_1"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_water_trial_pot_2"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Left Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_water_trial_left_chest"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Right Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_water_trial_right_chest"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": "917",
+                        "y": "596",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Forest Trial - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_forest_trial_pot_1"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_forest_trial_pot_2"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_forest_trial_chest"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": "914",
+                        "y": "797",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Light Trial - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Boulder Pot - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_light_trial_boulder_pot"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_light_trial_pot_1"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_light_trial_pot_2"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Left Chest 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_light_trial_left_chest_1"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Left Chest 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_light_trial_left_chest_2"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Left Chest 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_light_trial_left_chest_3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Right Chest 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_light_trial_right_chest_1"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Right Chest 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_light_trial_right_chest_2"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Right Chest 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_light_trial_right_chest_3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Invisible Enemies Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_light_trial_invisible_enemies_chest"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lullaby Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_light_trial_lullaby_chest"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": "387",
+                        "y": "596",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Deku Scrub - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Left - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_deku_scrub_left"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Center Left - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_deku_scrub_center_left"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Center Right - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_deku_scrub_center_right"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Right - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "ganons_castle_deku_scrub_right"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": "599",
+                        "y": "722",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "MQ Ganons Castle - hint",
+        "chest_unopened_img": "/images/items/close.png",
+        "chest_opened_img": "/images/items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "{}"
+        ],
+        "children": [
+            {
+                "name": "Water Trial - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Recovery Heart - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_water_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_water_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_water_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_water_trial"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Ganons Castle",
+                        "x": "892",
+                        "y": "2139",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Light Trial - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Recovery Heart 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_light_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Recovery Heart 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_light_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_light_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_light_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lullaby Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_light_trial"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Ganons Castle",
+                        "x": "395",
+                        "y": "2204",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Forest Trial - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_forest_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_forest_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Freestanding Key - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_forest_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Eye Switch Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_forest_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Frozen Eye Switch Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_forest_trial"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Ganons Castle",
+                        "x": "129",
+                        "y": "331",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Shadow Trial - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_shadow_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_shadow_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Bomb Flower Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_shadow_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Eye Switch Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_shadow_trial"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Ganons Castle",
+                        "x": "211",
+                        "y": "368",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Fire Trial - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_fire_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_fire_trial"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Ganons Castle",
+                        "x": "567",
+                        "y": "109",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Spirit Trial - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_spirit_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_spirit_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_spirit_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Invisible Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_spirit_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Sun Front Left Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_spirit_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Sun Back Left Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_spirit_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Sun Back Right Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_spirit_trial"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Golden Gauntlets Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_spirit_trial"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Ganons Castle",
+                        "x": "411",
+                        "y": "1711",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Deku Scrub - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Left - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_deku_scrub"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Center Left - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_deku_scrub"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Center - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_deku_scrub"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Center Right - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_deku_scrub"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Right - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_ganons_castle_deku_scrub"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Ganons Castle",
+                        "x": "1451",
+                        "y": "2377",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Ganons Castle",
+        "chest_unopened_img": "/images/Items/close.png",
+        "chest_opened_img": "/images/Items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            " "
+        ],
+        "visibility_rules": [
+            "^$Visibility_helper|MQ_ganons_castle|true"
+        ],
+        "children": [
+            {
+                "name": "OGC",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Great Fairy Reward",
+                        "access_rules": [
+                            "^$CanReach|Child OGC Great Fairy Reward",
+                            "^$CanReach|Adult OGC Great Fairy Reward"
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "GS",
+                        "access_rules": [
+                            "^$CanReach|Child OGC GS",
+                            "^$CanReach|Adult OGC GS"
+                        ],
+                        "visibility_rules": [
+                            "$Show|tokensanity|2"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Castle",
+                        "x": 1354,
+                        "y": 919,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Shadow Trial",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Recovery Heart 1",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Shadow Trial Recovery Heart 1",
+                            "^$CanReach|Adult Ganons Castle Shadow Trial Recovery Heart 1"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_freestanding_items|1|==",
+                            "$Show|shuffle_freestanding_items|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Recovery Heart 2",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Shadow Trial Recovery Heart 2",
+                            "^$CanReach|Adult Ganons Castle Shadow Trial Recovery Heart 2"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_freestanding_items|1|==",
+                            "$Show|shuffle_freestanding_items|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Recovery Heart 3",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Shadow Trial Recovery Heart 3",
+                            "^$CanReach|Adult Ganons Castle Shadow Trial Recovery Heart 3"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_freestanding_items|1|==",
+                            "$Show|shuffle_freestanding_items|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Like Like Pot 1",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Shadow Trial Like Like Pot 1",
+                            "^$CanReach|Adult Ganons Castle Shadow Trial Like Like Pot 1"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Like Like Pot 2",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Shadow Trial Like Like Pot 2",
+                            "^$CanReach|Adult Ganons Castle Shadow Trial Like Like Pot 2"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 1",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Shadow Trial Pot 1",
+                            "^$CanReach|Adult Ganons Castle Shadow Trial Pot 1"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Shadow Trial Pot 2",
+                            "^$CanReach|Adult Ganons Castle Shadow Trial Pot 2"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Front Chest",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Shadow Trial Front Chest",
+                            "^$CanReach|Adult Ganons Castle Shadow Trial Front Chest"
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Golden Gauntlets Chest",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Shadow Trial Golden Gauntlets Chest",
+                            "^$CanReach|Adult Ganons Castle Shadow Trial Golden Gauntlets Chest"
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 792,
+                        "y": 204,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Fire Trial",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Recovery Heart",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Fire Trial Recovery Heart",
+                            "^$CanReach|Adult Ganons Castle Fire Trial Recovery Heart"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_freestanding_items|1|==",
+                            "$Show|shuffle_freestanding_items|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 1",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Fire Trial Pot 1",
+                            "^$CanReach|Adult Ganons Castle Fire Trial Pot 1"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Fire Trial Pot 2",
+                            "^$CanReach|Adult Ganons Castle Fire Trial Pot 2"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 424,
+                        "y": 307,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Spirit Trial",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Recovery Heart",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Spirit Trial Recovery Heart",
+                            "^$CanReach|Adult Ganons Castle Spirit Trial Recovery Heart"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_freestanding_items|1|==",
+                            "$Show|shuffle_freestanding_items|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 1",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Spirit Trial Pot 1",
+                            "^$CanReach|Adult Ganons Castle Spirit Trial Pot 1"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Spirit Trial Pot 2",
+                            "^$CanReach|Adult Ganons Castle Spirit Trial Pot 2"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crystal Switch Chest",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Spirit Trial Crystal Switch Chest",
+                            "^$CanReach|Adult Ganons Castle Spirit Trial Crystal Switch Chest"
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Invisible Chest",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Spirit Trial Invisible Chest",
+                            "^$CanReach|Adult Ganons Castle Spirit Trial Invisible Chest"
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 450,
+                        "y": 783,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Water Trial",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Water Trial Pot 1",
+                            "^$CanReach|Adult Ganons Castle Water Trial Pot 1"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Water Trial Pot 2",
+                            "^$CanReach|Adult Ganons Castle Water Trial Pot 2"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Left Chest",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Water Trial Left Chest",
+                            "^$CanReach|Adult Ganons Castle Water Trial Left Chest"
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Right Chest",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Water Trial Right Chest",
+                            "^$CanReach|Adult Ganons Castle Water Trial Right Chest"
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 895,
+                        "y": 574,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Forest Trial",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Forest Trial Pot 1",
+                            "^$CanReach|Adult Ganons Castle Forest Trial Pot 1"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Forest Trial Pot 2",
+                            "^$CanReach|Adult Ganons Castle Forest Trial Pot 2"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Chest",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Forest Trial Chest",
+                            "^$CanReach|Adult Ganons Castle Forest Trial Chest"
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 692,
+                        "y": 775,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Light Trial",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Boulder Pot",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Light Trial Boulder Pot",
+                            "^$CanReach|Adult Ganons Castle Light Trial Boulder Pot"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 1",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Light Trial Pot 1",
+                            "^$CanReach|Adult Ganons Castle Light Trial Pot 1"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Light Trial Pot 2",
+                            "^$CanReach|Adult Ganons Castle Light Trial Pot 2"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Left Chest 1",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Light Trial First Left Chest",
+                            "^$CanReach|Adult Ganons Castle Light Trial First Left Chest"
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Left Chest 2",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Light Trial Second Left Chest",
+                            "^$CanReach|Adult Ganons Castle Light Trial Second Left Chest"
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Left Chest 3",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Light Trial Third Left Chest",
+                            "^$CanReach|Adult Ganons Castle Light Trial Third Left Chest"
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Right Chest 1",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Light Trial First Right Chest",
+                            "^$CanReach|Adult Ganons Castle Light Trial First Right Chest"
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Right Chest 2",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Light Trial Second Right Chest",
+                            "^$CanReach|Adult Ganons Castle Light Trial Second Right Chest"
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Right Chest 3",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Light Trial Third Right Chest",
+                            "^$CanReach|Adult Ganons Castle Light Trial Third Right Chest"
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Invisible Enemies Chest",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Light Trial Invisible Enemies Chest",
+                            "^$CanReach|Adult Ganons Castle Light Trial Invisible Enemies Chest"
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lullaby Chest",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Light Trial Lullaby Chest",
+                            "^$CanReach|Adult Ganons Castle Light Trial Lullaby Chest"
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 365,
+                        "y": 574,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Deku Scrub",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Left",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Deku Scrub Left",
+                            "^$CanReach|Adult Ganons Castle Deku Scrub Left"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_scrubs"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Center Left",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Deku Scrub Center-Left",
+                            "^$CanReach|Adult Ganons Castle Deku Scrub Center-Left"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_scrubs"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Center Right",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Deku Scrub Center-Right",
+                            "^$CanReach|Adult Ganons Castle Deku Scrub Center-Right"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_scrubs"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Right",
+                        "access_rules": [
+                            "^$CanReach|Child Ganons Castle Deku Scrub Right",
+                            "^$CanReach|Adult Ganons Castle Deku Scrub Right"
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_scrubs"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 577,
+                        "y": 700,
+                        "size": 24
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "MQ Ganons Castle",
+        "chest_unopened_img": "/images/Items/close.png",
+        "chest_opened_img": "/images/Items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            " "
+        ],
+        "visibility_rules": [
+            "^$Visibility_helper|MQ_ganons_castle|false"
+        ],
+        "children": [
+            {
+                "name": "OGC",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Great Fairy Reward",
+                        "access_rules": [
+                            "^$CanReach|Child OGC Great Fairy Reward",
+                            "^$CanReach|Adult OGC Great Fairy Reward"
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "GS",
+                        "access_rules": [
+                            "^$CanReach|Child OGC GS",
+                            "^$CanReach|Adult OGC GS"
+                        ],
+                        "visibility_rules": [
+                            "$Show|tokensanity|2"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Castle",
+                        "x": 1354,
+                        "y": 919,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Water Trial First Room",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Recovery Heart",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_freestanding_items|1|==",
+                            "$Show|shuffle_freestanding_items|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Chest",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 822,
+                        "y": 571,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Water Trial",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 1082,
+                        "y": 574,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Light Trial Lullaby Chest",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Lullaby Chest",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 304,
+                        "y": 564,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Light Trial Rolling Stones",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Recovery Heart 1",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_freestanding_items|1|==",
+                            "$Show|shuffle_freestanding_items|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Recovery Heart 2",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_freestanding_items|1|==",
+                            "$Show|shuffle_freestanding_items|3"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 231,
+                        "y": 573,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Light Trial",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 48,
+                        "y": 574,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Forest Trial First Room",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Freestanding Key",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 712,
+                        "y": 804,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Forest Trial Second Room",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Eye Switch Chest",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Frozen Eye Switch Chest",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 767,
+                        "y": 901,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Forest Trial",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 831,
+                        "y": 1016,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Shadow Trial First Chest",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Bomb Flower Chest",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 647,
+                        "y": 356,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Shadow Trial Second Chest",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Eye Switch Chest",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 806,
+                        "y": 215,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Shadow Trial",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 872,
+                        "y": 55,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Fire Trial",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 300,
+                        "y": 146,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Spirit Trial Golden Gauntlets Room",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Chest",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Invisible Chest",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Sun Front Left Chest",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Sun Back Left Chest",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Sun Back Right Chest",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Golden Gauntlets Chest",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        // "visibility_rules": [
+                        //     "$Show|"
+                        // ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 420,
+                        "y": 836,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Spirit Trial",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_pots|1|==",
+                            "$Show|shuffle_pots|3"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 389,
+                        "y": 904,
+                        "size": 24
+                    }
+                ]
+            },
+            {
+                "name": "Deku Scrub",
+                "chest_unopened_img": "/images/Items/close.png",
+                "chest_opened_img": "/images/Items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    " "
+                ],
+                "sections": [
+                    {
+                        "name": "Left",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_scrubs"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Center Left",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_scrubs"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Center",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_scrubs"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Center Right",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_scrubs"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Right",
+                        "access_rules": [
+                            "^$CanReach|Child ",
+                            "^$CanReach|Adult "
+                        ],
+                        "visibility_rules": [
+                            "$Show|shuffle_scrubs"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Ganons Tower",
+                        "x": 575,
+                        "y": 691,
+                        "size": 24
+                    }
+                ]
+            }
+        ]
+    }
+]

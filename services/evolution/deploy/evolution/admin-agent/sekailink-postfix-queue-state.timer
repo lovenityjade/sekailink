@@ -1,0 +1,10 @@
+[Unit]
+Description=Run SekaiLink Postfix Queue Snapshot periodically
+
+[Timer]
+OnBootSec=30s
+OnUnitActiveSec=60s
+Unit=sekailink-postfix-queue-state.service
+
+[Install]
+WantedBy=timers.target

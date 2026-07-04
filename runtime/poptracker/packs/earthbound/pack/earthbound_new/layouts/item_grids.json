@@ -1,0 +1,253 @@
+{
+    "item_grid": {
+        "type": "array",
+        "orientation": "horizontal",
+        "content": [
+            {
+                "type": "itemgrid",
+                "h_alignment": "center",
+                "item_margin": "3,2",
+                "item_size": 50,
+                "rows": [
+                    ["shackkey", "cabinkey", "towerkey", "lockerkey", "badkeymachine"],
+                    ["pencileraser", "erasereraser", "yogurtdispenser", "engine", "zombiepaper"],
+                    ["pakofbubblegum", "kingbanana", "signedbanana", "tendakraut", "flyhoney"],
+                    ["wadofbills", "tinyruby", "diamond", "meteoritepiece", "hieroglyph"],
+                    ["franklinbadge", "hawkeye", "pignose", "carrotkey", "shynessbook"],
+                    ["policebadge", "letter", "insignificantitem", "permit", "lens"]
+                ]
+            }
+        ]
+    },
+    "teleport_grid": {
+        "type": "array",
+        "orientation": "horizontal",
+        "v_alignment": "center",
+        "content": [
+            {
+                "type": "itemgrid",
+                "h_alignment": "left",
+                "v_alignment": "left",
+                "item_size": 50,
+                "item_margin": "2,4",
+                "rows": [
+                    ["onettwarp", "twosonwarp", "happywarp", "threedwarp", "valleywarp"],
+                    ["desertwarp", "foursidewarp", "winterswarp", "summerswarp", "scarabawarp"],
+                    ["dalaamwarp", "darkwarp", "tendawarp", "underwarp", "magicwarp"]
+                ]
+            }
+        ]
+    },
+    "char_grid": {
+        "type": "array",
+        "orientation": "horizontal",
+        "margin": "45,0,0,0",
+        "content": [
+            {
+                "type": "itemgrid",
+                "h_alignment": "center",
+                "item_size": 50,
+                "item_margin": "0,0",
+                "rows": [
+                    ["ness", "paula", "jeff", "poo"]
+                ]
+            }
+        ]
+    },
+    "melody_grid": {
+        "type": "array",
+        "orientation": "horizontal",
+        "content": [
+            {
+                "type": "itemgrid",
+                "h_alignment": "left",
+                "item_size": "50",
+                "margin": "110,0,0,0",
+                "item_margin": "1,2",
+                "rows": [
+                    ["giantstep"]
+                ]
+            },
+            {
+                "type": "itemgrid",
+                "h_alignment": "left",
+                "item_size": "50",
+                "margin": "15,25,0,0",
+                "item_margin": "1,2",
+                "rows": [
+                    ["lilliputsteps"]
+                ]
+            },
+            {
+                "type": "itemgrid",
+                "h_alignment": "left",
+                "item_size": "50",
+                "margin": "-20,95,0,0",
+                "item_margin": "1,2",
+                "rows": [
+                    ["milkywell"]
+                ]
+            },
+            {
+                "type": "itemgrid",
+                "h_alignment": "left",
+                "item_size": "50",
+                "margin": "-85,170,0,0",
+                "item_margin": "1,2",
+                "rows": [
+                    ["rainycircle"]
+                ]
+            },
+            {
+                "type": "itemgrid",
+                "h_alignment": "left",
+                "item_size": "50",
+                "margin": "-117,200,0,0",
+                "item_margin": "1,2",
+                "rows": [
+                    ["magnethill"]
+                ]
+            },
+            {
+                "type": "itemgrid",
+                "h_alignment": "left",
+                "item_size": "50",
+                "margin": "-117,170,0,0",
+                "item_margin": "1,2",
+                "rows": [
+                    ["pinkcloud"]
+                ]
+            },
+            {
+                "type": "itemgrid",
+                "h_alignment": "left",
+                "item_size": "50",
+                "margin": "-85,95,0,0",
+                "item_margin": "1,2",
+                "rows": [
+                    ["luminehall"]
+                ]
+            },
+            {
+                "type": "itemgrid",
+                "h_alignment": "left",
+                "item_size": "50",
+                "margin": "-22,26,0,0",
+                "item_margin": "1,2",
+                "rows": [
+                    ["firespring"]
+                ]
+            },
+            {
+                "type": "itemgrid",
+                "h_alignment": "left",
+                "item_size": "50",
+                "margin": "20,100,0,0",
+                "item_margin": "1,2",
+                "rows": [
+                    ["earth"]
+                ]
+            }
+        ]
+    },
+    "settings": {
+        "type": "array",
+        "orientation": "horizontal",
+        "content": [
+            {
+                "type": "itemgrid",
+                "h_alignment": "center",
+                "item_size": 200,
+                "max_width": 1,
+                "item_margin": "0,0",
+                "rows": [
+                    ["normalstart"]
+                ]
+            }
+        ]
+    },
+
+    "settings2": {
+        "type": "array",
+        "orientation": "horizontal",
+        "content": [
+            {
+                "type": "itemgrid",
+                "h_alignment": "center",
+                "item_size": 200,
+                "item_margin": "0,0",
+                "rows": [
+                    ["monkeyhunt"]
+                ]
+            }
+        ]
+    },
+    "settings3": {
+        "type": "array",
+        "margin": "0, 0, 0, 0",
+        "orientation": "horizontal",
+        "content": [
+            {
+                "type": "itemgrid",
+                "h_alignment": "center",
+                "item_size": 200,
+                "item_margin": "0,0",
+                "rows": [
+                    ["freesancoff"]
+                ]
+            }
+        ]
+    },
+    "settings4": {
+        "type": "array",
+        "orientation": "horizontal",
+        "content": [
+            {
+                "type": "itemgrid",
+                "h_alignment": "center",
+                "item_size": 200,
+                "item_margin": "0,0",
+                "rows": [
+                    ["shopsoff"]
+                ]
+            }
+        ]
+    },
+    "extra_item_array":             {
+        "type": "itemgrid",
+        "h_alignment": "center",
+        "item_margin": "3,2",
+        "item_size": 50,
+        "rows": [
+            ["tinykey"],
+            ["lavapants"]
+        ]
+    },
+    "items_broadcast": {
+        "type": "array",
+        "orientation": "horizontal",
+        "content": [
+            {
+                "type": "itemgrid",
+                "h_alignment": "center",
+                "item_margin": "3,2",
+                "item_size": 40,
+                "rows": [
+                    ["shackkey", "cabinkey", "towerkey", "lockerkey", "badkeymachine","tinykey"],
+                    ["pencileraser", "erasereraser", "yogurtdispenser", "engine", "zombiepaper","lavapants"],
+                    ["pakofbubblegum", "kingbanana", "signedbanana", "tendakraut", "flyhoney"],
+                    ["wadofbills", "tinyruby", "diamond", "meteoritepiece", "hieroglyph"],
+                    ["franklinbadge", "hawkeye", "pignose", "carrotkey", "shynessbook"],
+                    ["policebadge", "letter", "insignificantitem", "permit", "lens"],
+                    ["onettwarp", "twosonwarp", "happywarp", "threedwarp", "valleywarp"],
+                    ["desertwarp", "foursidewarp", "winterswarp", "summerswarp", "scarabawarp"],
+                    ["dalaamwarp", "darkwarp", "tendawarp", "underwarp", "magicwarp"],
+                    ["Ness", "Paula", "Jeff", "Poo"],
+                    ["giantstep", "lilliputsteps", "milkywell", "rainycircle"],
+                    ["magnethill","pinkcloud","luminehall","firespring"],
+                    ["earth"]
+                ]
+            }
+        ]
+    }
+}

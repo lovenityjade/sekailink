@@ -1,0 +1,509 @@
+[
+  {
+    "name": "Bad Key Machine",
+    "type": "toggle",
+    "img": "images/items/badkeymachie.png",
+    "codes": "badkeymachine"
+  },
+  {
+    "name": "Key to the Cabin",
+    "type": "toggle",
+    "img": "images/items/cabinkey.png",
+    "codes": "cabinkey"
+  },
+  {
+    "name": "Carrot Key",
+    "type": "toggle",
+    "img": "images/items/carrotkey.png",
+    "codes": "carrotkey"
+  },
+  {
+    "name": "Contact Lens",
+    "type": "toggle",
+    "img": "images/items/Contactlens.png",
+    "codes": "lens"
+  },
+  {
+    "name": "Diamond",
+    "type": "toggle",
+    "img": "images/items/diamond.png",
+    "codes": "diamond"
+  },
+  {
+    "name": "Key to the Tower",
+    "type": "toggle",
+    "img": "images/items/DungeonmanKeyFlagPallete.png",
+    "codes": "towerkey"
+  },
+  {
+    "name": "Eraser Eraser",
+    "type": "toggle",
+    "img": "images/items/erasereraser.png",
+    "codes": "erasereraser"
+  },
+  {
+    "name": "Jar of Fly Honey",
+    "type": "toggle",
+    "img": "images/items/FlyHoney.png",
+    "codes": "flyhoney"
+  },
+  {
+    "name": "Franklin Badge",
+    "type": "toggle",
+    "img": "images/items/franklinbadge.png",
+    "codes": "franklinbadge"
+  },
+  {
+    "name": "Hieroglyph Copy",
+    "type": "toggle",
+    "img": "images/items/GlyphCopy.png",
+    "codes": "hieroglyph"
+  },
+  {
+    "name": "Hawk Eye",
+    "type": "toggle",
+    "img": "images/items/hawkeye.png",
+    "codes": "hawkeye"
+  },
+  {
+    "name": "Insignificant Item",
+    "type": "toggle",
+    "img": "images/items/InsignificantItem.png",
+    "codes": "insignificantitem"
+  },
+  {
+    "name": "King Banana",
+    "type": "toggle",
+    "img": "images/items/kingbanana.png",
+    "codes": "kingbanana"
+  },
+  {
+    "name": "Key to the Locker",
+    "type": "toggle",
+    "img": "images/items/lockerkey.png",
+    "codes": "lockerkey"
+  },
+  {
+    "name": "Meteorite Piece",
+    "type": "toggle",
+    "img": "images/items/meteoritepiece.png",
+    "codes": "meteoritepiece"
+  },
+  {
+    "name": "Mining Permit",
+    "type": "toggle",
+    "img": "images/items/miningpermit.png",
+    "codes": "permit"
+  },
+  {
+    "name": "Pak of Bubble Gum",
+    "type": "toggle",
+    "img": "images/items/pakofbubblegum.png",
+    "codes": "pakofbubblegum"
+  },
+  {
+    "name": "Pencil Eraser",
+    "type": "toggle",
+    "img": "images/items/PencilEraser.png",
+    "codes": "pencileraser"
+  },
+  {
+    "name": "Piggy Nose",
+    "type": "toggle",
+    "img": "images/items/pignose.png",
+    "codes": "pignose"
+  },
+  {
+    "name": "Police Badge",
+    "type": "toggle",
+    "img": "images/items/Police Badge.png",
+    "codes": "policebadge"
+  },
+  {
+    "name": "UFO Engine",
+    "type": "toggle",
+    "img": "images/items/SciFiNotAnApparatusFromLCnoPROOF.png",
+    "codes": "engine"
+  },
+  {
+    "name": "Key to the Shack",
+    "type": "toggle",
+    "img": "images/items/ShackKey.png",
+    "codes": "shackkey"
+  },
+  {
+    "name": "Shyness Book",
+    "type": "toggle",
+    "img": "images/items/ShyBook.png",
+    "codes": "shynessbook"
+  },
+  {
+    "name": "Signed Banana",
+    "type": "toggle",
+    "img": "images/items/Signedbanana.png",
+    "codes": "signedbanana"
+  },
+  {
+    "name": "Tendakraut",
+    "type": "toggle",
+    "img": "images/items/tendakraut.png",
+    "codes": "tendakraut"
+  },
+  {
+    "name": "Tiny Ruby",
+    "type": "toggle",
+    "img": "images/items/TinyRuby.png",
+    "codes": "tinyruby"
+  },
+  {
+    "name": "Letter for Tony",
+    "type": "toggle",
+    "img": "images/items/TonyLetter.png",
+    "codes": "letter"
+  },
+  {
+    "name": "Wad of Bills",
+    "type": "toggle",
+    "img": "images/items/wad of bills.png",
+    "codes": "wadofbills"
+  },
+  {
+    "name": "Yogurt Dispenser",
+    "type": "toggle",
+    "img": "images/items/yogurtdispenser.png",
+    "codes": "yogurtdispenser"
+  },
+  {
+    "name": "Zombie Paper",
+    "type": "toggle",
+    "img": "images/items/zombiepaper.png",
+    "codes": "zombiepaper"
+  },
+
+  {
+    "name": "Tiny Key",
+    "type": "toggle",
+    "img": "images/items/TinyKey.png",
+    "codes": "tinykey"
+  },
+
+  {
+    "name": "Tenda Lavapants",
+    "type": "toggle",
+    "img": "images/items/LavaPants.png",
+    "codes": "lavapants"
+  },
+
+  {
+    "name": "",
+    "type": "toggle",
+    "codes": "codegoblin"
+  },
+
+  {
+    "name": "Onett Teleport",
+    "type": "toggle",
+    "img": "images/items/onett.png",
+    "codes": "onettwarp"
+  },
+  {
+    "name": "Twoson Teleport",
+    "type": "toggle",
+    "img": "images/items/twoson.png",
+    "codes": "twosonwarp"
+  },
+  {
+    "name": "Happy-Happy Village Teleport",
+    "type": "toggle",
+    "img": "images/items/happyhappy.png",
+    "codes": "happywarp"
+  },
+  {
+    "name": "Threed Teleport",
+    "type": "toggle",
+    "img": "images/items/threed.png",
+    "codes": "threedwarp"
+  },
+  {
+    "name": "Saturn Valley Teleport",
+    "type": "toggle",
+    "img": "images/items/saturnvalley.png",
+    "codes": "valleywarp"
+  },
+  {
+    "name": "Dusty Dunes Teleport",
+    "type": "toggle",
+    "img": "images/items/dustydunes.png",
+    "codes": "desertwarp"
+  },
+  {
+    "name": "Fourside Teleport",
+    "type": "toggle",
+    "img": "images/items/fourside.png",
+    "codes": "foursidewarp"
+  },
+  {
+    "name": "Winters Teleport",
+    "type": "toggle",
+    "img": "images/items/winters.png",
+    "codes": "winterswarp"
+  },
+  {
+    "name": "Summers Teleport",
+    "type": "toggle",
+    "img": "images/items/summers.png",
+    "codes": "summerswarp"
+  },
+  {
+    "name": "Scaraba Teleport",
+    "type": "toggle",
+    "img": "images/items/scaraba.png",
+    "codes": "scarabawarp"
+  },
+  {
+    "name": "Dalaam Teleport",
+    "type": "toggle",
+    "img": "images/items/dalaam.png",
+    "codes": "dalaamwarp"
+  },
+  {
+    "name": "Deep Darkness Teleport",
+    "type": "toggle",
+    "img": "images/items/deepdarkness.png",
+    "codes": "darkwarp"
+  },
+  {
+    "name": "Tenda Village Teleport",
+    "type": "toggle",
+    "img": "images/items/tendavillage.png",
+    "codes": "tendawarp"
+  },
+  {
+    "name": "Lost Underworld Teleport",
+    "type": "toggle",
+    "img": "images/items/underworld.png",
+    "codes": "underwarp"
+  },
+  {
+    "name": "Magicant Teleport",
+    "type": "toggle",
+    "img": "images/items/magicant.png",
+    "codes": "magicwarp"
+  },
+  {
+    "name": "Ness",
+    "type": "toggle",
+    "img": "images/items/ness.png",
+    "codes": "ness"
+  },
+  {
+    "name": "Paula",
+    "type": "toggle",
+    "img": "images/items/paula.png",
+    "codes": "paula"
+  },
+  {
+    "name": "Jeff",
+    "type": "toggle",
+    "img": "images/items/jeff.png",
+    "codes": "jeff"
+  },
+  {
+    "name": "Poo",
+    "type": "toggle",
+    "img": "images/items/poo.png",
+    "codes": "poo"
+  },
+  {
+    "name": "Giant Step",
+    "type": "toggle",
+    "img": "images/items/giantstep.png",
+    "codes": "giantstep"
+  },
+  {
+    "name": "Lilliput Steps",
+    "type": "toggle",
+    "img": "images/items/lilliputsteps.png",
+    "codes": "lilliputsteps"
+  },
+  {
+    "name": "Milky Well",
+    "type": "toggle",
+    "img": "images/items/milkywell.png",
+    "codes": "milkywell"
+  },
+  {
+    "name": "Rainy Circle",
+    "type": "toggle",
+    "img": "images/items/rainycircle.png",
+    "codes": "rainycircle"
+  },
+  {
+    "name": "Magnet Hill",
+    "type": "toggle",
+    "img": "images/items/magnethill.png",
+    "codes": "magnethill"
+  },
+  {
+    "name": "Pink Cloud",
+    "type": "toggle",
+    "img": "images/items/pinkcloud.png",
+    "codes": "pinkcloud"
+  },
+  {
+    "name": "Lumine Hall",
+    "type": "toggle",
+    "img": "images/items/luminehall.png",
+    "codes": "luminehall"
+  },
+  {
+    "name": "Fire Spring",
+    "type": "toggle",
+    "img": "images/items/firespring.png",
+    "codes": "firespring"
+  },
+  {
+    "name": "Power of the Earth",
+    "type": "toggle",
+    "img": "images/items/earth.png",
+    "codes": "earth"
+  },
+  {
+    "initial_stage_idx": 0,
+    "allow_disabled": "false",
+    "inherit_codes": "false",
+    "type": "progressive",
+    "stages": [
+      {
+        "img": "images/system/nesshouse.png",
+        "inherit_codes": "false",
+        "codes": "normalstart"
+      },
+      {
+        "img": "images/system/onett.png",
+        "inherit_codes": "false",
+        "codes": "onettstart"
+      },
+	  {
+        "img": "images/system/twoson.png",
+        "inherit_codes": "false",
+        "codes": "twosonstart"
+      },
+      {
+        "img": "images/system/happyhappy.png",
+        "inherit_codes": "false",
+        "codes": "happyhappystart"
+      },
+      {
+        "img": "images/system/threed.png",
+        "inherit_codes": "false",
+        "codes": "threedstart"
+      },
+      {
+        "img": "images/system/saturnvalley.png",
+        "inherit_codes": "false",
+        "codes": "saturnvalleystart"
+      },
+      {
+        "img": "images/system/fourside.png",
+        "inherit_codes": "false",
+        "codes": "foursidestart"
+      },
+      {
+        "img": "images/system/winters.png",
+        "inherit_codes": "false",
+        "codes": "wintersstart"
+      },
+      {
+        "img": "images/system/summers.png",
+        "inherit_codes": "false",
+        "codes": "summersstart"
+      },
+      {
+        "img": "images/system/dalaam.png",
+        "inherit_codes": "false",
+        "codes": "dalaamstart"
+      },
+      {
+        "img": "images/system/scaraba.png",
+        "inherit_codes": "false",
+        "codes": "scarabastart"
+      },
+      {
+        "img": "images/system/darkness.png",
+        "inherit_codes": "false",
+        "codes": "deepdarknessstart"
+      },
+      {
+        "img": "images/system/tendavillage.png",
+        "inherit_codes": "false",
+        "codes": "tendavillagestart"
+      },
+      {
+        "img": "images/system/underworld.png",
+        "inherit_codes": "false",
+        "codes": "understart"
+      },
+      {
+        "img": "images/system/magicant.png",
+        "inherit_codes": "false",
+        "codes": "magicantstart"
+      }
+    ]
+  },
+  {
+    "initial_stage_idx": 0,
+    "allow_disabled": "false",
+    "inherit_codes": "false",
+    "type": "progressive",
+    "stages": [
+      {
+        "img": "images/system/monkeyhunt.png",
+        "inherit_codes": "false",
+        "codes": "monkeyhunt"
+      },
+      {
+        "img": "images/system/monkeyfree.png",
+        "inherit_codes": "false",
+        "codes": "monkeyfree"
+      }
+    ]
+  },
+  {
+    "initial_stage_idx": 0,
+    "allow_disabled": "false",
+    "inherit_codes": "false",
+    "type": "progressive",
+    "stages": [
+      {
+        "img": "images/system/off.png",
+        "inherit_codes": "false",
+        "codes": "freesancoff"
+      },
+      {
+        "img": "images/system/on.png",
+        "inherit_codes": "false",
+        "codes": "freesancon"
+      }
+    ]
+  },
+  {
+    "initial_stage_idx": 0,
+    "allow_disabled": "false",
+    "inherit_codes": "false",
+    "type": "progressive",
+    "stages": [
+      {
+        "img": "images/system/off.png",
+        "inherit_codes": "false",
+        "codes": "shopsoff"
+      },
+      {
+        "img": "images/system/on.png",
+        "inherit_codes": "false",
+        "codes": "shopson"
+      }
+    ]
+  }
+
+]

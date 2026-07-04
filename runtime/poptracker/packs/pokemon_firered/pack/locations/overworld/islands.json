@@ -1,0 +1,4311 @@
+[
+  {
+    "name": "Islands",
+    "chest_unopened_img": "images/locations/pokeball.png",
+    "chest_opened_img": "images/locations/pokeball_bw.png",
+    "children": [
+      {
+        "name": "One Island Town",
+        "access_rules": [
+          "@One Island Town Access"
+        ],
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Unlock Fly Destination",
+            "chest_unopened_img": "images/locations/fly_destination_unlock.png",
+            "chest_opened_img": "images/locations/fly_destination_unlock_bw.png",
+            "visibility_rules": [
+              "fly_unlocks_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "PC Item",
+            "chest_unopened_img": "images/locations/pc_potion.png",
+            "chest_opened_img": "images/locations/pc_potion_bw.png",
+            "visibility_rules": [
+              "start_town_one_island,item_locations_on"
+            ]
+          },
+          {
+            "name": "Delivery for Lostelle's Dad",
+            "chest_unopened_img": "images/locations/bill_meteorite.png",
+            "chest_opened_img": "images/locations/bill_meteorite_bw.png",
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Meet Celio",
+            "chest_unopened_img": "images/locations/celio_tri_pass.png",
+            "chest_opened_img": "images/locations/celio_tri_pass_bw.png",
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Celio Gift (Deliver Ruby)",
+            "chest_unopened_img": "images/locations/celio_rainbow_pass.png",
+            "chest_opened_img": "images/locations/celio_rainbow_pass_bw.png",
+            "access_rules": [
+              "deliver_meteorite,ruby"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Restore Pokémon Network Machine (Event)",
+            "hosted_item": "restore_pokemon_network_machine_hosted",
+            "access_rules": [
+              "deliver_meteorite,ruby,free_captured_pokemon,sapphire"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Celio Gift (Deliver Sapphire)",
+            "chest_unopened_img": "images/locations/celio_rainbow_pass.png",
+            "chest_opened_img": "images/locations/celio_rainbow_pass_bw.png",
+            "access_rules": [
+              "deliver_meteorite,ruby,free_captured_pokemon,sapphire"
+            ],
+            "visibility_rules": [
+              "island_passes_split,item_locations_on",
+              "island_passes_split_prog,item_locations_on"
+            ]
+          },
+          {
+            "name": "Celio Info 1",
+            "chest_unopened_img": "images/locations/celio_info.png",
+            "chest_opened_img": "images/locations/celio_info_bw.png",
+            "access_rules": [
+              "$fame,restore_pokemon_network_machine"
+            ],
+            "visibility_rules": [
+              "famesanity_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Celio Info 2",
+            "chest_unopened_img": "images/locations/celio_info.png",
+            "chest_opened_img": "images/locations/celio_info_bw.png",
+            "access_rules": [
+              "$fame,restore_pokemon_network_machine"
+            ],
+            "visibility_rules": [
+              "famesanity_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Celio Info 3",
+            "chest_unopened_img": "images/locations/celio_info.png",
+            "chest_opened_img": "images/locations/celio_info_bw.png",
+            "access_rules": [
+              "$fame,restore_pokemon_network_machine"
+            ],
+            "visibility_rules": [
+              "famesanity_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Surf Encounters",
+            "chest_unopened_img": "images/locations/surfing.png",
+            "chest_opened_img": "images/locations/surfing_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "$surf"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Old Rod Encounters",
+            "chest_unopened_img": "images/locations/old_rod.png",
+            "chest_opened_img": "images/locations/old_rod_bw.png",
+            "access_rules": [
+              "old_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Good Rod Encounters",
+            "chest_unopened_img": "images/locations/good_rod.png",
+            "chest_opened_img": "images/locations/good_rod_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "good_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Super Rod Encounters",
+            "chest_unopened_img": "images/locations/super_rod.png",
+            "chest_opened_img": "images/locations/super_rod_bw.png",
+            "item_count": 5,
+            "clear_as_group": false,
+            "access_rules": [
+              "super_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 20,
+            "y": 228
+          },
+          {
+            "map": "sevii_123",
+            "x": 20,
+            "y": 84
+          }
+        ]
+      },
+      {
+        "name": "Treasure Beach",
+        "access_rules": [
+          "@One Island Town Access,$surf"
+        ],
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Swimmer Amara Reward",
+            "chest_unopened_img": "images/locations/swimmer_female_water.png",
+            "chest_opened_img": "images/locations/swimmer_female_water_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,swimmer_amara,item_locations_on"
+            ]
+          },
+          {
+            "name": "Beach West Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Beach East Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Tall Grass Northwest Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Tall Grass Northeast Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Tall Grass Center Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Tall Grass East Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Tall Grass Southwest Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Tall Grass Southeast Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Land Encounters",
+            "chest_unopened_img": "images/locations/grass.png",
+            "chest_opened_img": "images/locations/grass_bw.png",
+            "item_count": 6,
+            "clear_as_group": false,
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Surf Encounters",
+            "chest_unopened_img": "images/locations/surfing.png",
+            "chest_opened_img": "images/locations/surfing_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "$surf"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Old Rod Encounters",
+            "chest_unopened_img": "images/locations/old_rod.png",
+            "chest_opened_img": "images/locations/old_rod_bw.png",
+            "access_rules": [
+              "old_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Good Rod Encounters",
+            "chest_unopened_img": "images/locations/good_rod.png",
+            "chest_opened_img": "images/locations/good_rod_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "good_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Super Rod Encounters",
+            "chest_unopened_img": "images/locations/super_rod.png",
+            "chest_opened_img": "images/locations/super_rod_bw.png",
+            "item_count": 4,
+            "clear_as_group": false,
+            "access_rules": [
+              "super_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 20,
+            "y": 244,
+            "size": 4
+          },
+          {
+            "map": "sevii_123",
+            "x": 20,
+            "y": 100,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Kindle Road",
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Swimmer Abigail Reward",
+            "chest_unopened_img": "images/locations/swimmer_female_land.png",
+            "chest_opened_img": "images/locations/swimmer_female_land_bw.png",
+            "access_rules": [
+              "@One Island Town Access,$surf",
+              "@Kindle Road Center Access,$surf"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,swimmer_abigail,item_locations_on"
+            ]
+          },
+          {
+            "name": "Picnicker Claire Reward",
+            "chest_unopened_img": "images/locations/picnicker.png",
+            "chest_opened_img": "images/locations/picnicker_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,picnicker_claire,item_locations_on"
+            ]
+          },
+          {
+            "name": "Camper Bryce Reward",
+            "chest_unopened_img": "images/locations/camper.png",
+            "chest_opened_img": "images/locations/camper_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,camper_bryce,item_locations_on"
+            ]
+          },
+          {
+            "name": "Crush Girl Tanya Reward",
+            "chest_unopened_img": "images/locations/battle_girl.png",
+            "chest_opened_img": "images/locations/battle_girl_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,crush_girl_tanya,item_locations_on"
+            ]
+          },
+          {
+            "name": "Crush Girl Tanya Rematch Reward (6 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/battle_girl.png",
+            "chest_opened_img": "images/locations/battle_girl_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access,$trainer_rematch_4"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,crush_girl_tanya,item_locations_on"
+            ]
+          },
+          {
+            "name": "Crush Girl Tanya Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/battle_girl.png",
+            "chest_opened_img": "images/locations/battle_girl_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access,$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,crush_girl_tanya,item_locations_on"
+            ]
+          },
+          {
+            "name": "Plateau Item",
+            "access_rules": [
+              "@Kindle Road Center Access,$rock_smash"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Isolated Beach Item",
+            "access_rules": [
+              "@One Island Town Access,$surf",
+              "@Kindle Road Center Access,$surf"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Swimmer Garrett Reward",
+            "chest_unopened_img": "images/locations/swimmer_male_land.png",
+            "chest_opened_img": "images/locations/swimmer_male_land_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,swimmer_garrett,item_locations_on"
+            ]
+          },
+          {
+            "name": "Item Behind Smashable Rock",
+            "access_rules": [
+              "@Kindle Road Center Access,$rock_smash"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Crush Kin Mik & Kia Reward",
+            "chest_unopened_img": "images/locations/crush_kin.png",
+            "chest_opened_img": "images/locations/crush_kin_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access,$double_battle"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,crush_kin_mik_and_kia,item_locations_on"
+            ]
+          },
+          {
+            "name": "Crush Kin Mik & Kia Rematch Reward (6 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/crush_kin.png",
+            "chest_opened_img": "images/locations/crush_kin_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access,$trainer_rematch_4,$double_battle"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,crush_kin_mik_and_kia,item_locations_on"
+            ]
+          },
+          {
+            "name": "Crush Kin Mik & Kia Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/crush_kin.png",
+            "chest_opened_img": "images/locations/crush_kin_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access,$trainer_rematch_5,$double_battle"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,crush_kin_mik_and_kia,item_locations_on"
+            ]
+          },
+          {
+            "name": "Black Belt Hugh Reward",
+            "chest_unopened_img": "images/locations/black_belt.png",
+            "chest_opened_img": "images/locations/black_belt_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,black_belt_hugh,item_locations_on"
+            ]
+          },
+          {
+            "name": "Black Belt Hugh Rematch Reward (6 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/black_belt.png",
+            "chest_opened_img": "images/locations/black_belt_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access,$trainer_rematch_4"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,black_belt_hugh,item_locations_on"
+            ]
+          },
+          {
+            "name": "Black Belt Hugh Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/black_belt.png",
+            "chest_opened_img": "images/locations/black_belt_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access,$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,black_belt_hugh,item_locations_on"
+            ]
+          },
+          {
+            "name": "Black Belt Shea Reward",
+            "chest_unopened_img": "images/locations/black_belt.png",
+            "chest_opened_img": "images/locations/black_belt_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,black_belt_shea,item_locations_on"
+            ]
+          },
+          {
+            "name": "Black Belt Shea Rematch Reward (6 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/black_belt.png",
+            "chest_opened_img": "images/locations/black_belt_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access,$trainer_rematch_4"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,black_belt_shea,item_locations_on"
+            ]
+          },
+          {
+            "name": "Black Belt Shea Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/black_belt.png",
+            "chest_opened_img": "images/locations/black_belt_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access,$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,black_belt_shea,item_locations_on"
+            ]
+          },
+          {
+            "name": "Crush Girl Sharon Reward",
+            "chest_unopened_img": "images/locations/battle_girl.png",
+            "chest_opened_img": "images/locations/battle_girl_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,crush_girl_sharon,item_locations_on"
+            ]
+          },
+          {
+            "name": "Crush Girl Sharon Rematch Reward (6 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/battle_girl.png",
+            "chest_opened_img": "images/locations/battle_girl_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access,$trainer_rematch_4"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,crush_girl_sharon,item_locations_on"
+            ]
+          },
+          {
+            "name": "Crush Girl Sharon Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/battle_girl.png",
+            "chest_opened_img": "images/locations/battle_girl_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access,$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,crush_girl_sharon,item_locations_on"
+            ]
+          },
+          {
+            "name": "Swimmer Finn Reward",
+            "chest_unopened_img": "images/locations/swimmer_male_water.png",
+            "chest_opened_img": "images/locations/swimmer_male_water_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access,$surf",
+              "@Kindle Road North Access,$surf"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,swimmer_finn,item_locations_on"
+            ]
+          },
+          {
+            "name": "Swimmer Finn Rematch Reward (6 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/swimmer_male_water.png",
+            "chest_opened_img": "images/locations/swimmer_male_water_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access,$surf,$trainer_rematch_4",
+              "@Kindle Road North Access,$surf,$trainer_rematch_4"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,swimmer_finn,item_locations_on"
+            ]
+          },
+          {
+            "name": "Swimmer Maria Reward",
+            "chest_unopened_img": "images/locations/swimmer_female_water.png",
+            "chest_opened_img": "images/locations/swimmer_female_water_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access,$surf",
+              "@Kindle Road North Access,$surf"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,swimmer_maria,item_locations_on"
+            ]
+          },
+          {
+            "name": "Fisherman Tommy Reward",
+            "chest_unopened_img": "images/locations/fisherman.png",
+            "chest_opened_img": "images/locations/fisherman_bw.png",
+            "access_rules": [
+              "@Kindle Road Center Access,$surf",
+              "@Kindle Road North Access,$surf"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,fisherman_tommy,item_locations_on"
+            ]
+          },
+          {
+            "name": "Mt. Ember Entrance",
+            "hosted_item": "mt_ember_hosted",
+            "access_rules": [
+              "@Kindle Road North Access"
+            ],
+            "visibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          },
+          {
+            "name": "Land Encounters",
+            "chest_unopened_img": "images/locations/grass.png",
+            "chest_opened_img": "images/locations/grass_bw.png",
+            "item_count": 8,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Kindle Road Center Access"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Surf Encounters",
+            "chest_unopened_img": "images/locations/surfing.png",
+            "chest_opened_img": "images/locations/surfing_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "@One Island Town Access,$surf",
+              "@Kindle Road Center Access,$surf",
+              "@Kindle Road North Access,$surf"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Old Rod Encounters",
+            "chest_unopened_img": "images/locations/old_rod.png",
+            "chest_opened_img": "images/locations/old_rod_bw.png",
+            "access_rules": [
+              "@One Island Town Access,old_rod",
+              "@Kindle Road Center Access,old_rod",
+              "@Kindle Road North Access,old_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Good Rod Encounters",
+            "chest_unopened_img": "images/locations/good_rod.png",
+            "chest_opened_img": "images/locations/good_rod_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "@One Island Town Access,good_rod",
+              "@Kindle Road Center Access,good_rod",
+              "@Kindle Road North Access,good_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Super Rod Encounters",
+            "chest_unopened_img": "images/locations/super_rod.png",
+            "chest_opened_img": "images/locations/super_rod_bw.png",
+            "item_count": 4,
+            "clear_as_group": false,
+            "access_rules": [
+              "@One Island Town Access,super_rod",
+              "@Kindle Road Center Access,super_rod",
+              "@Kindle Road North Access,super_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 28,
+            "y": 216,
+            "size": 4
+          },
+          {
+            "map": "sevii_123",
+            "x": 28,
+            "y": 72,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Ember Spa",
+        "access_rules": [
+          "@Kindle Road Center Access"
+        ],
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Rock Smash Man Gift",
+            "chest_unopened_img": "images/locations/old_man_fighting_tm.png",
+            "chest_opened_img": "images/locations/old_man_fighting_tm_bw.png",
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Black Belt Info",
+            "chest_unopened_img": "images/locations/black_belt_info.png",
+            "chest_opened_img": "images/locations/black_belt_info_bw.png",
+            "access_rules": [
+              "$fame,$post_game_fame"
+            ],
+            "visibility_rules": [
+              "famesanity_on,$post_goal_gossipers_visible,item_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 28,
+            "y": 208,
+            "size": 4
+          },
+          {
+            "map": "sevii_123",
+            "x": 28,
+            "y": 64,
+            "size": 4
+          },
+          {
+            "map": "kindle_road_center_top",
+            "x": 248,
+            "y": 456
+          }
+        ]
+      },
+      {
+        "name": "Two Island Town",
+        "access_rules": [
+          "@Two Island Town Access"
+        ],
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Unlock Fly Destination",
+            "chest_unopened_img": "images/locations/fly_destination_unlock.png",
+            "chest_opened_img": "images/locations/fly_destination_unlock_bw.png",
+            "visibility_rules": [
+              "fly_unlocks_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "PC Item",
+            "chest_unopened_img": "images/locations/pc_potion.png",
+            "chest_opened_img": "images/locations/pc_potion_bw.png",
+            "visibility_rules": [
+              "start_town_two_island,item_locations_on"
+            ]
+          },
+          {
+            "name": "Item Behind Cuttable Tree",
+            "access_rules": [
+              "$cut"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Buy Fresh Water (Event)",
+            "hosted_item": "fresh_water_hosted",
+            "visibility_rules": [
+              "shopsanity_off,item_locations_on"
+            ]
+          },
+          {
+            "name": "Buy Soda Pop (Event)",
+            "hosted_item": "soda_pop_hosted",
+            "access_rules": [
+              "rescue_lostelle"
+            ],
+            "visibility_rules": [
+              "shopsanity_off,item_locations_on"
+            ]
+          },
+          {
+            "name": "Buy Lemonade (Event)",
+            "hosted_item": "lemonade_hosted",
+            "access_rules": [
+              "rescue_lostelle,defeat_champion"
+            ],
+            "visibility_rules": [
+              "shopsanity_off,item_locations_on"
+            ]
+          },
+          {
+            "name": "Market Stall Initial Items",
+            "chest_unopened_img": "images/locations/clerk.png",
+            "chest_opened_img": "images/locations/clerk_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "visibility_rules": [
+              "shopsanity_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Market Stall First Expansion Items",
+            "chest_unopened_img": "images/locations/clerk.png",
+            "chest_opened_img": "images/locations/clerk_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "^$two_island_stall|1"
+            ],
+            "visibility_rules": [
+              "shopsanity_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Market Stall Second Expansion Items",
+            "chest_unopened_img": "images/locations/clerk.png",
+            "chest_opened_img": "images/locations/clerk_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "^$two_island_stall|2"
+            ],
+            "visibility_rules": [
+              "shopsanity_on,$post_goal_visible,item_locations_on"
+            ]
+          },
+          {
+            "name": "Market Stall Third Expansion Items",
+            "chest_unopened_img": "images/locations/clerk.png",
+            "chest_opened_img": "images/locations/clerk_bw.png",
+            "item_count": 3,
+            "clear_as_group": false,
+            "access_rules": [
+              "^$two_island_stall|3"
+            ],
+            "visibility_rules": [
+              "shopsanity_on,$post_goal_visible,item_locations_on"
+            ]
+          },
+          {
+            "name": "Beauty Info",
+            "chest_unopened_img": "images/locations/beauty_info.png",
+            "chest_opened_img": "images/locations/beauty_info_bw.png",
+            "access_rules": [
+              "rescue_lostelle,defeat_champion,$fame"
+            ],
+            "visibility_rules": [
+              "famesanity_on,$post_goal_visible,item_locations_on"
+            ]
+          },
+          {
+            "name": "Deliver Meteorite (Event)",
+            "hosted_item": "deliver_meteorite_hosted",
+            "access_rules": [
+              "rescue_lostelle,meteorite"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Lostelle's Dad Gift",
+            "chest_unopened_img": "images/locations/balding_man_moon_stone.png",
+            "chest_opened_img": "images/locations/balding_man_moon_stone_bw.png",
+            "access_rules": [
+              "rescue_lostelle,meteorite"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 84,
+            "y": 236
+          },
+          {
+            "map": "sevii_123",
+            "x": 84,
+            "y": 92
+          }
+        ]
+      },
+      {
+        "name": "Cape Brink",
+        "access_rules": [
+          "@Two Island Town Access"
+        ],
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Hidden Item Across Pond",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "$surf,itemfinder"
+            ],
+            "visibility_rules": [
+              "hidden_nonrecurring,item_locations_on"
+            ]
+          },
+          {
+            "name": "Hidden Item Behind House",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_nonrecurring,item_locations_on"
+            ]
+          },
+          {
+            "name": "Land Encounters",
+            "chest_unopened_img": "images/locations/grass.png",
+            "chest_opened_img": "images/locations/grass_bw.png",
+            "item_count": 8,
+            "clear_as_group": false,
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Surf Encounters",
+            "chest_unopened_img": "images/locations/surfing.png",
+            "chest_opened_img": "images/locations/surfing_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "$surf"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Old Rod Encounters",
+            "chest_unopened_img": "images/locations/old_rod.png",
+            "chest_opened_img": "images/locations/old_rod_bw.png",
+            "access_rules": [
+              "old_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Good Rod Encounters",
+            "chest_unopened_img": "images/locations/good_rod.png",
+            "chest_opened_img": "images/locations/good_rod_bw.png",
+            "item_count": 3,
+            "clear_as_group": false,
+            "access_rules": [
+              "good_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Super Rod Encounters",
+            "chest_unopened_img": "images/locations/super_rod.png",
+            "chest_opened_img": "images/locations/super_rod_bw.png",
+            "item_count": 4,
+            "clear_as_group": false,
+            "access_rules": [
+              "super_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 84,
+            "y": 224,
+            "size": 4
+          },
+          {
+            "map": "sevii_123",
+            "x": 84,
+            "y": 80,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Three Isle Port",
+        "access_rules": [
+          "@Three Island Town South Access"
+        ],
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Land Encounters",
+            "chest_unopened_img": "images/locations/grass.png",
+            "chest_opened_img": "images/locations/grass_bw.png",
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 156,
+            "y": 268,
+            "size": 4
+          },
+          {
+            "map": "sevii_123",
+            "x": 156,
+            "y": 124,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Three Isle Path",
+        "access_rules": [
+          "@Three Island Town South Access"
+        ],
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Rock Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_nonrecurring,item_locations_on"
+            ]
+          },
+          {
+            "name": "Prospector Gift",
+            "chest_unopened_img": "images/locations/fat_man_nugget.png",
+            "chest_opened_img": "images/locations/fat_man_nugget_bw.png",
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 164,
+            "y": 268,
+            "size": 4
+          },
+          {
+            "map": "sevii_123",
+            "x": 164,
+            "y": 124,
+            "size": 4
+          },
+          {
+            "map": "three_isle_port",
+            "x": 264,
+            "y": 72
+          },
+          {
+            "map": "three_isle_port",
+            "x": 616,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Three Island Town",
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Unlock Fly Destination",
+            "chest_unopened_img": "images/locations/fly_destination_unlock.png",
+            "chest_opened_img": "images/locations/fly_destination_unlock_bw.png",
+            "access_rules": [
+              "@Three Island Town South Access",
+              "@Three Island Town North Access"
+            ],
+            "visibility_rules": [
+              "fly_unlocks_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "PC Item",
+            "chest_unopened_img": "images/locations/pc_potion.png",
+            "chest_opened_img": "images/locations/pc_potion_bw.png",
+            "access_rules": [
+              "@Three Island Town South Access"
+            ],
+            "visibility_rules": [
+              "start_town_three_island,item_locations_on"
+            ]
+          },
+          {
+            "name": "Lostelle Gift",
+            "chest_unopened_img": "images/locations/lostelle_tri_pass.png",
+            "chest_opened_img": "images/locations/lostelle_tri_pass_bw.png",
+            "access_rules": [
+              "@Three Island Town South Access,deliver_meteorite"
+            ],
+            "visibility_rules": [
+              "island_passes_split,item_locations_on",
+              "island_passes_split_prog,item_locations_on"
+            ]
+          },
+          {
+            "name": "Biker Goon 1 Reward",
+            "chest_unopened_img": "images/locations/biker.png",
+            "chest_opened_img": "images/locations/biker_bw.png",
+            "access_rules": [
+              "@Three Island Town South Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,biker_goon_1,item_locations_on"
+            ]
+          },
+          {
+            "name": "Biker Goon 2 Reward",
+            "chest_unopened_img": "images/locations/biker.png",
+            "chest_opened_img": "images/locations/biker_bw.png",
+            "access_rules": [
+              "@Three Island Town South Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,biker_goon_2,item_locations_on"
+            ]
+          },
+          {
+            "name": "Biker Goon 3 Reward",
+            "chest_unopened_img": "images/locations/biker.png",
+            "chest_opened_img": "images/locations/biker_bw.png",
+            "access_rules": [
+              "@Three Island Town South Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,biker_goon_3,item_locations_on"
+            ]
+          },
+          {
+            "name": "Cue Ball Paxton Reward",
+            "chest_unopened_img": "images/locations/biker.png",
+            "chest_opened_img": "images/locations/biker_bw.png",
+            "access_rules": [
+              "@Three Island Town South Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,cue_ball_paxton,item_locations_on"
+            ]
+          },
+          {
+            "name": "Anti-Biker Gift",
+            "chest_unopened_img": "images/locations/man_full_restore.png",
+            "chest_opened_img": "images/locations/man_full_restore_bw.png",
+            "access_rules": [
+              "@Three Island Town South Access"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Shop Items",
+            "chest_unopened_img": "images/locations/clerk.png",
+            "chest_opened_img": "images/locations/clerk_bw.png",
+            "item_count": 6,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Three Island Town North Access"
+            ],
+            "visibility_rules": [
+              "shopsanity_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Sabrina Fan Info",
+            "chest_unopened_img": "images/locations/man_info.png",
+            "chest_opened_img": "images/locations/man_info_bw.png",
+            "access_rules": [
+              "@Three Island Town North Access,$fame"
+            ],
+            "visibility_rules": [
+              "famesanity_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Item Behind East Fence",
+            "access_rules": [
+              "@Three Island Town North Access,$cut"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Hidden Item Behind West Fence",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Three Island Town North Access,$cut,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_nonrecurring,item_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 156,
+            "y": 260
+          },
+          {
+            "map": "sevii_123",
+            "x": 156,
+            "y": 116
+          }
+        ]
+      },
+      {
+        "name": "Bond Bridge",
+        "access_rules": [
+          "@Three Island Town North Access"
+        ],
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Twins Joy & Meg Reward",
+            "chest_unopened_img": "images/locations/twins.png",
+            "chest_opened_img": "images/locations/twins_bw.png",
+            "access_rules": [
+              "$double_battle"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,twins_joy_and_meg,item_locations_on"
+            ]
+          },
+          {
+            "name": "Twins Joy & Meg Rematch Reward (6 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/twins.png",
+            "chest_opened_img": "images/locations/twins_bw.png",
+            "access_rules": [
+              "$trainer_rematch_4,$double_battle"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,twins_joy_and_meg,item_locations_on"
+            ]
+          },
+          {
+            "name": "Rock Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_nonrecurring,item_locations_on"
+            ]
+          },
+          {
+            "name": "Aroma Lady Violet Reward",
+            "chest_unopened_img": "images/locations/woman_2.png",
+            "chest_opened_img": "images/locations/woman_2_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,aroma_lady_violet,item_locations_on"
+            ]
+          },
+          {
+            "name": "Tuber Alexis Reward",
+            "chest_unopened_img": "images/locations/tuber_female.png",
+            "chest_opened_img": "images/locations/tuber_female_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,tuber_alexis,item_locations_on"
+            ]
+          },
+          {
+            "name": "East Beach Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Swimmer Tisha Reward",
+            "chest_unopened_img": "images/locations/swimmer_female_water.png",
+            "chest_opened_img": "images/locations/swimmer_female_water_bw.png",
+            "access_rules": [
+              "$surf"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,swimmer_tisha,item_locations_on"
+            ]
+          },
+          {
+            "name": "West Beach Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Tuber Amira Reward",
+            "chest_unopened_img": "images/locations/tuber_female.png",
+            "chest_opened_img": "images/locations/tuber_female_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,tuber_amira,item_locations_on"
+            ]
+          },
+          {
+            "name": "Tuber Amira Rematch Reward (6 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/tuber_female.png",
+            "chest_opened_img": "images/locations/tuber_female_bw.png",
+            "access_rules": [
+              "$trainer_rematch_4"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,tuber_amira,item_locations_on"
+            ]
+          },
+          {
+            "name": "Aroma Lady Nikki Reward",
+            "chest_unopened_img": "images/locations/woman_2.png",
+            "chest_opened_img": "images/locations/woman_2_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,aroma_lady_nikki,item_locations_on"
+            ]
+          },
+          {
+            "name": "Berry Forest Entrance",
+            "hosted_item": "berry_forest_hosted",
+            "visibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          },
+          {
+            "name": "Land Encounters",
+            "chest_unopened_img": "images/locations/grass.png",
+            "chest_opened_img": "images/locations/grass_bw.png",
+            "item_count": 8,
+            "clear_as_group": false,
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Surf Encounters",
+            "chest_unopened_img": "images/locations/surfing.png",
+            "chest_opened_img": "images/locations/surfing_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "$surf"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Old Rod Encounters",
+            "chest_unopened_img": "images/locations/old_rod.png",
+            "chest_opened_img": "images/locations/old_rod_bw.png",
+            "access_rules": [
+              "old_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Good Rod Encounters",
+            "chest_unopened_img": "images/locations/good_rod.png",
+            "chest_opened_img": "images/locations/good_rod_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "good_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Super Rod Encounters",
+            "chest_unopened_img": "images/locations/super_rod.png",
+            "chest_opened_img": "images/locations/super_rod_bw.png",
+            "item_count": 4,
+            "clear_as_group": false,
+            "access_rules": [
+              "super_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 140,
+            "y": 260,
+            "size": 4
+          },
+          {
+            "map": "sevii_123",
+            "x": 140,
+            "y": 116,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Four Island Town",
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Unlock Fly Destination",
+            "chest_unopened_img": "images/locations/fly_destination_unlock.png",
+            "chest_opened_img": "images/locations/fly_destination_unlock_bw.png",
+            "access_rules": [
+              "@Four Island Town Access",
+              "@Four Island Town Near Cave Access"
+            ],
+            "visibility_rules": [
+              "fly_unlocks_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "PC Item",
+            "chest_unopened_img": "images/locations/pc_potion.png",
+            "chest_opened_img": "images/locations/pc_potion_bw.png",
+            "access_rules": [
+              "@Four Island Town Access"
+            ],
+            "visibility_rules": [
+              "start_town_four_island,item_locations_on"
+            ]
+          },
+          {
+            "name": "Beach Southeast Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Four Island Town Access,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Beach Northwest Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Four Island Town Access,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Beach Item",
+            "access_rules": [
+              "@Four Island Town Access,$rock_smash"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Bookshelf Info",
+            "chest_unopened_img": "images/locations/bookshelf_info.png",
+            "chest_opened_img": "images/locations/bookshelf_info_bw.png",
+            "access_rules": [
+              "@Four Island Town Access,$fame"
+            ],
+            "visibility_rules": [
+              "famesanity_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Old Man Info",
+            "chest_unopened_img": "images/locations/old_man_info.png",
+            "chest_opened_img": "images/locations/old_man_info_bw.png",
+            "access_rules": [
+              "@Four Island Town Access,$fame"
+            ],
+            "visibility_rules": [
+              "famesanity_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Shop Items",
+            "chest_unopened_img": "images/locations/clerk.png",
+            "chest_opened_img": "images/locations/clerk_bw.png",
+            "item_count": 8,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Four Island Town Access"
+            ],
+            "visibility_rules": [
+              "shopsanity_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Old Woman Info",
+            "chest_unopened_img": "images/locations/old_woman_info.png",
+            "chest_opened_img": "images/locations/old_woman_info_bw.png",
+            "access_rules": [
+              "@Four Island Town Access,restore_pokemon_network_machine,$fame"
+            ],
+            "visibility_rules": [
+              "famesanity_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Little Girl Info",
+            "chest_unopened_img": "images/locations/little_girl_info.png",
+            "chest_opened_img": "images/locations/little_girl_info_bw.png",
+            "access_rules": [
+              "@Four Island Town Access,$fame"
+            ],
+            "visibility_rules": [
+              "famesanity_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Northeast Island Item",
+            "access_rules": [
+              "@Four Island Town Access,$surf",
+              "@Four Island Town Near Cave Access,$surf"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Icefall Cave Entrance",
+            "hosted_item": "icefall_cave_hosted",
+            "access_rules": [
+              "@Four Island Town Near Cave Access"
+            ],
+            "visibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          },
+          {
+            "name": "Surf Encounters",
+            "chest_unopened_img": "images/locations/surfing.png",
+            "chest_opened_img": "images/locations/surfing_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Four Island Town Access,$surf",
+              "@Four Island Town Near Cave Access,$surf"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Old Rod Encounters",
+            "chest_unopened_img": "images/locations/old_rod.png",
+            "chest_opened_img": "images/locations/old_rod_bw.png",
+            "access_rules": [
+              "@Four Island Town Access,old_rod",
+              "@Four Island Town Near Cave Access,old_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Good Rod Encounters",
+            "chest_unopened_img": "images/locations/good_rod.png",
+            "chest_opened_img": "images/locations/good_rod_bw.png",
+            "item_count": 3,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Four Island Town Access,good_rod",
+              "@Four Island Town Near Cave Access,good_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Super Rod Encounters",
+            "chest_unopened_img": "images/locations/super_rod.png",
+            "chest_opened_img": "images/locations/super_rod_bw.png",
+            "item_count": 4,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Four Island Town Access,super_rod",
+              "@Four Island Town Near Cave Access,super_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 228,
+            "y": 52
+          },
+          {
+            "map": "sevii_45",
+            "x": 36,
+            "y": 52
+          }
+        ]
+      },
+      {
+        "name": "Five Island Town",
+        "access_rules": [
+          "@Five Island Town Access"
+        ],
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Unlock Fly Destination",
+            "chest_unopened_img": "images/locations/fly_destination_unlock.png",
+            "chest_opened_img": "images/locations/fly_destination_unlock_bw.png",
+            "visibility_rules": [
+              "fly_unlocks_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "PC Item",
+            "chest_unopened_img": "images/locations/pc_potion.png",
+            "chest_opened_img": "images/locations/pc_potion_bw.png",
+            "visibility_rules": [
+              "start_town_five_island,item_locations_on"
+            ]
+          },
+          {
+            "name": "Bookshelf Info",
+            "chest_unopened_img": "images/locations/bookshelf_info.png",
+            "chest_opened_img": "images/locations/bookshelf_info_bw.png",
+            "access_rules": [
+              "$fame,$post_game_fame"
+            ],
+            "visibility_rules": [
+              "famesanity_on,$post_goal_gossipers_visible,item_locations_on"
+            ]
+          },
+          {
+            "name": "Surf Encounters",
+            "chest_unopened_img": "images/locations/surfing.png",
+            "chest_opened_img": "images/locations/surfing_bw.png",
+            "item_count": 3,
+            "clear_as_group": false,
+            "access_rules": [
+              "$surf"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Old Rod Encounters",
+            "chest_unopened_img": "images/locations/old_rod.png",
+            "chest_opened_img": "images/locations/old_rod_bw.png",
+            "access_rules": [
+              "old_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Good Rod Encounters",
+            "chest_unopened_img": "images/locations/good_rod.png",
+            "chest_opened_img": "images/locations/good_rod_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "good_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Super Rod Encounters",
+            "chest_unopened_img": "images/locations/super_rod.png",
+            "chest_opened_img": "images/locations/super_rod_bw.png",
+            "item_count": 5,
+            "clear_as_group": false,
+            "access_rules": [
+              "super_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 332,
+            "y": 108
+          },
+          {
+            "map": "sevii_45",
+            "x": 140,
+            "y": 108
+          }
+        ]
+      },
+      {
+        "name": "Five Isle Meadow",
+        "access_rules": [
+          "@Five Island Town Access"
+        ],
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Item Behind Cuttable Tree",
+            "access_rules": [
+              "$cut"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "North Team Rocket Grunt Reward",
+            "chest_unopened_img": "images/locations/rocket_male.png",
+            "chest_opened_img": "images/locations/rocket_male_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,team_rocket_grunt_49,item_locations_on"
+            ]
+          },
+          {
+            "name": "Center Team Rocket Grunt Reward",
+            "chest_unopened_img": "images/locations/rocket_female.png",
+            "chest_opened_img": "images/locations/rocket_female_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,team_rocket_grunt_51,item_locations_on"
+            ]
+          },
+          {
+            "name": "South Team Rocket Grunt Reward",
+            "chest_unopened_img": "images/locations/rocket_male.png",
+            "chest_opened_img": "images/locations/rocket_male_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,team_rocket_grunt_50,item_locations_on"
+            ]
+          },
+          {
+            "name": "Southwest Island Item",
+            "access_rules": [
+              "$surf"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Rocket Warehouse Entrance",
+            "hosted_item": "rocket_warehouse_hosted",
+            "access_rules": [
+              "learn_goldeen_need_log,learn_yes_nah_chansey"
+            ],
+            "visibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          },
+          {
+            "name": "Land Encounters",
+            "chest_unopened_img": "images/locations/grass.png",
+            "chest_opened_img": "images/locations/grass_bw.png",
+            "item_count": 7,
+            "clear_as_group": false,
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Surf Encounters",
+            "chest_unopened_img": "images/locations/surfing.png",
+            "chest_opened_img": "images/locations/surfing_bw.png",
+            "item_count": 3,
+            "clear_as_group": false,
+            "access_rules": [
+              "$surf"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Old Rod Encounters",
+            "chest_unopened_img": "images/locations/old_rod.png",
+            "chest_opened_img": "images/locations/old_rod_bw.png",
+            "access_rules": [
+              "old_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Good Rod Encounters",
+            "chest_unopened_img": "images/locations/good_rod.png",
+            "chest_opened_img": "images/locations/good_rod_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "good_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Super Rod Encounters",
+            "chest_unopened_img": "images/locations/super_rod.png",
+            "chest_opened_img": "images/locations/super_rod_bw.png",
+            "item_count": 5,
+            "clear_as_group": false,
+            "access_rules": [
+              "super_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 340,
+            "y": 108,
+            "size": 4
+          },
+          {
+            "map": "sevii_45",
+            "x": 148,
+            "y": 108,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Memorial Pillar",
+        "access_rules": [
+          "@Five Island Town Access,$surf"
+        ],
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Bird Keeper Milo Reward",
+            "chest_unopened_img": "images/locations/rocker.png",
+            "chest_opened_img": "images/locations/rocker_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,bird_keeper_milo,item_locations_on"
+            ]
+          },
+          {
+            "name": "Bird Keeper Milo Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/rocker.png",
+            "chest_opened_img": "images/locations/rocker_bw.png",
+            "access_rules": [
+              "$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,bird_keeper_milo,item_locations_on"
+            ]
+          },
+          {
+            "name": "Tall Grass North Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_nonrecurring,item_locations_on"
+            ]
+          },
+          {
+            "name": "Bird Keeper Chaz Reward",
+            "chest_unopened_img": "images/locations/rocker.png",
+            "chest_opened_img": "images/locations/rocker_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,bird_keeper_chaz,item_locations_on"
+            ]
+          },
+          {
+            "name": "Bird Keeper Chaz Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/rocker.png",
+            "chest_opened_img": "images/locations/rocker_bw.png",
+            "access_rules": [
+              "$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,bird_keeper_chaz,item_locations_on"
+            ]
+          },
+          {
+            "name": "Tall Grass South Hidden Item (Left)",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_nonrecurring,item_locations_on"
+            ]
+          },
+          {
+            "name": "Tall Grass South Hidden Item (Right)",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_nonrecurring,item_locations_on"
+            ]
+          },
+          {
+            "name": "Bird Keeper Harold Reward",
+            "chest_unopened_img": "images/locations/rocker.png",
+            "chest_opened_img": "images/locations/rocker_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,bird_keeper_harold,item_locations_on"
+            ]
+          },
+          {
+            "name": "Bird Keeper Harold Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/rocker.png",
+            "chest_opened_img": "images/locations/rocker_bw.png",
+            "access_rules": [
+              "$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,bird_keeper_harold,item_locations_on"
+            ]
+          },
+          {
+            "name": "Memorial Man Gift",
+            "chest_unopened_img": "images/locations/man_normal_tm.png",
+            "chest_opened_img": "images/locations/man_normal_tm_bw.png",
+            "access_rules": [
+              "lemonade"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "South Island Item",
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "South Beach Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Land Encounters",
+            "chest_unopened_img": "images/locations/grass.png",
+            "chest_opened_img": "images/locations/grass_bw.png",
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Surf Encounters",
+            "chest_unopened_img": "images/locations/surfing.png",
+            "chest_opened_img": "images/locations/surfing_bw.png",
+            "item_count": 3,
+            "clear_as_group": false,
+            "access_rules": [
+              "$surf"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Old Rod Encounters",
+            "chest_unopened_img": "images/locations/old_rod.png",
+            "chest_opened_img": "images/locations/old_rod_bw.png",
+            "access_rules": [
+              "old_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Good Rod Encounters",
+            "chest_unopened_img": "images/locations/good_rod.png",
+            "chest_opened_img": "images/locations/good_rod_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "good_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Super Rod Encounters",
+            "chest_unopened_img": "images/locations/super_rod.png",
+            "chest_opened_img": "images/locations/super_rod_bw.png",
+            "item_count": 5,
+            "clear_as_group": false,
+            "access_rules": [
+              "super_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 348,
+            "y": 124,
+            "size": 4
+          },
+          {
+            "map": "sevii_45",
+            "x": 156,
+            "y": 124,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Water Labyrinth",
+        "access_rules": [
+          "@Five Island Town Access,$surf",
+          "@Resort Gorgeous Near Resort Access,$surf",
+          "@Resort Gorgeous Near Cave Access,$surf"
+        ],
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Pokémon Egg",
+            "chest_unopened_img": "images/locations/gentleman.png",
+            "chest_opened_img": "images/locations/gentleman_bw.png",
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Gentleman Info",
+            "chest_unopened_img": "images/locations/gentleman_info.png",
+            "chest_opened_img": "images/locations/gentleman_info_bw.png",
+            "access_rules": [
+              "[pokedex],togepi,$fame",
+              "[pokedex],togetic,$fame"
+            ],
+            "visibility_rules": [
+              "famesanity_on,pokemon_request_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Pokémon Breeder Alize Reward",
+            "chest_unopened_img": "images/locations/woman_2.png",
+            "chest_opened_img": "images/locations/woman_2_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,pokemon_breeder_alize,item_locations_on"
+            ]
+          },
+          {
+            "name": "Pokémon Breeder Alize Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/woman_2.png",
+            "chest_opened_img": "images/locations/woman_2_bw.png",
+            "access_rules": [
+              "$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,pokemon_breeder_alize,item_locations_on"
+            ]
+          },
+          {
+            "name": "Surf Encounters",
+            "chest_unopened_img": "images/locations/surfing.png",
+            "chest_opened_img": "images/locations/surfing_bw.png",
+            "item_count": 3,
+            "clear_as_group": false,
+            "access_rules": [
+              "$surf"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Old Rod Encounters",
+            "chest_unopened_img": "images/locations/old_rod.png",
+            "chest_opened_img": "images/locations/old_rod_bw.png",
+            "access_rules": [
+              "old_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Good Rod Encounters",
+            "chest_unopened_img": "images/locations/good_rod.png",
+            "chest_opened_img": "images/locations/good_rod_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "good_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Super Rod Encounters",
+            "chest_unopened_img": "images/locations/super_rod.png",
+            "chest_opened_img": "images/locations/super_rod_bw.png",
+            "item_count": 5,
+            "clear_as_group": false,
+            "access_rules": [
+              "super_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 324,
+            "y": 100,
+            "size": 4
+          },
+          {
+            "map": "sevii_45",
+            "x": 132,
+            "y": 100,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Resort Gorgeous",
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Painter Rayna Reward",
+            "chest_unopened_img": "images/locations/lass.png",
+            "chest_opened_img": "images/locations/lass_bw.png",
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access,$surf",
+              "@Resort Gorgeous Near Cave Access,$surf"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,painter_rayna,item_locations_on"
+            ]
+          },
+          {
+            "name": "Painter Rayna Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/lass.png",
+            "chest_opened_img": "images/locations/lass_bw.png",
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access,$surf,$trainer_rematch_5",
+              "@Resort Gorgeous Near Cave Access,$surf,$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,painter_rayna,item_locations_on"
+            ]
+          },
+          {
+            "name": "West Island Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access,$surf,^$hidden",
+              "@Resort Gorgeous Near Cave Access,$surf,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Lady Jacki Reward",
+            "chest_unopened_img": "images/locations/woman_2.png",
+            "chest_opened_img": "images/locations/woman_2_bw.png",
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,lady_jacki,item_locations_on"
+            ]
+          },
+          {
+            "name": "Main Island Northwest Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Youngster Destin Reward",
+            "chest_unopened_img": "images/locations/youngster.png",
+            "chest_opened_img": "images/locations/youngster_bw.png",
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,youngster_destin,item_locations_on"
+            ]
+          },
+          {
+            "name": "Youngster Destin Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/youngster.png",
+            "chest_opened_img": "images/locations/youngster_bw.png",
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access,$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,youngster_destin,item_locations_on"
+            ]
+          },
+          {
+            "name": "Main Island Southwest Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Lady Gillian Reward",
+            "chest_unopened_img": "images/locations/woman_2.png",
+            "chest_opened_img": "images/locations/woman_2_bw.png",
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,lady_gillian,item_locations_on"
+            ]
+          },
+          {
+            "name": "Painter Celina Reward",
+            "chest_unopened_img": "images/locations/lass.png",
+            "chest_opened_img": "images/locations/lass_bw.png",
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,painter_celina,item_locations_on"
+            ]
+          },
+          {
+            "name": "Main Island Southeast Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Selphy Gift (Show Pokemon)",
+            "chest_unopened_img": "images/locations/woman_2_luxury_ball.png",
+            "chest_opened_img": "images/locations/woman_2_luxury_ball_bw.png",
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access,rescue_selphy,[pokedex]"
+            ],
+            "visibility_rules": [
+              "pokemon_request_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Bookshelf Info",
+            "chest_unopened_img": "images/locations/bookshelf_info.png",
+            "chest_opened_img": "images/locations/bookshelf_info_bw.png",
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access,$fame"
+            ],
+            "visibility_rules": [
+              "famesanity_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Painter Daisy Reward",
+            "chest_unopened_img": "images/locations/lass.png",
+            "chest_opened_img": "images/locations/lass_bw.png",
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,painter_daisy,item_locations_on"
+            ]
+          },
+          {
+            "name": "Swimmer Toby Reward",
+            "chest_unopened_img": "images/locations/swimmer_male_water.png",
+            "chest_opened_img": "images/locations/swimmer_male_water_bw.png",
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access,$surf",
+              "@Resort Gorgeous Near Cave Access,$surf"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,swimmer_toby,item_locations_on"
+            ]
+          },
+          {
+            "name": "Lost Cave Entrance",
+            "hosted_item": "lost_cave_hosted",
+            "access_rules": [
+              "@Resort Gorgeous Near Cave Access"
+            ],
+            "visibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          },
+          {
+            "name": "Surf Encounters",
+            "chest_unopened_img": "images/locations/surfing.png",
+            "chest_opened_img": "images/locations/surfing_bw.png",
+            "item_count": 3,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access,$surf",
+              "@Resort Gorgeous Near Cave Access,$surf"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Old Rod Encounters",
+            "chest_unopened_img": "images/locations/old_rod.png",
+            "chest_opened_img": "images/locations/old_rod_bw.png",
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access,old_rod",
+              "@Resort Gorgeous Near Cave Access,old_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Good Rod Encounters",
+            "chest_unopened_img": "images/locations/good_rod.png",
+            "chest_opened_img": "images/locations/good_rod_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access,good_rod",
+              "@Resort Gorgeous Near Cave Access,good_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Super Rod Encounters",
+            "chest_unopened_img": "images/locations/super_rod.png",
+            "chest_opened_img": "images/locations/super_rod_bw.png",
+            "item_count": 5,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Resort Gorgeous Near Resort Access,super_rod",
+              "@Resort Gorgeous Near Cave Access,super_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 340,
+            "y": 92,
+            "size": 4
+          },
+          {
+            "map": "sevii_45",
+            "x": 148,
+            "y": 92,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Six Island Town",
+        "access_rules": [
+          "@Six Island Town Access"
+        ],
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Unlock Fly Destination",
+            "chest_unopened_img": "images/locations/fly_destination_unlock.png",
+            "chest_opened_img": "images/locations/fly_destination_unlock_bw.png",
+            "visibility_rules": [
+              "fly_unlocks_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "PC Item",
+            "chest_unopened_img": "images/locations/pc_potion.png",
+            "chest_opened_img": "images/locations/pc_potion_bw.png",
+            "visibility_rules": [
+              "start_town_six_island,item_locations_on"
+            ]
+          },
+          {
+            "name": "Old Woman Info",
+            "chest_unopened_img": "images/locations/old_woman_info.png",
+            "chest_opened_img": "images/locations/old_woman_info_bw.png",
+            "access_rules": [
+              "$fame"
+            ],
+            "visibility_rules": [
+              "famesanity_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Shop Items",
+            "chest_unopened_img": "images/locations/clerk.png",
+            "chest_opened_img": "images/locations/clerk_bw.png",
+            "item_count": 8,
+            "clear_as_group": false,
+            "visibility_rules": [
+              "shopsanity_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Hidden Item Behind Pokémon Center",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_nonrecurring,item_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 340,
+            "y": 204
+          },
+          {
+            "map": "sevii_67",
+            "x": 148,
+            "y": 60
+          }
+        ]
+      },
+      {
+        "name": "Water Path",
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Juggler Edward Reward",
+            "chest_unopened_img": "images/locations/rocker.png",
+            "chest_opened_img": "images/locations/rocker_bw.png",
+            "access_rules": [
+              "@Six Island Town Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,juggler_edward,item_locations_on"
+            ]
+          },
+          {
+            "name": "Tall Grass North Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Six Island Town Access,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_nonrecurring,item_locations_on"
+            ]
+          },
+          {
+            "name": "Tall Grass South Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Six Island Town Access,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_nonrecurring,item_locations_on"
+            ]
+          },
+          {
+            "name": "Hiker Earl Reward",
+            "chest_unopened_img": "images/locations/hiker.png",
+            "chest_opened_img": "images/locations/hiker_bw.png",
+            "access_rules": [
+              "@Six Island Town Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,hiker_earl,item_locations_on"
+            ]
+          },
+          {
+            "name": "Hiker Earl Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/hiker.png",
+            "chest_opened_img": "images/locations/hiker_bw.png",
+            "access_rules": [
+              "@Six Island Town Access,$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,hiker_earl,item_locations_on"
+            ]
+          },
+          {
+            "name": "South Island Item",
+            "access_rules": [
+              "@Six Island Town Access,$surf",
+              "@Green Path East Access,$surf"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Swimmer Denise Reward",
+            "chest_unopened_img": "images/locations/swimmer_female_water.png",
+            "chest_opened_img": "images/locations/swimmer_female_water_bw.png",
+            "access_rules": [
+              "@Six Island Town Access,$surf",
+              "@Green Path East Access,$surf"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,swimmer_denise,item_locations_on"
+            ]
+          },
+          {
+            "name": "Swimmer Samir Reward",
+            "chest_unopened_img": "images/locations/swimmer_male_water.png",
+            "chest_opened_img": "images/locations/swimmer_male_water_bw.png",
+            "access_rules": [
+              "@Six Island Town Access,$surf",
+              "@Green Path East Access,$surf"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,swimmer_samir,item_locations_on"
+            ]
+          },
+          {
+            "name": "Swimmer Samir Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/swimmer_male_water.png",
+            "chest_opened_img": "images/locations/swimmer_male_water_bw.png",
+            "access_rules": [
+              "@Six Island Town Access,$surf,$trainer_rematch_5",
+              "@Green Path East Access,$surf,$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,swimmer_samir,item_locations_on"
+            ]
+          },
+          {
+            "name": "Twins Miu & Mia Reward",
+            "chest_unopened_img": "images/locations/twins.png",
+            "chest_opened_img": "images/locations/twins_bw.png",
+            "access_rules": [
+              "@Green Path East Access,$double_battle"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,twins_miu_and_mia,item_locations_on"
+            ]
+          },
+          {
+            "name": "Aroma Lady Rose Reward",
+            "chest_unopened_img": "images/locations/woman_2.png",
+            "chest_opened_img": "images/locations/woman_2_bw.png",
+            "access_rules": [
+              "@Green Path East Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,aroma_lady_rose,item_locations_on"
+            ]
+          },
+          {
+            "name": "North Island Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Green Path East Access,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_nonrecurring,item_locations_on"
+            ]
+          },
+          {
+            "name": "North Island Item",
+            "access_rules": [
+              "@Green Path East Access,$surf"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Woman Gift (Show Heracross)",
+            "chest_unopened_img": "images/locations/beauty_nest_ball.png",
+            "chest_opened_img": "images/locations/beauty_nest_ball_bw.png",
+            "access_rules": [
+              "@Green Path East Access,[pokedex],heracross"
+            ],
+            "visibility_rules": [
+              "pokemon_request_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Land Encounters",
+            "chest_unopened_img": "images/locations/grass.png",
+            "chest_opened_img": "images/locations/grass_bw.png",
+            "item_count": 8,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Six Island Town Access"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Surf Encounters",
+            "chest_unopened_img": "images/locations/surfing.png",
+            "chest_opened_img": "images/locations/surfing_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Six Island Town Access,$surf",
+              "@Green Path East Access,$surf"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Old Rod Encounters",
+            "chest_unopened_img": "images/locations/old_rod.png",
+            "chest_opened_img": "images/locations/old_rod_bw.png",
+            "access_rules": [
+              "@Six Island Town Access,old_rod",
+              "@Green Path East Access,old_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Good Rod Encounters",
+            "chest_unopened_img": "images/locations/good_rod.png",
+            "chest_opened_img": "images/locations/good_rod_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Six Island Town Access,good_rod",
+              "@Green Path East Access,good_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Super Rod Encounters",
+            "chest_unopened_img": "images/locations/super_rod.png",
+            "chest_opened_img": "images/locations/super_rod_bw.png",
+            "item_count": 5,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Six Island Town Access,super_rod",
+              "@Green Path East Access,super_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 348,
+            "y": 204,
+            "size": 4
+          },
+          {
+            "map": "sevii_67",
+            "x": 156,
+            "y": 60,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Ruin Valley",
+        "access_rules": [
+          "@Six Island Town Access"
+        ],
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Southeast Item",
+            "access_rules": [
+              "$strength"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Southwest Item",
+            "access_rules": [
+              "$strength"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Hiker Daryl Reward",
+            "chest_unopened_img": "images/locations/hiker.png",
+            "chest_opened_img": "images/locations/hiker_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,hiker_daryl,item_locations_on"
+            ]
+          },
+          {
+            "name": "Plateau Item",
+            "access_rules": [
+              "$strength"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "PokéManiac Hector Reward",
+            "chest_unopened_img": "images/locations/super_nerd.png",
+            "chest_opened_img": "images/locations/super_nerd_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,pokemaniac_hector,item_locations_on"
+            ]
+          },
+          {
+            "name": "PokéManiac Hector Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/super_nerd.png",
+            "chest_opened_img": "images/locations/super_nerd_bw.png",
+            "access_rules": [
+              "$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,pokemaniac_hector,item_locations_on"
+            ]
+          },
+          {
+            "name": "Ruin Maniac Stanly Reward",
+            "chest_unopened_img": "images/locations/hiker.png",
+            "chest_opened_img": "images/locations/hiker_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,ruin_maniac_stanly,item_locations_on"
+            ]
+          },
+          {
+            "name": "Ruin Maniac Foster Reward",
+            "chest_unopened_img": "images/locations/hiker.png",
+            "chest_opened_img": "images/locations/hiker_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,ruin_maniac_foster,item_locations_on"
+            ]
+          },
+          {
+            "name": "Ruin Maniac Larry Reward",
+            "chest_unopened_img": "images/locations/hiker.png",
+            "chest_opened_img": "images/locations/hiker_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,ruin_maniac_larry,item_locations_on"
+            ]
+          },
+          {
+            "name": "Ruin Maniac Larry Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/hiker.png",
+            "chest_opened_img": "images/locations/hiker_bw.png",
+            "access_rules": [
+              "$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,ruin_maniac_larry,item_locations_on"
+            ]
+          },
+          {
+            "name": "Dotted Hole Entrance",
+            "hosted_item": "dotted_hole_hosted",
+            "access_rules": [
+              "help_lorelei,$cut"
+            ],
+            "visibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          },
+          {
+            "name": "Land Encounters",
+            "chest_unopened_img": "images/locations/grass.png",
+            "chest_opened_img": "images/locations/grass_bw.png",
+            "item_count": 9,
+            "clear_as_group": false,
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Surf Encounters",
+            "chest_unopened_img": "images/locations/surfing.png",
+            "chest_opened_img": "images/locations/surfing_bw.png",
+            "access_rules": [
+              "$surf"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Old Rod Encounters",
+            "chest_unopened_img": "images/locations/old_rod.png",
+            "chest_opened_img": "images/locations/old_rod_bw.png",
+            "access_rules": [
+              "old_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Good Rod Encounters",
+            "chest_unopened_img": "images/locations/good_rod.png",
+            "chest_opened_img": "images/locations/good_rod_bw.png",
+            "item_count": 3,
+            "clear_as_group": false,
+            "access_rules": [
+              "good_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Super Rod Encounters",
+            "chest_unopened_img": "images/locations/super_rod.png",
+            "chest_opened_img": "images/locations/super_rod_bw.png",
+            "item_count": 4,
+            "clear_as_group": false,
+            "access_rules": [
+              "super_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 340,
+            "y": 220,
+            "size": 4
+          },
+          {
+            "map": "sevii_67",
+            "x": 148,
+            "y": 76,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Green Path",
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Psychic Jaclyn Reward",
+            "chest_unopened_img": "images/locations/woman.png",
+            "chest_opened_img": "images/locations/woman_bw.png",
+            "access_rules": [
+              "@Green Path West Access,$surf"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,psychic_jaclyn,item_locations_on"
+            ]
+          },
+          {
+            "name": "Psychic Jaclyn Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/woman.png",
+            "chest_opened_img": "images/locations/woman_bw.png",
+            "access_rules": [
+              "@Green Path West Access,$surf,$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,psychic_jaclyn,item_locations_on"
+            ]
+          },
+          {
+            "name": "West Island Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Green Path West Access,$surf,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Pattern Bush East Entrance",
+            "hosted_item": "pattern_bush_east_hosted",
+            "access_rules": [
+              "@Green Path East Access"
+            ],
+            "visibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          },
+          {
+            "name": "Pattern Bush West Entrance",
+            "hosted_item": "pattern_bush_west_hosted",
+            "access_rules": [
+              "@Green Path West Access"
+            ],
+            "visibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          },
+          {
+            "name": "Surf Encounters",
+            "chest_unopened_img": "images/locations/surfing.png",
+            "chest_opened_img": "images/locations/surfing_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Green Path West Access,$surf"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Old Rod Encounters",
+            "chest_unopened_img": "images/locations/old_rod.png",
+            "chest_opened_img": "images/locations/old_rod_bw.png",
+            "access_rules": [
+              "@Green Path West Access,old_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Good Rod Encounters",
+            "chest_unopened_img": "images/locations/good_rod.png",
+            "chest_opened_img": "images/locations/good_rod_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Green Path West Access,good_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Super Rod Encounters",
+            "chest_unopened_img": "images/locations/super_rod.png",
+            "chest_opened_img": "images/locations/super_rod_bw.png",
+            "item_count": 5,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Green Path West Access,super_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 332,
+            "y": 188,
+            "size": 4
+          },
+          {
+            "map": "sevii_67",
+            "x": 140,
+            "y": 44,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Outcast Island",
+        "access_rules": [
+          "@Outcast Island Access"
+        ],
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Swimmer Nicole Reward",
+            "chest_unopened_img": "images/locations/swimmer_female_water.png",
+            "chest_opened_img": "images/locations/swimmer_female_water_bw.png",
+            "access_rules": [
+              "$surf"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,swimmer_nicole,item_locations_on"
+            ]
+          },
+          {
+            "name": "Swimmer Nicole Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/swimmer_female_water.png",
+            "chest_opened_img": "images/locations/swimmer_female_water_bw.png",
+            "access_rules": [
+              "$surf,$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,swimmer_nicole,item_locations_on"
+            ]
+          },
+          {
+            "name": "Sis and Bro Ava & Geb Reward",
+            "chest_unopened_img": "images/locations/sis_and_bro.png",
+            "chest_opened_img": "images/locations/sis_and_bro_bw.png",
+            "access_rules": [
+              "$surf,$double_battle"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,sis_and_bro_ava_and_geb,item_locations_on"
+            ]
+          },
+          {
+            "name": "Swimmer Mymo Reward",
+            "chest_unopened_img": "images/locations/swimmer_male_water.png",
+            "chest_opened_img": "images/locations/swimmer_male_water_bw.png",
+            "access_rules": [
+              "$surf"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,swimmer_mymo,item_locations_on"
+            ]
+          },
+          {
+            "name": "West Beach Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Team Rocket Grunt Reward",
+            "chest_unopened_img": "images/locations/rocket_male.png",
+            "chest_opened_img": "images/locations/rocket_male_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,team_rocket_grunt_46,item_locations_on"
+            ]
+          },
+          {
+            "name": "East Beach Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "$surf,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Fisherman Tylor Reward",
+            "chest_unopened_img": "images/locations/fisherman.png",
+            "chest_opened_img": "images/locations/fisherman_bw.png",
+            "access_rules": [
+              "$surf"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,fisherman_tylor,item_locations_on"
+            ]
+          },
+          {
+            "name": "North Beach Item",
+            "access_rules": [
+              "$surf"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Altering Cave Entrance",
+            "hosted_item": "altering_cave_hosted",
+            "visibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          },
+          {
+            "name": "Surf Encounters",
+            "chest_unopened_img": "images/locations/surfing.png",
+            "chest_opened_img": "images/locations/surfing_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "$surf"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Old Rod Encounters",
+            "chest_unopened_img": "images/locations/old_rod.png",
+            "chest_opened_img": "images/locations/old_rod_bw.png",
+            "access_rules": [
+              "old_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Good Rod Encounters",
+            "chest_unopened_img": "images/locations/good_rod.png",
+            "chest_opened_img": "images/locations/good_rod_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "good_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Super Rod Encounters",
+            "chest_unopened_img": "images/locations/super_rod.png",
+            "chest_opened_img": "images/locations/super_rod_bw.png",
+            "item_count": 5,
+            "clear_as_group": false,
+            "access_rules": [
+              "super_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 324,
+            "y": 172,
+            "size": 4
+          },
+          {
+            "map": "sevii_67",
+            "x": 132,
+            "y": 28,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Seven Island Town",
+        "access_rules": [
+          "@Seven Island Town Access"
+        ],
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Unlock Fly Destination",
+            "chest_unopened_img": "images/locations/fly_destination_unlock.png",
+            "chest_opened_img": "images/locations/fly_destination_unlock_bw.png",
+            "visibility_rules": [
+              "fly_unlocks_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "PC Item",
+            "chest_unopened_img": "images/locations/pc_potion.png",
+            "chest_opened_img": "images/locations/pc_potion_bw.png",
+            "visibility_rules": [
+              "start_town_seven_island,item_locations_on"
+            ]
+          },
+          {
+            "name": "Scientist Gift 1 (Trade Scanner)",
+            "chest_unopened_img": "images/locations/scientist_deep_sea_scale.png",
+            "chest_opened_img": "images/locations/scientist_deep_sea_scale_bw.png",
+            "access_rules": [
+              "scanner"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Scientist Gift 2 (Trade Scanner)",
+            "chest_unopened_img": "images/locations/scientist_deep_sea_tooth.png",
+            "chest_opened_img": "images/locations/scientist_deep_sea_tooth_bw.png",
+            "access_rules": [
+              "scanner"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Bookshelf Info",
+            "chest_unopened_img": "images/locations/bookshelf_info.png",
+            "chest_opened_img": "images/locations/bookshelf_info_bw.png",
+            "access_rules": [
+              "$fame,$post_game_fame"
+            ],
+            "visibility_rules": [
+              "famesanity_on,$post_goal_gossipers_visible,item_locations_on"
+            ]
+          },
+          {
+            "name": "Shop Items",
+            "chest_unopened_img": "images/locations/clerk.png",
+            "chest_opened_img": "images/locations/clerk_bw.png",
+            "item_count": 9,
+            "clear_as_group": false,
+            "visibility_rules": [
+              "shopsanity_on,item_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 244,
+            "y": 228
+          },
+          {
+            "map": "sevii_67",
+            "x": 52,
+            "y": 84
+          }
+        ]
+      },
+      {
+        "name": "Canyon Entrance",
+        "access_rules": [
+          "@Seven Island Town Access"
+        ],
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Aroma Lady Miah Reward",
+            "chest_unopened_img": "images/locations/woman_2.png",
+            "chest_opened_img": "images/locations/woman_2_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,aroma_lady_miah,item_locations_on"
+            ]
+          },
+          {
+            "name": "Juggler Mason Reward",
+            "chest_unopened_img": "images/locations/rocker.png",
+            "chest_opened_img": "images/locations/rocker_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,juggler_mason,item_locations_on"
+            ]
+          },
+          {
+            "name": "Juggler Mason Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/rocker.png",
+            "chest_opened_img": "images/locations/rocker_bw.png",
+            "access_rules": [
+              "$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,juggler_mason,item_locations_on"
+            ]
+          },
+          {
+            "name": "Pokémon Ranger Nicolas Reward",
+            "chest_unopened_img": "images/locations/camper.png",
+            "chest_opened_img": "images/locations/camper_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,pokemon_ranger_nicolas,item_locations_on"
+            ]
+          },
+          {
+            "name": "Pokémon Ranger Nicolas Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/camper.png",
+            "chest_opened_img": "images/locations/camper_bw.png",
+            "access_rules": [
+              "$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,pokemon_ranger_nicolas,item_locations_on"
+            ]
+          },
+          {
+            "name": "Pokémon Ranger Madeline Reward",
+            "chest_unopened_img": "images/locations/picnicker.png",
+            "chest_opened_img": "images/locations/picnicker_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,pokemon_ranger_madeline,item_locations_on"
+            ]
+          },
+          {
+            "name": "Pokémon Ranger Madeline Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/picnicker.png",
+            "chest_opened_img": "images/locations/picnicker_bw.png",
+            "access_rules": [
+              "$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,pokemon_ranger_madeline,item_locations_on"
+            ]
+          },
+          {
+            "name": "Southwest Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_nonrecurring,item_locations_on"
+            ]
+          },
+          {
+            "name": "Young Couple Eve & Jon Reward",
+            "chest_unopened_img": "images/locations/young_couple.png",
+            "chest_opened_img": "images/locations/young_couple_bw.png",
+            "access_rules": [
+              "$double_battle"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,young_couple_eve_and_jon,item_locations_on"
+            ]
+          },
+          {
+            "name": "Land Encounters",
+            "chest_unopened_img": "images/locations/grass.png",
+            "chest_opened_img": "images/locations/grass_bw.png",
+            "item_count": 7,
+            "clear_as_group": false,
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 244,
+            "y": 236,
+            "size": 4
+          },
+          {
+            "map": "sevii_67",
+            "x": 52,
+            "y": 92,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Sevault Canyon",
+        "access_rules": [
+          "@Seven Island Town Access"
+        ],
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Cool Couple Lex & Nya Reward",
+            "chest_unopened_img": "images/locations/cool_couple.png",
+            "chest_opened_img": "images/locations/cool_couple_bw.png",
+            "access_rules": [
+              "$double_battle"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,cool_couple_lex_and_nya,item_locations_on"
+            ]
+          },
+          {
+            "name": "Cool Couple Lex & Nya Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/cool_couple.png",
+            "chest_opened_img": "images/locations/cool_couple_bw.png",
+            "access_rules": [
+              "$trainer_rematch_5,$double_battle"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,cool_couple_lex_and_nya,item_locations_on"
+            ]
+          },
+          {
+            "name": "North Item",
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Tamer Evan Reward",
+            "chest_unopened_img": "images/locations/man.png",
+            "chest_opened_img": "images/locations/man_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,tamer_evan,item_locations_on"
+            ]
+          },
+          {
+            "name": "Tamer Evan Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/man.png",
+            "chest_opened_img": "images/locations/man_bw.png",
+            "access_rules": [
+              "$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,tamer_evan,item_locations_on"
+            ]
+          },
+          {
+            "name": "Tall Grass Item",
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Black Belt Info",
+            "chest_unopened_img": "images/locations/black_belt_info.png",
+            "chest_opened_img": "images/locations/black_belt_info_bw.png",
+            "access_rules": [
+              "$fame"
+            ],
+            "visibility_rules": [
+              "famesanity_on,item_locations_on"
+            ]
+          },
+          {
+            "name": "Pokémon Ranger Jackson Reward",
+            "chest_unopened_img": "images/locations/camper.png",
+            "chest_opened_img": "images/locations/camper_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,pokemon_ranger_jackson,item_locations_on"
+            ]
+          },
+          {
+            "name": "Pokémon Ranger Jackson Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/camper.png",
+            "chest_opened_img": "images/locations/camper_bw.png",
+            "access_rules": [
+              "$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,pokemon_ranger_jackson,item_locations_on"
+            ]
+          },
+          {
+            "name": "Pokémon Ranger Katelyn Reward",
+            "chest_unopened_img": "images/locations/picnicker.png",
+            "chest_opened_img": "images/locations/picnicker_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,pokemon_ranger_katelyn,item_locations_on"
+            ]
+          },
+          {
+            "name": "Pokémon Ranger Katelyn Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/picnicker.png",
+            "chest_opened_img": "images/locations/picnicker_bw.png",
+            "access_rules": [
+              "$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,pokemon_ranger_katelyn,item_locations_on"
+            ]
+          },
+          {
+            "name": "Crush Girl Cyndy Reward",
+            "chest_unopened_img": "images/locations/battle_girl.png",
+            "chest_opened_img": "images/locations/battle_girl_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,crush_girl_cyndy,item_locations_on"
+            ]
+          },
+          {
+            "name": "Crush Girl Cyndy Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/battle_girl.png",
+            "chest_opened_img": "images/locations/battle_girl_bw.png",
+            "access_rules": [
+              "$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,crush_girl_cyndy,item_locations_on"
+            ]
+          },
+          {
+            "name": "Item Behind Smashable Rocks",
+            "access_rules": [
+              "$strength,$rock_smash"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Cooltrainer Leroy Reward",
+            "chest_unopened_img": "images/locations/cooltrainer_male.png",
+            "chest_opened_img": "images/locations/cooltrainer_male_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,cooltrainer_leroy,item_locations_on"
+            ]
+          },
+          {
+            "name": "Cooltrainer Leroy Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/cooltrainer_male.png",
+            "chest_opened_img": "images/locations/cooltrainer_male_bw.png",
+            "access_rules": [
+              "$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,cooltrainer_leroy,item_locations_on"
+            ]
+          },
+          {
+            "name": "Cooltrainer Michelle Reward",
+            "chest_unopened_img": "images/locations/cooltrainer_female.png",
+            "chest_opened_img": "images/locations/cooltrainer_female_bw.png",
+            "visibility_rules": [
+              "trainersanity_on,cooltrainer_michelle,item_locations_on"
+            ]
+          },
+          {
+            "name": "Cooltrainer Michelle Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/cooltrainer_female.png",
+            "chest_opened_img": "images/locations/cooltrainer_female_bw.png",
+            "access_rules": [
+              "$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,cooltrainer_michelle,item_locations_on"
+            ]
+          },
+          {
+            "name": "Chansey House Item",
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Hidden Item Near Chansey House",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_nonrecurring,item_locations_on"
+            ]
+          },
+          {
+            "name": "Land Encounters",
+            "chest_unopened_img": "images/locations/grass.png",
+            "chest_opened_img": "images/locations/grass_bw.png",
+            "item_count": 10,
+            "clear_as_group": false,
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 252,
+            "y": 244,
+            "size": 4
+          },
+          {
+            "map": "sevii_67",
+            "x": 60,
+            "y": 100,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Tanoby Ruins",
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Island Item",
+            "access_rules": [
+              "@Seven Island Town Access,$surf,unlock_ruins",
+              "@Tanoby Ruins Monean Island Access,$surf,unlock_ruins",
+              "@Tanoby Ruins Liptoo Island Access,$surf,unlock_ruins",
+              "@Tanoby Ruins Weepth Island Access,$surf,unlock_ruins",
+              "@Tanoby Ruins Dilford Island Access,$surf,unlock_ruins",
+              "@Tanoby Ruins Scufib Island Access,$surf,unlock_ruins",
+              "@Tanoby Ruins Rixy Island Access,$surf,unlock_ruins",
+              "@Tanoby Ruins Viapois Island Access,$surf,unlock_ruins"
+            ],
+            "visibility_rules": [
+              "item_locations_on"
+            ]
+          },
+          {
+            "name": "Viapois Chamber Island Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Tanoby Ruins Viapois Island Access,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Ruin Maniac Brandon Reward",
+            "chest_unopened_img": "images/locations/hiker.png",
+            "chest_opened_img": "images/locations/hiker_bw.png",
+            "access_rules": [
+              "@Tanoby Ruins Scufib Island Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,ruin_maniac_brandon,item_locations_on"
+            ]
+          },
+          {
+            "name": "Scufib Chamber Island Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Tanoby Ruins Scufib Island Access,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Gentleman Clifford Reward",
+            "chest_unopened_img": "images/locations/gentleman.png",
+            "chest_opened_img": "images/locations/gentleman_bw.png",
+            "access_rules": [
+              "@Tanoby Ruins Weepth Island Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,gentleman_clifford,item_locations_on"
+            ]
+          },
+          {
+            "name": "Painter Edna Reward",
+            "chest_unopened_img": "images/locations/lass.png",
+            "chest_opened_img": "images/locations/lass_bw.png",
+            "access_rules": [
+              "@Tanoby Ruins Weepth Island Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,painter_edna,item_locations_on"
+            ]
+          },
+          {
+            "name": "Weepth Chamber Island Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Tanoby Ruins Weepth Island Access,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Ruin Maniac Benjamin Reward",
+            "chest_unopened_img": "images/locations/hiker.png",
+            "chest_opened_img": "images/locations/hiker_bw.png",
+            "access_rules": [
+              "@Tanoby Ruins Monean Island Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,ruin_maniac_benjamin,item_locations_on"
+            ]
+          },
+          {
+            "name": "Monean Chamber Island Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Tanoby Ruins Monean Island Access,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Viapois Chamber Entrance",
+            "hosted_item": "viapois_chamber_hosted",
+            "access_rules": [
+              "@Tanoby Ruins Viapois Island Access"
+            ],
+            "visibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          },
+          {
+            "name": "Rixy Chamber Entrance",
+            "hosted_item": "rixy_chamber_hosted",
+            "access_rules": [
+              "@Tanoby Ruins Rixy Island Access"
+            ],
+            "visibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          },
+          {
+            "name": "Scufib Chamber Entrance",
+            "hosted_item": "scufib_chamber_hosted",
+            "access_rules": [
+              "@Tanoby Ruins Scufib Island Access"
+            ],
+            "visibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          },
+          {
+            "name": "Dilford Chamber Entrance",
+            "hosted_item": "dilford_chamber_hosted",
+            "access_rules": [
+              "@Tanoby Ruins Dilford Island Access"
+            ],
+            "visibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          },
+          {
+            "name": "Weepth Chamber Entrance",
+            "hosted_item": "weepth_chamber_hosted",
+            "access_rules": [
+              "@Tanoby Ruins Weepth Island Access"
+            ],
+            "visibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          },
+          {
+            "name": "Liptoo Chamber Entrance",
+            "hosted_item": "liptoo_chamber_hosted",
+            "access_rules": [
+              "@Tanoby Ruins Liptoo Island Access"
+            ],
+            "visibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          },
+          {
+            "name": "Monean Chamber Entrance",
+            "hosted_item": "monean_chamber_hosted",
+            "access_rules": [
+              "@Tanoby Ruins Monean Island Access"
+            ],
+            "visibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          },
+          {
+            "name": "Surf Encounters",
+            "chest_unopened_img": "images/locations/surfing.png",
+            "chest_opened_img": "images/locations/surfing_bw.png",
+            "item_count": 3,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Seven Island Town Access,$surf",
+              "@Tanoby Ruins Monean Island Access,$surf",
+              "@Tanoby Ruins Liptoo Island Access,$surf",
+              "@Tanoby Ruins Weepth Island Access,$surf",
+              "@Tanoby Ruins Dilford Island Access,$surf",
+              "@Tanoby Ruins Scufib Island Access,$surf",
+              "@Tanoby Ruins Rixy Island Access,$surf",
+              "@Tanoby Ruins Viapois Island Access,$surf"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Old Rod Encounters",
+            "chest_unopened_img": "images/locations/old_rod.png",
+            "chest_opened_img": "images/locations/old_rod_bw.png",
+            "access_rules": [
+              "@Seven Island Town Access,old_rod",
+              "@Tanoby Ruins Monean Island Access,old_rod",
+              "@Tanoby Ruins Liptoo Island Access,old_rod",
+              "@Tanoby Ruins Weepth Island Access,old_rod",
+              "@Tanoby Ruins Dilford Island Access,old_rod",
+              "@Tanoby Ruins Scufib Island Access,old_rod",
+              "@Tanoby Ruins Rixy Island Access,old_rod",
+              "@Tanoby Ruins Viapois Island Access,old_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Good Rod Encounters",
+            "chest_unopened_img": "images/locations/good_rod.png",
+            "chest_opened_img": "images/locations/good_rod_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Seven Island Town Access,good_rod",
+              "@Tanoby Ruins Monean Island Access,good_rod",
+              "@Tanoby Ruins Liptoo Island Access,good_rod",
+              "@Tanoby Ruins Weepth Island Access,good_rod",
+              "@Tanoby Ruins Dilford Island Access,good_rod",
+              "@Tanoby Ruins Scufib Island Access,good_rod",
+              "@Tanoby Ruins Rixy Island Access,good_rod",
+              "@Tanoby Ruins Viapois Island Access,good_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Super Rod Encounters",
+            "chest_unopened_img": "images/locations/super_rod.png",
+            "chest_opened_img": "images/locations/super_rod_bw.png",
+            "item_count": 5,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Seven Island Town Access,super_rod",
+              "@Tanoby Ruins Monean Island Access,super_rod",
+              "@Tanoby Ruins Liptoo Island Access,super_rod",
+              "@Tanoby Ruins Weepth Island Access,super_rod",
+              "@Tanoby Ruins Dilford Island Access,super_rod",
+              "@Tanoby Ruins Scufib Island Access,super_rod",
+              "@Tanoby Ruins Rixy Island Access,super_rod",
+              "@Tanoby Ruins Viapois Island Access,super_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 252,
+            "y": 260,
+            "size": 4
+          },
+          {
+            "map": "sevii_67",
+            "x": 60,
+            "y": 116,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Trainer Tower Exterior",
+        "visibility_rules": [
+          "kanto_only_off"
+        ],
+        "sections": [
+          {
+            "name": "Psychic Rodette Reward",
+            "chest_unopened_img": "images/locations/woman.png",
+            "chest_opened_img": "images/locations/woman_bw.png",
+            "access_rules": [
+              "@Seven Island Town Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,psychic_rodette,item_locations_on"
+            ]
+          },
+          {
+            "name": "Psychic Rodette Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/woman.png",
+            "chest_opened_img": "images/locations/woman_bw.png",
+            "access_rules": [
+              "@Seven Island Town Access,$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,psychic_rodette,item_locations_on"
+            ]
+          },
+          {
+            "name": "Hidden Item Near Fence",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Seven Island Town Access,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_nonrecurring,item_locations_on"
+            ]
+          },
+          {
+            "name": "Beach West Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Seven Island Town Access,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Beach North Hidden Item",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Seven Island Town Access,^$hidden"
+            ],
+            "visibility_rules": [
+              "hidden_all,item_locations_on"
+            ]
+          },
+          {
+            "name": "Psychic Dario Reward",
+            "chest_unopened_img": "images/locations/boy.png",
+            "chest_opened_img": "images/locations/boy_bw.png",
+            "access_rules": [
+              "@Seven Island Town Access"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,psychic_dario,item_locations_on"
+            ]
+          },
+          {
+            "name": "Psychic Dario Rematch Reward (8 Badges-Gyms)",
+            "chest_unopened_img": "images/locations/boy.png",
+            "chest_opened_img": "images/locations/boy_bw.png",
+            "access_rules": [
+              "@Seven Island Town Access,$trainer_rematch_5"
+            ],
+            "visibility_rules": [
+              "trainersanity_on,$rematchsanity_on,psychic_dario,item_locations_on"
+            ]
+          },
+          {
+            "name": "Surf Encounters",
+            "chest_unopened_img": "images/locations/surfing.png",
+            "chest_opened_img": "images/locations/surfing_bw.png",
+            "item_count": 3,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Seven Island Town Access,$surf",
+              "@Trainer Tower Exterior Access,$surf"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Old Rod Encounters",
+            "chest_unopened_img": "images/locations/old_rod.png",
+            "chest_opened_img": "images/locations/old_rod_bw.png",
+            "access_rules": [
+              "@Seven Island Town Access,old_rod",
+              "@Trainer Tower Exterior Access,old_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Good Rod Encounters",
+            "chest_unopened_img": "images/locations/good_rod.png",
+            "chest_opened_img": "images/locations/good_rod_bw.png",
+            "item_count": 2,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Seven Island Town Access,good_rod",
+              "@Trainer Tower Exterior Access,good_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Super Rod Encounters",
+            "chest_unopened_img": "images/locations/super_rod.png",
+            "chest_opened_img": "images/locations/super_rod_bw.png",
+            "item_count": 5,
+            "clear_as_group": false,
+            "access_rules": [
+              "@Seven Island Town Access,super_rod",
+              "@Trainer Tower Exterior Access,super_rod"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 244,
+            "y": 220,
+            "size": 4
+          },
+          {
+            "map": "sevii_67",
+            "x": 52,
+            "y": 76,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Trainer Tower",
+        "access_rules": [
+          "@Trainer Tower Exterior Access"
+        ],
+        "sections": [
+          {
+            "name": "Shop Items",
+            "chest_unopened_img": "images/locations/union_room_receptionist.png",
+            "chest_opened_img": "images/locations/union_room_receptionist_bw.png",
+            "item_count": 9,
+            "clear_as_group": false,
+            "visibility_rules": [
+              "shopsanity_on,item_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 244,
+            "y": 212,
+            "size": 4
+          },
+          {
+            "map": "sevii_67",
+            "x": 52,
+            "y": 68,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Navel Rock",
+        "sections": [
+          {
+            "name": "Hidden Item Near Ho-Oh",
+            "chest_unopened_img": "images/locations/hidden_item.png",
+            "chest_opened_img": "images/locations/hidden_item_bw.png",
+            "access_rules": [
+              "@Navel Rock Exterior Access,$shuffle_dungeons_off,itemfinder",
+              "navel_rock_exit,$shuffle_dungeons_on,itemfinder"
+            ],
+            "visibility_rules": [
+              "hidden_nonrecurring,item_locations_on"
+            ]
+          },
+          {
+            "name": "Summit - Legendary Pokémon",
+            "chest_unopened_img": "images/locations/ho_oh.png",
+            "chest_opened_img": "images/locations/ho_oh_bw.png",
+            "access_rules": [
+              "@Navel Rock Exterior Access,$shuffle_dungeons_off",
+              "navel_rock_exit,$shuffle_dungeons_on"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Base - Legendary Pokémon",
+            "chest_unopened_img": "images/locations/lugia.png",
+            "chest_opened_img": "images/locations/lugia_bw.png",
+            "access_rules": [
+              "@Navel Rock Exterior Access,$shuffle_dungeons_off",
+              "navel_rock_exit,$shuffle_dungeons_on"
+            ],
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          },
+          {
+            "name": "Navel Rock Entrance",
+            "hosted_item": "navel_rock_hosted",
+            "access_rules": [
+              "@Navel Rock Exterior Access"
+            ],
+            "visibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 284,
+            "y": 84,
+            "size": 4
+          },
+          {
+            "map": "kanto",
+            "x": 156,
+            "y": 134,
+            "size": 4,
+            "force_invisibility_rules": [
+              "kanto_only_off"
+            ]
+          },
+          {
+            "map": "sevii_45",
+            "x": 92,
+            "y": 84,
+            "size": 4
+          }
+        ]
+      },
+      {
+        "name": "Birth Island",
+        "access_rules": [
+          "@Birth Island Exterior Access"
+        ],
+        "sections": [
+          {
+            "name": "Legendary Pokémon",
+            "chest_unopened_img": "images/locations/deoxys.png",
+            "chest_opened_img": "images/locations/deoxys_bw.png",
+            "visibility_rules": [
+              "pokemon_locations_on"
+            ]
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "kanto_sevii",
+            "x": 348,
+            "y": 268,
+            "size": 4
+          },
+          {
+            "map": "kanto",
+            "x": 180,
+            "y": 134,
+            "size": 4,
+            "force_invisibility_rules": [
+              "kanto_only_off"
+            ]
+          },
+          {
+            "map": "sevii_67",
+            "x": 156,
+            "y": 124,
+            "size": 4
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,22 @@
+[Unit]
+Description=SekaiLink Nexus Admin Agent
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=sekailink
+Group=sekailink
+WorkingDirectory=/opt/sekailink/nexus/admin-agent
+ExecStart=/opt/sekailink/nexus/admin-agent/bin/sekailink_admin_agent_service \
+  --config /opt/sekailink/nexus/admin-agent/config/admin_agent.json
+Restart=always
+RestartSec=2
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/sekailink/nexus /var/log/mariadb
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,23 @@
+[
+    {
+        "name": "Debug",
+        "access_rules": [
+            [
+                "$has_access_to|RidleyRoomOut"
+            ]
+        ],
+        "sections": [
+            {
+                "name": "",
+                "item_count": 1
+            }
+        ],
+        "map_locations": [
+            {
+                "map": "fullmap",
+                "x": 0,
+                "y": 0
+            }
+        ]
+    }
+]

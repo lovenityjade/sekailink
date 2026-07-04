@@ -1,0 +1,18 @@
+{
+    "dungeon_items_ganons_castle":{
+    "type": "itemgrid",
+            "item_margin": "2, 2",
+            "h_alignment": "left",
+            "item_h_alignment": "center",
+            "item_v_alignment": "center",
+            "item_height": 36,
+            "item_width": 36,
+            "rows": [
+            ["Ganons_Castle"],
+            ["Map(GanonsCastle)"],
+            ["Compass(GanonsCastle)"],
+            ["MQSmallKey(GanonsCastle)"],
+            ["BossKey(GanonsCastle)"]
+            ]
+            }
+}

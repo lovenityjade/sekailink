@@ -1,0 +1,46 @@
+{
+    "tracker_broadcast": {
+        "type": "container",
+        "background": "#00000000",
+        "content": {
+            "type": "dock",
+            "dropshadow": true,
+            "content": [
+                {
+                    "type": "dock",
+                    "dock": "left",
+                    "v_alignment": "stretch",
+                    "content": [
+                        {
+                            "type": "group",
+                            "header": "Items",
+                            "dock": "top",
+                            "content": {
+                                "type": "layout",
+                                "key": "item_grid"
+                            }
+                        },
+                        {
+                            "type": "group",
+                            "header": "Spells",
+                            "dock": "top",
+                            "content": {
+                                "type": "layout",
+                                "key": "spell_grid"
+                            }
+                        },
+                        {
+                            "type": "group",
+                            "header": "Keys",
+                            "dock": "top",
+                            "content": {
+                                "type": "layout",
+                                "key": "key_grid"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

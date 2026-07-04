@@ -1,0 +1,13 @@
+{
+  "http_port": 19096,
+  "listen_host": "127.0.0.1",
+  "sqlite_path": "/opt/sekailink/nexus/lobby-admin/data/lobbies.sqlite3",
+  "admin_token": "replace-nexus-lobby-admin-token",
+  "state_path": "/opt/sekailink/nexus/lobby-admin/data/lobby_admin_state.json",
+  "runtime_bridge": {
+    "enabled": true,
+    "host": "127.0.0.1",
+    "port": 19197,
+    "admin_token": "replace-link-lobby-runtime-token"
+  }
+}

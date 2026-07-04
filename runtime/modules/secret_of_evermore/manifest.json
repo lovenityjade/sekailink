@@ -1,0 +1,47 @@
+{
+  "game_id": "secret_of_evermore",
+  "display_name": "Secret of Evermore",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apsoe"
+  ],
+  "patch_world_module": "worlds.soe",
+  "ap_world": "soe",
+  "required_roms": [
+    "secret_of_evermore"
+  ],
+  "client_mode": "web_ap_client",
+  "ap_client": "web_ap_client",
+  "web_ap_client": {
+    "game_key": "secret_of_evermore",
+    "client": "ap-soeclient",
+    "url": "http://evermizer.com/apclient/",
+    "source": "third_party/upstream/ap-soeclient",
+    "requires_sni_bridge": true
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [
+      "6e9c94511d04fac6e0a1e582c170be3a"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "snes9x",
+    "ap_game": "Secret of Evermore"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "https://github.com/Cyb3RGER/evermizer-tracker-package/releases/latest",
+  "support_status": "supported",
+  "tracker_status": "trackerless_supported",
+  "compatibility_notes": "Linux send/reception confirmed through the upstream Evermizer browser AP client and SekaiLink web_ap_client wrapper. Uses Snes9x core to match the Evermizer/SNI browser-client runtime path. Windows validation is still required before Canonical promotion.",
+  "tracker_pack_path": "poptracker/packs/secret_of_evermore/pack"
+}

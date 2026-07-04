@@ -1,0 +1,26 @@
+{
+  "bridge_id": "alttp-linkedworld-memory-contract",
+  "linkedworld_id": "alttp",
+  "status": "linkedworld-owned-memory-contract-transitional-canonical",
+  "primary_contract": "bridge/sklmi.phase1.json",
+  "contract_family": "sklmi",
+  "contract_version": "1.0",
+  "source_snapshot": "source-snapshots/sklmi.phase1.current.json",
+  "compatibility_targets": {
+    "sekaiemu": "pending",
+    "sklmi": "1.0",
+    "link_room": "pending"
+  },
+  "current_coverage": {
+    "checks_status": "client-check-surface-plus-shops-declared",
+    "actions_status": "int-coded-item-surface-declared",
+    "declared_check_count": 286,
+    "declared_action_count": 145,
+    "test_reference": "sklmi/tests/sklmi_alttp_golden_main.cpp"
+  },
+  "notes": [
+    "The filename remains phase1 for path stability, but the content is owned here as ALTTP linkedworld data rather than as SKLMI-specific business logic.",
+    "This bridge was expanded only from local clean-room and read-only reference evidence, not from guessed runtime behavior.",
+    "Tracker and room bindings should treat this file as the active ALTTP memory contract while semantic tracker bindings catch up."
+  ]
+}

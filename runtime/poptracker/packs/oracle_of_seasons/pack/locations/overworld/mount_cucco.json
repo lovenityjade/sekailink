@@ -1,0 +1,231 @@
+[
+	{
+		"name": "Mount Cucco",
+		"chest_unopened_img": "images/labels/chest.png",
+		"chest_opened_img": "images/labels/chestopen.png",
+		"color": "#00ff08",
+		"children": [
+			{
+				"name": "Spring Banana",
+				"sections": [
+					{
+						"name": "Mt. Cucco: Spring Banana Tree",
+						"access_rules": ["^$CanReach|BananaTree"]
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 2513,
+						"y": 38
+					}
+				]
+			},
+			{
+				"name": "Mt. Cucco Portal",
+				"chest_unopened_img": "images/labels/portal.png",
+				"chest_opened_img": "images/labels/portalgray.png",
+				"visibility_rules": [
+					"portalshuffleon",
+					"portalshuffleoutward"
+				],
+				"sections": [
+					{
+						"access_rules": ["{^$CanReach|LowerMtCucco}"],
+						"inspectable_sequence_break": true
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 2312,
+						"y": 215,
+						"shape": "trapezoid"
+					}
+				]
+			},
+			{
+				"name": "Mt. Cucco Cave",
+				"sections": [
+					{
+						"name": "Mt. Cucco: Moving Platform Cave",
+						"access_rules": ["^$CanReach|MtCuccoPlatformCave"]
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 2519,
+						"y": 183
+					}
+				]
+			},
+			{
+				"name": "Mount Cucco Gasha Spot",
+				"visibility_rules": ["^$CanSeeGasha|1"],
+				"sections": [
+					{
+						"name": "Behind Mushrooms",
+						"chest_unopened_img": "images/items/gasha_spot.png",
+						"chest_opened_img": "images/items/gasha_spot_gray.png",
+						"access_rules": ["^$CanReach|MtCuccoGasha"]
+					},
+					{
+						"name": "Harvested",
+						"chest_unopened_img": "images/items/gasha_nut.png",
+						"chest_opened_img": "images/items/gasha_nut_gray.png",
+						"access_rules": ["^$HasPlanted|@Mount Cucco/Mount Cucco Gasha Spot/Behind Mushrooms"]
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 2424,
+						"y": 168
+					}
+				]
+			},
+			{
+				"name": "Talon's Cave",
+				"sections": [
+					{
+						"name": "Mt. Cucco: Talon Trade",
+						"access_rules": ["^$CanReach|TalonReward"]
+					},
+					{
+						"name": "Mt. Cucco: Chest Behind Talon",
+						"access_rules": ["^$CanReach|TalonChest"]
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 1880,
+						"y": 170
+					}
+				]
+			},
+			{
+				"name": "Diving Spot Outside D4",
+				"sections": [
+					{
+						"name": "Mt. Cucco: Diving Spot Outside D4",
+						"access_rules": ["^$CanReach|MtCuccoDiveSpot"]
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 2217,
+						"y": 152
+					}
+				]
+			},
+			{
+				"name": "Mt. Cucco Heart Piece",
+				"sections": [
+					{
+						"name": "Mt. Cucco: Item on Ledge",
+						"access_rules": ["^$CanReach|MtCuccoLedge"]
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 2136,
+						"y": 280
+					}
+				]
+			},
+			{
+				"name": "Enter D4",
+				"visibility_rules": ["ShuffleDungeonOn"],
+				"sections": [
+					{
+						"name": "Dancing Dragon Dungeon",
+						"access_rules": ["{^$CanReach|DancingDragonDungeon}"],
+						"chest_unopened_img": "images/labels/dungeon_eye.png",
+						"chest_opened_img": "images/labels/dungeon_eye_disabled.png",
+						"inspectable_sequence_break": true
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 2078,
+						"y": 152,
+						"shape": "trapezoid"
+					}
+				]
+			},
+			{
+				"name": "Dancing Dragon Dungeon",
+				"sections": [
+					{
+						"name": "Dancing Dragon Dungeon (2F): Chest North of Entrance",
+						"ref": "Dancing Dragon Dungeon/Chest North of Entrance/2F"
+					},
+					{
+						"name": "Dancing Dragon Dungeon (2F): Pots on Buttons Puzzle Drop",
+						"ref": "Dancing Dragon Dungeon/Pots on Buttons Puzzle Drop/2F"
+					},
+					{
+						"name": "Dancing Dragon Dungeon (1F): Chest in Southwest Quadrant of Beamos Room",
+						"ref": "Dancing Dragon Dungeon/Chest in Southwest Quadrant of Beamos Room/1F"
+					},
+					{
+						"name": "Dancing Dragon Dungeon (1F): Dark Room Chest",
+						"ref": "Dancing Dragon Dungeon/Dark Room Chest/1F"
+					},
+					{
+						"name": "Dancing Dragon Dungeon (2F): Chest in Water Donut Room",
+						"ref": "Dancing Dragon Dungeon/Chest in Water Donut Room/2F"
+					},
+					{
+						"name": "Dancing Dragon Dungeon (2F): Pool Drop",
+						"ref": "Dancing Dragon Dungeon/Pool Drop/2F"
+					},
+					{
+						"name": "Dancing Dragon Dungeon (1F): Chest on Small Terrace",
+						"ref": "Dancing Dragon Dungeon/Chest on Small Terrace/1F"
+					},
+					{
+						"name": "Dancing Dragon Dungeon (1F): Business Scrub",
+						"ref": "Dancing Dragon Dungeon/Business Scrub/1F"
+					},
+					{
+						"name": "Dancing Dragon Dungeon (1F): Chest Revealed by Minecart Torches",
+						"ref": "Dancing Dragon Dungeon/Chest Revealed by Minecart Torches/1F"
+					},
+					{
+						"name": "Dancing Dragon Dungeon (1F): Wild Ember Seeds",
+						"ref": "Dancing Dragon Dungeon/Wild Ember Seeds/1F"
+					},
+					{
+						"name": "Dancing Dragon Dungeon (1F): Crumbling Room Chest",
+						"ref": "Dancing Dragon Dungeon/Crumbling Room Chest/1F"
+					},
+					{
+						"name": "Dancing Dragon Dungeon (1F): Eye Diving Spot Item",
+						"ref": "Dancing Dragon Dungeon/Eye Diving Spot Item/1F"
+					},
+					{
+						"name": "Dancing Dragon Dungeon (B1F): Boss Reward",
+						"ref": "Dancing Dragon Dungeon/Boss Reward/Gohma"
+					},
+					{
+						"name": "Soothing Rain",
+						"ref": "Dancing Dragon Dungeon/Soothing Rain/Essence"
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 2136,
+						"y": 152
+					}
+				]
+			}
+		]
+	}
+]

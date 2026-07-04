@@ -1,0 +1,154 @@
+/* Tracker panel (React port) */
+.skl-tracker-view {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  color: #e4f0ea;
+}
+
+.skl-tracker-empty {
+  padding: 16px;
+  color: #cfe8dd;
+}
+
+.skl-tracker-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.skl-tracker-tabs {
+  display: flex;
+  gap: 6px;
+  background: rgba(12, 28, 21, 0.7);
+  border-radius: 999px;
+  border: 1px solid rgba(92, 231, 181, 0.2);
+  padding: 4px;
+}
+
+.skl-tracker-tabs button {
+  border: none;
+  background: transparent;
+  color: #d4efe3;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.skl-tracker-tabs button.active {
+  background: linear-gradient(120deg, rgba(92, 231, 181, 0.85), rgba(157, 245, 205, 0.75));
+  color: #06110b;
+}
+
+.skl-tracker-actions input {
+  border: 1px solid rgba(92, 231, 181, 0.2);
+  border-radius: 8px;
+  padding: 6px 8px;
+  background: rgba(8, 20, 14, 0.7);
+  color: #e4f0ea;
+  width: 220px;
+}
+
+.skl-tracker-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.skl-tracker-filter label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #cfe8dd;
+  font-size: 12px;
+}
+
+.skl-tracker-filter select {
+  border: 1px solid rgba(92, 231, 181, 0.2);
+  border-radius: 8px;
+  padding: 4px 8px;
+  background: rgba(8, 20, 14, 0.7);
+  color: #e4f0ea;
+}
+
+.skl-tracker-tables {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: auto;
+}
+
+.skl-tracker-table {
+  border-radius: 12px;
+  border: 1px solid rgba(190, 140, 255, 0.25);
+  background: rgba(10, 14, 18, 0.6);
+  padding: 12px;
+  overflow: auto;
+}
+
+.skl-tracker-table h4 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: #d4efe3;
+}
+
+.skl-tracker-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.skl-tracker-table thead th {
+  position: sticky;
+  top: 0;
+  background: rgba(14, 32, 24, 0.85);
+  padding: 6px;
+  text-align: left;
+}
+
+.skl-tracker-table tbody td {
+  border: 1px solid rgba(92, 231, 181, 0.15);
+  padding: 4px 6px;
+}
+
+.skl-tracker-table tbody tr:hover {
+  background-color: rgba(92, 231, 181, 0.12);
+}
+
+.skl-tracker-table .center {
+  text-align: center;
+}
+
+.skl-tracker-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.skl-tracker-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #cfe8dd;
+}
+
+.skl-tracker-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #cfe8dd;
+}
+
+.skl-tracker-footer a {
+  color: #5ce7b5;
+  text-decoration: none;
+}

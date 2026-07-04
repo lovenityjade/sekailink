@@ -1,0 +1,260 @@
+general_options:
+  # Where to place output files
+  output_path: "output"
+# Options for MultiServer
+# Null means nothing, for the server this means to default the value
+# These overwrite command line arguments!
+server_options:
+  host: null
+  port: 38281
+  password: null
+  multidata: null
+  savefile: null
+  disable_save: false
+  loglevel: "info"
+  logtime: false
+  # Allows for clients to log on and manage the server.  If this is null, no remote administration is possible.
+  server_password: null
+  # Disallow !getitem
+  disable_item_cheat: false
+  # Client hint system
+  # Points given to a player for each acquired item in their world
+  location_check_points: 1
+  # Relative point cost to receive a hint via !hint for players
+  # so for example hint_cost: 20 would mean that for every 20% of available checks, you get the ability to hint,
+  # for a total of 5
+  hint_cost: 10
+  # Release modes
+  # A Release sends out the remaining items *from* a world that releases
+  # "disabled" -> clients can't release,
+  # "enabled" -> clients can always release
+  # "auto" -> automatic release on goal completion
+  # "auto-enabled" -> automatic release on goal completion and manual release is also enabled
+  # "goal" -> release is allowed after goal completion
+  release_mode: "auto"
+  # Collect modes
+  # A Collect sends the remaining items *to* a world that collects
+  # "disabled" -> clients can't collect,
+  # "enabled" -> clients can always collect
+  # "auto" -> automatic collect on goal completion
+  # "auto-enabled" -> automatic collect on goal completion and manual collect is also enabled
+  # "goal" -> collect is allowed after goal completion
+  collect_mode: "auto"
+  # Hint modes
+  # Decides if hints pointing towards a player's own world display the exact location
+  # "default" -> hints are shown in full no matter which world
+  # "own" -> hints pointing towards the hinting player's world do not expose the exact location unless hinted and paid for again.
+  # "all" -> hints do not expose the exact location unless hinted and paid for again.
+  hint_mode: "default"
+  # Remaining modes
+  # !remaining handling, that tells a client which items remain in their pool
+  # "enabled" -> Client can always ask for remaining items
+  # "disabled" -> Client can never ask for remaining items
+  # "goal" -> Client can ask for remaining items after goal completion
+  remaining_mode: "goal"
+  # Countdown modes
+  # Determines whether or not a player can initiate a countdown with !countdown
+  # Note that /countdown is always available to the host.
+  # "enabled" -> Client can always initiate a countdown with !countdown.
+  # "disabled" -> Client can never initiate a countdown with !countdown.
+  # "auto" -> !countdown will be available for any room with less than 30 slots.
+  countdown_mode: "auto"
+  # Automatically shut down the server after this many seconds without new location checks, 0 to keep running
+  auto_shutdown: 0
+  # Compatibility handling
+  # 2 -> Recommended for casual/cooperative play, attempt to be compatible with everything across all versions
+  # 1 -> No longer in use, kept reserved in case of future use
+  # 0 -> Recommended for tournaments to force a level playing field, only allow an exact version match
+  compatibility: 2
+  # log all server traffic, mostly for dev use
+  log_network: 0
+# Options for Generation
+generator:
+  # Location of your Enemizer CLI, available here: https://github.com/Ijwu/Enemizer/releases
+  enemizer_path: "EnemizerCLI/EnemizerCLI.Core"
+  # Folder from which the player yaml files are pulled from
+  player_files_path: "Players"
+  # amount of players, 0 to infer from player files
+  players: 0
+  # general weights file, within the stated player_files_path location
+  # gets used if players is higher than the amount of per-player files found to fill remaining slots
+  weights_file_path: "weights.yaml"
+  # Meta file name, within the stated player_files_path location
+  meta_file_path: "meta.yaml"
+  # Create a spoiler file
+  # 0 -> None
+  # 1 -> Spoiler without playthrough or paths to playthrough required items
+  # 2 -> Spoiler with playthrough (viable solution to goals)
+  # 3 -> Spoiler with playthrough and traversal paths towards items
+  spoiler: 3
+  # Create encrypted race roms and flag games as race mode
+  race: 0
+  # List of options that can be plando'd. Can be combined, for example "bosses, items"
+  # Available options: bosses, items, texts, connections
+  plando_options: "bosses, connections, texts"
+  # What to do if the current item placements appear unsolvable.
+  # raise -> Raise an exception and abort.
+  # swap -> Attempt to fix it by swapping prior placements around. (Default)
+  # start_inventory -> Move remaining items to start_inventory, generate additional filler items to fill locations.
+  panic_method: "swap"
+  loglevel: "info"
+  logtime: false
+sni_options:
+  # Set this to your SNI folder location if you want the MultiClient to attempt an auto start, does nothing if not found
+  sni_path: ""
+  # Set this to false to never autostart a rom (such as after patching)
+  # True for operating system default program
+  # Alternatively, a path to a program to open the .sfc file with
+  snes_rom_start: true
+bizhawkclient_options:
+  # The location of the EmuHawk you want to auto launch patched ROMs with
+  emuhawk_path: "None"
+  # Set this to true to autostart a patched ROM in BizHawk with the connector script,
+  # to false to never open the patched rom automatically,
+  # or to a path to an external program to open the ROM file with that instead.
+  rom_start: true
+albw_settings:
+  rom_file: "Legend of Zelda, The - A Link Between Worlds (USA) (En,Fr,Es).cci"
+dk64_options:
+  release_branch: "master"
+  enable_minimal_logic_dk64: false
+dkc2_options:
+  rom_file: "roms/donkey_kong_country_2.sfc"
+  ut_poptracker_path: ""
+  trivia_path: "data/trivia/dkc2"
+dkc3_options:
+  rom_file: "roms/donkey_kong_country_3.sfc"
+dkc_options:
+  rom_file: "roms/donkey_kong_country.smc"
+earthbound_options:
+  rom_file: "roms/earthbound.sfc"
+ff4fe_options:
+  rom_file: "Final Fantasy II (USA) (Rev A).sfc"
+  rom_start: true
+ffr_options:
+  display_msgs: true
+ffta_options:
+  # File name of your Final Fantasy Tactics Advance ROM
+  rom_file: "roms/final_fantasy_tactics_advance.gba"
+ffvcd_options:
+  rom_file: "roms/final_fantasy_v.sfc"
+kdl3_options:
+  rom_file: "roms/kirbys_dream_land_3.sfc"
+ladx_beta_options:
+  rom_file: "roms/links_awakening_dx.gbc"
+  rom_start: true
+  gfx_mod_file: ""
+  retroarch_host: "127.0.0.1:55355"
+ladx_options:
+  rom_file: "Legend of Zelda, The - Link's Awakening DX (USA, Europe) (SGB Enhanced).gbc"
+  rom_start: true
+  gfx_mod_file: ""
+lttp_options:
+  # File name of the v1.0 J rom
+  rom_file: "roms/alttp.sfc"
+lufia2ac_options:
+  rom_file: "roms/lufia_ii.sfc"
+luigismansion_options:
+  iso_file: "None"
+  dolphin_settings:
+    path: ""
+    additional_args: []
+    auto_start: true
+  dolphin_process_name: ""
+metroidfusion_options:
+  rom_file: "roms/metroid_fusion.gba"
+  rom_start: true
+  display_location_found_messages: true
+metroidprime_options:
+  rom_file: "Metroid_Prime.iso"
+  rom_start: false
+mlss_options:
+  rom_file: "roms/mario_luigi_superstar_saga.gba"
+  rom_start: true
+mm2_options:
+  rom_file: "roms/mega_man_2.nes"
+mm3_options:
+  rom_file: "roms/mega_man_3.nes"
+mmbn3_options:
+  rom_file: "roms/mega_man_battle_network_3.gba"
+  rom_start: true
+mmx3_options:
+  rom_file: "roms/mega_man_x3.sfc"
+mzm_options:
+  rom_file: "roms/metroid_zero_mission.gba"
+  rom_start: true
+  universal_tracker_setings:
+    show_tricks: "next_level"
+oot_options:
+  rom_file: "The Legend of Zelda - Ocarina of Time.z64"
+  rom_start: true
+paper_mario_settings:
+  rom_file: "Paper Mario (USA).z64"
+  rom_start: true
+pokemon_crystal_settings:
+  rom_file: "roms/pokemon_crystal.gbc"
+pokemon_emerald_settings:
+  rom_file: "roms/pokemon_emerald.gba"
+pokemon_frlg_settings:
+  firered_rom_file: "roms/pokemon_firered.gba"
+  leafgreen_rom_file: "roms/pokemon_leafgreen.gba"
+  ut_poptracker_path: ""
+pokemon_rb_options:
+  red_rom_file: "roms/pokemon_red.gb"
+  blue_rom_file: "roms/pokemon_red.gb"
+sf64_options:
+  rom_path: ""
+  patch_path: ""
+  program_path: ""
+  program_args: "--lua=runtime/ap/data/lua/connector_sf64_bizhawk.lua"
+  enable_tracker: true
+sm_options:
+  rom_file: "roms/super_metroid.sfc"
+sml2_options:
+  rom_file: "Super Mario Land 2 - 6 Golden Coins (USA, Europe).gb"
+sms_options:
+  iso_file: "None"
+smw_options:
+  rom_file: "roms/super_mario_world.sfc"
+soe_options:
+  rom_file: "roms/secret_of_evermore.sfc"
+som_options:
+  rom_file: "roms/secret_of_mana.sfc"
+tetrisattack_options:
+  rom_file: "Tetris Attack (USA) (En,Ja).sfc"
+tloz_ooa_options:
+  rom_file: "roms/oracle_of_ages.gbc"
+  heart_beep_interval: "vanilla"
+  character_sprite: "link"
+  character_palette: "green"
+  qol_mermaid_suit: true
+  qol_quick_flute: true
+  skip_tokkey_dance: false
+  skip_boi_joke: false
+tloz_oos_options:
+  rom_file: "roms/oracle_of_seasons.gbc"
+  ages_rom_file: "Legend of Zelda, The - Oracle of Ages (USA).gbc"
+  rom_start: true
+  character_sprite: "link"
+  character_palette: "green"
+  reveal_hidden_subrosia_digging_spots: true
+  heart_beep_interval: "vanilla"
+  remove_music: false
+tloz_options:
+  rom_file: "roms/the_legend_of_zelda.nes"
+  rom_start: true
+  display_msgs: true
+tmc_options:
+  rom_file: "roms/the_minish_cap.gba"
+  rom_start: true
+ttyd_options:
+  dolphin_path: "None"
+  rom_file: "Paper Mario - The Thousand-Year Door (USA).iso"
+  rom_start: true
+wl4_options:
+  rom_file: "roms/wario_land_4.gba"
+  rom_start: true
+wl_options:
+  rom_file: "roms/wario_land.gb"
+zelda2_options:
+  rom_file: "roms/zelda_ii.nes"

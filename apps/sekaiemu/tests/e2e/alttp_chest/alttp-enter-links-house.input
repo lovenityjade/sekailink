@@ -1,0 +1,10 @@
+# Creates a deterministic Link's House savestate from the ALTTP boot/name flow.
+#
+# Format:
+#   frame_start..frame_end BUTTON[,BUTTON]
+#
+# The timing is calibrated against bsnes-mercury performance and the current
+# AP_78856210104802680998 ALTTP patch used by the Beta-3 heartbeat proof.
+1850..1870 START
+1900..1920 A
+1950..1970 START

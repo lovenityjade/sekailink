@@ -1,0 +1,431 @@
+#include "api_internal.hpp"
+
+#include <algorithm>
+#include <filesystem>
+#include <fstream>
+#include <regex>
+#include <sstream>
+
+namespace sekailink::sklmi {
+
+namespace {
+
+bool is_allowed_write_source(std::string_view source) {
+    return source.empty() || source == "constant" || source == "current_plus" || source == "current_plus_delta";
+}
+
+bool domain_declared(const CoreProfileManifest& core_profile, std::string_view domain_id) {
+    return core_profile.domain_ids.empty() ||
+           std::find(core_profile.domain_ids.begin(), core_profile.domain_ids.end(), domain_id) != core_profile.domain_ids.end();
+}
+
+bool is_allowed_archipelago_wrapper(std::string_view wrapper) {
+    return wrapper.empty() || wrapper == "text" || wrapper == "bizhawk" || wrapper == "sni" ||
+           wrapper == "oot" || wrapper == "dolphin" || wrapper == "module";
+}
+
+std::vector<std::string> extract_string_array_field(const std::string& text, const std::string& key) {
+    std::vector<std::string> values;
+    const auto key_pos = text.find("\"" + key + "\"");
+    if (key_pos == std::string::npos) return values;
+    const auto open = text.find('[', key_pos);
+    if (open == std::string::npos) return values;
+    const auto close = text.find(']', open);
+    if (close == std::string::npos) return values;
+    const auto body = text.substr(open + 1, close - open - 1);
+    const std::regex string_pattern("\"([^\"]*)\"");
+    for (std::sregex_iterator it(body.begin(), body.end(), string_pattern), end; it != end; ++it) {
+        if (it->size() > 1) values.push_back((*it)[1].str());
+    }
+    return values;
+}
+
+ArchipelagoClientWrapperConfig parse_archipelago_client_wrapper(const std::string& parse_source) {
+    ArchipelagoClientWrapperConfig config;
+    auto block = detail::extract_object_field_block(parse_source, "archipelago_client_wrapper");
+    if (!block.has_value()) block = detail::extract_object_field_block(parse_source, "archipelago_client");
+    if (!block.has_value()) block = detail::extract_object_field_block(parse_source, "ap_client_wrapper");
+    if (!block.has_value()) return config;
+
+    config.enabled = detail::extract_bool_field(*block, "enabled").value_or(true);
+    config.game_key = detail::extract_string_field(*block, "game_key")
+                          .value_or(detail::extract_string_field(*block, "gameKey").value_or(""));
+    config.game = detail::extract_string_field(*block, "game").value_or("");
+    config.platform = detail::extract_string_field(*block, "platform").value_or("");
+    config.world = detail::extract_string_field(*block, "world").value_or("");
+    config.wrapper = detail::extract_string_field(*block, "wrapper")
+                         .value_or(detail::extract_string_field(*block, "kind").value_or(""));
+    config.module = detail::extract_string_field(*block, "module").value_or("");
+    config.client_file = detail::extract_string_field(*block, "client_file")
+                             .value_or(detail::extract_string_field(*block, "clientFile").value_or(""));
+    config.status = detail::extract_string_field(*block, "status").value_or("");
+    config.dependency_hints = extract_string_array_field(*block, "requires");
+    return config;
+}
+
+std::optional<BridgeManifest> parse_bridge_manifest_text(const std::string& text,
+                                                         const std::filesystem::path& path,
+                                                         std::string* error) {
+    BridgeManifest manifest;
+    std::string parse_source = text;
+    const auto embedded_sklmi = detail::extract_object_field_block(text, "sklmi");
+    const bool is_linkedworld = embedded_sklmi.has_value();
+    if (is_linkedworld) {
+        const auto sklmi_key_pos = text.find("\"sklmi\"");
+        const auto linkedworld_header = sklmi_key_pos == std::string::npos ? text : text.substr(0, sklmi_key_pos);
+        const auto linkedworld_type = detail::extract_string_field(linkedworld_header, "type");
+        if (!linkedworld_type.has_value() || *linkedworld_type != "linkedworld") {
+            if (error) *error = "linkedworld_invalid_type";
+            return std::nullopt;
+        }
+        parse_source = *embedded_sklmi;
+        manifest.linkedworld_id = detail::extract_string_field(linkedworld_header, "id").value_or(
+            detail::extract_string_field(linkedworld_header, "linkedworld_id").value_or(""));
+        manifest.linkedworld_version = detail::extract_string_field(linkedworld_header, "version").value_or("");
+    } else {
+        manifest.linkedworld_id = detail::extract_string_field(text, "linkedworld_id").value_or("");
+        manifest.linkedworld_version = detail::extract_string_field(text, "linkedworld_version").value_or("");
+    }
+
+    if (detail::contains_forbidden_programming_fields(parse_source)) {
+        if (error) *error = "manifest_contains_forbidden_programming_fields";
+        return std::nullopt;
+    }
+
+    manifest.contract_version =
+        detail::extract_string_field(parse_source, "contract_version").value_or(is_linkedworld ? "1.0" : "legacy-bridge-v1");
+    manifest.bridge_id = detail::extract_string_field(parse_source, "bridge_id").value_or("default-bridge");
+    manifest.driver_instance_id =
+        detail::extract_string_field(parse_source, "driver_instance_id").value_or(manifest.bridge_id);
+    manifest.source_module = path.filename().string();
+    manifest.module = detail::extract_string_field(parse_source, "module").value_or(is_linkedworld ? "linkedworld.sklmi" : "manifest");
+    manifest.state_file = detail::extract_string_field(parse_source, "state_file").value_or("");
+    manifest.poll_interval_ms = detail::extract_uint_field(parse_source, "poll_interval_ms").value_or(16);
+    manifest.core_profile.name = detail::extract_string_field(parse_source, "core_profile").value_or("");
+    if (manifest.core_profile.name.empty()) {
+        if (const auto core_profile_block = detail::extract_object_field_block(parse_source, "core_profile")) {
+            manifest.core_profile.name = detail::extract_string_field(*core_profile_block, "name").value_or("");
+            const auto domains = detail::extract_object_blocks(*core_profile_block, "domains");
+            for (const auto& block : domains) {
+                if (const auto domain_id = detail::extract_string_field(block, "id")) {
+                    manifest.core_profile.domain_ids.push_back(*domain_id);
+                }
+            }
+        }
+    }
+    if (manifest.core_profile.name.empty() && !is_linkedworld) {
+        manifest.core_profile.name = "legacy.default";
+    }
+
+    manifest.archipelago_client_wrapper = parse_archipelago_client_wrapper(parse_source);
+
+    for (const auto& block : detail::extract_object_blocks(parse_source, "checks")) {
+        WatchRule rule;
+        rule.domain_id = detail::extract_string_field(block, "domain_id").value_or("");
+        rule.address = detail::extract_uint_field(block, "address").value_or(0);
+        rule.size = detail::extract_uint_field(block, "size").value_or(1);
+        rule.dynamic_source = detail::extract_string_field(block, "dynamic_source").value_or("");
+        rule.dynamic_flag_id = detail::extract_uint_field(block, "dynamic_flag_id");
+        if (const auto compare = detail::extract_string_field(block, "compare")) {
+            const auto parsed = parse_compare_op(*compare);
+            if (!parsed.has_value()) {
+                if (error) *error = "manifest_check_invalid_compare";
+                return std::nullopt;
+            }
+            rule.compare = *parsed;
+        } else {
+            rule.compare = CompareOp::equals;
+        }
+        rule.operand_u64 = detail::extract_uint_field(block, "operand_u64").value_or(
+            detail::extract_uint_field(block, "equals_u64").value_or(0));
+        if (const auto event_type = detail::extract_string_field(block, "event_type")) {
+            const auto parsed = parse_event_type(*event_type);
+            if (!parsed.has_value()) {
+                if (error) *error = "manifest_check_invalid_event_type";
+                return std::nullopt;
+            }
+            rule.event_type = *parsed;
+        } else {
+            rule.event_type = EventType::location_checked;
+        }
+        rule.location_id = detail::extract_uint_field(block, "location_id").value_or(0);
+        rule.location_name = detail::extract_string_field(block, "location_name").value_or("");
+        rule.event_key = detail::extract_string_field(block, "event_key").value_or("");
+        rule.mapped_value = detail::extract_string_field(block, "mapped_value").value_or("");
+        if (rule.event_key.empty()) {
+            rule.event_key = detail::default_check_event_key(rule);
+        }
+        if (rule.mapped_value.empty() && !rule.location_name.empty()) {
+            rule.mapped_value = rule.location_name;
+        }
+        manifest.checks.push_back(rule);
+    }
+
+    for (const auto& block : detail::extract_object_blocks(parse_source, "context_watches")) {
+        ContextWatchRule rule;
+        rule.domain_id = detail::extract_string_field(block, "domain_id").value_or("");
+        rule.address = detail::extract_uint_field(block, "address").value_or(0);
+        rule.size = detail::extract_uint_field(block, "size").value_or(1);
+        rule.context_key = detail::extract_string_field(block, "context_key").value_or("");
+        if (const auto event_type = detail::extract_string_field(block, "event_type")) {
+            const auto parsed = parse_event_type(*event_type);
+            if (!parsed.has_value()) {
+                if (error) *error = "manifest_context_invalid_event_type";
+                return std::nullopt;
+            }
+            rule.event_type = *parsed;
+        } else {
+            rule.event_type = EventType::map_changed;
+        }
+        for (const auto& value_block : detail::extract_object_blocks(block, "values")) {
+            ContextValueMapping mapping;
+            mapping.value = detail::extract_uint_field(value_block, "value").value_or(0);
+            mapping.min_value = detail::extract_uint_field(value_block, "min_value");
+            mapping.max_value = detail::extract_uint_field(value_block, "max_value");
+            mapping.event_key = detail::extract_string_field(value_block, "event_key").value_or("");
+            mapping.mapped_value = detail::extract_string_field(value_block, "mapped_value").value_or("");
+            mapping.tab_id = detail::extract_string_field(value_block, "tab_id").value_or("");
+            mapping.map_id = detail::extract_string_field(value_block, "map_id").value_or("");
+            mapping.zone_id = detail::extract_string_field(value_block, "zone_id").value_or("");
+            rule.values.push_back(std::move(mapping));
+        }
+        manifest.context_watches.push_back(std::move(rule));
+    }
+
+    auto injection_blocks = detail::extract_object_blocks(parse_source, "injections");
+    const auto action_blocks = detail::extract_object_blocks(parse_source, "actions");
+    injection_blocks.insert(injection_blocks.end(), action_blocks.begin(), action_blocks.end());
+
+    for (const auto& block : injection_blocks) {
+        InjectRule rule;
+        rule.domain_id = detail::extract_string_field(block, "domain_id").value_or("");
+        rule.address = detail::extract_uint_field(block, "address").value_or(0);
+        rule.size = detail::extract_uint_field(block, "size").value_or(1);
+        rule.value_u64 = detail::extract_uint_field(block, "value_u64").value_or(0);
+        rule.dynamic_source = detail::extract_string_field(block, "dynamic_source").value_or("");
+        rule.item_id = detail::extract_uint_field(block, "item_id").value_or(0);
+        rule.item_name = detail::extract_string_field(block, "item_name").value_or("");
+        rule.event_key = detail::extract_string_field(block, "event_key").value_or("");
+        rule.mapped_value = detail::extract_string_field(block, "mapped_value").value_or("");
+        rule.room_controlled = detail::extract_bool_field(block, "room_controlled").value_or(false);
+        for (const auto& step_block : detail::extract_object_blocks(block, "writes")) {
+            InjectRule::WriteStep step;
+            step.domain_id = detail::extract_string_field(step_block, "domain_id").value_or("");
+            step.address = detail::extract_uint_field(step_block, "address").value_or(0);
+            step.value_u64 = detail::extract_uint_field(step_block, "value_u64").value_or(0);
+            step.size = detail::extract_uint_field(step_block, "size").value_or(1);
+            step.source = detail::extract_string_field(step_block, "source").value_or("constant");
+            step.delta_u64 = detail::extract_uint_field(step_block, "delta_u64").value_or(0);
+            rule.writes.push_back(std::move(step));
+        }
+        if (rule.event_key.empty()) {
+            rule.event_key = detail::default_injection_event_key(rule);
+        }
+        if (rule.mapped_value.empty() && !rule.item_name.empty()) {
+            rule.mapped_value = rule.item_name;
+        }
+        manifest.injections.push_back(rule);
+    }
+
+    return manifest;
+}
+
+}  // namespace
+
+bool validate_bridge_manifest(const BridgeManifest& manifest, std::string* error) {
+    if (manifest.linkedworld_id.empty()) {
+        if (error) *error = "manifest_missing_linkedworld_id";
+        return false;
+    }
+    if (manifest.bridge_id.empty()) {
+        if (error) *error = "manifest_missing_bridge_id";
+        return false;
+    }
+    if (manifest.driver_instance_id.empty()) {
+        if (error) *error = "manifest_missing_driver_instance_id";
+        return false;
+    }
+    if (manifest.contract_version.empty()) {
+        if (error) *error = "manifest_missing_contract_version";
+        return false;
+    }
+    if (manifest.core_profile.name.empty()) {
+        if (error) *error = "manifest_missing_core_profile";
+        return false;
+    }
+    if (manifest.poll_interval_ms == 0) {
+        if (error) *error = "manifest_invalid_poll_interval";
+        return false;
+    }
+    if (manifest.checks.empty() && manifest.injections.empty()) {
+        if (error) *error = "manifest_missing_bridge_rules";
+        return false;
+    }
+    const auto& wrapper = manifest.archipelago_client_wrapper;
+    if (wrapper.enabled) {
+        if (!is_allowed_archipelago_wrapper(wrapper.wrapper)) {
+            if (error) *error = "manifest_client_wrapper_invalid_wrapper";
+            return false;
+        }
+        if (wrapper.game_key.empty() && wrapper.game.empty()) {
+            if (error) *error = "manifest_client_wrapper_missing_game";
+            return false;
+        }
+        if (wrapper.world.empty()) {
+            if (error) *error = "manifest_client_wrapper_missing_world";
+            return false;
+        }
+        if (wrapper.wrapper.empty()) {
+            if (error) *error = "manifest_client_wrapper_missing_wrapper";
+            return false;
+        }
+        if ((wrapper.wrapper == "module" || wrapper.wrapper == "dolphin") &&
+            wrapper.module.empty() && wrapper.client_file.empty() && wrapper.status != "generator_only") {
+            if (error) *error = "manifest_client_wrapper_missing_entry_point";
+            return false;
+        }
+    }
+
+    for (const auto& rule : manifest.checks) {
+        if (rule.domain_id.empty()) {
+            if (error) *error = "manifest_check_missing_domain_id";
+            return false;
+        }
+        if (!domain_declared(manifest.core_profile, rule.domain_id)) {
+            if (error) *error = "manifest_check_unknown_domain";
+            return false;
+        }
+        if (!rule.dynamic_source.empty() && rule.dynamic_source != "firered_saveblock1_flag") {
+            if (error) *error = "manifest_check_invalid_dynamic_source";
+            return false;
+        }
+        if (!rule.dynamic_source.empty() && !rule.dynamic_flag_id.has_value()) {
+            if (error) *error = "manifest_check_missing_dynamic_flag_id";
+            return false;
+        }
+        if (rule.dynamic_source.empty() && (rule.size == 0 || rule.size > 8)) {
+            if (error) *error = "manifest_check_invalid_size";
+            return false;
+        }
+        if (detail::default_check_event_key(rule).empty()) {
+            if (error) *error = "manifest_check_missing_identity";
+            return false;
+        }
+        if (rule.event_type == EventType::location_checked && rule.location_id == 0 && rule.location_name.empty()) {
+            if (error) *error = "manifest_location_check_missing_canonical_identity";
+            return false;
+        }
+    }
+
+    for (const auto& rule : manifest.context_watches) {
+        if (rule.domain_id.empty()) {
+            if (error) *error = "manifest_context_missing_domain_id";
+            return false;
+        }
+        if (!domain_declared(manifest.core_profile, rule.domain_id)) {
+            if (error) *error = "manifest_context_unknown_domain";
+            return false;
+        }
+        if (rule.size == 0 || rule.size > 8) {
+            if (error) *error = "manifest_context_invalid_size";
+            return false;
+        }
+        if (rule.context_key.empty()) {
+            if (error) *error = "manifest_context_missing_key";
+            return false;
+        }
+        if (rule.event_type != EventType::map_changed) {
+            if (error) *error = "manifest_context_invalid_event_type";
+            return false;
+        }
+        if (rule.values.empty()) {
+            if (error) *error = "manifest_context_missing_values";
+            return false;
+        }
+        for (const auto& mapping : rule.values) {
+            if (mapping.min_value.has_value() && mapping.max_value.has_value() && *mapping.min_value > *mapping.max_value) {
+                if (error) *error = "manifest_context_invalid_range";
+                return false;
+            }
+            if (mapping.tab_id.empty() && mapping.map_id.empty() && mapping.zone_id.empty()) {
+                if (error) *error = "manifest_context_missing_target";
+                return false;
+            }
+        }
+    }
+
+    for (const auto& rule : manifest.injections) {
+        if (detail::default_injection_event_key(rule).empty()) {
+            if (error) *error = "manifest_action_missing_identity";
+            return false;
+        }
+        if (!rule.dynamic_source.empty() && rule.dynamic_source != "firered_item_queue") {
+            if (error) *error = "manifest_action_invalid_dynamic_source";
+            return false;
+        }
+        if (!rule.dynamic_source.empty()) {
+            if (rule.domain_id.empty()) {
+                if (error) *error = "manifest_action_invalid_dynamic_write";
+                return false;
+            }
+            if (!domain_declared(manifest.core_profile, rule.domain_id)) {
+                if (error) *error = "manifest_action_unknown_domain";
+                return false;
+            }
+            continue;
+        }
+        if (rule.writes.empty()) {
+            if (rule.domain_id.empty() || rule.size == 0 || rule.size > 8) {
+                if (error) *error = "manifest_action_invalid_direct_write";
+                return false;
+            }
+            if (!domain_declared(manifest.core_profile, rule.domain_id)) {
+                if (error) *error = "manifest_action_unknown_domain";
+                return false;
+            }
+        } else {
+            if (rule.writes.size() > 16) {
+                if (error) *error = "manifest_action_sequence_too_large";
+                return false;
+            }
+            for (const auto& step : rule.writes) {
+                if (step.domain_id.empty() || step.size == 0 || step.size > 8) {
+                    if (error) *error = "manifest_action_invalid_write_step";
+                    return false;
+                }
+                if (!domain_declared(manifest.core_profile, step.domain_id)) {
+                    if (error) *error = "manifest_action_unknown_domain";
+                    return false;
+                }
+                if (!is_allowed_write_source(step.source)) {
+                    if (error) *error = "manifest_action_invalid_write_source";
+                    return false;
+                }
+            }
+        }
+    }
+
+    return true;
+}
+
+std::optional<BridgeManifest> load_bridge_manifest(const std::filesystem::path& path, std::string* error) {
+    std::ifstream input(path);
+    if (!input) {
+        if (error) *error = "manifest_open_failed";
+        return std::nullopt;
+    }
+    std::stringstream buffer;
+    buffer << input.rdbuf();
+    const auto text = buffer.str();
+
+    auto manifest = parse_bridge_manifest_text(text, path, error);
+    if (!manifest.has_value()) {
+        return std::nullopt;
+    }
+    if (!validate_bridge_manifest(*manifest, error)) {
+        return std::nullopt;
+    }
+    return manifest;
+}
+
+}  // namespace sekailink::sklmi

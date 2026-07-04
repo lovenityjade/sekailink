@@ -1,0 +1,4318 @@
+[
+    {
+        "name": "Lost Woods - Entrances",
+        "children": [
+            {
+                "name": "Master Sword Meadow",
+                "sections": [
+                    {
+                        "name": "From Master Sword Meadow",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Mastersword_meadow_outside"
+                        ],
+                        "hosted_item": "from_Mastersword_meadow_outside"
+                    },
+                    {
+                        "name": "To Master Sword Meadow",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Mastersword_meadow_outside"
+                        ],
+                        "hosted_item": "to_Mastersword_meadow_outside"
+                    },
+                    {
+                        "name": "Master Sword Meadow",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Mastersword_meadow_outside"
+                        ],
+                        "hosted_item": "from_Mastersword_meadow_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Lost_woods",
+                        "x":82,
+                        "y":102,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":82,
+                        "y":100,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Lost Woods Gamble",
+                "sections": [
+                    {
+                        "name": "From Lost Woods Gamble",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Lost_woods_gamble_outside"
+                        ],
+                        "hosted_item": "from_Lost_woods_gamble_outside"
+                    },
+                    {
+                        "name": "To Lost Woods Gamble",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Lost_woods_gamble_outside"
+                        ],
+                        "hosted_item": "to_Lost_woods_gamble_outside"
+                    },
+                    {
+                        "name": "Lost Woods Gamble",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Lost_woods_gamble_outside"
+                        ],
+                        "hosted_item": "from_Lost_woods_gamble_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Lost_woods",
+                        "x":372,
+                        "y":31,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":372,
+                        "y":32,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Lost Woods Hideout Drop",
+                "sections": [
+                    {
+                        "name": "From Lost Woods Hideout Drop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Lost_woods_hideout_hole_outside"
+                        ],
+                        "hosted_item": "from_Lost_woods_hideout_hole_outside"
+                    // },
+                    // {
+                    //     "name": "To Lost Woods Hideout Drop",
+                    // "visibility_rules": ["er_insanity"],
+                    // "clear_as_group":false,
+                    //     "access_rules": [
+                    //         "^$ChangeLocationColor|to_Lost_woods_hideout_hole_outside"
+                    //     ],
+                    //     "hosted_item": "to_Lost_woods_hideout_hole_outside"
+                    },
+                    {
+                        "name": "Lost Woods Hideout Drop",
+                    "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                    "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Lost_woods_hideout_hole_outside"
+                        ],
+                        "hosted_item": "from_Lost_woods_hideout_hole_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Lost_woods",
+                        "x":379,
+                        "y":263,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":380,
+                        "y":263,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Lost Woods Hideout Stump",
+                "sections": [
+                    {
+                        "name": "From Lost Woods Hideout Stump",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Lost_woods_hideout_cave_outside"
+                        ],
+                        "hosted_item": "from_Lost_woods_hideout_cave_outside"
+                    },
+                    {
+                        "name": "To Lost Woods Hideout Stump",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Lost_woods_hideout_cave_outside"
+                        ],
+                        "hosted_item": "to_Lost_woods_hideout_cave_outside"
+                    },
+                    {
+                        "name": "Lost Woods Hideout Stump",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Lost_woods_hideout_cave_outside"
+                        ],
+                        "hosted_item": "from_Lost_woods_hideout_cave_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Lost_woods",
+                        "x":368,
+                        "y":302,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":368,
+                        "y":302,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Lumberjack House",
+                "sections": [
+                    {
+                        "name": "From Lumberjack House",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Lumberjacks_house_outside"
+                        ],
+                        "hosted_item": "from_Lumberjacks_house_outside"
+                    },
+                    {
+                        "name": "To Lumberjack House",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Lumberjacks_house_outside"
+                        ],
+                        "hosted_item": "to_Lumberjacks_house_outside"
+                    },
+                    {
+                        "name": "Lumberjack House",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Lumberjacks_house_outside"
+                        ],
+                        "hosted_item": "from_Lumberjacks_house_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Lost_woods",
+                        "x":674,
+                        "y":124,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":674,
+                        "y":124,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Lumberjack Tree Tree",
+                "sections": [
+                    {
+                        "name": "From Lumberjack Tree Tree",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Lumberjacks_hole_outside"
+                        ],
+                        "hosted_item": "from_Lumberjacks_hole_outside"
+                    // },
+                    // {
+                    //     "name": "To Lumberjack Tree Tree",
+                    // "visibility_rules": ["er_insanity"],
+                    // "clear_as_group":false,
+                    //     "access_rules": [
+                    //         "^$ChangeLocationColor|to_Lumberjacks_hole_outside"
+                    //     ],
+                    //     "hosted_item": "to_Lumberjacks_hole_outside"
+                    },
+                    {
+                        "name": "Lumberjack Tree Tree",
+                    "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                    "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Lumberjacks_hole_outside"
+                        ],
+                        "hosted_item": "from_Lumberjacks_hole_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Lost_woods",
+                        "x":603,
+                        "y":147,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":603,
+                        "y":147,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Lumberjack Tree Cave",
+                "sections": [
+                    {
+                        "name": "From Lumberjack Tree Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Lumberjacks_cave_outside"
+                        ],
+                        "hosted_item": "from_Lumberjacks_cave_outside"
+                    },
+                    {
+                        "name": "To Lumberjack Tree Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Lumberjacks_cave_outside"
+                        ],
+                        "hosted_item": "to_Lumberjacks_cave_outside"
+                    },
+                    {
+                        "name": "Lumberjack Tree Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Lumberjacks_cave_outside"
+                        ],
+                        "hosted_item": "from_Lumberjacks_cave_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Lost_woods",
+                        "x":666,
+                        "y":66,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":666,
+                        "y":66,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Old Man Cave Exit (West)",
+                "sections": [
+                    {
+                        "name": "From Old Man Cave Exit (West)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Old_man_cave_left_outside"
+                        ],
+                        "hosted_item": "from_Old_man_cave_left_outside"
+                    },
+                    {
+                        "name": "To Old Man Cave Exit (West)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Old_man_cave_left_outside"
+                        ],
+                        "hosted_item": "to_Old_man_cave_left_outside"
+                    },
+                    {
+                        "name": "Old Man Cave Exit (West)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Old_man_cave_left_outside"
+                        ],
+                        "hosted_item": "from_Old_man_cave_left_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Lost_woods",
+                        "x":713,
+                        "y":356,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":713,
+                        "y":356,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Death Mountain Return Cave Exit (West)",
+                "sections": [
+                    {
+                        "name": "From Death Mountain Return Cave Exit (West)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Light_death_mountain_return_left_outside"
+                        ],
+                        "hosted_item": "from_Light_death_mountain_return_left_outside"
+                    },
+                    {
+                        "name": "To Death Mountain Return Cave Exit (West)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Light_death_mountain_return_left_outside"
+                        ],
+                        "hosted_item": "to_Light_death_mountain_return_left_outside"
+                    },
+                    {
+                        "name": "Death Mountain Return Cave Exit (West)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Light_death_mountain_return_left_outside"
+                        ],
+                        "hosted_item": "from_Light_death_mountain_return_left_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Lost_woods",
+                        "x":721,
+                        "y":309,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":721,
+                        "y":309,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Light Death Mountain - Entrances",
+        "children":[
+            {
+                "name": "Death Mountain Return Cave (East)",
+                "sections": [
+                    {
+                        "name": "From Death Mountain Return Cave (East)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Light_death_mountain_return_right_outside"
+                        ],
+                        "hosted_item": "from_Light_death_mountain_return_right_outside"
+                    },
+                    {
+                        "name": "To Death Mountain Return Cave (East)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Light_death_mountain_return_right_outside"
+                        ],
+                        "hosted_item": "to_Light_death_mountain_return_right_outside"
+                    },
+                    {
+                        "name": "Death Mountain Return Cave (East)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Light_death_mountain_return_right_outside"
+                        ],
+                        "hosted_item": "from_Light_death_mountain_return_right_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Light_death_mountain",
+                        "x":38,
+                        "y":276,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":792,
+                        "y":276,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Old Man Cave (East)",
+                "sections": [
+                    {
+                        "name": "From Old Man Cave (East)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Old_man_cave_right_outside"
+                        ],
+                        "hosted_item": "from_Old_man_cave_right_outside"
+                    },
+                    {
+                        "name": "To Old Man Cave (East)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Old_man_cave_right_outside"
+                        ],
+                        "hosted_item": "to_Old_man_cave_right_outside"
+                    },
+                    {
+                        "name": "Old Man Cave (East)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Old_man_cave_right_outside"
+                        ],
+                        "hosted_item": "from_Old_man_cave_right_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Light_death_mountain",
+                        "x":63,
+                        "y":378,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":815,
+                        "y":377,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Old Man House (Top)",
+                "sections": [
+                    {
+                        "name": "From Old Man House (Top)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Old_man_home_top_outside"
+                        ],
+                        "hosted_item": "from_Old_man_home_top_outside"
+                    },
+                    {
+                        "name": "To Old Man House (Top)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Old_man_home_top_outside"
+                        ],
+                        "hosted_item": "to_Old_man_home_top_outside"
+                    },
+                    {
+                        "name": "Old Man House (Top)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Old_man_home_top_outside"
+                        ],
+                        "hosted_item": "from_Old_man_home_top_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Light_death_mountain",
+                        "x":321,
+                        "y":323,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1074,
+                        "y":324,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Old Man House (Bottom)",
+                "sections": [
+                    {
+                        "name": "From Old Man House (Bottom)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Old_man_home_bottom_outside"
+                        ],
+                        "hosted_item": "from_Old_man_home_bottom_outside"
+                    },
+                    {
+                        "name": "To Old Man House (Bottom)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Old_man_home_bottom_outside"
+                        ],
+                        "hosted_item": "to_Old_man_home_bottom_outside"
+                    },
+                    {
+                        "name": "Old Man House (Bottom)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Old_man_home_bottom_outside"
+                        ],
+                        "hosted_item": "from_Old_man_home_bottom_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Light_death_mountain",
+                        "x":148,
+                        "y":472,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":901,
+                        "y":471,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Spectacle Rock Cave Peak",
+                "sections": [
+                    {
+                        "name": "From Spectacle Rock Cave Peak",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Spec_rock_top_entrance_outside"
+                        ],
+                        "hosted_item": "from_Spec_rock_top_entrance_outside"
+                    },
+                    {
+                        "name": "To Spectacle Rock Cave Peak",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Spec_rock_top_entrance_outside"
+                        ],
+                        "hosted_item": "to_Spec_rock_top_entrance_outside"
+                    },
+                    {
+                        "name": "Spectacle Rock Cave Peak",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Spec_rock_top_entrance_outside"
+                        ],
+                        "hosted_item": "from_Spec_rock_top_entrance_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Light_death_mountain",
+                        "x":227,
+                        "y":208,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":979,
+                        "y":203,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Spectacle Rock Cave (Bottom)",
+                "sections": [
+                    {
+                        "name": "From Spectacle Rock Cave (Bottom)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Spec_rock_ledge_entrance_outside"
+                        ],
+                        "hosted_item": "from_Spec_rock_ledge_entrance_outside"
+                    },
+                    {
+                        "name": "To Spectacle Rock Cave (Bottom)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Spec_rock_ledge_entrance_outside"
+                        ],
+                        "hosted_item": "to_Spec_rock_ledge_entrance_outside"
+                    },
+                    {
+                        "name": "Spectacle Rock Cave (Bottom)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Spec_rock_ledge_entrance_outside"
+                        ],
+                        "hosted_item": "from_Spec_rock_ledge_entrance_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Light_death_mountain",
+                        "x":227,
+                        "y":296,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":980,
+                        "y":292,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Spectacle Rock Cave Exit",
+                "sections": [
+                    {
+                        "name": "From Spectacle Rock Cave Exit",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Spec_rock_ledge_exit_outside"
+                        ],
+                        "hosted_item": "from_Spec_rock_ledge_exit_outside"
+                    },
+                    {
+                        "name": "To Spectacle Rock Cave Exit",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Spec_rock_ledge_exit_outside"
+                        ],
+                        "hosted_item": "to_Spec_rock_ledge_exit_outside"
+                    },
+                    {
+                        "name": "Spectacle Rock Cave Exit",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Spec_rock_ledge_exit_outside"
+                        ],
+                        "hosted_item": "from_Spec_rock_ledge_exit_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Light_death_mountain",
+                        "x":164,
+                        "y":280,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":917,
+                        "y":274,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Tower of Hera",
+                "sections": [
+                    {
+                        "name": "From Tower of Hera",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_ToH_entrance_outside"
+                        ],
+                        "hosted_item": "from_ToH_entrance_outside"
+                    },
+                    {
+                        "name": "To Tower of Hera",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_ToH_entrance_outside"
+                        ],
+                        "hosted_item": "to_ToH_entrance_outside"
+                    },
+                    {
+                        "name": "Tower of Hera",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_ToH_entrance_outside"
+                        ],
+                        "hosted_item": "from_ToH_entrance_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Light_death_mountain",
+                        "x":372,
+                        "y":66,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1124,
+                        "y":64,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Paradox Cave (Bottom)",
+                "sections": [
+                    {
+                        "name": "From Paradox Cave (Bottom)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Paradox_cave_bottom_entrance_outside"
+                        ],
+                        "hosted_item": "from_Paradox_cave_bottom_entrance_outside"
+                    },
+                    {
+                        "name": "To Paradox Cave (Bottom)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Paradox_cave_bottom_entrance_outside"
+                        ],
+                        "hosted_item": "to_Paradox_cave_bottom_entrance_outside"
+                    },
+                    {
+                        "name": "Paradox Cave (Bottom)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Paradox_cave_bottom_entrance_outside"
+                        ],
+                        "hosted_item": "from_Paradox_cave_bottom_entrance_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Light_death_mountain",
+                        "x":980,
+                        "y":435,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1717,
+                        "y":291,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Paradox Cave (Top)",
+                "sections": [
+                    {
+                        "name": "From Paradox Cave (Top)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Paradox_cave_top_entrance_outside"
+                        ],
+                        "hosted_item": "from_Paradox_cave_top_entrance_outside"
+                    },
+                    {
+                        "name": "To Paradox Cave (Top)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Paradox_cave_top_entrance_outside"
+                        ],
+                        "hosted_item": "to_Paradox_cave_top_entrance_outside"
+                    },
+                    {
+                        "name": "Paradox Cave (Top)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Paradox_cave_top_entrance_outside"
+                        ],
+                        "hosted_item": "from_Paradox_cave_top_entrance_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Light_death_mountain",
+                        "x":971,
+                        "y":129,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1724,
+                        "y":127,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Paradox Cave (Middle)",
+                "sections": [
+                    {
+                        "name": "From Paradox Cave (Middle)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Paradox_cave_middle_entrance_outside"
+                        ],
+                        "hosted_item": "from_Paradox_cave_middle_entrance_outside"
+                    },
+                    {
+                        "name": "To Paradox Cave (Middle)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Paradox_cave_middle_entrance_outside"
+                        ],
+                        "hosted_item": "to_Paradox_cave_middle_entrance_outside"
+                    },
+                    {
+                        "name": "Paradox Cave (Middle)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Paradox_cave_middle_entrance_outside"
+                        ],
+                        "hosted_item": "from_Paradox_cave_middle_entrance_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Light_death_mountain",
+                        "x":964,
+                        "y":294,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1732,
+                        "y":434,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Spiral Cave",
+                "sections": [
+                    {
+                        "name": "From Spiral Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Spiral_cave_top_outside"
+                        ],
+                        "hosted_item": "from_Spiral_cave_top_outside"
+                    },
+                    {
+                        "name": "To Spiral Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Spiral_cave_top_outside"
+                        ],
+                        "hosted_item": "to_Spiral_cave_top_outside"
+                    },
+                    {
+                        "name": "Spiral Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Spiral_cave_top_outside"
+                        ],
+                        "hosted_item": "from_Spiral_cave_top_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Light_death_mountain",
+                        "x":846,
+                        "y":184,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1599,
+                        "y":181,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Spiral Cave (Bottom)",
+                "sections": [
+                    {
+                        "name": "From Spiral Cave (Bottom)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Spiral_cave_bottom_outside"
+                        ],
+                        "hosted_item": "from_Spiral_cave_bottom_outside"
+                    },
+                    {
+                        "name": "To Spiral Cave (Bottom)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Spiral_cave_bottom_outside"
+                        ],
+                        "hosted_item": "to_Spiral_cave_bottom_outside"
+                    },
+                    {
+                        "name": "Spiral Cave (Bottom)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Spiral_cave_bottom_outside"
+                        ],
+                        "hosted_item": "from_Spiral_cave_bottom_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Light_death_mountain",
+                        "x":854,
+                        "y":263,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1607,
+                        "y":262,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Mimic Cave",
+                "sections": [
+                    {
+                        "name": "From Mimic Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Mimic_cave_outside"
+                        ],
+                        "hosted_item": "from_Mimic_cave_outside"
+                    },
+                    {
+                        "name": "To Mimic Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Mimic_cave_outside"
+                        ],
+                        "hosted_item": "to_Mimic_cave_outside"
+                    },
+                    {
+                        "name": "Mimic Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Mimic_cave_outside"
+                        ],
+                        "hosted_item": "from_Mimic_cave_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Light_death_mountain",
+                        "x":941,
+                        "y":185,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1693,
+                        "y":184,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Hookshot Fairy",
+                "sections": [
+                    {
+                        "name": "From Hookshot Fairy",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Hookshot_fairy_outside"
+                        ],
+                        "hosted_item": "from_Hookshot_fairy_outside"
+                    },
+                    {
+                        "name": "To Hookshot Fairy",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Hookshot_fairy_outside"
+                        ],
+                        "hosted_item": "to_Hookshot_fairy_outside"
+                    },
+                    {
+                        "name": "Hookshot Fairy",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Hookshot_fairy_outside"
+                        ],
+                        "hosted_item": "from_Hookshot_fairy_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Light_death_mountain",
+                        "x":940,
+                        "y":294,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1693,
+                        "y":293,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Fairy Ascension Cave (Bottom)",
+                "sections": [
+                    {
+                        "name": "From Fairy Ascension Cave (Bottom)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Fairy_ascension_cave_bottom_outside"
+                        ],
+                        "hosted_item": "from_Fairy_ascension_cave_bottom_outside"
+                    },
+                    {
+                        "name": "To Fairy Ascension Cave (Bottom)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Fairy_ascension_cave_bottom_outside"
+                        ],
+                        "hosted_item": "to_Fairy_ascension_cave_bottom_outside"
+                    },
+                    {
+                        "name": "Fairy Ascension Cave (Bottom)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Fairy_ascension_cave_bottom_outside"
+                        ],
+                        "hosted_item": "from_Fairy_ascension_cave_bottom_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Light_death_mountain",
+                        "x":893,
+                        "y":278,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1646,
+                        "y":277,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Fairy Ascension Cave (Top)",
+                "sections": [
+                    {
+                        "name": "From Fairy Ascension Cave (Top)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Fairy_ascension_cave_top_outside"
+                        ],
+                        "hosted_item": "from_Fairy_ascension_cave_top_outside"
+                    },
+                    {
+                        "name": "To Fairy Ascension Cave (Top)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Fairy_ascension_cave_top_outside"
+                        ],
+                        "hosted_item": "to_Fairy_ascension_cave_top_outside"
+                    },
+                    {
+                        "name": "Fairy Ascension Cave (Top)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Fairy_ascension_cave_top_outside"
+                        ],
+                        "hosted_item": "from_Fairy_ascension_cave_top_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Light_death_mountain",
+                        "x":893,
+                        "y":230,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1647,
+                        "y":231,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Waterfall of Wishing",
+                "sections": [
+                    {
+                        "name": "From Waterfall of Wishing",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Waterfall_fairy_outside"
+                        ],
+                        "hosted_item": "from_Waterfall_fairy_outside"
+                    },
+                    {
+                        "name": "To Waterfall of Wishing",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Waterfall_fairy_outside"
+                        ],
+                        "hosted_item": "to_Waterfall_fairy_outside"
+                    },
+                    {
+                        "name": "Waterfall of Wishing",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Waterfall_fairy_outside"
+                        ],
+                        "hosted_item": "from_Waterfall_fairy_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Light_death_mountain",
+                        "x":1055,
+                        "y":275,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1807,
+                        "y":273,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Kakariko Village - Entrances",
+        "children":[
+            {
+                "name": "Bat Cave Drop",
+                "sections": [
+                    {
+                        "name": "From Bat Cave Drop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Magic_bat_hole_outside"
+                        ],
+                        "hosted_item": "from_Magic_bat_hole_outside"
+                    // },
+                    // {
+                    //     "name": "To Bat Cave Drop",
+                    // "visibility_rules": ["er_insanity"],
+                    // "clear_as_group":false,
+                    //     "access_rules": [
+                    //         "^$ChangeLocationColor|to_Magic_bat_hole_outside"
+                    //     ],
+                    //     "hosted_item": "to_Magic_bat_hole_outside"
+                    },
+                    {
+                        "name": "Bat Cave Drop",
+                    "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                    "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Magic_bat_hole_outside"
+                        ],
+                        "hosted_item": "from_Magic_bat_hole_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":650,
+                        "y":556,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":650,
+                        "y":1129,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Bat Cave Exit",
+                "sections": [
+                    {
+                        "name": "From Bat Cave Exit",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Magic_bat_cave_outside"
+                        ],
+                        "hosted_item": "from_Magic_bat_cave_outside"
+                    },
+                    {
+                        "name": "To Bat Cave Exit",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Magic_bat_cave_outside"
+                        ],
+                        "hosted_item": "to_Magic_bat_cave_outside"
+                    },
+                    {
+                        "name": "Bat Cave Exit",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Magic_bat_cave_outside"
+                        ],
+                        "hosted_item": "from_Magic_bat_cave_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":643,
+                        "y":545,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":635,
+                        "y":1116,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Sick Kids House",
+                "sections": [
+                    {
+                        "name": "From Sick Kids House",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_sick_kid_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_sick_kid_outside"
+                    },
+                    {
+                        "name": "To Sick Kids House",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Kakariko_sick_kid_outside"
+                        ],
+                        "hosted_item": "to_Kakariko_sick_kid_outside"
+                    },
+                    {
+                        "name": "Sick Kids House",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_sick_kid_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_sick_kid_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":314,
+                        "y":506,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":314,
+                        "y":1081,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Elder House (East)",
+                "sections": [
+                    {
+                        "name": "From Elder House (East)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_elder_house_right_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_elder_house_right_outside"
+                    },
+                    {
+                        "name": "To Elder House (East)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Kakariko_elder_house_right_outside"
+                        ],
+                        "hosted_item": "to_Kakariko_elder_house_right_outside"
+                    },
+                    {
+                        "name": "Elder House (East)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_elder_house_right_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_elder_house_right_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":337,
+                        "y":274,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":337,
+                        "y":845,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Elder House (West)",
+                "sections": [
+                    {
+                        "name": "From Elder House (West)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_elder_house_left_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_elder_house_left_outside"
+                    },
+                    {
+                        "name": "To Elder House (West)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Kakariko_elder_house_left_outside"
+                        ],
+                        "hosted_item": "to_Kakariko_elder_house_left_outside"
+                    },
+                    {
+                        "name": "Elder House (West)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_elder_house_left_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_elder_house_left_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":305,
+                        "y":274,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":305,
+                        "y":845,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Fortune Teller (Light)",
+                "sections": [
+                    {
+                        "name": "From Fortune Teller (Light)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_furtune_teller_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_furtune_teller_outside"
+                    },
+                    {
+                        "name": "To Fortune Teller (Light)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Kakariko_furtune_teller_outside"
+                        ],
+                        "hosted_item": "to_Kakariko_furtune_teller_outside"
+                    },
+                    {
+                        "name": "Fortune Teller (Light)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_furtune_teller_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_furtune_teller_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":376,
+                        "y":77,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":376,
+                        "y":651,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Snitch Lady (East)",
+                "sections": [
+                    {
+                        "name": "From Snitch Lady (East)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_snitch_house_right_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_snitch_house_right_outside"
+                    },
+                    {
+                        "name": "To Snitch Lady (East)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Kakariko_snitch_house_right_outside"
+                        ],
+                        "hosted_item": "to_Kakariko_snitch_house_right_outside"
+                    },
+                    {
+                        "name": "Snitch Lady (East)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_snitch_house_right_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_snitch_house_right_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":416,
+                        "y":396,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":416,
+                        "y":971,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Snitch Lady (West)",
+                "sections": [
+                    {
+                        "name": "From Snitch Lady (West)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_snitch_house_left_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_snitch_house_left_outside"
+                    },
+                    {
+                        "name": "To Snitch Lady (West)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Kakariko_snitch_house_left_outside"
+                        ],
+                        "hosted_item": "to_Kakariko_snitch_house_left_outside"
+                    },
+                    {
+                        "name": "Snitch Lady (West)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_snitch_house_left_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_snitch_house_left_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":103,
+                        "y":367,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":103,
+                        "y":940,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Bush Covered House",
+                "sections": [
+                    {
+                        "name": "From Bush Covered House",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_overgrown_house_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_overgrown_house_outside"
+                    },
+                    {
+                        "name": "To Bush Covered House",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Kakariko_overgrown_house_outside"
+                        ],
+                        "hosted_item": "to_Kakariko_overgrown_house_outside"
+                    },
+                    {
+                        "name": "Bush Covered House",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_overgrown_house_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_overgrown_house_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":407,
+                        "y":499,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":407,
+                        "y":1073,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Tavern (Front)",
+                "sections": [
+                    {
+                        "name": "From Tavern (Front)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_frontside_pub_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_frontside_pub_outside"
+                    },
+                    {
+                        "name": "To Tavern (Front)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Kakariko_frontside_pub_outside"
+                        ],
+                        "hosted_item": "to_Kakariko_frontside_pub_outside"
+                    },
+                    {
+                        "name": "Tavern (Front)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_frontside_pub_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_frontside_pub_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":321,
+                        "y":625,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":321,
+                        "y":1198,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Tavern (Back)",
+                "sections": [
+                    {
+                        "name": "From Tavern (Back)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_backside_pub_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_backside_pub_outside"
+                    },
+                    {
+                        "name": "To Tavern (Back)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Kakariko_backside_pub_outside"
+                        ],
+                        "hosted_item": "to_Kakariko_backside_pub_outside"
+                    },
+                    {
+                        "name": "Tavern (Back)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_backside_pub_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_backside_pub_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":321,
+                        "y":564,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":321,
+                        "y":1137,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Light World Bomb Hut",
+                "sections": [
+                    {
+                        "name": "From Light World Bomb Hut",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_bombhut_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_bombhut_outside"
+                    },
+                    {
+                        "name": "To Light World Bomb Hut",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Kakariko_bombhut_outside"
+                        ],
+                        "hosted_item": "to_Kakariko_bombhut_outside"
+                    },
+                    {
+                        "name": "Light World Bomb Hut",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_bombhut_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_bombhut_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":54,
+                        "y":624,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":54,
+                        "y":1196,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Kakariko Shop",
+                "sections": [
+                    {
+                        "name": "From Kakariko Shop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_shop_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_shop_outside"
+                    },
+                    {
+                        "name": "To Kakariko Shop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Kakariko_shop_outside"
+                        ],
+                        "hosted_item": "to_Kakariko_shop_outside"
+                    },
+                    {
+                        "name": "Kakariko Shop",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_shop_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_shop_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":219,
+                        "y":601,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":219,
+                        "y":1173,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Kakariko Well Drop",
+                "sections": [
+                    {
+                        "name": "From Kakariko Well Drop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_well_hole_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_well_hole_outside"
+                    // },
+                    // {
+                    //     "name": "To Kakariko Well Drop",
+                    // "visibility_rules": ["er_insanity"],
+                    // "clear_as_group":false,
+                    //     "access_rules": [
+                    //         "^$ChangeLocationColor|to_Kakariko_well_hole_outside"
+                    //     ],
+                    //     "hosted_item": "to_Kakariko_well_hole_outside"
+                    },
+                    {
+                        "name": "Kakariko Well Drop",
+                    "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                    "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_well_hole_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_well_hole_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":47,
+                        "y":281,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":47,
+                        "y":854,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Kakariko Well Exit",
+                "sections": [
+                    {
+                        "name": "From Kakariko Well Exit",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_well_cave_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_well_cave_outside"
+                    },
+                    {
+                        "name": "To Kakariko Well Exit",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Kakariko_well_cave_outside"
+                        ],
+                        "hosted_item": "to_Kakariko_well_cave_outside"
+                    },
+                    {
+                        "name": "Kakariko Well Exit",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_well_cave_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_well_cave_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":93,
+                        "y":285,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":93,
+                        "y":857,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Chicken House",
+                "sections": [
+                    {
+                        "name": "From Chicken House",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_chickenhut_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_chickenhut_outside"
+                    },
+                    {
+                        "name": "To Chicken House",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Kakariko_chickenhut_outside"
+                        ],
+                        "hosted_item": "to_Kakariko_chickenhut_outside"
+                    },
+                    {
+                        "name": "Chicken House",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_chickenhut_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_chickenhut_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":197,
+                        "y":515,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":197,
+                        "y":1086,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Blinds Hideout",
+                "sections": [
+                    {
+                        "name": "From Blinds Hideout",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_blinds_hideout_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_blinds_hideout_outside"
+                    },
+                    {
+                        "name": "To Blinds Hideout",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Kakariko_blinds_hideout_outside"
+                        ],
+                        "hosted_item": "to_Kakariko_blinds_hideout_outside"
+                    },
+                    {
+                        "name": "Blinds Hideout",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_blinds_hideout_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_blinds_hideout_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":258,
+                        "y":271,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":258,
+                        "y":843,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Blacksmiths Hut",
+                "sections": [
+                    {
+                        "name": "From Blacksmiths Hut",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dwarf_smiths_outside"
+                        ],
+                        "hosted_item": "from_Dwarf_smiths_outside"
+                    },
+                    {
+                        "name": "To Blacksmiths Hut",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dwarf_smiths_outside"
+                        ],
+                        "hosted_item": "to_Dwarf_smiths_outside"
+                    },
+                    {
+                        "name": "Blacksmiths Hut",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dwarf_smiths_outside"
+                        ],
+                        "hosted_item": "from_Dwarf_smiths_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":610,
+                        "y":500,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":610,
+                        "y":1071,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Two Brothers House (East)",
+                "sections": [
+                    {
+                        "name": "From Two Brothers House (East)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Twin_house_right_outside"
+                        ],
+                        "hosted_item": "from_Twin_house_right_outside"
+                    },
+                    {
+                        "name": "To Two Brothers House (East)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Twin_house_right_outside"
+                        ],
+                        "hosted_item": "to_Twin_house_right_outside"
+                    },
+                    {
+                        "name": "Two Brothers House (East)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Twin_house_right_outside"
+                        ],
+                        "hosted_item": "from_Twin_house_right_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":282,
+                        "y":870,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":282,
+                        "y":1440,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Two Brothers House (West)",
+                "sections": [
+                    {
+                        "name": "From Two Brothers House (West)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Twin_house_left_outside"
+                        ],
+                        "hosted_item": "from_Twin_house_left_outside"
+                    },
+                    {
+                        "name": "To Two Brothers House (West)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Twin_house_left_outside"
+                        ],
+                        "hosted_item": "to_Twin_house_left_outside"
+                    },
+                    {
+                        "name": "Two Brothers House (West)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Twin_house_left_outside"
+                        ],
+                        "hosted_item": "from_Twin_house_left_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":219,
+                        "y":870,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":219,
+                        "y":1440,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Library",
+                "sections": [
+                    {
+                        "name": "From Library",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Library_outside"
+                        ],
+                        "hosted_item": "from_Library_outside"
+                    },
+                    {
+                        "name": "To Library",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Library_outside"
+                        ],
+                        "hosted_item": "to_Library_outside"
+                    },
+                    {
+                        "name": "Library",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Library_outside"
+                        ],
+                        "hosted_item": "from_Library_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":313,
+                        "y":751,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":313,
+                        "y":1323,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Kakariko Gamble Game",
+                "sections": [
+                    {
+                        "name": "From Kakariko Gamble Game",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_chest_minigame_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_chest_minigame_outside"
+                    },
+                    {
+                        "name": "To Kakariko Gamble Game",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Kakariko_chest_minigame_outside"
+                        ],
+                        "hosted_item": "to_Kakariko_chest_minigame_outside"
+                    },
+                    {
+                        "name": "Kakariko Gamble Game",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kakariko_chest_minigame_outside"
+                        ],
+                        "hosted_item": "from_Kakariko_chest_minigame_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Kakariko_village",
+                        "x":431,
+                        "y":837,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":431,
+                        "y":1408,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Central Hyrule - Entrances",
+        "children":[
+            {
+                "name": "Hyrule Castle Secret Entrance Drop",
+                "sections": [
+                    {
+                        "name": "From Hyrule Castle Secret Entrance Drop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Secret_passage_hole_outside"
+                        ],
+                        "hosted_item": "from_Secret_passage_hole_outside"
+                    // },
+                    // {
+                    //     "name": "To Hyrule Castle Secret Entrance Drop",
+                    // "visibility_rules": ["er_insanity"],
+                    // "clear_as_group":false,
+                    //     "access_rules": [
+                    //         "^$ChangeLocationColor|to_Secret_passage_hole_outside"
+                    //     ],
+                    //     "hosted_item": "to_Secret_passage_hole_outside"
+                    },
+                    {
+                        "name": "Hyrule Castle Secret Entrance Drop",
+                    "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                    "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Secret_passage_hole_outside"
+                        ],
+                        "hosted_item": "from_Secret_passage_hole_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "central_hyrule",
+                        "x":477,
+                        "y":333,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1195,
+                        "y":835,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Hyrule Castle Secret Entrance Stairs",
+                "sections": [
+                    {
+                        "name": "From Hyrule Castle Secret Entrance Stairs",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Secret_passage_stairs_outside"
+                        ],
+                        "hosted_item": "from_Secret_passage_stairs_outside"
+                    },
+                    {
+                        "name": "To Hyrule Castle Secret Entrance Stairs",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Secret_passage_stairs_outside"
+                        ],
+                        "hosted_item": "to_Secret_passage_stairs_outside"
+                    },
+                    {
+                        "name": "Hyrule Castle Secret Entrance Stairs",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Secret_passage_stairs_outside"
+                        ],
+                        "hosted_item": "from_Secret_passage_stairs_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "central_hyrule",
+                        "x":388,
+                        "y":358,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1105,
+                        "y":864,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Kings Grave",
+                "sections": [
+                    {
+                        "name": "From Kings Grave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kings_tomb_outside"
+                        ],
+                        "hosted_item": "from_Kings_tomb_outside"
+                    },
+                    {
+                        "name": "To Kings Grave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Kings_tomb_outside"
+                        ],
+                        "hosted_item": "to_Kings_tomb_outside"
+                    },
+                    {
+                        "name": "Kings Grave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Kings_tomb_outside"
+                        ],
+                        "hosted_item": "from_Kings_tomb_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "central_hyrule",
+                        "x":489,
+                        "y":91,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1207,
+                        "y":596,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Graveyard Cave",
+                "sections": [
+                    {
+                        "name": "From Graveyard Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Graveyard_ledge_outside"
+                        ],
+                        "hosted_item": "from_Graveyard_ledge_outside"
+                    },
+                    {
+                        "name": "To Graveyard Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Graveyard_ledge_outside"
+                        ],
+                        "hosted_item": "to_Graveyard_ledge_outside"
+                    },
+                    {
+                        "name": "Graveyard Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Graveyard_ledge_outside"
+                        ],
+                        "hosted_item": "from_Graveyard_ledge_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "central_hyrule",
+                        "x":427,
+                        "y":48,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1145,
+                        "y":552,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Bonk Rock Cave",
+                "sections": [
+                    {
+                        "name": "From Bonk Rock Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Sanctuary_bonk_pile_cave_outside"
+                        ],
+                        "hosted_item": "from_Sanctuary_bonk_pile_cave_outside"
+                    },
+                    {
+                        "name": "To Bonk Rock Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Sanctuary_bonk_pile_cave_outside"
+                        ],
+                        "hosted_item": "to_Sanctuary_bonk_pile_cave_outside"
+                    },
+                    {
+                        "name": "Bonk Rock Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Sanctuary_bonk_pile_cave_outside"
+                        ],
+                        "hosted_item": "from_Sanctuary_bonk_pile_cave_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "central_hyrule",
+                        "x":66,
+                        "y":85,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":764,
+                        "y":587,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Sanctuary",
+                "sections": [
+                    {
+                        "name": "From Sanctuary",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Sanctuary_entrance_outside"
+                        ],
+                        "hosted_item": "from_Sanctuary_entrance_outside"
+                    },
+                    {
+                        "name": "To Sanctuary",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Sanctuary_entrance_outside"
+                        ],
+                        "hosted_item": "to_Sanctuary_entrance_outside"
+                    },
+                    {
+                        "name": "Sanctuary",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Sanctuary_entrance_outside"
+                        ],
+                        "hosted_item": "from_Sanctuary_entrance_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "central_hyrule",
+                        "x":207,
+                        "y":34,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":925,
+                        "y":539,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Sanctuary Grave",
+                "sections": [
+                    {
+                        "name": "From Sanctuary Grave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_CE_dropdown_entrance_outside"
+                        ],
+                        "hosted_item": "from_CE_dropdown_entrance_outside"
+                    // },
+                    // {
+                    //     "name": "To Sanctuary Grave",
+                    // "visibility_rules": ["er_insanity"],
+                    // "clear_as_group":false,
+                    //     "access_rules": [
+                    //         "^$ChangeLocationColor|to_CE_dropdown_entrance_outside"
+                    //     ],
+                    //     "hosted_item": "to_CE_dropdown_entrance_outside"
+                    },
+                    {
+                        "name": "Sanctuary Grave",
+                    "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                    "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_CE_dropdown_entrance_outside"
+                        ],
+                        "hosted_item": "from_CE_dropdown_entrance_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "central_hyrule",
+                        "x":324,
+                        "y":86,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1042,
+                        "y":587,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "North Fairy Cave Drop",
+                "sections": [
+                    {
+                        "name": "From North Fairy Cave Drop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_North_fairy_drop_outside"
+                        ],
+                        "hosted_item": "from_North_fairy_drop_outside"
+                    // },
+                    // {
+                    //     "name": "To North Fairy Cave Drop",
+                    // "visibility_rules": ["er_insanity"],
+                    // "clear_as_group":false,
+                    //     "access_rules": [
+                    //         "^$ChangeLocationColor|to_North_fairy_drop_outside"
+                    //     ],
+                    //     "hosted_item": "to_North_fairy_drop_outside"
+                    },
+                    {
+                        "name": "North Fairy Cave Drop",
+                    "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                    "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_North_fairy_drop_outside"
+                        ],
+                        "hosted_item": "from_North_fairy_drop_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "central_hyrule",
+                        "x":572,
+                        "y":122,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1289,
+                        "y":624,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "North Fairy Cave Exit",
+                "sections": [
+                    {
+                        "name": "From North Fairy Cave Exit",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_North_fairy_cave_outside"
+                        ],
+                        "hosted_item": "from_North_fairy_cave_outside"
+                    },
+                    {
+                        "name": "To North Fairy Cave Exit",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_North_fairy_cave_outside"
+                        ],
+                        "hosted_item": "to_North_fairy_cave_outside"
+                    },
+                    {
+                        "name": "North Fairy Cave Exit",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_North_fairy_cave_outside"
+                        ],
+                        "hosted_item": "from_North_fairy_cave_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "central_hyrule",
+                        "x":622,
+                        "y":48,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1340,
+                        "y":551,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Hyrule Castle Entrance (South)",
+                "sections": [
+                    {
+                        "name": "From Hyrule Castle Entrance (South)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_HC_main_entrance_outside"
+                        ],
+                        "hosted_item": "from_HC_main_entrance_outside"
+                    },
+                    {
+                        "name": "To Hyrule Castle Entrance (South)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_HC_main_entrance_outside"
+                        ],
+                        "hosted_item": "to_HC_main_entrance_outside"
+                    },
+                    {
+                        "name": "Hyrule Castle Entrance (South)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_HC_main_entrance_outside"
+                        ],
+                        "hosted_item": "from_HC_main_entrance_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "central_hyrule",
+                        "x":286,
+                        "y":383,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1003,
+                        "y":884,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Hyrule Castle Entrance (West)",
+                "sections": [
+                    {
+                        "name": "From Hyrule Castle Entrance (West)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_HC_left_entrance_outside"
+                        ],
+                        "hosted_item": "from_HC_left_entrance_outside"
+                    },
+                    {
+                        "name": "To Hyrule Castle Entrance (West)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_HC_left_entrance_outside"
+                        ],
+                        "hosted_item": "to_HC_left_entrance_outside"
+                    },
+                    {
+                        "name": "Hyrule Castle Entrance (West)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_HC_left_entrance_outside"
+                        ],
+                        "hosted_item": "from_HC_left_entrance_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "central_hyrule",
+                        "x":184,
+                        "y":281,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":902,
+                        "y":785,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Hyrule Castle Entrance (East)",
+                "sections": [
+                    {
+                        "name": "From Hyrule Castle Entrance (East)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_HC_right_entrance_outside"
+                        ],
+                        "hosted_item": "from_HC_right_entrance_outside"
+                    },
+                    {
+                        "name": "To Hyrule Castle Entrance (East)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_HC_right_entrance_outside"
+                        ],
+                        "hosted_item": "to_HC_right_entrance_outside"
+                    },
+                    {
+                        "name": "Hyrule Castle Entrance (East)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_HC_right_entrance_outside"
+                        ],
+                        "hosted_item": "from_HC_right_entrance_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "central_hyrule",
+                        "x":388,
+                        "y":281,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1105,
+                        "y":785,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Pyramid Hole",
+                "visibility_rules": ["^$Inverted"],
+                "clear_as_group":false,
+                "sections": [
+                    {
+                        "name": "From Pyramid Hole",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Pyramid_hole_outside"
+                        ],
+                        "hosted_item": "from_Pyramid_hole_outside"
+                    // },
+                    // {
+                    //     "name": "To Pyramid Hole",
+                    //     "visibility_rules": ["er_insanity"],
+                    // "clear_as_group":false,
+                    //     "access_rules": [
+                    //         "^$ChangeLocationColor|to_Pyramid_hole_outside"
+                    //     ],
+                    //     "hosted_item": "to_Pyramid_hole_outside"
+                    },
+                    {
+                        "name": "Pyramid Hole",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Pyramid_hole_outside"
+                        ],
+                        "hosted_item": "from_Pyramid_hole_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "central_hyrule",
+                        "x":285,
+                        "y":322,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1004,
+                        "y":848,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Pyramid Exit",
+                "visibility_rules": ["^$Inverted"],
+                "clear_as_group":false,
+                "sections": [
+                    {
+                        "name": "From Pyramid Exit",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Pyramid_exit_outside"
+                        ],
+                        "hosted_item": "from_Pyramid_exit_outside"
+                    },
+                    {
+                        "name": "To Pyramid Exit",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Pyramid_exit_outside"
+                        ],
+                        "hosted_item": "to_Pyramid_exit_outside"
+                    },
+                    {
+                        "name": "Pyramid Exit",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Pyramid_exit_outside"
+                        ],
+                        "hosted_item": "from_Pyramid_exit_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "central_hyrule",
+                        "x":285,
+                        "y":322,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":902,
+                        "y":866,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Agahnims Tower",
+                "sections": [
+                    {
+                        "name": "From Agahnims Tower",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_AT_entrance_outside"
+                        ],
+                        "hosted_item": "from_AT_entrance_outside"
+                    },
+                    {
+                        "name": "To Agahnims Tower",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_AT_entrance_outside"
+                        ],
+                        "hosted_item": "to_AT_entrance_outside"
+                    },
+                    {
+                        "name": "Agahnims Tower",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_AT_entrance_outside"
+                        ],
+                        "hosted_item": "from_AT_entrance_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "central_hyrule",
+                        "x":285,
+                        "y":302,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1004,
+                        "y":808,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Eastern Area - Entrances",
+        "children":[
+            {
+                "name": "Eastern Palace",
+                "sections": [
+                    {
+                        "name": "From Eastern Palace",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_EP_entrance_outside"
+                        ],
+                        "hosted_item": "from_EP_entrance_outside"
+                    },
+                    {
+                        "name": "To Eastern Palace",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_EP_entrance_outside"
+                        ],
+                        "hosted_item": "to_EP_entrance_outside"
+                    },
+                    {
+                        "name": "Eastern Palace",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_EP_entrance_outside"
+                        ],
+                        "hosted_item": "from_EP_entrance_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Eastern_area",
+                        "x":417,
+                        "y":186,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1926,
+                        "y":784,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Sahasrahlas Hut",
+                "sections": [
+                    {
+                        "name": "From Sahasrahlas Hut",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Sahasralahs_hut_outside"
+                        ],
+                        "hosted_item": "from_Sahasralahs_hut_outside"
+                    },
+                    {
+                        "name": "To Sahasrahlas Hut",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Sahasralahs_hut_outside"
+                        ],
+                        "hosted_item": "to_Sahasralahs_hut_outside"
+                    },
+                    {
+                        "name": "Sahasrahlas Hut",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Sahasralahs_hut_outside"
+                        ],
+                        "hosted_item": "from_Sahasralahs_hut_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Eastern_area",
+                        "x":118,
+                        "y":316,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1627,
+                        "y":913,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Long Fairy Cave",
+                "sections": [
+                    {
+                        "name": "From Long Fairy Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Eastern_long_fairy_cave_outside"
+                        ],
+                        "hosted_item": "from_Eastern_long_fairy_cave_outside"
+                    },
+                    {
+                        "name": "To Long Fairy Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Eastern_long_fairy_cave_outside"
+                        ],
+                        "hosted_item": "to_Eastern_long_fairy_cave_outside"
+                    },
+                    {
+                        "name": "Long Fairy Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Eastern_long_fairy_cave_outside"
+                        ],
+                        "hosted_item": "from_Eastern_long_fairy_cave_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Eastern_area",
+                        "x":460,
+                        "y":811,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1967,
+                        "y":1406,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Trees Fairy Cave",
+                "sections": [
+                    {
+                        "name": "From Trees Fairy Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Eastern_tree_fairy_cave_outside"
+                        ],
+                        "hosted_item": "from_Eastern_tree_fairy_cave_outside"
+                    },
+                    {
+                        "name": "To Trees Fairy Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Eastern_tree_fairy_cave_outside"
+                        ],
+                        "hosted_item": "to_Eastern_tree_fairy_cave_outside"
+                    },
+                    {
+                        "name": "Trees Fairy Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Eastern_tree_fairy_cave_outside"
+                        ],
+                        "hosted_item": "from_Eastern_tree_fairy_cave_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Eastern_area",
+                        "x":146,
+                        "y":700,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1654,
+                        "y":1297,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Potion Shop",
+                "sections": [
+                    {
+                        "name": "From Potion Shop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Light_potion_shop_outside"
+                        ],
+                        "hosted_item": "from_Light_potion_shop_outside"
+                    },
+                    {
+                        "name": "To Potion Shop",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Light_potion_shop_outside"
+                        ],
+                        "hosted_item": "to_Light_potion_shop_outside"
+                    },
+                    {
+                        "name": "Potion Shop",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Light_potion_shop_outside"
+                        ],
+                        "hosted_item": "from_Light_potion_shop_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Eastern_area",
+                        "x":100,
+                        "y":80,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1607,
+                        "y":673,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Desert - Entrances",
+        "children":[
+            {
+                "name": "Aginahs Cave",
+                "sections": [
+                    {
+                        "name": "From Aginahs Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Aginah_cave_outside"
+                        ],
+                        "hosted_item": "from_Aginah_cave_outside"
+                    },
+                    {
+                        "name": "To Aginahs Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Aginah_cave_outside"
+                        ],
+                        "hosted_item": "to_Aginah_cave_outside"
+                    },
+                    {
+                        "name": "Aginahs Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Aginah_cave_outside"
+                        ],
+                        "hosted_item": "from_Aginah_cave_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "desert",
+                        "x":400,
+                        "y":152,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":400,
+                        "y":1656,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "50 Rupee Cave",
+                "sections": [
+                    {
+                        "name": "From 50 Rupee Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Fifty_rupee_thief_outside"
+                        ],
+                        "hosted_item": "from_Fifty_rupee_thief_outside"
+                    },
+                    {
+                        "name": "To 50 Rupee Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Fifty_rupee_thief_outside"
+                        ],
+                        "hosted_item": "to_Fifty_rupee_thief_outside"
+                    },
+                    {
+                        "name": "50 Rupee Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Fifty_rupee_thief_outside"
+                        ],
+                        "hosted_item": "from_Fifty_rupee_thief_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "desert",
+                        "x":627,
+                        "y":416,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":627,
+                        "y":1920,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Desert Palace Entrance (South)",
+                "sections": [
+                    {
+                        "name": "From Desert Palace Entrance (South)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_DP_main_entrance_outside"
+                        ],
+                        "hosted_item": "from_DP_main_entrance_outside"
+                    },
+                    {
+                        "name": "To Desert Palace Entrance (South)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_DP_main_entrance_outside"
+                        ],
+                        "hosted_item": "to_DP_main_entrance_outside"
+                    },
+                    {
+                        "name": "Desert Palace Entrance (South)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_DP_main_entrance_outside"
+                        ],
+                        "hosted_item": "from_DP_main_entrance_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "desert",
+                        "x":149,
+                        "y":91,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":149,
+                        "y":1598,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Desert Palace Entrance (West)",
+                "sections": [
+                    {
+                        "name": "From Desert Palace Entrance (West)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_DP_left_entrance_outside"
+                        ],
+                        "hosted_item": "from_DP_left_entrance_outside"
+                    },
+                    {
+                        "name": "To Desert Palace Entrance (West)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_DP_left_entrance_outside"
+                        ],
+                        "hosted_item": "to_DP_left_entrance_outside"
+                    },
+                    {
+                        "name": "Desert Palace Entrance (West)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_DP_left_entrance_outside"
+                        ],
+                        "hosted_item": "from_DP_left_entrance_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "desert",
+                        "x":70,
+                        "y":89,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":70,
+                        "y":1598,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Desert Palace Entrance (North)",
+                "sections": [
+                    {
+                        "name": "From Desert Palace Entrance (North)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_DP_back_entrance_outside"
+                        ],
+                        "hosted_item": "from_DP_back_entrance_outside"
+                    },
+                    {
+                        "name": "To Desert Palace Entrance (North)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_DP_back_entrance_outside"
+                        ],
+                        "hosted_item": "to_DP_back_entrance_outside"
+                    },
+                    {
+                        "name": "Desert Palace Entrance (North)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_DP_back_entrance_outside"
+                        ],
+                        "hosted_item": "from_DP_back_entrance_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "desert",
+                        "x":149,
+                        "y":34,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":149,
+                        "y":1538,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Desert Palace Entrance (East)",
+                "sections": [
+                    {
+                        "name": "From Desert Palace Entrance (East)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_DP_right_entrance_outside"
+                        ],
+                        "hosted_item": "from_DP_right_entrance_outside"
+                    },
+                    {
+                        "name": "To Desert Palace Entrance (East)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_DP_right_entrance_outside"
+                        ],
+                        "hosted_item": "to_DP_right_entrance_outside"
+                    },
+                    {
+                        "name": "Desert Palace Entrance (East)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_DP_right_entrance_outside"
+                        ],
+                        "hosted_item": "from_DP_right_entrance_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "desert",
+                        "x":227,
+                        "y":89,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":227,
+                        "y":1598,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Checkerboard Cave",
+                "sections": [
+                    {
+                        "name": "From Checkerboard Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Checkerboard_cave_outside"
+                        ],
+                        "hosted_item": "from_Checkerboard_cave_outside"
+                    },
+                    {
+                        "name": "To Checkerboard Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Checkerboard_cave_outside"
+                        ],
+                        "hosted_item": "to_Checkerboard_cave_outside"
+                    },
+                    {
+                        "name": "Checkerboard Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Checkerboard_cave_outside"
+                        ],
+                        "hosted_item": "from_Checkerboard_cave_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "desert",
+                        "x":352,
+                        "y":54,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":352,
+                        "y":1558,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Desert Fairy Cave",
+                "sections": [
+                    {
+                        "name": "From Desert Fairy Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dam_desert_fairy_outside"
+                        ],
+                        "hosted_item": "from_Dam_desert_fairy_outside"
+                    },
+                    {
+                        "name": "To Desert Fairy Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dam_desert_fairy_outside"
+                        ],
+                        "hosted_item": "to_Dam_desert_fairy_outside"
+                    },
+                    {
+                        "name": "Desert Fairy Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dam_desert_fairy_outside"
+                        ],
+                        "hosted_item": "from_Dam_desert_fairy_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "desert",
+                        "x":557,
+                        "y":285,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":557,
+                        "y":1789,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Cave 45",
+                "sections": [
+                    {
+                        "name": "From Cave 45",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Cave45_outside"
+                        ],
+                        "hosted_item": "from_Cave45_outside"
+                    },
+                    {
+                        "name": "To Cave 45",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Cave45_outside"
+                        ],
+                        "hosted_item": "to_Cave45_outside"
+                    },
+                    {
+                        "name": "Cave 45",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Cave45_outside"
+                        ],
+                        "hosted_item": "from_Cave45_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "desert",
+                        "x":533,
+                        "y":152,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":533,
+                        "y":1657,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Dam - Entrances",
+        "children":[
+            {
+                "name": "Light Hype Fairy",
+                "sections": [
+                    {
+                        "name": "From Light Hype Fairy",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Light_hype_fairy_outside"
+                        ],
+                        "hosted_item": "from_Light_hype_fairy_outside"
+                    },
+                    {
+                        "name": "To Light Hype Fairy",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Light_hype_fairy_outside"
+                        ],
+                        "hosted_item": "to_Light_hype_fairy_outside"
+                    },
+                    {
+                        "name": "Light Hype Fairy",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Light_hype_fairy_outside"
+                        ],
+                        "hosted_item": "from_Light_hype_fairy_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dam",
+                        "x":451,
+                        "y":276,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1199,
+                        "y":1566,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Bonk Fairy (Light)",
+                "sections": [
+                    {
+                        "name": "From Bonk Fairy (Light)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Links_fairy_fountain_outside"
+                        ],
+                        "hosted_item": "from_Links_fairy_fountain_outside"
+                    },
+                    {
+                        "name": "To Bonk Fairy (Light)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Links_fairy_fountain_outside"
+                        ],
+                        "hosted_item": "to_Links_fairy_fountain_outside"
+                    },
+                    {
+                        "name": "Bonk Fairy (Light)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Links_fairy_fountain_outside"
+                        ],
+                        "hosted_item": "from_Links_fairy_fountain_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dam",
+                        "x":200,
+                        "y":21,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":947,
+                        "y":1308,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Dam",
+                "sections": [
+                    {
+                        "name": "From Dam",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dam_outside"
+                        ],
+                        "hosted_item": "from_Dam_outside"
+                    },
+                    {
+                        "name": "To Dam",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Dam_outside"
+                        ],
+                        "hosted_item": "to_Dam_outside"
+                    },
+                    {
+                        "name": "Dam",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Dam_outside"
+                        ],
+                        "hosted_item": "from_Dam_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dam",
+                        "x":192,
+                        "y":589,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":940,
+                        "y":1878,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Links House",
+                "sections": [
+                    {
+                        "name": "From Links House",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Links_house_outside"
+                        ],
+                        "hosted_item": "from_Links_house_outside"
+                    },
+                    {
+                        "name": "To Links House",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Links_house_outside"
+                        ],
+                        "hosted_item": "to_Links_house_outside"
+                    },
+                    {
+                        "name": "Links House",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Links_house_outside"
+                        ],
+                        "hosted_item": "from_Links_house_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "dam",
+                        "x":349,
+                        "y":96,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1098,
+                        "y":1386,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Lake Hylia - Entrances",
+        "children":[
+            {
+                "name": "20 Rupee Cave",
+                "sections": [
+                    {
+                        "name": "From 20 Rupee Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Twenty_rupee_thief_outside"
+                        ],
+                        "hosted_item": "from_Twenty_rupee_thief_outside"
+                    },
+                    {
+                        "name": "To 20 Rupee Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Twenty_rupee_thief_outside"
+                        ],
+                        "hosted_item": "to_Twenty_rupee_thief_outside"
+                    },
+                    {
+                        "name": "20 Rupee Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Twenty_rupee_thief_outside"
+                        ],
+                        "hosted_item": "from_Twenty_rupee_thief_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "lake_hylia",
+                        "x":558,
+                        "y":71,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1810,
+                        "y":1576,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Lake Hylia Fortune Teller",
+                "sections": [
+                    {
+                        "name": "From Lake Hylia Fortune Teller",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Light_lake_fortune_outside"
+                        ],
+                        "hosted_item": "from_Light_lake_fortune_outside"
+                    },
+                    {
+                        "name": "To Lake Hylia Fortune Teller",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Light_lake_fortune_outside"
+                        ],
+                        "hosted_item": "to_Light_lake_fortune_outside"
+                    },
+                    {
+                        "name": "Lake Hylia Fortune Teller",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Light_lake_fortune_outside"
+                        ],
+                        "hosted_item": "from_Light_lake_fortune_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "lake_hylia",
+                        "x":47,
+                        "y":110,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1301,
+                        "y":1613,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Cave Shop (Lake Hylia)",
+                "sections": [
+                    {
+                        "name": "From Cave Shop (Lake Hylia)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Light_lake_shop_outside"
+                        ],
+                        "hosted_item": "from_Light_lake_shop_outside"
+                    },
+                    {
+                        "name": "To Cave Shop (Lake Hylia)",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Light_lake_shop_outside"
+                        ],
+                        "hosted_item": "to_Light_lake_shop_outside"
+                    },
+                    {
+                        "name": "Cave Shop (Lake Hylia)",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Light_lake_shop_outside"
+                        ],
+                        "hosted_item": "from_Light_lake_shop_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "lake_hylia",
+                        "x":204,
+                        "y":36,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1458,
+                        "y":1539,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Mini Moldorm Cave",
+                "sections": [
+                    {
+                        "name": "From Mini Moldorm Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Mini_moldorm_cave_outside"
+                        ],
+                        "hosted_item": "from_Mini_moldorm_cave_outside"
+                    },
+                    {
+                        "name": "To Mini Moldorm Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Mini_moldorm_cave_outside"
+                        ],
+                        "hosted_item": "to_Mini_moldorm_cave_outside"
+                    },
+                    {
+                        "name": "Mini Moldorm Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Mini_moldorm_cave_outside"
+                        ],
+                        "hosted_item": "from_Mini_moldorm_cave_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "lake_hylia",
+                        "x":55,
+                        "y":380,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1309,
+                        "y":1888,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Upgrade Faiy Cave",
+                "sections": [
+                    {
+                        "name": "From Upgrade Faiy Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Upgrade_fairy_outside"
+                        ],
+                        "hosted_item": "from_Upgrade_fairy_outside"
+                    },
+                    {
+                        "name": "To Upgrade Faiy Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Upgrade_fairy_outside"
+                        ],
+                        "hosted_item": "to_Upgrade_fairy_outside"
+                    },
+                    {
+                        "name": "Upgrade Faiy Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Upgrade_fairy_outside"
+                        ],
+                        "hosted_item": "from_Upgrade_fairy_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "lake_hylia",
+                        "x":338,
+                        "y":206,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1592,
+                        "y":1711,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Ice Rod Cave",
+                "sections": [
+                    {
+                        "name": "From Ice Rod Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Icerod_cave_outside"
+                        ],
+                        "hosted_item": "from_Icerod_cave_outside"
+                    },
+                    {
+                        "name": "To Ice Rod Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Icerod_cave_outside"
+                        ],
+                        "hosted_item": "to_Icerod_cave_outside"
+                    },
+                    {
+                        "name": "Ice Rod Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Icerod_cave_outside"
+                        ],
+                        "hosted_item": "from_Icerod_cave_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "lake_hylia",
+                        "x":542,
+                        "y":44,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1795,
+                        "y":1548,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Good Bee Cave",
+                "sections": [
+                    {
+                        "name": "From Good Bee Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Good_bee_cave_outside"
+                        ],
+                        "hosted_item": "from_Good_bee_cave_outside"
+                    },
+                    {
+                        "name": "To Good Bee Cave",
+                        "visibility_rules": ["er_insanity"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|to_Good_bee_cave_outside"
+                        ],
+                        "hosted_item": "to_Good_bee_cave_outside"
+                    },
+                    {
+                        "name": "Good Bee Cave",
+                        "visibility_rules": ["er_dungeons", "er_full", "route_mode"],
+                        "clear_as_group":false,
+                        "access_rules": [
+                            "^$ChangeLocationColor|from_Good_bee_cave_outside"
+                        ],
+                        "hosted_item": "from_Good_bee_cave_outside"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "lake_hylia",
+                        "x":582,
+                        "y":44,
+                        "size":16,
+                        "shape": "diamond"
+                    },
+                    {
+                        "map": "lightworld_er",
+                        "x":1835,
+                        "y":1548,
+                        "size":32,
+                        "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    }
+]

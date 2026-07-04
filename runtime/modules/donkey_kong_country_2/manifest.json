@@ -1,0 +1,46 @@
+{
+  "game_id": "donkey_kong_country_2",
+  "display_name": "Donkey Kong Country 2",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apdkc2"
+  ],
+  "patch_world_module": "worlds.dkc2",
+  "ap_world": "dkc2",
+  "required_roms": [
+    "donkey_kong_country_2"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "sni",
+  "archipelago_client": {
+    "game_key": "donkey_kong_country_2",
+    "world": "dkc2",
+    "wrapper": "sni",
+    "client_file": "worlds/dkc2/Client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [
+      "d323e6bb4ccc85fd7b416f58350bc1a2"
+    ],
+    "sha1": [
+      "69d0f91bfd05837b44023e33a6699aa28fca19cb"
+    ]
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "snes",
+    "ap_game": "Donkey Kong Country 2"
+  },
+  "tracker_pack_uid": "https://github.com/pwkfisher/ap-dkc2-tracker/releases",
+  "tracker_web_url": "https://github.com/pwkfisher/ap-dkc2-tracker/releases/latest",
+  "tracker_asset_regex": "\\.zip$",
+  "tracker_pack_path": "poptracker/packs/donkey_kong_country_2/pack/ap-dkc2-tracker"
+}

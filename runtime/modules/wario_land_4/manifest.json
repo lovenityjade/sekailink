@@ -1,0 +1,48 @@
+{
+  "game_id": "wario_land_4",
+  "display_name": "Wario Land 4",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apwl4"
+  ],
+  "patch_world_module": "worlds.wl4",
+  "ap_world": "wl4",
+  "required_roms": [
+    "wario_land_4"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "wario_land_4",
+    "world": "wl4",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/wl4/client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".gba"
+    ],
+    "md5": [
+      "5fe47355a33e3fabec2a1607af88a404"
+    ],
+    "sha1": [
+      "b9fe05a8080e124b67bce6a623234ee3b518a2c1"
+    ]
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "compatibility_notes": "GBA runtime test confirmed bilateral item/check communication. Wario Land 4 may delay location sends depending on send_locations_to_server, especially on_escape versus immediate behavior.",
+  "sekaiemu": {
+    "core_id": "gba",
+    "ap_game": "Wario Land 4"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "https://github.com/JackTHerbert/wl4_jth/releases/latest",
+  "support_status": "supported",
+  "availability_status": "available_beta3_confirmed",
+  "tracker_pack_path": "poptracker/packs/wario_land_4/pack/wl4_jth-main",
+  "default_tracker_variant": "standard"
+}

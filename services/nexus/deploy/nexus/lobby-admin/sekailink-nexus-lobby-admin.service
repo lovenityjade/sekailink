@@ -1,0 +1,15 @@
+[Unit]
+Description=SekaiLink Nexus Lobby Admin Service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/sekailink/src/sekailink_server_core
+ExecStart=/opt/sekailink/nexus/lobby-admin/bin/sekailink_lobby_admin_service --config /opt/sekailink/nexus/lobby-admin/config/lobby_admin.json
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

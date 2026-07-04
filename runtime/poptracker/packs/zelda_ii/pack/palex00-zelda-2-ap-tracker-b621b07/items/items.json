@@ -1,0 +1,232 @@
+[
+    {
+        "name": "Spell Spell",
+        "type": "toggle",
+        "img": "images/items/spellspell.png",
+        "img_mods": "",
+        "codes": "spellspell"
+    },
+    {
+        "name": "Child",
+        "type": "toggle",
+        "img": "images/items/child.png",
+        "img_mods": "",
+        "codes": "child"
+    },
+    {
+        "name": "Thunder Spell",
+        "type": "toggle",
+        "img": "images/items/thunderspell.png",
+        "img_mods": "",
+        "codes": "thunderspell"
+    },
+    {
+        "name": "Bagu's Letter",
+        "type": "toggle",
+        "img": "images/items/bagusletter.png",
+        "img_mods": "",
+        "codes": "bagusletter"
+    },
+    {
+        "name": "Handy Glove",
+        "type": "toggle",
+        "img": "images/items/handyglove.png",
+        "img_mods": "",
+        "codes": "handyglove"
+    },
+    {
+        "name": "Boots",
+        "type": "toggle",
+        "img": "images/items/boots.png",
+        "img_mods": "",
+        "codes": "boots"
+    },
+    {
+        "name": "Reflect Spell",
+        "type": "toggle",
+        "img": "images/items/reflectspell.png",
+        "img_mods": "",
+        "codes": "reflectspell"
+    },
+    {
+        "name": "Fairy Spell",
+        "type": "toggle",
+        "img": "images/items/fairyspell.png",
+        "img_mods": "",
+        "codes": "fairyspell"
+    },
+    {
+        "name": "Cross",
+        "type": "toggle",
+        "img": "images/items/cross.png",
+        "img_mods": "",
+        "codes": "cross"
+    },
+    {
+        "name": "Raft",
+        "type": "toggle",
+        "img": "images/items/raft.png",
+        "img_mods": "",
+        "codes": "raft"
+    },
+    {
+        "name": "Life Spell",
+        "type": "toggle",
+        "img": "images/items/lifespell.png",
+        "img_mods": "",
+        "codes": "lifespell"
+    },
+    {
+        "name": "Fire Spell",
+        "type": "toggle",
+        "img": "images/items/firespell.png",
+        "img_mods": "",
+        "codes": "firespell"
+    },
+    {
+        "name": "Trophy",
+        "type": "toggle",
+        "img": "images/items/trophy.png",
+        "img_mods": "",
+        "codes": "trophy"
+    },
+    {
+        "name": "Jump Spell",
+        "type": "toggle",
+        "img": "images/items/jumpspell.png",
+        "img_mods": "",
+        "codes": "jumpspell"
+    },
+    {
+        "name": "Shield Spell",
+        "type": "toggle",
+        "img": "images/items/shieldspell.png",
+        "img_mods": "",
+        "codes": "shieldspell"
+    },
+    {
+        "name": "Candle",
+        "type": "toggle",
+        "img": "images/items/candle.png",
+        "img_mods": "",
+        "codes": "candle"
+    },
+    {
+        "name": "Down Thrust",
+        "type": "toggle",
+        "img": "images/items/downthrust.png",
+        "img_mods": "",
+        "codes": "downthrust"
+    },
+    {
+        "name": "Flute",
+        "type": "toggle",
+        "img": "images/items/flute.png",
+        "img_mods": "",
+        "codes": "flute"
+    },
+    {
+        "name": "Up Thrust",
+        "type": "toggle",
+        "img": "images/items/upthrust.png",
+        "img_mods": "",
+        "codes": "upthrust"
+    },
+    {
+        "name": "Water of Life",
+        "type": "toggle",
+        "img": "images/items/wateroflife.png",
+        "img_mods": "",
+        "codes": "wateroflife"
+    },
+    {
+        "name": "Hammer",
+        "type": "toggle",
+        "img": "images/items/hammer.png",
+        "img_mods": "",
+        "codes": "hammer"
+    },
+    {
+        "name": "Magic Container",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 4,
+        "allow_disabled": true,
+        "img": "images/items/magiccontainer.png",
+        "img_mods": "",
+        "codes": "magiccontainer"
+    },
+    {
+        "name": "Magical Key",
+        "type": "toggle",
+        "img": "images/items/magicalkey.png",
+        "img_mods": "",
+        "codes": "magicalkey"
+    },
+    {
+        "name": "Three-Eye Rock Palace Key",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 2,
+        "allow_disabled": true,
+        "img": "/images/items/threeeyerockpalacekey.png",
+        "overlay_background": "#000000",
+        "codes": "threeeyerockpalacekey",
+        "overlay_font_size": 30
+    },
+    {
+        "name": "Parapa Palace Key",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 3,
+        "allow_disabled": true,
+        "img": "/images/items/parapapalacekey.png",
+        "overlay_background": "#000000",
+        "codes": "parapapalacekey",
+        "overlay_font_size": 30
+    },
+    {
+        "name": "Sea Palace Key",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 5,
+        "allow_disabled": true,
+        "img": "/images/items/seapalacekey.png",
+        "overlay_background": "#000000",
+        "codes": "seapalacekey",
+        "overlay_font_size": 30
+    },
+    {
+        "name": "Midoro Palace Key",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 4,
+        "allow_disabled": true,
+        "img": "/images/items/midoropalacekey.png",
+        "overlay_background": "#000000",
+        "codes": "midoropalacekey",
+        "overlay_font_size": 30
+    },
+    {
+        "name": "Island Palace Key",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 4,
+        "allow_disabled": true,
+        "img": "/images/items/islandpalacekey.png",
+        "overlay_background": "#000000",
+        "codes": "islandpalacekey",
+        "overlay_font_size": 30
+    },
+    {
+        "name": "Maze Palace Key",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 6,
+        "allow_disabled": true,
+        "img": "/images/items/mazepalacekey.png",
+        "overlay_background": "#000000",
+        "codes": "mazepalacekey",
+        "overlay_font_size": 30
+    }
+]

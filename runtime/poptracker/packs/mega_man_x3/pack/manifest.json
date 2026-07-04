@@ -1,0 +1,17 @@
+﻿{
+    "name": "Mega Man X3 Archipelago",
+    "game_name": "Mega Man X3",
+    "package_version": "1.0.3",
+    "package_uid": "megamanx3_meridianbc",
+    "platform": "pc",
+    "author": "MeridianBC",
+    "variants": {
+        "standard": {
+            "display_name": "Map Tracker",
+            "flags": [
+                "ap"
+            ]
+        }
+    },
+    "versions_url": "https://raw.githubusercontent.com/BrianCumminger/megamanx3-ap-poptracker/master/versions.json"
+}

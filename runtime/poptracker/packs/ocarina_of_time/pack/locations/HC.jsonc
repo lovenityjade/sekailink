@@ -1,0 +1,351 @@
+
+
+[
+  {
+    "name": "HC - hint",
+    "chest_unopened_img": "/images/items/close.png",
+    "chest_opened_img": "/images/items/open.png",
+    "overlay_background": "#000000",
+    "access_rules": [
+        "{}"
+    ],
+    "children": [
+        {
+            "name": "Meeting Zelda - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Song from Impa - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hc_meeting_zelda_song_from_impa"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Zeldas Letter, SkullMask, MaskofTruth - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hc_meeting_zelda_zeldas_letter,_skullmask,_maskoftruth"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Hyrule Castle",
+                    "x": "202",
+                    "y": "164",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "By Entrance - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Malon Egg - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hc_by_entrance_malon_egg"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Tree GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hc_by_entrance_tree_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Hyrule Castle",
+                    "x": "592",
+                    "y": "895",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Storms Grotto - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hc_storms_grotto_gs"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hc_storms_grotto_pot_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hc_storms_grotto_pot_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hc_storms_grotto_pot_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 4 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hc_storms_grotto_pot_4"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Hyrule Castle",
+                    "x": "1051",
+                    "y": "749",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        }
+    ],
+    "sections": [
+        {
+            "name": "Great Fairy Reward - hint",
+            "access_rules": [],
+            "visibility_rules": [
+                "hc_great_fairy_reward"
+            ],
+            "item_count": 1
+        }
+    ],
+    "map_locations": [
+        {
+            "map": "Hyrule Castle",
+            "x": "1054",
+            "y": "989",
+            "size": 22,
+            "shape": "diamond"
+        }
+    ]
+},
+    {
+      "name": "HC",
+      "chest_unopened_img": "/images/Items/close.png",
+      "chest_opened_img": "/images/Items/open.png",
+      "overlay_background": "#000000",
+      "access_rules": [
+        " "
+      ],
+      "children": [
+        {
+          "name": "By Entrance",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Malon Egg",
+              "access_rules": [
+                "^$CanReach|Child HC Malon Egg",
+                "^$CanReach|Adult HC Malon Egg"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_child_trade|1|<="
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Tree GS",
+              "access_rules": [
+                "^$CanReach|Child HC GS Tree",
+                "^$CanReach|Adult HC GS Tree"
+              ],
+              "visibility_rules": [
+                "$Show|tokensanity|2"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Hyrule Castle",
+              "x": 570,
+              "y": 873,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Storms Grotto",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS",
+              "access_rules": [
+                "^$CanReach|Child HC GS Storms Grotto",
+                "^$CanReach|Adult HC GS Storms Grotto"
+              ],
+              "visibility_rules": [
+                "$Show|tokensanity|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 1",
+              "access_rules": [
+                "^$CanReach|Child HC Storms Grotto Pot 1",
+                "^$CanReach|Adult HC Storms Grotto Pot 1"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_pots|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 2",
+              "access_rules": [
+                "^$CanReach|Child HC Storms Grotto Pot 2",
+                "^$CanReach|Adult HC Storms Grotto Pot 2"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_pots|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 3",
+              "access_rules": [
+                "^$CanReach|Child HC Storms Grotto Pot 3",
+                "^$CanReach|Adult HC Storms Grotto Pot 3"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_pots|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 4",
+              "access_rules": [
+                "^$CanReach|Child HC Storms Grotto Pot 4",
+                "^$CanReach|Adult HC Storms Grotto Pot 4"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_pots|2"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Hyrule Castle",
+              "x": 1029,
+              "y": 727,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Meeting Zelda",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Song from Impa",
+              "access_rules": [
+                "^$CanReach|Child Song from Impa",
+                "^$CanReach|Adult Song from Impa"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_child_trade|1|<="
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Zeldas Letter",
+              "access_rules": [
+                "^$CanReach|Child HC Zeldas Letter",
+                "^$CanReach|Adult HC Zeldas Letter"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_child_trade|1|<="
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Hyrule Castle",
+              "x": 180,
+              "y": 142,
+              "size": 24
+            }
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "name": "Great Fairy Reward",
+          "access_rules": [
+            "^$CanReach|Child HC Great Fairy Reward",
+            "^$CanReach|Adult HC Great Fairy Reward"
+          ],
+          "item_count": 1
+        }
+      ],
+      "map_locations": [
+        {
+          "map": "Hyrule Castle",
+          "x": 1032,
+          "y": 967,
+          "size": 24
+        }
+      ]
+    }
+]

@@ -1,0 +1,1398 @@
+{
+  "mapping_id": "alttp-item-slots-complete-v1",
+  "linkedworld_id": "alttp",
+  "status": "repo-owned-normalized-surface-inventory",
+  "source_refs": [
+    "sekaiemu/worlds/alttp/Items.py"
+  ],
+  "slot_groups": [
+    {
+      "group_id": "combat",
+      "label": "Combat"
+    },
+    {
+      "group_id": "mobility",
+      "label": "Mobility"
+    },
+    {
+      "group_id": "utility",
+      "label": "Utility"
+    },
+    {
+      "group_id": "magic",
+      "label": "Magic"
+    },
+    {
+      "group_id": "dungeon_items",
+      "label": "Dungeon Items"
+    },
+    {
+      "group_id": "goal_progress",
+      "label": "Goal Progress"
+    },
+    {
+      "group_id": "resources",
+      "label": "Resources"
+    },
+    {
+      "group_id": "consumables",
+      "label": "Consumables"
+    },
+    {
+      "group_id": "filler_traps",
+      "label": "Filler And Traps"
+    }
+  ],
+  "slots": [
+    {
+      "slot_id": "bow",
+      "label": "Bow",
+      "group_id": "combat",
+      "behavior": "progressive",
+      "max_stage": 2,
+      "source_examples": [
+        "Bow",
+        "Progressive Bow",
+        "Silver Bow"
+      ],
+      "items": [
+        {
+          "item_id": 100,
+          "item_name": "Progressive Bow",
+          "event_key": "item.progressive_bow",
+          "slot_id": "bow"
+        },
+        {
+          "item_id": 101,
+          "item_name": "Progressive Bow (Alt)",
+          "event_key": "item.progressive_bow_alt",
+          "slot_id": "bow"
+        },
+        {
+          "item_id": 88,
+          "item_name": "Silver Arrows",
+          "event_key": "item.silver_arrows",
+          "slot_id": "bow"
+        },
+        {
+          "item_id": 59,
+          "item_name": "Silver Bow",
+          "event_key": "item.silver_bow",
+          "slot_id": "bow"
+        }
+      ]
+    },
+    {
+      "slot_id": "sword",
+      "label": "Sword",
+      "group_id": "combat",
+      "behavior": "progressive",
+      "max_stage": 4,
+      "source_examples": [
+        "Fighter Sword",
+        "Master Sword",
+        "Tempered Sword",
+        "Golden Sword",
+        "Progressive Sword"
+      ],
+      "items": [
+        {
+          "item_id": 80,
+          "item_name": "Master Sword",
+          "event_key": "item.master_sword",
+          "slot_id": "sword"
+        },
+        {
+          "item_id": 2,
+          "item_name": "Tempered Sword",
+          "event_key": "item.tempered_sword",
+          "slot_id": "sword"
+        },
+        {
+          "item_id": 73,
+          "item_name": "Fighter Sword",
+          "event_key": "item.fighter_sword",
+          "slot_id": "sword"
+        },
+        {
+          "item_id": 3,
+          "item_name": "Golden Sword",
+          "event_key": "item.golden_sword",
+          "slot_id": "sword"
+        },
+        {
+          "item_id": 94,
+          "item_name": "Progressive Sword",
+          "event_key": "item.progressive_sword",
+          "slot_id": "sword"
+        }
+      ]
+    },
+    {
+      "slot_id": "shield",
+      "label": "Shield",
+      "group_id": "combat",
+      "behavior": "progressive",
+      "max_stage": 3,
+      "source_examples": [
+        "Blue Shield",
+        "Red Shield",
+        "Mirror Shield",
+        "Progressive Shield"
+      ],
+      "items": [
+        {
+          "item_id": 4,
+          "item_name": "Blue Shield",
+          "event_key": "item.blue_shield",
+          "slot_id": "shield"
+        },
+        {
+          "item_id": 5,
+          "item_name": "Red Shield",
+          "event_key": "item.red_shield",
+          "slot_id": "shield"
+        },
+        {
+          "item_id": 6,
+          "item_name": "Mirror Shield",
+          "event_key": "item.mirror_shield",
+          "slot_id": "shield"
+        },
+        {
+          "item_id": 95,
+          "item_name": "Progressive Shield",
+          "event_key": "item.progressive_shield",
+          "slot_id": "shield"
+        }
+      ]
+    },
+    {
+      "slot_id": "mail",
+      "label": "Mail",
+      "group_id": "combat",
+      "behavior": "progressive",
+      "max_stage": 2,
+      "source_examples": [
+        "Blue Mail",
+        "Red Mail"
+      ],
+      "items": [
+        {
+          "item_id": 34,
+          "item_name": "Blue Mail",
+          "event_key": "item.blue_mail",
+          "slot_id": "mail"
+        },
+        {
+          "item_id": 35,
+          "item_name": "Red Mail",
+          "event_key": "item.red_mail",
+          "slot_id": "mail"
+        },
+        {
+          "item_id": 96,
+          "item_name": "Progressive Mail",
+          "event_key": "item.progressive_mail",
+          "slot_id": "mail"
+        }
+      ]
+    },
+    {
+      "slot_id": "boomerang",
+      "label": "Boomerang",
+      "group_id": "combat",
+      "behavior": "multi-source-toggle",
+      "source_examples": [
+        "Blue Boomerang",
+        "Red Boomerang"
+      ],
+      "items": [
+        {
+          "item_id": 12,
+          "item_name": "Blue Boomerang",
+          "event_key": "item.blue_boomerang",
+          "slot_id": "boomerang"
+        },
+        {
+          "item_id": 42,
+          "item_name": "Red Boomerang",
+          "event_key": "item.red_boomerang",
+          "slot_id": "boomerang"
+        }
+      ]
+    },
+    {
+      "slot_id": "hookshot",
+      "label": "Hookshot",
+      "group_id": "mobility",
+      "behavior": "toggle",
+      "source_examples": [
+        "Hookshot"
+      ],
+      "items": [
+        {
+          "item_id": 10,
+          "item_name": "Hookshot",
+          "event_key": "item.hookshot",
+          "slot_id": "hookshot"
+        }
+      ]
+    },
+    {
+      "slot_id": "boots",
+      "label": "Pegasus Boots",
+      "group_id": "mobility",
+      "behavior": "toggle",
+      "source_examples": [
+        "Pegasus Boots"
+      ],
+      "items": [
+        {
+          "item_id": 75,
+          "item_name": "Pegasus Boots",
+          "event_key": "item.pegasus_boots",
+          "slot_id": "boots"
+        }
+      ]
+    },
+    {
+      "slot_id": "glove",
+      "label": "Glove",
+      "group_id": "mobility",
+      "behavior": "progressive",
+      "max_stage": 2,
+      "source_examples": [
+        "Power Glove",
+        "Progressive Glove",
+        "Titans Mitts"
+      ],
+      "items": [
+        {
+          "item_id": 27,
+          "item_name": "Power Glove",
+          "event_key": "item.power_glove",
+          "slot_id": "glove"
+        },
+        {
+          "item_id": 28,
+          "item_name": "Titans Mitts",
+          "event_key": "item.titans_mitts",
+          "slot_id": "glove"
+        },
+        {
+          "item_id": 97,
+          "item_name": "Progressive Glove",
+          "event_key": "item.progressive_glove",
+          "slot_id": "glove"
+        }
+      ]
+    },
+    {
+      "slot_id": "flippers",
+      "label": "Flippers",
+      "group_id": "mobility",
+      "behavior": "toggle",
+      "source_examples": [
+        "Flippers"
+      ],
+      "items": [
+        {
+          "item_id": 30,
+          "item_name": "Flippers",
+          "event_key": "item.flippers",
+          "slot_id": "flippers"
+        }
+      ]
+    },
+    {
+      "slot_id": "moon_pearl",
+      "label": "Moon Pearl",
+      "group_id": "mobility",
+      "behavior": "toggle",
+      "source_examples": [
+        "Moon Pearl"
+      ],
+      "items": [
+        {
+          "item_id": 31,
+          "item_name": "Moon Pearl",
+          "event_key": "item.moon_pearl",
+          "slot_id": "moon_pearl"
+        }
+      ]
+    },
+    {
+      "slot_id": "magic_mirror",
+      "label": "Magic Mirror",
+      "group_id": "mobility",
+      "behavior": "toggle",
+      "source_examples": [
+        "Magic Mirror"
+      ],
+      "items": [
+        {
+          "item_id": 26,
+          "item_name": "Magic Mirror",
+          "event_key": "item.magic_mirror",
+          "slot_id": "magic_mirror"
+        }
+      ]
+    },
+    {
+      "slot_id": "hammer",
+      "label": "Hammer",
+      "group_id": "utility",
+      "behavior": "toggle",
+      "source_examples": [
+        "Hammer"
+      ],
+      "items": [
+        {
+          "item_id": 9,
+          "item_name": "Hammer",
+          "event_key": "item.hammer",
+          "slot_id": "hammer"
+        }
+      ]
+    },
+    {
+      "slot_id": "lamp",
+      "label": "Lamp",
+      "group_id": "utility",
+      "behavior": "toggle",
+      "source_examples": [
+        "Lamp"
+      ],
+      "items": [
+        {
+          "item_id": 18,
+          "item_name": "Lamp",
+          "event_key": "item.lamp",
+          "slot_id": "lamp"
+        }
+      ]
+    },
+    {
+      "slot_id": "book",
+      "label": "Book Of Mudora",
+      "group_id": "utility",
+      "behavior": "toggle",
+      "source_examples": [
+        "Book of Mudora"
+      ],
+      "items": [
+        {
+          "item_id": 29,
+          "item_name": "Book of Mudora",
+          "event_key": "item.book_of_mudora",
+          "slot_id": "book"
+        }
+      ]
+    },
+    {
+      "slot_id": "bottle",
+      "label": "Bottle",
+      "group_id": "utility",
+      "behavior": "variant-family",
+      "source_examples": [
+        "Bottle",
+        "Bottle (Red Potion)",
+        "Bottle (Fairy)",
+        "Bottle (Good Bee)"
+      ],
+      "items": [
+        {
+          "item_id": 22,
+          "item_name": "Bottle",
+          "event_key": "item.bottle",
+          "slot_id": "bottle"
+        },
+        {
+          "item_id": 43,
+          "item_name": "Bottle (Red Potion)",
+          "event_key": "item.bottle_red_potion",
+          "slot_id": "bottle"
+        },
+        {
+          "item_id": 44,
+          "item_name": "Bottle (Green Potion)",
+          "event_key": "item.bottle_green_potion",
+          "slot_id": "bottle"
+        },
+        {
+          "item_id": 45,
+          "item_name": "Bottle (Blue Potion)",
+          "event_key": "item.bottle_blue_potion",
+          "slot_id": "bottle"
+        },
+        {
+          "item_id": 61,
+          "item_name": "Bottle (Fairy)",
+          "event_key": "item.bottle_fairy",
+          "slot_id": "bottle"
+        },
+        {
+          "item_id": 60,
+          "item_name": "Bottle (Bee)",
+          "event_key": "item.bottle_bee",
+          "slot_id": "bottle"
+        },
+        {
+          "item_id": 72,
+          "item_name": "Bottle (Good Bee)",
+          "event_key": "item.bottle_good_bee",
+          "slot_id": "bottle"
+        }
+      ]
+    },
+    {
+      "slot_id": "flute",
+      "label": "Flute",
+      "group_id": "utility",
+      "behavior": "stateful-toggle",
+      "source_examples": [
+        "Flute",
+        "Activated Flute"
+      ],
+      "items": [
+        {
+          "item_id": 20,
+          "item_name": "Flute",
+          "event_key": "item.flute",
+          "slot_id": "flute"
+        },
+        {
+          "item_id": 74,
+          "item_name": "Activated Flute",
+          "event_key": "item.activated_flute",
+          "slot_id": "flute"
+        }
+      ]
+    },
+    {
+      "slot_id": "shovel",
+      "label": "Shovel",
+      "group_id": "utility",
+      "behavior": "toggle",
+      "source_examples": [
+        "Shovel"
+      ],
+      "items": [
+        {
+          "item_id": 19,
+          "item_name": "Shovel",
+          "event_key": "item.shovel",
+          "slot_id": "shovel"
+        }
+      ]
+    },
+    {
+      "slot_id": "mushroom",
+      "label": "Mushroom",
+      "group_id": "utility",
+      "behavior": "toggle",
+      "source_examples": [
+        "Mushroom"
+      ],
+      "items": [
+        {
+          "item_id": 41,
+          "item_name": "Mushroom",
+          "event_key": "item.mushroom",
+          "slot_id": "mushroom"
+        }
+      ]
+    },
+    {
+      "slot_id": "powder",
+      "label": "Magic Powder",
+      "group_id": "utility",
+      "behavior": "toggle",
+      "source_examples": [
+        "Magic Powder"
+      ],
+      "items": [
+        {
+          "item_id": 13,
+          "item_name": "Magic Powder",
+          "event_key": "item.magic_powder",
+          "slot_id": "powder"
+        }
+      ]
+    },
+    {
+      "slot_id": "fire_rod",
+      "label": "Fire Rod",
+      "group_id": "magic",
+      "behavior": "toggle",
+      "source_examples": [
+        "Fire Rod"
+      ],
+      "items": [
+        {
+          "item_id": 7,
+          "item_name": "Fire Rod",
+          "event_key": "item.fire_rod",
+          "slot_id": "fire_rod"
+        }
+      ]
+    },
+    {
+      "slot_id": "ice_rod",
+      "label": "Ice Rod",
+      "group_id": "magic",
+      "behavior": "toggle",
+      "source_examples": [
+        "Ice Rod"
+      ],
+      "items": [
+        {
+          "item_id": 8,
+          "item_name": "Ice Rod",
+          "event_key": "item.ice_rod",
+          "slot_id": "ice_rod"
+        }
+      ]
+    },
+    {
+      "slot_id": "somaria",
+      "label": "Cane Of Somaria",
+      "group_id": "magic",
+      "behavior": "toggle",
+      "source_examples": [
+        "Cane of Somaria"
+      ],
+      "items": [
+        {
+          "item_id": 21,
+          "item_name": "Cane of Somaria",
+          "event_key": "item.cane_of_somaria",
+          "slot_id": "somaria"
+        }
+      ]
+    },
+    {
+      "slot_id": "byrna",
+      "label": "Cane Of Byrna",
+      "group_id": "magic",
+      "behavior": "toggle",
+      "source_examples": [
+        "Cane of Byrna"
+      ],
+      "items": [
+        {
+          "item_id": 24,
+          "item_name": "Cane of Byrna",
+          "event_key": "item.cane_of_byrna",
+          "slot_id": "byrna"
+        }
+      ]
+    },
+    {
+      "slot_id": "cape",
+      "label": "Cape",
+      "group_id": "magic",
+      "behavior": "toggle",
+      "source_examples": [
+        "Cape"
+      ],
+      "items": [
+        {
+          "item_id": 25,
+          "item_name": "Cape",
+          "event_key": "item.cape",
+          "slot_id": "cape"
+        }
+      ]
+    },
+    {
+      "slot_id": "medallions",
+      "label": "Medallions",
+      "group_id": "magic",
+      "behavior": "multi-toggle",
+      "source_examples": [
+        "Bombos",
+        "Ether",
+        "Quake"
+      ],
+      "items": [
+        {
+          "item_id": 15,
+          "item_name": "Bombos",
+          "event_key": "item.bombos",
+          "slot_id": "medallions"
+        },
+        {
+          "item_id": 16,
+          "item_name": "Ether",
+          "event_key": "item.ether",
+          "slot_id": "medallions"
+        },
+        {
+          "item_id": 17,
+          "item_name": "Quake",
+          "event_key": "item.quake",
+          "slot_id": "medallions"
+        }
+      ]
+    },
+    {
+      "slot_id": "dungeon_items",
+      "label": "Dungeon Items",
+      "group_id": "dungeon_items",
+      "behavior": "family",
+      "source_examples": [
+        "Small Key (...)",
+        "Big Key (...)",
+        "Compass (...)",
+        "Map (...)"
+      ],
+      "items": [
+        {
+          "item_id": 162,
+          "item_name": "Small Key (Eastern Palace)",
+          "event_key": "item.small_key_eastern_palace",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 157,
+          "item_name": "Big Key (Eastern Palace)",
+          "event_key": "item.big_key_eastern_palace",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 141,
+          "item_name": "Compass (Eastern Palace)",
+          "event_key": "item.compass_eastern_palace",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 125,
+          "item_name": "Map (Eastern Palace)",
+          "event_key": "item.map_eastern_palace",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 163,
+          "item_name": "Small Key (Desert Palace)",
+          "event_key": "item.small_key_desert_palace",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 156,
+          "item_name": "Big Key (Desert Palace)",
+          "event_key": "item.big_key_desert_palace",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 140,
+          "item_name": "Compass (Desert Palace)",
+          "event_key": "item.compass_desert_palace",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 124,
+          "item_name": "Map (Desert Palace)",
+          "event_key": "item.map_desert_palace",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 170,
+          "item_name": "Small Key (Tower of Hera)",
+          "event_key": "item.small_key_tower_of_hera",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 149,
+          "item_name": "Big Key (Tower of Hera)",
+          "event_key": "item.big_key_tower_of_hera",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 133,
+          "item_name": "Compass (Tower of Hera)",
+          "event_key": "item.compass_tower_of_hera",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 117,
+          "item_name": "Map (Tower of Hera)",
+          "event_key": "item.map_tower_of_hera",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 160,
+          "item_name": "Small Key (Hyrule Castle)",
+          "event_key": "item.small_key_hyrule_castle",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 159,
+          "item_name": "Big Key (Hyrule Castle)",
+          "event_key": "item.big_key_hyrule_castle",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 143,
+          "item_name": "Compass (Hyrule Castle)",
+          "event_key": "item.compass_hyrule_castle",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 127,
+          "item_name": "Map (Hyrule Castle)",
+          "event_key": "item.map_hyrule_castle",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 164,
+          "item_name": "Small Key (Agahnims Tower)",
+          "event_key": "item.small_key_agahnims_tower",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 155,
+          "item_name": "Big Key (Agahnims Tower)",
+          "event_key": "item.big_key_agahnims_tower",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 139,
+          "item_name": "Compass (Agahnims Tower)",
+          "event_key": "item.compass_agahnims_tower",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 123,
+          "item_name": "Map (Agahnims Tower)",
+          "event_key": "item.map_agahnims_tower",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 166,
+          "item_name": "Small Key (Palace of Darkness)",
+          "event_key": "item.small_key_palace_of_darkness",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 153,
+          "item_name": "Big Key (Palace of Darkness)",
+          "event_key": "item.big_key_palace_of_darkness",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 137,
+          "item_name": "Compass (Palace of Darkness)",
+          "event_key": "item.compass_palace_of_darkness",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 121,
+          "item_name": "Map (Palace of Darkness)",
+          "event_key": "item.map_palace_of_darkness",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 171,
+          "item_name": "Small Key (Thieves Town)",
+          "event_key": "item.small_key_thieves_town",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 148,
+          "item_name": "Big Key (Thieves Town)",
+          "event_key": "item.big_key_thieves_town",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 132,
+          "item_name": "Compass (Thieves Town)",
+          "event_key": "item.compass_thieves_town",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 116,
+          "item_name": "Map (Thieves Town)",
+          "event_key": "item.map_thieves_town",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 168,
+          "item_name": "Small Key (Skull Woods)",
+          "event_key": "item.small_key_skull_woods",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 151,
+          "item_name": "Big Key (Skull Woods)",
+          "event_key": "item.big_key_skull_woods",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 135,
+          "item_name": "Compass (Skull Woods)",
+          "event_key": "item.compass_skull_woods",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 119,
+          "item_name": "Map (Skull Woods)",
+          "event_key": "item.map_skull_woods",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 165,
+          "item_name": "Small Key (Swamp Palace)",
+          "event_key": "item.small_key_swamp_palace",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 154,
+          "item_name": "Big Key (Swamp Palace)",
+          "event_key": "item.big_key_swamp_palace",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 138,
+          "item_name": "Compass (Swamp Palace)",
+          "event_key": "item.compass_swamp_palace",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 122,
+          "item_name": "Map (Swamp Palace)",
+          "event_key": "item.map_swamp_palace",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 169,
+          "item_name": "Small Key (Ice Palace)",
+          "event_key": "item.small_key_ice_palace",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 150,
+          "item_name": "Big Key (Ice Palace)",
+          "event_key": "item.big_key_ice_palace",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 134,
+          "item_name": "Compass (Ice Palace)",
+          "event_key": "item.compass_ice_palace",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 118,
+          "item_name": "Map (Ice Palace)",
+          "event_key": "item.map_ice_palace",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 167,
+          "item_name": "Small Key (Misery Mire)",
+          "event_key": "item.small_key_misery_mire",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 152,
+          "item_name": "Big Key (Misery Mire)",
+          "event_key": "item.big_key_misery_mire",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 136,
+          "item_name": "Compass (Misery Mire)",
+          "event_key": "item.compass_misery_mire",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 120,
+          "item_name": "Map (Misery Mire)",
+          "event_key": "item.map_misery_mire",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 172,
+          "item_name": "Small Key (Turtle Rock)",
+          "event_key": "item.small_key_turtle_rock",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 147,
+          "item_name": "Big Key (Turtle Rock)",
+          "event_key": "item.big_key_turtle_rock",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 131,
+          "item_name": "Compass (Turtle Rock)",
+          "event_key": "item.compass_turtle_rock",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 115,
+          "item_name": "Map (Turtle Rock)",
+          "event_key": "item.map_turtle_rock",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 173,
+          "item_name": "Small Key (Ganons Tower)",
+          "event_key": "item.small_key_ganons_tower",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 146,
+          "item_name": "Big Key (Ganons Tower)",
+          "event_key": "item.big_key_ganons_tower",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 130,
+          "item_name": "Compass (Ganons Tower)",
+          "event_key": "item.compass_ganons_tower",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 114,
+          "item_name": "Map (Ganons Tower)",
+          "event_key": "item.map_ganons_tower",
+          "slot_id": "dungeon_items"
+        },
+        {
+          "item_id": 175,
+          "item_name": "Small Key (Universal)",
+          "event_key": "item.small_key_universal",
+          "slot_id": "dungeon_items"
+        }
+      ]
+    },
+    {
+      "slot_id": "goal_items",
+      "label": "Goal Progress",
+      "group_id": "goal_progress",
+      "behavior": "family",
+      "source_examples": [
+        "Green Pendant",
+        "Blue Pendant",
+        "Red Pendant",
+        "Crystal 1",
+        "Crystal 7",
+        "Triforce Piece"
+      ],
+      "items": [
+        {
+          "item_id": 106,
+          "item_name": "Triforce",
+          "event_key": "item.triforce",
+          "slot_id": "goal_items"
+        },
+        {
+          "item_id": 107,
+          "item_name": "Power Star",
+          "event_key": "item.power_star",
+          "slot_id": "goal_items"
+        },
+        {
+          "item_id": 108,
+          "item_name": "Triforce Piece",
+          "event_key": "item.triforce_piece",
+          "slot_id": "goal_items"
+        }
+      ]
+    },
+    {
+      "slot_id": "magic_upgrades",
+      "label": "Magic Upgrades",
+      "group_id": "magic",
+      "behavior": "upgrade-family",
+      "source_examples": [
+        "Magic Upgrade (1/2)",
+        "Magic Upgrade (1/4)"
+      ],
+      "items": [
+        {
+          "item_id": 78,
+          "item_name": "Magic Upgrade (1/2)",
+          "event_key": "item.magic_upgrade_half",
+          "slot_id": "magic_upgrades"
+        },
+        {
+          "item_id": 79,
+          "item_name": "Magic Upgrade (1/4)",
+          "event_key": "item.magic_upgrade_quarter",
+          "slot_id": "magic_upgrades"
+        }
+      ]
+    },
+    {
+      "slot_id": "arrows",
+      "label": "Arrows",
+      "group_id": "resources",
+      "behavior": "countable-resource-family",
+      "source_examples": [
+        "Single Arrow",
+        "Arrows (10)"
+      ],
+      "items": [
+        {
+          "item_id": 67,
+          "item_name": "Single Arrow",
+          "event_key": "item.single_arrow",
+          "slot_id": "arrows"
+        },
+        {
+          "item_id": 68,
+          "item_name": "Arrows (10)",
+          "event_key": "item.arrows_10",
+          "slot_id": "arrows"
+        }
+      ]
+    },
+    {
+      "slot_id": "bombs",
+      "label": "Bombs",
+      "group_id": "resources",
+      "behavior": "countable-resource-family",
+      "source_examples": [
+        "Single Bomb",
+        "Bombs (3)",
+        "Bombs (10)"
+      ],
+      "items": [
+        {
+          "item_id": 39,
+          "item_name": "Single Bomb",
+          "event_key": "item.single_bomb",
+          "slot_id": "bombs"
+        },
+        {
+          "item_id": 40,
+          "item_name": "Bombs (3)",
+          "event_key": "item.bombs_3",
+          "slot_id": "bombs"
+        },
+        {
+          "item_id": 49,
+          "item_name": "Bombs (10)",
+          "event_key": "item.bombs_10",
+          "slot_id": "bombs"
+        }
+      ]
+    },
+    {
+      "slot_id": "capacity_upgrades",
+      "label": "Capacity Upgrades",
+      "group_id": "resources",
+      "behavior": "upgrade-family",
+      "source_examples": [
+        "Arrow Upgrade (+5)",
+        "Bomb Upgrade (+10)"
+      ],
+      "items": [
+        {
+          "item_id": 84,
+          "item_name": "Arrow Upgrade (+10)",
+          "event_key": "item.arrow_upgrade_10",
+          "slot_id": "capacity_upgrades"
+        },
+        {
+          "item_id": 83,
+          "item_name": "Arrow Upgrade (+5)",
+          "event_key": "item.arrow_upgrade_5",
+          "slot_id": "capacity_upgrades"
+        },
+        {
+          "item_id": 77,
+          "item_name": "Arrow Upgrade (70)",
+          "event_key": "item.arrow_upgrade_70",
+          "slot_id": "capacity_upgrades"
+        },
+        {
+          "item_id": 82,
+          "item_name": "Bomb Upgrade (+10)",
+          "event_key": "item.bomb_upgrade_10",
+          "slot_id": "capacity_upgrades"
+        },
+        {
+          "item_id": 81,
+          "item_name": "Bomb Upgrade (+5)",
+          "event_key": "item.bomb_upgrade_5",
+          "slot_id": "capacity_upgrades"
+        },
+        {
+          "item_id": 76,
+          "item_name": "Bomb Upgrade (50)",
+          "event_key": "item.bomb_upgrade_50",
+          "slot_id": "capacity_upgrades"
+        }
+      ]
+    },
+    {
+      "slot_id": "rupees",
+      "label": "Rupees",
+      "group_id": "resources",
+      "behavior": "currency-family",
+      "source_examples": [
+        "Rupee (1)",
+        "Rupees (300)"
+      ],
+      "items": [
+        {
+          "item_id": 52,
+          "item_name": "Rupee (1)",
+          "event_key": "item.rupee_1",
+          "slot_id": "rupees"
+        },
+        {
+          "item_id": 53,
+          "item_name": "Rupees (5)",
+          "event_key": "item.rupees_5",
+          "slot_id": "rupees"
+        },
+        {
+          "item_id": 54,
+          "item_name": "Rupees (20)",
+          "event_key": "item.rupees_20",
+          "slot_id": "rupees"
+        },
+        {
+          "item_id": 65,
+          "item_name": "Rupees (50)",
+          "event_key": "item.rupees_50",
+          "slot_id": "rupees"
+        },
+        {
+          "item_id": 64,
+          "item_name": "Rupees (100)",
+          "event_key": "item.rupees_100",
+          "slot_id": "rupees"
+        },
+        {
+          "item_id": 70,
+          "item_name": "Rupees (300)",
+          "event_key": "item.rupees_300",
+          "slot_id": "rupees"
+        }
+      ]
+    },
+    {
+      "slot_id": "potions",
+      "label": "Potions",
+      "group_id": "consumables",
+      "behavior": "variant-family",
+      "source_examples": [
+        "Red Potion",
+        "Green Potion",
+        "Blue Potion"
+      ],
+      "items": [
+        {
+          "item_id": 46,
+          "item_name": "Red Potion",
+          "event_key": "item.red_potion",
+          "slot_id": "potions"
+        },
+        {
+          "item_id": 47,
+          "item_name": "Green Potion",
+          "event_key": "item.green_potion",
+          "slot_id": "potions"
+        },
+        {
+          "item_id": 48,
+          "item_name": "Blue Potion",
+          "event_key": "item.blue_potion",
+          "slot_id": "potions"
+        }
+      ]
+    },
+    {
+      "slot_id": "health_pickups",
+      "label": "Health Pickups",
+      "group_id": "consumables",
+      "behavior": "health-family",
+      "source_examples": [
+        "Boss Heart Container",
+        "Piece of Heart",
+        "Small Heart",
+        "Apple"
+      ],
+      "items": [
+        {
+          "item_id": 62,
+          "item_name": "Boss Heart Container",
+          "event_key": "item.boss_heart_container",
+          "slot_id": "health_pickups"
+        },
+        {
+          "item_id": 63,
+          "item_name": "Sanctuary Heart Container",
+          "event_key": "item.sanctuary_heart_container",
+          "slot_id": "health_pickups"
+        },
+        {
+          "item_id": 23,
+          "item_name": "Piece of Heart",
+          "event_key": "item.piece_of_heart",
+          "slot_id": "health_pickups"
+        },
+        {
+          "item_id": 180,
+          "item_name": "Apple",
+          "event_key": "item.apple",
+          "slot_id": "health_pickups"
+        },
+        {
+          "item_id": 66,
+          "item_name": "Small Heart",
+          "event_key": "item.small_heart",
+          "slot_id": "health_pickups"
+        }
+      ]
+    },
+    {
+      "slot_id": "magic_pickups",
+      "label": "Magic Pickups",
+      "group_id": "consumables",
+      "behavior": "magic-family",
+      "source_examples": [
+        "Magic Jar"
+      ],
+      "items": [
+        {
+          "item_id": 179,
+          "item_name": "Magic Jar",
+          "event_key": "item.magic_jar",
+          "slot_id": "magic_pickups"
+        }
+      ]
+    },
+    {
+      "slot_id": "clocks",
+      "label": "Clocks",
+      "group_id": "filler_traps",
+      "behavior": "timer-family",
+      "source_examples": [
+        "Red Clock",
+        "Blue Clock",
+        "Green Clock"
+      ],
+      "items": [
+        {
+          "item_id": 91,
+          "item_name": "Red Clock",
+          "event_key": "item.red_clock",
+          "slot_id": "clocks"
+        },
+        {
+          "item_id": 92,
+          "item_name": "Blue Clock",
+          "event_key": "item.blue_clock",
+          "slot_id": "clocks"
+        },
+        {
+          "item_id": 93,
+          "item_name": "Green Clock",
+          "event_key": "item.green_clock",
+          "slot_id": "clocks"
+        }
+      ]
+    },
+    {
+      "slot_id": "traps",
+      "label": "Traps",
+      "group_id": "filler_traps",
+      "behavior": "trap-family",
+      "source_examples": [
+        "Rupoor",
+        "Bee Trap",
+        "Bee",
+        "Nothing"
+      ],
+      "items": [
+        {
+          "item_id": 89,
+          "item_name": "Rupoor",
+          "event_key": "item.rupoor",
+          "slot_id": "traps"
+        },
+        {
+          "item_id": 90,
+          "item_name": "Nothing",
+          "event_key": "item.nothing",
+          "slot_id": "traps"
+        },
+        {
+          "item_id": 176,
+          "item_name": "Bee Trap",
+          "event_key": "item.bee_trap",
+          "slot_id": "traps"
+        },
+        {
+          "item_id": 14,
+          "item_name": "Bee",
+          "event_key": "item.bee",
+          "slot_id": "traps"
+        }
+      ]
+    },
+    {
+      "slot_id": "rng_and_misc",
+      "label": "RNG And Misc Pickups",
+      "group_id": "filler_traps",
+      "behavior": "misc-family",
+      "source_examples": [
+        "Single RNG",
+        "Multi RNG",
+        "Faerie",
+        "Good Bee"
+      ],
+      "items": [
+        {
+          "item_id": 33,
+          "item_name": "Bug Catching Net",
+          "event_key": "item.bug_catching_net",
+          "slot_id": "rng_and_misc"
+        },
+        {
+          "item_id": 98,
+          "item_name": "Single RNG",
+          "event_key": "item.single_rng",
+          "slot_id": "rng_and_misc"
+        },
+        {
+          "item_id": 99,
+          "item_name": "Multi RNG",
+          "event_key": "item.multi_rng",
+          "slot_id": "rng_and_misc"
+        },
+        {
+          "item_id": 177,
+          "item_name": "Faerie",
+          "event_key": "item.faerie",
+          "slot_id": "rng_and_misc"
+        },
+        {
+          "item_id": 178,
+          "item_name": "Good Bee",
+          "event_key": "item.good_bee",
+          "slot_id": "rng_and_misc"
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "This file normalizes tracker-facing item slots rather than upstream item-table internals.",
+    "Progressive and stateful families are intentionally collapsed into tester-facing slots.",
+    "Every active room-controlled bridge action is now assigned to one tracker item slot."
+  ],
+  "coverage": {
+    "active_bridge_ref": "bridge/sklmi.phase1.json",
+    "covered_item_actions": 145,
+    "slot_assignment_status": "complete-for-active-runtime-bridge-actions",
+    "note": "Each active room-controlled item action is assigned to one tracker item slot; crystal and pendant tuple-coded rewards remain modeled in dungeon-progress metadata."
+  }
+}

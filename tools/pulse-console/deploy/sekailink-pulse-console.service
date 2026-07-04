@@ -1,0 +1,33 @@
+[Unit]
+Description=SekaiLink Pulse Console web interface
+After=network-online.target sekailink-pulse-rag-api.service
+Wants=network-online.target
+Requires=sekailink-pulse-rag-api.service
+
+[Service]
+Type=simple
+User=sekailink-pulse
+Group=sekailink-pulse
+WorkingDirectory=/opt/sekailink/pulse-console
+Environment=PULSE_CONSOLE_HOST=127.0.0.1
+Environment=PULSE_CONSOLE_PORT=18183
+Environment=PULSE_CONSOLE_ROOT=/opt/sekailink/pulse-console
+Environment=PULSE_CONSOLE_STATIC_ROOT=/opt/sekailink/pulse-console/static
+Environment=PULSE_CONSOLE_LOG_ROOT=/opt/sekailink/pulse-console/logs
+Environment=PULSE_CONSOLE_AUTH_FILE=/opt/sekailink/pulse-console/etc/auth.json
+Environment=PULSE_RAG_URL=http://127.0.0.1:18182
+Environment=PULSE_LLAMA_URL=http://127.0.0.1:18181/v1/chat/completions
+Environment=PULSE_LLAMA_API_KEY_FILE=/opt/sekailink/pulse/etc/llama_api_keys
+Environment=PULSE_MODEL=pulse-qwen2.5-coder-3b
+ExecStart=/usr/bin/python3 /opt/sekailink/pulse-console/server.py
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ReadOnlyPaths=/opt/sekailink/pulse /opt/sekailink/pulse-console/static
+ReadWritePaths=/opt/sekailink/pulse-console/etc /opt/sekailink/pulse-console/logs
+
+[Install]
+WantedBy=multi-user.target

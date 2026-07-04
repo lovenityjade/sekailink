@@ -1,0 +1,45 @@
+# Sekaiemu core option schema
+# Generated from libretro option metadata exposed by the core.
+
+[bsnes_violate_accuracy]
+desc=Allow settings to reduce accuracy
+requires_restart=false
+default=disabled
+values=disabled | enabled
+
+[bsnes_chip_hle]
+desc=Special chip accuracy
+requires_restart=false
+default=LLE
+values=LLE | HLE
+
+[bsnes_superfx_overclock]
+desc=SuperFX speed
+requires_restart=false
+default=100%
+values=100% | 150% | 200% | 300% | 400% | 500% | 1000%
+
+[bsnes_region]
+desc=System region
+requires_restart=false
+default=auto
+values=auto | ntsc | pal
+
+[bsnes_aspect_ratio]
+desc=Preferred aspect ratio
+requires_restart=false
+default=auto
+values=auto | ntsc | pal
+
+[bsnes_crop_overscan]
+desc=Crop overscan
+requires_restart=false
+default=disabled
+values=disabled | enabled
+
+[bsnes_gamma_ramp]
+desc=Gamma ramp (requires restart)
+requires_restart=false
+default=disabled
+values=disabled | enabled
+

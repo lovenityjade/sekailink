@@ -1,0 +1,72 @@
+{
+    "shared_item_grid_vertical": {
+        "type": "array",
+        "orientation": "vertical",
+        "margin": "0,0",
+        "content": [
+            {
+                "type": "array",
+                "orientation": "vertical",
+                "margin": "0,0",
+                "content": [
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "2, 2",
+                        "h_alignment": "left",
+                        "item_h_alignment": "center",
+                        "item_v_alignment": "center",
+                        "item_height": 44,
+                        "item_width": 44,
+                        "rows": [
+                            [
+                                "climb",
+                                "swim",
+                                "teamattack",
+                                "cartwheel",
+                                "helicopterspin",
+                                "cling",
+                                "carry"
+                            ],
+                            [
+                                "diddy",
+                                "dixie",
+                                "barrelkannons",
+                                "exclamationbarrels",
+                                "controllablebarrels",
+                                "kongbarrels",
+                                "warpbarrels"
+                            ],
+                            [
+                                "rambi",
+                                "enguarde",
+                                "squitter",
+                                "rattly",
+                                "squawks",
+                                "glimmer",
+                                "clapper"
+                            ],
+                            [
+                                "gangplankgalleonaccess",
+                                "crocodilecauldronaccess",
+                                "kremquayaccess",
+                                "krazykremlandaccess",
+                                "gloomygulchaccess",
+                                "kroolskeepaccess",
+                                "theflyingkrockaccess"
+                            ],
+                            [
+                                "skullkart",
+                                "lostworldaccesscrocodilecauldron",
+                                "lostworldaccesskremquay",
+                                "lostworldaccesskrazykremland",
+                                "lostworldaccessgloomygulch",
+                                "lostworldaccesskroolskeep"
+                            ]
+
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

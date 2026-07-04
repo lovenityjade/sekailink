@@ -1,0 +1,456 @@
+{
+    "shared_song_medallion_grid_horizontal": {
+      "type": "array",
+      "orientation": "vertical",
+      "margin": "0,0", 
+      "content": [
+        {
+          "type": "array",
+        "orientation": "horizontal",
+        "item_h_alignment": "center",
+        "item_v_alignment": "center",
+        "margin": "0,0", 
+        "content": [
+          {
+            "type": "itemgrid",
+            "item_margin": "2, 2",
+            "h_alignment": "left",
+            "item_h_alignment": "center",
+            "item_v_alignment": "center",
+            "item_height": 36,
+            "item_width": 36,
+            "rows": [
+              [
+                "HeartContainer"
+              ],
+              [              
+                "PieceofHeart"
+              ],
+              [
+                "MagicMeter"
+              ]
+          ]
+        },
+        {
+          "type": "itemgrid",
+          "item_margin": "2, 2",
+          "h_alignment": "left",
+          "item_h_alignment": "center",
+          "item_v_alignment": "center",
+          "item_height": 36,
+          "item_width": 36,
+          "rows": [
+            [
+              "Kokiri_Emerald"
+            ],
+            [              
+              "Gorons_Ruby"
+            ],
+            [
+              "Zora_Sapphire"
+            ]
+          ]
+        },
+        {
+          "type": "itemgrid",
+          "item_margin": "2, 2",
+          "margin": "0, 20",
+          "h_alignment": "left",
+          "item_h_alignment": "center",
+          "item_v_alignment": "center",
+          "item_height": 36,
+          "item_width": 36,
+          "rows": [
+            [
+              "shadow_medallion"
+            ],
+            [              
+              "spirit_medallion"
+            ]
+        ]
+      },
+      {
+        "type": "itemgrid",
+        "item_margin": "2, 2",
+        "h_alignment": "left",
+        "item_h_alignment": "center",
+        "item_v_alignment": "center",
+        "item_height": 36,
+        "item_width": 36,
+        "rows": [
+          [
+            "light_medallion"
+          ],
+          [""],
+          [              
+            "water_medallion"
+          ]
+      ]
+    },
+    {
+      "type": "itemgrid",
+      "item_margin": "2, 2",
+      "margin": "0, 20",
+      "h_alignment": "left",
+      "item_h_alignment": "center",
+      "item_v_alignment": "center",
+      "item_height": 36,
+      "item_width": 36,
+      "rows": [
+        [
+          "forest_medallion"
+        ],
+        [              
+          "fire_medallion"
+        ]
+    ]
+  }
+          
+            ]
+          },
+          {
+            "type": "array",
+          "orientation": "horizontal",
+          "margin": "0,0", 
+          "content": [
+            {
+              "type": "itemgrid",
+              "item_margin": "0,0",
+              "margin": "2,0",
+              "h_alignment": "left",
+              "item_h_alignment": "center",
+              "item_v_alignment": "center",
+              "item_height": 36,
+              "item_width": 36,
+              "rows": [
+                [
+                  "ZeldasLullaby"
+                ],
+                [              
+                  "MinuetofForest"
+                ]
+            ]
+          },
+          {
+            "type": "itemgrid",
+            "item_margin": "0,0",
+            "margin": "2,0",
+            "h_alignment": "left",
+            "item_h_alignment": "center",
+            "item_v_alignment": "center",
+            "item_height": 36,
+            "item_width": 36,
+            "rows": [
+              [
+                "EponasSong"
+              ],
+              [              
+                "BoleroofFire"
+              ]
+          ]
+        },
+        {
+          "type": "itemgrid",
+          "item_margin": "0,0",
+          "margin": "2,0",
+          "h_alignment": "left",
+          "item_h_alignment": "center",
+          "item_v_alignment": "center",
+          "item_height": 36,
+          "item_width": 36,
+          "rows": [
+            [
+              "SariasSong"
+            ],
+            [              
+              "SerenadeofWater"
+            ]
+        ]
+      },
+      {
+        "type": "itemgrid",
+        "item_margin": "0,0",
+        "margin": "2,0",
+        "h_alignment": "left",
+        "item_h_alignment": "center",
+        "item_v_alignment": "center",
+        "item_height": 36,
+        "item_width": 36,
+        "rows": [
+          [
+            "SunsSong"
+          ],
+          [              
+            "RequiemofSpirit"
+          ]
+      ]
+    },
+    {
+      "type": "itemgrid",
+      "item_margin": "0,0",
+      "margin": "2,0",
+      "h_alignment": "left",
+      "item_h_alignment": "center",
+      "item_v_alignment": "center",
+      "item_height": 36,
+      "item_width": 36,
+      "rows": [
+        [
+          "SongofTime"
+        ],
+        [              
+          "NocturneofShadow"
+        ]
+    ]
+    },
+    {
+      "type": "itemgrid",
+      "item_margin": "0,0",
+      "margin": "2,0",
+      "h_alignment": "left",
+      "item_h_alignment": "center",
+      "item_v_alignment": "center",
+      "item_height": 36,
+      "item_width": 36,
+      "rows": [
+        [
+          "SongofStorms"
+        ],
+        [              
+          "PreludeofLight"
+        ]
+    ]
+    }
+            
+              ]
+            }
+      ]
+    },
+    "shared_song_medallion_grid_vertical": {
+      "type": "array",
+      "orientation": "vertical",
+      "margin": "0,0", 
+      "content": [
+        {
+          "type": "array",
+        "orientation": "horizontal",
+        "item_h_alignment": "center",
+        "item_v_alignment": "center",
+        "margin": "0,0", 
+        "content": [
+            {
+              "type": "itemgrid",
+              "item_margin": "2, 2",
+              "h_alignment": "left",
+              "item_h_alignment": "center",
+              "item_v_alignment": "center",
+              "item_height": 36,
+              "item_width": 36,
+              "rows": [
+                [
+                  "HeartContainer"
+                ],
+                [              
+                  "PieceofHeart"
+                ],
+                [
+                  "MagicMeter"
+                ]
+            ]
+          },
+          {
+            "type": "itemgrid",
+            "item_margin": "2, 2",
+            "h_alignment": "left",
+            "item_h_alignment": "center",
+            "item_v_alignment": "center",
+            "item_height": 36,
+            "item_width": 36,
+            "rows": [
+              [
+                "Kokiri_Emerald"
+              ],
+              [              
+                "Gorons_Ruby"
+              ],
+              [
+                "Zora_Sapphire"
+              ]
+          ]
+        },
+        {
+          "type": "itemgrid",
+          "item_margin": "2, 2",
+          "margin": "0, 20",
+          "h_alignment": "left",
+          "item_h_alignment": "center",
+          "item_v_alignment": "center",
+          "item_height": 36,
+          "item_width": 36,
+          "rows": [
+            [
+              "shadow_medallion"
+            ],
+            [              
+              "spirit_medallion"
+            ]
+        ]
+      },
+      {
+        "type": "itemgrid",
+        "item_margin": "2, 2",
+        "h_alignment": "left",
+        "item_h_alignment": "center",
+        "item_v_alignment": "center",
+        "item_height": 36,
+        "item_width": 36,
+        "rows": [
+          [
+            "light_medallion"
+          ],
+          [""],
+          [              
+            "water_medallion"
+          ]
+      ]
+    },
+    {
+      "type": "itemgrid",
+      "item_margin": "2, 2",
+      "margin": "0, 20",
+      "h_alignment": "left",
+      "item_h_alignment": "center",
+      "item_v_alignment": "center",
+      "item_height": 36,
+      "item_width": 36,
+      "rows": [
+        [
+          "forest_medallion"
+        ],
+        [              
+          "fire_medallion"
+        ]
+    ]
+  }
+          
+            ]
+          },
+          {
+            "type": "array",
+          "orientation": "horizontal",
+          "margin": "0,0", 
+          "content": [
+            {
+              "type": "itemgrid",
+              "item_margin": "0,0",
+              "margin": "2,0",
+              "h_alignment": "left",
+              "item_h_alignment": "center",
+              "item_v_alignment": "center",
+              "item_height": 36,
+              "item_width": 36,
+              "rows": [
+                [
+                  "ZeldasLullaby"
+                ],
+                [              
+                  "MinuetofForest"
+                ]
+            ]
+          },
+          {
+            "type": "itemgrid",
+            "item_margin": "0,0",
+            "margin": "2,0",
+            "h_alignment": "left",
+            "item_h_alignment": "center",
+            "item_v_alignment": "center",
+            "item_height": 36,
+            "item_width": 36,
+            "rows": [
+              [
+                "EponasSong"
+              ],
+              [              
+                "BoleroofFire"
+              ]
+          ]
+        },
+        {
+          "type": "itemgrid",
+          "item_margin": "0,0",
+          "margin": "2,0",
+          "h_alignment": "left",
+          "item_h_alignment": "center",
+          "item_v_alignment": "center",
+          "item_height": 36,
+          "item_width": 36,
+          "rows": [
+            [
+              "SariasSong"
+            ],
+            [              
+              "SerenadeofWater"
+            ]
+        ]
+      },
+      {
+        "type": "itemgrid",
+        "item_margin": "0,0",
+        "margin": "2,0",
+        "h_alignment": "left",
+        "item_h_alignment": "center",
+        "item_v_alignment": "center",
+        "item_height": 36,
+        "item_width": 36,
+        "rows": [
+          [
+            "SunsSong"
+          ],
+          [              
+            "RequiemofSpirit"
+          ]
+      ]
+    },
+    {
+      "type": "itemgrid",
+      "item_margin": "0,0",
+      "margin": "2,0",
+      "h_alignment": "left",
+      "item_h_alignment": "center",
+      "item_v_alignment": "center",
+      "item_height": 36,
+      "item_width": 36,
+      "rows": [
+        [
+          "SongofTime"
+        ],
+        [              
+          "NocturneofShadow"
+        ]
+    ]
+    },
+    {
+      "type": "itemgrid",
+      "item_margin": "0,0",
+      "margin": "2,0",
+      "h_alignment": "left",
+      "item_h_alignment": "center",
+      "item_v_alignment": "center",
+      "item_height": 36,
+      "item_width": 36,
+      "rows": [
+        [
+          "SongofStorms"
+        ],
+        [              
+          "PreludeofLight"
+        ]
+    ]
+    }
+            
+              ]
+            }
+      ]
+    },
+  }

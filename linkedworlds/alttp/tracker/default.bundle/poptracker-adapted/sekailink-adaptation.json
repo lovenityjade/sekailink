@@ -1,0 +1,31 @@
+{
+  "adaptation_id": "alttp-poptracker-adapted-assets-v1",
+  "linkedworld_id": "alttp",
+  "source": {
+    "name": "alttp-ap-poptracker-pack",
+    "url": "https://github.com/StripesOO7/alttp-ap-poptracker-pack",
+    "local_reference": "<local-home>/reference-repos/alttp-ap-poptracker-pack",
+    "commit": "bff7a80d7cfb53de5c5b49923ddedb3344108b96",
+    "license": "MIT",
+    "license_file": "LICENSE"
+  },
+  "included_static_surfaces": {
+    "images": "images/",
+    "items": "items/",
+    "layouts": "layouts/",
+    "locations": "locations/",
+    "maps": "maps/",
+    "pack_manifest": "manifest.json",
+    "readme": "README.md",
+    "scripts": "scripts/"
+  },
+  "excluded_runtime_surfaces": [
+    "PopTracker runtime embedding",
+    "SNI runtime embedding"
+  ],
+  "sekailink_usage": {
+    "purpose": "Use the pack as a licensed asset, data, layout, and Lua tracker-logic reference for the ALTTP LinkedWorld tracker.",
+    "runtime_model": "Sekaiemu consumes PopTracker pack Lua through a Sekaiemu-owned compatibility facade. This does not embed PopTracker itself, and Lua is not used for memory, network, emulator, patcher, or SKLMI transport logic.",
+    "status": "static assets, JSON data, and pack Lua tracker logic included; host/runtime translation remains SekaiLink-owned"
+  }
+}

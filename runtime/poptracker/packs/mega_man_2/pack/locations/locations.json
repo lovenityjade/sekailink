@@ -1,0 +1,1490 @@
+[
+    {
+        "name": "Stages",
+        "children": [
+            {
+                "name": "Bubble Man",
+                "access_rules": ["bubble_man_1"],
+                "sections": [
+                    {
+                        "name": "Bubble Man",
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Bubble Lead Get",
+                        "access_rules": []
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 74,
+                        "y": 50
+                    }
+                ]
+            },
+            {
+                "name": "Air Man",
+                "access_rules": [
+                    "air_man_1"
+                ],
+                "sections": [
+                    {
+                        "name": "Air Man",
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Air Shooter Get",
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Item 2 Get",
+                        "access_rules": []
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 138,
+                        "y": 50
+                    }
+                ]
+            },
+            {
+                "name": "Quick Man",
+                "access_rules": [
+                    "quick_man_1,[time_stopper]"
+                ],
+                "sections": [
+                    {
+                        "name": "1-Up 1",
+                        "access_rules": ["item_1", "item_2", "item_3"],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    {
+                        "name": "1-Up 2",
+                        "access_rules": ["[time_stopper]"],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    {
+                        "name": "E-Tank",
+                        "access_rules": ["[time_stopper]"],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    {
+                        "name": "Weapon Energy 1",
+                        "access_rules": ["[time_stopper]"],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Weapon Energy 2",
+                        "access_rules": ["[time_stopper]"],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Health Energy",
+                        "access_rules": ["[time_stopper]"],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "1-Up 3",
+                        "access_rules": ["[time_stopper]"],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    {
+                        "name": "Weapon Energy 3",
+                        "access_rules": ["[time_stopper]"],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Quick Man",
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Quick Boomerang Get",
+                        "access_rules": []
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 202,
+                        "y": 50
+                    }
+                ]
+            },
+            {
+                "name": "Heat Man",
+                "access_rules": [
+                    "heat_man_1"
+                ],
+                "sections": [
+                    {
+                        "name": "1-Up",
+                        "access_rules": ["[item_2]"],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    {
+                        "name": "Heat Man",
+                        "access_rules": ["[item_2]"]
+                    },
+                    {
+                        "name": "Atomic Fire Get",
+                        "access_rules": ["[item_2]"]
+                    },
+                    {
+                        "name": "Item 1 Get",
+                        "access_rules": ["[item_2]"]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 74,
+                        "y": 114
+                    }
+                ]
+            },
+            {
+                "name": "Wood Man",
+                "access_rules": [
+                    "wood_man_1"
+                ],
+                "sections": [
+                    {
+                        "name": "Wood Man",
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Leaf Shield Get",
+                        "access_rules": []
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 202,
+                        "y": 114
+                    }
+                ]
+            },
+            {
+                "name": "Metal Man",
+                "access_rules": [
+                    "metal_man_1"
+                ],
+                "sections": [
+                    {
+                        "name": "E-Tank 1",
+                        "access_rules": [],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    {
+                        "name": "1-Up",
+                        "access_rules": ["item_1", "item_2"],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    {
+                        "name": "E-Tank 2",
+                        "access_rules": ["[item_1]", "[item_2]"],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    {
+                        "name": "Metal Man",
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Metal Blade Get",
+                        "access_rules": []
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 74,
+                        "y": 178
+                    }
+                ]
+            },
+            {
+                "name": "Flash Man",
+                "access_rules": [
+                    "flash_man_1"
+                ],
+                "sections": [
+                    {
+                        "name": "Health Energy 1",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "1-Up",
+                        "access_rules": ["item_1", "item_2", "item_3"],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    {
+                        "name": "Health Energy 2",
+                        "access_rules": ["crash_bomber"],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Weapon Energy 1",
+                        "access_rules": ["crash_bomber"],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Health Energy 3",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+
+                    {
+                        "name": "E-Tank",
+                        "access_rules": [],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    
+                    {
+                        "name": "Flash Man",
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Time Stopper Get",
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Item 3 Get",
+                        "access_rules": []
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 138,
+                        "y": 178
+                    }
+                ]
+            },
+            {
+                "name": "Crash Man",
+                "access_rules": [
+                    "crash_man_1"
+                ],
+                "sections": [
+                    {
+                        "name": "Health Energy",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "E-Tank",
+                        "access_rules": [],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    {
+                        "name": "1-Up",
+                        "access_rules": [],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    
+                    {
+                        "name": "Crash Man",
+                        "access_rules": []
+                    },
+                    {
+                        "name": "Crash Bomber Get",
+                        "access_rules": []
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 202,
+                        "y": 178
+                    }
+                ]
+            },
+            {
+                "name": "Dr. Wily 1",
+                "access_rules": ["item_1,item_2,item_3"],
+                "sections": [
+                    {
+                        "name": "1-Up",
+                        "access_rules": [],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    {
+                        "name": "Weapon Energy",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Mecha Dragon",
+                        "access_rules": []
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 114,
+                        "y": 88
+                    }
+                ]
+            },
+            {
+                "name": "Dr. Wily 2",
+                "access_rules": ["wily_1_cleared, item_2" ],
+                "sections": [
+                    {
+                        "name": "Weapon Energy 1",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Weapon Energy 2",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "E-Tank 1",
+                        "access_rules": [],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    {
+                        "name": "1-Up 1",
+                        "access_rules": [],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    {
+                        "name": "Weapon Energy 3",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Weapon Energy 4",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Weapon Energy 5",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Weapon Energy 6",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Weapon Energy 7",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Weapon Energy 8",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Weapon Energy 9",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Weapon Energy 10",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Weapon Energy 11",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "1-Up 2",
+                        "access_rules": ["crash_bomber"],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    {
+                        "name": "E-Tank 2",
+                        "access_rules": ["crash_bomber"],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    {
+                        "name": "Health Energy",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Picopico-kun",
+                        "access_rules": []
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 129,
+                        "y": 88
+                    }
+                ]
+            },
+            {
+                "name": "Dr. Wily 3",
+                "access_rules": ["wily_2_cleared"],
+                "sections": [
+                    {
+                        "name": "E-Tank",
+                        "access_rules": [],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    {
+                        "name": "Weapon Energy 1",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    
+                    {
+                        "name": "Weapon Energy 2",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Weapon Energy 3",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Guts Tank",
+                        "access_rules": []
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 144,
+                        "y": 88
+                    }
+                ]
+            },
+            {
+                "name": "Dr. Wily 4",
+                "access_rules": ["wily_3_cleared"],
+                "sections": [
+                    {
+                        "name": "Weapon Energy 1",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "Weapon Energy 2",
+                        "access_rules": [],
+                        "visibility_rules": ["energypickups_on"]
+                    },
+                    {
+                        "name": "1-Up",
+                        "access_rules": [],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    {
+                        "name": "E-Tank",
+                        "access_rules": [],
+                        "visibility_rules": ["etanks_on"]
+                    },
+                    {
+                        "name": "Boobeam Trap",
+                        "access_rules": ["crash_bomber"]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 114,
+                        "y": 120
+                    }
+                ]
+            },
+            {
+                "name": "Dr. Wily 5",
+                "access_rules": ["wily_4_cleared"],
+                "sections": [
+                    {
+                        "name": "Wily Machine 2",
+                        "access_rules": []
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 129,
+                        "y": 120
+                    }
+                ]
+            },
+            {
+                "name": "Dr. Wily 6",
+                "access_rules": ["wily_5_cleared"],
+                "sections": [
+                    {
+                        "name": "Dr. Wily (Alien)",
+                        "access_rules": []
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "stages",
+                        "x": 144,
+                        "y": 120
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Bubble Man",
+        "children": [
+            {
+                "name": "Boss",
+                "access_rules": [],
+                "sections": [
+                    {
+                        "ref": "Stages/Bubble Man/Bubble Man",
+                        "name": "Bubble Man"
+                    },
+                    {
+                        "ref": "Stages/Bubble Man/Bubble Lead Get",
+                        "name": "Bubble Lead Get"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "bubble_man",
+                        "x": 2174,
+                        "y": 1379
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Air Man",
+        "children": [
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Air Man/Air Man",
+                        "name": "Air Man"
+                    },
+                    {
+                        "ref": "Stages/Air Man/Air Shooter Get",
+                        "name": "Air Shooter Get"
+                    },
+                    {
+                        "ref": "Stages/Air Man/Item 2 Get",
+                        "name": "Item 2 Get"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "air_man",
+                        "x": 2299,
+                        "y": 957
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Quick Man",
+        "children": [
+            {
+                "name": "1-Up 1",
+                "sections": [
+                    {
+                        "ref": "Stages/Quick Man/1-Up 1"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "quick_man",
+                        "x": 47,
+                        "y": 91
+                    }
+                ]
+            },
+            {
+                "name": "E-Tank",
+                "sections": [
+                    {
+                        "ref": "Stages/Quick Man/E-Tank"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "quick_man",
+                        "x": 113,
+                        "y": 1593
+                    }
+                ]
+            },
+            {
+                "name": "1-Up 2",
+                "sections": [
+                    {
+                        "ref": "Stages/Quick Man/1-Up 2"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "quick_man",
+                        "x": 145,
+                        "y": 1530
+                    }
+                ]
+            },
+            {
+                "name": "Weapon Energy 1",
+                "sections": [
+                    {
+                        "ref": "Stages/Quick Man/Weapon Energy 1"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "quick_man",
+                        "x": 190,
+                        "y": 1593
+                    }
+                ]
+            },
+            {
+                "name": "Weapon Energy 2",
+                "sections": [
+                    {
+                        "ref": "Stages/Quick Man/Weapon Energy 2"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "quick_man",
+                        "x": 1207,
+                        "y": 904
+                    }
+                ]
+            },
+            {
+                "name": "Health Energy",
+                "sections": [
+                    {
+                        "ref": "Stages/Quick Man/Health Energy"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "quick_man",
+                        "x": 1136,
+                        "y": 1305
+                    }
+                ]
+            },
+            {
+                "name": "1-Up 3",
+                "sections": [
+                    {
+                        "ref": "Stages/Quick Man/1-Up 3"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "quick_man",
+                        "x": 1136,
+                        "y": 1387
+                    }
+                ]
+            },
+            {
+                "name": "Weapon Energy 3",
+                "sections": [
+                    {
+                        "ref": "Stages/Quick Man/Weapon Energy 3"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "quick_man",
+                        "x": 1129,
+                        "y": 1801
+                    }
+                ]
+            },
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Quick Man/Quick Man",
+                        "name": "Quick Man"
+                    },
+                    {
+                        "ref": "Stages/Quick Man/Quick Boomerang Get",
+                        "name": "Quick Boomerang Get"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "quick_man",
+                        "x": 2175,
+                        "y": 2022
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Heat Man",
+        "children": [
+            {
+                "name": "1-Up",
+                "sections": [
+                    {
+                        "ref": "Stages/Heat Man/1-Up"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "heat_man",
+                        "x": 1034,
+                        "y": 966
+                    }
+                ]
+            },
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Heat Man/Heat Man",
+                        "name": "Heat Man"
+                    },
+                    {
+                        "ref": "Stages/Heat Man/Atomic Fire Get",
+                        "name": "Atomic Fire Get"
+                    },
+                    {
+                        "ref": "Stages/Heat Man/Item 1 Get",
+                        "name": "Item 1 Get"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "heat_man",
+                        "x": 2006,
+                        "y": 1389
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Wood Man",
+        "children": [
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Wood Man/Wood Man",
+                        "name": "Wood Man"
+                    },
+                    {
+                        "ref": "Stages/Wood Man/Leaf Shield Get",
+                        "name": "Leaf Shield Get"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wood_man",
+                        "x": 1244,
+                        "y": 1483
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Metal Man",
+        "children": [
+            {
+                "name": "E-Tank 1",
+                "sections": [
+                    {
+                        "ref": "Stages/Metal Man/E-Tank 1"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "metal_man",
+                        "x": 504,
+                        "y": 167
+                    }
+                ]
+            },
+            {
+                "name": "1-Up",
+                "sections": [
+                    {
+                        "ref": "Stages/Metal Man/1-Up"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "metal_man",
+                        "x": 2521,
+                        "y": 74
+                    }
+                ]
+            },
+            {
+                "name": "E-Tank 2",
+                "sections": [
+                    {
+                        "ref": "Stages/Metal Man/E-Tank 2"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "metal_man",
+                        "x": 1068,
+                        "y": 997
+                    }
+                ]
+            },
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Metal Man/Metal Man",
+                        "name": "Metal Man"
+                    },
+                    {
+                        "ref": "Stages/Metal Man/Metal Blade Get",
+                        "name": "Metal Blade Get"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "metal_man",
+                        "x": 2325,
+                        "y": 935
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Flash Man",
+        "children": [
+            {
+                "name": "Health Energy 1",
+                "sections": [
+                    {
+                        "ref": "Stages/Flash Man/Health Energy 1"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "flash_man",
+                        "x": 710,
+                        "y": 153
+                    }
+                ]
+            },
+            {
+                "name": "1-Up",
+                "sections": [
+                    {
+                        "ref": "Stages/Flash Man/1-Up"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "flash_man",
+                        "x": 1366,
+                        "y": 60
+                    }
+                ]
+            },
+            {
+                "name": "Health Energy 2",
+                "sections": [
+                    {
+                        "ref": "Stages/Flash Man/Health Energy 2"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "flash_man",
+                        "x": 1647,
+                        "y": 840
+                    }
+                ]
+            },
+            {
+                "name": "Weapon Energy 1",
+                "sections": [
+                    {
+                        "ref": "Stages/Flash Man/Weapon Energy 1"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "flash_man",
+                        "x": 1623,
+                        "y": 1019
+                    }
+                ]
+            },
+            {
+                "name": "Health Energy 3",
+                "sections": [
+                    {
+                        "ref": "Stages/Flash Man/Health Energy 3"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "flash_man",
+                        "x": 232,
+                        "y": 1301
+                    }
+                ]
+            },
+            {
+                "name": "E-Tank",
+                "sections": [
+                    {
+                        "ref": "Stages/Flash Man/E-Tank"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "flash_man",
+                        "x": 968,
+                        "y": 1381
+                    }
+                ]
+            },
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Flash Man/Flash Man",
+                        "name": "Flash Man"
+                    },
+                    {
+                        "ref": "Stages/Flash Man/Time Stopper Get",
+                        "name": "Time Stopper Get"
+                    },
+                    {
+                        "ref": "Stages/Flash Man/Item 3 Get",
+                        "name": "Item 3 Get"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "flash_man",
+                        "x": 1672,
+                        "y": 1430
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Crash Man",
+        "children": [
+            {
+                "name": "Health Energy",
+                "sections": [
+                    {
+                        "ref": "Stages/Crash Man/Health Energy"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "crash_man",
+                        "x": 1009,
+                        "y": 833
+                    }
+                ]
+            },
+            {
+                "name": "E-Tank",
+                "sections": [
+                    {
+                        "ref": "Stages/Crash Man/E-Tank"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "crash_man",
+                        "x": 984,
+                        "y": 625
+                    }
+                ]
+            },
+            {
+                "name": "1-Up",
+                "sections": [
+                    {
+                        "ref": "Stages/Crash Man/1-Up"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "crash_man",
+                        "x": 944,
+                        "y": 244
+                    }
+                ]
+            },
+            
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Crash Man/Crash Man",
+                        "name": "Crash Man"
+                    },
+                    {
+                        "ref": "Stages/Crash Man/Crash Bomber Get",
+                        "name": "Crash Bomber Get"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "crash_man",
+                        "x": 1764,
+                        "y": 284
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Dr. Wily 1",
+        "children": [
+            {
+                "name": "1-Up",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 1/1-Up"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_1",
+                        "x": 2111,
+                        "y": 1425
+                    }
+                ]
+            },
+            {
+                "name": "Weapon Energy",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 1/Weapon Energy"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_1",
+                        "x": 2105,
+                        "y": 1200
+                    }
+                ]
+            },
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 1/Mecha Dragon",
+                        "name": "Mecha Dragon"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_1",
+                        "x": 2194,
+                        "y": 85
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Dr. Wily 2",
+        "children": [
+            {
+                "name": "Weapon Energy 1",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 2/Weapon Energy 1"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_2",
+                        "x": 80,
+                        "y": 75
+                    }
+                ]
+            },
+            {
+                "name": "Weapon Energy 2",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 2/Weapon Energy 2"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_2",
+                        "x": 599,
+                        "y": 188
+                    }
+                ]
+            },
+            {
+                "name": "E-Tank 1",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 2/E-Tank 1"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_2",
+                        "x": 1447,
+                        "y": 73
+                    }
+                ]
+            },
+            {
+                "name": "1-Up 1",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 2/1-Up 1"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_2",
+                        "x": 1366,
+                        "y": 315
+                    }
+                ]
+            },
+            {
+                "name": "Small Weapon Energy Pickups",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 2/Weapon Energy 3",
+                        "name": "Weapon Energy 3"
+                    },
+                    {
+                        "ref": "Stages/Dr. Wily 2/Weapon Energy 4",
+                        "name": "Weapon Energy 4"
+                    },
+                    {
+                        "ref": "Stages/Dr. Wily 2/Weapon Energy 5",
+                        "name": "Weapon Energy 5"
+                    },
+                    {
+                        "ref": "Stages/Dr. Wily 2/Weapon Energy 6",
+                        "name": "Weapon Energy 6"
+                    },
+                    {
+                        "ref": "Stages/Dr. Wily 2/Weapon Energy 7",
+                        "name": "Weapon Energy 7"
+                    },
+                    {
+                        "ref": "Stages/Dr. Wily 2/Weapon Energy 8",
+                        "name": "Weapon Energy 8"
+                    },
+                    {
+                        "ref": "Stages/Dr. Wily 2/Weapon Energy 9",
+                        "name": "Weapon Energy 9"
+                    },
+                    {
+                        "ref": "Stages/Dr. Wily 2/Weapon Energy 10",
+                        "name": "Weapon Energy 10"
+                    },
+                    {
+                        "ref": "Stages/Dr. Wily 2/Weapon Energy 11",
+                        "name": "Weapon Energy 11"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_2",
+                        "x": 1394,
+                        "y": 400
+                    }
+                ]
+            },
+            {
+                "name": "Wall Blocked Pickups",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 2/1-Up 2",
+                        "name": "1-Up 2"
+                    },
+                    {
+                        "ref": "Stages/Dr. Wily 2/E-Tank 2",
+                        "name": "E-Tank 2"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_2",
+                        "x": 1437,
+                        "y": 648
+                    }
+                ]
+            },
+            {
+                "name": "Health Energy",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 2/Health Energy"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_2",
+                        "x": 2732,
+                        "y": 553
+                    }
+                ]
+            },
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 2/Picopico-kun",
+                        "name": "Picopico-kun"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_2",
+                        "x": 2652,
+                        "y": 839
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Dr. Wily 3",
+        "children": [
+            {
+                "name": "E-Tank",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 3/E-Tank"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_3",
+                        "x": 223,
+                        "y": 312
+                    }
+                ]
+            },
+            {
+                "name": "Weapon Energy 1",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 3/Weapon Energy 1"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_3",
+                        "x": 32,
+                        "y": 394
+                    }
+                ]
+            },
+            {
+                "name": "Weapon Energy 2",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 3/Weapon Energy 2"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_3",
+                        "x": 72,
+                        "y": 539
+                    }
+                ]
+            },
+            {
+                "name": "Weapon Energy 3",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 3/Weapon Energy 3"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_3",
+                        "x": 193,
+                        "y": 587
+                    }
+                ]
+            },
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 3/Guts Tank",
+                        "name": "Guts Tank"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_3",
+                        "x": 1729,
+                        "y": 1300
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Dr. Wily 4",
+        "children": [
+            {
+                "name": "Weapon Energy 1",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 4/Weapon Energy 1"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_4",
+                        "x": 57,
+                        "y": 1629
+                    }
+                ]
+            },
+            {
+                "name": "Weapon Energy 2",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 4/Weapon Energy 2"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_4",
+                        "x": 201,
+                        "y": 1629
+                    }
+                ]
+            },
+            {
+                "name": "1-Up",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 4/1-Up"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_4",
+                        "x": 49,
+                        "y": 1355
+                    }
+                ]
+            },
+            {
+                "name": "E-Tank",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 4/E-Tank"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_4",
+                        "x": 176,
+                        "y": 297
+                    }
+                ]
+            },
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 4/Boobeam Trap",
+                        "name": "Boobeam Trap"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_4",
+                        "x": 1407,
+                        "y": 1304
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Dr. Wily 5",
+        "children": [
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 5/Wily Machine 2",
+                        "name": "Wily Machine 2"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_5",
+                        "x": 126,
+                        "y": 352
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Dr. Wily 6",
+        "children": [
+            {
+                "name": "Boss",
+                "sections": [
+                    {
+                        "ref": "Stages/Dr. Wily 6/Dr. Wily (Alien)",
+                        "name": "Dr. Wily (Alien)"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "wily_6",
+                        "x": 1669,
+                        "y": 834
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -1,0 +1,15 @@
+{
+  "name": "Ship of Harkinian Archipelago",
+  "game_name": "Ship of Harkinian",
+  "package_version": "1.0.1",
+  "package_uid": "ship_of_harkinian_ap",
+  "author": "OnlySpaghettiCode",
+  "variants": {
+    "map_tracker_horizontal": {
+      "display_name": "Map Tracker - Horizontal",
+      "flags": ["ap"]
+    }
+  },
+  "versions_url": "https://raw.githubusercontent.com/Brian0255/ship-of-harkinian-ap-tracker/versions/versions.json",
+  "min_poptracker_version": "0.31.0"
+}

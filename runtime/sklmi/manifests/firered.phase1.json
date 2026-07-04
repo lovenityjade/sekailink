@@ -1,0 +1,83 @@
+{
+  "id": "firered",
+  "type": "linkedworld",
+  "version": "0.2.0-beta3-runtime",
+  "sklmi": {
+    "contract_version": "1.0",
+    "bridge_id": "firered-phase1",
+    "driver_instance_id": "firered-sekaiemu-runtime",
+    "core_profile": {
+      "name": "gba_v1",
+      "domains": [
+        { "id": "gba_system_bus" }
+      ]
+    },
+    "module": "sekaiemu",
+    "state_file": "firered.phase1.bridge.state",
+    "poll_interval_ms": 16,
+    "checks": [
+      {
+        "domain_id": "gba_system_bus",
+        "dynamic_source": "firered_saveblock1_flag",
+        "dynamic_flag_id": 740,
+        "compare": "equals",
+        "operand_u64": 1,
+        "event_type": "location_checked",
+        "location_id": 740,
+        "location_name": "Player's PC - PC Item"
+      },
+      {
+        "domain_id": "gba_system_bus",
+        "dynamic_source": "firered_saveblock1_flag",
+        "dynamic_flag_id": 560,
+        "compare": "equals",
+        "operand_u64": 1,
+        "event_type": "location_checked",
+        "location_id": 560,
+        "location_name": "Route 1 - Free Sample"
+      }
+    ],
+    "actions": [
+      {
+        "domain_id": "gba_system_bus",
+        "dynamic_source": "firered_item_queue",
+        "room_controlled": true,
+        "value_u64": "0x000D",
+        "item_id": 13,
+        "item_name": "Potion"
+      },
+      {
+        "domain_id": "gba_system_bus",
+        "dynamic_source": "firered_item_queue",
+        "room_controlled": true,
+        "value_u64": "0x0004",
+        "item_id": 4,
+        "item_name": "Poke Ball"
+      },
+      {
+        "domain_id": "gba_system_bus",
+        "dynamic_source": "firered_item_queue",
+        "room_controlled": true,
+        "value_u64": "0x000E",
+        "item_id": 14,
+        "item_name": "Antidote"
+      },
+      {
+        "domain_id": "gba_system_bus",
+        "dynamic_source": "firered_item_queue",
+        "room_controlled": true,
+        "value_u64": "0x0001",
+        "item_id": 1,
+        "item_name": "Master Ball"
+      },
+      {
+        "domain_id": "gba_system_bus",
+        "dynamic_source": "firered_item_queue",
+        "room_controlled": true,
+        "value_u64": "0x015F",
+        "item_id": 351,
+        "item_name": "HM01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+[Unit]
+Description=SekaiLink Worlds Admin Agent
+After=network.target
+
+[Service]
+Type=simple
+User=sekailink
+Group=sekailink
+WorkingDirectory=/opt/sekailink/worlds/admin-agent
+ExecStart=/opt/sekailink/worlds/admin-agent/bin/sekailink_admin_agent_service \
+  --config /opt/sekailink/worlds/admin-agent/config/admin_agent.json
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

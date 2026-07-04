@@ -1,0 +1,2050 @@
+{
+  "mapping_id": "alttp-location-groups-complete-v1",
+  "linkedworld_id": "alttp",
+  "status": "repo-owned-normalized-surface-inventory",
+  "source_refs": [
+    "sekaiemu/worlds/alttp/__init__.py",
+    "sekaiemu/worlds/alttp/Client.py"
+  ],
+  "domains": [
+    {
+      "domain_id": "underworld",
+      "description": "Dungeon and cave chest, pot, key-drop, and boss checks derived from underworld room state."
+    },
+    {
+      "domain_id": "overworld",
+      "description": "Surface checks tied to overworld screen flags and landmarks."
+    },
+    {
+      "domain_id": "npc",
+      "description": "NPC, tablet, and scripted interaction checks driven by dedicated flags."
+    },
+    {
+      "domain_id": "misc",
+      "description": "Special event-style checks such as merchant, uncle, hobo, and purple chest."
+    },
+    {
+      "domain_id": "shop",
+      "description": "Shop-slot checks reflected through the ALTTP shop buffer."
+    }
+  ],
+  "groups": [
+    {
+      "group_id": "light_world_surface",
+      "label": "Light World Surface",
+      "preferred_tab": "light-world",
+      "domain_ids": [
+        "overworld"
+      ],
+      "source_examples": [
+        "Flute Spot",
+        "Sunken Treasure",
+        "Zora's Ledge",
+        "Lake Hylia Island",
+        "Maze Race",
+        "Desert Ledge",
+        "Master Sword Pedestal",
+        "Spectacle Rock"
+      ],
+      "locations": [
+        {
+          "location_id": 1573194,
+          "location_name": "Flute Spot",
+          "event_key": "0x18014A",
+          "domain_id": "overworld"
+        },
+        {
+          "location_id": 1573189,
+          "location_name": "Sunken Treasure",
+          "event_key": "0x180145",
+          "domain_id": "overworld"
+        },
+        {
+          "location_id": 1573193,
+          "location_name": "Zora's Ledge",
+          "event_key": "0x180149",
+          "domain_id": "overworld"
+        },
+        {
+          "location_id": 1573188,
+          "location_name": "Lake Hylia Island",
+          "event_key": "0x180144",
+          "domain_id": "overworld"
+        },
+        {
+          "location_id": 1573186,
+          "location_name": "Maze Race",
+          "event_key": "0x180142",
+          "domain_id": "overworld"
+        },
+        {
+          "location_id": 1573187,
+          "location_name": "Desert Ledge",
+          "event_key": "0x180143",
+          "domain_id": "overworld"
+        },
+        {
+          "location_id": 166320,
+          "location_name": "Master Sword Pedestal",
+          "event_key": "0x289B0",
+          "domain_id": "overworld"
+        },
+        {
+          "location_id": 1573184,
+          "location_name": "Spectacle Rock",
+          "event_key": "0x180140",
+          "domain_id": "overworld"
+        }
+      ]
+    },
+    {
+      "group_id": "dark_world_surface",
+      "label": "Dark World Surface",
+      "preferred_tab": "dark-world",
+      "domain_ids": [
+        "overworld"
+      ],
+      "source_examples": [
+        "Pyramid",
+        "Digging Game",
+        "Bumper Cave Ledge",
+        "Floating Island"
+      ],
+      "locations": [
+        {
+          "location_id": 1573191,
+          "location_name": "Pyramid",
+          "event_key": "0x180147",
+          "domain_id": "overworld"
+        },
+        {
+          "location_id": 1573192,
+          "location_name": "Digging Game",
+          "event_key": "0x180148",
+          "domain_id": "overworld"
+        },
+        {
+          "location_id": 1573190,
+          "location_name": "Bumper Cave Ledge",
+          "event_key": "0x180146",
+          "domain_id": "overworld"
+        },
+        {
+          "location_id": 1573185,
+          "location_name": "Floating Island",
+          "event_key": "0x180141",
+          "domain_id": "overworld"
+        }
+      ]
+    },
+    {
+      "group_id": "world_npc_checks",
+      "label": "NPC And Tablet Checks",
+      "preferred_tab": "light-world",
+      "domain_ids": [
+        "npc"
+      ],
+      "source_examples": [
+        "Mushroom",
+        "King Zora",
+        "Sahasrahla",
+        "Blacksmith",
+        "Magic Bat",
+        "Sick Kid",
+        "Library",
+        "Potion Shop",
+        "Old Man",
+        "Ether Tablet",
+        "Catfish",
+        "Stumpy",
+        "Bombos Tablet"
+      ],
+      "locations": [
+        {
+          "location_id": 1572883,
+          "location_name": "Mushroom",
+          "event_key": "0x180013",
+          "domain_id": "npc"
+        },
+        {
+          "location_id": 975299,
+          "location_name": "King Zora",
+          "event_key": "0xEE1C3",
+          "domain_id": "npc"
+        },
+        {
+          "location_id": 193020,
+          "location_name": "Sahasrahla",
+          "event_key": "0x2F1FC",
+          "domain_id": "npc"
+        },
+        {
+          "location_id": 1572906,
+          "location_name": "Blacksmith",
+          "event_key": "0x18002A",
+          "domain_id": "npc"
+        },
+        {
+          "location_id": 1572885,
+          "location_name": "Magic Bat",
+          "event_key": "0x180015",
+          "domain_id": "npc"
+        },
+        {
+          "location_id": 211407,
+          "location_name": "Sick Kid",
+          "event_key": "0x339CF",
+          "domain_id": "npc"
+        },
+        {
+          "location_id": 1572882,
+          "location_name": "Library",
+          "event_key": "0x180012",
+          "domain_id": "npc"
+        },
+        {
+          "location_id": 1572884,
+          "location_name": "Potion Shop",
+          "event_key": "0x180014",
+          "domain_id": "npc"
+        },
+        {
+          "location_id": 1010170,
+          "location_name": "Old Man",
+          "event_key": "0xF69FA",
+          "domain_id": "npc"
+        },
+        {
+          "location_id": 1572886,
+          "location_name": "Ether Tablet",
+          "event_key": "0x180016",
+          "domain_id": "npc"
+        },
+        {
+          "location_id": 975237,
+          "location_name": "Catfish",
+          "event_key": "0xEE185",
+          "domain_id": "npc"
+        },
+        {
+          "location_id": 209095,
+          "location_name": "Stumpy",
+          "event_key": "0x330C7",
+          "domain_id": "npc"
+        },
+        {
+          "location_id": 1572887,
+          "location_name": "Bombos Tablet",
+          "event_key": "0x180017",
+          "domain_id": "npc"
+        }
+      ]
+    },
+    {
+      "group_id": "misc_checks",
+      "label": "Misc Checks",
+      "preferred_tab": "light-world",
+      "domain_ids": [
+        "misc"
+      ],
+      "source_examples": [
+        "Bottle Merchant",
+        "Purple Chest",
+        "Link's Uncle",
+        "Hobo"
+      ],
+      "locations": [
+        {
+          "location_id": 191256,
+          "location_name": "Bottle Merchant",
+          "event_key": "0x2EB18",
+          "domain_id": "misc"
+        },
+        {
+          "location_id": 212328,
+          "location_name": "Purple Chest",
+          "event_key": "0x33D68",
+          "domain_id": "misc"
+        },
+        {
+          "location_id": 188229,
+          "location_name": "Link's Uncle",
+          "event_key": "0x2DF45",
+          "domain_id": "misc"
+        },
+        {
+          "location_id": 212605,
+          "location_name": "Hobo",
+          "event_key": "0x33E7D",
+          "domain_id": "misc"
+        }
+      ]
+    },
+    {
+      "group_id": "shop_checks",
+      "label": "Shop Checks",
+      "preferred_tab": "light-world",
+      "domain_ids": [
+        "shop"
+      ],
+      "source_examples": [
+        "Shop inventory slots tracked through the ALTTP shop buffer"
+      ],
+      "locations": [
+        {
+          "location_id": 4194304,
+          "location_name": "Cave Shop (Dark Death Mountain) Left",
+          "event_key": "0x400000",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194305,
+          "location_name": "Cave Shop (Dark Death Mountain) Center",
+          "event_key": "0x400001",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194306,
+          "location_name": "Cave Shop (Dark Death Mountain) Right",
+          "event_key": "0x400002",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194307,
+          "location_name": "Red Shield Shop Left",
+          "event_key": "0x400003",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194308,
+          "location_name": "Red Shield Shop Center",
+          "event_key": "0x400004",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194309,
+          "location_name": "Red Shield Shop Right",
+          "event_key": "0x400005",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194310,
+          "location_name": "Dark Lake Hylia Shop Left",
+          "event_key": "0x400006",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194311,
+          "location_name": "Dark Lake Hylia Shop Center",
+          "event_key": "0x400007",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194312,
+          "location_name": "Dark Lake Hylia Shop Right",
+          "event_key": "0x400008",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194313,
+          "location_name": "Dark World Lumberjack Shop Left",
+          "event_key": "0x400009",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194314,
+          "location_name": "Dark World Lumberjack Shop Center",
+          "event_key": "0x40000A",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194315,
+          "location_name": "Dark World Lumberjack Shop Right",
+          "event_key": "0x40000B",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194316,
+          "location_name": "Village of Outcasts Shop Left",
+          "event_key": "0x40000C",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194317,
+          "location_name": "Village of Outcasts Shop Center",
+          "event_key": "0x40000D",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194318,
+          "location_name": "Village of Outcasts Shop Right",
+          "event_key": "0x40000E",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194319,
+          "location_name": "Dark World Potion Shop Left",
+          "event_key": "0x40000F",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194320,
+          "location_name": "Dark World Potion Shop Center",
+          "event_key": "0x400010",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194321,
+          "location_name": "Dark World Potion Shop Right",
+          "event_key": "0x400011",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194322,
+          "location_name": "Light World Death Mountain Shop Left",
+          "event_key": "0x400012",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194323,
+          "location_name": "Light World Death Mountain Shop Center",
+          "event_key": "0x400013",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194324,
+          "location_name": "Light World Death Mountain Shop Right",
+          "event_key": "0x400014",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194325,
+          "location_name": "Kakariko Shop Left",
+          "event_key": "0x400015",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194326,
+          "location_name": "Kakariko Shop Center",
+          "event_key": "0x400016",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194327,
+          "location_name": "Kakariko Shop Right",
+          "event_key": "0x400017",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194328,
+          "location_name": "Cave Shop (Lake Hylia) Left",
+          "event_key": "0x400018",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194329,
+          "location_name": "Cave Shop (Lake Hylia) Center",
+          "event_key": "0x400019",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194330,
+          "location_name": "Cave Shop (Lake Hylia) Right",
+          "event_key": "0x40001A",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194331,
+          "location_name": "Potion Shop Left",
+          "event_key": "0x40001B",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194332,
+          "location_name": "Potion Shop Center",
+          "event_key": "0x40001C",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194333,
+          "location_name": "Potion Shop Right",
+          "event_key": "0x40001D",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194334,
+          "location_name": "Capacity Upgrade Left",
+          "event_key": "0x40001E",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194335,
+          "location_name": "Capacity Upgrade Right",
+          "event_key": "0x40001F",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194337,
+          "location_name": "Old Man Sword Cave",
+          "event_key": "0x400021",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194338,
+          "location_name": "Take-Any #1",
+          "event_key": "0x400022",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194339,
+          "location_name": "Take-Any #2",
+          "event_key": "0x400023",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194340,
+          "location_name": "Take-Any #3",
+          "event_key": "0x400024",
+          "domain_id": "shop"
+        },
+        {
+          "location_id": 4194341,
+          "location_name": "Take-Any #4",
+          "event_key": "0x400025",
+          "domain_id": "shop"
+        }
+      ]
+    },
+    {
+      "group_id": "light_world_caves",
+      "label": "Light World Caves",
+      "preferred_tab": "light-world",
+      "domain_ids": [
+        "underworld"
+      ],
+      "source_group_names": [
+        "Blind's Hideout",
+        "Kakariko Well",
+        "Mini Moldorm Cave"
+      ],
+      "locations": [
+        {
+          "location_id": 60175,
+          "location_name": "Blind's Hideout - Top",
+          "event_key": "0xEB0F",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60178,
+          "location_name": "Blind's Hideout - Left",
+          "event_key": "0xEB12",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60181,
+          "location_name": "Blind's Hideout - Right",
+          "event_key": "0xEB15",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60184,
+          "location_name": "Blind's Hideout - Far Left",
+          "event_key": "0xEB18",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60187,
+          "location_name": "Blind's Hideout - Far Right",
+          "event_key": "0xEB1B",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59761,
+          "location_name": "Secret Passage",
+          "event_key": "0xE971",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59824,
+          "location_name": "Waterfall Fairy - Left",
+          "event_key": "0xE9B0",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59857,
+          "location_name": "Waterfall Fairy - Right",
+          "event_key": "0xE9D1",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59770,
+          "location_name": "King's Tomb",
+          "event_key": "0xE97A",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59788,
+          "location_name": "Floodgate Chest",
+          "event_key": "0xE98C",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59836,
+          "location_name": "Link's House",
+          "event_key": "0xE9BC",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59854,
+          "location_name": "Kakariko Tavern",
+          "event_key": "0xE9CE",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59881,
+          "location_name": "Chicken House",
+          "event_key": "0xE9E9",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59890,
+          "location_name": "Aginah's Cave",
+          "event_key": "0xE9F2",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60034,
+          "location_name": "Sahasrahla's Hut - Left",
+          "event_key": "0xEA82",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60037,
+          "location_name": "Sahasrahla's Hut - Middle",
+          "event_key": "0xEA85",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60040,
+          "location_name": "Sahasrahla's Hut - Right",
+          "event_key": "0xEA88",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60046,
+          "location_name": "Kakariko Well - Top",
+          "event_key": "0xEA8E",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60049,
+          "location_name": "Kakariko Well - Left",
+          "event_key": "0xEA91",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60052,
+          "location_name": "Kakariko Well - Middle",
+          "event_key": "0xEA94",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60055,
+          "location_name": "Kakariko Well - Right",
+          "event_key": "0xEA97",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60058,
+          "location_name": "Kakariko Well - Bottom",
+          "event_key": "0xEA9A",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1572864,
+          "location_name": "Lost Woods Hideout",
+          "event_key": "0x180000",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1572865,
+          "location_name": "Lumberjack Tree",
+          "event_key": "0x180001",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1572867,
+          "location_name": "Cave 45",
+          "event_key": "0x180003",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1572868,
+          "location_name": "Graveyard Cave",
+          "event_key": "0x180004",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1572869,
+          "location_name": "Checkerboard Cave",
+          "event_key": "0x180005",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60226,
+          "location_name": "Mini Moldorm Cave - Far Left",
+          "event_key": "0xEB42",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60229,
+          "location_name": "Mini Moldorm Cave - Left",
+          "event_key": "0xEB45",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60232,
+          "location_name": "Mini Moldorm Cave - Right",
+          "event_key": "0xEB48",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60235,
+          "location_name": "Mini Moldorm Cave - Far Right",
+          "event_key": "0xEB4B",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1572880,
+          "location_name": "Mini Moldorm Cave - Generous Guy",
+          "event_key": "0x180010",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60238,
+          "location_name": "Ice Rod Cave",
+          "event_key": "0xEB4E",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60223,
+          "location_name": "Bonk Rock Cave",
+          "event_key": "0xEB3F",
+          "domain_id": "underworld"
+        }
+      ]
+    },
+    {
+      "group_id": "mountain_caves",
+      "label": "Mountain Caves",
+      "preferred_tab": "mountain",
+      "domain_ids": [
+        "underworld"
+      ],
+      "source_group_names": [
+        "Paradox Cave",
+        "Hookshot Cave"
+      ],
+      "locations": [
+        {
+          "location_id": 1572866,
+          "location_name": "Spectacle Rock Cave",
+          "event_key": "0x180002",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60202,
+          "location_name": "Paradox Cave Lower - Far Left",
+          "event_key": "0xEB2A",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60205,
+          "location_name": "Paradox Cave Lower - Left",
+          "event_key": "0xEB2D",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60208,
+          "location_name": "Paradox Cave Lower - Right",
+          "event_key": "0xEB30",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60211,
+          "location_name": "Paradox Cave Lower - Far Right",
+          "event_key": "0xEB33",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60214,
+          "location_name": "Paradox Cave Lower - Middle",
+          "event_key": "0xEB36",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60217,
+          "location_name": "Paradox Cave Upper - Left",
+          "event_key": "0xEB39",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60220,
+          "location_name": "Paradox Cave Upper - Right",
+          "event_key": "0xEB3C",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59839,
+          "location_name": "Spiral Cave",
+          "event_key": "0xE9BF",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60028,
+          "location_name": "Superbunny Cave - Top",
+          "event_key": "0xEA7C",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60031,
+          "location_name": "Superbunny Cave - Bottom",
+          "event_key": "0xEA7F",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60043,
+          "location_name": "Spike Cave",
+          "event_key": "0xEA8B",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60241,
+          "location_name": "Hookshot Cave - Top Right",
+          "event_key": "0xEB51",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60244,
+          "location_name": "Hookshot Cave - Top Left",
+          "event_key": "0xEB54",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60250,
+          "location_name": "Hookshot Cave - Bottom Right",
+          "event_key": "0xEB5A",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60247,
+          "location_name": "Hookshot Cave - Bottom Left",
+          "event_key": "0xEB57",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59845,
+          "location_name": "Mimic Cave",
+          "event_key": "0xE9C5",
+          "domain_id": "underworld"
+        }
+      ]
+    },
+    {
+      "group_id": "dark_world_caves",
+      "label": "Dark World Caves",
+      "preferred_tab": "dark-world",
+      "domain_ids": [
+        "underworld"
+      ],
+      "source_group_names": [
+        "Hype Cave"
+      ],
+      "locations": [
+        {
+          "location_id": 60190,
+          "location_name": "Hype Cave - Top",
+          "event_key": "0xEB1E",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60193,
+          "location_name": "Hype Cave - Middle Right",
+          "event_key": "0xEB21",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60196,
+          "location_name": "Hype Cave - Middle Left",
+          "event_key": "0xEB24",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60199,
+          "location_name": "Hype Cave - Bottom",
+          "event_key": "0xEB27",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1572881,
+          "location_name": "Hype Cave - Generous Guy",
+          "event_key": "0x180011",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1572870,
+          "location_name": "Peg Cave",
+          "event_key": "0x180006",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59776,
+          "location_name": "Pyramid Fairy - Left",
+          "event_key": "0xE980",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59779,
+          "location_name": "Pyramid Fairy - Right",
+          "event_key": "0xE983",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59884,
+          "location_name": "Brewery",
+          "event_key": "0xE9EC",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59887,
+          "location_name": "C-Shaped House",
+          "event_key": "0xE9EF",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60840,
+          "location_name": "Chest Game",
+          "event_key": "0xEDA8",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60019,
+          "location_name": "Mire Shed - Left",
+          "event_key": "0xEA73",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60022,
+          "location_name": "Mire Shed - Right",
+          "event_key": "0xEA76",
+          "domain_id": "underworld"
+        }
+      ]
+    },
+    {
+      "group_id": "hyrule_castle_and_escape",
+      "label": "Hyrule Castle And Escape",
+      "preferred_tab": "escape",
+      "domain_ids": [
+        "underworld"
+      ],
+      "source_group_names": [
+        "Hyrule Castle",
+        "Castle Tower"
+      ],
+      "locations": [
+        {
+          "location_id": 59764,
+          "location_name": "Hyrule Castle - Boomerang Chest",
+          "event_key": "0xE974",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310772,
+          "location_name": "Hyrule Castle - Boomerang Guard Key Drop",
+          "event_key": "0x140034",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60172,
+          "location_name": "Hyrule Castle - Map Chest",
+          "event_key": "0xEB0C",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310775,
+          "location_name": "Hyrule Castle - Map Guard Key Drop",
+          "event_key": "0x140037",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60169,
+          "location_name": "Hyrule Castle - Zelda's Chest",
+          "event_key": "0xEB09",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310781,
+          "location_name": "Hyrule Castle - Big Key Drop",
+          "event_key": "0x14003D",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59758,
+          "location_name": "Sewers - Dark Cross",
+          "event_key": "0xE96E",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310733,
+          "location_name": "Sewers - Key Rat Key Drop",
+          "event_key": "0x14000D",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60253,
+          "location_name": "Sewers - Secret Room - Left",
+          "event_key": "0xEB5D",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60256,
+          "location_name": "Sewers - Secret Room - Middle",
+          "event_key": "0xEB60",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60259,
+          "location_name": "Sewers - Secret Room - Right",
+          "event_key": "0xEB63",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60025,
+          "location_name": "Sanctuary",
+          "event_key": "0xEA79",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60085,
+          "location_name": "Castle Tower - Room 03",
+          "event_key": "0xEAB5",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60082,
+          "location_name": "Castle Tower - Dark Maze",
+          "event_key": "0xEAB2",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310817,
+          "location_name": "Castle Tower - Dark Archer Key Drop",
+          "event_key": "0x140061",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310802,
+          "location_name": "Castle Tower - Circle of Pots Key Drop",
+          "event_key": "0x140052",
+          "domain_id": "underworld"
+        }
+      ]
+    },
+    {
+      "group_id": "eastern_palace",
+      "label": "Eastern Palace",
+      "preferred_tab": "eastern",
+      "domain_ids": [
+        "underworld"
+      ],
+      "source_group_names": [
+        "Eastern Palace"
+      ],
+      "locations": [
+        {
+          "location_id": 59767,
+          "location_name": "Eastern Palace - Compass Chest",
+          "event_key": "0xE977",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59773,
+          "location_name": "Eastern Palace - Big Chest",
+          "event_key": "0xE97D",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310811,
+          "location_name": "Eastern Palace - Dark Square Pot Key",
+          "event_key": "0x14005B",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310793,
+          "location_name": "Eastern Palace - Dark Eyegore Key Drop",
+          "event_key": "0x140049",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59827,
+          "location_name": "Eastern Palace - Cannonball Chest",
+          "event_key": "0xE9B3",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59833,
+          "location_name": "Eastern Palace - Big Key Chest",
+          "event_key": "0xE9B9",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59893,
+          "location_name": "Eastern Palace - Map Chest",
+          "event_key": "0xE9F5",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1573200,
+          "location_name": "Eastern Palace - Boss",
+          "event_key": "0x180150",
+          "domain_id": "underworld"
+        }
+      ]
+    },
+    {
+      "group_id": "desert_palace",
+      "label": "Desert Palace",
+      "preferred_tab": "desert",
+      "domain_ids": [
+        "underworld"
+      ],
+      "source_group_names": [
+        "Desert Palace"
+      ],
+      "locations": [
+        {
+          "location_id": 59791,
+          "location_name": "Desert Palace - Big Chest",
+          "event_key": "0xE98F",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1573216,
+          "location_name": "Desert Palace - Torch",
+          "event_key": "0x180160",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59830,
+          "location_name": "Desert Palace - Map Chest",
+          "event_key": "0xE9B6",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59851,
+          "location_name": "Desert Palace - Compass Chest",
+          "event_key": "0xE9CB",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59842,
+          "location_name": "Desert Palace - Big Key Chest",
+          "event_key": "0xE9C2",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310769,
+          "location_name": "Desert Palace - Desert Tiles 1 Pot Key",
+          "event_key": "0x140031",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310763,
+          "location_name": "Desert Palace - Beamos Hall Pot Key",
+          "event_key": "0x14002B",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310760,
+          "location_name": "Desert Palace - Desert Tiles 2 Pot Key",
+          "event_key": "0x140028",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1573201,
+          "location_name": "Desert Palace - Boss",
+          "event_key": "0x180151",
+          "domain_id": "underworld"
+        }
+      ]
+    },
+    {
+      "group_id": "tower_of_hera",
+      "label": "Tower Of Hera",
+      "preferred_tab": "hera",
+      "domain_ids": [
+        "underworld"
+      ],
+      "source_group_names": [
+        "Tower of Hera"
+      ],
+      "locations": [
+        {
+          "location_id": 1573218,
+          "location_name": "Tower of Hera - Basement Cage",
+          "event_key": "0x180162",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59821,
+          "location_name": "Tower of Hera - Map Chest",
+          "event_key": "0xE9AD",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59878,
+          "location_name": "Tower of Hera - Big Key Chest",
+          "event_key": "0xE9E6",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59899,
+          "location_name": "Tower of Hera - Compass Chest",
+          "event_key": "0xE9FB",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59896,
+          "location_name": "Tower of Hera - Big Chest",
+          "event_key": "0xE9F8",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1573202,
+          "location_name": "Tower of Hera - Boss",
+          "event_key": "0x180152",
+          "domain_id": "underworld"
+        }
+      ]
+    },
+    {
+      "group_id": "palace_of_darkness",
+      "label": "Palace Of Darkness",
+      "preferred_tab": "pod",
+      "domain_ids": [
+        "underworld"
+      ],
+      "source_group_names": [
+        "Palace of Darkness"
+      ],
+      "locations": [
+        {
+          "location_id": 59995,
+          "location_name": "Palace of Darkness - Shooter Room",
+          "event_key": "0xEA5B",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59965,
+          "location_name": "Palace of Darkness - The Arena - Bridge",
+          "event_key": "0xEA3D",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59977,
+          "location_name": "Palace of Darkness - Stalfos Basement",
+          "event_key": "0xEA49",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59959,
+          "location_name": "Palace of Darkness - Big Key Chest",
+          "event_key": "0xEA37",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59962,
+          "location_name": "Palace of Darkness - The Arena - Ledge",
+          "event_key": "0xEA3A",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59986,
+          "location_name": "Palace of Darkness - Map Chest",
+          "event_key": "0xEA52",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59971,
+          "location_name": "Palace of Darkness - Compass Chest",
+          "event_key": "0xEA43",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59980,
+          "location_name": "Palace of Darkness - Dark Basement - Left",
+          "event_key": "0xEA4C",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59983,
+          "location_name": "Palace of Darkness - Dark Basement - Right",
+          "event_key": "0xEA4F",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59989,
+          "location_name": "Palace of Darkness - Dark Maze - Top",
+          "event_key": "0xEA55",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59992,
+          "location_name": "Palace of Darkness - Dark Maze - Bottom",
+          "event_key": "0xEA58",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59968,
+          "location_name": "Palace of Darkness - Big Chest",
+          "event_key": "0xEA40",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59974,
+          "location_name": "Palace of Darkness - Harmless Hellway",
+          "event_key": "0xEA46",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1573203,
+          "location_name": "Palace of Darkness - Boss",
+          "event_key": "0x180153",
+          "domain_id": "underworld"
+        }
+      ]
+    },
+    {
+      "group_id": "swamp_palace",
+      "label": "Swamp Palace",
+      "preferred_tab": "swamp",
+      "domain_ids": [
+        "underworld"
+      ],
+      "source_group_names": [
+        "Swamp Palace"
+      ],
+      "locations": [
+        {
+          "location_id": 60061,
+          "location_name": "Swamp Palace - Entrance",
+          "event_key": "0xEA9D",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59782,
+          "location_name": "Swamp Palace - Map Chest",
+          "event_key": "0xE986",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310745,
+          "location_name": "Swamp Palace - Pot Row Pot Key",
+          "event_key": "0x140019",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310742,
+          "location_name": "Swamp Palace - Trench 1 Pot Key",
+          "event_key": "0x140016",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310739,
+          "location_name": "Swamp Palace - Hookshot Pot Key",
+          "event_key": "0x140013",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59785,
+          "location_name": "Swamp Palace - Big Chest",
+          "event_key": "0xE989",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60064,
+          "location_name": "Swamp Palace - Compass Chest",
+          "event_key": "0xEAA0",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310736,
+          "location_name": "Swamp Palace - Trench 2 Pot Key",
+          "event_key": "0x140010",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60070,
+          "location_name": "Swamp Palace - Big Key Chest",
+          "event_key": "0xEAA6",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60067,
+          "location_name": "Swamp Palace - West Chest",
+          "event_key": "0xEAA3",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60073,
+          "location_name": "Swamp Palace - Flooded Room - Left",
+          "event_key": "0xEAA9",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60076,
+          "location_name": "Swamp Palace - Flooded Room - Right",
+          "event_key": "0xEAAC",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60079,
+          "location_name": "Swamp Palace - Waterfall Room",
+          "event_key": "0xEAAF",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310730,
+          "location_name": "Swamp Palace - Waterway Pot Key",
+          "event_key": "0x14000A",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1573204,
+          "location_name": "Swamp Palace - Boss",
+          "event_key": "0x180154",
+          "domain_id": "underworld"
+        }
+      ]
+    },
+    {
+      "group_id": "skull_woods",
+      "label": "Skull Woods",
+      "preferred_tab": "skull",
+      "domain_ids": [
+        "underworld"
+      ],
+      "source_group_names": [
+        "Skull Woods"
+      ],
+      "locations": [
+        {
+          "location_id": 59794,
+          "location_name": "Skull Woods - Compass Chest",
+          "event_key": "0xE992",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59803,
+          "location_name": "Skull Woods - Map Chest",
+          "event_key": "0xE99B",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59800,
+          "location_name": "Skull Woods - Big Chest",
+          "event_key": "0xE998",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59809,
+          "location_name": "Skull Woods - Pot Prison",
+          "event_key": "0xE9A1",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59848,
+          "location_name": "Skull Woods - Pinball Room",
+          "event_key": "0xE9C8",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59806,
+          "location_name": "Skull Woods - Big Key Chest",
+          "event_key": "0xE99E",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310766,
+          "location_name": "Skull Woods - West Lobby Pot Key",
+          "event_key": "0x14002E",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59902,
+          "location_name": "Skull Woods - Bridge Room",
+          "event_key": "0xE9FE",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310748,
+          "location_name": "Skull Woods - Spike Corner Key Drop",
+          "event_key": "0x14001C",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1573205,
+          "location_name": "Skull Woods - Boss",
+          "event_key": "0x180155",
+          "domain_id": "underworld"
+        }
+      ]
+    },
+    {
+      "group_id": "thieves_town",
+      "label": "Thieves' Town",
+      "preferred_tab": "thieves",
+      "domain_ids": [
+        "underworld"
+      ],
+      "source_group_names": [
+        "Thieves' Town"
+      ],
+      "locations": [
+        {
+          "location_id": 59908,
+          "location_name": "Thieves' Town - Big Key Chest",
+          "event_key": "0xEA04",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59905,
+          "location_name": "Thieves' Town - Map Chest",
+          "event_key": "0xEA01",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59911,
+          "location_name": "Thieves' Town - Compass Chest",
+          "event_key": "0xEA07",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59914,
+          "location_name": "Thieves' Town - Ambush Chest",
+          "event_key": "0xEA0A",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310814,
+          "location_name": "Thieves' Town - Hallway Pot Key",
+          "event_key": "0x14005E",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310799,
+          "location_name": "Thieves' Town - Spike Switch Pot Key",
+          "event_key": "0x14004F",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59917,
+          "location_name": "Thieves' Town - Attic",
+          "event_key": "0xEA0D",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59920,
+          "location_name": "Thieves' Town - Big Chest",
+          "event_key": "0xEA10",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59923,
+          "location_name": "Thieves' Town - Blind's Cell",
+          "event_key": "0xEA13",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1573206,
+          "location_name": "Thieves' Town - Boss",
+          "event_key": "0x180156",
+          "domain_id": "underworld"
+        }
+      ]
+    },
+    {
+      "group_id": "ice_palace",
+      "label": "Ice Palace",
+      "preferred_tab": "ice",
+      "domain_ids": [
+        "underworld"
+      ],
+      "source_group_names": [
+        "Ice Palace"
+      ],
+      "locations": [
+        {
+          "location_id": 1310724,
+          "location_name": "Ice Palace - Jelly Key Drop",
+          "event_key": "0x140004",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59860,
+          "location_name": "Ice Palace - Compass Chest",
+          "event_key": "0xE9D4",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310754,
+          "location_name": "Ice Palace - Conveyor Key Drop",
+          "event_key": "0x140022",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59797,
+          "location_name": "Ice Palace - Freezor Chest",
+          "event_key": "0xE995",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59818,
+          "location_name": "Ice Palace - Big Chest",
+          "event_key": "0xE9AA",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59875,
+          "location_name": "Ice Palace - Iced T Room",
+          "event_key": "0xE9E3",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310790,
+          "location_name": "Ice Palace - Many Pots Pot Key",
+          "event_key": "0x140046",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59872,
+          "location_name": "Ice Palace - Spike Room",
+          "event_key": "0xE9E0",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59812,
+          "location_name": "Ice Palace - Big Key Chest",
+          "event_key": "0xE9A4",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310757,
+          "location_name": "Ice Palace - Hammer Block Key Drop",
+          "event_key": "0x140025",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59869,
+          "location_name": "Ice Palace - Map Chest",
+          "event_key": "0xE9DD",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1573207,
+          "location_name": "Ice Palace - Boss",
+          "event_key": "0x180157",
+          "domain_id": "underworld"
+        }
+      ]
+    },
+    {
+      "group_id": "misery_mire",
+      "label": "Misery Mire",
+      "preferred_tab": "mire",
+      "domain_ids": [
+        "underworld"
+      ],
+      "source_group_names": [
+        "Misery Mire"
+      ],
+      "locations": [
+        {
+          "location_id": 60007,
+          "location_name": "Misery Mire - Big Chest",
+          "event_key": "0xEA67",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60010,
+          "location_name": "Misery Mire - Map Chest",
+          "event_key": "0xEA6A",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59998,
+          "location_name": "Misery Mire - Main Lobby",
+          "event_key": "0xEA5E",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60001,
+          "location_name": "Misery Mire - Bridge Chest",
+          "event_key": "0xEA61",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310805,
+          "location_name": "Misery Mire - Spikes Pot Key",
+          "event_key": "0x140055",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59866,
+          "location_name": "Misery Mire - Spike Chest",
+          "event_key": "0xE9DA",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310796,
+          "location_name": "Misery Mire - Fishbone Pot Key",
+          "event_key": "0x14004C",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310820,
+          "location_name": "Misery Mire - Conveyor Crystal Key Drop",
+          "event_key": "0x140064",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60004,
+          "location_name": "Misery Mire - Compass Chest",
+          "event_key": "0xEA64",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60013,
+          "location_name": "Misery Mire - Big Key Chest",
+          "event_key": "0xEA6D",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1573208,
+          "location_name": "Misery Mire - Boss",
+          "event_key": "0x180158",
+          "domain_id": "underworld"
+        }
+      ]
+    },
+    {
+      "group_id": "turtle_rock",
+      "label": "Turtle Rock",
+      "preferred_tab": "turtle",
+      "domain_ids": [
+        "underworld"
+      ],
+      "source_group_names": [
+        "Turtle Rock"
+      ],
+      "locations": [
+        {
+          "location_id": 59938,
+          "location_name": "Turtle Rock - Compass Chest",
+          "event_key": "0xEA22",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59932,
+          "location_name": "Turtle Rock - Roller Room - Left",
+          "event_key": "0xEA1C",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59935,
+          "location_name": "Turtle Rock - Roller Room - Right",
+          "event_key": "0xEA1F",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310808,
+          "location_name": "Turtle Rock - Pokey 1 Key Drop",
+          "event_key": "0x140058",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59926,
+          "location_name": "Turtle Rock - Chain Chomps",
+          "event_key": "0xEA16",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310727,
+          "location_name": "Turtle Rock - Pokey 2 Key Drop",
+          "event_key": "0x140007",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59941,
+          "location_name": "Turtle Rock - Big Key Chest",
+          "event_key": "0xEA25",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59929,
+          "location_name": "Turtle Rock - Big Chest",
+          "event_key": "0xEA19",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59956,
+          "location_name": "Turtle Rock - Crystaroller Room",
+          "event_key": "0xEA34",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59953,
+          "location_name": "Turtle Rock - Eye Bridge - Bottom Left",
+          "event_key": "0xEA31",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59950,
+          "location_name": "Turtle Rock - Eye Bridge - Bottom Right",
+          "event_key": "0xEA2E",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59947,
+          "location_name": "Turtle Rock - Eye Bridge - Top Left",
+          "event_key": "0xEA2B",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 59944,
+          "location_name": "Turtle Rock - Eye Bridge - Top Right",
+          "event_key": "0xEA28",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1573209,
+          "location_name": "Turtle Rock - Boss",
+          "event_key": "0x180159",
+          "domain_id": "underworld"
+        }
+      ]
+    },
+    {
+      "group_id": "ganons_tower",
+      "label": "Ganon's Tower",
+      "preferred_tab": "gt",
+      "domain_ids": [
+        "underworld"
+      ],
+      "source_group_names": [
+        "Ganons Tower",
+        "Ganons Tower Climb"
+      ],
+      "locations": [
+        {
+          "location_id": 1310784,
+          "location_name": "Ganons Tower - Conveyor Cross Pot Key",
+          "event_key": "0x140040",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1573217,
+          "location_name": "Ganons Tower - Bob's Torch",
+          "event_key": "0x180161",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60121,
+          "location_name": "Ganons Tower - Hope Room - Left",
+          "event_key": "0xEAD9",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60124,
+          "location_name": "Ganons Tower - Hope Room - Right",
+          "event_key": "0xEADC",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60130,
+          "location_name": "Ganons Tower - Tile Room",
+          "event_key": "0xEAE2",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60133,
+          "location_name": "Ganons Tower - Compass Room - Top Left",
+          "event_key": "0xEAE5",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60136,
+          "location_name": "Ganons Tower - Compass Room - Top Right",
+          "event_key": "0xEAE8",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60139,
+          "location_name": "Ganons Tower - Compass Room - Bottom Left",
+          "event_key": "0xEAEB",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60142,
+          "location_name": "Ganons Tower - Compass Room - Bottom Right",
+          "event_key": "0xEAEE",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310778,
+          "location_name": "Ganons Tower - Conveyor Star Pits Pot Key",
+          "event_key": "0x14003A",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60088,
+          "location_name": "Ganons Tower - DMs Room - Top Left",
+          "event_key": "0xEAB8",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60091,
+          "location_name": "Ganons Tower - DMs Room - Top Right",
+          "event_key": "0xEABB",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60094,
+          "location_name": "Ganons Tower - DMs Room - Bottom Left",
+          "event_key": "0xEABE",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60097,
+          "location_name": "Ganons Tower - DMs Room - Bottom Right",
+          "event_key": "0xEAC1",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60115,
+          "location_name": "Ganons Tower - Map Chest",
+          "event_key": "0xEAD3",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310787,
+          "location_name": "Ganons Tower - Double Switch Pot Key",
+          "event_key": "0x140043",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60112,
+          "location_name": "Ganons Tower - Firesnake Room",
+          "event_key": "0xEAD0",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60100,
+          "location_name": "Ganons Tower - Randomizer Room - Top Left",
+          "event_key": "0xEAC4",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60103,
+          "location_name": "Ganons Tower - Randomizer Room - Top Right",
+          "event_key": "0xEAC7",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60106,
+          "location_name": "Ganons Tower - Randomizer Room - Bottom Left",
+          "event_key": "0xEACA",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60109,
+          "location_name": "Ganons Tower - Randomizer Room - Bottom Right",
+          "event_key": "0xEACD",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60127,
+          "location_name": "Ganons Tower - Bob's Chest",
+          "event_key": "0xEADF",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60118,
+          "location_name": "Ganons Tower - Big Chest",
+          "event_key": "0xEAD6",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60148,
+          "location_name": "Ganons Tower - Big Key Room - Left",
+          "event_key": "0xEAF4",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60151,
+          "location_name": "Ganons Tower - Big Key Room - Right",
+          "event_key": "0xEAF7",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60145,
+          "location_name": "Ganons Tower - Big Key Chest",
+          "event_key": "0xEAF1",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60157,
+          "location_name": "Ganons Tower - Mini Helmasaur Room - Left",
+          "event_key": "0xEAFD",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60160,
+          "location_name": "Ganons Tower - Mini Helmasaur Room - Right",
+          "event_key": "0xEB00",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 1310751,
+          "location_name": "Ganons Tower - Mini Helmasaur Key Drop",
+          "event_key": "0x14001F",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60163,
+          "location_name": "Ganons Tower - Pre-Moldorm Chest",
+          "event_key": "0xEB03",
+          "domain_id": "underworld"
+        },
+        {
+          "location_id": 60166,
+          "location_name": "Ganons Tower - Validation Chest",
+          "event_key": "0xEB06",
+          "domain_id": "underworld"
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "This file normalizes grouping for tracker presentation only.",
+    "Every active runtime bridge check is now assigned to one tracker group.",
+    "Dungeon prizes and non-int-coded crystal reward items remain represented by dungeon-progress metadata rather than SKLMI item actions."
+  ],
+  "coverage": {
+    "active_bridge_ref": "bridge/sklmi.phase1.json",
+    "covered_location_checks": 286,
+    "grouping_status": "complete-for-active-runtime-bridge",
+    "note": "Each active bridge check is listed exactly once for tracker presentation; this is not a separate memory contract."
+  }
+}

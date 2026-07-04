@@ -1,0 +1,617 @@
+[
+  {
+    "name": "Cinnabar Island",
+    "children": [
+      {
+        "name": "Visit",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Unlock Fly Destination"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_island",
+            "x": 12,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_island",
+            "x": 368,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Gym Sign",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Gym Sign Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_island",
+            "x": 360,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Woman",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Woman Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_island",
+            "x": 232,
+            "y": 104
+          }
+        ]
+      },
+      {
+        "name": "Pokémon Center",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/PC Item",
+            "name": "PC Item"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Bill Gift",
+            "name": "Bill Gift"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Bookshelf Info",
+            "name": "Bookshelf Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_island",
+            "x": 232,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Pokémon Lab",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Old Man Trade Pokémon",
+            "name": "Old Man Trade Pokémon"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Woman Trade Pokémon",
+            "name": "Woman Trade Pokémon"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Scientist Gift",
+            "name": "Scientist Gift"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Fossil",
+            "name": "Fossil"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Boy Trade Pokémon",
+            "name": "Boy Trade Pokémon"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Revive Dome Fossil",
+            "name": "Revive Dome Fossil"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Revive Helix Fossil",
+            "name": "Revive Helix Fossil"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Revive Old Amber",
+            "name": "Revive Old Amber"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_island",
+            "x": 136,
+            "y": 152
+          }
+        ]
+      },
+      {
+        "name": "Cinnabar Gym",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Burglar Quinn Reward",
+            "name": "Burglar Quinn Reward"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Super Nerd Erik Reward",
+            "name": "Super Nerd Erik Reward"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Super Nerd Avery Reward",
+            "name": "Super Nerd Avery Reward"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Burglar Ramon Reward",
+            "name": "Burglar Ramon Reward"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Super Nerd Derek Reward",
+            "name": "Super Nerd Derek Reward"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Super Nerd Derek Info",
+            "name": "Super Nerd Derek Info"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Burglar Dusty Reward",
+            "name": "Burglar Dusty Reward"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Super Nerd Zac Reward",
+            "name": "Super Nerd Zac Reward"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Defeat Blaine (Event)",
+            "name": "Defeat Blaine (Event)"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Leader Blaine Reward",
+            "name": "Leader Blaine Reward"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Blaine Info",
+            "name": "Blaine Info"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Cinnabar Gym Prize",
+            "name": "Cinnabar Gym Prize"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Blaine TM",
+            "name": "Blaine TM"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Photo Info 1",
+            "name": "Photo Info 1"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Photo Info 2",
+            "name": "Photo Info 2"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_island",
+            "x": 328,
+            "y": 72
+          }
+        ]
+      },
+      {
+        "name": "Poké Mart",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Shop Items"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_island",
+            "x": 312,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Pokémon Mansion Entrance",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Pokémon Mansion Entrance",
+            "name": "Entrance"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_island",
+            "x": 136,
+            "y": 56
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Cinnabar Gym",
+    "children": [
+      {
+        "name": "Burglar Quinn",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Burglar Quinn Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_gym",
+            "x": 408,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Super Nerd Erik",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Super Nerd Erik Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_gym",
+            "x": 408,
+            "y": 72
+          }
+        ]
+      },
+      {
+        "name": "Super Nerd Avery",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Super Nerd Avery Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_gym",
+            "x": 280,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Burglar Ramon",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Burglar Ramon Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_gym",
+            "x": 264,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Super Nerd Derek",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Super Nerd Derek Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Super Nerd Derek Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_gym",
+            "x": 264,
+            "y": 296
+          }
+        ]
+      },
+      {
+        "name": "Burglar Dusty",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Burglar Dusty Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_gym",
+            "x": 72,
+            "y": 312
+          }
+        ]
+      },
+      {
+        "name": "Super Nerd Zac",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Super Nerd Zac Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_gym",
+            "x": 72,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Blaine",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Defeat Blaine (Event)",
+            "name": "Defeat Blaine (Event)"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Leader Blaine Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Blaine Info",
+            "name": "Info"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Cinnabar Gym Prize",
+            "name": "Gym Prize"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Blaine TM",
+            "name": "TM"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_gym",
+            "x": 88,
+            "y": 72
+          }
+        ]
+      },
+      {
+        "name": "Photo",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Photo Info 1",
+            "name": "Info 1"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Photo Info 2",
+            "name": "Info 2"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_gym",
+            "x": 56,
+            "y": 16
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Pokémon Lab Lounge",
+    "children": [
+      {
+        "name": "Old Man",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Old Man Trade Pokémon",
+            "name": "Trade Pokémon"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "pokemon_lab_lounge",
+            "x": 72,
+            "y": 104
+          }
+        ]
+      },
+      {
+        "name": "Woman",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Woman Trade Pokémon",
+            "name": "Trade Pokémon"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "pokemon_lab_lounge",
+            "x": 168,
+            "y": 88
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Pokémon Lab Research Room",
+    "children": [
+      {
+        "name": "Scientist",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Scientist Gift",
+            "name": "Gift"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "pokemon_lab_research_room",
+            "x": 168,
+            "y": 56
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Pokémon Lab Experiment Room",
+    "children": [
+      {
+        "name": "Boy",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Boy Trade Pokémon",
+            "name": "Trade Pokémon"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "pokemon_lab_experiment_room",
+            "x": 184,
+            "y": 136
+          }
+        ]
+      },
+      {
+        "name": "Fossil",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Fossil"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "pokemon_lab_experiment_room",
+            "x": 184,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Scientist",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Revive Dome Fossil",
+            "name": "Revive Dome Fossil"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Revive Helix Fossil",
+            "name": "Revive Helix Fossil"
+          },
+          {
+            "ref": "Cities/Cinnabar Island/Revive Old Amber",
+            "name": "Revive Old Amber"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "pokemon_lab_experiment_room",
+            "x": 200,
+            "y": 56
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Cinnabar Pokémon Center 1F",
+    "children": [
+      {
+        "name": "PC",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/PC Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_pokemon_center_1f",
+            "x": 184,
+            "y": 24
+          }
+        ]
+      },
+      {
+        "name": "Bill",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Bill Gift",
+            "name": "Gift"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_pokemon_center_1f",
+            "x": 184,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Bookshelf",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Bookshelf Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_pokemon_center_1f",
+            "x": 48,
+            "y": 32
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Cinnabar Mart",
+    "children": [
+      {
+        "name": "Poké Mart Clerk",
+        "sections": [
+          {
+            "ref": "Cities/Cinnabar Island/Shop Items"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cinnabar_mart",
+            "x": 40,
+            "y": 56
+          }
+        ]
+      }
+    ]
+  }
+]

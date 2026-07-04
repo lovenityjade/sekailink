@@ -1,0 +1,134 @@
+{
+    "layouttabs": {
+        "type": "tabbed",
+        "tabs": [
+            {
+                "title": "Stage Select",
+                "content": {
+                    "type": "map",
+                    "maps": [
+                        "stages"
+                    ]
+                }
+            },
+            {
+                "title": "Hunter Base",
+                "content": {
+                    "type": "map",
+                    "maps": [
+                        "hunter_base"
+                    ]
+                }
+            },
+            {
+                "title": "Maverick Stages",
+                "content": {
+                    "type": "tabbed",
+                    "tabs": [
+                        {
+                            "title": "Blast Hornet",
+                            "content": {
+                                "type": "map",
+                                "maps": ["blast_hornet"]
+                            }
+                        },
+                        {
+                            "title": "Blizzard Buffalo",
+                            "content": {
+                                "type": "map",
+                                "maps": ["blizzard_buffalo"]
+                            }
+                        },
+                        {
+                            "title": "Gravity Beetle",
+                            "content": {
+                                "type": "map",
+                                "maps": ["gravity_beetle"]
+                            }
+                        },
+                        {
+                            "title": "Toxic Seahorse",
+                            "content": {
+                                "type": "map",
+                                "maps": ["toxic_seahorse"]
+                            }
+                        },
+                        {
+                            "title": "Volt Catfish",
+                            "content": {
+                                "type": "map",
+                                "maps": ["volt_catfish"]
+                            }
+                        },
+                        {
+                            "title": "Crush Crawfish",
+                            "content": {
+                                "type": "map",
+                                "maps": ["crush_crawfish"]
+                            }
+                        },
+                        {
+                            "title": "Tunnel Rhino",
+                            "content": {
+                                "type": "map",
+                                "maps": ["tunnel_rhino"]
+                            }
+                        },
+                        {
+                            "title": "Neon Tiger",
+                            "content": {
+                                "type": "map",
+                                "maps": ["neon_tiger"]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Vile's Stage",
+                "content": {
+                    "type": "map",
+                    "maps": [
+                        "vile"
+                    ]
+                }
+            },
+            {
+                "title": "Dr. Doppler's Lab",
+                "content": {
+                    "type": "tabbed",
+                    "tabs": [
+                        {
+                            "title": "Dr. Doppler's Lab 1",
+                            "content": {
+                                "type": "map",
+                                "maps": ["doppler_lab_1"]
+                            }
+                        },
+                        {
+                            "title": "Dr. Doppler's Lab 2",
+                            "content": {
+                                "type": "map",
+                                "maps": ["doppler_lab_2"]
+                            }
+                        },
+                        {
+                            "title": "Dr. Doppler's Lab 3",
+                            "content": {
+                                "type": "map",
+                                "maps": ["doppler_lab_3"]
+                            }
+                        },
+                        {
+                            "title": "Dr. Doppler's Lab 4",
+                            "content": {
+                                "type": "map",
+                                "maps": ["doppler_lab_4"]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

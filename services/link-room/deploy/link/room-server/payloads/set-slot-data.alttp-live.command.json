@@ -1,0 +1,10 @@
+{
+  "cmd": "set_slot_data",
+  "room_id": "alttp-live-1",
+  "slot_data": {
+    "difficulty": "normal",
+    "goal": "ganon",
+    "mode": "open",
+    "weapons": "randomized"
+  }
+}

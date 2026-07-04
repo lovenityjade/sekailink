@@ -1,0 +1,22 @@
+{
+    "major_bosses_supervertical": {
+        "type": "array",
+        "orientation": "vertical",
+        "margin": "6,6",
+        "content": [
+            {
+                "type": "itemgrid",
+                "item_margin": "4, 4",
+                "item_size": "64, 64",
+                "margin": "0, 0",
+                "h_alignment": "center",
+                "rows": [
+                    ["Kraid Defeated"],
+                    ["Ridley Defeated"],
+                    ["Mother Brain Defeated"],
+                    ["Chozo Ghost Defeated"]
+                ]
+            }
+        ]
+    }
+}

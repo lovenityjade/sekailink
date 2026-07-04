@@ -1,0 +1,362 @@
+[
+  {
+    "name": "Route 11",
+    "children": [
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Land Encounters",
+            "name": "Land Encounters"
+          },
+          {
+            "ref": "Routes/Route 11/Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Routes/Route 11/Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Routes/Route 11/Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Routes/Route 11/Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_west",
+            "x": 576,
+            "y": 12
+          },
+          {
+            "map": "route_11_east",
+            "x": 544,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Northwest Item",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Northwest Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_west",
+            "x": 216,
+            "y": 56
+          }
+        ]
+      },
+      {
+        "name": "Tall Grass Item",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Tall Grass Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_east",
+            "x": 88,
+            "y": 200
+          }
+        ]
+      },
+      {
+        "name": "Item Behind Trees",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Item Behind Trees",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_east",
+            "x": 424,
+            "y": 216
+          }
+        ]
+      },
+      {
+        "name": "Northeast Rock Hidden Item",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Northeast Rock Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_east",
+            "x": 344,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Gate",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Oak's Aide Gift (Pokédex Progress)",
+            "name": "Oak's Aide Gift (Pokédex Progress)"
+          },
+          {
+            "ref": "Routes/Route 11/Youngster Trade Pokémon",
+            "name": "Youngster Trade Pokémon"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_east",
+            "x": 344,
+            "y": 168
+          },
+          {
+            "map": "route_11_east",
+            "x": 456,
+            "y": 168
+          }
+        ]
+      },
+      {
+        "name": "Engineer Bernie",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Engineer Bernie Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Routes/Route 11/Engineer Bernie Rematch Reward (4 Badges-Gyms)",
+            "name": "Rematch Reward (4 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_west",
+            "x": 520,
+            "y": 296
+          }
+        ]
+      },
+      {
+        "name": "Engineer Braxton",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Engineer Braxton Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_east",
+            "x": 88,
+            "y": 136
+          }
+        ]
+      },
+      {
+        "name": "Gamer Darian",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Gamer Darian Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Routes/Route 11/Gamer Darian Rematch Reward (4 Badges-Gyms)",
+            "name": "Rematch Reward (4 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_east",
+            "x": 216,
+            "y": 72
+          }
+        ]
+      },
+      {
+        "name": "Gamer Dirk",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Gamer Dirk Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_east",
+            "x": 328,
+            "y": 264
+          }
+        ]
+      },
+      {
+        "name": "Gamer Hugo",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Gamer Hugo Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_west",
+            "x": 264,
+            "y": 280
+          }
+        ]
+      },
+      {
+        "name": "Gamer Jasper",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Gamer Jasper Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_east",
+            "x": 24,
+            "y": 248
+          }
+        ]
+      },
+      {
+        "name": "Youngster Dave",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Youngster Dave Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_west",
+            "x": 456,
+            "y": 168
+          }
+        ]
+      },
+      {
+        "name": "Youngster Dillon",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Youngster Dillon Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_west",
+            "x": 504,
+            "y": 136
+          }
+        ]
+      },
+      {
+        "name": "Youngster Eddie",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Youngster Eddie Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_west",
+            "x": 312,
+            "y": 136
+          }
+        ]
+      },
+      {
+        "name": "Youngster Yasu",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Youngster Yasu Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Routes/Route 11/Youngster Yasu Rematch Reward (2 Badges-Gyms)",
+            "name": "Rematch Reward (2 Badges-Gyms)"
+          },
+          {
+            "ref": "Routes/Route 11/Youngster Yasu Rematch Reward (6 Badges-Gyms)",
+            "name": "Rematch Reward (6 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_east",
+            "x": 216,
+            "y": 232
+          }
+        ]
+      },
+      {
+        "name": "Diglett's Cave South Entrance",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Diglett's Cave South Entrance",
+            "name": "Entrance"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_west",
+            "x": 104,
+            "y": 120
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Route 11 Gate 2F",
+    "children": [
+      {
+        "name": "Oak's Aide",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Oak's Aide Gift (Pokédex Progress)",
+            "name": "Gift (Pokédex Progress)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_gate_2f",
+            "x": 40,
+            "y": 104
+          }
+        ]
+      },
+      {
+        "name": "Youngster",
+        "sections": [
+          {
+            "ref": "Routes/Route 11/Youngster Trade Pokémon",
+            "name": "Trade Pokémon"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_11_gate_2f",
+            "x": 120,
+            "y": 56
+          }
+        ]
+      }
+    ]
+  }
+]

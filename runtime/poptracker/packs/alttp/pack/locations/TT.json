@@ -1,0 +1,248 @@
+[
+    {
+        "name": "Thieves Town Front",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "parent": "TT",
+        "access_rules": [
+            "^$CanReach|TT_entrance_inside"
+        ],
+        "children": [
+            {
+                "name": "Map Chest",
+                "access_rules": [
+                    "^$CanReach|TT_front_bottom_left"
+                ],
+                "sections": [
+                    {
+                        "name": "Map Chest",
+                        "access_rules": [
+                            "^$CanReach|TT - Map Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "TT",
+                        "x": 35,
+                        "y": 170,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Ambush Chest",
+                "access_rules": [
+                    "^$CanReach|TT_front_top_left"
+                ],
+                "sections": [
+                    {
+                        "name": "Ambush Chest",
+                        "access_rules": [
+                            "^$CanReach|TT - Ambush Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "TT",
+                        "x": 50,
+                        "y": 75,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Compass Chest",
+                "access_rules": [
+                    "^$CanReach|TT_front_bottom_right"
+                ],
+                "sections": [
+                    {
+                        "name": "Compass Chest",
+                        "access_rules": [
+                            "^$CanReach|TT - Compass Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "TT",
+                        "x": 175,
+                        "y": 204,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Big Key Chest",
+                "access_rules": [
+                    "^$CanReach|TT_front_bottom_right"
+                ],
+                "sections": [
+                    {
+                        "name": "Big Key Chest",
+                        "access_rules": [
+                            "^$CanReach|TT - Big Key Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "TT",
+                        "x": 100,
+                        "y": 215,
+                        "size": 6
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Thieves Town Back",
+        "chest_unopened_img": "/images/items/closed_Chest.png",
+        "chest_opened_img": "/images/items/open_Chest.png",
+        "access_rules": [
+            "^$CanReach|TT_back_hallway"
+        ],
+        "parent": "TT",
+        "children": [
+            {
+                "name": "Hallway Pot Key",
+                "visibility_rules": ["key_drop_shuffle"],
+                "access_rules": [
+                    "^$CanReach|TT_back_hallway"
+                ],
+                "sections": [
+                    {
+                        "name": "Hallway Pot Key",
+                        "access_rules": [
+                            "^$CanReach|TT - Hallway Pot Key"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "TT",
+                        "x": 500,
+                        "y": 145,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Spike Switch Pot Key",
+                "access_rules": [
+                    "^$CanReach|TT_crystal_switch_room"
+                ],
+                "visibility_rules": ["key_drop_shuffle"],
+                "sections": [
+                    {
+                        "name": "Spike Switch Pot Key",
+                        "access_rules": [
+                            "^$CanReach|TT - Spike Switch Pot Key"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "TT",
+                        "x": 291,
+                        "y": 98,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Blind's Cell",
+                "access_rules": [
+                    "^$CanReach|TT_basement_cell"
+                ],
+                "sections": [
+                    {
+                        "name": "Blind's Cell",
+                        "access_rules": [
+                            "^$CanReach|TT - Blind's Cell"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "TT",
+                        "x": 774,
+                        "y": 152,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Attic",
+                "access_rules": [
+                    "^$CanReach|TT_attic"
+                ],
+                "sections": [
+                    {
+                        "name": "Attic",
+                        "access_rules": [
+                            "^$CanReach|TT - Attic"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "TT",
+                        "x": 473,
+                        "y": 18,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Big Chest",
+                "access_rules": [
+                    "^$CanReach|TT_big_chest_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Big Chest",
+                        "access_rules": [
+                            "^$CanReach|TT - Big Chest"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "TT",
+                        "x": 568,
+                        "y": 222,
+                        "size": 6
+                    }
+                ]
+            },
+            {
+                "name": "Boss",
+                "access_rules": [
+                    "^$CanReach|TT_boss_room"
+                ],
+                "sections": [
+                    {
+                        "name": "Boss Item",
+                        "access_rules": [
+                            "^$CanReach|TT - Boss"
+                        ],
+                        "item_count": 1,
+                        "hosted_item": "tt_boss, thievestown"
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "TT",
+                        "x": 490,
+                        "y": 100,
+                        "size": 6
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -1,0 +1,485 @@
+[
+  {
+    "name": "Safari Zone Center Area",
+    "children": [
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/Center Area - Land Encounters",
+            "name": "Land Encounters"
+          },
+          {
+            "ref": "Dungeons/Safari Zone/Center Area - Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Dungeons/Safari Zone/Center Area - Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Dungeons/Safari Zone/Center Area - Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Dungeons/Safari Zone/Center Area - Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_center",
+            "x": 800,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Island Item",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/Center Area - Island Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_center",
+            "x": 392,
+            "y": 248
+          }
+        ]
+      },
+      {
+        "name": "Island Hidden Item",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/Center Area - Island Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_center",
+            "x": 440,
+            "y": 248
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Safari Zone East Area",
+    "children": [
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/East Area - Land Encounters",
+            "name": "Land Encounters"
+          },
+          {
+            "ref": "Dungeons/Safari Zone/East Area - Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Dungeons/Safari Zone/East Area - Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Dungeons/Safari Zone/East Area - Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Dungeons/Safari Zone/East Area - Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_east",
+            "x": 848,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Southeast Plateau Item",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/East Area - Southeast Plateau Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_east",
+            "x": 584,
+            "y": 280
+          }
+        ]
+      },
+      {
+        "name": "Tall Grass Item",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/East Area - Tall Grass Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_east",
+            "x": 504,
+            "y": 296
+          }
+        ]
+      },
+      {
+        "name": "Item Near Bush",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/East Area - Item Near Bush",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_east",
+            "x": 216,
+            "y": 200
+          }
+        ]
+      },
+      {
+        "name": "Item Near Rest House",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/East Area - Item Near Rest House",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_east",
+            "x": 600,
+            "y": 248
+          }
+        ]
+      },
+      {
+        "name": "Rest House",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/East Area Rest House - Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_east",
+            "x": 648,
+            "y": 232
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Safari Zone North Area",
+    "children": [
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/North Area - Land Encounters",
+            "name": "Land Encounters"
+          },
+          {
+            "ref": "Dungeons/Safari Zone/North Area - Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Dungeons/Safari Zone/North Area - Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Dungeons/Safari Zone/North Area - Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Dungeons/Safari Zone/North Area - Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_north",
+            "x": 896,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "South Item",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/North Area - South Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_north",
+            "x": 472,
+            "y": 280
+          }
+        ]
+      },
+      {
+        "name": "Center Item",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/North Area - Center Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_north",
+            "x": 456,
+            "y": 152
+          }
+        ]
+      },
+      {
+        "name": "North Item",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/North Area - North Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_north",
+            "x": 536,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Rest House",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/North Area Rest House - Balding Man Info",
+            "name": "Balding Man Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_north",
+            "x": 696,
+            "y": 136
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Safari Zone West Area",
+    "children": [
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/West Area - Land Encounters",
+            "name": "Land Encounters"
+          },
+          {
+            "ref": "Dungeons/Safari Zone/West Area - Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Dungeons/Safari Zone/West Area - Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Dungeons/Safari Zone/West Area - Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Dungeons/Safari Zone/West Area - Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_west",
+            "x": 752,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Southeast Item",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/West Area - Southeast Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_west",
+            "x": 440,
+            "y": 392
+          }
+        ]
+      },
+      {
+        "name": "Southwest Item",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/West Area - Southwest Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_west",
+            "x": 264,
+            "y": 440
+          }
+        ]
+      },
+      {
+        "name": "Northeast Item",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/West Area - Northeast Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_west",
+            "x": 456,
+            "y": 232
+          }
+        ]
+      },
+      {
+        "name": "Northwest Item",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/West Area - Northwest Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_west",
+            "x": 280,
+            "y": 216
+          }
+        ]
+      },
+      {
+        "name": "Hidden Item Near Secret House",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/West Area - Hidden Item Near Secret House",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_west",
+            "x": 216,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Secret House",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/Secret House - Campaign Prize",
+            "name": "Campaign Prize"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_west",
+            "x": 200,
+            "y": 120
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Safari Zone East Rest House",
+    "children": [
+      {
+        "name": "Item",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/East Area Rest House - Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_east_rest_house",
+            "x": 136,
+            "y": 120
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Safari Zone North Rest House",
+    "children": [
+      {
+        "name": "Balding Man",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/North Area Rest House - Balding Man Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_north_rest_house",
+            "x": 184,
+            "y": 40
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Safari Zone Secret House",
+    "children": [
+      {
+        "name": "Attendant",
+        "sections": [
+          {
+            "ref": "Dungeons/Safari Zone/Secret House - Campaign Prize",
+            "name": "Campaign Prize"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "safari_zone_secret_house",
+            "x": 104,
+            "y": 88
+          }
+        ]
+      }
+    ]
+  }
+]

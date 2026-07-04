@@ -1,0 +1,224 @@
+cmake_minimum_required(VERSION 3.20)
+project(sekailink_sklmi LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(LIBARCHIVE REQUIRED IMPORTED_TARGET libarchive)
+pkg_check_modules(CURL REQUIRED IMPORTED_TARGET libcurl)
+
+set(SKLMI_PLATFORM_LIBS)
+if(WIN32)
+  list(APPEND SKLMI_PLATFORM_LIBS ws2_32)
+endif()
+
+add_library(sekailink_sklmi
+  src/api_archipelago.cpp
+  src/api_archipelago_websocket.cpp
+  src/api_common.cpp
+  src/api_room.cpp
+  src/api_bridge_runtime.cpp
+  src/api_manifest.cpp
+  src/api_socket_memory.cpp
+  src/unix_socket_memory_provider.cpp
+)
+
+target_link_libraries(sekailink_sklmi PUBLIC ${SKLMI_PLATFORM_LIBS})
+
+target_include_directories(sekailink_sklmi
+  PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+add_executable(sekailink_sklmi_runtime
+  src/bug_report_client.cpp
+  src/runtime_main.cpp
+  src/runtime_options.cpp
+  src/runtime_jsonl_sink.cpp
+  src/tracker_headless_runtime.cpp
+)
+
+target_link_libraries(sekailink_sklmi_runtime PRIVATE sekailink_sklmi)
+target_link_libraries(sekailink_sklmi_runtime PRIVATE PkgConfig::LIBARCHIVE PkgConfig::CURL)
+target_include_directories(sekailink_sklmi_runtime PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+add_executable(sekailink_sklmi_smoke
+  tests/sklmi_smoke_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_smoke PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_legacy_manifest_smoke
+  tests/sklmi_legacy_manifest_smoke_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_legacy_manifest_smoke PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_runtime_socket_smoke
+  tests/sklmi_runtime_socket_smoke_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_runtime_socket_smoke PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_unix_socket_smoke
+  tests/sklmi_unix_socket_smoke_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_unix_socket_smoke PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_generic_bizhawk_manifest_smoke
+  tests/sklmi_generic_bizhawk_manifest_smoke_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_generic_bizhawk_manifest_smoke PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_archipelago_client_wrapper_manifest_smoke
+  tests/sklmi_archipelago_client_wrapper_manifest_smoke_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_archipelago_client_wrapper_manifest_smoke PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_sekaiemu_runtime_proof
+  tests/sklmi_sekaiemu_runtime_proof_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_sekaiemu_runtime_proof PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_sekaiemu_game_server_runtime_proof
+  tests/sklmi_sekaiemu_game_server_runtime_proof_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_sekaiemu_game_server_runtime_proof PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_sekaiemu_real_game_server_runtime_proof
+  tests/sklmi_sekaiemu_real_game_server_runtime_proof_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_sekaiemu_real_game_server_runtime_proof PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_earthbound_golden
+  tests/sklmi_earthbound_golden_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_earthbound_golden PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_alttp_golden
+  tests/sklmi_alttp_golden_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_alttp_golden PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_room_sync_smoke
+  tests/sklmi_room_sync_smoke_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_room_sync_smoke PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_archipelago_room_client_smoke
+  tests/sklmi_archipelago_room_client_smoke_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_archipelago_room_client_smoke PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_archipelago_websocket_smoke
+  tests/sklmi_archipelago_websocket_smoke_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_archipelago_websocket_smoke PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_archipelago_live_probe
+  tools/sklmi_archipelago_live_probe_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_archipelago_live_probe PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_archipelago_runtime_live_probe
+  tools/sklmi_archipelago_runtime_live_probe_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_archipelago_runtime_live_probe PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_runtime_runner_smoke
+  tests/sklmi_runtime_runner_smoke_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_runtime_runner_smoke PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_alttp_runtime_runner_smoke
+  tests/sklmi_alttp_runtime_runner_smoke_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_alttp_runtime_runner_smoke PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_game_server_room_client_smoke
+  tests/sklmi_game_server_room_client_smoke_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_game_server_room_client_smoke PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_runtime_game_server_smoke
+  tests/sklmi_runtime_game_server_smoke_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_runtime_game_server_smoke PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_alttp_runtime_game_server_smoke
+  tests/sklmi_alttp_runtime_game_server_smoke_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_alttp_runtime_game_server_smoke PRIVATE sekailink_sklmi)
+
+add_executable(sekailink_sklmi_tracker_headless_smoke
+  tests/sklmi_tracker_headless_smoke_main.cpp
+  src/tracker_headless_runtime.cpp
+)
+
+target_link_libraries(sekailink_sklmi_tracker_headless_smoke PRIVATE sekailink_sklmi PkgConfig::LIBARCHIVE)
+target_include_directories(sekailink_sklmi_tracker_headless_smoke PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+add_executable(sekailink_sklmi_tracker_alttp_bundle_smoke
+  tests/sklmi_tracker_alttp_bundle_smoke_main.cpp
+  src/tracker_headless_runtime.cpp
+)
+
+target_link_libraries(sekailink_sklmi_tracker_alttp_bundle_smoke PRIVATE sekailink_sklmi PkgConfig::LIBARCHIVE)
+target_include_directories(sekailink_sklmi_tracker_alttp_bundle_smoke PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+add_executable(sekailink_sklmi_tracker_runtime_e2e_smoke
+  tests/sklmi_tracker_runtime_e2e_smoke_main.cpp
+)
+
+target_link_libraries(sekailink_sklmi_tracker_runtime_e2e_smoke PRIVATE sekailink_sklmi)
+
+enable_testing()
+
+add_test(NAME sekailink_sklmi_smoke COMMAND sekailink_sklmi_smoke)
+add_test(NAME sekailink_sklmi_legacy_manifest_smoke COMMAND sekailink_sklmi_legacy_manifest_smoke)
+add_test(NAME sekailink_sklmi_generic_bizhawk_manifest_smoke
+  COMMAND sekailink_sklmi_generic_bizhawk_manifest_smoke ${CMAKE_CURRENT_SOURCE_DIR})
+add_test(NAME sekailink_sklmi_archipelago_client_wrapper_manifest_smoke
+  COMMAND sekailink_sklmi_archipelago_client_wrapper_manifest_smoke)
+if(NOT WIN32)
+  add_test(NAME sekailink_sklmi_runtime_socket_smoke COMMAND sekailink_sklmi_runtime_socket_smoke)
+  add_test(NAME sekailink_sklmi_unix_socket_smoke COMMAND sekailink_sklmi_unix_socket_smoke)
+endif()
+add_test(NAME sekailink_sklmi_earthbound_golden COMMAND sekailink_sklmi_earthbound_golden)
+add_test(NAME sekailink_sklmi_alttp_golden COMMAND sekailink_sklmi_alttp_golden)
+add_test(NAME sekailink_sklmi_room_sync_smoke COMMAND sekailink_sklmi_room_sync_smoke)
+add_test(NAME sekailink_sklmi_archipelago_room_client_smoke COMMAND sekailink_sklmi_archipelago_room_client_smoke)
+add_test(NAME sekailink_sklmi_archipelago_websocket_smoke COMMAND sekailink_sklmi_archipelago_websocket_smoke)
+add_test(NAME sekailink_sklmi_runtime_runner_smoke
+  COMMAND sekailink_sklmi_runtime_runner_smoke $<TARGET_FILE:sekailink_sklmi_runtime>)
+add_test(NAME sekailink_sklmi_alttp_runtime_runner_smoke
+  COMMAND sekailink_sklmi_alttp_runtime_runner_smoke $<TARGET_FILE:sekailink_sklmi_runtime>)
+add_test(NAME sekailink_sklmi_game_server_room_client_smoke COMMAND sekailink_sklmi_game_server_room_client_smoke)
+add_test(NAME sekailink_sklmi_runtime_game_server_smoke
+  COMMAND sekailink_sklmi_runtime_game_server_smoke $<TARGET_FILE:sekailink_sklmi_runtime>)
+add_test(NAME sekailink_sklmi_alttp_runtime_game_server_smoke
+  COMMAND sekailink_sklmi_alttp_runtime_game_server_smoke $<TARGET_FILE:sekailink_sklmi_runtime>)
+add_test(NAME sekailink_sklmi_tracker_headless_smoke COMMAND sekailink_sklmi_tracker_headless_smoke)
+add_test(NAME sekailink_sklmi_tracker_alttp_bundle_smoke COMMAND sekailink_sklmi_tracker_alttp_bundle_smoke)
+add_test(NAME sekailink_sklmi_tracker_runtime_e2e_smoke
+  COMMAND sekailink_sklmi_tracker_runtime_e2e_smoke $<TARGET_FILE:sekailink_sklmi_runtime>)

@@ -1,0 +1,61 @@
+{
+  "game_id": "links_awakening_dx",
+  "display_name": "Links Awakening DX",
+  "aliases": [
+    "ladx",
+    "link_s_awakening_dx",
+    "links_awakening_dx_beta",
+    "the_legend_of_zelda_link_s_awakening_dx",
+    "the_legend_of_zelda_links_awakening_dx"
+  ],
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apladxb",
+    ".apladx"
+  ],
+  "patch_world_module": "worlds.ladx_beta",
+  "ap_world": "ladx_beta",
+  "required_roms": [
+    "links_awakening_dx",
+    "ladx"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "module",
+  "archipelago_client": {
+    "game_key": "links_awakening_dx",
+    "world": "ladx_beta",
+    "wrapper": "module",
+    "memory_bridge": "retroarch_udp",
+    "retroarch_port": 55355,
+    "pass_patch": false,
+    "pass_slot": false,
+    "client_file": "worlds/ladx_beta/LinksAwakeningClient.py",
+    "module": "worlds.ladx_beta.LinksAwakeningClient"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".gbc"
+    ],
+    "md5": [
+      "07c211479386825042efb4ad31bb525f"
+    ],
+    "sha1": [
+      "d90ac17e9bf17b6c61624ad9f05447bdb5efc01a"
+    ],
+    "expected": "The Legend of Zelda: Link's Awakening DX (USA, Europe) English v1.0 / revision 0"
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "gbc",
+    "ap_game": "Links Awakening DX Beta"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "MagpieTracker",
+  "support_status": "canari_test",
+  "availability_status": "available_canari_test",
+  "compatibility_notes": "Canari test frozen: Linux bilateral send/reception confirmed through Sekaiemu/Gambatte plus the RetroArch UDP compatibility bridge on port 55355. Windows validation is still required before Canonical promotion."
+}

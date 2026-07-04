@@ -1,0 +1,415 @@
+[
+  {
+    "name": "Colossus - hint",
+    "chest_unopened_img": "/images/items/close.png",
+    "chest_opened_img": "/images/items/open.png",
+    "overlay_background": "#000000",
+    "access_rules": [
+        "{}"
+    ],
+    "children": [
+        {
+            "name": "Near Temple - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Bean Patch - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "GS - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "colossus_near_temple_bean_patch_gs"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Colossus",
+                            "x": "497",
+                            "y": "586",
+                            "size": 22,
+                            "shape": "diamond"
+                        }
+                    ]
+                }
+            ],
+            "sections": [
+                {
+                    "name": "Sheik at Colossus - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "colossus_near_temple_sheik_at_colossus"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Freestanding PoH - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "colossus_near_temple_freestanding_poh"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Colossus",
+                    "x": "658",
+                    "y": "508",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Deku Scrub Grotto - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Front - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "colossus_deku_scrub_grotto_front"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Rear - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "colossus_deku_scrub_grotto_rear"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Beehive - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "colossus_deku_scrub_grotto_beehive"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Colossus",
+                    "x": "967",
+                    "y": "574",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Tree - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "colossus_tree_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Colossus",
+                    "x": "447",
+                    "y": "729",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Hill - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "colossus_hill_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Colossus",
+                    "x": "1057",
+                    "y": "597",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        }
+    ],
+    "sections": [
+        {
+            "name": "Great Fairy Reward - hint",
+            "access_rules": [],
+            "visibility_rules": [
+                "colossus_great_fairy_reward"
+            ],
+            "item_count": 1
+        }
+    ],
+    "map_locations": [
+        {
+            "map": "Colossus",
+            "x": "1339",
+            "y": "638",
+            "size": 22,
+            "shape": "diamond"
+        }
+    ]
+},
+  {
+    "name": "Colossus",
+    "chest_unopened_img": "/images/Items/close.png",
+    "chest_opened_img": "/images/Items/open.png",
+    "overlay_background": "#000000",
+    "access_rules": [
+      " "
+    ],
+    "children": [
+      {
+        "name": "Near Temple",
+        "chest_unopened_img": "/images/Items/close.png",
+        "chest_opened_img": "/images/Items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+          " "
+        ],
+        "children": [
+          {
+            "name": "Bean Patch",
+            "chest_unopened_img": "/images/Items/close.png",
+            "chest_opened_img": "/images/Items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+              " "
+            ],
+            "sections": [
+              {
+                "name": "GS",
+                "access_rules": [
+                  "^$CanReach|Child Colossus GS Bean Patch",
+                  "^$CanReach|Adult Colossus GS Bean Patch"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+                "item_count": 1
+              }
+            ],
+            "map_locations": [
+              {
+                "map": "Desert Colossus",
+                "x": 475,
+                "y": 564,
+                "size": 24
+              }
+            ]
+          }
+        ],
+        "sections": [
+          {
+            "name": "Sheik at Colossus",
+            "access_rules": [
+              "^$CanReach|Child Sheik at Colossus",
+              "^$CanReach|Adult Sheik at Colossus"
+            ],
+            // "visibility_rules": [
+            //   "$Show|"
+            // ],
+            "item_count": 1
+          },
+          {
+            "name": "Freestanding PoH",
+            "access_rules": [
+              "^$CanReach|Child Colossus Freestanding PoH",
+              "^$CanReach|Adult Colossus Freestanding PoH"
+            ],
+            // "visibility_rules": [
+            //   "$Show|"
+            // ],
+            "item_count": 1
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "Desert Colossus",
+            "x": 636,
+            "y": 486,
+            "size": 24
+          }
+        ]
+      },
+      {
+        "name": "Deku Scrub Grotto",
+        "chest_unopened_img": "/images/Items/close.png",
+        "chest_opened_img": "/images/Items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+          " "
+        ],
+        "sections": [
+          {
+            "name": "Front",
+            "access_rules": [
+              "^$CanReach|Child Colossus Deku Scrub Grotto Front",
+              "^$CanReach|Adult Colossus Deku Scrub Grotto Front"
+            ],
+            "visibility_rules": [
+              "$Show|shuffle_scrubs"
+            ],
+            "item_count": 1
+          },
+          {
+            "name": "Rear",
+            "access_rules": [
+              "^$CanReach|Child Colossus Deku Scrub Grotto Rear",
+              "^$CanReach|Adult Colossus Deku Scrub Grotto Rear"
+            ],
+            "visibility_rules": [
+              "$Show|shuffle_scrubs"
+            ],
+            "item_count": 1
+          },
+          {
+            "name": "Beehive",
+            "access_rules": [
+              "^$CanReach|Child Colossus Grotto Beehive",
+              "^$CanReach|Adult Colossus Grotto Beehive"
+            ],
+            "visibility_rules": [
+              "$Show|shuffle_beehives"
+            ],
+            "item_count": 1
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "Desert Colossus",
+            "x": 945,
+            "y": 552,
+            "size": 24
+          }
+        ]
+      },
+      {
+        "name": "Tree",
+        "chest_unopened_img": "/images/Items/close.png",
+        "chest_opened_img": "/images/Items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+          " "
+        ],
+        "sections": [
+          {
+            "name": "GS",
+            "access_rules": [
+              "^$CanReach|Child Colossus GS Tree",
+              "^$CanReach|Adult Colossus GS Tree"
+            ],
+            "visibility_rules": [
+              "$Show|tokensanity|2"
+            ],
+            "item_count": 1
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "Desert Colossus",
+            "x": 425,
+            "y": 707,
+            "size": 24
+          }
+        ]
+      },
+      {
+        "name": "Hill",
+        "chest_unopened_img": "/images/Items/close.png",
+        "chest_opened_img": "/images/Items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+          " "
+        ],
+        "sections": [
+          {
+            "name": "GS",
+            "access_rules": [
+              "^$CanReach|Child Colossus GS Hill",
+              "^$CanReach|Adult Colossus GS Hill"
+            ],
+            "visibility_rules": [
+              "$Show|tokensanity|2"
+            ],
+            "item_count": 1
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "Desert Colossus",
+            "x": 1035,
+            "y": 575,
+            "size": 24
+          }
+        ]
+      }
+    ],
+    "sections": [
+      {
+        "name": "Great Fairy Reward",
+        "access_rules": [
+          "^$CanReach|Child Colossus Great Fairy Reward",
+          "^$CanReach|Adult Colossus Great Fairy Reward"
+        ],
+        "visibility_rules": [
+          " "
+        ],
+        "item_count": 1
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "Desert Colossus",
+        "x": 1317,
+        "y": 616,
+        "size": 24
+      }
+    ]
+  }
+]

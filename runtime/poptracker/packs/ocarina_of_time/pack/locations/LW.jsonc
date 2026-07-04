@@ -1,0 +1,997 @@
+
+
+[
+  {
+    "name": "LW - hint",
+    "chest_unopened_img": "/images/items/close.png",
+    "chest_opened_img": "/images/items/open.png",
+    "overlay_background": "#000000",
+    "access_rules": [
+        "{}"
+    ],
+    "children": [
+        {
+            "name": "Bridge - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Bean Patch Near Bridge - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "GS - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "lw_bridge_bean_patch_near_bridge_gs"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Lost Woods",
+                            "x": "153",
+                            "y": "779",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                }
+            ],
+            "sections": [
+                {
+                    "name": "Gift from Saria - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_bridge_gift_from_saria"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Deku Scrub Near Bridge - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_bridge_deku_scrub_near_bridge"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Lost Woods",
+                    "x": "177",
+                    "y": "910",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Target in Woods - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Ocarina Memory Game - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_target_in_woods_ocarina_memory_game"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_target_in_woods_item"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Lost Woods",
+                    "x": "617",
+                    "y": "620",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Near Shortcuts Grotto - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Chest - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_near_shortcuts_grotto_chest"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Beehive 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_near_shortcuts_grotto_beehive_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Beehive 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_near_shortcuts_grotto_beehive_2"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Lost Woods",
+                    "x": "563",
+                    "y": "422",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Deku Theater - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Deku Scrub Near Deku Theater - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Left - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "lw_deku_theater_deku_scrub_near_deku_theater_left"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Right - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "lw_deku_theater_deku_scrub_near_deku_theater_right"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Lost Woods",
+                            "x": "472",
+                            "y": "337",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                },
+                {
+                    "name": "Bean Patch Near Theater - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "GS - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "lw_deku_theater_bean_patch_near_theater_gs"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Lost Woods",
+                            "x": "507",
+                            "y": "259",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                },
+                {
+                    "name": "Above Theater - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "GS - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "lw_deku_theater_above_theater_gs"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Lost Woods",
+                            "x": "548",
+                            "y": "257",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                }
+            ],
+            "sections": [
+                {
+                    "name": "Skull Mask - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_deku_theater_skull_mask"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Mask of Truth - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_deku_theater_mask_of_truth"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Lost Woods",
+                    "x": "410",
+                    "y": "293",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Deku Scrub Grotto - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Front - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_deku_scrub_grotto_front"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Rear - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_deku_scrub_grotto_rear"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Beehive - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_deku_scrub_grotto_beehive"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Lost Woods",
+                    "x": "518",
+                    "y": "114",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Under Boulder - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Blue Rupee - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_under_boulder_blue_rupee"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Lost Woods",
+                    "x": "720",
+                    "y": "115",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Underwater - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Green Rupee 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_underwater_green_rupee_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_underwater_green_rupee_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_underwater_green_rupee"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_underwater_green_rupee_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 4 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_underwater_green_rupee_4"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 5 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_underwater_green_rupee_5"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 6 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_underwater_green_rupee_6"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 7 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "lw_underwater_green_rupee_7"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Lost Woods",
+                    "x": "798",
+                    "y": "436",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        }
+    ],
+    "sections": [
+        {
+            "name": "Skull Kid - hint",
+            "access_rules": [],
+            "visibility_rules": [
+                "lw_skull_kid"
+            ],
+            "item_count": 1
+        }
+    ],
+    "map_locations": [
+        {
+            "map": "Lost Woods",
+            "x": "169",
+            "y": "573",
+            "size": 22,
+                    "shape": "diamond"
+        }
+    ]
+},
+    {
+      "name": "LW",
+      "chest_unopened_img": "/images/Items/close.png",
+      "chest_opened_img": "/images/Items/open.png",
+      "overlay_background": "#000000",
+      "access_rules": [
+        " "
+      ],
+      "children": [
+        {
+          "name": "Bridge",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "Bean Patch Near Bridge",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child LW GS Bean Patch Near Bridge",
+                "^$CanReach|Adult LW GS Bean Patch Near Bridge"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Lost Woods",
+                  "x": 131,
+                  "y": 757,
+                  "size": 24
+                }
+              ]
+            }
+          ],
+          "sections": [
+            {
+              "name": "Gift from Saria",
+                "access_rules": [
+                "^$CanReach|Child LW Gift from Saria",
+                "^$CanReach|Adult LW Gift from Saria"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Deku Scrub Near Bridge",
+                "access_rules": [
+                "^$CanReach|Child LW Deku Scrub Near Bridge",
+                "^$CanReach|Adult LW Deku Scrub Near Bridge"
+                ],
+                // "visibility_rules": [
+                //   "$Show|shuffle_scrubs"
+                // ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Lost Woods",
+              "x": 155,
+              "y": 888,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Target in Woods",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Ocarina Memory Game",
+                "access_rules": [
+                "^$CanReach|Child LW Ocarina Memory Game",
+                "^$CanReach|Adult LW Ocarina Memory Game"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Item",
+                "access_rules": [
+                "^$CanReach|Child LW Target in Woods",
+                "^$CanReach|Adult LW Target in Woods"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Lost Woods",
+              "x": 595,
+              "y": 598,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Near Shortcuts Grotto",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Chest",
+                "access_rules": [
+                "^$CanReach|Child LW Near Shortcuts Grotto Chest",
+                "^$CanReach|Adult LW Near Shortcuts Grotto Chest"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Beehive 1",
+                "access_rules": [
+                "^$CanReach|Child LW Near Shortcuts Grotto Beehive 1",
+                "^$CanReach|Adult LW Near Shortcuts Grotto Beehive 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_beehives"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Beehive 2",
+                "access_rules": [
+                "^$CanReach|Child LW Near Shortcuts Grotto Beehive 2",
+                "^$CanReach|Adult LW Near Shortcuts Grotto Beehive 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_beehives"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Lost Woods",
+              "x": 541,
+              "y": 400,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Deku Theater",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "Deku Scrub Near Deku Theater",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Left",
+                "access_rules": [
+                "^$CanReach|Child LW Deku Scrub Near Deku Theater Left",
+                "^$CanReach|Adult LW Deku Scrub Near Deku Theater Left"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_scrubs"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Right",
+                "access_rules": [
+                "^$CanReach|Child LW Deku Scrub Near Deku Theater Right",
+                "^$CanReach|Adult LW Deku Scrub Near Deku Theater Right"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_scrubs"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Lost Woods",
+                  "x": 450,
+                  "y": 315,
+                  "size": 24
+                }
+              ]
+            },
+            {
+              "name": "Bean Patch Near Theater",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child LW GS Bean Patch Near Theater",
+                "^$CanReach|Adult LW GS Bean Patch Near Theater"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Lost Woods",
+                  "x": 485,
+                  "y": 237,
+                  "size": 24
+                }
+              ]
+            },
+            {
+              "name": "Above Theater",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child LW GS Above Theater",
+                "^$CanReach|Adult LW GS Above Theater"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Lost Woods",
+                  "x": 526,
+                  "y": 235,
+                  "size": 24
+                }
+              ]
+            }
+          ],
+          "sections": [
+            {
+              "name": "Skull Mask",
+                "access_rules": [
+                "^$CanReach|Child Deku Theater Skull Mask",
+                "^$CanReach|Adult Deku Theater Skull Mask"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Mask of Truth",
+                "access_rules": [
+                "^$CanReach|Child Deku Theater Mask of Truth",
+                "^$CanReach|Adult Deku Theater Mask of Truth"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Lost Woods",
+              "x": 388,
+              "y": 271,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Deku Scrub Grotto",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Front",
+                "access_rules": [
+                "^$CanReach|Child LW Deku Scrub Grotto Front",
+                "^$CanReach|Adult LW Deku Scrub Grotto Front"
+                ],
+                // "visibility_rules": [
+                //   "$Show|shuffle_scrubs"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Rear",
+                "access_rules": [
+                "^$CanReach|Child LW Deku Scrub Grotto Rear",
+                "^$CanReach|Adult LW Deku Scrub Grotto Rear"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_scrubs"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Beehive",
+                "access_rules": [
+                "^$CanReach|Child LW Scrubs Grotto Beehive",
+                "^$CanReach|Adult LW Scrubs Grotto Beehive"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_beehives"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Lost Woods",
+              "x": 496,
+              "y": 92,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Under Boulder",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Blue Rupee",
+                "access_rules": [
+                "^$CanReach|Child LW Under Boulder Blue Rupee",
+                "^$CanReach|Adult LW Under Boulder Blue Rupee"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Lost Woods",
+              "x": 698,
+              "y": 93,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Underwater",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Green Rupee",
+                "access_rules": [
+                "^$CanReach|Child LW Underwater Shortcut Green Rupee",
+                "^$CanReach|Adult LW Underwater Shortcut Green Rupee"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 1",
+                "access_rules": [
+                "^$CanReach|Child LW Underwater Green Rupee 1",
+                "^$CanReach|Adult LW Underwater Green Rupee 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 2",
+                "access_rules": [
+                "^$CanReach|Child LW Underwater Green Rupee 2",
+                "^$CanReach|Adult LW Underwater Green Rupee 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 3",
+                "access_rules": [
+                "^$CanReach|Child LW Underwater Green Rupee 3",
+                "^$CanReach|Adult LW Underwater Green Rupee 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 4",
+                "access_rules": [
+                "^$CanReach|Child LW Underwater Green Rupee 4",
+                "^$CanReach|Adult LW Underwater Green Rupee 4"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 5",
+                "access_rules": [
+                "^$CanReach|Child LW Underwater Green Rupee 5",
+                "^$CanReach|Adult LW Underwater Green Rupee 5"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 6",
+                "access_rules": [
+                "^$CanReach|Child LW Underwater Green Rupee 6",
+                "^$CanReach|Adult LW Underwater Green Rupee 6"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 7",
+                "access_rules": [
+                "^$CanReach|Child LW Underwater Green Rupee 7",
+                "^$CanReach|Adult LW Underwater Green Rupee 7"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Lost Woods",
+              "x": 776,
+              "y": 414,
+              "size": 24
+            }
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "name": "Skull Kid",
+                "access_rules": [
+                "^$CanReach|Child LW Skull Kid",
+                "^$CanReach|Adult LW Skull Kid"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+          "item_count": 1
+        }
+      ],
+      "map_locations": [
+        {
+          "map": "Lost Woods",
+          "x": 147,
+          "y": 551,
+          "size": 24
+        }
+      ]
+    }
+  ]

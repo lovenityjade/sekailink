@@ -1,0 +1,223 @@
+{
+  "module_id": "sekailink-linkedworld-alttp",
+  "game_id": "alttp",
+  "family_system_id": "snes",
+  "display_name": "A Link to the Past",
+  "version": "0.1.1-dev",
+  "repo_status": "test-runtime-prep",
+  "canonical_policy": {
+    "canonical_root": ".",
+    "canonical_rule": "Files under manifest, metadata, bridge, tracker, patch, presets, and docs are the clean-room source of truth for this repo.",
+    "snapshot_rule": "Files under source-snapshots are migration references only and must not be treated as final contracts."
+  },
+  "contract_targets": {
+    "contracts": "linkedworld-manifest-v1-prep",
+    "sekaiemu": "linkedworld-runtime-v1-prep",
+    "sklmi": "1.0",
+    "link_room": "room-metadata-v1-prep",
+    "worlds": "apdelta-alttp-v1-prep"
+  },
+  "runtime_requirements": {
+    "host": "sekaiemu",
+    "memory_interface": "sklmi",
+    "system": "snes",
+    "runner": "snes"
+  },
+  "module_blocks": {
+    "metadata": {
+      "status": "required",
+      "path": "metadata/module.json"
+    },
+    "bridge": {
+      "status": "required",
+      "path": "bridge/sklmi.phase1.json"
+    },
+    "bridge_manifest": {
+      "status": "required",
+      "path": "bridge/bridge.manifest.json"
+    },
+    "tracker": {
+      "status": "required",
+      "path": "tracker/tracker.manifest.json"
+    },
+    "patch": {
+      "status": "required",
+      "path": "patch/patch.manifest.json"
+    },
+    "presets": {
+      "status": "required",
+      "path": "presets/presets.manifest.json"
+    },
+    "preset_default": {
+      "status": "required",
+      "path": "presets/alttp.ap-defaults.core.json"
+    },
+    "generation_ir": {
+      "status": "required",
+      "path": "generation/generation-ir.json"
+    },
+    "docs": {
+      "status": "required",
+      "path": "docs/EXTRACTION_STATUS.md"
+    },
+    "handoff": {
+      "status": "required",
+      "path": "docs/HANDOFF.md"
+    },
+    "runtime_test_doc": {
+      "status": "required",
+      "path": "docs/REALTIME_TEST_RUN.md"
+    },
+    "changelog": {
+      "status": "required",
+      "path": "CHANGELOG.md"
+    },
+    "tracker_bindings": {
+      "status": "required",
+      "path": "tracker/runtime-bindings.phase1.json"
+    }
+  },
+  "canonical_artifacts": [
+    "manifest/manifest.json",
+    "metadata/module.json",
+    "metadata/provenance.json",
+    "metadata/room-metadata.complete.json",
+    "metadata/slot-data.complete.json",
+    "bridge/sklmi.phase1.json",
+    "bridge/bridge.manifest.json",
+    "tracker/tracker.manifest.json",
+    "tracker/runtime-bindings.phase1.json",
+    "tracker/location-groups.complete.json",
+    "tracker/item-slots.complete.json",
+    "tracker/dungeon-progress.complete.json",
+    "tracker/default.bundle/manifest.json",
+    "tracker/default.bundle/surface.complete.json",
+    "tracker/default.zip",
+    "patch/patch.manifest.json",
+    "generation/generation-ir.json",
+    "presets/presets.manifest.json",
+    "presets/alttp.ap-defaults.core.json",
+    "presets/alttp.runtime-complete.side-by-side.json",
+    "config/default.yaml",
+    "docs/EXTRACTION_STATUS.md",
+    "docs/HANDOFF.md",
+    "docs/REALTIME_TEST_RUN.md",
+    "docs/TRACKER_RUN_COMPLETE_SURFACE.md",
+    "docs/LINKEDWORLD_CONTENT_OWNERSHIP.md",
+    "CHANGELOG.md"
+  ],
+  "snapshot_artifacts": [
+    "source-snapshots/linkedworld.current.json",
+    "source-snapshots/sklmi.phase1.current.json",
+    "source-snapshots/en_A_Link_to_the_Past.md",
+    "source-snapshots/fr_A_Link_to_the_Past.md"
+  ],
+  "distribution": {
+    "origins": [
+      {
+        "kind": "repo-canonical-root",
+        "path": "."
+      },
+      {
+        "kind": "module-manifest",
+        "path": "manifest/manifest.json"
+      },
+      {
+        "kind": "tracker-pack-reference",
+        "uid": "https://github.com/StripesOO7/alttp-ap-poptracker-pack",
+        "materialized_default_path": "tracker/default.zip"
+      }
+    ],
+    "notes": "This repo owns the canonical ALTTP module contract and now materializes a clean-room-owned baseline at tracker/default.zip and config/default.yaml, plus a normalized full-run tracker surface inventory. The external tracker UID remains a historical compatibility reference, not proof of third-party asset equivalence."
+  },
+  "consumer_views": {
+    "sekaiemu": [
+      "patch/patch.manifest.json",
+      "tracker/default.zip",
+      "config/default.yaml",
+      "presets/alttp.runtime-test.side-by-side.json"
+    ],
+    "sklmi": [
+      "bridge/sklmi.phase1.json"
+    ],
+    "link_room": [
+      "metadata/room-metadata.complete.json",
+      "tracker/runtime-bindings.phase1.json"
+    ]
+  },
+  "launch": {
+    "entrypoints": [
+      {
+        "kind": "patch-input",
+        "path": "{runtime_input.patch_file}",
+        "accepted_extensions": [
+          ".aplttp"
+        ]
+      },
+      {
+        "kind": "base-rom-input",
+        "path": "{runtime_input.base_rom_file}",
+        "validation_ref": "patch/patch.manifest.json"
+      },
+      {
+        "kind": "tracker-bundle",
+        "path": "tracker/default.zip"
+      },
+      {
+        "kind": "runtime-preset",
+        "path": "presets/alttp.runtime-test.side-by-side.json"
+      }
+    ],
+    "args_template": [
+      "--module",
+      "alttp",
+      "--patch",
+      "{runtime_input.patch_file}",
+      "--base-rom",
+      "{runtime_input.base_rom_file}",
+      "--tracker-pack",
+      "{materialized.tracker_bundle}",
+      "--tracker-variant",
+      "{runtime_settings.tracker_variant}",
+      "--yaml",
+      "{runtime_settings.yaml_file}",
+      "--room-state",
+      "{runtime_state.room_state_file}"
+    ]
+  },
+  "patch": {
+    "type": "apdelta",
+    "asset_validation": "Japan 1.0 base ROM MD5 gate via get_base_rom_bytes()",
+    "procedure": "See patch/patch.manifest.json for the extracted ALTTP patch sequence"
+  },
+  "modes": [
+    "solo",
+    "offline",
+    "online",
+    "experimental"
+  ],
+  "room_surface": {
+    "bridge_ref": "bridge/sklmi.phase1.json",
+    "version": "1.0",
+    "required_runtime_metadata": [
+      "seed_id",
+      "seed_hash",
+      "slot_name",
+      "player_alias",
+      "tracker_pack",
+      "tracker_variant",
+      "slot_data"
+    ]
+  },
+  "recovery_checklist": [
+    "extend ALTTP checks/items/actions deeper into dungeon, shop, boss, and crystal families toward the normalized full-run surface declared in tracker/default.bundle/surface.complete.json",
+    "decide whether the clean-room placeholder bundle remains canonical or is replaced by a pinned external-compatible pack",
+    "expand presets from explicit defaults to curated room-facing profiles",
+    "version compatibility against contracts, sekaiemu, worlds, and link-room",
+    "replace pending tracker node ids with finalized pack-facing mappings once a durable pack import path is chosen"
+  ],
+  "source_snapshots": [
+    "source-snapshots/linkedworld.current.json",
+    "source-snapshots/sklmi.phase1.current.json"
+  ]
+}

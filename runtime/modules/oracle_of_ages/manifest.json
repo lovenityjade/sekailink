@@ -1,0 +1,48 @@
+{
+  "game_id": "oracle_of_ages",
+  "display_name": "The Legend of Zelda - Oracle of Ages",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apooa"
+  ],
+  "patch_world_module": "worlds.tloz_ooa",
+  "ap_world": "tloz_ooa",
+  "required_roms": [
+    "oracle_of_ages"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "oracle_of_ages",
+    "world": "tloz_ooa",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/tloz_ooa/Client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".gbc",
+      ".gb"
+    ],
+    "md5": [
+      "c4639cc61c049e5a085526bb6cac03bb"
+    ],
+    "sha1": [
+      "880374fb978b18af4aa529e2e32f7ffb4d7dd2f4"
+    ]
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "gbc",
+    "ap_game": "The Legend of Zelda - Oracle of Ages"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "https://github.com/Dranzior/ooa_brooty/releases/latest",
+  "support_status": "canari_test",
+  "availability_status": "available_canari_test",
+  "compatibility_notes": "Canari test frozen: Linux bilateral send/reception confirmed through Sekaiemu/Gambatte with the BizHawk-compatible runtime memory bridge. Windows validation is still required before Canonical promotion.",
+  "tracker_pack_path": "poptracker/packs/oracle_of_ages/pack"
+}

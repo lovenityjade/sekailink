@@ -1,0 +1,79 @@
+[
+    {
+        "name": "Island Palace",
+        "chest_unopened_img": "/images/items/close.png",
+        "chest_opened_img": "/images/items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "@Western Coast, ^$candle, fairyspell"
+        ],
+        "sections": [
+            {
+                "name": "Island Palace: Buried Item Left",
+                "access_rules": ["downthrust, handyglove"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Island Palace: Buried Item Right",
+                "access_rules": ["downthrust, handyglove"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Island Palace: Outside",
+                "access_rules": [],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Island Palace: Block Mountain",
+                "access_rules": ["^$key|island|1|3, handyglove"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Island Palace: Precarious Item",
+                "access_rules": ["^$key|island|1|3, handyglove"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Island Palace: Pedestal Item",
+                "access_rules": ["^$key|island|2|3, handyglove"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Island Palace: Pillar Item",
+                "access_rules": ["^$key|island|2|4, jumpspell"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Island Palace: Guarded by Iron Knuckles",
+                "access_rules": ["^$key|island|2|4, handyglove, downthrust"],
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Island Palace: Rebonack Drop",
+                "access_rules": ["^$key|island|2|4, handyglove, downthrust"],
+                "visibility_rules": [],
+                "item_count": 1
+            }
+        ],
+        "map_locations": [
+            {
+                "map": "Overworld",
+                "x": "938",
+                "y": "1107"
+            },
+            {
+                "map": "West Hyrule",
+                "x": "938",
+                "y": "1104"
+            }
+        ]
+    }
+]

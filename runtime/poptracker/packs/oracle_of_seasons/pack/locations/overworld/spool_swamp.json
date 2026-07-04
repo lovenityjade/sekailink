@@ -1,0 +1,300 @@
+[
+	{
+		"name": "Spool Swamp",
+		"chest_unopened_img": "images/labels/chest.png",
+		"chest_opened_img": "images/labels/chestopen.png",
+		"color": "#00ff08",
+		"children": [
+			{
+				"name": "See the Season",
+				"visibility_rules": [
+					"defaultseasonsoff",
+					"singularity_random"
+				],
+				"sections": [
+					{
+						"name": "Spool Swamp",
+						"access_rules": ["{^$CanReach|SpoolSwampFindSeason}"],
+						"chest_unopened_img": "images/labels/season_icons.png",
+						"chest_opened_img": "images/labels/season_icons_disabled.png"
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 257,
+						"y": 1253,
+						"shape": "diamond"
+					}
+				]
+			},
+			{
+				"name": "Spool Swamp Tree",
+				"sections": [
+					{
+						"name": "Spool Swamp: Seed Tree",
+						"access_rules": ["^$CanReach|SwampTree"],
+						"chest_unopened_img": "images/items/tree_pegasus.png",
+						"chest_opened_img": "images/items/tree_pegasus_disabled.png"
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 400,
+						"y": 944
+					}
+				]
+			},
+			{
+				"name": "Floodgate Keeper",
+				"sections": [
+					{
+						"name": "Spool Swamp: Item in Floodgate Keeper's House",
+						"access_rules": ["^$CanReach|FloodgateLever"]
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 392,
+						"y": 826
+					}
+				]
+			},
+			{
+				"name": "Spool Swamp Digging Spot",
+				"sections": [
+					{
+						"name": "Vasu's Hidden Gift",
+						"access_rules": ["^$CanReach|SwampVasuDigSpot"]
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 440,
+						"y": 1067
+					}
+				]
+			},
+			{
+				"name": "Spool Swamp North Gasha Spot",
+				"visibility_rules": ["^$CanSeeGasha|1"],
+				"sections": [
+					{
+						"name": "Near Keyhole",
+						"chest_unopened_img": "images/items/gasha_spot.png",
+						"chest_opened_img": "images/items/gasha_spot_gray.png",
+						"access_rules": ["^$CanReach|SwampNorthGashaSpot"]
+					},
+					{
+						"name": "Harvested",
+						"chest_unopened_img": "images/items/gasha_nut.png",
+						"chest_opened_img": "images/items/gasha_nut_gray.png",
+						"access_rules": ["^$HasPlanted|@Spool Swamp/Spool Swamp North Gasha Spot/Near Keyhole"]
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 56,
+						"y": 1112
+					}
+				]
+			},
+			{
+				"name": "Business Scrub",
+				"visibility_rules": ["shufflescrubson"],
+				"sections": [
+					{
+						"name": "Near Keyhole",
+						"access_rules": ["^$CanReach|SwampScrub"]
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 130,
+						"y": 1044
+					}
+				]
+			},
+			{
+				"name": "Spool Swamp South Gasha Spot",
+				"visibility_rules": ["^$CanSeeGasha|1"],
+				"sections": [
+					{
+						"name": "Near Portal",
+						"chest_unopened_img": "images/items/gasha_spot.png",
+						"chest_opened_img": "images/items/gasha_spot_gray.png",
+						"access_rules": ["^$CanReach|SwampSouthGashaSpot"]
+					},
+					{
+						"name": "Harvested",
+						"chest_unopened_img": "images/items/gasha_nut.png",
+						"chest_opened_img": "images/items/gasha_nut_gray.png",
+						"access_rules": ["^$HasPlanted|@Spool Swamp/Spool Swamp South Gasha Spot/Near Portal"]
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 30,
+						"y": 1640
+					}
+				]
+			},
+			{
+				"name": "Spool Swamp Portal",
+				"chest_unopened_img": "images/labels/portal.png",
+				"chest_opened_img": "images/labels/portalgray.png",
+				"visibility_rules": [
+					"portalshuffleon",
+					"portalshuffleoutward"
+				],
+				"sections": [
+					{
+						"access_rules": ["{^$CanReach|SpoolPortal}"],
+						"inspectable_sequence_break": true
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 90,
+						"y": 1464,
+						"shape": "trapezoid"
+					}
+				]
+			},
+			{
+				"name": "Spool Swamp Heart Piece",
+				"sections": [
+					{
+						"name": "Spool Swamp: Item Amidst Currents in Spring",
+						"access_rules": ["^$CanReach|SwampFloodedHP"]
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 279,
+						"y": 1479
+					}
+				]
+			},
+			{
+				"name": "Winter Cave",
+				"sections": [
+					{
+						"name": "Spool Swamp: Chest in Winter Cave",
+						"access_rules": ["^$CanReach|SwampBombCave"]
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 440,
+						"y": 1544
+					}
+				]
+			},
+			{
+				"name": "Golden Octorok",
+				"sections": [
+					{
+						"name": "Summer",
+						"access_rules": ["^$CanReach|GoldenOctorokKill"],
+						"hosted_item": "golden_octorok"
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 94,
+						"y": 1612,
+						"shape": "diamond"
+					}
+				]
+			},
+			{
+				"name": "Enter D3",
+				"visibility_rules": ["ShuffleDungeonOn"],
+				"sections": [
+					{
+						"name": "Poison Moth's Lair",
+						"access_rules": ["{^$CanReach|PoisonMothLair}"],
+						"chest_unopened_img": "images/labels/dungeon_eye.png",
+						"chest_opened_img": "images/labels/dungeon_eye_disabled.png",
+						"inspectable_sequence_break": true
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 148,
+						"y": 808,
+						"shape": "trapezoid"
+					}
+				]
+			},
+			{
+				"name": "Poison Moth's Lair",
+				"sections": [
+					{
+						"name": "Poison Moth's Lair (B1F): Chest in Roller Room",
+						"ref": "Poison Moth's Lair/Chest in Roller Room/B1F"
+					},
+					{
+						"name": "Poison Moth's Lair (1F): Chest in Moldorm Room",
+						"ref": "Poison Moth's Lair/Chest in Moldorm Room/1F"
+					},
+					{
+						"name": "Poison Moth's Lair (1F): Chest in Room Behind Hidden Cracked Wall",
+						"ref": "Poison Moth's Lair/Chest in Room Behind Hidden Cracked Wall/1F"
+					},
+					{
+						"name": "Poison Moth's Lair (1F): Chest in Mimics Room",
+						"ref": "Poison Moth's Lair/Chest in Mimics Room/1F"
+					},
+					{
+						"name": "Poison Moth's Lair (B1F): Chest in Watery Room",
+						"ref": "Poison Moth's Lair/Chest in Watery Room/B1F"
+					},
+					{
+						"name": "Poison Moth's Lair (1F): Chest Above West Trampoline & Owl",
+						"ref": "Poison Moth's Lair/Chest Above West Trampoline & Owl/1F"
+					},
+					{
+						"name": "Poison Moth's Lair (1F): Chest Above East Trampoline",
+						"ref": "Poison Moth's Lair/Chest Above East Trampoline/1F"
+					},
+					{
+						"name": "Poison Moth's Lair (B1F): Chest on Quicksand Terrace",
+						"ref": "Poison Moth's Lair/Chest on Quicksand Terrace/B1F"
+					},
+					{
+						"name": "Poison Moth's Lair (B1F): Chest in Moving Blade Room",
+						"ref": "Poison Moth's Lair/Chest in Moving Blade Room/B1F"
+					},
+					{
+						"name": "Poison Moth's Lair (1F): Boss Reward",
+						"ref": "Poison Moth's Lair/Boss Reward/Mothula"
+					},
+					{
+						"name": "Bright Sun",
+						"ref": "Poison Moth's Lair/Bright Sun/Essence"
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 88,
+						"y": 808
+					}
+				]
+			}
+		]
+	}
+]

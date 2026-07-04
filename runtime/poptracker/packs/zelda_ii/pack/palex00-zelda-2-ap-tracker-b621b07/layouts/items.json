@@ -1,0 +1,132 @@
+{
+    "item_grid": {
+        "type": "array",
+        "orientation": "vertical",
+        "margin": "0,0",
+        "content": [
+            {
+                "type": "array",
+                "orientation": "vertical",
+                "margin": "0,0",
+                "content": [
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "2, 2",
+                        "h_alignment": "left",
+                        "item_h_alignment": "center",
+                        "item_v_alignment": "center",
+                        "item_height": 46,
+                        "item_width": 46,
+                        "rows": [
+                            [
+                                "candle",
+                                "handyglove",
+                                "raft",
+                                "boots",
+                                "flute"
+                            ],
+                            [
+                                "cross",
+                                "hammer",
+                                "magicalkey",
+                                "trophy",
+                                "wateroflife"
+                            ],
+                            [
+                                "child",
+                                "bagusletter",
+                                "upthrust",
+                                "downthrust",
+                                "magiccontainer"
+                            ]
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "spell_grid": {
+        "type": "array",
+        "orientation": "vertical",
+        "margin": "0,0",
+        "content": [
+            {
+                "type": "array",
+                "orientation": "vertical",
+                "margin": "0,0",
+                "content": [
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "2, 2",
+                        "h_alignment": "left",
+                        "item_h_alignment": "center",
+                        "item_v_alignment": "center",
+                        "item_height": 36,
+                        "item_width": 236,
+                        "rows": [
+                            [
+                                "shieldspell"
+                            ],
+                            [
+                                "jumpspell"
+                            ],
+                            [
+                                "lifespell"
+                            ],
+                            [
+                                "fairyspell"
+                            ],
+                            [
+                                "firespell"
+                            ],
+                            [
+                                "reflectspell"
+                            ],
+                            [
+                                "spellspell"
+                            ],
+                            [
+                                "thunderspell"
+                            ]
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "key_grid": {
+        "type": "array",
+        "orientation": "vertical",
+        "margin": "0,0",
+        "content": [
+            {
+                "type": "array",
+                "orientation": "vertical",
+                "margin": "0,0",
+                "content": [
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "2, 2",
+                        "h_alignment": "left",
+                        "item_h_alignment": "left",
+                        "item_v_alignment": "left",
+                        "item_height": 36,
+                        "item_width": 72,
+                        "rows": [
+                            [
+                                "parapapalacekey",
+                                "midoropalacekey",
+                                "islandpalacekey"
+                            ],
+                            [
+                                "mazepalacekey",
+                                "seapalacekey",
+                                "threeeyerockpalacekey"
+                            ]
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,439 @@
+[
+  {
+    "name": "Tanoby Ruins",
+    "children": [
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Islands/Tanoby Ruins/Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Islands/Tanoby Ruins/Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Islands/Tanoby Ruins/Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Islands/Tanoby Ruins/Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_west",
+            "x": 592,
+            "y": 12
+          },
+          {
+            "map": "tanoby_ruins_center_left",
+            "x": 480,
+            "y": 12
+          },
+          {
+            "map": "tanoby_ruins_center_right",
+            "x": 432,
+            "y": 12
+          },
+          {
+            "map": "tanoby_ruins_east",
+            "x": 544,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Island Item",
+        "sections": [
+          {
+            "ref": "Islands/Tanoby Ruins/Island Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_center_right",
+            "x": 56,
+            "y": 136
+          }
+        ]
+      },
+      {
+        "name": "Viapois Chamber Island Hidden Item",
+        "sections": [
+          {
+            "ref": "Islands/Tanoby Ruins/Viapois Chamber Island Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_west",
+            "x": 136,
+            "y": 40
+          }
+        ]
+      },
+      {
+        "name": "Scufib Chamber Island Hidden Item",
+        "sections": [
+          {
+            "ref": "Islands/Tanoby Ruins/Scufib Chamber Island Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_west",
+            "x": 536,
+            "y": 168
+          }
+        ]
+      },
+      {
+        "name": "Weepth Chamber Island Hidden Item",
+        "sections": [
+          {
+            "ref": "Islands/Tanoby Ruins/Weepth Chamber Island Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_center_right",
+            "x": 280,
+            "y": 152
+          }
+        ]
+      },
+      {
+        "name": "Monean Chamber Island Hidden Item",
+        "sections": [
+          {
+            "ref": "Islands/Tanoby Ruins/Monean Chamber Island Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_east",
+            "x": 456,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Ruin Maniac Brandon",
+        "sections": [
+          {
+            "ref": "Islands/Tanoby Ruins/Ruin Maniac Brandon Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_west",
+            "x": 568,
+            "y": 120
+          }
+        ]
+      },
+      {
+        "name": "Gentleman Clifford",
+        "sections": [
+          {
+            "ref": "Islands/Tanoby Ruins/Gentleman Clifford Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_center_right",
+            "x": 264,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Painter Edna",
+        "sections": [
+          {
+            "ref": "Islands/Tanoby Ruins/Painter Edna Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_center_right",
+            "x": 264,
+            "y": 136
+          }
+        ]
+      },
+      {
+        "name": "Ruin Maniac Benjamin",
+        "sections": [
+          {
+            "ref": "Islands/Tanoby Ruins/Ruin Maniac Benjamin Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_east",
+            "x": 392,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Monean Chamber Entrance",
+        "sections": [
+          {
+            "ref": "Islands/Tanoby Ruins/Monean Chamber Entrance",
+            "name": "Entrance"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_east",
+            "x": 376,
+            "y": 168
+          }
+        ]
+      },
+      {
+        "name": "Monean Chamber",
+        "sections": [
+          {
+            "ref": "Dungeons/Tanoby Chambers/Monean Chamber - Land Encounter",
+            "name": "Land Encounter"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_east",
+            "x": 376,
+            "y": 168,
+            "force_invisibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Liptoo Chamber Entrance",
+        "sections": [
+          {
+            "ref": "Islands/Tanoby Ruins/Liptoo Chamber Entrance",
+            "name": "Entrance"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_east",
+            "x": 104,
+            "y": 168
+          }
+        ]
+      },
+      {
+        "name": "Liptoo Chamber",
+        "sections": [
+          {
+            "ref": "Dungeons/Tanoby Chambers/Liptoo Chamber - Land Encounter",
+            "name": "Land Encounter"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_east",
+            "x": 104,
+            "y": 168,
+            "force_invisibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Weepth Chamber Entrance",
+        "sections": [
+          {
+            "ref": "Islands/Tanoby Ruins/Weepth Chamber Entrance",
+            "name": "Entrance"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_center_right",
+            "x": 312,
+            "y": 136
+          }
+        ]
+      },
+      {
+        "name": "Weepth Chamber",
+        "sections": [
+          {
+            "ref": "Dungeons/Tanoby Chambers/Weepth Chamber - Land Encounter",
+            "name": "Land Encounter"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_center_right",
+            "x": 312,
+            "y": 136,
+            "force_invisibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Dilford Chamber Entrance",
+        "sections": [
+          {
+            "ref": "Islands/Tanoby Ruins/Dilford Chamber Entrance",
+            "name": "Entrance"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_center_left",
+            "x": 104,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Dilford Chamber",
+        "sections": [
+          {
+            "ref": "Dungeons/Tanoby Chambers/Dilford Chamber - Land Encounter",
+            "name": "Land Encounter"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_center_left",
+            "x": 104,
+            "y": 184,
+            "force_invisibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Scufib Chamber Entrance",
+        "sections": [
+          {
+            "ref": "Islands/Tanoby Ruins/Scufib Chamber Entrance",
+            "name": "Entrance"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_west",
+            "x": 520,
+            "y": 152
+          }
+        ]
+      },
+      {
+        "name": "Scufib Chamber",
+        "sections": [
+          {
+            "ref": "Dungeons/Tanoby Chambers/Scufib Chamber - Land Encounter",
+            "name": "Land Encounter"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_west",
+            "x": 520,
+            "y": 152,
+            "force_invisibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Rixy Chamber Entrance",
+        "sections": [
+          {
+            "ref": "Islands/Tanoby Ruins/Rixy Chamber Entrance",
+            "name": "Entrance"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_west",
+            "x": 200,
+            "y": 248
+          }
+        ]
+      },
+      {
+        "name": "Rixy Chamber",
+        "sections": [
+          {
+            "ref": "Dungeons/Tanoby Chambers/Rixy Chamber - Land Encounter",
+            "name": "Land Encounter"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_west",
+            "x": 200,
+            "y": 248,
+            "force_invisibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Viapois Chamber Entrance",
+        "sections": [
+          {
+            "ref": "Islands/Tanoby Ruins/Viapois Chamber Entrance",
+            "name": "Entrance"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_west",
+            "x": 184,
+            "y": 104
+          }
+        ]
+      },
+      {
+        "name": "Viapois Chamber",
+        "sections": [
+          {
+            "ref": "Dungeons/Tanoby Chambers/Viapois Chamber - Land Encounter",
+            "name": "Land Encounter"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_ruins_west",
+            "x": 184,
+            "y": 104,
+            "force_invisibility_rules": [
+              "$shuffle_dungeons_on"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

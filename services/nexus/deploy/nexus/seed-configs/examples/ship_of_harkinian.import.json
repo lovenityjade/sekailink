@@ -1,0 +1,67 @@
+{
+  "game_key": "ship_of_harkinian",
+  "display_name": "Ship of Harkinian",
+  "system_key": "pc",
+  "linkedworld_id": "oot_soh",
+  "schema_version": "oot_soh-cycle1-v1",
+  "source_kind": "linkedworld",
+  "source_hash": "oot_soh-cycle1-placeholder",
+  "source_ref": "clean-room/repos/sekailink-linkedworld-soh",
+  "options": [
+    {
+      "option_key": "goal",
+      "yaml_key": "goal",
+      "label": "Goal",
+      "description": "Primary completion goal for the SoH session.",
+      "type": "enum",
+      "default_value": "ganon",
+      "required": true,
+      "choices": [
+        {
+          "choice_key": "ganon",
+          "yaml_value": "ganon",
+          "label": "Defeat Ganon",
+          "description": ""
+        },
+        {
+          "choice_key": "triforce_hunt",
+          "yaml_value": "triforce_hunt",
+          "label": "Triforce Hunt",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "option_key": "logic_rules",
+      "yaml_key": "logic_rules",
+      "label": "Logic Rules",
+      "description": "Rule profile imported into Nexus for the first SoH vertical.",
+      "type": "enum",
+      "default_value": "glitchless",
+      "required": true,
+      "choices": [
+        {
+          "choice_key": "glitchless",
+          "yaml_value": "glitchless",
+          "label": "Glitchless",
+          "description": ""
+        },
+        {
+          "choice_key": "none",
+          "yaml_value": "none",
+          "label": "No Logic",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "option_key": "open_forest",
+      "yaml_key": "open_forest",
+      "label": "Open Forest",
+      "description": "Example boolean for the cycle 1 SoH import path.",
+      "type": "boolean",
+      "default_value": true,
+      "required": true
+    }
+  ]
+}

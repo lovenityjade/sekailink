@@ -1,0 +1,74 @@
+[
+    {
+        "children": [
+            {"sections": [{"name": "Great Tree Entrance - Coin","ref": "Magical Map/Great Tree/Great Tree Entrance - Coin"},
+                        {"name": "Great Tree Entrance - Puni Orb","ref": "Magical Map/Great Tree/Great Tree Entrance - Puni Orb"},
+                        {"name": "Great Tree Entrance - Emerald Star","ref": "Magical Map/Great Tree/Great Tree Entrance - Emerald Star"},
+                        {"name": "Great Tree Entrance - Mystic Egg","ref": "Magical Map/Great Tree/Great Tree Entrance - Mystic Egg"}],
+                "map_locations": [{"map": "The Great Tree", "x": 790, "y": 322}]},
+            {"sections": [{"ref": "Magical Map/Great Tree/Great Tree 10-Puni Pedestal - Star Piece"}],
+                "map_locations": [{"map": "The Great Tree", "x": 800, "y": 250}]},
+            {"sections": [{"ref": "Magical Map/Great Tree/Great Tree Upper Duplex - Power Punch"}],
+                "map_locations": [{"map": "The Great Tree", "x": 848, "y": 170}]},
+            {"sections": [{"ref": "Magical Map/Great Tree/Great Tree Red \u0026 Blue Cages - Star Piece"}],
+                "map_locations": [{"map": "The Great Tree", "x": 792, "y": 70}]},
+            {"sections": [{"name": "Great Tree Red Key Room - Coin","ref": "Magical Map/Great Tree/Great Tree Red Key Room - Coin"},
+                        {"name": "Great Tree Red Key Room - Red Key","ref": "Magical Map/Great Tree/Great Tree Red Key Room - Red Key"},
+                        {"name": "Great Tree Red Key Room - Ultra Shroom","ref": "Magical Map/Great Tree/Great Tree Red Key Room - Ultra Shroom"},
+                        {"name": "Great Tree Red Key Room - Mushroom","ref": "Magical Map/Great Tree/Great Tree Red Key Room - Mushroom"}],
+                "map_locations": [{"map": "The Great Tree", "x": 735, "y": 98}]},
+            {"sections": [{"name": "Great Tree Bubble Room - Shine Sprite","ref": "Magical Map/Great Tree/Great Tree Bubble Room - Shine Sprite"},
+            {"name": "Great Tree Bubble Room - Thunder Rage","ref": "Magical Map/Great Tree/Great Tree Bubble Room - Thunder Rage"}],
+                "map_locations": [{"map": "The Great Tree", "x": 954, "y": 312}]},
+            {"sections": [{"ref": "Magical Map/Great Tree/Great Tree Middle Duplex - Shine Sprite"}],
+                "map_locations": [{"map": "The Great Tree", "x": 870, "y": 488}]},
+            {"sections": [{"name": "Great Tree Zigzag Room - Coin","ref": "Magical Map/Great Tree/Great Tree Zigzag Room - Coin"},
+                        {"name": "Great Tree Zigzag Room - Damage Dodge P","ref": "Magical Map/Great Tree/Great Tree Zigzag Room - Damage Dodge P"}],
+                "map_locations": [{"map": "The Great Tree", "x": 864, "y": 562}]},
+            {"sections": [{"ref": "Magical Map/Great Tree/Great Tree Zigzag Room - Star Piece"}],
+                "map_locations": [{"map": "The Great Tree", "x": 876, "y": 616}]},
+            {"sections": [{"ref": "Magical Map/Great Tree/Great Tree Blue Key Room - Blue Key"}],
+                "map_locations": [{"map": "The Great Tree", "x": 1182, "y": 520}]},
+            {"sections": [{"name": "Great Tree Blue Key Room - Charge","ref": "Magical Map/Great Tree/Great Tree Blue Key Room - Charge"},
+                        {"name": "Great Tree Blue Key Room - Shine Sprite","ref": "Magical Map/Great Tree/Great Tree Blue Key Room - Shine Sprite"}],
+                "map_locations": [{"map": "The Great Tree", "x": 1143, "y": 572}]},
+            {"sections": [{"ref": "Magical Map/Great Tree/Great Tree Super Boots Room - Super Boots"}],
+                "map_locations": [{"map": "The Great Tree", "x": 1128, "y": 480}]},
+            {"sections": [{"name": "Great Tree 100-Puni Pedestal - Coin","ref": "Magical Map/Great Tree/Great Tree 100-Puni Pedestal - Coin"},
+                        {"name": "Great Tree 100-Puni Pedestal - Star Piece","ref": "Magical Map/Great Tree/Great Tree 100-Puni Pedestal - Star Piece"}],
+                "map_locations": [{"map": "The Great Tree", "x": 650, "y": 688}]},
+            {"sections": [{"ref": "Magical Map/Great Tree/Great Tree Fake Pedestal - Star Piece"}],
+                "map_locations": [{"map": "The Great Tree", "x": 740, "y": 718}]},
+            {"sections": [{"ref": "Magical Map/Great Tree/Great Tree Lower Duplex - Coin"}],
+                "map_locations": [{"map": "The Great Tree", "x": 648, "y": 780}]},
+            {"sections": [{"name": "Great Tree Pool Room - Dizzy Dial","ref": "Magical Map/Great Tree/Great Tree Pool Room - Dizzy Dial"},
+                        {"name": "Great Tree Pool Room - Shrink Stomp","ref": "Magical Map/Great Tree/Great Tree Pool Room - Shrink Stomp"}],
+                "map_locations": [{"map": "The Great Tree", "x": 650, "y": 856}]},
+            {"sections": [{"ref": "Magical Map/Great Tree/Great Tree Pool Room - Shine Sprite"}],
+                "map_locations": [{"map": "The Great Tree", "x": 644, "y": 909}]},
+            {"sections": [{"ref": "Magical Map/Great Tree/Great Tree Elevator Pedestal - Mushroom"}],
+                "map_locations": [{"map": "The Great Tree", "x": 668, "y": 1042}]},
+            {"sections": [{"ref": "Magical Map/Great Tree/Great Tree Escape Ambush Room - Star Piece"}],
+                "map_locations": [{"map": "The Great Tree", "x": 998, "y": 603}]}
+        ]
+    },
+    {
+        "name":  "Great Tree (Pungent's Great Tree Shop)",
+        "children": [
+            {"sections": [{"name": "Honey Syrup Purchase","ref": "Magical Map/Great Tree (Pungent's Great Tree Shop)/Honey Syrup Purchase"},
+                        {"name": "HP Drain Purchase","ref": "Magical Map/Great Tree (Pungent's Great Tree Shop)/HP Drain Purchase"},
+                        {"name": "Ice Storm Purchase","ref": "Magical Map/Great Tree (Pungent's Great Tree Shop)/Ice Storm Purchase"},
+                        {"name": "Mini Mr.Mini Purchase","ref": "Magical Map/Great Tree (Pungent's Great Tree Shop)/Mini Mr.Mini Purchase"},
+                        {"name": "Mushroom Purchase","ref": "Magical Map/Great Tree (Pungent's Great Tree Shop)/Mushroom Purchase"},
+                        {"name": "Mystery Purchase","ref": "Magical Map/Great Tree (Pungent's Great Tree Shop)/Mystery Purchase"}],
+                "map_locations": [{"map": "The Great Tree", "x": 790, "y": 651}]}
+        ]
+    },
+    {
+        "name":  "Boggly Woods",
+        "children": [
+            {"sections": [{"ref": "Magical Map/Boggly Woods/Boggly Woods Outside Great Tree - FP Plus"}],
+                "map_locations": [{"map": "The Great Tree", "x": 688, "y": 327}]}
+        ]
+    }
+]

@@ -1,0 +1,278 @@
+
+
+[
+  {
+    "name": "GF - hint",
+    "chest_unopened_img": "/images/items/close.png",
+    "chest_opened_img": "/images/items/open.png",
+    "overlay_background": "#000000",
+    "access_rules": [
+        "{}"
+    ],
+    "children": [
+        {
+            "name": "Horseback Archery - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "1000 Points - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gf_horseback_archery_1000_points"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "1500 Points - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gf_horseback_archery_1500_points"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Far End GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gf_horseback_archery_far_end_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Gerudo Fortress",
+                    "x": "611",
+                    "y": "234",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Top Floor - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gf_top_floor_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Gerudo Fortress",
+                    "x": "731",
+                    "y": "495",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Above Jail - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Crate - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gf_above_jail_crate"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Gerudo Fortress",
+                    "x": "505",
+                    "y": "512",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        }
+    ],
+    "sections": [
+        {
+            "name": "Chest - hint",
+            "access_rules": [],
+            "visibility_rules": [
+                "gf_chest"
+            ],
+            "item_count": 1
+        }
+    ],
+    "map_locations": [
+        {
+            "map": "Gerudo Fortress",
+            "x": "611",
+            "y": "502",
+            "size": 22,
+                    "shape": "diamond"
+        }
+    ]
+},
+    {
+      "name": "GF",
+      "chest_unopened_img": "/images/Items/close.png",
+      "chest_opened_img": "/images/Items/open.png",
+      "overlay_background": "#000000",
+      "access_rules": [
+        " "
+      ],
+      "children": [
+        {
+          "name": "Horseback Archery",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "1000 Points",
+                "access_rules": [
+                "^$CanReach|Child GF HBA 1000 Points",
+                "^$CanReach|Adult GF HBA 1000 Points"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "1500 Points",
+                "access_rules": [
+                "^$CanReach|Child GF HBA 1500 Points",
+                "^$CanReach|Adult GF HBA 1500 Points"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Far End GS",
+                "access_rules": [
+                "^$CanReach|Child GF GS Archery Range",
+                "^$CanReach|Adult GF GS Archery Range"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Gerudo Fortress",
+              "x": 589,
+              "y": 212,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Top Floor",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child GF GS Top Floor",
+                "^$CanReach|Adult GF GS Top Floor"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Gerudo Fortress",
+              "x": 709,
+              "y": 473,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Above Jail",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Crate",
+                "access_rules": [
+                "^$CanReach|Child GF Above Jail Crate",
+                "^$CanReach|Adult GF Above Jail Crate"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_crates|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Gerudo Fortress",
+              "x": 483,
+              "y": 490,
+              "size": 24
+            }
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "name": "Chest",
+          "access_rules": [
+            "^$CanReach|Child GF Chest",
+            "^$CanReach|Adult GF Chest"
+          ],
+          "visibility_rules": [
+            " "
+          ],
+          "item_count": 1
+        }
+      ],
+      "map_locations": [
+        {
+          "map": "Gerudo Fortress",
+          "x": 589,
+          "y": 480,
+          "size": 24
+        }
+      ]
+    }
+  ]

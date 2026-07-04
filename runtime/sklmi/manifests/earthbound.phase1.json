@@ -1,0 +1,53 @@
+{
+  "id": "earthbound",
+  "type": "linkedworld",
+  "version": "0.1.0-dev",
+  "sklmi": {
+    "contract_version": "1.0",
+    "bridge_id": "earthbound-phase1",
+    "driver_instance_id": "earthbound-phase1-default",
+    "core_profile": "snes_v1",
+    "module": "sekaiemu",
+    "state_file": "earthbound.phase1.bridge.state",
+    "poll_interval_ms": 16,
+    "checks": [
+      {
+        "domain_id": "system_ram",
+        "address": 39953,
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": 8,
+        "event_type": "location_checked",
+        "location_id": 1540096,
+        "location_name": "Onett - Tracy Gift",
+        "event_key": "0xEB0000",
+        "mapped_value": "Onett - Tracy Gift"
+      },
+      {
+        "domain_id": "system_ram",
+        "address": 40044,
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": 16,
+        "event_type": "location_checked",
+        "location_id": 1540097,
+        "location_name": "Onett - Tracy's Room Present",
+        "event_key": "0xEB0001",
+        "mapped_value": "Onett - Tracy's Room Present"
+      }
+    ],
+    "actions": [
+      {
+        "domain_id": "system_ram",
+        "address": 46448,
+        "value_u64": 154,
+        "size": 1,
+        "item_id": 154,
+        "item_name": "Toothbrush",
+        "event_key": "item.toothbrush",
+        "mapped_value": "Toothbrush",
+        "room_controlled": true
+      }
+    ]
+  }
+}

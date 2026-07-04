@@ -1,0 +1,631 @@
+/* ============================================================
+   SekaiLink – Social: Friends, DMs, Profile Card
+   (ui-context.md / profilecard_example.png compliant)
+   ============================================================ */
+
+/* ── Unread badge ── */
+.skl-unread-badge {
+    display: none;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    background: var(--danger, #ff4d4d);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 0 6px;
+    margin-left: 6px;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s ease, transform 0.2s ease, max-width 0.25s ease;
+}
+
+.skl-unread-badge.active {
+    display: inline-flex;
+}
+
+/* ── Toast notification stack ── */
+.skl-toast-stack {
+    position: fixed;
+    top: 90px;
+    right: 24px;
+    display: grid;
+    gap: 10px;
+    z-index: 200;
+    pointer-events: none;
+}
+
+.skl-toast {
+    pointer-events: auto;
+    background: rgba(10, 20, 16, 0.95);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg, 14px);
+    padding: 12px 16px;
+    color: var(--text-0);
+    min-width: 220px;
+    max-width: 380px;
+    box-shadow: 0 20px 40px rgba(4, 8, 6, 0.4);
+    font-size: 13px;
+    backdrop-filter: blur(8px);
+    animation: toast-in 0.25s ease;
+}
+
+/* ── Social Drawer (Friends panel — slides from left) ── */
+.skl-social-drawer {
+    position: fixed;
+    inset: 0;
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 150;
+    transition: opacity 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
+    will-change: opacity;
+}
+
+.skl-social-drawer.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.skl-social-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(6, 10, 8, 0.7);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    transition: opacity 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
+    will-change: opacity;
+}
+
+.skl-social-panel {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    bottom: 16px;
+    height: auto;
+    width: min(420px, 92vw);
+    background: linear-gradient(160deg, rgba(8, 18, 14, 0.96), rgba(6, 14, 11, 0.92));
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 24px 60px rgba(4, 8, 6, 0.6);
+    display: flex;
+    flex-direction: column;
+    padding: 18px;
+    gap: 16px;
+    transform: translate3d(18px, 0, 0);
+    opacity: 0;
+    transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.28s ease;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+}
+
+/* Friends drawer — slides from left */
+#skl-friends-drawer .skl-social-panel {
+    left: 16px;
+    right: auto;
+    width: min(280px, 90vw);
+    border-right: 1px solid var(--border);
+    box-shadow: 0 24px 60px rgba(4, 8, 6, 0.6);
+    transform: translate3d(-18px, 0, 0);
+}
+
+/* DM drawer layer */
+#skl-pm-drawer {
+    z-index: 160;
+}
+
+#skl-pm-drawer .skl-social-backdrop {
+    background: transparent;
+}
+
+#skl-pm-drawer .skl-social-panel.skl-pm-panel {
+    width: min(980px, 96vw);
+}
+
+.skl-social-drawer.open .skl-social-backdrop {
+    opacity: 1;
+}
+
+.skl-social-drawer.open .skl-social-panel {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+}
+
+/* ── Social header ── */
+.skl-social-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.skl-social-eyebrow {
+    margin: 0 0 4px;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.skl-social-close {
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-0);
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+/* ── Social controls (filter / sort) ── */
+.skl-social-controls {
+    display: grid;
+    gap: 12px;
+}
+
+.skl-social-controls label {
+    display: grid;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-1);
+}
+
+.skl-social-controls select {
+    padding: 7px 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(10, 18, 14, 0.8);
+    color: var(--text-0);
+    font-family: var(--font-ui);
+}
+
+.skl-social-section h4 {
+    margin: 6px 0 10px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-2);
+    font-family: var(--font-ui);
+    font-weight: 500;
+}
+
+/* ── Friends List ── */
+.skl-social-list {
+    display: grid;
+    gap: 4px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.skl-friend-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 6px;
+    border-radius: 10px;
+    background: rgba(6, 14, 10, 0.6);
+    border: 1px solid rgba(255,255,255,0.05);
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.skl-friend-row:hover {
+    background: rgba(92,231,181,0.06);
+    border-color: var(--border);
+}
+
+.skl-friend-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(92,231,181,0.15);
+    flex-shrink: 0;
+}
+
+.skl-friend-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.skl-friend-name {
+    font-weight: 600;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.skl-friend-status {
+    font-size: 9px;
+    color: var(--text-2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.skl-friend-actions {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.skl-friend-actions .skl-btn {
+    padding: 4px 8px;
+    font-size: 10px;
+    border-radius: 8px;
+}
+
+/* ── Status Dot ── */
+.skl-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+    background: #6b7f77;
+    flex-shrink: 0;
+}
+
+.skl-status-dot.online {
+    background: var(--accent);
+    box-shadow: 0 0 6px rgba(92,231,181,0.4);
+}
+
+.skl-status-dot.dnd {
+    background: #f2a36b;
+}
+
+.skl-status-dot.away {
+    background: var(--warn);
+}
+
+/* ── DM / PM Layout — 3 columns ── */
+.skl-pm-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+    gap: 14px;
+    height: 100%;
+    min-height: 0;
+}
+
+.skl-pm-chat {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 0;
+}
+
+.skl-pm-profile {
+    display: flex;
+}
+
+/* ── PM Messages ── */
+.skl-pm-messages {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 8px 2px;
+}
+
+.skl-pm-bubble {
+    padding: 9px 12px;
+    border-radius: 14px;
+    max-width: 80%;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.skl-pm-bubble-time {
+    font-size: 10px;
+    color: var(--text-2);
+    margin-top: 4px;
+}
+
+.skl-pm-bubble.in {
+    background: rgba(12, 28, 21, 0.8);
+    border: 1px solid rgba(92,231,181,0.12);
+    align-self: flex-start;
+}
+
+.skl-pm-bubble.out {
+    align-self: flex-end;
+    background: rgba(92,231,181,0.12);
+    border: 1px solid rgba(92,231,181,0.25);
+}
+
+.skl-pm-bubble-meta {
+    font-size: 10px;
+    color: var(--text-2);
+    margin-top: 4px;
+}
+
+.skl-pm-form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+}
+
+.skl-pm-typing {
+    font-size: 11px;
+    color: var(--text-2);
+    min-height: 16px;
+}
+
+.skl-pm-form input {
+    padding: 9px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(8, 18, 14, 0.8);
+    color: var(--text-0);
+    font-family: var(--font-ui);
+}
+
+.skl-pm-form input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(92,231,181,0.15);
+}
+
+/* ── Profile Card (compact / DM sidebar + standalone) ── */
+.skl-profile-card {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid rgba(92,231,181,0.22);
+    background: radial-gradient(circle at 20% 0%, rgba(92,231,181,0.15), transparent 40%),
+                rgba(6, 14, 10, 0.74);
+    backdrop-filter: blur(12px);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Neon frame glow */
+.skl-profile-card::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    border: 1px solid transparent;
+    background: linear-gradient(135deg, rgba(92,231,181,0.35), transparent 40%, transparent 60%, rgba(92,231,181,0.22)) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.skl-profile-banner {
+    height: 120px;
+    border-radius: 0;
+    background: linear-gradient(120deg, rgba(92,231,181,0.25), rgba(16,40,30,0.75));
+    border-bottom: 1px solid rgba(92,231,181,0.18);
+    position: relative;
+}
+
+.skl-profile-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.skl-profile-body {
+    padding: 10px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.skl-profile-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 14px;
+    margin-top: -40px;
+    border: 3px solid rgba(92,231,181,0.4);
+    background: rgba(92,231,181,0.15);
+    object-fit: cover;
+    position: relative;
+    z-index: 2;
+}
+
+.skl-profile-avatar-wrap {
+    position: relative;
+    display: inline-flex;
+}
+
+.skl-profile-avatar-status {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid rgba(6,14,10,0.9);
+}
+
+.skl-profile-name-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.skl-profile-name {
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--text-0);
+}
+
+.skl-profile-handle {
+    font-size: 12px;
+    color: var(--text-2);
+}
+
+.skl-profile-status-text {
+    font-size: 12px;
+    color: var(--text-2);
+    font-style: italic;
+}
+
+/* ── Profile Badges ── */
+.skl-profile-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.skl-profile-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: rgba(92,231,181,0.1);
+    border: 1px solid rgba(92,231,181,0.25);
+    color: var(--accent);
+}
+
+.skl-profile-badge.special {
+    background: rgba(190,140,255,0.12);
+    border-color: rgba(190,140,255,0.3);
+    color: rgb(190,140,255);
+}
+
+.skl-profile-badge.gold {
+    background: rgba(255,204,102,0.12);
+    border-color: rgba(255,204,102,0.3);
+    color: rgb(255,204,102);
+}
+
+/* ── Profile Actions ── */
+.skl-profile-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.skl-profile-actions .skl-btn {
+    flex: 1;
+    min-width: 80px;
+}
+
+/* ── Profile Sections (About / Games / Mutuals) ── */
+.skl-profile-section {
+    padding: 12px 14px;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    background: rgba(8, 16, 12, 0.55);
+}
+
+.skl-profile-section + .skl-profile-section {
+    margin-top: 6px;
+}
+
+.skl-profile-section h4 {
+    margin: 0 0 6px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-2);
+    font-family: var(--font-ui);
+    font-weight: 500;
+}
+
+.skl-profile-section p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--text-1);
+    line-height: 1.5;
+}
+
+.skl-profile-section .skl-profile-member-since {
+    font-size: 12px;
+    color: var(--text-2);
+}
+
+/* Favorite Games grid */
+.skl-profile-games {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+}
+
+.skl-profile-game-thumb {
+    aspect-ratio: 3/4;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    overflow: hidden;
+}
+
+.skl-profile-game-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Mutuals */
+.skl-profile-mutuals {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-2);
+}
+
+.skl-profile-mutuals-count {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* ── Animations ── */
+@keyframes toast-in {
+    from {
+        transform: translateX(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* ── Responsive ── */
+@media (max-width: 720px) {
+    .skl-social-panel {
+        width: 100%;
+        border-left: none;
+    }
+
+    #skl-friends-drawer .skl-social-panel {
+        width: 100%;
+        border-right: none;
+    }
+
+    .skl-pm-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .skl-pm-profile {
+        display: none;
+    }
+
+    .skl-toast-stack {
+        right: 12px;
+        left: 12px;
+    }
+
+    .skl-profile-games {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

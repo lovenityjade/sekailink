@@ -1,0 +1,48 @@
+{
+  "game_id": "lufia_ii",
+  "display_name": "Lufia II Ancient Cave",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apl2ac"
+  ],
+  "patch_world_module": "worlds.lufia2ac",
+  "ap_world": "lufia2ac",
+  "required_roms": [
+    "lufia_ii"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "sni",
+  "archipelago_client": {
+    "game_key": "lufia_ii",
+    "world": "lufia2ac",
+    "wrapper": "sni",
+    "client_file": "worlds/lufia2ac/Client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [
+      "6efc477d6203ed2b3b9133c1cd9e9c5d"
+    ],
+    "sha1": [
+      "a89931c1f29b161b8be717dfab4a4adb54b42b84"
+    ]
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "snes",
+    "ap_game": "Lufia II Ancient Cave"
+  },
+  "tracker_pack_uid": "",
+  "tracker_type": "universal_tracker",
+  "tracker_web_url": "universal_tracker",
+  "support_status": "supported_trackerless",
+  "tracker_status": "trackerless_supported",
+  "compatibility_notes": "Supported without a PopTracker pack for the current compatibility tier; launches through Universal Tracker when a tracker is requested."
+}

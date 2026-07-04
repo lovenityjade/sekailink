@@ -1,0 +1,17 @@
+{
+    "name": "Kirby's Dream Land 3 Archipelago Randomizer (Starsanity beta)",
+    "game_name": "Kirby's Dream Land 3",
+    "author": "Silvris (core), ROT8 (starsanity mapping), Jackster (raw map images)",
+    "package_uid": "KDL3_Silvris_AP",
+    "package_version": "0.1.3",
+    "platform": "snes",
+    "variants": {
+        "ap_map_tracker": {
+            "display_name": "Archipelago Map Tracker",
+            "flags": [
+                "sa1",
+                "ap"
+            ]
+        }
+    }
+}

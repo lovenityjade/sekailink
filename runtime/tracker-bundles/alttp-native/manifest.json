@@ -1,0 +1,447 @@
+{
+  "tracker_contract_version": "1",
+  "linkedworld_id": "alttp",
+  "display_name": "ALTTP Native Tracker",
+  "default_view_id": "main",
+  "default_tab_id": "overview",
+  "default_map_id": "lightworld",
+  "views": [
+    {
+      "id": "main",
+      "label": "Main",
+      "tabs": [
+        "overview",
+        "items",
+        "map-lightworld",
+        "map-castle",
+        "map-sewers",
+        "settings",
+        "slot"
+      ]
+    }
+  ],
+  "tabs": [
+    {
+      "id": "overview",
+      "label": "Overview",
+      "view_id": "main"
+    },
+    {
+      "id": "items",
+      "label": "Items",
+      "view_id": "main"
+    },
+    {
+      "id": "map-lightworld",
+      "label": "Light World",
+      "view_id": "main",
+      "map_id": "lightworld"
+    },
+    {
+      "id": "map-castle",
+      "label": "Castle",
+      "view_id": "main",
+      "map_id": "hyrule-castle"
+    },
+    {
+      "id": "map-sewers",
+      "label": "Sewers",
+      "view_id": "main",
+      "map_id": "hyrule-sewers"
+    },
+    {
+      "id": "settings",
+      "label": "Settings",
+      "view_id": "main"
+    },
+    {
+      "id": "slot",
+      "label": "Slot",
+      "view_id": "main"
+    }
+  ],
+  "maps": [
+    {
+      "id": "lightworld",
+      "label": "Light World",
+      "image": "maps/lightworld.ppm"
+    },
+    {
+      "id": "hyrule-castle",
+      "label": "Hyrule Castle",
+      "image": "maps/hyrule-castle.ppm"
+    },
+    {
+      "id": "hyrule-sewers",
+      "label": "Hyrule Sewers",
+      "image": "maps/hyrule-sewers.ppm"
+    }
+  ],
+  "zone_bindings": {
+    "alttp.overworld": "lightworld",
+    "alttp.links_house": "lightworld",
+    "alttp.sanctuary": "lightworld",
+    "alttp.secret_passage": "hyrule-castle",
+    "alttp.castle": "hyrule-castle",
+    "alttp.hyrule_castle": "hyrule-castle",
+    "alttp.sewers": "hyrule-sewers"
+  },
+  "info_panels": [
+    {
+      "id": "session",
+      "label": "Session",
+      "surface": "summary",
+      "priority": 10,
+      "fields": [
+        {
+          "id": "slot",
+          "label": "Slot",
+          "source": "session",
+          "key": "slot_id"
+        },
+        {
+          "id": "seed",
+          "label": "Seed",
+          "source": "session",
+          "key": "seed_id"
+        },
+        {
+          "id": "room",
+          "label": "Room",
+          "source": "snapshot",
+          "key": "room_id"
+        },
+        {
+          "id": "zone",
+          "label": "Zone",
+          "source": "session",
+          "key": "current_zone_id"
+        }
+      ]
+    },
+    {
+      "id": "progress",
+      "label": "Progress",
+      "surface": "summary",
+      "priority": 20,
+      "fields": [
+        {
+          "id": "checked",
+          "label": "Checked",
+          "source": "session",
+          "key": "checked_count"
+        },
+        {
+          "id": "missing",
+          "label": "Open",
+          "source": "session",
+          "key": "missing_count"
+        },
+        {
+          "id": "items",
+          "label": "Items",
+          "source": "session",
+          "key": "received_count"
+        },
+        {
+          "id": "clear",
+          "label": "Clear",
+          "source": "session",
+          "key": "completion_percent"
+        }
+      ]
+    },
+    {
+      "id": "live-feed",
+      "label": "Live",
+      "surface": "summary",
+      "priority": 30,
+      "fields": [
+        {
+          "id": "last-item",
+          "label": "Last Item",
+          "source": "session",
+          "key": "last_received_label"
+        },
+        {
+          "id": "last-from",
+          "label": "From",
+          "source": "session",
+          "key": "last_received_from"
+        },
+        {
+          "id": "last-check",
+          "label": "Last Check",
+          "source": "session",
+          "key": "last_check_label"
+        },
+        {
+          "id": "events",
+          "label": "Events",
+          "source": "session",
+          "key": "recent_event_count"
+        }
+      ]
+    },
+    {
+      "id": "tracker-state",
+      "label": "Tracker",
+      "surface": "summary",
+      "priority": 40,
+      "fields": [
+        {
+          "id": "display",
+          "label": "Display",
+          "source": "session",
+          "key": "display_mode"
+        },
+        {
+          "id": "auto-follow",
+          "label": "Follow",
+          "source": "session",
+          "key": "auto_follow_map"
+        },
+        {
+          "id": "active-tab",
+          "label": "Tab",
+          "source": "session",
+          "key": "active_tab_id"
+        },
+        {
+          "id": "active-map",
+          "label": "Map",
+          "source": "session",
+          "key": "active_map_id"
+        }
+      ]
+    },
+    {
+      "id": "slot-info",
+      "label": "Slot Info",
+      "surface": "details",
+      "priority": 10,
+      "fields": [
+        {
+          "id": "slot-name",
+          "label": "Name",
+          "source": "snapshot",
+          "key": "slot_name"
+        },
+        {
+          "id": "player-alias",
+          "label": "Alias",
+          "source": "snapshot",
+          "key": "player_alias"
+        },
+        {
+          "id": "world",
+          "label": "World",
+          "source": "snapshot",
+          "key": "world_instance_id"
+        },
+        {
+          "id": "room-id",
+          "label": "Room",
+          "source": "snapshot",
+          "key": "room_id"
+        }
+      ]
+    },
+    {
+      "id": "seed-meta",
+      "label": "Seed Meta",
+      "surface": "details",
+      "priority": 20,
+      "fields": [
+        {
+          "id": "seed-hash",
+          "label": "Hash",
+          "source": "seed",
+          "key": "seed_hash"
+        },
+        {
+          "id": "tracker-pack",
+          "label": "Pack",
+          "source": "seed",
+          "key": "tracker_pack"
+        },
+        {
+          "id": "tracker-variant",
+          "label": "Variant",
+          "source": "seed",
+          "key": "tracker_variant"
+        },
+        {
+          "id": "slot-data-name",
+          "label": "Preset",
+          "source": "seed",
+          "key": "slot_data.name"
+        }
+      ]
+    },
+    {
+      "id": "room-meta",
+      "label": "Room Meta",
+      "surface": "details",
+      "priority": 25,
+      "fields": [
+        {
+          "id": "room-name",
+          "label": "Room Name",
+          "source": "snapshot",
+          "key": "room_name"
+        },
+        {
+          "id": "room-type",
+          "label": "Room Type",
+          "source": "snapshot",
+          "key": "room_type"
+        },
+        {
+          "id": "session-id",
+          "label": "Session",
+          "source": "snapshot",
+          "key": "session_id"
+        },
+        {
+          "id": "linkedworld",
+          "label": "World ID",
+          "source": "session",
+          "key": "linkedworld_id"
+        }
+      ]
+    },
+    {
+      "id": "runtime-meta",
+      "label": "Runtime Meta",
+      "surface": "details",
+      "priority": 26,
+      "fields": [
+        {
+          "id": "driver-instance",
+          "label": "Driver",
+          "source": "snapshot",
+          "key": "room_metadata.driver_instance_id",
+          "hide_when_empty": true
+        },
+        {
+          "id": "core-profile",
+          "label": "Core",
+          "source": "snapshot",
+          "key": "room_metadata.core_profile",
+          "hide_when_empty": true
+        },
+        {
+          "id": "event-count",
+          "label": "Events",
+          "source": "session",
+          "key": "recent_event_count"
+        },
+        {
+          "id": "layout",
+          "label": "Layout",
+          "source": "session",
+          "key": "presentation_mode"
+        }
+      ]
+    },
+    {
+      "id": "journal-meta",
+      "label": "Journal",
+      "surface": "details",
+      "priority": 27,
+      "fields": [
+        {
+          "id": "check-progress",
+          "label": "Checks",
+          "source": "session",
+          "key": "check_progress"
+        },
+        {
+          "id": "clear-percent",
+          "label": "Clear",
+          "source": "session",
+          "key": "completion_percent"
+        },
+        {
+          "id": "last-item-at",
+          "label": "Item At",
+          "source": "session",
+          "key": "last_received_timestamp",
+          "hide_when_empty": true
+        },
+        {
+          "id": "last-check-at",
+          "label": "Check At",
+          "source": "session",
+          "key": "last_check_timestamp",
+          "hide_when_empty": true
+        }
+      ]
+    },
+    {
+      "id": "settings-core",
+      "label": "Settings",
+      "surface": "details",
+      "priority": 30,
+      "fields": [
+        {
+          "id": "mode",
+          "label": "Mode",
+          "source": "seed",
+          "key": "slot_data.mode"
+        },
+        {
+          "id": "goal",
+          "label": "Goal",
+          "source": "seed",
+          "key": "slot_data.goal"
+        },
+        {
+          "id": "difficulty",
+          "label": "Diff",
+          "source": "seed",
+          "key": "slot_data.difficulty"
+        },
+        {
+          "id": "weapons",
+          "label": "Weapons",
+          "source": "seed",
+          "key": "slot_data.weapons"
+        }
+      ]
+    },
+    {
+      "id": "settings-rules",
+      "label": "Rules",
+      "surface": "details",
+      "priority": 40,
+      "fields": [
+        {
+          "id": "shuffle",
+          "label": "Shuffle",
+          "source": "seed",
+          "key": "slot_data.entrance_shuffle"
+        },
+        {
+          "id": "pool",
+          "label": "Pool",
+          "source": "seed",
+          "key": "slot_data.item_pool"
+        },
+        {
+          "id": "dark-room",
+          "label": "Dark Room",
+          "source": "seed",
+          "key": "slot_data.dark_room_logic"
+        },
+        {
+          "id": "counters",
+          "label": "Counters",
+          "source": "seed",
+          "key": "slot_data.dungeon_counters"
+        }
+      ]
+    }
+  ]
+}

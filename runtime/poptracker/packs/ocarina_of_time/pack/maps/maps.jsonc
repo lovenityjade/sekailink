@@ -1,0 +1,236 @@
+[
+            {
+                "name": "Overworld",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/Overworld.png"
+            },
+            {
+                "name": "Shadow Temple",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/shadow temple.png"
+            },
+            {
+                "name": "Dodongos Cavern",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/dodongos cavern.png"
+            },
+            {
+                "name": "Bottom of the Well",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/bottom of the well.png"
+            },
+            {
+                "name": "Goron City",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/goron city.png"
+            },
+            {
+                "name": "Ice Cavern",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/ice cavern.png"
+            },
+            {
+                "name": "Spirit Temple",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/spirit temple.png"
+            },
+            {
+                "name": "Ganons Tower",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/ganons tower.png"
+            },
+            {
+                "name": "DMT",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/dmt.png"
+            },
+            {
+                "name": "Fire Temple",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/fire temple.png"
+            },
+            {
+                "name": "Market",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/market.png"
+            },
+            {
+                "name": "Gerudo Training Ground",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/gerudo training ground.png"
+            },
+            {
+                "name": "Forest Temple",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/forest temple.png"
+            },
+            {
+                "name": "Kakariko Village",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/kakariko village.png"
+            },
+            {
+                "name": "Water Temple",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/water temple.png"
+            },
+            {
+                "name": "Kokiri Forest",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/kokiri forest.png"
+            },
+            {
+                "name": "Shadow Temple",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/shadow temple.png"
+            },
+            {
+                "name": "Dodongos Cavern",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/dodongos cavern.png"
+            },
+            {
+                "name": "Bottom of the Well",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/bottom of the well.png"
+            },
+            {
+                "name": "DMC",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/dmc.png"
+            },
+            {
+                "name": "Desert Colossus",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/colossus.png"
+            },
+            {
+                "name": "Gerudo Fortress",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/gtg.png"
+            },
+            {
+                "name": "Wasteland",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/wasteland.png"
+            },
+            {
+                "name": "Gerudo Valley",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/gerudo valley.png"
+            },
+            {
+                "name": "Graveyard",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/graveyard.png"
+            },
+            {
+                "name": "Dampe Race",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/race.png"
+            },
+            {
+                "name": "Hyrule Castle",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/hyrule castle.png"
+            },
+            {
+                "name": "Hyrule Fields",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/hyrule fields.png"
+            },
+            {
+                "name": "Lake Hylia",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/lake hylia.png"
+            },
+            {
+                "name": "Lon Lon Ranch",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/lonlonranch.png"
+            },
+            {
+                "name": "Lost Woods",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/lost woods.png"
+            },
+            {
+                "name": "SFM",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/sfm.png"
+            },
+            {
+                "name": "Zora River",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/zorariver.png"
+            },
+            {
+                "name": "Zoras Domain",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/zoras domain.png"
+            },
+            {
+                "name": "Zoras Fountain",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/zoras fountain.png"
+            },
+            {
+                "name": "Deku Tree",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/deku tree.png"
+            },
+            {
+                "name": "Ganons Castle",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/ganons castle.png"
+            },
+            {
+                "name": "Temple of Time",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/temple of time.png"
+            },
+            {
+                "name": "Jabu Jabus Belly",
+                "location_size": 6,
+                "location_border_thickness": 1,
+                "img": "images/maps/jabu jabus belly.png"
+            }
+]

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SekaiLink Bootloader</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">SEKAILINK CORE</div>
+          <h1>SekaiLink Bootloader</h1>
+          <p id="statusText">Preparing updater...</p>
+        </div>
+        <div class="mark">S</div>
+      </section>
+
+      <section class="panel">
+        <div class="row">
+          <label>
+            Channel
+            <input id="channel" />
+          </label>
+          <label>
+            Build
+            <input id="build" />
+          </label>
+          <label>
+            Platform
+            <input id="platform" />
+          </label>
+        </div>
+        <label>
+          Install directory
+          <input id="installDir" />
+        </label>
+        <label>
+          API base URL
+          <input id="apiBaseUrl" />
+        </label>
+        <div class="toggles">
+          <label class="check"><input id="autoLaunch" type="checkbox" checked /> Launch SekaiLink automatically after update</label>
+          <label class="check"><input id="force" type="checkbox" /> Force reinstall</label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="meter-head">
+          <span id="phase">Idle</span>
+          <span id="percent">0%</span>
+        </div>
+        <div class="meter"><div id="bar"></div></div>
+      </section>
+
+      <section class="panel changelog-panel">
+        <div class="meter-head">
+          <span>Changelog</span>
+          <span id="version"></span>
+        </div>
+        <pre id="changelog">Release notes will appear here after the latest release is checked.</pre>
+      </section>
+
+      <section id="errorPanel" class="panel error-panel" hidden>
+        <div class="meter-head">
+          <span>Error Trace</span>
+          <span id="logPath"></span>
+        </div>
+        <pre id="errorText"></pre>
+      </section>
+
+      <footer>
+        <button id="startBtn">Update</button>
+        <button id="launchBtn" disabled>Launch SekaiLink</button>
+        <button id="folderBtn">Open Folder</button>
+        <button id="logBtn">Open Log</button>
+      </footer>
+    </main>
+    <script src="./renderer.js"></script>
+  </body>
+</html>

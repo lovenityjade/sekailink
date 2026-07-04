@@ -1,0 +1,926 @@
+[
+    {
+        "name": "Level 3",
+        "overlay_background": "#66000000",
+        "children": [
+            {
+                "name": "3-1",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Sand Canyon 1 - Complete",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Sand Canyon 1 - Geromuzudake",
+                        "item_count": 1,
+                        "access_rules": [
+                        ]
+                    },
+                    {
+                        "name": "Sand Canyon 1 - 1-Up (Polof)",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ]
+                    },
+                    {
+                        "name": "Stars",
+                        "chest_unopened_img": "images/StarLarge.png",
+                        "chest_opened_img": "images/StarLargeDim.png",
+                        "clear_as_group": false,
+                        "visibility_rules": ["Starsanity"],
+                        "access_rules": [],
+                        "item_count": 22
+                    },
+                    {
+                        "name": "Star 11 (Polof Room)",
+                        "ref": "3-1/Stars 11-22 (Polof Room)/Star 11",
+                    },
+                    {
+                        "name": "Star 12 (Polof Room)",
+                        "ref": "3-1/Stars 11-22 (Polof Room)/Star 12",
+                    },
+                    {
+                        "name": "Star 13 (Polof Room)",
+                        "ref": "3-1/Stars 11-22 (Polof Room)/Star 13",
+                    },
+                    {
+                        "name": "Star 14 (Polof Room)",
+                        "ref": "3-1/Stars 11-22 (Polof Room)/Star 14",
+                    },
+                    {
+                        "name": "Star 15 (Polof Room)",
+                        "ref": "3-1/Stars 11-22 (Polof Room)/Star 15",
+                    },
+                    {
+                        "name": "Star 16 (Polof Room)",
+                        "ref": "3-1/Stars 11-22 (Polof Room)/Star 16",
+                    },
+                    {
+                        "name": "Star 17 (Polof Room)",
+                        "ref": "3-1/Stars 11-22 (Polof Room)/Star 17",
+                    },
+                    {
+                        "name": "Star 18 (Polof Room)",
+                        "ref": "3-1/Stars 11-22 (Polof Room)/Star 18",
+                    },
+                    {
+                        "name": "Star 19 (Polof Room)",
+                        "ref": "3-1/Stars 11-22 (Polof Room)/Star 19",
+                    },
+                    {
+                        "name": "Star 20 (Polof Room)",
+                        "ref": "3-1/Stars 11-22 (Polof Room)/Star 20",
+                    },
+                    {
+                        "name": "Star 21 (Polof Room)",
+                        "ref": "3-1/Stars 11-22 (Polof Room)/Star 21",
+                    },
+                    {
+                        "name": "Star 22 (Polof Room)",
+                        "ref": "3-1/Stars 11-22 (Polof Room)/Star 22",
+                    },
+                    {
+                        "name": "Star 1",
+                        "ref": "3-1/Stars 1,2,3,4/Star 1",
+                    },
+                    {
+                        "name": "Star 2",
+                        "ref": "3-1/Stars 1,2,3,4/Star 2",
+                    },
+                    {
+                        "name": "Star 3",
+                        "ref": "3-1/Stars 1,2,3,4/Star 3",
+                    },
+                    {
+                        "name": "Star 4",
+                        "ref": "3-1/Stars 1,2,3,4/Star 4",
+                    },
+                    {
+                        "name": "Star 10 (Block)",
+                        "ref": "3-1/Star 10 (Block)/Star 10",
+                    },
+                    {
+                        "name": "Star 9 (Block)",
+                        "ref": "3-1/Star 9 (Block)/Star 9",
+                    },
+                    {
+                        "name": "Star 8 (Block)",
+                        "ref": "3-1/Star 8 (Block)/Star 8",
+                    },
+                    {
+                        "name": "Star 7 (Block)",
+                        "ref": "3-1/Star 7 (Block)/Star 7",
+                    },
+                    {
+                        "name": "Star 6 (Block)",
+                        "ref": "3-1/Star 6 (Block)/Star 6",
+                    },
+                    {
+                        "name": "Star 5 (Block)",
+                        "ref": "3-1/Star 5 (Block)/Star 5",
+                    },
+                ],
+                "map_locations": [
+                    {
+                        "map": "World3",
+                        "x": 68,
+                        "y": 149
+                    }
+                ]
+            },            
+            {
+                "name": "3-2",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Sand Canyon 2 - Complete",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Sand Canyon 2 - Auntie",
+                        "item_count": 1,
+                        "access_rules": [
+                            "Clean"
+                        ]
+                    },
+                    {
+                        "name": "Sand Canyon 2 - 1-Up (Enclave)",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules": [
+                        ]
+                    },
+                    {
+                        "name": "Sand Canyon 2 - Maxim Tomato (Underwater)",
+                        "chest_unopened_img": "images/MaximTomato.png",
+                        "chest_opened_img": "images/MaximTomatoDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules": [
+                        ]
+                    },
+                    {
+                        "name": "Stars",
+                        "chest_unopened_img": "images/StarLarge.png",
+                        "chest_opened_img": "images/StarLargeDim.png",
+                        "clear_as_group": false,
+                        "visibility_rules": ["Starsanity"],
+                        "access_rules": [],
+                        "item_count": 48
+                    },
+                    {
+                        "name": "Star 8",
+                        "ref": "3-2/Star 8/Star 8",
+                    },
+                    {
+                        "name": "Star 9",
+                        "ref": "3-2/Star 9/Star 9",
+                    },
+                    {
+                        "name": "Star 10",
+                        "ref": "3-2/Star 10/Star 10",
+                    },
+                    {
+                        "name": "Star 11",
+                        "ref": "3-2/Star 11/Star 11",
+                    },
+                    {
+                        "name": "Star 3",
+                        "ref": "3-2/Star 3/Star 3",
+                    },
+                    {
+                        "name": "Star 1 (Block)",
+                        "ref": "3-2/Star 1 (Block)/Star 1",
+                    },
+                    {
+                        "name": "Star 2 (Block)",
+                        "ref": "3-2/Star 2 (Block)/Star 2",
+                    },
+                    {
+                        "name": "Star 4 (Block)",
+                        "ref": "3-2/Star 4 (Block)/Star 4",
+                    },
+                    {
+                        "name": "Star 6 (Block)",
+                        "ref": "3-2/Star 6 (Block)/Star 6",
+                    },
+                    {
+                        "name": "Star 5 (Block)",
+                        "ref": "3-2/Star 5 (Block)/Star 5",
+                    },
+                    {
+                        "name": "Star 7 (Block)",
+                        "ref": "3-2/Star 7 (Block)/Star 7",
+                    },
+                    {
+                        "name": "Star 19",
+                        "ref": "3-2/Star 19/Star 19",
+                    },
+                    {
+                        "name": "Star 18",
+                        "ref": "3-2/Star 18/Star 18",
+                    },
+                    {
+                        "name": "Star 20 (Block)",
+                        "ref": "3-2/Star 20 (Block)/Star 20",
+                    },
+                    {
+                        "name": "Star 21 (Block)",
+                        "ref": "3-2/Star 21 (Block)/Star 21",
+                    },
+                    {
+                        "name": "Star 22 (Block)",
+                        "ref": "3-2/Star 22 (Block)/Star 22",
+                    },
+                    {
+                        "name": "Star 32",
+                        "ref": "3-2/Star 32/Star 32",
+                    },
+                    {
+                        "name": "Star 28",
+                        "ref": "3-2/Star 28/Star 28",
+                    },
+                    {
+                        "name": "Star 27",
+                        "ref": "3-2/Star 27/Star 27",
+                    },
+                    {
+                        "name": "Star 26",
+                        "ref": "3-2/Star 26/Star 26",
+                    },
+                    {
+                        "name": "Star 34",
+                        "ref": "3-2/Star 34/Star 34",
+                    },
+                    {
+                        "name": "Star 35",
+                        "ref": "3-2/Star 35/Star 35",
+                    },
+                    {
+                        "name": "Star 33",
+                        "ref": "3-2/Star 33/Star 33",
+                    },
+                    {
+                        "name": "Star 31",
+                        "ref": "3-2/Star 31/Star 31",
+                    },
+                    {
+                        "name": "Star 30",
+                        "ref": "3-2/Star 30/Star 30",
+                    },
+                    {
+                        "name": "Star 29",
+                        "ref": "3-2/Star 29/Star 29",
+                    },
+                    {
+                        "name": "Star 23 (Block)",
+                        "ref": "3-2/Star 23 (Block)/Star 23",
+                    },
+                    {
+                        "name": "Star 24 (Block)",
+                        "ref": "3-2/Star 24 (Block)/Star 24",
+                    },
+                    {
+                        "name": "Star 25 (Block)",
+                        "ref": "3-2/Star 25 (Block)/Star 25",
+                    },
+                    {
+                        "name": "Star 12",
+                        "ref": "3-2/Star 12/Star 12",
+                    },
+                    {
+                        "name": "Star 14",
+                        "ref": "3-2/Star 14/Star 14",
+                    },
+                    {
+                        "name": "Star 13",
+                        "ref": "3-2/Star 13/Star 13",
+                    },
+                    {
+                        "name": "Star 15",
+                        "ref": "3-2/Star 15/Star 15",
+                    },
+                    {
+                        "name": "Star 16",
+                        "ref": "3-2/Star 16/Star 16",
+                    },
+                    {
+                        "name": "Star 17",
+                        "ref": "3-2/Star 17/Star 17",
+                    },
+                    {
+                        "name": "Star 41",
+                        "ref": "3-2/Star 41/Star 41",
+                    },
+                    {
+                        "name": "Star 42",
+                        "ref": "3-2/Star 42/Star 42",
+                    },
+                    {
+                        "name": "Star 44",
+                        "ref": "3-2/Star 44/Star 44",
+                    },
+                    {
+                        "name": "Star 43",
+                        "ref": "3-2/Star 43/Star 43",
+                    },
+                    {
+                        "name": "Star 39",
+                        "ref": "3-2/Star 39/Star 39",
+                    },
+                    {
+                        "name": "Star 36",
+                        "ref": "3-2/Star 36/Star 36",
+                    },
+                    {
+                        "name": "Star 38",
+                        "ref": "3-2/Star 38/Star 38",
+                    },
+                    {
+                        "name": "Star 40",
+                        "ref": "3-2/Star 40/Star 40",
+                    },
+                    {
+                        "name": "Star 37",
+                        "ref": "3-2/Star 37/Star 37",
+                    },
+                    {
+                        "name": "Star 45 (Floor)",
+                        "ref": "3-2/Star 45 (Floor)/Star 45",
+                    },
+                    {
+                        "name": "Star 46 (Floor)",
+                        "ref": "3-2/Star 46 (Floor)/Star 46",
+                    },
+                    {
+                        "name": "Star 47 (Floor)",
+                        "ref": "3-2/Star 47 (Floor)/Star 47",
+                    },
+                    {
+                        "name": "Star 48 (Floor)",
+                        "ref": "3-2/Star 48 (Floor)/Star 48",
+                    },
+                ],
+                "map_locations": [
+                    {
+                        "map": "World3",
+                        "x": 92,
+                        "y": 149
+                    }
+                ]
+            },            
+            {
+                "name": "3-3",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Sand Canyon 3 - Complete",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Sand Canyon 3 - Caramello",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Stars",
+                        "chest_unopened_img": "images/StarLarge.png",
+                        "chest_opened_img": "images/StarLargeDim.png",
+                        "clear_as_group": false,
+                        "visibility_rules": ["Starsanity"],
+                        "access_rules": [],
+                        "item_count": 10
+                    },
+                    {
+                        "name": "Star 1",
+                        "ref": "3-3/Star 1/Star 1",
+                    },
+                    {
+                        "name": "Star 4",
+                        "ref": "3-3/Star 4/Star 4",
+                    },
+                    {
+                        "name": "Star 2",
+                        "ref": "3-3/Star 2/Star 2",
+                    },
+                    {
+                        "name": "Star 5",
+                        "ref": "3-3/Star 5/Star 5",
+                    },
+                    {
+                        "name": "Star 3 (Block)",
+                        "ref": "3-3/Star 3 (Block)/Star 3",
+                    },
+                    {
+                        "name": "Star 6",
+                        "ref": "3-3/Star 6/Star 6",
+                    },
+                    {
+                        "name": "Star 8",
+                        "ref": "3-3/Star 8/Star 8",
+                    },
+                    {
+                        "name": "Star 9",
+                        "ref": "3-3/Star 9/Star 9",
+                    },
+                    {
+                        "name": "Star 7",
+                        "ref": "3-3/Star 7/Star 7",
+                    },
+                    {
+                        "name": "Star 10",
+                        "ref": "3-3/Star 10/Star 10",
+                    },
+                ],
+                "map_locations": [
+                    {
+                        "map": "World3",
+                        "x": 116,
+                        "y": 149
+                    }
+                ]
+            },            
+            {
+                "name": "3-4",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Sand Canyon 4 - Complete",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Sand Canyon 4 - Donbe & Hikari",
+                        "item_count": 1,
+                        "access_rules": [
+                        ]
+                    },
+                    {
+                        "name": "Sand Canyon 4 - Maxim Tomato (Pacto)",
+                        "chest_unopened_img": "images/MaximTomato.png",
+                        "chest_opened_img": "images/MaximTomatoDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ]
+                    },
+                    {
+                        "name": "Sand Canyon 4 - 1-Up (Clean)",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules":[
+                            "Clean"
+                        ]
+                    },
+                    {
+                        "name": "Sand Canyon 4 - Maxim Tomato (Needle)",
+                        "chest_unopened_img": "images/MaximTomato.png",
+                        "chest_opened_img": "images/MaximTomatoDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules":[
+                            "Needle"
+                        ]
+                    },
+                    {
+                        "name": "Stars",
+                        "chest_unopened_img": "images/StarLarge.png",
+                        "chest_opened_img": "images/StarLargeDim.png",
+                        "clear_as_group": false,
+                        "visibility_rules": ["Starsanity"],
+                        "access_rules": [],
+                        "item_count": 23
+                    },
+                    {
+                        "name": "Star 5",
+                        "ref": "3-4/Star 5/Star 5",
+                    },
+                    {
+                        "name": "Star 4",
+                        "ref": "3-4/Star 4/Star 4",
+                    },
+                    {
+                        "name": "Star 3",
+                        "ref": "3-4/Star 3/Star 3",
+                    },
+                    {
+                        "name": "Star 2",
+                        "ref": "3-4/Star 2/Star 2",
+                    },
+                    {
+                        "name": "Star 1",
+                        "ref": "3-4/Star 1/Star 1",
+                    },
+                    {
+                        "name": "Star 6",
+                        "ref": "3-4/Star 6/Star 6",
+                    },
+                    {
+                        "name": "Star 7",
+                        "ref": "3-4/Star 7/Star 7",
+                    },
+                    {
+                        "name": "Star 8",
+                        "ref": "3-4/Star 8/Star 8",
+                    },
+                    {
+                        "name": "Star 10",
+                        "ref": "3-4/Star 10/Star 10",
+                    },
+                    {
+                        "name": "Star 11",
+                        "ref": "3-4/Star 11/Star 11",
+                    },
+                    {
+                        "name": "Star 9",
+                        "ref": "3-4/Star 9/Star 9",
+                    },
+                    {
+                        "name": "Star 15 (Down/Down)",
+                        "ref": "3-4/Star 15 (Down/Down)/Star 15",
+                    },
+                    {
+                        "name": "Star 12 (Down/Up)",
+                        "ref": "3-4/Star 12 (Down/Up)/Star 12",
+                    },
+                    {
+                        "name": "Star 13 (Down/Up/Down)",
+                        "ref": "3-4/Star 13 (Down/Up/Down)/Star 13",
+                    },
+                    {
+                        "name": "Star 14 (Down/Up/Up)",
+                        "ref": "3-4/Star 14 (Down/Up/Up)/Star 14",
+                    },
+                    {
+                        "name": "Star 16 (Block)",
+                        "ref": "3-4/Star 16 (Block)/Star 16",
+                    },
+                    {
+                        "name": "Star 17 (Block)",
+                        "ref": "3-4/Star 17 (Block)/Star 17",
+                    },
+                    {
+                        "name": "Star 18 (Block)",
+                        "ref": "3-4/Star 18 (Block)/Star 18",
+                    },
+                    {
+                        "name": "Star 19 (Block)",
+                        "ref": "3-4/Star 19 (Block)/Star 19",
+                    },
+                    {
+                        "name": "Star 20 (Block)",
+                        "ref": "3-4/Star 20 (Block)/Star 20",
+                    },
+                    {
+                        "name": "Star 21 (Block)",
+                        "ref": "3-4/Star 21 (Block)/Star 21",
+                    },
+                    {
+                        "name": "Star 22 (Block)",
+                        "ref": "3-4/Star 22 (Block)/Star 22",
+                    },
+                    {
+                        "name": "Star 23 (Block)",
+                        "ref": "3-4/Star 23 (Block)/Star 23",
+                    },
+                ],
+                "map_locations": [
+                    {
+                        "map": "World3",
+                        "x": 140,
+                        "y": 149
+                    }
+                ]
+            },            
+            {
+                "name": "3-5",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Sand Canyon 5 - Complete",
+                        "item_count": 1,
+                        "access_rules":[
+                            "Cutter"
+                        ]
+                    },
+                    {
+                        "name": "Sand Canyon 5 - Nyupun",
+                        "item_count": 1,
+                        "access_rules": [
+                            "ChuChu,Cutter"
+                        ]
+                    },
+                    {
+                        "name": "Sand Canyon 5 - 1-Up (Falling Block)",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules":[
+                        ]
+                    },
+                    {
+                        "name": "Sand Canyon 5 - Maxim Tomato (Pit)",
+                        "chest_unopened_img": "images/MaximTomato.png",
+                        "chest_opened_img": "images/MaximTomatoDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules":[
+                        ]
+                    },
+                    {
+                        "name": "Sand Canyon 5 - 1-Up (Ice 1)",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules":[
+                            "Ice,Rick","Ice,Coo","Ice,Nago","Ice,ChuChu","Ice,Pitch",
+                            "[Rick],[Coo],[Nago],[ChuChu],[Pitch],Ice,Kine"
+                        ]
+                    },
+                    {
+                        "name": "Sand Canyon 5 - 1-Up (Ice 2)",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules":[
+                            "Ice,Rick","Ice,Coo","Ice,Nago","Ice,ChuChu","Ice,Pitch",
+                            "[Rick],[Coo],[Nago],[ChuChu],[Pitch],Ice,Kine"
+                        ]
+                    },
+                    {
+                        "name": "Sand Canyon 5 - 1-Up (Ice 3)",
+                        "chest_unopened_img": "images/1Up.png",
+                        "chest_opened_img": "images/1UpDim.png",
+                        "item_count": 1,
+                        "visibility_rules":[
+                            "Consumables"
+                        ],
+                        "access_rules":[
+                            "Ice,Rick","Ice,Coo","Ice,Nago","Ice,ChuChu","Ice,Pitch",
+                            "[Rick],[Coo],[Nago],[ChuChu],[Pitch],Ice,Kine"
+                        ]
+                    },
+                    {
+                        "name": "Stars",
+                        "chest_unopened_img": "images/StarLarge.png",
+                        "chest_opened_img": "images/StarLargeDim.png",
+                        "clear_as_group": false,
+                        "visibility_rules": ["Starsanity"],
+                        "access_rules": ["Ice,Burning,Clean"],
+                        "item_count": 40
+                    },
+                    {
+                        "name": "Star 4",
+                        "ref": "3-5/Star 4/Star 4",
+                    },
+                    {
+                        "name": "Star 9",
+                        "ref": "3-5/Star 9/Star 9",
+                    },
+                    {
+                        "name": "Star 5",
+                        "ref": "3-5/Star 5/Star 5",
+                    },
+                    {
+                        "name": "Star 8",
+                        "ref": "3-5/Star 8/Star 8",
+                    },
+                    {
+                        "name": "Star 7",
+                        "ref": "3-5/Star 7/Star 7",
+                    },
+                    {
+                        "name": "Star 10",
+                        "ref": "3-5/Star 10/Star 10",
+                    },
+                    {
+                        "name": "Star 6",
+                        "ref": "3-5/Star 6/Star 6",
+                    },
+                    {
+                        "name": "Star 2",
+                        "ref": "3-5/Star 2/Star 2",
+                    },
+                    {
+                        "name": "Star 1",
+                        "ref": "3-5/Star 1/Star 1",
+                    },
+                    {
+                        "name": "Star 3",
+                        "ref": "3-5/Star 3/Star 3",
+                    },
+                    {
+                        "name": "Star 11 (Block)",
+                        "ref": "3-5/Star 11 (Block)/Star 11",
+                    },
+                    {
+                        "name": "Star 12 (Ice)",
+                        "ref": "3-5/Star 12 (Ice)/Star 12",
+                    },
+                    {
+                        "name": "Star 13 (Ice)",
+                        "ref": "3-5/Star 13 (Ice)/Star 13",
+                    },
+                    {
+                        "name": "Star 14 (Ice)",
+                        "ref": "3-5/Star 14 (Ice)/Star 14",
+                    },
+                    {
+                        "name": "Star 15 (Ice)",
+                        "ref": "3-5/Star 15 (Ice)/Star 15",
+                    },
+                    {
+                        "name": "Star 16 (Ice)",
+                        "ref": "3-5/Star 16 (Ice)/Star 16",
+                    },
+                    {
+                        "name": "Star 17 (Ice)",
+                        "ref": "3-5/Star 17 (Ice)/Star 17",
+                    },
+                    {
+                        "name": "Star 18",
+                        "ref": "3-5/Star 18/Star 18",
+                    },
+                    {
+                        "name": "Star 22",
+                        "ref": "3-5/Star 22/Star 22",
+                    },
+                    {
+                        "name": "Star 21",
+                        "ref": "3-5/Star 21/Star 21",
+                    },
+                    {
+                        "name": "Star 31 (Burning)",
+                        "ref": "3-5/Star 31 (Burning)/Star 31",
+                    },
+                    {
+                        "name": "Star 32 (Burning)",
+                        "ref": "3-5/Star 32 (Burning)/Star 32",
+                    },
+                    {
+                        "name": "Star 33 (Burning)",
+                        "ref": "3-5/Star 33 (Burning)/Star 33",
+                    },
+                    {
+                        "name": "Star 35 (Burning)",
+                        "ref": "3-5/Star 35 (Burning)/Star 35",
+                    },
+                    {
+                        "name": "Star 36 (Burning)",
+                        "ref": "3-5/Star 36 (Burning)/Star 36",
+                    },
+                    {
+                        "name": "Star 34 (Burning)",
+                        "ref": "3-5/Star 34 (Burning)/Star 34",
+                    },
+                    {
+                        "name": "Star 39 (Burning)",
+                        "ref": "3-5/Star 39 (Burning)/Star 39",
+                    },
+                    {
+                        "name": "Star 40 (Burning)",
+                        "ref": "3-5/Star 40 (Burning)/Star 40",
+                    },
+                    {
+                        "name": "Star 38 (Burning)",
+                        "ref": "3-5/Star 38 (Burning)/Star 38",
+                    },
+                    {
+                        "name": "Star 37 (Burning)",
+                        "ref": "3-5/Star 37 (Burning)/Star 37",
+                    },
+                    {
+                        "name": "Star 23 (Clean)",
+                        "ref": "3-5/Star 23 (Clean)/Star 23",
+                    },
+                    {
+                        "name": "Star 20 (Clean)",
+                        "ref": "3-5/Star 20 (Clean)/Star 20",
+                    },
+                    {
+                        "name": "Star 24 (Clean)",
+                        "ref": "3-5/Star 24 (Clean)/Star 24",
+                    },
+                    {
+                        "name": "Star 25 (Clean)",
+                        "ref": "3-5/Star 25 (Clean)/Star 25",
+                    },
+                    {
+                        "name": "Star 26 (Clean)",
+                        "ref": "3-5/Star 26 (Clean)/Star 26",
+                    },
+                    {
+                        "name": "Star 27 (Clean)",
+                        "ref": "3-5/Star 27 (Clean)/Star 27",
+                    },
+                    {
+                        "name": "Star 19 (Clean)",
+                        "ref": "3-5/Star 19 (Clean)/Star 19",
+                    },
+                    {
+                        "name": "Star 28 (Clean)",
+                        "ref": "3-5/Star 28 (Clean)/Star 28",
+                    },
+                    {
+                        "name": "Star 29 (Clean)",
+                        "ref": "3-5/Star 29 (Clean)/Star 29",
+                    },
+                    {
+                        "name": "Star 30 (Clean)",
+                        "ref": "3-5/Star 30 (Clean)/Star 30",
+                    },
+                ],
+                "map_locations": [
+                    {
+                        "map": "World3",
+                        "x": 164,
+                        "y": 149
+                    }
+                ]
+            },            
+            {
+                "name": "3-6",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Sand Canyon 6 - Complete",
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Sand Canyon 6 - Professor Hector & R.O.B",
+                        "item_count": 1,
+                        "access_rules":[
+                            "Kine,Coo,Stone,Parasol,Clean,Ice",
+                            "Kine,Coo,Stone,Parasol,Spark,Ice",
+                            "Kine,Coo,Stone,Parasol,Clean,Needle",
+                            "Kine,Coo,Stone,Parasol,Spark,Needle"
+                        ]
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "World3",
+                        "x": 188,
+                        "y": 149
+                    }
+                ]
+            },
+            {
+                "name": "3-7",
+                "access_rules": [
+                    //"11"
+                ],
+                "sections": [
+                    {
+                        "name": "Sand Canyon - Boss (Pon & Con) Purified",
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "World3",
+                        "x": 212,
+                        "y": 149
+                    }
+                ]
+            }
+        ]
+    }
+]

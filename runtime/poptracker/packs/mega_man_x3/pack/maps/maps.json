@@ -1,0 +1,92 @@
+[
+    {
+        "name": "stages",
+        "location_size": 10,
+        "location_border_thickness": 2,
+        "img": "images/maps/stages.png"
+    },
+    {
+        "name": "hunter_base",
+        "location_size": 20,
+        "location_border_thickness": 2,
+        "img": "images/maps/intro.png"
+    },
+    {
+        "name": "blast_hornet",
+        "location_size": 20,
+        "location_border_thickness": 2,
+        "img": "images/maps/blast_hornet.png"
+    },
+    {
+        "name": "blizzard_buffalo",
+        "location_size": 20,
+        "location_border_thickness": 2,
+        "img": "images/maps/blizzard_buffalo.png"
+    },
+    {
+        "name": "gravity_beetle",
+        "location_size": 20,
+        "location_border_thickness": 2,
+        "img": "images/maps/gravity_beetle.png"
+    },
+    {
+        "name": "toxic_seahorse",
+        "location_size": 20,
+        "location_border_thickness": 2,
+        "img": "images/maps/toxic_seahorse.png"
+    },
+    {
+        "name": "volt_catfish",
+        "location_size": 20,
+        "location_border_thickness": 2,
+        "img": "images/maps/volt_catfish.png"
+    },
+    {
+        "name": "crush_crawfish",
+        "location_size": 20,
+        "location_border_thickness": 2,
+        "img": "images/maps/crush_crawfish.png"
+    },
+    {
+        "name": "tunnel_rhino",
+        "location_size": 20,
+        "location_border_thickness": 2,
+        "img": "images/maps/tunnel_rhino.png"
+    },
+    {
+        "name": "neon_tiger",
+        "location_size": 20,
+        "location_border_thickness": 2,
+        "img": "images/maps/neon_tiger.png"
+    },
+    {
+        "name": "vile",
+        "location_size": 20,
+        "location_border_thickness": 2,
+        "img": "images/maps/vile.png"
+    },
+    {
+        "name": "doppler_lab_1",
+        "location_size": 20,
+        "location_border_thickness": 2,
+        "img": "images/maps/doppler1.png"
+    },
+    {
+        "name": "doppler_lab_2",
+        "location_size": 20,
+        "location_border_thickness": 2,
+        "img": "images/maps/doppler2.png"
+    },
+    {
+        "name": "doppler_lab_3",
+        "location_size": 20,
+        "location_border_thickness": 2,
+        "img": "images/maps/doppler3.png"
+    },
+    {
+        "name": "doppler_lab_4",
+        "location_size": 20,
+        "location_border_thickness": 2,
+        "img": "images/maps/doppler4.png"
+    }
+]

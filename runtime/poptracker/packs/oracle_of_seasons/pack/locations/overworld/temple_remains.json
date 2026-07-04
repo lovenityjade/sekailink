@@ -1,0 +1,95 @@
+[
+	{
+		"name": "Temple Remains",
+		"chest_unopened_img": "images/labels/chest.png",
+		"chest_opened_img": "images/labels/chestopen.png",
+		"color": "#00ff08",
+		"children": [
+			{
+				"name": "See the Season",
+				"visibility_rules": [
+					"defaultseasonsoff",
+					"singularity_random"
+				],
+				"sections": [
+					{
+						"name": "Temple Remains",
+						"access_rules": ["{^$CanReach|TempleRemainsFindSeason}"],
+						"chest_unopened_img": "images/labels/season_icons.png",
+						"chest_opened_img": "images/labels/season_icons_disabled.png"
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 1041,
+						"y": 447,
+						"shape": "diamond"
+					}
+				]
+			},
+			{
+				"name": "Temple Remains Heart Piece",
+				"sections": [
+					{
+						"name": "Temple Remains: Item in Cave Behind Rockslide",
+						"access_rules": ["^$CanReach|TempleRemainsBombCave"]
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 872,
+						"y": 136
+					}
+				]
+			},
+			{
+				"name": "Temple Remains Lower Portal",
+				"chest_unopened_img": "images/labels/portal.png",
+				"chest_opened_img": "images/labels/portalgray.png",
+				"visibility_rules": [
+					"portalshuffleon",
+					"portalshuffleoutward"
+				],
+				"sections": [
+					{
+						"access_rules": ["{^$CanReach|TempleRemainsLowerPortal}"],
+						"inspectable_sequence_break": true
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 840,
+						"y": 296,
+						"shape": "trapezoid"
+					}
+				]
+			},
+			{
+				"name": "Temple Remains Upper Portal",
+				"chest_unopened_img": "images/labels/portal.png",
+				"chest_opened_img": "images/labels/portalgray.png",
+				"visibility_rules": [
+					"portalshuffleon",
+					"portalshuffleoutward"
+				],
+				"sections": [
+					{
+						"access_rules": ["{^$CanReach|TempleRemainsUpperPortal}"],
+						"inspectable_sequence_break": true
+					}
+				],
+				"map_locations": [
+					{
+						"map": "holodrum",
+						"x": 760,
+						"y": 38,
+						"shape": "trapezoid"
+					}
+				]
+			}
+		]
+	}
+]

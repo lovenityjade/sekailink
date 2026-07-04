@@ -1,0 +1,867 @@
+[
+  {
+    "name": "ZR - hint",
+    "chest_unopened_img": "/images/items/close.png",
+    "chest_opened_img": "/images/items/open.png",
+    "overlay_background": "#000000",
+    "access_rules": [
+        "{}"
+    ],
+    "children": [
+        {
+            "name": "Storms Grotto - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Near Storms Grotto - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Magic Bean Salesman - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "zr_storms_grotto_near_storms_grotto_magic_bean_salesman"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Zora River",
+                            "x": "244",
+                            "y": "802",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                },
+                {
+                    "name": "Tree Near Hyrule Field - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Tree GS - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "zr_storms_grotto_tree_near_hyrule_field_tree_gs"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Zora River",
+                            "x": "227",
+                            "y": "914",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                }
+            ],
+            "sections": [
+                {
+                    "name": "Scrub Front - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zr_storms_grotto_scrub_front"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Scrub Rear - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zr_storms_grotto_scrub_rear"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Beehive - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zr_storms_grotto_beehive"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Zora River",
+                    "x": "106",
+                    "y": "859",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Open Grotto - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Near Open Grotto - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Freestanding PoH - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "zr_open_grotto_near_open_grotto_freestanding_poh"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "GS - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "zr_open_grotto_near_open_grotto_gs"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Zora River",
+                            "x": "445",
+                            "y": "614",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                }
+            ],
+            "sections": [
+                {
+                    "name": "Chest - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zr_open_grotto_chest"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Beehive 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zr_open_grotto_beehive_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Beehive 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zr_open_grotto_beehive_2"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Zora River",
+                    "x": "530",
+                    "y": "646",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Frogs - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "in the Rain - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zr_frogs_in_the_rain"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Ocarina Game - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zr_frogs_ocarina_game"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Zeldas Lullaby - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zr_frogs_zeldas_lullaby"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Eponas Song - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zr_frogs_eponas_song"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Sarias Song - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zr_frogs_sarias_song"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Suns Song - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zr_frogs_suns_song"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Song of Time - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zr_frogs_song_of_time"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Zora River",
+                    "x": "426",
+                    "y": "607",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Near Domain - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Ladder - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "GS - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "zr_near_domain_ladder_gs"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Zora River",
+                            "x": "835",
+                            "y": "303",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                },
+                {
+                    "name": "Waterfall - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Red Rupee 1 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "zr_near_domain_waterfall_red_rupee_1"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Red Rupee 2 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "zr_near_domain_waterfall_red_rupee_2"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Red Rupee 3 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "zr_near_domain_waterfall_red_rupee_3"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Red Rupee 4 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "zr_near_domain_waterfall_red_rupee_4"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Zora River",
+                            "x": "967",
+                            "y": "294",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                }
+            ],
+            "sections": [
+                {
+                    "name": "Freestanding PoH - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zr_near_domain_freestanding_poh"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Zora River",
+                    "x": "798",
+                    "y": "254",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Above Bridge - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zr_above_bridge_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Zora River",
+                    "x": "694",
+                    "y": "283",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        }
+    ]
+},
+    {
+      "name": "ZR",
+      "chest_unopened_img": "/images/Items/close.png",
+      "chest_opened_img": "/images/Items/open.png",
+      "overlay_background": "#000000",
+      "access_rules": [
+        " "
+      ],
+      "children": [
+        {
+          "name": "Storms Grotto",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "Tree Near Hyrule Field",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Tree GS",
+                  "access_rules": [
+                    "^$CanReach|Child ZR GS Tree",
+                    "^$CanReach|Adult ZR GS Tree"
+                  ],
+                  "visibility_rules": [
+                    "$Show|tokensanity|2"
+                  ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Zora River",
+                  "x": 205,
+                  "y": 892,
+                  "size": 24
+                }
+              ]
+            },
+            {
+              "name": "Near Storms Grotto",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Magic Bean Salesman",
+                  "access_rules": [
+                      "^$CanReach|Child ZR Magic Bean Salesman",
+                      "^$CanReach|Adult ZR Magic Bean Salesman"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_beans"
+                  ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Zora River",
+                  "x": 222,
+                  "y": 780,
+                  "size": 24
+                }
+              ]
+            }
+          ],
+          "sections": [
+            {
+              "name": "Scrub Front",
+              "access_rules": [
+                "^$CanReach|Child ZR Deku Scrub Grotto Front",
+                "^$CanReach|Adult ZR Deku Scrub Grotto Front"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_scrubs"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Scrub Rear",
+              "access_rules": [
+                "^$CanReach|Child ZR Deku Scrub Grotto Rear",
+                "^$CanReach|Adult ZR Deku Scrub Grotto Rear"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_scrubs"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Beehive",
+              "access_rules": [
+                "^$CanReach|Child ZR Storms Grotto Beehive",
+                "^$CanReach|Adult ZR Storms Grotto Beehive"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_beehives"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Zora River",
+              "x": 84,
+              "y": 847,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Open Grotto",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "Near Open Grotto",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Freestanding PoH",
+                  "access_rules": [
+                    "^$CanReach|Child ZR Near Open Grotto Freestanding PoH",
+                    "^$CanReach|Adult ZR Near Open Grotto Freestanding PoH"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "GS",
+                  "access_rules": [
+                    "^$CanReach|Child ZR GS Near Raised Grottos",
+                    "^$CanReach|Adult ZR GS Near Raised Grottos"
+                  ],
+                  "visibility_rules": [
+                    "$Show|tokensanity|2"
+                  ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Zora River",
+                  "x": 423,
+                  "y": 592,
+                  "size": 24
+                }
+              ]
+            }
+          ],
+          "sections": [
+            {
+              "name": "Chest",
+              "access_rules": [
+                "^$CanReach|Child ZR Open Grotto Chest",
+                "^$CanReach|Adult ZR Open Grotto Chest"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Beehive 1",
+              "access_rules": [
+                "^$CanReach|Child ZR Open Grotto Beehive 1",
+                "^$CanReach|Adult ZR Open Grotto Beehive 1"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_beehives"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Beehive 2",
+              "access_rules": [
+                "^$CanReach|Child ZR Open Grotto Beehive 2",
+                "^$CanReach|Adult ZR Open Grotto Beehive 2"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_beehives"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Zora River",
+              "x": 508,
+              "y": 624,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Frogs",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "in the Rain",
+              "access_rules": [
+                "^$CanReach|Child ZR Frogs in the Rain",
+                "^$CanReach|Adult ZR Frogs in the Rain"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Ocarina Game",
+              "access_rules": [
+                "^$CanReach|Child ZR Frogs Ocarina Game",
+                "^$CanReach|Adult ZR Frogs Ocarina Game"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Zeldas Lullaby",
+              "access_rules": [
+                "^$CanReach|Child ZR Frogs Zeldas Lullaby",
+                "^$CanReach|Adult ZR Frogs Zeldas Lullaby"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_frog_song_rupees"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Eponas Song",
+              "access_rules": [
+                "^$CanReach|Child ZR Frogs Eponas Song",
+                "^$CanReach|Adult ZR Frogs Eponas Song"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_frog_song_rupees"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Sarias Song",
+              "access_rules": [
+                "^$CanReach|Child ZR Frogs Sarias Song",
+                "^$CanReach|Adult ZR Frogs Sarias Song"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_frog_song_rupees"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Suns Song",
+              "access_rules": [
+                "^$CanReach|Child ZR Frogs Suns Song",
+                "^$CanReach|Adult ZR Frogs Suns Song"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_frog_song_rupees"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Song of Time",
+              "access_rules": [
+                "^$CanReach|Child ZR Frogs Song of Time",
+                "^$CanReach|Adult ZR Frogs Song of Time"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_frog_song_rupees"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Zora River",
+              "x": 404,
+              "y": 585,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Near Domain",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "Ladder",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "GS",
+                  "access_rules": [
+                    "^$CanReach|Child ZR GS Ladder",
+                    "^$CanReach|Adult ZR GS Ladder"
+                  ],
+                  "visibility_rules": [
+                    "$Show|tokensanity|2"
+                  ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Zora River",
+                  "x": 813,
+                  "y": 281,
+                  "size": 24
+                }
+              ]
+            },
+            {
+              "name": "Waterfall",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Red Rupee 1",
+                  "access_rules": [
+                    "^$CanReach|Child ZR Waterfall Red Rupee 1",
+                    "^$CanReach|Adult ZR Waterfall Red Rupee 1"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_freestanding_items|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Red Rupee 2",
+                  "access_rules": [
+                    "^$CanReach|Child ZR Waterfall Red Rupee 2",
+                    "^$CanReach|Adult ZR Waterfall Red Rupee 2"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_freestanding_items|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Red Rupee 3",
+                  "access_rules": [
+                    "^$CanReach|Child ZR Waterfall Red Rupee 3",
+                    "^$CanReach|Adult ZR Waterfall Red Rupee 3"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_freestanding_items|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Red Rupee 4",
+                  "access_rules": [
+                    "^$CanReach|Child ZR Waterfall Red Rupee 4",
+                    "^$CanReach|Adult ZR Waterfall Red Rupee 4"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_freestanding_items|2"
+                  ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Zora River",
+                  "x": 945,
+                  "y": 272,
+                  "size": 24
+                }
+              ]
+            }
+          ],
+          "sections": [
+            {
+              "name": "Freestanding PoH",
+              "access_rules": [
+                "^$CanReach|Child ZR Near Domain Freestanding PoH",
+                "^$CanReach|Adult ZR Near Domain Freestanding PoH"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Zora River",
+              "x": 776,
+              "y": 232,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Above Bridge",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS",
+              "access_rules": [
+                "^$CanReach|Child ZR GS Above Bridge",
+                "^$CanReach|Adult ZR GS Above Bridge"
+              ],
+              "visibility_rules": [
+                "$Show|tokensanity|2"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Zora River",
+              "x": 672,
+              "y": 261,
+              "size": 24
+            }
+          ]
+        }
+      ]
+    }
+]

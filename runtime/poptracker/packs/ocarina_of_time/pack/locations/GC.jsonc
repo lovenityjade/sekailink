@@ -1,0 +1,1176 @@
+
+
+[
+  {
+    "name": "GC - hint",
+    "chest_unopened_img": "/images/items/close.png",
+    "chest_opened_img": "/images/items/open.png",
+    "overlay_background": "#000000",
+    "access_rules": [
+        "{}"
+    ],
+    "children": [
+        {
+            "name": "Darunia - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Darunias Joy - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_darunia_darunias_joy"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_darunia_pot_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_darunia_pot_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_darunia_pot_3"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Goron City",
+                    "x": "518",
+                    "y": "237",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Spinning Pot - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Freestanding PoH - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_spinning_pot_freestanding_poh"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Bomb Drop 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_spinning_pot_bomb_drop_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Bomb Drop 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_spinning_pot_bomb_drop_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Bomb Drop 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_spinning_pot_bomb_drop_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Rupee Drop 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_spinning_pot_rupee_drop_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Rupee Drop 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_spinning_pot_rupee_drop_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Rupee Drop 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_spinning_pot_rupee_drop_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "PoH Rupee 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_spinning_pot_poh_rupee_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "PoH Rupee 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_spinning_pot_poh_rupee_2"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Goron City",
+                    "x": "498",
+                    "y": "611",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Rolling Goron - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "as Child - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_rolling_goron_as_child"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "as Adult - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_rolling_goron_as_adult"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Goron City",
+                    "x": "388",
+                    "y": "434",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Medigoron - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Buy Item - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_medigoron_buy_item"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_medigoron_pot"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Goron City",
+                    "x": "300",
+                    "y": "1000",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Maze - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Left Chest - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_maze_left_chest"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Right Chest - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_maze_right_chest"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Center Chest - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_maze_center_chest"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "GS in Crate - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_maze_gs_in_crate"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Crate - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_maze_crate"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Goron City",
+                    "x": "115",
+                    "y": "262",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Deku Scrub Grotto - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Left - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_deku_scrub_grotto_left"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Center - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_deku_scrub_grotto_center"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Right - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_deku_scrub_grotto_right"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Beehive - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_deku_scrub_grotto_beehive"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Goron City",
+                    "x": "812",
+                    "y": "262",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Center Platform - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_center_platform_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Goron City",
+                    "x": "496",
+                    "y": "659",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Shop - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Item 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_shop_item_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_shop_item_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_shop_item_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 4 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_shop_item_4"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 5 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_shop_item_5"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 6 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_shop_item_6"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 7 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_shop_item_7"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 8 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_shop_item_8"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Goron City",
+                    "x": "434",
+                    "y": "606",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Lower Staircase - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Pot 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_lower_staircase_pot_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_lower_staircase_pot_2"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Goron City",
+                    "x": "514",
+                    "y": "715",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Upper Staircase - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Pot 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_upper_staircase_pot_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_upper_staircase_pot_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "gc_upper_staircase_pot_3"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Goron City",
+                    "x": "153",
+                    "y": "626",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        }
+    ]
+},
+    {
+      "name": "GC",
+      "chest_unopened_img": "/images/Items/close.png",
+      "chest_opened_img": "/images/Items/open.png",
+      "overlay_background": "#000000",
+      "access_rules": [
+        " "
+      ],
+      "children": [
+        {
+          "name": "Darunia",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Darunias Joy",
+                "access_rules": [
+                "^$CanReach|Child GC Darunias Joy",
+                "^$CanReach|Adult GC Darunias Joy"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child GC Darunia Pot 1",
+                "^$CanReach|Adult GC Darunia Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child GC Darunia Pot 2",
+                "^$CanReach|Adult GC Darunia Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 3",
+                "access_rules": [
+                "^$CanReach|Child GC Darunia Pot 3",
+                "^$CanReach|Adult GC Darunia Pot 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Goron City",
+              "x": 496,
+              "y": 215,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Spinning Pot",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Freestanding PoH",
+                "access_rules": [
+                "^$CanReach|Child GC Spinning Pot Freestanding PoH",
+                "^$CanReach|Adult GC Spinning Pot Freestanding PoH"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "PoH Rupee 1",
+            "access_rules": [
+            "^$CanReach|Child GC Spinning Pot PoH Drop Rupee 1",
+            "^$CanReach|Adult GC Spinning Pot PoH Drop Rupee 1"
+            ],
+            "visibility_rules": [
+              "$Show|shuffle_freestanding_items|2"
+            ],
+              "item_count": 1
+            },
+            {
+              "name": "PoH Rupee 2",
+            "access_rules": [
+            "^$CanReach|Child GC Spinning Pot PoH Drop Rupee 2",
+            "^$CanReach|Adult GC Spinning Pot PoH Drop Rupee 2"
+            ],
+            "visibility_rules": [
+              "$Show|shuffle_freestanding_items|2"
+            ],
+              "item_count": 1
+            },
+            {
+              "name": "Bomb Drop 1",
+                "access_rules": [
+                "^$CanReach|Child GC Spinning Pot Bomb Drop 1",
+                "^$CanReach|Adult GC Spinning Pot Bomb Drop 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Bomb Drop 2",
+                "access_rules": [
+                "^$CanReach|Child GC Spinning Pot Bomb Drop 2",
+                "^$CanReach|Adult GC Spinning Pot Bomb Drop 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Bomb Drop 3",
+                "access_rules": [
+                "^$CanReach|Child GC Spinning Pot Bomb Drop 3",
+                "^$CanReach|Adult GC Spinning Pot Bomb Drop 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Rupee Drop 1",
+                "access_rules": [
+                "^$CanReach|Child GC Spinning Pot Rupee Drop 1",
+                "^$CanReach|Adult GC Spinning Pot Rupee Drop 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Rupee Drop 2",
+                "access_rules": [
+                "^$CanReach|Child GC Spinning Pot Rupee Drop 2",
+                "^$CanReach|Adult GC Spinning Pot Rupee Drop 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Rupee Drop 3",
+                "access_rules": [
+                "^$CanReach|Child GC Spinning Pot Rupee Drop 3",
+                "^$CanReach|Adult GC Spinning Pot Rupee Drop 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Goron City",
+              "x": 476,
+              "y": 589,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Rolling Goron",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "as Child",
+                "access_rules": [
+                "^$CanReach|Child GC Rolling Goron as Child",
+                "^$CanReach|Adult GC Rolling Goron as Child"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "as Adult",
+                "access_rules": [
+                "^$CanReach|Child GC Rolling Goron as Adult",
+                "^$CanReach|Adult GC Rolling Goron as Adult"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Goron City",
+              "x": 366,
+              "y": 412,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Medigoron",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Buy Item",
+                "access_rules": [
+                "^$CanReach|Child GC Medigoron",
+                "^$CanReach|Adult GC Medigoron"
+                ],
+                  "visibility_rules": [
+                  "$Show|shuffle_medigoron_carpet_salesman"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot",
+                "access_rules": [
+                "^$CanReach|Child GC Medigoron Pot",
+                "^$CanReach|Adult GC Medigoron Pot"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Goron City",
+              "x": 278,
+              "y": 978,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Maze",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Left Chest",
+                "access_rules": [
+                "^$CanReach|Child GC Maze Left Chest",
+                "^$CanReach|Adult GC Maze Left Chest"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Right Chest",
+                "access_rules": [
+                "^$CanReach|Child GC Maze Right Chest",
+                "^$CanReach|Adult GC Maze Right Chest"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Center Chest",
+                "access_rules": [
+                "^$CanReach|Child GC Maze Center Chest",
+                "^$CanReach|Adult GC Maze Center Chest"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "GS in Crate",
+                "access_rules": [
+                "^$CanReach|Child GC GS Boulder Maze",
+                "^$CanReach|Adult GC GS Boulder Maze"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Crate",
+                "access_rules": [
+                "^$CanReach|Child GC Boulder Maze Crate",
+                "^$CanReach|Adult GC Boulder Maze Crate"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_crates|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Goron City",
+              "x": 93,
+              "y": 240,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Deku Scrub Grotto",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Left",
+                "access_rules": [
+                "^$CanReach|Child GC Deku Scrub Grotto Left",
+                "^$CanReach|Adult GC Deku Scrub Grotto Left"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_scrubs"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Center",
+                "access_rules": [
+                "^$CanReach|Child GC Deku Scrub Grotto Center",
+                "^$CanReach|Adult GC Deku Scrub Grotto Center"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_scrubs"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Right",
+                "access_rules": [
+                "^$CanReach|Child GC Deku Scrub Grotto Right",
+                "^$CanReach|Adult GC Deku Scrub Grotto Right"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_scrubs"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Beehive",
+                "access_rules": [
+                "^$CanReach|Child GC Grotto Beehive",
+                "^$CanReach|Adult GC Grotto Beehive"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_beehives"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Goron City",
+              "x": 790,
+              "y": 240,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Center Platform",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child GC GS Center Platform",
+                "^$CanReach|Adult GC GS Center Platform"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Goron City",
+              "x": 474,
+              "y": 637,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Shop",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Item 1",
+                "access_rules": [
+                "^$CanReach|Child GC Shop Item 1",
+                "^$CanReach|Adult GC Shop Item 1"
+                ],
+                "visibility_rules": [
+                  "$Show|"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 2",
+                "access_rules": [
+                "^$CanReach|Child GC Shop Item 2",
+                "^$CanReach|Adult GC Shop Item 2"
+                ],
+                "visibility_rules": [
+                  "$Show|"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 3",
+                "access_rules": [
+                "^$CanReach|Child GC Shop Item 3",
+                "^$CanReach|Adult GC Shop Item 3"
+                ],
+                "visibility_rules": [
+                  "$Show|"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 4",
+                "access_rules": [
+                "^$CanReach|Child GC Shop Item 4",
+                "^$CanReach|Adult GC Shop Item 4"
+                ],
+                "visibility_rules": [
+                  "$Show|"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 5",
+                "access_rules": [
+                "^$CanReach|Child GC Shop Item 5",
+                "^$CanReach|Adult GC Shop Item 5"
+                ],
+                "visibility_rules": [
+                  "$Show|shopsanity, $ShopSlotHelper|67191|1"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 6",
+                "access_rules": [
+                "^$CanReach|Child GC Shop Item 6",
+                "^$CanReach|Adult GC Shop Item 6"
+                ],
+                "visibility_rules": [
+                  "$Show|shopsanity, $ShopSlotHelper|67192|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 7",
+                "access_rules": [
+                "^$CanReach|Child GC Shop Item 7",
+                "^$CanReach|Adult GC Shop Item 7"
+                ],
+                "visibility_rules": [
+                  "$Show|shopsanity, $ShopSlotHelper|67193|3"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 8",
+                "access_rules": [
+                "^$CanReach|Child GC Shop Item 8",
+                "^$CanReach|Adult GC Shop Item 8"
+                ],
+                "visibility_rules": [
+                  "$Show|shopsanity, $ShopSlotHelper|67194|4"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Goron City",
+              "x": 412,
+              "y": 584,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Lower Staircase",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child GC Lower Staircase Pot 1",
+                "^$CanReach|Adult GC Lower Staircase Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child GC Lower Staircase Pot 2",
+                "^$CanReach|Adult GC Lower Staircase Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Goron City",
+              "x": 492,
+              "y": 693,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Upper Staircase",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child GC Upper Staircase Pot 1",
+                "^$CanReach|Adult GC Upper Staircase Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child GC Upper Staircase Pot 2",
+                "^$CanReach|Adult GC Upper Staircase Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 3",
+                "access_rules": [
+                "^$CanReach|Child GC Upper Staircase Pot 3",
+                "^$CanReach|Adult GC Upper Staircase Pot 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Goron City",
+              "x": 131,
+              "y": 604,
+              "size": 24
+            }
+          ]
+        }
+      ]
+    }
+  ]

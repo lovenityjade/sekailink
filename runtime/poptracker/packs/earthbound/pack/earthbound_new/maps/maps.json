@@ -1,0 +1,98 @@
+﻿[
+  {
+    "name": "onett",
+    "location_size": 40,
+    "location_border_thickness": 2,
+    "img": "images/maps/onett.png"
+  },
+  {
+    "name": "twoson",
+    "location_size": 40,
+    "location_border_thickness": 2,
+    "img": "images/maps/twoson.png"
+  },
+  {
+    "name": "happyhappy",
+    "location_size": 20,
+    "location_border_thickness": 2,
+    "img": "images/maps/happyhappy.png"
+  },
+  {
+    "name": "threed",
+    "location_size": 40,
+    "location_border_thickness": 2,
+    "img": "images/maps/threed.png"
+  },
+  {
+    "name": "grapefruitfalls",
+    "location_size": 40,
+    "location_border_thickness": 2,
+    "img": "images/maps/grapefruitfalls.png"
+  },
+  {
+    "name": "saturnvalley",
+    "location_size": 20,
+    "location_border_thickness": 2,
+    "img": "images/maps/saturnvalley.png"
+  },
+  {
+    "name": "dustydunes",
+    "location_size": 40,
+    "location_border_thickness": 2,
+    "img": "images/maps/dustydunes.png"
+  },
+  {
+    "name": "fourside",
+    "location_size": 40,
+    "location_border_thickness": 2,
+    "img": "images/maps/fourside.png"
+  },
+  {
+    "name": "winters",
+    "location_size": 50,
+    "location_border_thickness": 2,
+    "img": "images/maps/winters.png"
+  },
+  {
+    "name": "summers",
+    "location_size": 40,
+    "location_border_thickness": 2,
+    "img": "images/maps/summers.png"
+  },
+  {
+    "name": "dalaam",
+    "location_size": 20,
+    "location_border_thickness": 2,
+    "img": "images/maps/dalaam.png"
+  },
+  {
+    "name": "scaraba",
+    "location_size": 40,
+    "location_border_thickness": 2,
+    "img": "images/maps/scaraba.png"
+  },
+  {
+    "name": "deepdarkness",
+    "location_size": 30,
+    "location_border_thickness": 2,
+    "img": "images/maps/deepdarkness.png"
+  },
+  {
+    "name": "tendavillage",
+    "location_size": 15,
+    "location_border_thickness": 2,
+    "img": "images/maps/tendavillage.png"
+  },
+  {
+    "name": "underworld",
+    "location_size": 15,
+    "location_border_thickness": 2,
+    "img": "images/maps/underworld.png"
+  },
+  {
+    "name": "magicant",
+    "location_size": 20,
+    "location_border_thickness": 2,
+    "img": "images/maps/magicant.png"
+  }
+]

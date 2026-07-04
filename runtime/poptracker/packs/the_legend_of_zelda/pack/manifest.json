@@ -1,0 +1,23 @@
+﻿{
+  "name": "TLoZ Randomizer - AP",
+  "game_name": "The Legend of Zelda",
+  "package_version": "1.5.5.1",
+  "package_uid": "tloz_brooty",
+  "platform": "nes",
+  "author": "Br00ty",
+  "variants": {
+    "standard": {
+      "display_name": "Map Tracker",
+      "flags": [
+        "ap"
+      ]
+    },
+    "var_itemsonly": {
+     "display_name": "Items Only",
+     "flags": [
+       "ap"
+     ]
+    }
+  },
+  "versions_url": "https://raw.githubusercontent.com/Br00ty/tloz_brooty/master/versions.json"
+}

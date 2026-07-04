@@ -1,0 +1,46 @@
+{
+  "game_id": "mario_luigi_superstar_saga",
+  "display_name": "Mario & Luigi: Superstar Saga",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apmlss"
+  ],
+  "patch_world_module": "worlds.mlss",
+  "ap_world": "mlss",
+  "required_roms": [
+    "mario_luigi_superstar_saga"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "mario_luigi_superstar_saga",
+    "world": "mlss",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/mlss/Client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".gba"
+    ],
+    "md5": [
+      "4b1a5897d89d9e74ec7f630eefdfd435"
+    ],
+    "sha1": [
+      "7c303cdde5061ee329296948060b875cb50ba410"
+    ]
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "gba",
+    "ap_game": "Mario & Luigi: Superstar Saga"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "",
+  "support_status": "not_available",
+  "availability_status": "unavailable_gba_pending_tester",
+  "compatibility_notes": "Temporarily unavailable for BETA-3 launch: GBA support is frozen to confirmed bilateral games only until a focused tester validates this title."
+}

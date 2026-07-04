@@ -1,0 +1,14 @@
+{
+  "platform": "snes",
+  "display_name": "Super Nintendo Entertainment System",
+  "primary_core": "bsnes-mercury-performance",
+  "core_paths": {
+    "linux-x64": "runtime/platforms/linux-x64/cores/bsnes_mercury_performance_libretro.so",
+    "win32-x64": "runtime/platforms/win32-x64/cores/bsnes_mercury_performance_libretro.dll"
+  },
+  "notes": [
+    "Most SNES candidates should be investigated through APWorld client code and SNI/Lua connector behavior before writing SKLMI mappings manually.",
+    "ALTTP is release-certified but must not become a hardcoded template for all SNES games."
+  ]
+}
+

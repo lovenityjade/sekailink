@@ -1,0 +1,840 @@
+
+
+[
+  {
+    "name": "Graveyard - hint",
+    "chest_unopened_img": "/images/items/close.png",
+    "chest_opened_img": "/images/items/open.png",
+    "overlay_background": "#000000",
+    "access_rules": [
+        "{}"
+    ],
+    "children": [
+        {
+            "name": "Royal Familys Tomb - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Song from Royal Familys Tomb - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "graveyard_royal_familys_tomb_song_from_royal_familys_tomb"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Chest - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "graveyard_royal_familys_tomb_chest"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Graveyard",
+                    "x": "365",
+                    "y": "1034",
+                    "size": 22,
+                    "shape": "diamond"
+                },
+                {
+                  "map": "Graveyard",
+                  "x": "669",
+                  "y": "313",
+                  "size": 22,
+                    "shape": "diamond"
+              }
+            ]
+        },
+        {
+            "name": "Shield Grave - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Shield Grave Chest - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "graveyard_shield_grave_shield_grave_chest"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Graveyard",
+                    "x": "801",
+                    "y": "567",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Heart Piece Grave - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Suns Song Chest - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "graveyard_heart_piece_grave_suns_song_chest"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Graveyard",
+                    "x": "984",
+                    "y": "381",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Dampe Gravedigging Tour - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Early Night - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "graveyard_dampe_gravedigging_tour_early_night"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Graveyard",
+                    "x": "453",
+                    "y": "485",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Dampe - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Race - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Hookshot Chest - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "graveyard_dampe_race_hookshot_chest"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Freestanding PoH - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "graveyard_dampe_race_freestanding_poh"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Rupee 1 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "graveyard_dampe_race_rupee_1"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Rupee 2 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "graveyard_dampe_race_rupee_2"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Rupee 3 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "graveyard_dampe_race_rupee_3"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Rupee 4 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "graveyard_dampe_race_rupee_4"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Rupee 5 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "graveyard_dampe_race_rupee_5"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Rupee 6 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "graveyard_dampe_race_rupee_6"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Rupee 7 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "graveyard_dampe_race_rupee_7"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Rupee 8 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "graveyard_dampe_race_rupee_8"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Dampe Race",
+                            "x": "367",
+                            "y": "951",
+                            "size": 22,
+                    "shape": "diamond"
+                        },
+                        {
+                          "map": "Graveyard",
+                          "x": "242",
+                          "y": "405",
+                          "size": 22,
+                    "shape": "diamond"
+                      }
+                    ]
+                }
+            ],
+            "sections": [
+                {
+                    "name": "Pot 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "graveyard_dampe_pot_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "graveyard_dampe_pot_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "graveyard_dampe_pot_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 4 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "graveyard_dampe_pot_4"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 5 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "graveyard_dampe_pot_5"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 6 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "graveyard_dampe_pot_6"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Graveyard",
+                    "x": "1583",
+                    "y": "1366",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Bean Patch - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "graveyard_bean_patch_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Graveyard",
+                    "x": "217",
+                    "y": "424",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Wall - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "graveyard_wall_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Graveyard",
+                    "x": "686",
+                    "y": "398",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        }
+    ],
+    "sections": [
+        {
+            "name": "Freestanding PoH - hint",
+            "access_rules": [],
+            "visibility_rules": [
+                "graveyard_freestanding_poh"
+            ],
+            "item_count": 1
+        }
+    ],
+    "map_locations": [
+        {
+            "map": "Graveyard",
+            "x": "119",
+            "y": "398",
+            "size": 22,
+                    "shape": "diamond"
+        }
+    ]
+},
+    {
+      "name": "Graveyard",
+      "chest_unopened_img": "/images/Items/close.png",
+      "chest_opened_img": "/images/Items/open.png",
+      "overlay_background": "#000000",
+      "access_rules": [
+        " "
+      ],
+      "children": [
+        {
+          "name": "Royal Familys Tomb",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Song from Royal Familys Tomb",
+                "access_rules": [
+                "^$CanReach|Child Song from Royal Familys Tomb",
+                "^$CanReach|Adult Song from Royal Familys Tomb"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Chest",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Royal Familys Tomb Chest",
+                "^$CanReach|Adult Graveyard Royal Familys Tomb Chest"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Graveyard",
+              "x": 343,
+              "y": 1012,
+              "size": 24
+            },
+            {
+              "map": "Graveyard",
+              "x": 647,
+              "y": 291,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Dampe",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "Race",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Hookshot Chest",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Dampe Race Hookshot Chest",
+                "^$CanReach|Adult Graveyard Dampe Race Hookshot Chest"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Freestanding PoH",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Dampe Race Freestanding PoH",
+                "^$CanReach|Adult Graveyard Dampe Race Freestanding PoH"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Rupee 1",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Dampe Race Rupee 1",
+                "^$CanReach|Adult Graveyard Dampe Race Rupee 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Rupee 2",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Dampe Race Rupee 2",
+                "^$CanReach|Adult Graveyard Dampe Race Rupee 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Rupee 3",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Dampe Race Rupee 3",
+                "^$CanReach|Adult Graveyard Dampe Race Rupee 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Rupee 4",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Dampe Race Rupee 4",
+                "^$CanReach|Adult Graveyard Dampe Race Rupee 4"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Rupee 5",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Dampe Race Rupee 5",
+                "^$CanReach|Adult Graveyard Dampe Race Rupee 5"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Rupee 6",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Dampe Race Rupee 6",
+                "^$CanReach|Adult Graveyard Dampe Race Rupee 6"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Rupee 7",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Dampe Race Rupee 7",
+                "^$CanReach|Adult Graveyard Dampe Race Rupee 7"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Rupee 8",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Dampe Race Rupee 8",
+                "^$CanReach|Adult Graveyard Dampe Race Rupee 8"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Dampe Race",
+                  "x": 345,
+                  "y": 929,
+                  "size": 24
+                },
+                {
+                  "map": "Graveyard",
+                  "x": 220,
+                  "y": 383,
+                  "size": 24
+                }
+              ]
+            }
+          ],
+          "sections": [
+            {
+              "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Dampe Pot 1",
+                "^$CanReach|Adult Graveyard Dampe Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Dampe Pot 2",
+                "^$CanReach|Adult Graveyard Dampe Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 3",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Dampe Pot 3",
+                "^$CanReach|Adult Graveyard Dampe Pot 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 4",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Dampe Pot 4",
+                "^$CanReach|Adult Graveyard Dampe Pot 4"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 5",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Dampe Pot 5",
+                "^$CanReach|Adult Graveyard Dampe Pot 5"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 6",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Dampe Pot 6",
+                "^$CanReach|Adult Graveyard Dampe Pot 6"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Dampe Race",
+              "x": 454,
+              "y": 115,
+              "size": 24
+            },
+            {
+              "map": "Graveyard",
+              "x": 244,
+              // moving 24 pixels to the right, Race box at 220
+              "y": 383,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Bean Patch",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child Graveyard GS Bean Patch",
+                "^$CanReach|Adult Graveyard GS Bean Patch"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Graveyard",
+              "x": 195,
+              "y": 402,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Wall",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child Graveyard GS Wall",
+                "^$CanReach|Adult Graveyard GS Wall"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Graveyard",
+              "x": 664,
+              "y": 376,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Shield Grave",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Shield Grave Chest",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Shield Grave Chest",
+                "^$CanReach|Adult Graveyard Shield Grave Chest"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Graveyard",
+              "x": 779,
+              "y": 545,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Heart Piece Grave",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Suns Song Chest",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Heart Piece Grave Chest",
+                "^$CanReach|Adult Graveyard Heart Piece Grave Chest"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Graveyard",
+              "x": 962,
+              "y": 359,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Dampe Gravedigging Tour",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Early Night",
+                "access_rules": [
+                "^$CanReach|Child Graveyard Dampe Gravedigging Tour",
+                "^$CanReach|Adult Graveyard Dampe Gravedigging Tour"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Graveyard",
+              "x": 431,
+              "y": 463,
+              "size": 24
+            }
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "name": "Freestanding PoH",
+          "access_rules": [
+            "^$CanReach|Child Graveyard Freestanding PoH",
+            "^$CanReach|Adult Graveyard Freestanding PoH"
+          ],
+          "item_count": 1
+        }
+      ],
+      "map_locations": [
+        {
+          "map": "Graveyard",
+          "x": 97,
+          "y": 376,
+          "size": 24
+        }
+      ]
+    }
+  ]

@@ -1,0 +1,26 @@
+{
+    "name": "Secret of Mana Randomizer - Open Mode - Map and Item Tracker",
+    "game_name": "Secret of Mana Randomizer",
+    "platform": "snes",
+    "package_version": "1.7.0.3",
+    "package_uid": "som_open_mode_map",
+    "author": "Cyb3R",
+    "variants": {
+        "standard": {
+            "display_name": "Map Tracker",
+            "flags": [
+                "hirom"
+            ]
+        },
+        "var_itemsonly": {
+            "display_name": "Items Only",
+            "flags": [
+                "hirom"
+            ]
+        } /*,
+            "var_no_pins": {
+            "display_name": "I hate pins >:^( [WIP]"
+        }*/
+    },
+    "versions_url": "https://raw.githubusercontent.com/Cyb3RGER/SoM-Open-Mode-Tracker/master/versions.json"
+}

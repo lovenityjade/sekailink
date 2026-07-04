@@ -1,0 +1,17 @@
+{
+  "broadcast_item_grid": {
+    "type": "layout",
+    "key": "compact_item_grid"
+  },
+  "tracker_broadcast": {
+    "type": "array",
+    "dropshadow": false,
+    "margin": 0,
+    "content": [
+      {
+        "type": "layout",
+        "key": "broadcast_item_grid"
+      }
+    ]
+  }
+}

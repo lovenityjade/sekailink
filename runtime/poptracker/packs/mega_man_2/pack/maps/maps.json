@@ -1,0 +1,93 @@
+[
+    {
+        "name": "stages",
+        "location_size": 7,
+        "location_border_thickness": 2,
+        "img": "images/maps/stages.png"
+    },
+    {
+        "name": "bubble_man",
+        "location_size": 40,
+        "location_border_thickness": 2,
+        "img": "images/maps/bubble_man.png"
+    },
+    {
+        "name": "air_man",
+        "location_size": 40,
+        "location_border_thickness": 2,
+        "img": "images/maps/air_man.png"
+    },
+    {
+        "name": "quick_man",
+        "location_size": 40,
+        "location_border_thickness": 2,
+        "img": "images/maps/quick_man.png"
+    },
+    {
+        "name": "heat_man",
+        "location_size": 40,
+        "location_border_thickness": 2,
+        "img": "images/maps/heat_man.png"
+    },
+    {
+        "name": "wood_man",
+        "location_size": 40,
+        "location_border_thickness": 2,
+        "img": "images/maps/wood_man.png"
+    },
+    {
+        "name": "metal_man",
+        "location_size": 40,
+        "location_border_thickness": 2,
+        "img": "images/maps/metal_man.png"
+    },
+    {
+        "name": "flash_man",
+        "location_size": 40,
+        "location_border_thickness": 2,
+        "img": "images/maps/flash_man.png"
+    },
+    {
+        "name": "crash_man",
+        "location_size": 40,
+        "location_border_thickness": 2,
+        "img": "images/maps/crash_man.png"
+    },
+    
+    {
+        "name": "wily_1",
+        "location_size": 40,
+        "location_border_thickness": 2,
+        "img": "images/maps/wily_1.png"
+    },
+    {
+        "name": "wily_2",
+        "location_size": 40,
+        "location_border_thickness": 2,
+        "img": "images/maps/wily_2.png"
+    },
+    {
+        "name": "wily_3",
+        "location_size": 40,
+        "location_border_thickness": 2,
+        "img": "images/maps/wily_3.png"
+    },
+    {
+        "name": "wily_4",
+        "location_size": 40,
+        "location_border_thickness": 2,
+        "img": "images/maps/wily_4.png"
+    },
+    {
+        "name": "wily_5",
+        "location_size": 40,
+        "location_border_thickness": 2,
+        "img": "images/maps/wily_5.png"
+    },
+    {
+        "name": "wily_6",
+        "location_size": 40,
+        "location_border_thickness": 2,
+        "img": "images/maps/wily_6.png"
+    }
+]

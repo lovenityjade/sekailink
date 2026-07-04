@@ -1,0 +1,46 @@
+{
+  "game_id": "super_mario_world",
+  "display_name": "Super Mario World",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apsmw"
+  ],
+  "patch_world_module": "worlds.smw",
+  "ap_world": "smw",
+  "required_roms": [
+    "super_mario_world"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "sni",
+  "archipelago_client": {
+    "game_key": "super_mario_world",
+    "world": "smw",
+    "wrapper": "sni",
+    "client_file": "worlds/smw/Client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [
+      "cdd3c8c37322978ca8669b34bc89c804"
+    ],
+    "sha1": [
+      "6b47bb75d16514b6a476aa0c73a683a2a4c18765"
+    ]
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "snes",
+    "ap_game": "Super Mario World"
+  },
+  "tracker_pack_uid": "https://github.com/PoryGone/SMW_AP_Tracker",
+  "tracker_web_url": "https://github.com/PoryGone/SMW_AP_Tracker/releases/latest",
+  "tracker_asset_regex": "\\.zip$",
+  "tracker_pack_path": "poptracker/packs/super_mario_world/pack/super_mario_world_randomizer_porygone"
+}

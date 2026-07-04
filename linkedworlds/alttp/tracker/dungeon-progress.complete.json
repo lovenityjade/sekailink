@@ -1,0 +1,310 @@
+{
+  "mapping_id": "alttp-dungeon-progress-complete-v1",
+  "linkedworld_id": "alttp",
+  "status": "repo-owned-dungeon-reward-and-goal-surface",
+  "source_refs": [
+    "sekaiemu/worlds/alttp/__init__.py",
+    "sekaiemu/worlds/alttp/Items.py",
+    "sekaiemu/worlds/alttp/Options.py",
+    "bridge/sklmi.phase1.json"
+  ],
+  "dungeons": [
+    {
+      "dungeon_id": "eastern_palace",
+      "label": "Eastern Palace",
+      "preferred_tab": "eastern",
+      "boss_location_name": "Eastern Palace - Boss",
+      "reward_slot_id": "eastern_reward"
+    },
+    {
+      "dungeon_id": "desert_palace",
+      "label": "Desert Palace",
+      "preferred_tab": "desert",
+      "boss_location_name": "Desert Palace - Boss",
+      "reward_slot_id": "desert_reward"
+    },
+    {
+      "dungeon_id": "tower_of_hera",
+      "label": "Tower of Hera",
+      "preferred_tab": "hera",
+      "boss_location_name": "Tower of Hera - Boss",
+      "reward_slot_id": "hera_reward"
+    },
+    {
+      "dungeon_id": "palace_of_darkness",
+      "label": "Palace of Darkness",
+      "preferred_tab": "pod",
+      "boss_location_name": "Palace of Darkness - Boss",
+      "reward_slot_id": "pod_reward"
+    },
+    {
+      "dungeon_id": "swamp_palace",
+      "label": "Swamp Palace",
+      "preferred_tab": "swamp",
+      "boss_location_name": "Swamp Palace - Boss",
+      "reward_slot_id": "swamp_reward"
+    },
+    {
+      "dungeon_id": "skull_woods",
+      "label": "Skull Woods",
+      "preferred_tab": "skull",
+      "boss_location_name": "Skull Woods - Boss",
+      "reward_slot_id": "skull_reward"
+    },
+    {
+      "dungeon_id": "thieves_town",
+      "label": "Thieves' Town",
+      "preferred_tab": "thieves",
+      "boss_location_name": "Thieves' Town - Boss",
+      "reward_slot_id": "thieves_reward"
+    },
+    {
+      "dungeon_id": "ice_palace",
+      "label": "Ice Palace",
+      "preferred_tab": "ice",
+      "boss_location_name": "Ice Palace - Boss",
+      "reward_slot_id": "ice_reward"
+    },
+    {
+      "dungeon_id": "misery_mire",
+      "label": "Misery Mire",
+      "preferred_tab": "mire",
+      "boss_location_name": "Misery Mire - Boss",
+      "reward_slot_id": "mire_reward"
+    },
+    {
+      "dungeon_id": "turtle_rock",
+      "label": "Turtle Rock",
+      "preferred_tab": "turtle",
+      "boss_location_name": "Turtle Rock - Boss",
+      "reward_slot_id": "turtle_reward"
+    },
+    {
+      "dungeon_id": "castle_tower",
+      "label": "Castle Tower",
+      "preferred_tab": "escape",
+      "boss_location_name": "Beat Agahnim 1",
+      "reward_slot_id": "aga1_progress"
+    },
+    {
+      "dungeon_id": "ganons_tower",
+      "label": "Ganon's Tower",
+      "preferred_tab": "gt",
+      "boss_location_name": "Beat Agahnim 2",
+      "reward_slot_id": "aga2_progress"
+    }
+  ],
+  "reward_slots": [
+    {
+      "slot_id": "eastern_reward",
+      "label": "Eastern Reward",
+      "category": "pendant_or_crystal",
+      "possible_values": [
+        "Green Pendant",
+        "Blue Pendant",
+        "Red Pendant",
+        "Crystal 1",
+        "Crystal 2",
+        "Crystal 3",
+        "Crystal 4",
+        "Crystal 5",
+        "Crystal 6",
+        "Crystal 7"
+      ]
+    },
+    {
+      "slot_id": "desert_reward",
+      "label": "Desert Reward",
+      "category": "pendant_or_crystal",
+      "possible_values": [
+        "Green Pendant",
+        "Blue Pendant",
+        "Red Pendant",
+        "Crystal 1",
+        "Crystal 2",
+        "Crystal 3",
+        "Crystal 4",
+        "Crystal 5",
+        "Crystal 6",
+        "Crystal 7"
+      ]
+    },
+    {
+      "slot_id": "hera_reward",
+      "label": "Hera Reward",
+      "category": "pendant_or_crystal",
+      "possible_values": [
+        "Green Pendant",
+        "Blue Pendant",
+        "Red Pendant",
+        "Crystal 1",
+        "Crystal 2",
+        "Crystal 3",
+        "Crystal 4",
+        "Crystal 5",
+        "Crystal 6",
+        "Crystal 7"
+      ]
+    },
+    {
+      "slot_id": "pod_reward",
+      "label": "PoD Reward",
+      "category": "crystal",
+      "possible_values": [
+        "Crystal 1",
+        "Crystal 2",
+        "Crystal 3",
+        "Crystal 4",
+        "Crystal 5",
+        "Crystal 6",
+        "Crystal 7"
+      ]
+    },
+    {
+      "slot_id": "swamp_reward",
+      "label": "Swamp Reward",
+      "category": "crystal",
+      "possible_values": [
+        "Crystal 1",
+        "Crystal 2",
+        "Crystal 3",
+        "Crystal 4",
+        "Crystal 5",
+        "Crystal 6",
+        "Crystal 7"
+      ]
+    },
+    {
+      "slot_id": "skull_reward",
+      "label": "Skull Reward",
+      "category": "crystal",
+      "possible_values": [
+        "Crystal 1",
+        "Crystal 2",
+        "Crystal 3",
+        "Crystal 4",
+        "Crystal 5",
+        "Crystal 6",
+        "Crystal 7"
+      ]
+    },
+    {
+      "slot_id": "thieves_reward",
+      "label": "Thieves Reward",
+      "category": "crystal",
+      "possible_values": [
+        "Crystal 1",
+        "Crystal 2",
+        "Crystal 3",
+        "Crystal 4",
+        "Crystal 5",
+        "Crystal 6",
+        "Crystal 7"
+      ]
+    },
+    {
+      "slot_id": "ice_reward",
+      "label": "Ice Reward",
+      "category": "crystal",
+      "possible_values": [
+        "Crystal 1",
+        "Crystal 2",
+        "Crystal 3",
+        "Crystal 4",
+        "Crystal 5",
+        "Crystal 6",
+        "Crystal 7"
+      ]
+    },
+    {
+      "slot_id": "mire_reward",
+      "label": "Mire Reward",
+      "category": "crystal",
+      "possible_values": [
+        "Crystal 1",
+        "Crystal 2",
+        "Crystal 3",
+        "Crystal 4",
+        "Crystal 5",
+        "Crystal 6",
+        "Crystal 7"
+      ]
+    },
+    {
+      "slot_id": "turtle_reward",
+      "label": "Turtle Reward",
+      "category": "crystal",
+      "possible_values": [
+        "Crystal 1",
+        "Crystal 2",
+        "Crystal 3",
+        "Crystal 4",
+        "Crystal 5",
+        "Crystal 6",
+        "Crystal 7"
+      ]
+    }
+  ],
+  "goal_slots": [
+    {
+      "slot_id": "goal_mode",
+      "label": "Goal",
+      "source_key": "slot_data.goal"
+    },
+    {
+      "slot_id": "gt_requirement",
+      "label": "Crystals For GT",
+      "source_key": "slot_data.crystals_needed_for_gt"
+    },
+    {
+      "slot_id": "ganon_requirement",
+      "label": "Crystals For Ganon",
+      "source_key": "slot_data.crystals_needed_for_ganon"
+    },
+    {
+      "slot_id": "mire_medallion",
+      "label": "Misery Mire Medallion",
+      "source_key": "slot_data.misery_mire_medallion"
+    },
+    {
+      "slot_id": "turtle_medallion",
+      "label": "Turtle Rock Medallion",
+      "source_key": "slot_data.turtle_rock_medallion"
+    },
+    {
+      "slot_id": "prize_shuffle",
+      "label": "Shuffle Prizes",
+      "source_key": "slot_data.shuffle_prizes"
+    },
+    {
+      "slot_id": "aga1_progress",
+      "label": "Agahnim 1",
+      "semantic_value": "Beat Agahnim 1"
+    },
+    {
+      "slot_id": "aga2_progress",
+      "label": "Agahnim 2",
+      "semantic_value": "Beat Agahnim 2"
+    },
+    {
+      "slot_id": "triforce_pieces_required",
+      "label": "Triforce Pieces Required",
+      "source_key": "slot_data.triforce_pieces_required"
+    },
+    {
+      "slot_id": "triforce_pieces_available",
+      "label": "Triforce Pieces Available",
+      "source_key": "slot_data.triforce_pieces_available"
+    }
+  ],
+  "live_bridge_alignment": {
+    "declared_boss_checks": 0,
+    "declared_reward_slots": 0,
+    "declared_goal_progress_slots": 0,
+    "status": "surface-prepared-live-proof-still-needed",
+    "notes": [
+      "The linkedworld surface now reserves dungeon, reward, and goal families explicitly.",
+      "The active bridge still needs deeper extraction before these families are fully proven live."
+    ]
+  }
+}

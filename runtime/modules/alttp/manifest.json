@@ -1,0 +1,46 @@
+{
+  "game_id": "alttp",
+  "display_name": "A Link to the Past",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".aplttp"
+  ],
+  "patch_world_module": "worlds.alttp",
+  "required_roms": [
+    "alttp"
+  ],
+  "client_mode": "archipelago",
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [
+      "03a63945398191337e896e5771f77173"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "snes",
+    "profile": "profiles/alttp-starter.profile",
+    "ap_game": "A Link to the Past"
+  },
+  "tracker_pack_uid": "https://github.com/StripesOO7/alttp-ap-poptracker-pack",
+  "tracker_web_url": "https://github.com/StripesOO7/alttp-ap-poptracker-pack/releases/latest",
+  "ap_client": "sni",
+  "ap_world": "alttp",
+  "archipelago_client": {
+    "game_key": "a_link_to_the_past",
+    "world": "alttp",
+    "wrapper": "sni",
+    "client_file": "worlds/alttp/Client.py"
+  },
+  "tracker_asset_regex": "\\.zip$",
+  "tracker_pack_path": "poptracker/packs/alttp/pack",
+  "default_tracker_variant": "Map Tracker - AP"
+}

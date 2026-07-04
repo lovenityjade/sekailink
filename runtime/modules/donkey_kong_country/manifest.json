@@ -1,0 +1,44 @@
+{
+  "game_id": "donkey_kong_country",
+  "display_name": "Donkey Kong Country",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apdkc"
+  ],
+  "patch_world_module": "worlds.dkc",
+  "ap_world": "dkc",
+  "required_roms": [
+    "donkey_kong_country"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "sni",
+  "archipelago_client": {
+    "game_key": "donkey_kong_country",
+    "world": "dkc",
+    "wrapper": "sni",
+    "client_file": "worlds/dkc/Client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [
+      "30c5f292ff4cbbfcc00fd8fa96c2de3b"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "snes",
+    "ap_game": "Donkey Kong Country"
+  },
+  "tracker_pack_uid": "https://github.com/PoryGone/DKC3_AP_Tracker/releases/",
+  "tracker_web_url": "https://github.com/pwkfisher/ap-dkc-tracker/releases/latest",
+  "tracker_asset_regex": "\\.zip$",
+  "tracker_pack_path": "poptracker/packs/donkey_kong_country/pack/ap-dkc-tracker"
+}

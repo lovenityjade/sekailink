@@ -1,0 +1,1019 @@
+/* This file was automatically generated via Phakager. Do not make manual edits to this file. */
+[
+    {
+        "name": "1-Up Block Randomization",
+        "type": "toggle",
+        "img": "images/labels/label_1ups.png",
+        "disabled_img_mods": "none",
+        "codes": "__label_1ups"
+    },
+    {
+        "name": "100 Coin Star Randomization",
+        "type": "toggle",
+        "img": "images/labels/label_100s.png",
+        "disabled_img_mods": "none",
+        "codes": "__label_100s"
+    },
+    {
+        "name": "Logic - Cannons",
+        "type": "toggle",
+        "img": "images/labels/label_cannons.png",
+        "disabled_img_mods": "none",
+        "codes": "__label_cannons"
+    },
+    {
+        "name": "Logic - Caps",
+        "type": "toggle",
+        "img": "images/labels/label_caps.png",
+        "disabled_img_mods": "none",
+        "codes": "__label_caps"
+    },
+    {
+        "name": "Logic - Moves",
+        "type": "toggle",
+        "img": "images/labels/label_moves.png",
+        "disabled_img_mods": "none",
+        "codes": "__label_moves"
+    },
+    {
+        "name": "Victory Condition",
+        "type": "toggle",
+        "img": "images/labels/label_defeat.png",
+        "disabled_img_mods": "none",
+        "codes": "__label_goal"
+    },
+    {
+        "name": "Randomize Bob-omb Buddies",
+        "type": "toggle",
+        "codes": "__setting_BB",
+        "img": "images/buddy.png",
+        "initial_active_state": true
+    },
+    {
+        "name": "1-Up Block Randomization",
+        "type": "toggle",
+        "codes": "__setting_1UB",
+        "img": "images/labels/option_shuffled.png",
+        "disabled_img": "images/labels/option_excluded.png",
+        "disabled_img_mods": "none",
+        "initial_active_state": true
+    },
+    {
+        "name": "100 Coin Star Randomization",
+        "type": "toggle",
+        "codes": "__setting_100",
+        "img": "images/labels/option_shuffled.png",
+        "disabled_img": "images/labels/option_excluded.png",
+        "disabled_img_mods": "none"
+    },
+    {
+        "name": "Logic - Caps",
+        "type": "progressive",
+        "codes": "__setting_SC",
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "Logic - Caps (Strict)",
+                "img": "images/labels/option_strict.png",
+                "inherit_codes": false
+            },
+            {
+                "name": "Logic - Caps (Non-Strict)",
+                "img": "images/labels/option_nonstrict.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Strict Cannon Requirements",
+        "type": "progressive",
+        "codes": "__setting_SN",
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "Logic - Cannons (Strict)",
+                "img": "images/labels/option_strict.png",
+                "inherit_codes": false
+            },
+            {
+                "name": "Logic - Cannons (Non-Strict)",
+                "img": "images/labels/option_nonstrict.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Strict Move Requirements",
+        "type": "progressive",
+        "codes": "__setting_SM",
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "Logic - Moves (Strict)",
+                "img": "images/labels/option_strict.png",
+                "inherit_codes": false
+            },
+            {
+                "name": "Logic - Moves (Non-Strict)",
+                "img": "images/labels/option_nonstrict.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Lobby Star Door - Star Requirement",
+        "type": "static",
+        "codes": "__setting_F1",
+        "img": "images/settings/door_f1.png",
+        "disabled_img_mods": "none"
+    },
+    {
+        "name": "Basement Star Door - Star Requirement",
+        "type": "static",
+        "codes": "__setting_B1",
+        "img": "images/settings/door_b1.png",
+        "disabled_img_mods": "none"
+    },
+    {
+        "name": "Upstairs Door - Star Requirement",
+        "type": "static",
+        "codes": "__setting_F2",
+        "img": "images/settings/door_f2.png",
+        "disabled_img_mods": "none"
+    },
+    {
+        "name": "Infinite Staircase Door - Star Requirement",
+        "type": "static",
+        "codes": "__setting_F3",
+        "img": "images/settings/door_f3.png",
+        "disabled_img_mods": "none"
+    },
+    {
+        "name": "MIPS the Rabbit I - Star Requirement",
+        "type": "static",
+        "codes": "__setting_MIPS1",
+        "img": "images/settings/mips1.png",
+        "disabled_img_mods": "none"
+    },
+    {
+        "name": "MIPS the Rabbit II - Star Requirement",
+        "type": "static",
+        "codes": "__setting_MIPS2",
+        "img": "images/settings/mips2.png",
+        "disabled_img_mods": "none"
+    },
+    {
+        "name": "Goal Requirement",
+        "type": "progressive",
+        "codes": "__setting_GOAL",
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "Defeat Last Bowser",
+                "img": "images/labels/option_lastbowser.png",
+                "inherit_codes": false
+            },
+            {
+                "name": "Defeat All Bowsers",
+                "img": "images/labels/option_allbowsers.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Clear Course Entrances",
+        "type": "progressive",
+        "codes": "__er_clear_courses",
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "loop": true,
+        "stages": [
+            {
+                "img": "images/er_legend/meta/er_clr_courses.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/er_legend/meta/er_clr_courses.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Clear Secret Entrances",
+        "type": "progressive",
+        "codes": "__er_clear_secrets",
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "loop": true,
+        "stages": [
+            {
+                "img": "images/er_legend/meta/er_clr_secrets.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/er_legend/meta/er_clr_secrets.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Clear All Entrances",
+        "type": "progressive",
+        "codes": "__er_clear_all",
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "loop": true,
+        "stages": [
+            {
+                "img": "images/er_legend/meta/er_clr_all.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/er_legend/meta/er_clr_all.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Reset Course Entrances to Vanilla",
+        "type": "progressive",
+        "codes": "__er_reset_courses",
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "loop": true,
+        "stages": [
+            {
+                "img": "images/er_legend/meta/er_rst_courses.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/er_legend/meta/er_rst_courses.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Reset Secret Entrances to Vanilla",
+        "type": "progressive",
+        "codes": "__er_reset_secrets",
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "loop": true,
+        "stages": [
+            {
+                "img": "images/er_legend/meta/er_rst_secrets.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/er_legend/meta/er_rst_secrets.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Reset All Entrances to Vanilla",
+        "type": "progressive",
+        "codes": "__er_reset_all",
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "loop": true,
+        "stages": [
+            {
+                "img": "images/er_legend/meta/er_rst_all.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/er_legend/meta/er_rst_all.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Spoil Star Requirements",
+        "type": "static",
+        "codes": "__setting_spoil_reqs_txt",
+        "img": "images/labels/label_spoil_requirements.png"
+    },
+    {
+        "name": "Auto-set Entrances",
+        "type": "static",
+        "codes": "__setting_auto_ent_txt",
+        "img": "images/labels/label_autoset_entrances.png"
+    },
+    {
+        "name": "Spoil Star Requirements",
+        "type": "progressive",
+        "codes": "__setting_spoil_reqs",
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "loop": true,
+        "stages": [
+            {
+                "name": "Spoil Star Requirements - No",
+                "img": "images/labels/option_no.png",
+                "inherit_codes": false
+            },
+            {
+                "name": "Spoil Star Requirements - Yes",
+                "img": "images/labels/option_yes.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Auto-set Entrances",
+        "type": "progressive",
+        "codes": "__setting_auto_ent",
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "loop": true,
+        "stages": [
+            {
+                "name": "Auto-set Entrances - No",
+                "img": "images/labels/option_no.png",
+                "inherit_codes": false
+            },
+            {
+                "name": "Auto-set Entrances - If Logically Accessible",
+                "img": "images/labels/option_iflogical.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Lobby Star Door - Star Requirement Tens Place",
+        "type": "progressive",
+        "codes": "__setting_F1_tens",
+        "allow_disabled": false,
+        "stages": [
+            {
+                "img": "images/num/unknown_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/0_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/1_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/2_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/3_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/4_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/5_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/6_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/7_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/8_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/9_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/10_w.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Lobby Star Door - Star Requirement Ones Place",
+        "type": "progressive",
+        "codes": "__setting_F1_ones",
+        "allow_disabled": false,
+        "stages": [
+            {
+                "img": "images/num/unknown.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/0.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/1.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/2.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/3.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/4.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/5.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/6.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/7.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/8.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/9.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/10.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Basement Star Door - Star Requirement Tens Place",
+        "type": "progressive",
+        "codes": "__setting_B1_tens",
+        "allow_disabled": false,
+        "stages": [
+            {
+                "img": "images/num/unknown_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/0_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/1_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/2_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/3_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/4_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/5_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/6_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/7_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/8_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/9_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/10_w.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Basement Star Door - Star Requirement Ones Place",
+        "type": "progressive",
+        "codes": "__setting_B1_ones",
+        "allow_disabled": false,
+        "stages": [
+            {
+                "img": "images/num/unknown.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/0.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/1.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/2.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/3.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/4.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/5.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/6.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/7.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/8.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/9.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/10.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Upstairs Star Door - Star Requirement Tens Place",
+        "type": "progressive",
+        "codes": "__setting_F2_tens",
+        "allow_disabled": false,
+        "stages": [
+            {
+                "img": "images/num/unknown_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/0_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/1_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/2_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/3_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/4_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/5_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/6_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/7_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/8_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/9_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/10_w.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Upstairs Star Door - Star Requirement Ones Place",
+        "type": "progressive",
+        "codes": "__setting_F2_ones",
+        "allow_disabled": false,
+        "stages": [
+            {
+                "img": "images/num/unknown.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/0.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/1.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/2.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/3.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/4.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/5.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/6.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/7.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/8.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/9.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/10.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Infinite Staircase Door - Star Requirement Tens Place",
+        "type": "progressive",
+        "codes": "__setting_F3_tens",
+        "allow_disabled": false,
+        "stages": [
+            {
+                "img": "images/num/unknown_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/0_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/1_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/2_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/3_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/4_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/5_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/6_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/7_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/8_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/9_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/10_w.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "Infinite Staircase Door - Star Requirement Ones Place",
+        "type": "progressive",
+        "codes": "__setting_F3_ones",
+        "allow_disabled": false,
+        "stages": [
+            {
+                "img": "images/num/unknown.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/0.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/1.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/2.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/3.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/4.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/5.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/6.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/7.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/8.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/9.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/10.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "MIPS I - Star Requirement Tens Place",
+        "type": "progressive",
+        "codes": "__setting_MIPS1_tens",
+        "allow_disabled": false,
+        "stages": [
+            {
+                "img": "images/num/unknown_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/0_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/1_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/2_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/3_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/4_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/5_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/6_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/7_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/8_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/9_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/10_w.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "MIPS I - Star Requirement Ones Place",
+        "type": "progressive",
+        "codes": "__setting_MIPS1_ones",
+        "allow_disabled": false,
+        "stages": [
+            {
+                "img": "images/num/unknown.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/0.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/1.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/2.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/3.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/4.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/5.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/6.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/7.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/8.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/9.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/10.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "MIPS II - Star Requirement Tens Place",
+        "type": "progressive",
+        "codes": "__setting_MIPS2_tens",
+        "allow_disabled": false,
+        "stages": [
+            {
+                "img": "images/num/unknown_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/0_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/1_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/2_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/3_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/4_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/5_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/6_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/7_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/8_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/9_w.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/10_w.png",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+        "name": "MIPS II - Star Requirement Ones Place",
+        "type": "progressive",
+        "codes": "__setting_MIPS2_ones",
+        "allow_disabled": false,
+        "stages": [
+            {
+                "img": "images/num/unknown.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/0.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/1.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/2.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/3.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/4.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/5.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/6.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/7.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/8.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/9.png",
+                "inherit_codes": false
+            },
+            {
+                "img": "images/num/10.png",
+                "inherit_codes": false
+            }
+        ]
+    }
+]

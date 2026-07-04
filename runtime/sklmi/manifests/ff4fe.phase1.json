@@ -1,0 +1,172 @@
+{
+  "id": "ff4fe",
+  "type": "linkedworld",
+  "version": "0.1.0-beta3-heartbeat",
+  "sklmi": {
+    "contract_version": "1.0",
+    "bridge_id": "ff4fe-phase1",
+    "driver_instance_id": "ff4fe-heartbeat-default",
+    "core_profile": "snes_v1",
+    "module": "sekaiemu",
+    "state_file": "ff4fe.phase1.bridge.state",
+    "poll_interval_ms": 16,
+    "checks": [
+      {
+        "domain_id": "system_ram",
+        "address": 70304,
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": 1,
+        "event_type": "location_checked",
+        "location_id": 7191991,
+        "location_name": "Baron Town -- Exterior -- grass, top",
+        "event_key": "ff4fe.treasure.0",
+        "mapped_value": "Baron Town -- Exterior -- grass, top"
+      },
+      {
+        "domain_id": "system_ram",
+        "address": 70304,
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": 2,
+        "event_type": "location_checked",
+        "location_id": 7191992,
+        "location_name": "Baron Town -- Exterior -- grass, left",
+        "event_key": "ff4fe.treasure.1",
+        "mapped_value": "Baron Town -- Exterior -- grass, left"
+      },
+      {
+        "domain_id": "system_ram",
+        "address": 70304,
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": 4,
+        "event_type": "location_checked",
+        "location_id": 7191993,
+        "location_name": "Baron Town -- Exterior -- grass, bottom",
+        "event_key": "ff4fe.treasure.2",
+        "mapped_value": "Baron Town -- Exterior -- grass, bottom"
+      },
+      {
+        "domain_id": "system_ram",
+        "address": 70928,
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": 2,
+        "event_type": "location_checked",
+        "location_id": 7192418,
+        "location_name": "Starting Character 1",
+        "event_key": "ff4fe.reward.513",
+        "mapped_value": "Starting Character 1"
+      },
+      {
+        "domain_id": "system_ram",
+        "address": 70928,
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": 4,
+        "event_type": "location_checked",
+        "location_id": 7192419,
+        "location_name": "Starting Character 2",
+        "event_key": "ff4fe.reward.514",
+        "mapped_value": "Starting Character 2"
+      },
+      {
+        "domain_id": "system_ram",
+        "address": 70928,
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": 8,
+        "event_type": "location_checked",
+        "location_id": 7192420,
+        "location_name": "Mist Character",
+        "event_key": "ff4fe.reward.515",
+        "mapped_value": "Mist Character"
+      },
+      {
+        "domain_id": "system_ram",
+        "address": 70928,
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": 16,
+        "event_type": "location_checked",
+        "location_id": 7192421,
+        "location_name": "Watery Pass Character",
+        "event_key": "ff4fe.reward.516",
+        "mapped_value": "Watery Pass Character"
+      },
+      {
+        "domain_id": "system_ram",
+        "address": 70928,
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": 32,
+        "event_type": "location_checked",
+        "location_id": 7192422,
+        "location_name": "Damcyan Character",
+        "event_key": "ff4fe.reward.517",
+        "mapped_value": "Damcyan Character"
+      },
+      {
+        "domain_id": "system_ram",
+        "address": 70928,
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": 64,
+        "event_type": "location_checked",
+        "location_id": 7192423,
+        "location_name": "Kaipo Character",
+        "event_key": "ff4fe.reward.518",
+        "mapped_value": "Kaipo Character"
+      },
+      {
+        "domain_id": "system_ram",
+        "address": 70932,
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": 1,
+        "event_type": "location_checked",
+        "location_id": 7192390,
+        "location_name": "Baron Castle -- 1F -- Starting item",
+        "event_key": "ff4fe.reward.544",
+        "mapped_value": "Baron Castle -- 1F -- Starting item"
+      },
+      {
+        "domain_id": "system_ram",
+        "address": 70932,
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": 2,
+        "event_type": "location_checked",
+        "location_id": 7192391,
+        "location_name": "Antlion Cave -- B3F -- Antlion Nest item",
+        "event_key": "ff4fe.reward.545",
+        "mapped_value": "Antlion Cave -- B3F -- Antlion Nest item"
+      }
+    ],
+    "actions": [
+      {
+        "item_id": 7192050,
+        "item_name": "Silver Sword",
+        "event_key": "item.silver_sword",
+        "mapped_value": "Silver Sword",
+        "room_controlled": true,
+        "writes": [
+          {
+            "domain_id": "system_ram",
+            "address": 70720,
+            "value_u64": 61,
+            "size": 1
+          },
+          {
+            "domain_id": "system_ram",
+            "address": 70721,
+            "value_u64": 1,
+            "size": 1
+          }
+        ]
+      }
+    ]
+  }
+}
+

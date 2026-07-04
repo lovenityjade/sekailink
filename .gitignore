@@ -1,0 +1,77 @@
+# Build output
+build/
+build-*/
+cmake-build-*/
+target/
+dist/
+!docs/sekailink-core-access/dist/
+!docs/sekailink-core-access/dist/pdf/
+!docs/sekailink-core-access/dist/pdf/*.pdf
+out/
+release/
+coverage/
+.cache/
+.vite/
+/apps/runtime/
+
+# JavaScript dependencies
+node_modules/
+
+# Runtime/user data
+logs/
+tmp/
+saves/
+roms/
+patched/
+downloads/
+generated/
+runtime/local-roms/
+AP_*.xml
+imgui.ini
+*.log
+*.sqlite
+*.sqlite3
+*.db
+*.zip.bak-*
+
+# Golden-test fixtures kept intentionally.
+!apps/saves/
+!apps/saves/**
+!apps/saves/**/bridge/outbox.log
+
+# Local configuration and secrets
+.env
+.env.*
+*.local
+*.local.*
+XX-server-infos.local.md
+local-*.json
+local-*.yaml
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Common ROM formats
+*.sfc
+*.smc
+*.z64
+*.n64
+*.v64
+*.iso
+*.gcm
+*.rvz
+*.gb
+*.gbc
+*.gba
+*.nes
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Local experimental tooling not part of public canonical snapshot
+tools/imgui-forge-builder/
+tools/imgui_forge_builder

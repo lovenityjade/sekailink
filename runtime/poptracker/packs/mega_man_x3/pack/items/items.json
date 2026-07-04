@@ -1,0 +1,1122 @@
+[
+    {
+        "name": "Victory",
+        "type": "consumable",
+        "img": "images/icons/blank.png",
+        "disabled_img": "images/icons/blank.png",
+        "codes": "victory"
+    },
+    {
+        "name": "Maverick Medal",
+        "type": "consumable",
+        "img": "images/icons/maverick.png",
+        "disabled_img": "images/icons/maverick_gray.png",
+        "max_quantity": 8,
+        "increment": 1,
+        "decrement": 1,
+        "initial_quantity": 0,
+        "overlay_font_size": 32,
+        "overlay_background": "#A0000000",
+        "codes": "maverick_medal"
+    },
+
+    {
+        "name": "Blank",
+        "type": "toggle",
+        "img": "images/icons/blank.png",
+        "disabled_img": "images/icons/blank.png",
+        "codes": "blank"
+    },
+
+    {
+        "name": "Toxic Seahorse Access Codes",
+        "type": "toggle",
+        "codes": "stage_toxic_seahorse"
+    },
+    {
+        "name": "Volt Catfish Access Codes",
+        "type": "toggle",
+        "codes": "stage_volt_catfish"
+    },
+    {
+        "name": "Tunnel Rhino Access Codes",
+        "type": "toggle",
+        "codes": "stage_tunnel_rhino"
+    },
+    {
+        "name": "Blizzard Buffalo Access Codes",
+        "type": "toggle",
+        "codes": "stage_blizzard_buffalo"
+    },
+    {
+        "name": "Crush Crawfish Access Codes",
+        "type": "toggle",
+        "codes": "stage_crush_crawfish"
+    },
+    {
+        "name": "Neon Tiger Access Codes",
+        "type": "toggle",
+        "codes": "stage_neon_tiger"
+    },
+    {
+        "name": "Gravity Beetle Access Codes",
+        "type": "toggle",
+        "codes": "stage_gravity_beetle"
+    },
+    {
+        "name": "Blast Hornet Access Codes",
+        "type": "toggle",
+        "codes": "stage_blast_hornet"
+    },
+    {
+        "name": "Dr. Doppler's Lab Access Codes",
+        "type": "toggle",
+        "img": "images/icons/drdoppler.png",
+        "codes": "stage_doppler_lab"
+    },
+    {
+        "name": "Vile Access Codes",
+        "type": "toggle",
+        "img": "images/icons/vile.png",
+        "codes": "stage_vile"
+    },
+    {
+        "name": "Frost Shield",
+        "type": "toggle",
+        "img": "images/icons/frostshield.png",
+        "codes": "frost_shield"
+    },
+    {
+        "name": "Acid Burst",
+        "type": "toggle",
+        "img": "images/icons/acidburst.png",
+        "codes": "acid_burst"
+    },
+    {
+        "name": "Tornado Fang",
+        "type": "toggle",
+        "img": "images/icons/tornadofang.png",
+        "codes": "tornado_fang"
+    },
+    {
+        "name": "Triad Thunder",
+        "type": "toggle",
+        "img": "images/icons/triadthunder.png",
+        "codes": "triad_thunder"
+    },
+    {
+        "name": "Spinning Blade",
+        "type": "toggle",
+        "img": "images/icons/spinningblade.png",
+        "codes": "spinning_blade"
+    },
+    {
+        "name": "Ray Splasher",
+        "type": "toggle",
+        "img": "images/icons/raysplasher.png",
+        "codes": "ray_splasher"
+    },
+    {
+        "name": "Gravity Well",
+        "type": "toggle",
+        "img": "images/icons/gravitywell.png",
+        "codes": "gravity_well"
+    },
+    {
+        "name": "Parasitic Bomb",
+        "type": "toggle",
+        "img": "images/icons/parasiticbomb.png",
+        "codes": "parasitic_bomb"
+    },
+    {
+        "name": "Z-Saber",
+        "type": "toggle",
+        "img": "images/icons/zsaber.png",
+        "codes": "z_saber"
+    },
+
+    {
+        "name": "Heart Tank",
+        "type": "consumable",
+        "max_quantity": 8,
+        "increment": 1,
+        "decrement": 1,
+        "initial_quantity": 0,
+        "overlay_font_size": 32,
+        "overlay_background": "#A0000000",
+        "img": "images/icons/heart.png",
+        "disabled_img": "images/icons/heart_gray.png",
+        "codes": "heart_tank"
+    },
+    {
+        "name": "Sub Tank",
+        "type": "consumable",
+        "max_quantity": 4,
+        "increment": 1,
+        "decrement": 1,
+        "initial_quantity": 0,
+        "overlay_font_size": 32,
+        "overlay_background": "#A0000000",
+        "img": "images/icons/subtank.png",
+        "disabled_img": "images/icons/subtank_gray.png",
+        "codes": "sub_tank"
+    },
+    
+    {
+      "name": "Helmet Upgrade",
+      "type": "progressive",
+      "loop": false,
+      "allow_disabled": false,
+      "codes": "third_armor_helmet",
+      "stages": [
+        {
+          "img": "images/icons/helmet_gray.png",
+          "name": "No Helmet Upgrade",
+          "codes": "helmet0",
+          "inherit_codes": true
+        },
+        {
+          "img": "images/icons/helmet.png",
+          "name": "Helmet Upgrade",
+          "codes": "helmet1",
+          "inherit_codes": true
+        },
+        {
+          "img": "images/icons/helmet_gold.png",
+          "name": "Gold Helmet Upgrade",
+          "codes": "helmet2",
+          "inherit_codes": true
+        }
+      ]
+  },
+  {
+    "name": "Body Upgrade",
+    "type": "progressive",
+    "loop": false,
+    "allow_disabled": false,
+    "codes": "third_armor_body",
+    "stages": [
+      {
+        "img": "images/icons/body_gray.png",
+        "name": "No Body Upgrade",
+        "codes": "body0",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/icons/body.png",
+        "name": "Body Upgrade",
+        "codes": "body1",
+        "inherit_codes": true
+      },
+      {
+        "img": "images/icons/body_gold.png",
+        "name": "Gold Body Upgrade",
+        "codes": "body2",
+        "inherit_codes": true
+      }
+    ]
+},
+    {
+        "name": "Arms Upgrade",
+        "type": "consumable",
+        "img": "images/icons/arms.png",
+        "disabled_img": "images/icons/arms_gray.png",
+        "codes": "third_armor_arms"
+    },
+    {
+      "name": "Legs Upgrade",
+      "type": "progressive",
+      "loop": false,
+      "allow_disabled": false,
+      "codes": "third_armor_legs",
+      "stages": [
+        {
+          "img": "images/icons/legs_gray.png",
+          "name": "No Legs Upgrade",
+          "codes": "legs0",
+          "inherit_codes": true
+        },
+        {
+          "img": "images/icons/legs.png",
+          "name": "Legs Upgrade",
+          "codes": "legs1",
+          "inherit_codes": true
+        },
+        {
+          "img": "images/icons/legs_gold.png",
+          "name": "Gold Legs Upgrade",
+          "codes": "legs2",
+          "inherit_codes": true
+        }
+      ]
+  },
+    {
+        "name": "Chimera Ride Armor",
+        "type": "toggle",
+        "img": "images/icons/ridechimera.png",
+        "codes": "ride_chimera"
+    },
+    {
+        "name": "Kangaroo Ride Armor",
+        "type": "toggle",
+        "img": "images/icons/ridekangaroo.png",
+        "codes": "ride_kangaroo"
+    },
+    {
+        "name": "Hawk Ride Armor",
+        "type": "toggle",
+        "img": "images/icons/ridehawk.png",
+        "codes": "ride_hawk"
+    },
+    {
+        "name": "Frog Ride Armor",
+        "type": "toggle",
+        "img": "images/icons/ridefrog.png",
+        "codes": "ride_frog"
+    },
+
+
+    {
+        "name": "Large HP Refill",
+        "type": "consumable",
+        "codes": "large_hp"
+    },
+    {
+        "name": "Small HP Refill",
+        "type": "consumable",
+        "codes": "small_hp"
+    },
+    {
+        "name": "Extra Life",
+        "type": "consumable",
+        "codes": "life"
+    },
+    {
+      "name": "Small Weapon Refill",
+      "type": "consumable",
+      "codes": "small_weapon"
+    },
+    {
+      "name": "Large Weapon Refill",
+      "type": "consumable",
+      "codes": "large_weapon"
+    },
+    {
+        "name": "Toxic Seahorse Cleared",
+        "type": "toggle",
+        "codes": "toxic_seahorse_cleared",
+        "img": "images/icons/toxicseahorse_x.png",
+        "disabled_img": "images/icons/toxicseahorse_gray.png"
+    },
+    {
+      "name": "Toxic Seahorse Refight Cleared",
+      "type": "toggle",
+      "codes": "toxic_seahorse_refight_cleared"
+    },
+    {
+        "name": "Toxic Seahorse State",
+        "type": "progressive",
+        "loop": false,
+        "allow_disabled": false,
+        "codes": "toxic_seahorse_state",
+        "stages": [
+          {
+            "img": "images/icons/toxicseahorse_gray.png",
+            "name": "Toxic Seahorse Locked",
+            "codes": "toxic_seahorse_0",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/toxicseahorse.png",
+            "name": "Toxic Seahorse Open",
+            "codes": "toxic_seahorse_1",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/toxicseahorse_x.png",
+            "name": "Toxic Seahorse Defeated",
+            "codes": "toxic_seahorse_2",
+            "inherit_codes": true
+          }
+        ]
+    },
+    {
+        "name": "Volt Catfish Cleared",
+        "type": "toggle",
+        "codes": "volt_catfish_cleared",
+        "img": "images/icons/voltcatfish_x.png",
+        "disabled_img": "images/icons/voltcatfish_gray.png"
+    },
+    {
+      "name": "Volt Catfish Refight Cleared",
+      "type": "toggle",
+      "codes": "volt_catfish_refight_cleared"
+    },
+    {
+        "name": "Volt Catfish State",
+        "type": "progressive",
+        "loop": false,
+        "allow_disabled": false,
+        "codes": "volt_catfish_state",
+        "stages": [
+          {
+            "img": "images/icons/voltcatfish_gray.png",
+            "name": "Volt Catfish Locked",
+            "codes": "volt_catfish_0",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/voltcatfish.png",
+            "name": "Volt Catfish Open",
+            "codes": "volt_catfish_1",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/voltcatfish_x.png",
+            "name": "Volt Catfish Defeated",
+            "codes": "volt_catfish_2",
+            "inherit_codes": true
+          }
+        ]
+    },
+    {
+        "name": "Tunnel Rhino Cleared",
+        "type": "toggle",
+        "codes": "tunnel_rhino_cleared",
+        "img": "images/icons/tunnelrhino_x.png",
+        "disabled_img": "images/icons/tunnelrhino_gray.png"
+    },
+    {
+      "name": "Tunnel Rhino Refight Cleared",
+      "type": "toggle",
+      "codes": "tunnel_rhino_refight_cleared"
+    },
+    {
+        "name": "Tunnel Rhino State",
+        "type": "progressive",
+        "loop": false,
+        "allow_disabled": false,
+        "codes": "tunnel_rhino_state",
+        "stages": [
+          {
+            "img": "images/icons/tunnelrhino_gray.png",
+            "name": "Tunnel Rhino Locked",
+            "codes": "tunnel_rhino_0",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/tunnelrhino.png",
+            "name": "Tunnel Rhino Open",
+            "codes": "tunnel_rhino_1",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/tunnelrhino_x.png",
+            "name": "Tunnel Rhino Defeated",
+            "codes": "tunnel_rhino_2",
+            "inherit_codes": true
+          }
+        ]
+    },
+    {
+        "name": "Blizzard Buffalo Cleared",
+        "type": "toggle",
+        "codes": "blizzard_buffalo_cleared",
+        "img": "images/icons/blizzardbuffalo_x.png",
+        "disabled_img": "images/icons/blizzardbuffalo_gray.png"
+    },
+    {
+      "name": "Blizzard Buffalo Refight Cleared",
+      "type": "toggle",
+      "codes": "blizzard_buffalo_refight_cleared"
+    },
+    {
+        "name": "Blizzard Buffalo State",
+        "type": "progressive",
+        "loop": false,
+        "allow_disabled": false,
+        "codes": "blizzard_buffalo_state",
+        "stages": [
+          {
+            "img": "images/icons/blizzardbuffalo_gray.png",
+            "name": "Blizzard Buffalo Locked",
+            "codes": "blizzard_buffalo_0",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/blizzardbuffalo.png",
+            "name": "Blizzard Buffalo Open",
+            "codes": "blizzard_buffalo_1",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/blizzardbuffalo_x.png",
+            "name": "Blizzard Buffalo Defeated",
+            "codes": "blizzard_buffalo_2",
+            "inherit_codes": true
+          }
+        ]
+    },
+    {
+        "name": "Crush Crawfish Cleared",
+        "type": "toggle",
+        "codes": "crush_crawfish_cleared",
+        "img": "images/icons/crushcrawfish_x.png",
+        "disabled_img": "images/icons/crushcrawfish_gray.png"
+    },
+    {
+      "name": "Crush Crawfish Refight Cleared",
+      "type": "toggle",
+      "codes": "crush_crawfish_refight_cleared"
+    },
+    {
+        "name": "Crush Crawfish State",
+        "type": "progressive",
+        "loop": false,
+        "allow_disabled": false,
+        "codes": "crush_crawfish_state",
+        "stages": [
+          {
+            "img": "images/icons/crushcrawfish_gray.png",
+            "name": "Crush Crawfish Locked",
+            "codes": "crush_crawfish_0",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/crushcrawfish.png",
+            "name": "Crush Crawfish Open",
+            "codes": "crush_crawfish_1",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/crushcrawfish_x.png",
+            "name": "Crush Crawfish Defeated",
+            "codes": "crush_crawfish_2",
+            "inherit_codes": true
+          }
+        ]
+    },
+    {
+        "name": "Neon Tiger Cleared",
+        "type": "toggle",
+        "codes": "neon_tiger_cleared"
+    },
+    {
+      "name": "Neon Tiger Refight Cleared",
+      "type": "toggle",
+      "codes": "neon_tiger_refight_cleared"
+    },
+    {
+        "name": "Neon Tiger State",
+        "type": "progressive",
+        "loop": false,
+        "allow_disabled": false,
+        "codes": "neon_tiger_state",
+        "stages": [
+          {
+            "img": "images/icons/neontiger_gray.png",
+            "name": "Neon Tiger Locked",
+            "codes": "neon_tiger_0",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/neontiger.png",
+            "name": "Neon Tiger Open",
+            "codes": "neon_tiger_1",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/neontiger_x.png",
+            "name": "Neon Tiger Defeated",
+            "codes": "neon_tiger_2",
+            "inherit_codes": true
+          }
+        ]
+    },
+    {
+        "name": "Gravity Beetle Cleared",
+        "type": "toggle",
+        "codes": "gravity_beetle_cleared"
+    },
+    {
+      "name": "Gravity Beetle Refight Cleared",
+      "type": "toggle",
+      "codes": "gravity_beetle_refight_cleared"
+    },
+    {
+        "name": "Gravity Beetle State",
+        "type": "progressive",
+        "loop": false,
+        "allow_disabled": false,
+        "codes": "gravity_beetle_state",
+        "stages": [
+          {
+            "img": "images/icons/gravitybeetle_gray.png",
+            "name": "Gravity Beetle Locked",
+            "codes": "gravity_beetle_0",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/gravitybeetle.png",
+            "name": "Gravity Beetle Open",
+            "codes": "gravity_beetle_1",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/gravitybeetle_x.png",
+            "name": "Gravity Beetle Defeated",
+            "codes": "gravity_beetle_2",
+            "inherit_codes": true
+          }
+        ]
+    },
+    {
+        "name": "Blast Hornet Cleared",
+        "type": "toggle",
+        "codes": "blast_hornet_cleared",
+        "img": "images/icons/blasthornet_x.png",
+        "disabled_img": "images/icons/blasthornet_gray.png"
+    },
+    {
+      "name": "Blast Hornet Refight Cleared",
+      "type": "toggle",
+      "codes": "blast_hornet_refight_cleared"
+    },
+    {
+        "name": "Blast Hornet State",
+        "type": "progressive",
+        "loop": false,
+        "allow_disabled": false,
+        "codes": "blast_hornet_state",
+        "stages": [
+          {
+            "img": "images/icons/blasthornet_gray.png",
+            "name": "Blast Hornet Locked",
+            "codes": "blast_hornet_0",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/blasthornet.png",
+            "name": "Blast Hornet Open",
+            "codes": "blast_hornet_1",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/blasthornet_x.png",
+            "name": "Blast Hornet Defeated",
+            "codes": "blast_hornet_2",
+            "inherit_codes": true
+          }
+        ]
+    },
+    {
+      "name": "Bit Defeated",
+      "type": "toggle",
+      "codes": "bit_cleared"
+    },
+    {
+      "name": "Bit State",
+      "type": "progressive",
+      "loop": false,
+      "allow_disabled": false,
+      "codes": "bit_state",
+      "stages": [
+        {
+          "img": "images/icons/bit_gray.png",
+          "name": "Bit Locked",
+          "codes": "bit_state_0",
+          "inherit_codes": true
+        },
+        {
+          "img": "images/icons/bit.png",
+          "name": "Bit Open",
+          "codes": "bit_state_1",
+          "inherit_codes": true
+        },
+        {
+          "img": "images/icons/bit_x.png",
+          "name": "Bit Defeated",
+          "codes": "bit_state_2",
+          "inherit_codes": true
+        }
+      ]
+  },
+    {
+      "name": "Byte Defeated",
+      "type": "toggle",
+      "codes": "byte_cleared"
+    },
+    {
+      "name": "Byte State",
+      "type": "progressive",
+      "loop": false,
+      "allow_disabled": false,
+      "codes": "byte_state",
+      "stages": [
+        {
+          "img": "images/icons/byte_gray.png",
+          "name": "Byte Locked",
+          "codes": "byte_state_0",
+          "inherit_codes": true
+        },
+        {
+          "img": "images/icons/byte.png",
+          "name": "Byte Open",
+          "codes": "byte_state_1",
+          "inherit_codes": true
+        },
+        {
+          "img": "images/icons/byte_x.png",
+          "name": "Byte Defeated",
+          "codes": "byte_state_2",
+          "inherit_codes": true
+        }
+      ]
+  },
+    {
+        "name": "Dr. Droppler 1 Cleared",
+        "type": "toggle",
+        "codes": "doppler_1_cleared"
+    },
+    {
+        "name": "Dr. Droppler 2 Cleared",
+        "type": "toggle",
+        "codes": "doppler_2_cleared"
+    },
+    {
+        "name": "Dr. Droppler 3 Cleared",
+        "type": "toggle",
+        "codes": "doppler_3_cleared"
+    },
+    {
+      "name": "Dr. Doppler State",
+      "type": "progressive",
+      "loop": false,
+      "allow_disabled": false,
+      "codes": "drdoppler_state",
+      "stages": [
+        {
+          "img": "images/icons/drdoppler_gray.png",
+          "name": "Dr. Doppler Locked",
+          "codes": "drdoppler_state_0",
+          "inherit_codes": true
+        },
+        {
+          "img": "images/icons/drdoppler.png",
+          "name": "Dr. Doppler Open",
+          "codes": "drdoppler_state_1",
+          "inherit_codes": true
+        },
+        {
+          "img": "images/icons/drdoppler_x.png",
+          "name": "Dr. Doppler Defeated",
+          "codes": "drdoppler_state_2",
+          "inherit_codes": true
+        }
+      ]
+  },
+    {
+      "name": "Vile Cleared",
+      "type": "toggle",
+      "codes": "vile_cleared"
+    },
+    {
+      "name": "Vile State",
+      "type": "progressive",
+      "loop": false,
+      "allow_disabled": false,
+      "codes": "vile_state",
+      "stages": [
+        {
+          "img": "images/icons/vile_gray.png",
+          "name": "Vile Locked",
+          "codes": "vile_state_0",
+          "inherit_codes": true
+        },
+        {
+          "img": "images/icons/vile.png",
+          "name": "Vile Open",
+          "codes": "vile_state_1",
+          "inherit_codes": true
+        },
+        {
+          "img": "images/icons/vile_x.png",
+          "name": "Vile Defeated",
+          "codes": "vile_state_2",
+          "inherit_codes": true
+        }
+      ]
+  },
+
+    {
+        "name": "Pickupsanity",
+        "type": "progressive",
+        "loop": true,
+        "allow_disabled": false,
+        "stages": [
+          {
+            "img": "images/settings/pickupsanity_off.png",
+            "name": "Pickupsanity - Off",
+            "codes": "pickupsanity,pickupsanity_off",
+            "inherit_codes": false
+          },
+          {
+            "img": "images/settings/pickupsanity_on.png",
+            "name": "Pickupsanity - On",
+            "codes": "pickupsanity,pickupsanity_on"
+          }
+        ]
+    },
+    {
+        "name": "Arms Upgrade",
+        "type": "progressive",
+        "loop": false,
+        "allow_disabled": false,
+        "initial_stage_idx": 1,
+        "codes": "arms",
+        "stages": [
+          {
+            "img": "images/icons/arms_x.png",
+            "name": "Buster Jammed",
+            "codes": "arms0",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/arms_gray.png",
+            "name": "No Arms Upgrade",
+            "codes": "arms1",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/arms.png",
+            "name": "Regular Arms Upgrade",
+            "codes": "arms2",
+            "inherit_codes": true
+          },
+          {
+            "img": "images/icons/arms_gold.png",
+            "name": "Gold Arms Upgrade",
+            "codes": "arms3",
+            "inherit_codes": true
+          }
+        ]
+    },
+
+    {
+        "name": "Jammed Buster",
+        "type": "progressive",
+        "loop": true,
+        "allow_disabled": false,
+        "stages": [
+            {
+                "name": "Jammed Buster - Off",
+                "codes": "jammed_buster,jammed_buster_off",
+                "inherit_codes": false,
+                "img": "images/settings/jammedbuster_off.png"
+            },
+            {
+                "name": "Jammed Buster - On",
+                "codes": "jammed_buster,jammed_buster_on",
+                "img": "images/settings/jammedbuster_on.png"
+            }
+        ]
+    },
+
+    {
+        "name": "Dr. Doppler Open Logic AP",
+        "type": "consumable",
+        "initial_quantity": 0,
+        "img": "images/icons/drdoppler.png",
+        "codes": "doppler_open"
+    },
+    {
+        "name": "Dr. Doppler Weapon Count",
+        "type": "consumable",
+        "initial_quantity": 0,
+        "max_quantity": 8,
+        "overlay_font_size": 26,
+        "img": "images/settings/doppler_weapons_count.png",
+        "codes": "doppler_weapon_count"
+    },
+    {
+        "name": "Dr. Doppler Upgrade Count",
+        "type": "consumable",
+        "initial_quantity": 0,
+        "max_quantity": 9,
+        "overlay_font_size": 26,
+        "img": "images/settings/doppler_upgrades_count.png",
+        "codes": "doppler_upgrade_count"
+    },
+    {
+        "name": "Dr. Doppler Heart Tank Count",
+        "type": "consumable",
+        "initial_quantity": 0,
+        "max_quantity": 8,
+        "overlay_font_size": 26,
+        "img": "images/settings/doppler_hearttanks_count.png",
+        "codes": "doppler_heart_tank_count"
+    },
+    {
+        "name": "Dr. Doppler Sub Tank Count",
+        "type": "consumable",
+        "initial_quantity": 0,
+        "max_quantity": 4,
+        "overlay_font_size": 26,
+        "img": "images/settings/doppler_subtanks_count.png",
+        "codes": "doppler_sub_tank_count"
+    },
+    {
+        "name": "Dr. Doppler Medal Count",
+        "type": "consumable",
+        "initial_quantity": 0,
+        "max_quantity": 8,
+        "overlay_font_size": 26,
+        "img": "images/settings/doppler_medals_count.png",
+        "codes": "doppler_medal_count"
+    },
+    {
+      "name": "Rematch Fights Required",
+      "type": "consumable",
+      "initial_quantity": 8,
+      "max_quantity": 8,
+      "overlay_font_size": 26,
+      "img": "images/settings/rematch_required_count.png",
+      "codes": "doppler_lab_3_boss_rematch_count"
+    },
+    {
+      "name": "Rematch Fights",
+      "type": "consumable",
+      "img": "images/icons/maverick.png",
+      "codes": "rematch_fights"
+    },
+    {
+      "name": "toxic_seahorse_refight_cleared",
+      "type": "toggle",
+      "codes": "toxic_seahorse_refight_cleared"
+    },
+    {
+      "name": "volt_catfish_refight_cleared",
+      "type": "toggle",
+      "codes": "volt_catfish_refight_cleared"
+    },
+    {
+      "name": "tunnel_rhino_refight_cleared",
+      "type": "toggle",
+      "codes": "tunnel_rhino_refight_cleared"
+    },
+    {
+      "name": "blizzard_buffalo_refight_cleared",
+      "type": "toggle",
+      "codes": "blizzard_buffalo_refight_cleared"
+    },
+    {
+      "name": "crush_crawfish_refight_cleared",
+      "type": "toggle",
+      "codes": "crush_crawfish_refight_cleared"
+    },
+    {
+      "name": "neon_tiger_refight_cleared",
+      "type": "toggle",
+      "codes": "neon_tiger_refight_cleared"
+    },
+    {
+      "name": "gravity_beetle_refight_cleared",
+      "type": "toggle",
+      "codes": "gravity_beetle_refight_cleared"
+    },
+    {
+      "name": "blast_hornet_refight_cleared",
+      "type": "toggle",
+      "codes": "blast_hornet_refight_cleared"
+    },
+    {
+      "name": "dummy refresh item",
+      "type": "toggle",
+      "codes": "refresh"
+    },
+    {
+        "name": "Logic Boss Weakness",
+        "type": "toggle",
+        "img": "images/icons/sigma.png",
+        "codes": "logic_boss_weakness"
+    },
+    {
+      "name": "Bosses Logically Require Weaknesses",
+      "type": "progressive",
+      "loop": true,
+      "allow_disabled": false,
+      "stages": [
+          {
+            "img": "images/settings/weaknesses_off.png",
+            "name": "Bosses Logically Require Weaknesses - Off",
+            "codes": "setting_weakness,setting_weakness_off",
+            "inherit_codes": false
+          },
+          {
+            "img": "images/settings/weaknesses_on.png",
+            "name": "Bosses Logically Require Weaknesses - On",
+            "codes": "setting_weakness,setting_weakness_on"
+          }
+        ]
+    },
+    {
+        "name": "Boss Weakness Strictness",
+        "type": "progressive",
+        "loop": true,
+        "allow_disabled": false,
+        "codes": "boss_weakness_strictness",
+        "stages": [
+          {
+            "img": "images/settings/setting_strictness_0.png",
+            "name": "Boss Weakness Strictness - Not Strict",
+            "codes": "boss_weakness_strictness_0",
+            "inherit_codes": false
+          },
+          {
+            "img": "images/settings/setting_strictness_1.png",
+            "name": "Boss Weakness Strictness - Weakness and Buster",
+            "codes": "boss_weakness_strictness_1"
+          },
+          {
+            "img": "images/settings/setting_strictness_2.png",
+            "name": "Boss Weakness Strictness - Weakness and Upgraded Buster",
+            "codes": "boss_weakness_strictness_2"
+          },
+          {
+            "img": "images/settings/setting_strictness_3.png",
+            "name": "Boss Weakness Strictness - Only Weakness",
+            "codes": "boss_weakness_strictness_3"
+          }
+        ]
+    },
+    {
+      "name": "Group Dr. Doppler Levels",
+      "type": "progressive",
+      "allow_disabled": false,
+      "loop": true,
+      "stages": [
+        {
+          "img": "images/settings/doppler_group_off.png",
+          "name": "Group Dr. Doppler Levels - Off",
+          "codes": "doppler_all_labs,doppler_all_labs_off",
+          "inherit_codes": "false"
+        },
+        {
+          "img": "images/settings/doppler_group_on.png",
+          "name": "Group Dr. Doppler Levels - On",
+          "codes": "doppler_all_labs,doppler_all_labs_on"
+        }
+      ]
+    },
+    {
+      "name": "Dr. Doppler's Lab Access",
+      "type": "toggle",
+      "img": "images/icons/drdoppler.png",
+      "disabled_img": "images/icons/drdoppler_gray.png",
+      "codes": "is_doppler_open"
+    },
+    {
+      "name": "Auto Switch Tabs",
+      "type": "progressive",
+      "loop": true,
+      "allow_disabled": false,
+      "initial_stage_idx": 1,
+      "codes": "auto_tab_switch",
+      "stages": [
+        {
+          "img": "images/icons/tabswitch_gray.png",
+          "name": "Auto Switch Tabs - Off"
+        },
+        {
+          "img": "images/icons/tabswitch.png",
+          "name": "Auto Switch Tabs - On"
+        }
+      ]
+    },
+    {
+      "name": "Vile Required For Dr. Doppler",
+      "type": "progressive",
+      "loop": true,
+      "allow_disabled": false,
+      "initial_stage_idx": 1,
+      "codes": "logic_vile_required",
+      "stages": [
+        {
+          "img": "images/settings/doppler_requires_vile_off.png",
+          "name": "Vile Required For Dr. Doppler - Off"
+        },
+        {
+          "img": "images/settings/doppler_requires_vile_on.png",
+          "name": "Vile Required For Dr. Doppler - On"
+        }
+      ]
+    },
+    {
+      "name": "Vile Open Logic AP",
+      "type": "consumable",
+      "codes": "vile_open"
+    },
+    {
+      "name": "Vile Weapon Count",
+      "type": "consumable",
+      "initial_quantity": 0,
+      "max_quantity": 8,
+      "overlay_font_size": 26,
+      "img": "images/settings/vile_weapons_count.png",
+      "codes": "vile_weapon_count"
+  },
+  {
+      "name": "Vile Upgrade Count",
+      "type": "consumable",
+      "initial_quantity": 0,
+      "max_quantity": 9,
+      "overlay_font_size": 26,
+      "img": "images/settings/vile_upgrades_count.png",
+      "codes": "vile_upgrade_count"
+  },
+  {
+      "name": "Vile Heart Tank Count",
+      "type": "consumable",
+      "initial_quantity": 0,
+      "max_quantity": 8,
+      "overlay_font_size": 26,
+      "img": "images/settings/vile_hearttanks_count.png",
+      "codes": "vile_heart_tank_count"
+  },
+  {
+      "name": "Vile Sub Tank Count",
+      "type": "consumable",
+      "initial_quantity": 0,
+      "max_quantity": 4,
+      "overlay_font_size": 26,
+      "img": "images/settings/vile_subtanks_count.png",
+      "codes": "vile_sub_tank_count"
+  },
+  {
+      "name": "Vile Medal Count",
+      "type": "consumable",
+      "initial_quantity": 0,
+      "max_quantity": 8,
+      "overlay_font_size": 26,
+      "img": "images/settings/vile_medals_count.png",
+      "codes": "vile_medal_count"
+  },
+  {
+    "name": "Bit Medal Count",
+    "type": "consumable",
+    "initial_quantity": 2,
+    "max_quantity": 8,
+    "overlay_font_size": 26,
+    "img": "images/settings/bit_medals_count.png",
+    "codes": "bit_medal_count"
+  },
+  {
+    "name": "Byte Medal Count",
+    "type": "consumable",
+    "initial_quantity": 5,
+    "max_quantity": 8,
+    "overlay_font_size": 26,
+    "img": "images/settings/byte_medals_count.png",
+    "codes": "byte_medal_count"
+  }
+]

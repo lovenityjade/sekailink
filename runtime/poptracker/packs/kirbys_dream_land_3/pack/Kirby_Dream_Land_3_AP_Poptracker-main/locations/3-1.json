@@ -1,0 +1,228 @@
+[
+    {
+        "name": "3-1",
+        "children":
+        [
+            {
+                "name": "1-Up (Polof)",
+                "map_locations":
+                [
+                    {
+                        "map": "3-1",
+                        "x": "526",
+                        "y": "323"
+                    }
+                ],
+                "sections":
+                [
+                    {
+                        "name": "1-Up (Polof)",
+                        "ref": "Level 3/3-1/Sand Canyon 1 - 1-Up (Polof)"
+                    }
+                ]
+            },
+            {
+                "name": "Stars 11-22 (Polof Room)",
+                "chest_unopened_img": "images/StarSmall.png",
+                "chest_opened_img": "images/StarSmallDim.png",
+                "visibility_rules": ["Starsanity"],
+                "map_locations":
+                [
+                    {
+                        "map": "3-1",
+                        "x": "526",
+                        "y": "305"
+                    }
+                ],
+                "sections":
+                [
+                    {
+                        "name": "Star 11",
+                    },
+                    {
+                        "name": "Star 12",
+                    },
+                    {
+                        "name": "Star 13",
+                    },
+                    {
+                        "name": "Star 14",
+                    },
+                    {
+                        "name": "Star 15",
+                    },
+                    {
+                        "name": "Star 16",
+                    },
+                    {
+                        "name": "Star 17",
+                    },
+                    {
+                        "name": "Star 18",
+                    },
+                    {
+                        "name": "Star 19",
+                    },
+                    {
+                        "name": "Star 20",
+                    },
+                    {
+                        "name": "Star 21",
+                    },
+                    {
+                        "name": "Star 22",
+                    }
+                ]
+            },
+            {
+                "name": "Stars 1,2,3,4",
+                "chest_unopened_img": "images/StarSmall.png",
+                "chest_opened_img": "images/StarSmallDim.png",
+                "visibility_rules": ["Starsanity"],
+                "map_locations":
+                [
+                    {
+                        "map": "3-1",
+                        "x": "2241",
+                        "y": "528"
+                    }
+                ],
+                "sections":
+                [
+                    {
+                        "name": "Star 1",
+                    },
+                    {
+                        "name": "Star 2",
+                    },
+                    {
+                        "name": "Star 3",
+                    },
+                    {
+                        "name": "Star 4",
+                    }
+                ]
+            },
+            {
+                "name": "Star 10 (Block)",
+                "chest_unopened_img": "images/StarSmall.png",
+                "chest_opened_img": "images/StarSmallDim.png",
+                "visibility_rules": ["Starsanity"],
+                "map_locations":
+                [
+                    {
+                        "map": "3-1",
+                        "x": "1808",
+                        "y": "879"
+                    }
+                ],
+                "sections":
+                [
+                    {
+                        "name": "Star 10",
+                    }
+                ]
+            },
+            {
+                "name": "Star 9 (Block)",
+                "chest_unopened_img": "images/StarSmall.png",
+                "chest_opened_img": "images/StarSmallDim.png",
+                "visibility_rules": ["Starsanity"],
+                "map_locations":
+                [
+                    {
+                        "map": "3-1",
+                        "x": "2047",
+                        "y": "785"
+                    }
+                ],
+                "sections":
+                [
+                    {
+                        "name": "Star 9",
+                    }
+                ]
+            },
+            {
+                "name": "Star 8 (Block)",
+                "chest_unopened_img": "images/StarSmall.png",
+                "chest_opened_img": "images/StarSmallDim.png",
+                "visibility_rules": ["Starsanity"],
+                "map_locations":
+                [
+                    {
+                        "map": "3-1",
+                        "x": "2288",
+                        "y": "768"
+                    }
+                ],
+                "sections":
+                [
+                    {
+                        "name": "Star 8",
+                    }
+                ]
+            },
+            {
+                "name": "Star 7 (Block)",
+                "chest_unopened_img": "images/StarSmall.png",
+                "chest_opened_img": "images/StarSmallDim.png",
+                "visibility_rules": ["Starsanity"],
+                "map_locations":
+                [
+                    {
+                        "map": "3-1",
+                        "x": "2336",
+                        "y": "768"
+                    }
+                ],
+                "sections":
+                [
+                    {
+                        "name": "Star 7",
+                    }
+                ]
+            },
+            {
+                "name": "Star 6 (Block)",
+                "chest_unopened_img": "images/StarSmall.png",
+                "chest_opened_img": "images/StarSmallDim.png",
+                "visibility_rules": ["Starsanity"],
+                "map_locations":
+                [
+                    {
+                        "map": "3-1",
+                        "x": "2960",
+                        "y": "879"
+                    }
+                ],
+                "sections":
+                [
+                    {
+                        "name": "Star 6",
+                    }
+                ]
+            },
+            {
+                "name": "Star 5 (Block)",
+                "chest_unopened_img": "images/StarSmall.png",
+                "chest_opened_img": "images/StarSmallDim.png",
+                "visibility_rules": ["Starsanity"],
+                "map_locations":
+                [
+                    {
+                        "map": "3-1",
+                        "x": "3104",
+                        "y": "863"
+                    }
+                ],
+                "sections":
+                [
+                    {
+                        "name": "Star 5",
+                    }
+                ]
+            }
+        ]
+    }
+]

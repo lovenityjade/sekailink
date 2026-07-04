@@ -1,0 +1,41 @@
+{
+  "id": "tloz",
+  "type": "linkedworld",
+  "version": "0.2.0-beta3-runtime",
+  "sklmi": {
+    "contract_version": "1.0",
+    "bridge_id": "tloz-phase1",
+    "driver_instance_id": "tloz-sekaiemu-runtime",
+    "core_profile": {
+      "name": "nes_v1",
+      "domains": [
+        { "id": "system_ram" }
+      ]
+    },
+    "module": "sekaiemu",
+    "state_file": "tloz.phase1.bridge.state",
+    "poll_interval_ms": 16,
+    "checks": [
+      {
+        "domain_id": "system_ram",
+        "address": "0x06F6",
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": "0x10",
+        "event_type": "location_checked",
+        "location_id": 7000,
+        "location_name": "Starting Sword Cave"
+      },
+      {
+        "domain_id": "system_ram",
+        "address": "0x06C3",
+        "size": 1,
+        "compare": "mask_any",
+        "operand_u64": "0x10",
+        "event_type": "location_checked",
+        "location_id": 7010,
+        "location_name": "Level 1 Item (Boomerang)"
+      }
+    ]
+  }
+}

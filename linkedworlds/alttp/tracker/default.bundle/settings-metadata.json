@@ -1,0 +1,119 @@
+{
+  "metadata_id": "alttp-settings-metadata-v1",
+  "linkedworld_id": "alttp",
+  "status": "repo-owned-settings-render-metadata",
+  "purpose": "Declare tracker-visible settings metadata from normalized slot_data without embedding executable option logic.",
+  "source_refs": [
+    "slot-data.complete.json",
+    "room-metadata.complete.json",
+    "surface.complete.json"
+  ],
+  "render_policy": {
+    "source_priority": [
+      "room.state.slot_data",
+      "seed_metadata.slot_data",
+      "slot-data.complete.json default_value"
+    ],
+    "missing_value_fallback": "UNKNOWN",
+    "value_kind": "display-only",
+    "logic_policy": "Do not infer access logic from this file; it is a rendering metadata contract only."
+  },
+  "panels": [
+    {
+      "panel_id": "settings_core",
+      "label": "Core Settings",
+      "field_keys": [
+        "goal",
+        "mode",
+        "entrance_shuffle",
+        "item_pool",
+        "item_functionality",
+        "progressive"
+      ]
+    },
+    {
+      "panel_id": "settings_logic",
+      "label": "Logic And Access",
+      "field_keys": [
+        "glitches_required",
+        "dark_room_logic",
+        "open_pyramid",
+        "swordless",
+        "retro_bow",
+        "retro_caves",
+        "allow_collect"
+      ]
+    },
+    {
+      "panel_id": "settings_dungeons",
+      "label": "Dungeon Rules",
+      "field_keys": [
+        "big_key_shuffle",
+        "small_key_shuffle",
+        "key_drop_shuffle",
+        "compass_shuffle",
+        "map_shuffle",
+        "dungeon_counters",
+        "boss_shuffle",
+        "crystals_needed_for_gt",
+        "crystals_needed_for_ganon"
+      ]
+    },
+    {
+      "panel_id": "settings_world",
+      "label": "World And Economy",
+      "field_keys": [
+        "shop_item_slots",
+        "randomize_shop_inventories",
+        "shuffle_shop_inventories",
+        "randomize_shop_prices",
+        "randomize_cost_types",
+        "shop_price_modifier",
+        "shuffle_capacity_upgrades",
+        "shuffle_prizes",
+        "misery_mire_medallion",
+        "turtle_rock_medallion",
+        "timer"
+      ]
+    }
+  ],
+  "field_display_hints": [
+    {
+      "slot_data_key": "goal",
+      "priority": "primary"
+    },
+    {
+      "slot_data_key": "mode",
+      "priority": "primary"
+    },
+    {
+      "slot_data_key": "entrance_shuffle",
+      "priority": "primary"
+    },
+    {
+      "slot_data_key": "crystals_needed_for_gt",
+      "priority": "goal"
+    },
+    {
+      "slot_data_key": "crystals_needed_for_ganon",
+      "priority": "goal"
+    },
+    {
+      "slot_data_key": "misery_mire_medallion",
+      "priority": "dungeon-access"
+    },
+    {
+      "slot_data_key": "turtle_rock_medallion",
+      "priority": "dungeon-access"
+    },
+    {
+      "slot_data_key": "shop_item_slots",
+      "priority": "economy"
+    }
+  ],
+  "deltas": {
+    "settings_panels": 4,
+    "settings_fields": 33,
+    "display_hint_fields": 8
+  }
+}

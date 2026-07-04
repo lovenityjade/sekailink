@@ -1,0 +1,79 @@
+[
+    {
+        "name": "Kleever's Kiln",
+        "overlay_background": "#000000",
+        "access_rules": [
+            " "
+        ],
+        "children": [
+            {
+        "sections": [
+            {
+                "name": "Clear",
+                "access_rules": ["EASY, carry, cling, diddy, dixie", "HARD, carry, cling", "NORMAL, carry, cling"],
+                "chest_unopened_img": "images/checks/clear_disabled.png",
+                "chest_opened_img": "images/checks/clear.png",
+                "visibility_rules": [],
+                "item_count": 1
+            },
+            {
+                "name": "Defeat",
+                "access_rules": ["EASY, carry, cling, diddy, dixie", "HARD, carry, cling", "NORMAL, carry, cling"],
+                "chest_unopened_img": "images/checks/kremkoin_disabled.png",
+                "chest_opened_img": "images/checks/kremkoin.png",
+                "visibility_rules": [],
+                "item_count": 1
+            }
+        ],
+            "name": "Kleever's Kiln - Boss",
+            "map_locations": [
+                {
+                    "map": "cc-kleeverskiln",
+                    "x": "207",
+                    "y": "397"
+                }
+            ]
+        },
+        {
+            "sections": [
+                {
+                "name": "Banana Coin #1 (Top left corner)",
+                "access_rules": ["EASY, carry, cling, diddy, dixie, helicopterspin", "NORMAL, cling, carry, helicopterspin, dixie", "HARD, cling, carry, helicopterspin, dixie"],
+                "chest_unopened_img": "images/checks/bananacoin_disabled.png",
+                "chest_opened_img": "images/checks/bananacoin.png",
+                "visibility_rules": ["coinsanity"],
+                "item_count": 1
+            }
+        ],
+            "name": "Kleever's Kiln - Banana Coin #1",
+            "map_locations": [
+                {
+                    "map": "cc-kleeverskiln",
+                    "x": "885",
+                    "y": "105"
+                }
+            ]
+        },
+        {
+            "sections": [
+                {
+                "name": "Banana Coin #2 (Top left corner)",
+                "access_rules": ["EASY, carry, cling, diddy, dixie, helicopterspin", "NORMAL, cling, carry, helicopterspin, dixie", "HARD, cling, carry, helicopterspin, dixie"],
+                "chest_unopened_img": "images/checks/bananacoin_disabled.png",
+                "chest_opened_img": "images/checks/bananacoin.png",
+                "visibility_rules": ["coinsanity"],
+                "item_count": 1
+            }
+        ],
+            "name": "Kleever's Kiln - Banana Coin #2",
+            "map_locations": [
+                {
+                    "map": "cc-kleeverskiln",
+                    "x": "885",
+                    "y": "145"
+                }
+            ]
+        }
+        ]
+    }
+]

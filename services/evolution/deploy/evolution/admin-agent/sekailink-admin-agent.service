@@ -1,0 +1,22 @@
+[Unit]
+Description=SekaiLink Evolution Admin Agent
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/sekailink/evolution/admin-agent
+ExecStart=/opt/sekailink/evolution/admin-agent/bin/sekailink_admin_agent_service \
+  --config /opt/sekailink/evolution/admin-agent/config/admin_agent.json
+Restart=always
+RestartSec=2
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/sekailink/evolution /var/log/apache2
+
+[Install]
+WantedBy=multi-user.target

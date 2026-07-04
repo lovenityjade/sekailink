@@ -1,0 +1,46 @@
+{
+  "game_id": "final_fantasy_v",
+  "display_name": "Final Fantasy V Career Day",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apffvcd"
+  ],
+  "patch_world_module": "worlds.ffvcd",
+  "ap_world": "ffvcd",
+  "required_roms": [
+    "final_fantasy_v"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "sni",
+  "archipelago_client": {
+    "game_key": "final_fantasy_v",
+    "world": "ffvcd",
+    "wrapper": "sni",
+    "client_file": "worlds/ffvcd/client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".sfc",
+      ".smc"
+    ],
+    "md5": [
+      "d69b2115e17d1cf2cb3590d3f75febb9"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "snes",
+    "ap_game": "Final Fantasy V Career Day"
+  },
+  "tracker_pack_uid": "",
+  "tracker_web_url": "",
+  "support_status": "unstable",
+  "availability_status": "unavailable_unstable",
+  "tracker_status": "missing_poptracker",
+  "compatibility_notes": "Marked unavailable/unstable until runtime/client behavior is revalidated after APWorld/server updates."
+}

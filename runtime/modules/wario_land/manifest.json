@@ -1,0 +1,46 @@
+{
+  "game_id": "wario_land",
+  "display_name": "Wario Land",
+  "emu": "sekaiemu-libretro",
+  "patcher": "archipelago",
+  "patch_extensions": [
+    ".apwl"
+  ],
+  "patch_world_module": "worlds.wl",
+  "ap_world": "wl",
+  "required_roms": [
+    "wario_land"
+  ],
+  "client_mode": "archipelago",
+  "ap_client": "bizhawk",
+  "archipelago_client": {
+    "game_key": "wario_land",
+    "world": "wl",
+    "wrapper": "bizhawk",
+    "client_file": "worlds/wl/Client.py"
+  },
+  "rom_requirements": {
+    "extensions": [
+      ".gb"
+    ],
+    "md5": [
+      "d9d957771484ef846d4e8d241f6f2815"
+    ],
+    "sha1": []
+  },
+  "features": {
+    "autotracking": true,
+    "save_required": true
+  },
+  "sekaiemu": {
+    "core_id": "gb",
+    "ap_game": "Wario Land"
+  },
+  "tracker_pack_uid": "",
+  "tracker_type": "universal_tracker",
+  "tracker_web_url": "universal_tracker",
+  "support_status": "canari_test",
+  "tracker_status": "trackerless_supported",
+  "compatibility_notes": "Canari test active: uses the generic GB/GBC Sekaiemu/Gambatte runtime path validated by Pokemon Red and Blue.",
+  "availability_status": "available_canari_test"
+}

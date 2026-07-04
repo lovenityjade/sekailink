@@ -1,0 +1,935 @@
+
+
+[
+  {
+    "name": "LLR - hint",
+    "chest_unopened_img": "/images/items/close.png",
+    "chest_opened_img": "/images/items/open.png",
+    "overlay_background": "#000000",
+    "access_rules": [
+        "{}"
+    ],
+    "children": [
+        {
+            "name": "Front - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Talons House - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Talons Chickens - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "llr_front_talons_house_talons_chickens"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 1 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "llr_front_talons_house_pot_1"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 2 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "llr_front_talons_house_pot_2"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 3 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "llr_front_talons_house_pot_3"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Lon Lon Ranch",
+                            "x": "639",
+                            "y": "181",
+                            "size": 22,
+                            "shape": "diamond"
+                        }
+                    ]
+                },
+                {
+                    "name": "Stables - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Left Cow - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "llr_front_stables_left_cow"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Right Cow - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "llr_front_stables_right_cow"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Lon Lon Ranch",
+                            "x": "458",
+                            "y": "218",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                },
+                {
+                    "name": "Child - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Crate - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "llr_front_child_crate"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Lon Lon Ranch",
+                            "x": "640",
+                            "y": "307",
+                            "size": 22,
+                            "shape": "diamond"
+                        }
+                    ]
+                }
+            ],
+            "sections": [
+                {
+                    "name": "Pot 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "llr_front_pot_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "llr_front_pot_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "llr_front_pot_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 4 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "llr_front_pot_4"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Lon Lon Ranch",
+                    "x": "558",
+                    "y": "172",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Tower - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Freestanding PoH - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "llr_tower_freestanding_poh"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Left Cow - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "llr_tower_left_cow"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Right Cow - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "llr_tower_right_cow"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Lon Lon Ranch",
+                    "x": "169",
+                    "y": "1049",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Deku Scrub Grotto - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Left - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "llr_deku_scrub_grotto_left"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Center - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "llr_deku_scrub_grotto_center"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Right - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "llr_deku_scrub_grotto_right"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Beehive - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "llr_deku_scrub_grotto_beehive"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Lon Lon Ranch",
+                    "x": "743",
+                    "y": "951",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "House Window - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "llr_house_window_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Lon Lon Ranch",
+                    "x": "611",
+                    "y": "250",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Tree - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "llr_tree_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Lon Lon Ranch",
+                    "x": "662",
+                    "y": "335",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Rain Shed - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "llr_rain_shed_gs"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "llr_rain_shed_pot_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "llr_rain_shed_pot_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "llr_rain_shed_pot_3"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Lon Lon Ranch",
+                    "x": "571",
+                    "y": "739",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Back Wall - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "llr_back_wall_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Lon Lon Ranch",
+                    "x": "70",
+                    "y": "828",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        }
+    ],
+    "sections": [
+        {
+            "name": "Song from Malon - hint",
+            "access_rules": [],
+            "visibility_rules": [
+                "llr_song_from_malon"
+            ],
+            "item_count": 1
+        }
+    ],
+    "map_locations": [
+        {
+            "map": "Lon Lon Ranch",
+            "x": "443",
+            "y": "605",
+            "size": 22,
+                    "shape": "diamond"
+        }
+    ]
+},
+    {
+      "name": "LLR",
+      "chest_unopened_img": "/images/Items/close.png",
+      "chest_opened_img": "/images/Items/open.png",
+      "overlay_background": "#000000",
+      "access_rules": [
+        " "
+      ],
+      "children": [
+        {
+          "name": "Front",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "Talons House",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Talons Chickens",
+                "access_rules": [
+                "^$CanReach|Child LLR Talons Chickens",
+                "^$CanReach|Adult LLR Talons Chickens"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child LLR Talons House Pot 1",
+                "^$CanReach|Adult LLR Talons House Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child LLR Talons House Pot 2",
+                "^$CanReach|Adult LLR Talons House Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 3",
+                "access_rules": [
+                "^$CanReach|Child LLR Talons House Pot 3",
+                "^$CanReach|Adult LLR Talons House Pot 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Lon Lon Ranch",
+                  "x": 617,
+                  "y": 159,
+                  "size": 24
+                }
+              ]
+            },
+            {
+              "name": "Stables",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Left Cow",
+                "access_rules": [
+                "^$CanReach|Child LLR Stables Left Cow",
+                "^$CanReach|Adult LLR Stables Left Cow"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_cows"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Right Cow",
+                    "access_rules": [
+                    "^$CanReach|Child LLR Stables Right Cow",
+                    "^$CanReach|Adult LLR Stables Right Cow"
+                    ],
+                    "visibility_rules": [
+                      "$Show|shuffle_cows"
+                    ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Lon Lon Ranch",
+                  "x": 436,
+                  "y": 196,
+                  "size": 24
+                }
+              ]
+            },
+            {
+              "name": "Child",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Crate",
+                "access_rules": [
+                "^$CanReach|Child LLR Child Crate",
+                "^$CanReach|Adult LLR Child Crate"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_crates|2"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Lon Lon Ranch",
+                  "x": 618,
+                  "y": 285,
+                  "size": 24
+                }
+              ]
+            }
+          ],
+          "sections": [
+            {
+              "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child LLR Front Pot 1",
+                "^$CanReach|Adult LLR Front Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child LLR Front Pot 2",
+                "^$CanReach|Adult LLR Front Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 3",
+                "access_rules": [
+                "^$CanReach|Child LLR Front Pot 3",
+                "^$CanReach|Adult LLR Front Pot 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 4",
+                "access_rules": [
+                "^$CanReach|Child LLR Front Pot 4",
+                "^$CanReach|Adult LLR Front Pot 4"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Lon Lon Ranch",
+              "x": 536,
+              "y": 150,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Tower",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Freestanding PoH",
+                "access_rules": [
+                "^$CanReach|Child LLR Freestanding PoH",
+                "^$CanReach|Adult LLR Freestanding PoH"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Left Cow",
+                "access_rules": [
+                "^$CanReach|Child LLR Tower Left Cow",
+                "^$CanReach|Adult LLR Tower Left Cow"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_cows"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Right Cow",
+                "access_rules": [
+                "^$CanReach|Child LLR Tower Right Cow",
+                "^$CanReach|Adult LLR Tower Right Cow"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_cows"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Lon Lon Ranch",
+              "x": 147,
+              "y": 1027,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Deku Scrub Grotto",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Left",
+                "access_rules": [
+                "^$CanReach|Child LLR Deku Scrub Grotto Left",
+                "^$CanReach|Adult LLR Deku Scrub Grotto Left"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_scrubs"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Center",
+                "access_rules": [
+                "^$CanReach|Child LLR Deku Scrub Grotto Center",
+                "^$CanReach|Adult LLR Deku Scrub Grotto Center"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_scrubs"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Right",
+                "access_rules": [
+                "^$CanReach|Child LLR Deku Scrub Grotto Right",
+                "^$CanReach|Adult LLR Deku Scrub Grotto Right"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_scrubs"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Beehive",
+                "access_rules": [
+                "^$CanReach|Child LLR Grotto Beehive",
+                "^$CanReach|Adult LLR Grotto Beehive"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_beehives"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Lon Lon Ranch",
+              "x": 723,
+              "y": 929,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "House Window",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child LLR GS House Window",
+                "^$CanReach|Adult LLR GS House Window"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Lon Lon Ranch",
+              "x": 589,
+              "y": 228,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Tree",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child LLR GS Tree",
+                "^$CanReach|Adult LLR GS Tree"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Lon Lon Ranch",
+              "x": 640,
+              "y": 303,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Rain Shed",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child LLR GS Rain Shed",
+                "^$CanReach|Adult LLR GS Rain Shed"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child LLR Rain Shed Pot 1",
+                "^$CanReach|Adult LLR Rain Shed Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child LLR Rain Shed Pot 2",
+                "^$CanReach|Adult LLR Rain Shed Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 3",
+                "access_rules": [
+                "^$CanReach|Child LLR Rain Shed Pot 3",
+                "^$CanReach|Adult LLR Rain Shed Pot 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Lon Lon Ranch",
+              "x": 549,
+              "y": 717,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Back Wall",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child LLR GS Back Wall",
+                "^$CanReach|Adult LLR GS Back Wall"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Lon Lon Ranch",
+              "x": 48,
+              "y": 806,
+              "size": 24
+            }
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "name": "Song from Malon",
+                "access_rules": [
+                "^$CanReach|Child Song from Malon",
+                "^$CanReach|Adult Song from Malon"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+          "item_count": 1
+        }
+      ],
+      "map_locations": [
+        {
+          "map": "Lon Lon Ranch",
+          "x": 421,
+          "y": 583,
+          "size": 24
+        }
+      ]
+    }
+  ]

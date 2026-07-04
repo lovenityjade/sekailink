@@ -1,0 +1,21 @@
+{
+  "schema_version": "sekailink-nexus-worlds-config-handoff-v1",
+  "purpose": "Cycle 1 SoH server-first fixture for Worlds package generation.",
+  "user_id": 1001,
+  "display_name": "Jade",
+  "game_key": "ship_of_harkinian",
+  "linkedworld_id": "oot_soh",
+  "config_name": "Jade-SoH",
+  "config_version_id": 7001,
+  "config_snapshot_ref": "clean-room/repos/sekailink-linkedworld-soh/presets/jade-soh.config-snapshot.json",
+  "worlds_slot": {
+    "slot_id": 1,
+    "game_key": "oot_soh",
+    "linkedworld_id": "oot_soh"
+  },
+  "notes": [
+    "This file is a handoff fixture, not a live database export.",
+    "Worlds receives the resolved config_snapshot JSON, not this ref wrapper.",
+    "The live Nexus database remains the future source of immutable config_version_id snapshots."
+  ]
+}

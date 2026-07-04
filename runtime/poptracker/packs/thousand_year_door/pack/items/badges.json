@@ -1,0 +1,682 @@
+[
+  {
+        "name": "Power Jump",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/PowerJump.png",
+        "img_mods": "",
+        "codes": "PowerJump"
+    },
+    {
+        "name": "Multibounce",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/Multibounce.png",
+        "img_mods": "",
+        "codes": "Multibounce"
+    },
+    {
+        "name": "Shrink Stomp",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/ShrinkStomp.png",
+        "img_mods": "",
+        "codes": "ShrinkStomp"
+    },
+    {
+        "name": "Sleepy Stomp",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/SleepyStomp.png",
+        "img_mods": "",
+        "codes": "SleepyStomp"
+    },
+    {
+        "name": "Soft Stomp",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/SoftStomp.png",
+        "img_mods": "",
+        "codes": "SoftStomp"
+    },
+    {
+        "name": "Tornado Jump",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/TornadoJump.png",
+        "img_mods": "",
+        "codes": "TornadoJump"
+    },
+    {
+        "name": "Power Bounce",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/PowerBounce.png",
+        "img_mods": "",
+        "codes": "PowerBounce"
+    },
+    {
+        "name": "Power Smash",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/PowerSmash.png",
+        "img_mods": "",
+        "codes": "PowerSmash"
+    },
+    {
+        "name": "Piercing Blow",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/PiercingBlow.png",
+        "img_mods": "",
+        "codes": "PiercingBlow"
+    },
+    {
+        "name": "Hammer Throw",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/HammerThrow.png",
+        "img_mods": "",
+        "codes": "HammerThrow"
+    },
+    {
+        "name": "Head Rattle",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/HeadRattle.png",
+        "img_mods": "",
+        "codes": "HeadRattle"
+    },
+    {
+        "name": "Ice Smash",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/IceSmash.png",
+        "img_mods": "",
+        "codes": "IceSmash"
+    },
+    {
+        "name": "Quake Hammer",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/QuakeHammer.png",
+        "img_mods": "",
+        "codes": "QuakeHammer"
+    },
+    {
+        "name": "Fire Drive",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/FireDrive.png",
+        "img_mods": "",
+        "codes": "FireDrive"
+    },
+    {
+        "name": "Charge",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/Charge.png",
+        "img_mods": "",
+        "codes": "Charge"
+    },
+    {
+        "name": "Charge P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/ChargeP.png",
+        "img_mods": "",
+        "codes": "ChargeP"
+    },
+    {
+        "name": "Double Dip",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/DoubleDip.png",
+        "img_mods": "",
+        "codes": "DoubleDip"
+    },
+    {
+        "name": "Double Dip P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/DoubleDipP.png",
+        "img_mods": "",
+        "codes": "DoubleDipP"
+    },
+    {
+        "name": "HP Plus",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/HPPlus.png",
+        "img_mods": "",
+        "codes": "HPPlus"
+    },
+    {
+        "name": "HP Plus P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/HPPlusP.png",
+        "img_mods": "",
+        "codes": "HPPlusP"
+    },
+    {
+        "name": "FP Plus",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/FPPlus.png",
+        "img_mods": "",
+        "codes": "FPPlus"
+    },
+    {
+        "name": "Power Plus",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/PowerPlus.png",
+        "img_mods": "",
+        "codes": "PowerPlus"
+    },
+    {
+        "name": "Power Plus P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/PowerPlusP.png",
+        "img_mods": "",
+        "codes": "PowerPlusP"
+    },
+    {
+        "name": "All or Nothing",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/AllorNothing.png",
+        "img_mods": "",
+        "codes": "AllorNothing"
+    },
+    {
+        "name": "Jumpman",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/Jumpman.png",
+        "img_mods": "",
+        "codes": "Jumpman"
+    },
+    {
+        "name": "Hammerman",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/Hammerman.png",
+        "img_mods": "",
+        "codes": "Hammerman"
+    },
+    {
+        "name": "P-Up, D-Down",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/PupDdown.png",
+        "img_mods": "",
+        "codes": "PupDdown"
+    },
+    {
+        "name": "P-Up, D-Down P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/PupDdownP.png",
+        "img_mods": "",
+        "codes": "PupDdownP"
+    },
+    {
+        "name": "P-Down, D-Up",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/PdownDup.png",
+        "img_mods": "",
+        "codes": "PdownDup"
+    },
+    {
+        "name": "P-Down, D-Up P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/PdownDupP.png",
+        "img_mods": "",
+        "codes": "PdownDupP"
+    },
+    {
+        "name": "Damage Dodge",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/DamageDodge.png",
+        "img_mods": "",
+        "codes": "DamageDodge"
+    },
+    {
+        "name": "Damage Dodge P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/DamageDodgeP.png",
+        "img_mods": "",
+        "codes": "DamageDodgeP"
+    },
+    {
+        "name": "Defend Plus",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/DefendPlus.png",
+        "img_mods": "",
+        "codes": "DefendPlus"
+    },
+    {
+        "name": "Defend Plus P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/DefendPlusP.png",
+        "img_mods": "",
+        "codes": "DefendPlusP"
+    },
+    {
+        "name": "Double Pain",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/DoublePain.png",
+        "img_mods": "",
+        "codes": "DoublePain"
+    },
+    {
+        "name": "Power Rush",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/PowerRush.png",
+        "img_mods": "",
+        "codes": "PowerRush"
+    },
+    {
+        "name": "Power Rush P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/PowerRushP.png",
+        "img_mods": "",
+        "codes": "PowerRushP"
+    },
+    {
+        "name": "Last Stand",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/LastStand.png",
+        "img_mods": "",
+        "codes": "LastStand"
+    },
+    {
+        "name": "Last Stand P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/LastStandP.png",
+        "img_mods": "",
+        "codes": "LastStandP"
+    },
+    {
+        "name": "Mega Rush",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/MegaRush.png",
+        "img_mods": "",
+        "codes": "MegaRush"
+    },
+    {
+        "name": "Mega Rush P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/MegaRushP.png",
+        "img_mods": "",
+        "codes": "MegaRushP"
+    },
+    {
+        "name": "Close Call",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/CloseCall.png",
+        "img_mods": "",
+        "codes": "CloseCall"
+    },
+    {
+        "name": "Close Call P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/CloseCallP.png",
+        "img_mods": "",
+        "codes": "CloseCallP"
+    },
+    {
+        "name": "Pretty Lucky",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/PrettyLucky.png",
+        "img_mods": "",
+        "codes": "PrettyLucky"
+    },
+    {
+        "name": "Pretty Lucky P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/PrettyLuckyP.png",
+        "img_mods": "",
+        "codes": "PrettyLuckyP"
+    },
+    {
+        "name": "Lucky Day",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/LuckyDay.png",
+        "img_mods": "",
+        "codes": "LuckyDay"
+    },
+    {
+        "name": "Lucky Start",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/LuckyStart.png",
+        "img_mods": "",
+        "codes": "LuckyStart"
+    },
+    {
+        "name": "Happy Heart",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/HappyHeart.png",
+        "img_mods": "",
+        "codes": "HappyHeart"
+    },
+    {
+        "name": "Happy Heart P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/HappyHeartP.png",
+        "img_mods": "",
+        "codes": "HappyHeartP"
+    },
+    {
+        "name": "Happy Flower",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/HappyFlower.png",
+        "img_mods": "",
+        "codes": "HappyFlower"
+    },
+    {
+        "name": "Flower Saver",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/FlowerSaver.png",
+        "img_mods": "",
+        "codes": "FlowerSaver"
+    },
+    {
+        "name": "Flower Saver P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/FlowerSaverP.png",
+        "img_mods": "",
+        "codes": "FlowerSaverP"
+    },
+    {
+        "name": "Pity Flower",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/PityFlower.png",
+        "img_mods": "",
+        "codes": "PityFlower"
+    },
+    {
+        "name": "HP Drain",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/HPDrain.png",
+        "img_mods": "",
+        "codes": "HPDrain"
+    },
+    {
+        "name": "HP Drain P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/HPDrainP.png",
+        "img_mods": "",
+        "codes": "HPDrainP"
+    },
+    {
+        "name": "FP Drain",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/FPDrain.png",
+        "img_mods": "",
+        "codes": "FPDrain"
+    },
+    {
+        "name": "Heart Finder",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/HeartFinder.png",
+        "img_mods": "",
+        "codes": "HeartFinder"
+    },
+    {
+        "name": "Flower Finder",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/FlowerFinder.png",
+        "img_mods": "",
+        "codes": "FlowerFinder"
+    },
+    {
+        "name": "Item Hog",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/ItemHog.png",
+        "img_mods": "",
+        "codes": "ItemHog"
+    },
+    {
+        "name": "Ice Power",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/IcePower.png",
+        "img_mods": "",
+        "codes": "IcePower"
+    },
+    {
+        "name": "Spike Shield",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/SpikeShield.png",
+        "img_mods": "",
+        "codes": "SpikeShield"
+    },
+    {
+        "name": "Zap Tap",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/ZapTap.png",
+        "img_mods": "",
+        "codes": "ZapTap"
+    },
+    {
+        "name": "Return Postage",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/ReturnPostage.png",
+        "img_mods": "",
+        "codes": "ReturnPostage"
+    },
+    {
+        "name": "Feeling Fine",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/FeelingFine.png",
+        "img_mods": "",
+        "codes": "FeelingFine"
+    },
+    {
+        "name": "Feeling Fine P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/FeelingFineP.png",
+        "img_mods": "",
+        "codes": "FeelingFineP"
+    },
+    {
+        "name": "Refund",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/Refund.png",
+        "img_mods": "",
+        "codes": "Refund"
+    },
+    {
+        "name": "Money Money",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/MoneyMoney.png",
+        "img_mods": "",
+        "codes": "MoneyMoney"
+    },
+    {
+        "name": "Super Appeal",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/SuperAppeal.png",
+        "img_mods": "",
+        "codes": "SuperAppeal"
+    },
+    {
+        "name": "Super Appeal P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/SuperAppealP.png",
+        "img_mods": "",
+        "codes": "SuperAppealP"
+    },
+    {
+        "name": "Peekaboo",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/Peekaboo.png",
+        "img_mods": "",
+        "codes": "Peekaboo"
+    },
+    {
+        "name": "Quick Change",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/QuickChange.png",
+        "img_mods": "",
+        "codes": "QuickChange"
+    },
+    {
+        "name": "Timing Tutor",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/TimingTutor.png",
+        "img_mods": "",
+        "codes": "TimingTutor"
+    },
+    {
+        "name": "Simplifier",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/Simplifier.png",
+        "img_mods": "",
+        "codes": "Simplifier"
+    },
+    {
+        "name": "Unsimplifier",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/Unsimplifier.png",
+        "img_mods": "",
+        "codes": "Unsimplifier"
+    },
+    {
+        "name": "Chill Out",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/ChillOut.png",
+        "img_mods": "",
+        "codes": "ChillOut"
+    },
+    {
+        "name": "First Attack",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/FirstAttack.png",
+        "img_mods": "",
+        "codes": "FirstAttack"
+    },
+    {
+        "name": "Bump Attack",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/BumpAttack.png",
+        "img_mods": "",
+        "codes": "BumpAttack"
+    },
+    {
+        "name": "Attack FX R",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/AttackFXR.png",
+        "img_mods": "",
+        "codes": "AttackFXR"
+    },
+    {
+        "name": "Attack FX Y",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/AttackFXY.png",
+        "img_mods": "",
+        "codes": "AttackFXY"
+    },
+    {
+        "name": "Attack FX B",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/AttackFXB.png",
+        "img_mods": "",
+        "codes": "AttackFXB"
+    },
+    {
+        "name": "Attack FX G",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/AttackFXG.png",
+        "img_mods": "",
+        "codes": "AttackFXG"
+    },
+    {
+        "name": "Attack FX P",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/AttackFXP.png",
+        "img_mods": "",
+        "codes": "AttackFXP"
+    },
+    {
+        "name": "L Emblem",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/LEmblem.png",
+        "img_mods": "",
+        "codes": "LEmblem"
+    },
+    {
+        "name": "W Emblem",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/WEmblem.png",
+        "img_mods": "",
+        "codes": "WEmblem"
+    },
+    {
+        "name": "Slow Go",
+        "type": "consumable",
+        "max_quantity": 200,
+        "img": "images/items/SlowGo.png",
+        "img_mods": "",
+        "codes": "SlowGo"
+    }
+]

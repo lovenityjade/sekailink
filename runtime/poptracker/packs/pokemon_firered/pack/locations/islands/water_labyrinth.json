@@ -1,0 +1,80 @@
+[
+  {
+    "name": "Water Labyrinth",
+    "children": [
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Islands/Water Labyrinth/Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Islands/Water Labyrinth/Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Islands/Water Labyrinth/Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Islands/Water Labyrinth/Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "water_labyrinth_west",
+            "x": 560,
+            "y": 12
+          },
+          {
+            "map": "water_labyrinth_east",
+            "x": 560,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Gentleman",
+        "sections": [
+          {
+            "ref": "Islands/Water Labyrinth/Pokémon Egg",
+            "name": "Pokémon Egg"
+          },
+          {
+            "ref": "Islands/Water Labyrinth/Gentleman Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "water_labyrinth_west",
+            "x": 232,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Pokémon Breeder Alize",
+        "sections": [
+          {
+            "ref": "Islands/Water Labyrinth/Pokémon Breeder Alize Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Islands/Water Labyrinth/Pokémon Breeder Alize Rematch Reward (8 Badges-Gyms)",
+            "name": "Rematch Reward (8 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "water_labyrinth_west",
+            "x": 152,
+            "y": 120
+          }
+        ]
+      }
+    ]
+  }
+]

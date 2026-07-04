@@ -1,0 +1,555 @@
+{
+  "contract_id": "alttp-tracker-flow-v1",
+  "linkedworld_id": "alttp",
+  "status": "repo-owned-data-driven-tracker-flow-contract",
+  "purpose": "Describe the complete-run tracker data flow consumed by Sekaiemu without copying PopTracker code or requiring engine-specific tracker logic.",
+  "scope": {
+    "owns": [
+      "server item feed projection into tracker inventory",
+      "seed and slot metadata projection into tracker status panels",
+      "slot_data settings projection into tracker settings panels",
+      "automatic tab and map selection based on session, zone, and check context"
+    ],
+    "does_not_own": [
+      "SKLMI memory writes",
+      "Link Room protocol implementation",
+      "Sekaiemu rendering internals",
+      "third-party PopTracker Lua, layouts, or source code"
+    ]
+  },
+  "authoritative_refs": {
+    "bundle_manifest": "manifest.json",
+    "surface_inventory": "surface.complete.json",
+    "location_groups": "location-groups.complete.json",
+    "item_slots": "item-slots.complete.json",
+    "dungeon_progress": "dungeon-progress.complete.json",
+    "room_metadata": "room-metadata.complete.json",
+    "slot_data": "slot-data.complete.json",
+    "item_icon_metadata": "item-icon-metadata.json",
+    "map_pin_metadata": "map-pin-metadata.json",
+    "settings_metadata": "settings-metadata.json",
+    "autotabbing_hints": "autotabbing-hints.json",
+    "runtime_bindings": "../runtime-bindings.phase1.json"
+  },
+  "boot_sequence": [
+    {
+      "step_id": "load_bundle",
+      "description": "Load manifest.json, then resolve all refs declared by the bundle and this flow contract.",
+      "required": true,
+      "outputs": [
+        "views",
+        "tabs",
+        "maps",
+        "info_panels",
+        "location_groups",
+        "item_slots",
+        "dungeon_progress",
+        "item_icon_metadata",
+        "map_pin_metadata",
+        "settings_metadata",
+        "autotabbing_hints",
+        "flow_contract"
+      ]
+    },
+    {
+      "step_id": "load_seed_metadata",
+      "description": "Load seed identity and slot_data from the room/session metadata source before rendering settings panels.",
+      "required": true,
+      "outputs": [
+        "tracker_state.seed_metadata",
+        "tracker_state.slot_data",
+        "tracker_state.settings"
+      ]
+    },
+    {
+      "step_id": "apply_settings",
+      "description": "Normalize slot_data values into display fields and tracker flags using slot-data.complete.json.",
+      "required": true,
+      "outputs": [
+        "settings_core",
+        "settings_logic",
+        "settings_dungeons",
+        "settings_world",
+        "goal_progress"
+      ]
+    },
+    {
+      "step_id": "subscribe_server_item_feed",
+      "description": "Subscribe to append-only item delivery events from the room/server feed and project them into item-slots.complete.json.",
+      "required": true,
+      "outputs": [
+        "tracker_state.inventory",
+        "tracker_state.received_count",
+        "tracker_state.server_item_feed_cursor"
+      ]
+    },
+    {
+      "step_id": "subscribe_location_and_session_context",
+      "description": "Subscribe to checked-location, zone, dungeon, and session-focus context used by autotabbing.",
+      "required": true,
+      "outputs": [
+        "tracker_state.checked_locations",
+        "tracker_state.active_tab_id",
+        "tracker_state.active_map_id"
+      ]
+    }
+  ],
+  "server_item_feed_contract": {
+    "feed_id": "room.server.item_feed",
+    "delivery_semantics": "append-only-idempotent",
+    "accepted_event_types": [
+      "item_received",
+      "room_item_pending",
+      "room_item_applied",
+      "room_item_acknowledged"
+    ],
+    "minimum_payload": {
+      "required_any_identity": [
+        "item_id",
+        "event_key",
+        "tracker_semantic_id",
+        "item_name",
+        "mapped_value"
+      ],
+      "required_fields": [
+        "delivery_id"
+      ],
+      "recommended_fields": [
+        "item_id",
+        "item_name",
+        "event_key",
+        "tracker_semantic_id",
+        "mapped_value",
+        "source_player",
+        "recipient_slot",
+        "location_id",
+        "location_name",
+        "server_index"
+      ]
+    },
+    "identity_resolution_order": [
+      "item_id",
+      "event_key",
+      "tracker_semantic_id",
+      "item_name",
+      "mapped_value"
+    ],
+    "projection_rules": [
+      {
+        "rule_id": "match_item_slot",
+        "description": "Find the first item-slots.complete.json slot item matching the resolved identity.",
+        "on_match": "apply_slot_behavior",
+        "on_missing_match": "append_to_unmapped_feed_log"
+      },
+      {
+        "rule_id": "apply_slot_behavior",
+        "description": "Apply the slot behavior declared in item-slots.complete.json.",
+        "behaviors": {
+          "progressive": "increment stage up to max_stage",
+          "toggle": "mark slot owned",
+          "multi-source-toggle": "mark the matching source item owned while keeping the slot active",
+          "counter": "increment count by payload.quantity or 1",
+          "resource": "increment visible resource count when the host exposes quantity",
+          "filler": "record delivery in feed history without changing progression availability",
+          "trap": "record delivery in feed history and mark the latest trap banner if the UI supports it"
+        }
+      },
+      {
+        "rule_id": "dedupe_delivery",
+        "description": "Ignore repeated delivery_id values after the first successful projection.",
+        "state_key": "tracker_state.server_item_feed_cursor.applied_delivery_ids"
+      },
+      {
+        "rule_id": "update_received_count",
+        "description": "Increment received_count only for the first projection of a delivery_id."
+      }
+    ],
+    "tracker_only_ack": {
+      "event_type": "tracker_item_observed",
+      "description": "Optional tracker-side observation event. It must not be treated as the authoritative gameplay acknowledgement owned by Link Room or SKLMI.",
+      "payload_fields": [
+        "delivery_id",
+        "slot_id",
+        "event_key",
+        "applied_behavior"
+      ]
+    }
+  },
+  "seed_metadata_contract": {
+    "source_priority": [
+      "room.state.seed_metadata",
+      "room.state.slot_data",
+      "session.connect_payload",
+      "trace.room_metadata_ready",
+      "preset_defaults"
+    ],
+    "required_keys": [
+      "seed_id",
+      "seed_hash",
+      "slot_name",
+      "player_alias",
+      "tracker_pack",
+      "tracker_variant",
+      "slot_data"
+    ],
+    "recommended_optional_keys": [
+      "slot_id",
+      "world_id",
+      "world_instance_id",
+      "room_id",
+      "team_id",
+      "server_uri",
+      "goal",
+      "mode",
+      "entrance_shuffle",
+      "item_pool",
+      "item_functionality"
+    ],
+    "fallback_policy": {
+      "missing_required_key": "render UNKNOWN and mark metadata_status as incomplete",
+      "missing_slot_data": "render settings panels from preset defaults and mark settings_status as fallback",
+      "late_metadata_update": "reapply settings and rerender metadata panels without resetting inventory or checked locations"
+    },
+    "panel_projection": [
+      {
+        "source": "room-metadata.complete.json",
+        "target_panels": [
+          "session",
+          "runtime_context"
+        ]
+      },
+      {
+        "source": "slot-data.complete.json",
+        "target_panels": [
+          "settings_core",
+          "settings_logic",
+          "settings_dungeons",
+          "settings_world"
+        ]
+      }
+    ]
+  },
+  "settings_application_contract": {
+    "source_ref": "slot-data.complete.json",
+    "application_order": [
+      "preset_defaults",
+      "seed_metadata.slot_data",
+      "live_room_metadata_updates"
+    ],
+    "normalization": {
+      "key_format": "slot_data.<slot_data_key>",
+      "display_labels": "slot-data.complete.json panels[].fields[].label",
+      "unknown_value": "UNKNOWN"
+    },
+    "tracker_flags": [
+      {
+        "flag_id": "entrance_shuffle_mode",
+        "source_key": "slot_data.entrance_shuffle",
+        "effect": "Display the value in settings_core. Autotabbing may lower confidence for zone-only hints when entrances are non-vanilla."
+      },
+      {
+        "flag_id": "dungeon_item_visibility",
+        "source_keys": [
+          "slot_data.big_key_shuffle",
+          "slot_data.small_key_shuffle",
+          "slot_data.key_drop_shuffle",
+          "slot_data.compass_shuffle",
+          "slot_data.map_shuffle",
+          "slot_data.dungeon_counters"
+        ],
+        "effect": "Drive dungeon settings labels and dungeon item counter visibility."
+      },
+      {
+        "flag_id": "goal_requirements",
+        "source_keys": [
+          "slot_data.goal",
+          "slot_data.crystals_needed_for_gt",
+          "slot_data.crystals_needed_for_ganon",
+          "slot_data.triforce_pieces_required",
+          "slot_data.triforce_pieces_available"
+        ],
+        "effect": "Drive goal_progress labels and completion thresholds."
+      },
+      {
+        "flag_id": "medallion_requirements",
+        "source_keys": [
+          "slot_data.misery_mire_medallion",
+          "slot_data.turtle_rock_medallion"
+        ],
+        "effect": "Drive the Mire and Turtle Rock requirement indicators."
+      },
+      {
+        "flag_id": "logic_visibility",
+        "source_keys": [
+          "slot_data.glitches_required",
+          "slot_data.dark_room_logic",
+          "slot_data.open_pyramid",
+          "slot_data.swordless",
+          "slot_data.retro_bow",
+          "slot_data.retro_caves",
+          "slot_data.allow_collect"
+        ],
+        "effect": "Expose tester-visible logic context without changing gameplay behavior."
+      }
+    ],
+    "mutation_boundaries": {
+      "may_update": [
+        "tracker_state.settings",
+        "tracker_state.metadata_status",
+        "tracker_state.info_panels",
+        "tracker_state.goal_progress"
+      ],
+      "must_not_update": [
+        "game_memory",
+        "server_item_feed",
+        "location_check_state",
+        "SKLMI action state"
+      ]
+    }
+  },
+  "autotabbing_contract": {
+    "enabled_by_default": true,
+    "manual_override": {
+      "state_key": "tracker_state.manual_tab_lock",
+      "behavior": "When true, suppress automatic tab changes until the user clears the lock or the session emits force_autotab."
+    },
+    "decision_priority": [
+      "force_autotab_event",
+      "checked_location_context",
+      "active_check_preview",
+      "dungeon_context",
+      "zone_context",
+      "session_focus_context",
+      "server_item_feed_context",
+      "default_tab"
+    ],
+    "timing": {
+      "minimum_switch_interval_ms": 400,
+      "location_context_hold_ms": 2500,
+      "zone_context_hold_ms": 1200,
+      "item_feed_hold_ms": 800
+    },
+    "context_inputs": [
+      {
+        "input_id": "checked_location_context",
+        "accepted_fields": [
+          "location_id",
+          "location_name",
+          "event_key",
+          "tracker_semantic_id",
+          "location_group_id",
+          "domain_id"
+        ],
+        "resolution": "Resolve location_group_id directly, otherwise find a matching location in location-groups.complete.json."
+      },
+      {
+        "input_id": "dungeon_context",
+        "accepted_fields": [
+          "dungeon_id",
+          "boss_location_name",
+          "reward_slot_id"
+        ],
+        "resolution": "Resolve preferred_tab from dungeon-progress.complete.json dungeons[].preferred_tab."
+      },
+      {
+        "input_id": "zone_context",
+        "accepted_fields": [
+          "zone_id",
+          "map_id",
+          "room_id",
+          "screen_id",
+          "area_name"
+        ],
+        "resolution": "Resolve zone_id through autotab_zone_rules below."
+      },
+      {
+        "input_id": "session_focus_context",
+        "accepted_fields": [
+          "active_tab_id",
+          "active_map_id",
+          "presentation_mode"
+        ],
+        "resolution": "Trust explicit session focus if it names a tab declared in manifest.json."
+      },
+      {
+        "input_id": "server_item_feed_context",
+        "accepted_fields": [
+          "slot_id",
+          "event_key",
+          "item_name"
+        ],
+        "resolution": "Switch to items tab for newly received progression unless a stronger location, dungeon, or zone context is active."
+      }
+    ],
+    "location_group_policy": {
+      "source_ref": "location-groups.complete.json",
+      "default_field": "preferred_tab",
+      "missing_group_fallback_tab": "light-world"
+    },
+    "dungeon_policy": {
+      "source_ref": "dungeon-progress.complete.json",
+      "default_field": "preferred_tab",
+      "missing_dungeon_fallback_tab": "light-world"
+    },
+    "tab_to_map": [
+      {
+        "tab_id": "items",
+        "map_id": null
+      },
+      {
+        "tab_id": "light-world",
+        "map_id": "light_world"
+      },
+      {
+        "tab_id": "dark-world",
+        "map_id": "dark_world"
+      },
+      {
+        "tab_id": "mountain",
+        "map_id": "death_mountain"
+      },
+      {
+        "tab_id": "escape",
+        "map_id": "hc_escape"
+      },
+      {
+        "tab_id": "eastern",
+        "map_id": "eastern_palace"
+      },
+      {
+        "tab_id": "desert",
+        "map_id": "desert_palace"
+      },
+      {
+        "tab_id": "hera",
+        "map_id": "tower_of_hera"
+      },
+      {
+        "tab_id": "pod",
+        "map_id": "dark_dungeons"
+      },
+      {
+        "tab_id": "swamp",
+        "map_id": "dark_dungeons"
+      },
+      {
+        "tab_id": "skull",
+        "map_id": "dark_dungeons"
+      },
+      {
+        "tab_id": "thieves",
+        "map_id": "dark_dungeons"
+      },
+      {
+        "tab_id": "ice",
+        "map_id": "ice_mire"
+      },
+      {
+        "tab_id": "mire",
+        "map_id": "ice_mire"
+      },
+      {
+        "tab_id": "turtle",
+        "map_id": "turtle_gt"
+      },
+      {
+        "tab_id": "gt",
+        "map_id": "turtle_gt"
+      }
+    ],
+    "autotab_zone_rules": [
+      {
+        "zone_id": "light_world",
+        "tab_id": "light-world",
+        "map_id": "light_world"
+      },
+      {
+        "zone_id": "dark_world",
+        "tab_id": "dark-world",
+        "map_id": "dark_world"
+      },
+      {
+        "zone_id": "death_mountain",
+        "tab_id": "mountain",
+        "map_id": "death_mountain"
+      },
+      {
+        "zone_id": "hyrule_castle_escape",
+        "tab_id": "escape",
+        "map_id": "hc_escape"
+      },
+      {
+        "zone_id": "eastern_palace",
+        "tab_id": "eastern",
+        "map_id": "eastern_palace"
+      },
+      {
+        "zone_id": "desert_palace",
+        "tab_id": "desert",
+        "map_id": "desert_palace"
+      },
+      {
+        "zone_id": "tower_of_hera",
+        "tab_id": "hera",
+        "map_id": "tower_of_hera"
+      },
+      {
+        "zone_id": "palace_of_darkness",
+        "tab_id": "pod",
+        "map_id": "dark_dungeons"
+      },
+      {
+        "zone_id": "swamp_palace",
+        "tab_id": "swamp",
+        "map_id": "dark_dungeons"
+      },
+      {
+        "zone_id": "skull_woods",
+        "tab_id": "skull",
+        "map_id": "dark_dungeons"
+      },
+      {
+        "zone_id": "thieves_town",
+        "tab_id": "thieves",
+        "map_id": "dark_dungeons"
+      },
+      {
+        "zone_id": "ice_palace",
+        "tab_id": "ice",
+        "map_id": "ice_mire"
+      },
+      {
+        "zone_id": "misery_mire",
+        "tab_id": "mire",
+        "map_id": "ice_mire"
+      },
+      {
+        "zone_id": "turtle_rock",
+        "tab_id": "turtle",
+        "map_id": "turtle_gt"
+      },
+      {
+        "zone_id": "ganons_tower",
+        "tab_id": "gt",
+        "map_id": "turtle_gt"
+      }
+    ],
+    "output_patch": {
+      "state_keys": [
+        "tracker_state.active_tab_id",
+        "tracker_state.active_map_id",
+        "tracker_state.autotab_reason",
+        "tracker_state.autotab_confidence"
+      ],
+      "valid_tabs_source": "manifest.json tabs[].id",
+      "valid_maps_source": "manifest.json maps[].id"
+    }
+  },
+  "validation_expectations": {
+    "json_must_parse": true,
+    "all_tab_ids_must_exist_in_manifest": true,
+    "all_non_null_map_ids_must_exist_in_manifest": true,
+    "all_ref_files_must_exist_in_bundle_or_tracker_root": true,
+    "engine_runtime_changes_required": false
+  }
+}
