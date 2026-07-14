@@ -1,0 +1,41 @@
+[
+    {
+    "name":  "Pirate's Grotto",
+    "children": [
+        {"sections": [{"ref": "Magical Map/Pirate's Grotto/Pirate's Grotto Entrance - Ruin Powder"}],
+            "map_locations": [{"map": "Pirate's Grotto", "x": 102, "y": 63}]},
+        {"sections": [{"ref": "Magical Map/Pirate's Grotto/Pirate's Grotto Gate Handle Room - Gate Handle"}],
+            "map_locations": [{"map": "Pirate's Grotto", "x": 390, "y": 375}]},
+        {"sections": [{"ref": "Magical Map/Pirate's Grotto/Pirate's Grotto Gate Handle Room - Shine Sprite"}],
+            "map_locations": [{"map": "Pirate's Grotto", "x": 350, "y": 300}]},
+        {"sections": [{"ref": "Magical Map/Pirate's Grotto/Pirate's Grotto Gate Handle Room - Star Piece"}],
+            "map_locations": [{"map": "Pirate's Grotto", "x": 357, "y": 357}]},
+        {"sections": [{"ref": "Magical Map/Pirate's Grotto/Pirate's Grotto Sluice Gate - Star Piece"}],
+            "map_locations": [{"map": "Pirate's Grotto", "x": 951, "y": 483}]},
+        {"sections": [{"ref": "Magical Map/Pirate's Grotto/Pirate's Grotto Storeroom - Grotto Key"}],
+            "map_locations": [{"map": "Pirate's Grotto", "x": 766, "y": 346}]},
+        {"sections": [{"ref": "Magical Map/Pirate's Grotto/Pirate's Grotto Storeroom - Shine Sprite"}],
+            "map_locations": [{"map": "Pirate's Grotto", "x": 694, "y": 300}]},
+        {"sections": [{"ref": "Magical Map/Pirate's Grotto/Pirate's Grotto Storeroom - Star Piece"}],
+            "map_locations": [{"map": "Pirate's Grotto", "x": 662, "y": 338}]},
+        {"sections": [{"name": "Pirate's Grotto Staircase - Coin","ref": "Magical Map/Pirate's Grotto/Pirate's Grotto Staircase - Coin"},
+                {"name": "Pirate's Grotto Staircase - Shine Sprite","ref": "Magical Map/Pirate's Grotto/Pirate's Grotto Staircase - Shine Sprite"}],
+            "map_locations": [{"map": "Pirate's Grotto", "x": 944, "y": 538}]},
+        {"sections": [{"ref": "Magical Map/Pirate's Grotto/Pirate's Grotto Staircase - Defend Plus P"}],
+            "map_locations": [{"map": "Pirate's Grotto","x": 1113,"y": 530}]},
+        {"sections": [{"ref": "Magical Map/Pirate's Grotto/Pirate's Grotto Parabuzzy Room - Star Piece"}],
+            "map_locations": [{"map": "Pirate's Grotto","x": 1034,"y": 672}]},
+        {"sections": [{"name": "Pirate's Grotto Chest Boat - Black Key 4","ref": "Magical Map/Pirate's Grotto/Pirate's Grotto Chest Boat - Black Key 4"},
+                {"name": "Pirate's Grotto Chest Boat - Boat Curse","ref": "Magical Map/Pirate's Grotto/Pirate's Grotto Chest Boat - Boat Curse"},
+                {"name": "Pirate's Grotto Chest Boat - P-Down D-Up","ref": "Magical Map/Pirate's Grotto/Pirate's Grotto Chest Boat - P-Down D-Up"}],
+            "map_locations": [{"map":  "Pirate's Grotto","x":  242,"y":  351}]},
+        {"sections": [{"name": "Pirate's Grotto Barrel Room - 10 Coins","ref": "Magical Map/Pirate's Grotto/Pirate's Grotto Barrel Room - 10 Coins"},
+                {"name": "Pirate's Grotto Barrel Room - Shine Sprite","ref": "Magical Map/Pirate's Grotto/Pirate's Grotto Barrel Room - Shine Sprite"}],
+            "map_locations":  [{"map":  "Pirate's Grotto","x":  836,"y":  627}]},
+        {"sections":  [{"ref":  "Magical Map/Pirate's Grotto/Pirate's Grotto Spike Wall Room - Shine Sprite"}],
+            "map_locations":  [{"map":  "Pirate's Grotto","x":  1034,"y":  720}]},
+        {"sections":  [{"ref":  "Magical Map/Pirate's Grotto/Pirate's Grotto Cortez' Hoard - Sapphire Star"}],
+            "map_locations":  [{"map":  "Pirate's Grotto","x":  1562,"y":  964}]}
+                 ]
+    }
+]

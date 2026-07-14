@@ -6,7 +6,7 @@ TARGET_JSON="${1:-/opt/sekailink/evolution/admin-agent/data/postfix_queue_state.
 mkdir -p "$(dirname "$TARGET_JSON")"
 
 raw_output="$(postqueue -p 2>&1 || true)"
-queue_count="$(printf '%s\n' "$raw_output" | grep -E '^[A-F0-9]+' | wc -l | tr -d ' ')"
+queue_count="$(printf '%s\n' "$raw_output" | { grep -E '^[A-F0-9]+' || true; } | wc -l | tr -d ' ')"
 
 python3 - "$TARGET_JSON" "$queue_count" <<'PY'
 import json

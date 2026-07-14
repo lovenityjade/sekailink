@@ -19,6 +19,7 @@ const createAutoLaunchRuntime = (deps = {}) => {
     moduleHasExternalTracker,
     launchBizHawk,
     tryLaunchSoh,
+    tryLaunch2Ship,
     tryLaunchSekaiemu,
     startCommonClient,
     sendCommonClientCommand,
@@ -252,6 +253,7 @@ const createAutoLaunchRuntime = (deps = {}) => {
     multiGameSession.base = {
       serverAddress: String(options.serverAddress || "").trim(),
       password: options.password,
+      playerAliasMap: isPlainObject(options.playerAliasMap) ? options.playerAliasMap : {},
       chatBridge: isPlainObject(options.chatBridge) ? options.chatBridge : null,
       apiBaseUrl: options.apiBaseUrl,
       authToken: options.authToken,
@@ -312,7 +314,19 @@ const createAutoLaunchRuntime = (deps = {}) => {
     if (emu === "bizhawk") {
       launchRes = await launchBizHawk({ romPath, moduleId });
     } else if (emu === "soh") {
-      launchRes = await tryLaunchSoh();
+      launchRes = await tryLaunchSoh({
+        serverAddress: options.serverAddress,
+        slot: options.slot,
+        password: options.password,
+        sessionId: options.sessionId,
+      });
+    } else if (emu === "2ship") {
+      launchRes = await tryLaunch2Ship({
+        serverAddress: options.serverAddress,
+        slot: options.slot,
+        password: options.password,
+        sessionId: options.sessionId,
+      });
     } else if (emu === "sekaiemu" || emu === "sekaiemu-libretro") {
       launchRes = await tryLaunchSekaiemu({
         romPath,
@@ -321,6 +335,7 @@ const createAutoLaunchRuntime = (deps = {}) => {
         serverAddress: options.serverAddress,
         slot: options.slot,
         playerAlias: options.playerAlias,
+        playerAliasMap: options.playerAliasMap,
         password: options.password,
         chatBridge: options.chatBridge,
         apiBaseUrl: options.apiBaseUrl,
@@ -415,6 +430,8 @@ const createAutoLaunchRuntime = (deps = {}) => {
         romPath,
         memorySocketPath,
         chatBridge,
+        playerAliasMap: options.playerAliasMap,
+        multiGameEntries: options.multiGameEntries,
       });
       writeLogLine(
         "info",
@@ -459,6 +476,8 @@ const createAutoLaunchRuntime = (deps = {}) => {
         password,
         memorySocketPath,
         chatBridge,
+        playerAliasMap: options.playerAliasMap,
+        multiGameEntries: options.multiGameEntries,
         show: webSpec.show_window === true,
       });
       writeLogLine(
@@ -500,6 +519,8 @@ const createAutoLaunchRuntime = (deps = {}) => {
   	      memorySocketPath,
   	      memoryBridge: clientSpec.memory_bridge || clientSpec.memoryBridge || "",
   	      chatBridge,
+        playerAliasMap: options.playerAliasMap,
+        multiGameEntries: options.multiGameEntries,
   	    });
       writeLogLine(
         "info",
@@ -671,6 +692,7 @@ const createAutoLaunchRuntime = (deps = {}) => {
     const serverAddress = options.serverAddress;
     const slot = options.slot;
     const playerAlias = options.playerAlias;
+    const playerAliasMap = isPlainObject(options.playerAliasMap) ? options.playerAliasMap : {};
     const password = options.password;
     const apGameName = options.apGameName;
     const forceTrackerVariantPrompt = options.forceTrackerVariantPrompt === true;
@@ -732,6 +754,7 @@ const createAutoLaunchRuntime = (deps = {}) => {
         serverAddress,
         slot,
         playerAlias,
+        playerAliasMap,
         password,
         chatBridge,
         apiBaseUrl,
@@ -744,8 +767,9 @@ const createAutoLaunchRuntime = (deps = {}) => {
   
       await applyRuntimeLayoutForSession({ moduleId, gamePid: runtimeRes.pid, trackerPid: null });
   
-      const note =
-        "Ship of Harkinian started. Connect from in-game menu: ESC > Network > Archipelago.";
+      const note = String(manifest.emu || "").trim().toLowerCase() === "2ship"
+        ? "2Ship2Harkinian started with the SekaiLink room connection."
+        : "Ship of Harkinian started with the SekaiLink room connection.";
       emitSessionEvent({ event: "status", status: note, moduleId });
       emitSessionEvent({
         event: "ready",
@@ -1085,6 +1109,7 @@ const createAutoLaunchRuntime = (deps = {}) => {
       serverAddress,
       slot,
       playerAlias,
+      playerAliasMap,
       password,
       chatBridge,
       apiBaseUrl,
@@ -1101,11 +1126,13 @@ const createAutoLaunchRuntime = (deps = {}) => {
   	      serverAddress,
   	      slot,
   	      playerAlias: options.playerAlias,
+          playerAliasMap,
   	      password,
   	      patchPath: downloadedPath,
   	      romPath: patchOutput,
   	      memorySocketPath: runtimeRes.memorySocketPath,
   	      chatBridge: runtimeRes.chatBridge,
+          multiGameEntries: options.multiGameEntries,
   	    });
   
     const trackerRes = await launchTrackerForModuleSession({
@@ -1130,6 +1157,19 @@ const createAutoLaunchRuntime = (deps = {}) => {
     if (runtimeRes.pid && !isPidAlive(runtimeRes.pid)) {
       const detail = `Game runtime exited before launch completed (pid=${runtimeRes.pid}).`;
       emitSessionEvent({ event: "error", step: "emu", error: "emu_exited_before_ready", detail, moduleId });
+      if (trackerRes?.pid) {
+        await stopPopTracker(trackerRes.pid).catch((err) => {
+          writeLogLine("warn", "autolaunch", `tracker cleanup after early emulator exit failed: ${String(err?.message || err || "")}`);
+        });
+      }
+      await stopSniBridge().catch((err) => {
+        writeLogLine("warn", "autolaunch", `SNI cleanup after early emulator exit failed: ${String(err?.message || err || "")}`);
+      });
+      if (slot) {
+        await stopArchipelagoClientsForSession(moduleId, slot, `emu_exited_before_ready:${runtimeRes.pid}`).catch((err) => {
+          writeLogLine("warn", "autolaunch", `AP cleanup after early emulator exit failed: ${String(err?.message || err || "")}`);
+        });
+      }
       return { ok: false, error: "emu_exited_before_ready", detail, moduleId };
     }
   
@@ -1246,6 +1286,7 @@ const createAutoLaunchRuntime = (deps = {}) => {
       serverAddress: multiGameSession.base.serverAddress,
       slot: entry.slot || multiGameSession.current.slot,
       playerAlias: entry.playerAlias,
+      playerAliasMap: entry.playerAliasMap || multiGameSession.base.playerAliasMap,
       password: multiGameSession.base.password,
       apGameName: entry.apGameName,
       trackerVariant: String(options.trackerVariant || entry.trackerVariant || "").trim(),

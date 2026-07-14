@@ -31,6 +31,56 @@
   <script>document.documentElement.classList.replace("no-js","js");</script>
 </head>
 <body>
+  <style class="skl-maintenance-style">
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 28%, rgba(20, 184, 166, 0.20), transparent 34rem),
+        linear-gradient(135deg, #020407, #061016 54%, #030708);
+      color: #fff;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body > :not(.skl-maintenance-style):not(.skl-maintenance-static) {
+      display: none !important;
+    }
+    .skl-maintenance-static {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      padding: 32px;
+      text-align: center;
+    }
+    .skl-maintenance-static__spinner {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 3px solid rgba(20, 184, 166, 0.22);
+      border-top-color: #2dd4bf;
+      box-shadow: 0 0 24px rgba(45, 212, 191, 0.26);
+      animation: sklMaintenanceSpin 0.85s linear infinite;
+    }
+    .skl-maintenance-static h1 {
+      margin: 0;
+      color: #fff;
+      font-size: clamp(30px, 7vw, 58px);
+      line-height: 1.05;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-shadow: 0 0 28px rgba(45, 212, 191, 0.26);
+    }
+    @keyframes sklMaintenanceSpin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+  <main class="skl-maintenance-static" aria-labelledby="maintenance-title">
+    <div class="skl-maintenance-static__spinner" aria-hidden="true"></div>
+    <h1 id="maintenance-title">Maintenance in progress</h1>
+  </main>
   <div style="position:relative;z-index:10000;padding:14px 18px;text-align:center;background:linear-gradient(90deg,#0f766e,#14b8a6);color:#031412;font:700 15px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;box-shadow:0 10px 28px rgba(0,0,0,.28);">
     SekaiLink is currently on a temporary hiatus for health reasons. Thank you for your patience and support.
   </div>

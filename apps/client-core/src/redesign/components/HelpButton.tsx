@@ -62,7 +62,7 @@ export default function HelpButton() {
 
                 <button
                   onClick={() => {
-                    setShowBugModal(true);
+                    window.dispatchEvent(new CustomEvent('sekailink:report-bug'));
                     setShowMenu(false);
                   }}
                   className="w-full px-4 py-2.5 flex items-center gap-3 hover:bg-gradient-to-r hover:from-[#ff6b35]/10 hover:to-transparent transition-all text-left"
@@ -89,7 +89,7 @@ export default function HelpButton() {
 
       {/* Help Modal */}
       {showHelpModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-8">
+        <div className="fixed left-0 right-0 bottom-0 top-[32px] bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-8">
           <div className="w-full max-w-5xl h-[80vh] bg-[#161b22] rounded-xl shadow-2xl border-2 border-[#4ecdc4] card-float overflow-hidden flex flex-col">
             {/* Header */}
             <div className="p-6 border-b-2 border-[#2a2b30] bg-gradient-to-r from-[#1c1d22] to-[#161b22] flex items-center justify-between">
@@ -160,7 +160,7 @@ export default function HelpButton() {
 
       {/* Bug Report Modal */}
       {showBugModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-8">
+        <div className="fixed left-0 right-0 bottom-0 top-[32px] bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-8">
           <div className="w-full max-w-3xl bg-[#161b22] rounded-xl shadow-2xl border-2 border-[#ff6b35] card-float overflow-hidden max-h-[90vh] flex flex-col">
             {/* Header */}
             <div className="p-6 border-b-2 border-[#2a2b30] bg-gradient-to-r from-[#1c1d22] to-[#161b22] flex items-center justify-between">
@@ -283,7 +283,7 @@ export default function HelpButton() {
 
       {/* About Modal */}
       {showAboutModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-8">
+        <div className="fixed left-0 right-0 bottom-0 top-[32px] bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-8">
           <div className="w-full max-w-2xl bg-[#161b22] rounded-xl shadow-2xl border-2 border-[#aa96da] card-float overflow-hidden">
             {/* Header */}
             <div className="p-6 border-b-2 border-[#2a2b30] bg-gradient-to-r from-[#1c1d22] to-[#161b22] flex items-center justify-between">

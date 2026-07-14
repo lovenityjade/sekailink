@@ -4,11 +4,20 @@ import RedesignApp from "./redesign/App";
 import AuthGatePrototype from "./ui-prototype/ui/auth/AuthGatePrototype";
 
 const App: React.FC = () => {
+  const isRuntimeSocialWindow =
+    typeof window !== "undefined" && window.location.hash.startsWith("#/runtime-social/");
+  const isHostConsoleWindow =
+    typeof window !== "undefined" && window.location.hash.startsWith("#/host-console/");
+
   return (
     <ErrorBoundary>
-      <AuthGatePrototype>
+      {isRuntimeSocialWindow || isHostConsoleWindow ? (
         <RedesignApp />
-      </AuthGatePrototype>
+      ) : (
+        <AuthGatePrototype>
+          <RedesignApp />
+        </AuthGatePrototype>
+      )}
     </ErrorBoundary>
   );
 };

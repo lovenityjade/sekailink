@@ -9,19 +9,82 @@ const copyDir = (source, target) => {
   fs.cpSync(source, target, { recursive: true });
 };
 
+const copyFileIfExists = (source, target) => {
+  if (!fs.existsSync(source)) return false;
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  fs.copyFileSync(source, target);
+  return true;
+};
+
+const stageWindowsBootloaderDlls = (appOutDir) => {
+  const bootloaderDir = path.join(appOutDir, "SekaiLink Bootloader");
+  if (!fs.existsSync(path.join(bootloaderDir, "SekaiLink Bootloader.exe"))) return;
+
+  const runtimeBinDir = path.join(appOutDir, "resources", "runtime", "platforms", "win32-x64", "bin");
+  const msysRoots = [
+    process.env.SEKAILINK_MSYS2_UCRT_ROOT,
+    "C:\\msys64\\ucrt64",
+  ].filter(Boolean);
+  const required = [
+    "libgcc_s_seh-1.dll",
+    "libwinpthread-1.dll",
+    "libstdc++-6.dll",
+    "libcurl-4.dll",
+    "libcrypto-3-x64.dll",
+    "libssl-3-x64.dll",
+    "SDL2.dll",
+    "zlib1.dll",
+    "libidn2-0.dll",
+    "libintl-8.dll",
+    "libnghttp2-14.dll",
+    "libnghttp3-9.dll",
+    "libngtcp2-16.dll",
+    "libngtcp2_crypto_ossl-0.dll",
+    "libpsl-5.dll",
+    "libssh2-1.dll",
+    "libunistring-5.dll",
+    "libbrotlicommon.dll",
+    "libbrotlidec.dll",
+    "libbrotlienc.dll",
+    "libiconv-2.dll",
+    "libzstd.dll",
+  ];
+
+  for (const name of required) {
+    const target = path.join(bootloaderDir, name);
+    if (copyFileIfExists(path.join(runtimeBinDir, name), target)) continue;
+    for (const root of msysRoots) {
+      if (copyFileIfExists(path.join(root, "bin", name), target)) break;
+    }
+  }
+
+  copyFileIfExists(path.join(runtimeBinDir, "ca-bundle.crt"), path.join(bootloaderDir, "ca-bundle.crt"));
+  for (const root of msysRoots) {
+    if (copyFileIfExists(path.join(root, "etc", "ssl", "certs", "ca-bundle.crt"), path.join(bootloaderDir, "ca-bundle.crt"))) break;
+  }
+};
+
 const run = (cmd, args, options = {}) => {
   const res = spawnSync(cmd, args, { stdio: "inherit", ...options });
   if (res.status !== 0) throw new Error(`${cmd} ${args.join(" ")} failed`);
 };
 
 const latestBootstrapperDir = (releaseDir) => {
+  const normalizeReleaseChannel = (value) => {
+    const raw = String(value || "").trim().toLowerCase();
+    if (raw === "canary") return "canari";
+    if (raw === "test" || raw === "stable" || raw === "release") return "canonical";
+    return raw === "canari" ? "canari" : "canonical";
+  };
   const root = path.join(releaseDir, "bootstrapper");
-  if (!fs.existsSync(root)) return "";
-  const dirs = fs.readdirSync(root, { withFileTypes: true })
+  const channelRoot = path.join(root, normalizeReleaseChannel(process.env.SEKAILINK_RELEASE_CHANNEL || "canonical"));
+  const searchRoot = fs.existsSync(channelRoot) ? channelRoot : root;
+  if (!fs.existsSync(searchRoot)) return "";
+  const dirs = fs.readdirSync(searchRoot, { withFileTypes: true })
     .filter((entry) => entry.isDirectory() && /^\d{8}$/.test(entry.name))
     .map((entry) => entry.name)
     .sort();
-  return dirs.length ? path.join(root, dirs[dirs.length - 1]) : "";
+  return dirs.length ? path.join(searchRoot, dirs[dirs.length - 1]) : "";
 };
 
 const findArtifact = (dir, suffix) => {
@@ -49,6 +112,7 @@ const stageNativeBootloader = (platform, appOutDir, releaseDir) => {
         throw new Error("native_windows_bootloader_exe_missing");
       }
       copyDir(source, path.join(appOutDir, "SekaiLink Bootloader"));
+      stageWindowsBootloaderDlls(appOutDir);
       return;
     }
 

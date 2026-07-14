@@ -39,6 +39,7 @@
     "ap_game": "Mega Man 3"
   },
   "tracker_pack_uid": "",
+  "tracker_type": "universal_tracker",
   "tracker_web_url": "universal_tracker",
   "support_status": "supported_trackerless",
   "tracker_status": "trackerless_supported",

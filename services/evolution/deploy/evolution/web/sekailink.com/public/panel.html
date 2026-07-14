@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="fr" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compte - SekaiLink</title>
+  <link rel="icon" type="image/png" sizes="64x64" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+  <script>document.documentElement.classList.replace("no-js","js");</script>
+</head>
+<body class="panel-page">
+  <div class="stage" aria-hidden="true">
+    <div class="stage__void"></div>
+    <div class="stage__vignette"></div>
+  </div>
+
+  <header class="topbar">
+    <div class="shell topbar__row">
+      <a class="brand" href="index.html">
+        <img class="brand__mark" src="assets/sekailink-logo-image.png" width="36" height="36" alt="" />
+        <img class="brand__wordmark" src="assets/sekailink-logo-text.png" height="26" alt="SekaiLink" />
+      </a>
+      <div class="topbar__cta">
+        <div class="panel-topbar-profile">
+          <img id="topbar-avatar" class="panel-topbar-avatar" alt="" />
+          <div>
+            <div id="topbar-displayname" class="panel-topbar-name">Compte</div>
+            <div id="topbar-subline" class="panel-topbar-subline">Session active</div>
+          </div>
+        </div>
+        <button id="btn-logout" class="btn btn--ghost btn--sm">Déconnexion</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="panel-layout shell">
+    <div class="panel-grid">
+      <aside class="panel-nav">
+        <button class="panel-nav-link is-active" data-target="section-overview">Vue d'ensemble</button>
+        <button class="panel-nav-link" data-target="section-account">Compte</button>
+        <button class="panel-nav-link" data-target="section-keys">Clés de jeu</button>
+        <button class="panel-nav-link" data-target="section-security">Sécurité</button>
+        <button class="panel-nav-link" data-target="section-patreon">Patreon</button>
+        <button class="panel-nav-link" data-target="section-social">Social</button>
+        <button class="panel-nav-link" data-target="section-notifications">Notifications</button>
+      </aside>
+
+      <section class="panel-content">
+        <div id="section-overview" class="panel-section is-active">
+          <div class="panel-header">
+            <h2>Vue d'ensemble</h2>
+            <p>Tout l'état de votre compte SekaiLink au même endroit.</p>
+          </div>
+
+          <div class="panel-overview-grid">
+            <article class="glow-card panel-card panel-summary-card">
+              <div class="glow-card__aurora"></div>
+              <div class="glow-card__inner">
+                <div class="panel-summary-head">
+                  <img id="overview-avatar" class="panel-avatar panel-avatar--hero" alt="" />
+                  <div>
+                    <h3 id="ov-username">...</h3>
+                    <p id="ov-identity-line" class="panel-muted">...</p>
+                  </div>
+                </div>
+                <div class="panel-pill-row">
+                  <span id="ov-role-pill" class="badge">player</span>
+                  <span id="ov-email-badge" class="badge">Vérification...</span>
+                  <span id="ov-emu-badge" class="badge">SekaiEmu...</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="glow-card panel-card">
+              <div class="glow-card__inner">
+                <h3>Compte</h3>
+                <div class="data-list">
+                  <div class="data-item">
+                    <span class="data-label">Nom d'utilisateur</span>
+                    <span class="data-value" id="ov-username-raw">-</span>
+                  </div>
+                  <div class="data-item">
+                    <span class="data-label">Email</span>
+                    <span class="data-value" id="ov-email">-</span>
+                  </div>
+                  <div class="data-item">
+                    <span class="data-label">Locale</span>
+                    <span class="data-value" id="ov-locale">-</span>
+                  </div>
+                </div>
+                <div class="panel-inline-actions">
+                  <button id="btn-resend-email" class="btn btn--ghost btn--sm" style="display:none;">Renvoyer l'email</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="glow-card panel-card">
+              <div class="glow-card__inner">
+                <h3>Accès</h3>
+                <div class="data-list">
+                  <div class="data-item">
+                    <span class="data-label">Clés actives</span>
+                    <span class="data-value" id="ov-key-count">0</span>
+                  </div>
+                  <div class="data-item">
+                    <span class="data-label">Entitlements</span>
+                    <span class="data-value" id="ov-entitlements">-</span>
+                  </div>
+                  <div class="data-item">
+                    <span class="data-label">Patreon</span>
+                    <span class="data-value" id="ov-patreon">Non lié</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="glow-card panel-card">
+              <div class="glow-card__inner">
+                <h3>Sessions</h3>
+                <div class="data-list">
+                  <div class="data-item">
+                    <span class="data-label">Sessions actives</span>
+                    <span class="data-value" id="ov-session-count">-</span>
+                  </div>
+                  <div class="data-item">
+                    <span class="data-label">Appareils</span>
+                    <span class="data-value" id="ov-device-count">-</span>
+                  </div>
+                  <div class="data-item">
+                    <span class="data-label">2FA</span>
+                    <span class="data-value" id="ov-2fa">-</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div id="section-account" class="panel-section">
+          <div class="panel-header">
+            <h2>Compte et profil</h2>
+            <p>Avatar, bio, locale et identité publique.</p>
+          </div>
+
+          <div class="panel-two-column">
+            <article class="glow-card panel-card">
+              <div class="glow-card__aurora"></div>
+              <div class="glow-card__inner">
+                <h3>Avatar</h3>
+                <div class="avatar-editor">
+                  <img id="profile-avatar" class="panel-avatar panel-avatar--profile" alt="" />
+                  <div class="avatar-editor-meta">
+                    <p class="panel-muted">PNG et JPG uniquement, maximum 1 MB. L'image sera recadrée et exportée en 512x512 max.</p>
+                    <div class="panel-inline-actions">
+                      <label class="btn btn--primary btn--sm" for="avatar-file-input">Choisir une image</label>
+                      <input id="avatar-file-input" type="file" accept="image/png,image/jpeg" hidden />
+                      <button id="btn-avatar-remove" class="btn btn--ghost btn--sm" type="button">Retirer l'avatar</button>
+                    </div>
+                    <div id="avatar-msg" class="panel-inline-note"></div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="glow-card panel-card">
+              <div class="glow-card__inner">
+                <h3>Profil public</h3>
+                <form id="profile-form" class="auth-form">
+                  <div class="form-group">
+                    <label for="prof-displayname">Nom d'affichage</label>
+                    <input type="text" id="prof-displayname" maxlength="64" />
+                  </div>
+                  <div class="form-group">
+                    <label for="prof-bio">Bio</label>
+                    <textarea id="prof-bio" rows="5" maxlength="280"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="prof-locale">Locale</label>
+                    <input type="text" id="prof-locale" placeholder="fr-CA" maxlength="16" />
+                  </div>
+                  <div class="form-group">
+                    <label for="prof-avatar-url">Avatar URL actuel</label>
+                    <input type="text" id="prof-avatar-url" readonly />
+                  </div>
+                  <button type="submit" class="btn btn--primary">Sauvegarder</button>
+                </form>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div id="section-keys" class="panel-section">
+          <div class="panel-header">
+            <h2>Clés de jeu</h2>
+            <p>Activez vos accès et vérifiez immédiatement l'état de vos clés.</p>
+          </div>
+
+          <article class="glow-card panel-card">
+            <div class="glow-card__aurora"></div>
+            <div class="glow-card__inner">
+              <h3>Activer une clé</h3>
+              <form id="key-form" class="auth-form auth-form--inline">
+                <div class="form-group form-group--grow">
+                  <label for="game-key">Code de clé</label>
+                  <input type="text" id="game-key" placeholder="XXXX-XXXX-XXXX-XXXX" required />
+                </div>
+                <button type="submit" class="btn btn--primary">Activer</button>
+                <button id="btn-key-check" type="button" class="btn btn--ghost">Vérifier</button>
+              </form>
+              <div id="key-msg" class="panel-inline-note"></div>
+            </div>
+          </article>
+
+          <article class="glow-card panel-card">
+            <div class="glow-card__inner">
+              <h3>Vos clés</h3>
+              <div id="keys-summary" class="panel-summary-strip"></div>
+              <div id="keys-list" class="key-list"></div>
+            </div>
+          </article>
+        </div>
+
+        <div id="section-security" class="panel-section">
+          <div class="panel-header">
+            <h2>Sécurité</h2>
+            <p>Vérification email, sessions, 2FA et journal de sécurité.</p>
+          </div>
+
+          <div class="panel-two-column">
+            <article class="glow-card panel-card">
+              <div class="glow-card__inner">
+                <h3>État de sécurité</h3>
+                <div class="data-list">
+                  <div class="data-item">
+                    <span class="data-label">Email</span>
+                    <span class="data-value"><span id="sec-email-badge" class="badge">-</span></span>
+                  </div>
+                  <div class="data-item">
+                    <span class="data-label">2FA</span>
+                    <span class="data-value"><span id="sec-2fa-badge" class="badge">-</span></span>
+                  </div>
+                  <div class="data-item">
+                    <span class="data-label">Recovery codes</span>
+                    <span class="data-value" id="sec-recovery-count">-</span>
+                  </div>
+                  <div class="data-item">
+                    <span class="data-label">Sessions actives</span>
+                    <span class="data-value" id="sec-session-count">-</span>
+                  </div>
+                </div>
+                <div class="panel-inline-actions">
+                  <button id="btn-revoke-others" class="btn btn--ghost btn--sm" type="button">Révoquer les autres sessions</button>
+                </div>
+                <div id="sec-msg" class="panel-inline-note"></div>
+              </div>
+            </article>
+
+            <article class="glow-card panel-card">
+              <div class="glow-card__inner">
+                <h3>Sessions</h3>
+                <div id="sessions-list" class="session-list"></div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div id="section-patreon" class="panel-section">
+          <div class="panel-header">
+            <h2>Patreon</h2>
+            <p>Liez Patreon pour récupérer automatiquement le statut et le tier du compte.</p>
+          </div>
+
+          <article class="glow-card panel-card">
+            <div class="glow-card__inner">
+              <h3>Liaison Patreon</h3>
+              <div class="data-list">
+                <div class="data-item">
+                  <span class="data-label">Statut</span>
+                  <span class="data-value"><span id="pat-badge" class="badge">Non lié</span></span>
+                </div>
+                <div class="data-item">
+                  <span class="data-label">Tier</span>
+                  <span class="data-value" id="pat-tier">-</span>
+                </div>
+                <div class="data-item">
+                  <span class="data-label">Supporter</span>
+                  <span class="data-value" id="pat-supporter">-</span>
+                </div>
+              </div>
+              <div class="panel-inline-actions">
+                <button id="btn-patreon-link" class="btn btn--primary">Lier Patreon</button>
+                <button id="btn-patreon-unlink" class="btn btn--ghost" style="display:none;">Délier</button>
+              </div>
+              <div id="pat-msg" class="panel-inline-note"></div>
+            </div>
+          </article>
+        </div>
+
+        <div id="section-social" class="panel-section">
+          <div class="panel-header">
+            <h2>Social</h2>
+            <p>Préparation du panneau amis, messages privés et blocage, branché pour l'intégration serveur dès qu'elle est active.</p>
+          </div>
+
+          <div class="panel-three-column">
+            <article class="glow-card panel-card">
+              <div class="glow-card__inner">
+                <h3>Ajouter un ami</h3>
+                <form id="friend-form" class="auth-form">
+                  <div class="form-group">
+                    <label for="friend-username">Nom d'utilisateur</label>
+                    <input id="friend-username" type="text" placeholder="username" />
+                  </div>
+                  <button class="btn btn--primary" type="submit">Envoyer la demande</button>
+                </form>
+                <div id="friend-msg" class="panel-inline-note"></div>
+              </div>
+            </article>
+
+            <article class="glow-card panel-card">
+              <div class="glow-card__inner">
+                <h3>Amis</h3>
+                <div id="friends-list" class="social-list"></div>
+              </div>
+            </article>
+
+            <article class="glow-card panel-card">
+              <div class="glow-card__inner">
+                <h3>Bloqués</h3>
+                <div id="blocked-list" class="social-list"></div>
+              </div>
+            </article>
+          </div>
+
+          <article class="glow-card panel-card">
+            <div class="glow-card__inner">
+              <h3>Messages privés</h3>
+              <div id="dm-list" class="dm-shell"></div>
+            </div>
+          </article>
+        </div>
+
+        <div id="section-notifications" class="panel-section">
+          <div class="panel-header">
+            <h2>Notifications SekaiLink</h2>
+            <p>Placeholders branchés pour les futures notifications serveur.</p>
+          </div>
+
+          <div class="panel-two-column">
+            <article class="glow-card panel-card">
+              <div class="glow-card__inner">
+                <h3>Préférences</h3>
+                <div class="toggle-list">
+                  <label class="toggle-row">
+                    <span>Updates de compte</span>
+                    <input type="checkbox" id="notif-account" checked />
+                  </label>
+                  <label class="toggle-row">
+                    <span>Amis et social</span>
+                    <input type="checkbox" id="notif-social" checked />
+                  </label>
+                  <label class="toggle-row">
+                    <span>SekaiEmu / accès</span>
+                    <input type="checkbox" id="notif-sekaiemu" checked />
+                  </label>
+                </div>
+                <div id="notif-msg" class="panel-inline-note"></div>
+              </div>
+            </article>
+
+            <article class="glow-card panel-card">
+              <div class="glow-card__inner">
+                <h3>Flux</h3>
+                <div id="notifications-feed" class="notification-feed"></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="avatar-modal" class="avatar-modal" hidden>
+    <div class="avatar-modal__backdrop"></div>
+    <div class="avatar-modal__dialog">
+      <div class="avatar-modal__header">
+        <h3>Recadrer l'avatar</h3>
+        <button id="btn-avatar-close" class="btn btn--ghost btn--sm" type="button">Fermer</button>
+      </div>
+      <div class="avatar-cropper">
+        <canvas id="avatar-canvas" width="512" height="512"></canvas>
+      </div>
+      <div class="avatar-controls">
+        <label for="avatar-zoom">Zoom</label>
+        <input id="avatar-zoom" type="range" min="1" max="3" step="0.01" value="1" />
+      </div>
+      <div class="panel-inline-actions">
+        <button id="btn-avatar-apply" class="btn btn--primary" type="button">Appliquer</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/auth.js" defer></script>
+  <script src="js/panel.js" defer></script>
+</body>
+</html>

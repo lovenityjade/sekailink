@@ -59,9 +59,9 @@ class LocationTracker:
             '0x223': 0x20,
             '0x234': 0x20,
             # Tarin's Gift is the start-item gate used by the AP client before
-            # it injects queued received items. The current LADX beta patch
-            # marks it with 0x10; older tracker tables expected 0x20.
-            '0x2A3': 0x10,
+            # it injects queued received items. The LADX beta patch marks this
+            # room complete with the normal dropped-key finished bit.
+            '0x2A3': 0x20,
             '0x2FD': 0x20,
             '0x2A7': 0x20,
             '0x1F5': 0x06,
@@ -225,8 +225,9 @@ class MagpieBridge:
                         await self.send_all_checks()
                     if self.use_entrance_tracker():
                         await self.send_gps(diff=False)
-            except websockets.exceptions.ConnectionClosedOK:
-                pass
+            except websockets.exceptions.ConnectionClosed:
+                self.ws = None
+                break
 
     # Translate renamed IDs back to LADXR IDs
     @staticmethod
@@ -317,7 +318,7 @@ class MagpieBridge:
         self.has_sent_slot_data = True
 
     async def serve(self):
-        async with websockets.serve(lambda w: self.handler(w), "", 17026, logger=logger):
+        async with websockets.serve(lambda w: self.handler(w), "127.0.0.1", self.port, logger=logger):
             await asyncio.Future()  # run forever
 
     def set_checks(self, checks):

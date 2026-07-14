@@ -392,7 +392,7 @@ def ask_llama(message: str, mode: str, context: str, web_context: str = "") -> d
                         "mode": mode,
                         "question": message,
                         "context": context,
-                        "expected_style": "Pas ChatGPT 2.0: console Pulse de travail, directe, challenge-friendly.",
+                        "expected_style": "console Pulse de travail, directe, challenge-friendly.",
                     },
                     ensure_ascii=False,
                 ),

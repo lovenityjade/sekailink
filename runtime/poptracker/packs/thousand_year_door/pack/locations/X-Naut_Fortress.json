@@ -1,0 +1,43 @@
+[
+    {
+    "name":  "X-Naut Fortress",
+    "children": [
+        {"sections": [{"ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Elevator Key Room - Elevator Key 1"}],
+            "map_locations": [{"map": "X-Naut Fortress", "x": 771, "y": 182}]},
+        {"sections": [{"ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Elevator Key Room - Super Shroom"}],
+            "map_locations": [{"map": "X-Naut Fortress", "x": 738, "y": 158}]},
+        {"sections": [{"name": "X-Naut Fortress Crane Room - Coin 1","ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Crane Room - Coin 1"},
+                {"name": "X-Naut Fortress Crane Room - Coin 2","ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Crane Room - Coin 2"},
+                {"name": "X-Naut Fortress Crane Room - Coin 3","ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Crane Room - Coin 3"},
+                {"name": "X-Naut Fortress Crane Room - Coin 4","ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Crane Room - Coin 4"},
+                {"name": "X-Naut Fortress Crane Room - Coin 5","ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Crane Room - Coin 5"},
+                {"name": "X-Naut Fortress Crane Room - Coin 6","ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Crane Room - Coin 6"},
+                {"name": "X-Naut Fortress Crane Room - Feeling Fine","ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Crane Room - Feeling Fine"},
+                {"name": "X-Naut Fortress Crane Room - Feeling Fine P","ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Crane Room - Feeling Fine P"},
+                {"name": "X-Naut Fortress Crane Room - Star Piece","ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Crane Room - Star Piece"}],
+            "map_locations": [{"map": "X-Naut Fortress", "x": 442, "y": 274}]},
+        {"sections": [{"ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Quiz Room - Elevator Key 2"}],
+            "map_locations": [{"map": "X-Naut Fortress", "x": 748, "y": 374}]},
+        {"sections": [{"ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Card Key Room A - Card Key 1"}],
+            "map_locations": [{"map": "X-Naut Fortress", "x": 396, "y": 466}]},
+        {"sections": [{"ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Card Key Room A - Sleepy Sheep"}],
+            "map_locations": [{"map": "X-Naut Fortress", "x": 448, "y": 454}]},
+        {"sections": [{"ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Teleporter Room - Cog"}],
+            "map_locations": [{"map": "X-Naut Fortress", "x": 708, "y": 490}]},
+        {"sections": [{"ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Ceiling Grate Room - Star Piece"}],
+            "map_locations": [{"map": "X-Naut Fortress", "x": 526, "y": 384}]},
+        {"sections": [{"ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Office - Card Key 2"}],
+            "map_locations": [{"map": "X-Naut Fortress", "x": 1128, "y": 680}]},
+        {"sections": [{"ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Card Key Room B - Card Key 3"}],
+            "map_locations": [{"map": "X-Naut Fortress", "x": 574, "y": 720}]},
+        {"sections": [{"ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Card Key Room B - HP Drain"}],
+            "map_locations": [{"map": "X-Naut Fortress", "x": 652, "y": 762}]},
+        {"sections": [{"ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Factory - Card Key 4"}],
+            "map_locations": [{"map": "X-Naut Fortress", "x": 1099, "y": 860}]},
+        {"sections": [{"ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Factory - Ultra Shroom"}],
+            "map_locations": [{"map": "X-Naut Fortress", "x": 1038, "y": 482}]},
+        {"sections": [{"ref": "Magical Map/X-Naut Fortress/X-Naut Fortress Boss Room - Crystal Star"}],
+            "map_locations": [{"map": "X-Naut Fortress", "x": 1382, "y": 854}]}
+    ]
+    }
+]

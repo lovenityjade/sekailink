@@ -79,7 +79,7 @@ fastest path is to implement connector-family adapters:
   `apps/sekaiemu/src/runtime_memory_server.cpp`,
   `apps/sekaiemu/src/memory_domain_registry.cpp`, and
   `services/sklmi/src/api_socket_memory.cpp`.
-- Deep Research report at `/home/thelovenityjade/deep-research-report.md`.
+- Deep Research report at `<local-home>/deep-research-report.md`.
 - Universal Tracker release lane:
   `https://github.com/FarisTheAncient/Archipelago/releases/latest`.
 - Public Archipelago setup pages for EarthBound, Super Mario World, Kirby's

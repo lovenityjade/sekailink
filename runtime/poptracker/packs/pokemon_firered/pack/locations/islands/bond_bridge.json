@@ -1,0 +1,212 @@
+[
+  {
+    "name": "Bond Bridge",
+    "children": [
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Islands/Bond Bridge/Land Encounters",
+            "name": "Land Encounters"
+          },
+          {
+            "ref": "Islands/Bond Bridge/Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Islands/Bond Bridge/Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Islands/Bond Bridge/Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Islands/Bond Bridge/Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "bond_bridge_west",
+            "x": 720,
+            "y": 12
+          },
+          {
+            "map": "bond_bridge_east",
+            "x": 784,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Rock Hidden Item",
+        "sections": [
+          {
+            "ref": "Islands/Bond Bridge/Rock Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "bond_bridge_east",
+            "x": 248,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "East Beach Hidden Item",
+        "sections": [
+          {
+            "ref": "Islands/Bond Bridge/East Beach Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "bond_bridge_west",
+            "x": 712,
+            "y": 200
+          }
+        ]
+      },
+      {
+        "name": "West Beach Hidden Item",
+        "sections": [
+          {
+            "ref": "Islands/Bond Bridge/West Beach Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "bond_bridge_west",
+            "x": 536,
+            "y": 120
+          }
+        ]
+      },
+      {
+        "name": "Aroma Lady Nikki",
+        "sections": [
+          {
+            "ref": "Islands/Bond Bridge/Aroma Lady Nikki Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "bond_bridge_west",
+            "x": 440,
+            "y": 168
+          }
+        ]
+      },
+      {
+        "name": "Aroma Lady Violet",
+        "sections": [
+          {
+            "ref": "Islands/Bond Bridge/Aroma Lady Violet Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "bond_bridge_east",
+            "x": 360,
+            "y": 168
+          }
+        ]
+      },
+      {
+        "name": "Tuber Alexis",
+        "sections": [
+          {
+            "ref": "Islands/Bond Bridge/Tuber Alexis Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "bond_bridge_east",
+            "x": 72,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Tuber Amira",
+        "sections": [
+          {
+            "ref": "Islands/Bond Bridge/Tuber Amira Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Islands/Bond Bridge/Tuber Amira Rematch Reward (6 Badges-Gyms)",
+            "name": "Rematch Reward (6 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "bond_bridge_west",
+            "x": 536,
+            "y": 216
+          }
+        ]
+      },
+      {
+        "name": "Twins Joy & Meg",
+        "sections": [
+          {
+            "ref": "Islands/Bond Bridge/Twins Joy & Meg Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Islands/Bond Bridge/Twins Joy & Meg Rematch Reward (6 Badges-Gyms)",
+            "name": "Rematch Reward (6 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "bond_bridge_east",
+            "x": 512,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Swimmer Tisha",
+        "sections": [
+          {
+            "ref": "Islands/Bond Bridge/Swimmer Tisha Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "bond_bridge_west",
+            "x": 584,
+            "y": 72
+          }
+        ]
+      },
+      {
+        "name": "Berry Forest Entrance",
+        "sections": [
+          {
+            "ref": "Islands/Bond Bridge/Berry Forest Entrance",
+            "name": "Entrance"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "bond_bridge_west",
+            "x": 208,
+            "y": 104
+          }
+        ]
+      }
+    ]
+  }
+]

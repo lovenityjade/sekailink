@@ -1,0 +1,779 @@
+[
+    {
+        "name": "Coconut",
+        "type": "toggle",
+        "img": "images/items/Coconut.png",
+        "img_mods": "",
+        "codes": "Coconut"
+    },
+    {
+        "name": "Goombella",
+        "type": "toggle",
+        "img": "images/items/Goombella.png",
+        "img_mods": "",
+        "codes": "Goombella"
+    },
+    {
+        "name": "Koops",
+        "type": "toggle",
+        "img": "images/items/Koops.png",
+        "img_mods": "",
+        "codes": "Koops"
+    },
+    {
+        "name": "Yoshi",
+        "type": "progressive_toggle",
+        "stages": [
+            {
+                "name": "Yoshi",
+                "img": "images/items/GYoshi.png",
+                "codes": "GYoshi, Yoshi"
+            },
+            {
+                "name": "Yoshi",
+                "img": "images/items/RYoshi.png",
+                "codes": "RYoshi, Yoshi"
+            },
+            {
+                "name": "Yoshi",
+                "img": "images/items/BYoshi.png",
+                "codes": "BYoshi, Yoshi"
+            },
+            {
+                "name": "Yoshi",
+                "img": "images/items/OYoshi.png",
+                "codes": "OYoshi, Yoshi"
+            },
+            {
+                "name": "Yoshi",
+                "img": "images/items/PYoshi.png",
+                "codes": "PYoshi, Yoshi"
+            },
+            {
+                "name": "Yoshi",
+                "img": "images/items/DYoshi.png",
+                "codes": "DYoshi, Yoshi"
+            },
+            {
+                "name": "Yoshi",
+                "img": "images/items/WYoshi.png",
+                "codes": "WYoshi, Yoshi"
+            },
+            {
+                "name": "Yoshi",
+                "img": "images/items/WYoshi.png",
+                "codes": "WYoshi, Yoshi"
+            }
+        ]
+    },
+    {
+        "name": "Madame Flurrie",
+        "type": "toggle",
+        "img": "images/items/Flurrie.png",
+        "img_mods": "",
+        "codes": "Flurrie"
+    },
+    {
+        "name": "Vivian",
+        "type": "toggle",
+        "img": "images/items/Vivian.png",
+        "img_mods": "",
+        "codes": "Vivian"
+    },
+    {
+        "name": "Bobbery",
+        "type": "toggle",
+        "img": "images/items/Bobbery.png",
+        "img_mods": "",
+        "codes": "Bobbery"
+    },
+    {
+        "name": "Ms. Mowz",
+        "type": "toggle",
+        "img": "images/items/Mowz.png",
+        "img_mods": "",
+        "codes": "Mowz"
+    },
+    {
+        "name": "Plane Curse",
+        "type": "toggle",
+        "img": "images/items/Plane.png",
+        "img_mods": "",
+        "codes": "PlaneCurse"
+    },
+    {
+        "name": "Paper Curse",
+        "type": "toggle",
+        "img": "images/items/Paper.png",
+        "img_mods": "",
+        "codes": "PaperCurse"
+    },
+    {
+        "name": "Tube Curse",
+        "type": "toggle",
+        "img": "images/items/Tube.png",
+        "img_mods": "",
+        "codes": "TubeCurse"
+    },
+    {
+        "name": "Boat Curse",
+        "type": "toggle",
+        "img": "images/items/Boat.png",
+        "img_mods": "",
+        "codes": "BoatCurse"
+    },
+    {
+        "name": "Diamond Star",
+        "type": "toggle",
+        "img": "images/items/DiamondStar.png",
+        "img_mods": "",
+        "codes": "DiamondStar"
+    },
+    {
+        "name": "Emerald Star",
+        "type": "toggle",
+        "img": "images/items/EmeraldStar.png",
+        "img_mods": "",
+        "codes": "EmeraldStar"
+    },
+    {
+        "name": "Gold Star",
+        "type": "toggle",
+        "img": "images/items/GoldStar.png",
+        "img_mods": "",
+        "codes": "GoldStar"
+    },
+    {
+        "name": "Ruby Star",
+        "type": "toggle",
+        "img": "images/items/RubyStar.png",
+        "img_mods": "",
+        "codes": "RubyStar"
+    },
+    {
+        "name": "Sapphire Star",
+        "type": "toggle",
+        "img": "images/items/SapphireStar.png",
+        "img_mods": "",
+        "codes": "SapphireStar"
+    },
+    {
+        "name": "Garnet Star",
+        "type": "toggle",
+        "img": "images/items/GarnetStar.png",
+        "img_mods": "",
+        "codes": "GarnetStar"
+    },
+    {
+        "name": "Crystal Star",
+        "type": "toggle",
+        "img": "images/items/CrystalStar.png",
+        "img_mods": "",
+        "codes": "CrystalStar"
+    },
+    {
+        "name": "Strange Sack",
+        "type": "toggle",
+        "img": "images/items/StrangeSack.png",
+        "img_mods": "",
+        "codes": "StrangeSack"
+    },
+    {
+        "name": "Sun Stone",
+        "type": "toggle",
+        "img": "images/items/SunStone.png",
+        "img_mods": "",
+        "codes": "SunStone"
+    },
+    {
+        "name": "Moon Stone",
+        "type": "toggle",
+        "img": "images/items/MoonStone.png",
+        "img_mods": "",
+        "codes": "MoonStone"
+    },
+    {
+        "name": "Contact Lens",
+        "type": "toggle",
+        "img": "images/items/ContactLens.png",
+        "img_mods": "",
+        "codes": "ContactLens"
+    },
+    {
+        "name": "Black Key (Plane)",
+        "type": "toggle",
+        "img": "images/items/BlackKey.png",
+        "img_mods": "overlay|/images/Items/Overlay1.png,",
+        "codes": "BlackKey1"
+    },
+    {
+        "name": "Black Key (Paper)",
+        "type": "toggle",
+        "img": "images/items/BlackKey.png",
+        "img_mods": "overlay|/images/Items/Overlay2.png,",
+        "codes": "BlackKey2"
+    },
+    {
+        "name": "Black Key (Tube)",
+        "type": "toggle",
+        "img": "images/items/BlackKey.png",
+        "img_mods": "overlay|/images/Items/Overlay3.png,",
+        "codes": "BlackKey3"
+    },
+    {
+        "name": "Black Key (Boat)",
+        "type": "toggle",
+        "img": "images/items/BlackKey.png",
+        "img_mods": "overlay|/images/Items/Overlay4.png,",
+        "codes": "BlackKey4"
+    },
+    {
+        "name": "Necklace",
+        "type": "toggle",
+        "img": "images/items/Necklace.png",
+        "img_mods": "",
+        "codes": "Necklace"
+    },
+    {
+        "name": "Red Key",
+        "type": "toggle",
+        "img": "images/items/RedKey.png",
+        "img_mods": "",
+        "codes": "RedKey"
+    },
+    {
+        "name": "Puni Orb",
+        "type": "toggle",
+        "img": "images/items/PuniOrb.png",
+        "img_mods": "",
+        "codes": "PuniOrb"
+    },
+    {
+        "name": "Blue Key",
+        "type": "toggle",
+        "img": "images/items/BlueKey.png",
+        "img_mods": "",
+        "codes": "BlueKey"
+    },
+    {
+        "name": "Blimp Ticket",
+        "type": "toggle",
+        "img": "images/items/BlimpTicket.png",
+        "img_mods": "",
+        "codes": "BlimpTicket"
+    },
+    {
+        "name": "Dubious Paper",
+        "type": "toggle",
+        "img": "images/items/DubiousPaper.png",
+        "img_mods": "",
+        "codes": "DubiousPaper"
+    },
+    {
+        "name": "Storage Key 1",
+        "type": "toggle",
+        "img": "images/items/StorageKey.png",
+        "img_mods": "overlay|/images/Items/Overlay1.png,",
+        "codes": "StorageKey1"
+    },
+    {
+        "name": "Storage Key 2",
+        "type": "toggle",
+        "img": "images/items/StorageKey.png",
+        "img_mods": "overlay|/images/Items/Overlay2.png,",
+        "codes": "StorageKey2"
+    },
+    {
+        "name": "Champ's Belt",
+        "type": "toggle",
+        "img": "images/items/ChampsBelt.png",
+        "img_mods": "",
+        "codes": "ChampsBelt"
+    },
+    {
+        "name": "Shop Key",
+        "type": "toggle",
+        "img": "images/items/ShopKey.png",
+        "img_mods": "",
+        "codes": "ShopKey"
+    },
+    {
+        "name": "Steeple Key 1 ",
+        "type": "toggle",
+        "img": "images/items/SteepleKey1.png",
+        "codes": "SteepleKey1"
+    },
+    {
+        "name": "Steeple Key 2",
+        "type": "toggle",
+        "img": "images/items/SteepleKey2.png",
+        "codes": "SteepleKey2"
+    },
+    {
+        "name": "Superbombomb",
+        "type": "toggle",
+        "img": "images/items/Superbombomb.png",
+        "img_mods": "",
+        "codes": "Superbombomb"
+    },
+    {
+        "name": "The letter p",
+        "type": "toggle",
+        "img": "images/items/TheLetterP.png",
+        "img_mods": "",
+        "codes": "TheLetterP"
+    },
+    {
+        "name": "Old Letter",
+        "type": "toggle",
+        "img": "images/items/OldLetter.png",
+        "img_mods": "",
+        "codes": "OldLetter"
+    },
+    {
+        "name": "Chuckola Cola",
+        "type": "toggle",
+        "img": "images/items/ChuckolaCola.png",
+        "img_mods": "",
+        "codes": "ChuckolaCola"
+    },
+    {
+        "name": "Skull Gem",
+        "type": "toggle",
+        "img": "images/items/SkullGem.png",
+        "img_mods": "",
+        "codes": "SkullGem"
+    },
+    {
+        "name": "Grotto Key",
+        "type": "toggle",
+        "img": "images/items/GrottoKey.png",
+        "img_mods": "",
+        "codes": "GrottoKey"
+    },
+    {
+        "name": "Gate Handle",
+        "type": "toggle",
+        "img": "images/items/GateHandle.png",
+        "img_mods": "",
+        "codes": "GateHandle"
+    },
+    {
+        "name": "Wedding Ring",
+        "type": "toggle",
+        "img": "images/items/WeddingRing.png",
+        "img_mods": "",
+        "codes": "WeddingRing"
+    },
+    {
+        "name": "Train Ticket",
+        "type": "toggle",
+        "img": "images/items/TrainTicket.png",
+        "img_mods": "",
+        "codes": "TrainTicket"
+    },
+    {
+        "name": "Galley Pot",
+        "type": "toggle",
+        "img": "images/items/GalleyPot.png",
+        "img_mods": "",
+        "codes": "GalleyPot"
+    },
+    {
+        "name": "Vital Paper",
+        "type": "toggle",
+        "img": "images/items/VitalPaper.png",
+        "img_mods": "",
+        "codes": "VitalPaper"
+    },
+    {
+        "name": "Briefcase",
+        "type": "toggle",
+        "img": "images/items/Briefcase.png",
+        "img_mods": "",
+        "codes": "Briefcase"
+    },
+    {
+        "name": "Gold Ring",
+        "type": "toggle",
+        "img": "images/items/GoldRing.png",
+        "img_mods": "",
+        "codes": "GoldRing"
+    },
+    {
+        "name": "Shell Earrings",
+        "type": "toggle",
+        "img": "images/items/ShellEarrings.png",
+        "img_mods": "",
+        "codes": "ShellEarrings"
+    },
+    {
+        "name": "Autograph",
+        "type": "toggle",
+        "img": "images/items/Autograph.png",
+        "img_mods": "",
+        "codes": "Autograph"
+    },
+    {
+        "name": "Ragged Diary",
+        "type": "toggle",
+        "img": "images/items/RaggedDiary.png",
+        "img_mods": "",
+        "codes": "RaggedDiary"
+    },
+    {
+        "name": "Blanket",
+        "type": "toggle",
+        "img": "images/items/Blanket.png",
+        "img_mods": "",
+        "codes": "Blanket"
+    },
+    {
+        "name": "Station Key 1",
+        "type": "toggle",
+        "img": "images/items/StationKey1.png",
+        "codes": "StationKey1"
+    },
+    {
+        "name": "Station Key 2",
+        "type": "toggle",
+        "img": "images/items/StationKey2.png",
+        "codes": "StationKey2"
+    },
+    {
+        "name": "Elevator Key",
+        "type": "toggle",
+        "img": "images/items/ElevatorKey.png",
+        "img_mods": "",
+        "codes": "ElevatorKey"
+    },
+    {
+        "name": "Goldbob Guide",
+        "type": "toggle",
+        "img": "images/items/GoldbobGuide.png",
+        "img_mods": "",
+        "codes": "GoldbobGuide"
+    },
+    {
+        "name": "Card Key 1",
+        "type": "toggle",
+        "img": "images/items/CardKeyP.png",
+        "codes": "CardKey1"
+    },
+    {
+        "name": "Card Key 2",
+        "type": "toggle",
+        "img": "images/items/CardKeyY.png",
+        "img_mods": "",
+        "codes": "CardKey2"
+    },
+    {
+        "name": "Card Key 3",
+        "type": "toggle",
+        "img": "images/items/CardKeyG.png",
+        "img_mods": "",
+        "codes": "CardKey3"
+    },
+    {
+        "name": "Card Key 4",
+        "type": "toggle",
+        "img": "images/items/CardKeyB.png",
+        "img_mods": "",
+        "codes": "CardKey4"
+    },
+    {
+        "name": "Elevator Key (Card 1)",
+        "type": "toggle",
+        "img": "images/items/ElevatorKey1.png",
+        "img_mods": "",
+        "codes": "ElevatorKey1"
+    },
+    {
+        "name": "Elevator Key (Card 2)",
+        "type": "toggle",
+        "img": "images/items/ElevatorKey2.png",
+        "img_mods": "",
+        "codes": "ElevatorKey2"
+    },
+    {
+        "name": "Cog",
+        "type": "toggle",
+        "img": "images/items/Cog.png",
+        "img_mods": "",
+        "codes": "Cog"
+    },
+    {
+        "name": "Star Key",
+        "type": "toggle",
+        "img": "images/items/StarKey.png",
+        "img_mods": "",
+        "codes": "StarKey"
+    },
+    {
+        "name": "Battle Trunks",
+        "type": "consumable",
+        "max_quantity": 20,
+        "img": "images/items/BattleTrunks.png",
+        "img_mods": "",
+        "codes": "BattleTrunks"
+    },
+    {
+        "name": "Box",
+        "type": "toggle",
+        "img": "images/items/Box.png",
+        "img_mods": "",
+        "codes": "Box"
+    },
+    {
+        "name": "Package",
+        "type": "toggle",
+        "img": "images/items/Box.png",
+        "img_mods": "",
+        "codes": "Package"
+    },
+    {
+        "name": "Cookbook",
+        "type": "toggle",
+        "img": "images/items/Cookbook.png",
+        "img_mods": "",
+        "codes": "Cookbook"
+    },
+    {
+        "name": "House Key",
+        "type": "toggle",
+        "img": "images/items/HouseKey.png",
+        "img_mods": "",
+        "codes": "HouseKey"
+    },
+    {
+        "name": "Lottery Pick",
+        "type": "toggle",
+        "img": "images/items/LotteryPick.png",
+        "img_mods": "",
+        "codes": "LotteryPick"
+    },
+    {
+        "name": "Present",
+        "type": "toggle",
+        "img": "images/items/Present.png",
+        "img_mods": "",
+        "codes": "Present"
+    },
+    {
+        "name": "Routing Slip",
+        "type": "toggle",
+        "img": "images/items/RoutingSlip.png",
+        "img_mods": "",
+        "codes": "RoutingSlip"
+    },
+    {
+        "name": "Up Arrow",
+        "type": "toggle",
+        "img": "images/items/UpArrow.png",
+        "img_mods": "",
+        "codes": "UpArrow"
+    },
+    {
+        "name": "Wrestling Mag",
+        "type": "toggle",
+        "img": "images/items/WrestlingMag.png",
+        "img_mods": "",
+        "codes": "WrestlingMag"
+    },
+    {
+        "name": "Special Card",
+        "type": "toggle",
+        "img": "images/items/SpecialCard.png",
+        "img_mods": "",
+        "codes": "SpecialCard"
+    },
+    {
+        "name": "Silver Card",
+        "type": "toggle",
+        "img": "images/items/SilverCard.png",
+        "img_mods": "",
+        "codes": "SilverCard"
+    },
+    {
+        "name": "Gold Card",
+        "type": "toggle",
+        "img": "images/items/GoldCard.png",
+        "img_mods": "",
+        "codes": "GoldCard"
+    },
+    {
+        "name": "Platinum Card",
+        "type": "toggle",
+        "img": "images/items/PlatinumCard.png",
+        "img_mods": "",
+        "codes": "PlatinumCard"
+    },
+    {
+        "name": "Star Piece",
+        "type": "consumable",
+        "max_quantity": 100,
+        "img": "images/items/StarPiece.png",
+        "img_mods": "",
+        "codes": "StarPiece"
+    },
+    {
+        "name": "Shine Sprites",
+        "type": "consumable",
+        "max_quantity": 42,
+        "img": "images/items/ShineSprite.png",
+        "img_mods": "",
+        "codes": "ShineSprite"
+    },
+    {
+        "name": "Castle Key",
+        "type": "progressive",
+        "stages": [
+            {
+                "name": "1 Castle Key",
+                "img": "images/items/CastleKey.png",
+                "img_mods": "overlay|/images/Items/Overlay1.png,",
+                "codes": "CastleKey1, CastleKey"
+            },
+            {
+                "name": "2 Castle Keys",
+                "img": "images/items/CastleKey.png",
+                "img_mods": "overlay|/images/Items/Overlay2.png,",
+                "codes": "CastleKey2, CastleKey"
+            },
+            {
+                "name": "3 Castle Keys",
+                "img": "images/items/CastleKey.png",
+                "img_mods": "overlay|/images/Items/Overlay3.png,",
+                "codes": "CastleKey3, CastleKey"
+            },
+            {
+                "name": "4 Castle Keys",
+                "img": "images/items/CastleKey.png",
+                "img_mods": "overlay|/images/Items/GreenOverlay4.png,",
+                "codes": "CastleKey4, CastleKey"
+            }
+        ]
+    },
+    {
+        "name": "Palace Key",
+        "type": "progressive",
+        "stages": [
+            {
+                "name": "1 Palace Key",
+                "img": "images/items/PalaceKey.png",
+                "img_mods": "overlay|/images/Items/Overlay1.png,",
+                "codes": "PalaceKey1, PalaceKey"
+            },
+            {
+                "name": "2 Palace Keys",
+                "img": "images/items/PalaceKey.png",
+                "img_mods": "overlay|/images/Items/Overlay2.png,",
+                "codes": "PalaceKey2, PalaceKey"
+            },
+            {
+                "name": "3 Palace Keys",
+                "img": "images/items/PalaceKey.png",
+                "img_mods": "overlay|/images/Items/GreenOverlay3.png,",
+                "codes": "PalaceKey3, PalaceKey"
+            }
+        ]
+    },
+    {
+        "name": "Palace Key (Tower)",
+        "type": "progressive",
+        "stages": [
+            {
+                "name": "1 Palace Key (Riddle Tower)",
+                "img": "images/items/PalaceKey(RiddleTower).png",
+                "img_mods": "overlay|/images/Items/Overlay1.png,",
+                "codes": "PalaceKey(RiddleTower)1, PalaceKey(RiddleTower)"
+            },
+            {
+                "name": "2 Palace Keys (Riddle Tower)",
+                "img": "images/items/PalaceKey(RiddleTower).png",
+                "img_mods": "overlay|/images/Items/Overlay2.png,",
+                "codes": "PalaceKey(RiddleTower)2, PalaceKey(RiddleTower)"
+            },
+            {
+                "name": "3 Palace Keys (Riddle Tower)",
+                "img": "images/items/PalaceKey(RiddleTower).png",
+                "img_mods": "overlay|/images/Items/Overlay3.png,",
+                "codes": "PalaceKey(RiddleTower)3, PalaceKey(RiddleTower)"
+            },
+            {
+                "name": "4 Palace Keys (Riddle Tower)",
+                "img": "images/items/PalaceKey(RiddleTower).png",
+                "img_mods": "overlay|/images/Items/Overlay4.png,",
+                "codes": "PalaceKey(RiddleTower)4, PalaceKey(RiddleTower)"
+            },
+            {
+                "name": "5 Palace Keys (Riddle Tower)",
+                "img": "images/items/PalaceKey(RiddleTower).png",
+                "img_mods": "overlay|/images/Items/Overlay5.png,",
+                "codes": "PalaceKey(RiddleTower)5, PalaceKey(RiddleTower)"
+            },
+            {
+                "name": "6 Palace Keys (Riddle Tower)",
+                "img": "images/items/PalaceKey(RiddleTower).png",
+                "img_mods": "overlay|/images/Items/Overlay6.png,",
+                "codes": "PalaceKey(RiddleTower)6, PalaceKey(RiddleTower)"
+            },
+            {
+                "name": "7 Palace Keys (Riddle Tower)",
+                "img": "images/items/PalaceKey(RiddleTower).png",
+                "img_mods": "overlay|/images/Items/Overlay7.png,",
+                "codes": "PalaceKey(RiddleTower)7, PalaceKey(RiddleTower)"
+            },
+            {
+                "name": "8 Palace Keys (Riddle Tower)",
+                "img": "images/items/PalaceKey(RiddleTower).png",
+                "img_mods": "overlay|/images/Items/GreenOverlay8.png,",
+                "codes": "PalaceKey(RiddleTower)8, PalaceKey(RiddleTower)"
+            }
+        ]
+    },
+    {
+        "name": "Boots",
+        "type": "progressive",
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "Boots",
+                "img": "images/items/Boots.png",
+                "codes": "Boots, Bootss"
+            },
+            {
+                "name": "Super Boots",
+                "img": "images/items/SuperBoots.png",
+                "codes": "SuperBoots, Bootss"
+            },
+            {
+                "name": "Ultra Boots",
+                "img": "images/items/UltraBoots.png",
+                "codes": "UltraBoots, Bootss"
+            }
+        ]
+    },
+    {
+        "name": "Hammer",
+        "type": "progressive",
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "Hammer",
+                "img": "images/items/Hammer.png",
+                "codes": "Hammer, Hammers"
+            },
+            {
+                "name": "Super Hammer",
+                "img": "images/items/SuperHammer.png",
+                "codes": "SuperHammer, Hammers"
+            },
+            {
+                "name": "Ultra Hammer",
+                "img": "images/items/UltraHammer.png",
+                "codes": "UltraHammer, Hammers"
+            }
+        ]
+    }
+]

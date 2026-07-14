@@ -57,6 +57,140 @@ std::optional<std::string> optional_string(const nlohmann::json& body, const cha
   return value;
 }
 
+char normalize_moderation_char(unsigned char c) {
+  if (std::isalpha(c) != 0) return static_cast<char>(std::tolower(c));
+  if (std::isdigit(c) != 0) {
+    switch (c) {
+      case '0': return 'o';
+      case '1': return 'i';
+      case '3': return 'e';
+      case '4': return 'a';
+      case '5': return 's';
+      case '7': return 't';
+      default: return static_cast<char>(c);
+    }
+  }
+  switch (c) {
+    case '@': return 'a';
+    case '$': return 's';
+    case '!': return 'i';
+    default: return '\0';
+  }
+}
+
+std::vector<std::string> moderation_tokens(const std::string& value) {
+  std::vector<std::string> tokens;
+  std::string current;
+  for (unsigned char c : value) {
+    const char normalized = normalize_moderation_char(c);
+    if (normalized != '\0') {
+      current.push_back(normalized);
+      continue;
+    }
+    if (!current.empty()) {
+      tokens.push_back(current);
+      current.clear();
+    }
+  }
+  if (!current.empty()) tokens.push_back(current);
+  return tokens;
+}
+
+std::string moderation_compact(const std::string& value) {
+  std::string compact;
+  for (unsigned char c : value) {
+    const char normalized = normalize_moderation_char(c);
+    if (normalized != '\0') compact.push_back(normalized);
+  }
+  return compact;
+}
+
+bool contains_token(const std::vector<std::string>& tokens, const std::vector<std::string_view>& blocked) {
+  for (const auto& token : tokens) {
+    for (std::string_view word : blocked) {
+      if (token == word) return true;
+    }
+  }
+  return false;
+}
+
+bool contains_compact(const std::string& compact, const std::vector<std::string_view>& blocked) {
+  for (std::string_view word : blocked) {
+    if (compact.find(word) != std::string::npos) return true;
+  }
+  return false;
+}
+
+bool lobby_text_looks_blocked(const std::string& text) {
+  auto lowered = text;
+  std::transform(lowered.begin(), lowered.end(), lowered.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
+  if (lowered.find("http://") != std::string::npos ||
+      lowered.find("https://") != std::string::npos ||
+      lowered.find("www.") != std::string::npos ||
+      lowered.find("discord.gg/") != std::string::npos ||
+      lowered.find("discord.com/invite") != std::string::npos) {
+    return true;
+  }
+  std::size_t letters_or_digits = 0;
+  std::size_t punctuation = 0;
+  std::size_t spaces = 0;
+  int repeated = 0;
+  char previous = '\0';
+  for (unsigned char c : text) {
+    if (std::isalnum(c) != 0) ++letters_or_digits;
+    else if (std::isspace(c) != 0) ++spaces;
+    else ++punctuation;
+    const char normalized = normalize_moderation_char(c);
+    if (normalized != '\0' && normalized == previous) {
+      ++repeated;
+      if (repeated >= 6) return true;
+    } else {
+      previous = normalized;
+      repeated = normalized == '\0' ? 0 : 1;
+    }
+  }
+  const auto visible = letters_or_digits + punctuation;
+  if (visible >= 12 && punctuation > letters_or_digits) return true;
+  return letters_or_digits == 0 && spaces == 0 && punctuation >= 4;
+}
+
+bool lobby_text_allowed(const std::string& text) {
+  if (text.empty()) return true;
+  const auto tokens = moderation_tokens(text);
+  const auto compact = moderation_compact(text);
+  const std::vector<std::string_view> blocked_tokens = {
+      "nigger", "nigga", "faggot", "kike", "chink", "spic",
+      "rapist", "pedo", "pedophile", "negre", "tapette",
+      "fuck", "shit", "bitch", "cunt", "slut", "whore", "dick", "cock", "pussy", "asshole",
+      "porn", "hentai", "onlyfans",
+      "merde", "putain", "pute", "salope", "connard", "connasse", "conasse",
+      "tabarnak", "tabarnac", "osti", "estie", "criss", "caliss", "calisse",
+      "bite", "chatte", "couille",
+  };
+  const std::vector<std::string_view> blocked_compact = {
+      "killyourself", "killurself", "gasjews", "childporn", "cporn",
+  };
+  return !contains_token(tokens, blocked_tokens) &&
+         !contains_compact(compact, blocked_compact) &&
+         !lobby_text_looks_blocked(text);
+}
+
+std::optional<std::string> optional_lobby_text(const nlohmann::json& body, const char* key) {
+  auto value = optional_string(body, key);
+  if (value.has_value() && !lobby_text_allowed(*value)) {
+    throw std::runtime_error(std::string("blocked_") + key);
+  }
+  return value;
+}
+
+std::string required_lobby_text(const nlohmann::json& body, const char* key) {
+  auto value = required_string(body, key);
+  if (!lobby_text_allowed(value)) {
+    throw std::runtime_error(std::string("blocked_") + key);
+  }
+  return value;
+}
+
 std::optional<nlohmann::json> optional_object(const nlohmann::json& body, const char* key) {
   if (!body.contains(key) || body.at(key).is_null()) {
     return std::nullopt;
@@ -719,17 +853,19 @@ nlohmann::json LobbyRuntimeService::handle_open_lobby(const nlohmann::json& body
   try {
     const auto lobby = store_.open_lobby(
         required_string(body, "lobby_id"),
-        required_string(body, "name"),
+        required_lobby_text(body, "name"),
         body.value("visibility", "private"),
         optional_string(body, "owner_username"),
-        optional_string(body, "description"),
+        optional_lobby_text(body, "description"),
         optional_object(body, "metadata").value_or(nlohmann::json::object()));
     return {{"ok", true}, {"lobby", lobby_to_json(lobby)}};
   } catch (const std::exception& exception) {
     if (std::string(exception.what()) == "lobby_conflict") {
       return {{"ok", false}, {"status", 409}, {"error", "lobby_conflict"}};
     }
-    if (std::string(exception.what()).rfind("missing_", 0) == 0 || std::string(exception.what()).rfind("invalid_", 0) == 0) {
+    if (std::string(exception.what()).rfind("missing_", 0) == 0 ||
+        std::string(exception.what()).rfind("invalid_", 0) == 0 ||
+        std::string(exception.what()).rfind("blocked_", 0) == 0) {
       return {{"ok", false}, {"status", 400}, {"error", exception.what()}};
     }
     throw;
@@ -740,10 +876,10 @@ nlohmann::json LobbyRuntimeService::handle_edit_lobby(const std::string& lobby_i
   try {
     const auto lobby = store_.update_lobby(
         lobby_id,
-        optional_string(body, "name"),
+        optional_lobby_text(body, "name"),
         optional_string(body, "visibility"),
         optional_string(body, "owner_username"),
-        optional_string(body, "description"),
+        optional_lobby_text(body, "description"),
         optional_object(body, "metadata"),
         optional_string(body, "status"));
     if (!lobby.has_value()) {
@@ -751,7 +887,7 @@ nlohmann::json LobbyRuntimeService::handle_edit_lobby(const std::string& lobby_i
     }
     return {{"ok", true}, {"lobby", lobby_to_json(*lobby)}};
   } catch (const std::exception& exception) {
-    if (std::string(exception.what()).rfind("invalid_", 0) == 0) {
+    if (std::string(exception.what()).rfind("invalid_", 0) == 0 || std::string(exception.what()).rfind("blocked_", 0) == 0) {
       return {{"ok", false}, {"status", 400}, {"error", exception.what()}};
     }
     throw;

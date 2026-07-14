@@ -170,51 +170,38 @@ void DrawRuntimeMenuControlsPage(OverlayCanvas& canvas,
                                  RuntimeSettingsMode mode,
                                  RuntimeControlsPageMode controls_mode,
                                  std::string& tooltip) {
-  const int art_width = std::max(330, list_width * 42 / 100);
-  const int rows_x = list_x + art_width + 18;
-  const int rows_width = std::max(260, list_width - art_width - 18);
-  const int art_height = std::min(260, std::max(180, (list_bottom - list_y) * 48 / 100));
+  const int header_height = 70;
+  const int header_bottom = std::min(list_bottom, list_y + header_height);
+  const int rows_x = list_x;
+  const int rows_width = list_width;
+  const int rows_y = std::min(list_bottom, header_bottom + 10);
 
-  canvas.FillRect(list_x, list_y, art_width, art_height, UiColor{16, 22, 34, 220});
-  canvas.DrawRect(list_x, list_y, art_width, art_height, UiColor{65, 85, 120, 255});
+  canvas.FillRect(list_x, list_y, list_width, std::max(0, header_bottom - list_y),
+                  UiColor{16, 22, 34, 220});
+  canvas.DrawRect(list_x, list_y, list_width, std::max(0, header_bottom - list_y),
+                  UiColor{65, 85, 120, 255});
   canvas.DrawText(list_x + 14,
                   list_y + 12,
                   controls_mode == RuntimeControlsPageMode::Sekaiemu
-                      ? "SEKAIEMU CONTROLS"
-                      : mode == RuntimeSettingsMode::Easy ? "CORE CONTROLS EASY" : "CORE CONTROLS ADVANCED",
+                      ? "SEKAIEMU SHORTCUTS"
+                      : mode == RuntimeSettingsMode::Easy ? "CONTROLLER SETTINGS" : "CONTROLLER SETTINGS ADVANCED",
                   UiColor{255, 245, 225, 255},
                   2);
-  DrawControllerArt(canvas, list_x + 22, list_y + 44, art_width - 44, art_height - 60);
-
-  const int help_y = list_y + art_height + 14;
-  canvas.FillRect(list_x, help_y, art_width, std::max(80, list_bottom - help_y),
-                  UiColor{16, 22, 34, 180});
-  canvas.DrawRect(list_x, help_y, art_width, std::max(80, list_bottom - help_y),
-                  UiColor{65, 85, 120, 255});
   canvas.DrawWrappedText(list_x + 14,
-                         help_y + 12,
-                         art_width - 28,
+                         list_y + 42,
+                         list_width - 28,
                          controls_mode == RuntimeControlsPageMode::Sekaiemu
-                             ? "THESE FRONTEND SHORTCUTS CONTROL SEKAIEMU, CHAT, MENU, AND TRACKER UI."
-                             : "ENTER CAPTURES A CONTROL. LEFT/RIGHT SWITCHES THE ACTIVE SDL CONTROLLER ROW.",
+                             ? "Frontend shortcuts are separate from game controls."
+                             : "Enter changes a binding. Left and Right switch the active SDL controller.",
                          UiColor{180, 205, 255, 255},
                          1,
-                         3);
-  canvas.DrawWrappedText(list_x + 14,
-                         help_y + 48,
-                         art_width - 28,
-                         controls_mode == RuntimeControlsPageMode::Sekaiemu
-                             ? "CORE CONTROLS ARE KEPT SEPARATE SO GAME INPUTS DO NOT FIGHT FRONTEND HOTKEYS."
-                             : "EASY MODE HIDES TECHNICAL TABS. ADVANCED MODE KEEPS CORE AND BRIDGE SETTINGS AVAILABLE.",
-                         UiColor{150, 170, 205, 255},
-                         1,
-                         3);
+                         2);
 
   if (controls_mode == RuntimeControlsPageMode::Sekaiemu) {
     DrawFrontendControlsRows(canvas,
                              rows_x,
                              rows_width,
-                             list_y,
+                             rows_y,
                              list_bottom,
                              selected_index,
                              scroll_offset,
@@ -223,30 +210,33 @@ void DrawRuntimeMenuControlsPage(OverlayCanvas& canvas,
     return;
   }
 
-  const int row_height = 24;
-  const int label_width = static_cast<int>(rows_width * 0.42f);
+  const int row_height = 30;
+  const int label_width = static_cast<int>(rows_width * 0.34f);
   const int value_x = rows_x + label_width + 12;
   const int value_width = rows_width - label_width - 20;
-  visible_rows = std::max(1, (list_bottom - list_y) / row_height);
+  visible_rows = std::max(1, (list_bottom - rows_y) / row_height);
   const int total_rows = static_cast<int>(input_state.InputMenuRowCount());
   const int end = std::min(total_rows, scroll_offset + visible_rows);
   for (int index = scroll_offset; index < end; ++index) {
     const bool selected = index == selected_index;
     const int row = index - scroll_offset;
-    const int y = list_y + row * row_height;
+    const int y = rows_y + row * row_height;
+    const auto menu_row = input_state.InputMenuRowAt(static_cast<std::size_t>(index));
     canvas.FillRect(rows_x, y, rows_width, row_height - 3,
                     selected ? UiColor{49, 70, 115, 255} : UiColor{24, 30, 42, 205});
     canvas.DrawText(rows_x + 8,
-                    y + 7,
+                    y + 9,
                     Truncate(input_state.InputMenuRowLabelAt(static_cast<std::size_t>(index)),
                              static_cast<std::size_t>(std::max(8, label_width / 6))),
                     UiColor{255, 245, 225, 255},
                     1);
     canvas.DrawText(value_x,
-                    y + 7,
+                    y + 9,
                     Truncate(input_state.InputMenuRowValueAt(static_cast<std::size_t>(index)),
                              static_cast<std::size_t>(std::max(8, value_width / 6))),
-                    input_state.CaptureActive() && index == selected_index
+                    menu_row.kind == InputMenuRowKind::Controller
+                        ? UiColor{120, 235, 245, 255}
+                        : input_state.CaptureActive() && index == selected_index
                         ? UiColor{255, 215, 150, 255}
                         : UiColor{170, 230, 180, 255},
                     1);
@@ -258,14 +248,14 @@ void DrawRuntimeMenuControlsPage(OverlayCanvas& canvas,
   if (total_rows > visible_rows) {
     const int track_x = rows_x + rows_width - 8;
     const int track_height = visible_rows * row_height - 4;
-    canvas.FillRect(track_x, list_y, 4, track_height, UiColor{40, 52, 74, 180});
+    canvas.FillRect(track_x, rows_y, 4, track_height, UiColor{40, 52, 74, 180});
     const float ratio = static_cast<float>(visible_rows) / static_cast<float>(total_rows);
     const int thumb_height = std::max(14, static_cast<int>(track_height * ratio));
     const float offset_ratio =
         total_rows <= visible_rows
             ? 0.0f
             : static_cast<float>(scroll_offset) / static_cast<float>(total_rows - visible_rows);
-    const int thumb_y = list_y + static_cast<int>((track_height - thumb_height) * offset_ratio);
+    const int thumb_y = rows_y + static_cast<int>((track_height - thumb_height) * offset_ratio);
     canvas.FillRect(track_x, thumb_y, 4, thumb_height, UiColor{130, 150, 190, 255});
   }
 

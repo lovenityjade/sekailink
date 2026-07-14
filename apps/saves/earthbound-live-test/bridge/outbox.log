@@ -1,4 +1,4 @@
-bridge_started|game=EarthBound|profile=/home/thelovenityjade/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/profiles/earthbound-starter.profile
+bridge_started|game=EarthBound|profile=<local-home>/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/profiles/earthbound-starter.profile
 inject|item|0x9A|Live bridge test
 location|0xEB0000|Onett - Tracy Gift|byte=17|bit=3
 location|0xEB0001|Onett - Tracy's Room Present|byte=108|bit=4

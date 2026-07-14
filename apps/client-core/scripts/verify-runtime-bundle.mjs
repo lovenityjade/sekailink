@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 import fs from "node:fs";
 import path from "node:path";
+import { spawnSync } from "node:child_process";
 
 const args = process.argv.slice(2);
+const catalogPath = new URL("../src/data/sekailinkGameCatalog.ts", import.meta.url);
 
 const readArg = (name, fallback = "") => {
   const index = args.indexOf(name);
@@ -52,6 +54,20 @@ const readJson = (p) => {
   }
 };
 
+const readForcedUnavailableCatalogKeys = () => {
+  try {
+    const source = fs.readFileSync(catalogPath, "utf8");
+    return new Set(
+      Array.from(source.matchAll(/\{\s*key:\s*['"]([^'"]+)['"][^}]*forceUnavailable:\s*true[^}]*\}/g))
+        .map((match) => match[1])
+        .filter(Boolean),
+    );
+  } catch (err) {
+    warnings.push(`catalog_force_unavailable_unreadable:${catalogPath.pathname}:${String(err?.message || err)}`);
+    return new Set();
+  }
+};
+
 const fileMagic = (p) => {
   try {
     return fs.readFileSync(p).subarray(0, 4);
@@ -69,6 +85,69 @@ const fileKind = (p) => {
     return "pe";
   }
   return "unknown";
+};
+
+const windowsSystemDlls = new Set(
+  [
+    "advapi32.dll",
+    "bcrypt.dll",
+    "comctl32.dll",
+    "comdlg32.dll",
+    "crypt32.dll",
+    "gdi32.dll",
+    "imm32.dll",
+    "iphlpapi.dll",
+    "kernel32.dll",
+    "msvcrt.dll",
+    "ntdll.dll",
+    "ole32.dll",
+    "oleaut32.dll",
+    "opengl32.dll",
+    "rpcrt4.dll",
+    "setupapi.dll",
+    "shell32.dll",
+    "shlwapi.dll",
+    "user32.dll",
+    "version.dll",
+    "winmm.dll",
+    "ws2_32.dll",
+  ].map((name) => name.toLowerCase()),
+);
+
+const isWindowsApiSetDll = (name) => /^api-ms-win-/i.test(String(name || ""));
+
+const readWindowsDllImports = (p) => {
+  if (!isWindows) return [];
+  const candidates = [
+    "C:\\msys64\\ucrt64\\bin\\objdump.exe",
+    "C:\\msys64\\usr\\bin\\objdump.exe",
+    "/usr/bin/x86_64-w64-mingw32-objdump",
+    "x86_64-w64-mingw32-objdump",
+    "objdump",
+  ];
+  for (const cmd of candidates) {
+    const res = spawnSync(cmd, ["-p", p], { encoding: "utf8" });
+    if (res.status !== 0 || !res.stdout) continue;
+    return Array.from(String(res.stdout).matchAll(/DLL Name:\s*(.+)/g))
+      .map((match) => String(match[1] || "").trim())
+      .filter(Boolean);
+  }
+  warnings.push("windows_import_check_skipped:objdump_unavailable");
+  return [];
+};
+
+const verifyWindowsDllImports = (label, binaryPath) => {
+  if (!isWindows || !binaryPath) return;
+  for (const imported of readWindowsDllImports(binaryPath)) {
+    const lower = imported.toLowerCase();
+    if (windowsSystemDlls.has(lower) || isWindowsApiSetDll(imported)) continue;
+    const localPath = path.join(path.dirname(binaryPath), imported);
+    const platformBinPath = path.join(platformRoot, "bin", imported);
+    const runtimeBinPath = path.join(runtimeRoot, "bin", imported);
+    if (!isFile(localPath) && !isFile(platformBinPath) && !isFile(runtimeBinPath)) {
+      errors.push(`missing_imported_dll_${label}:${imported}:required_by:${binaryPath}`);
+    }
+  }
 };
 
 const requirePath = (label, p, predicate = exists) => {
@@ -98,6 +177,7 @@ const requireBinary = (label, pathsToTry, expectedKind) => {
   if (kind !== expectedKind) {
     errors.push(`invalid_${label}_format:${p}:expected_${expectedKind}:got_${kind}`);
   }
+  verifyWindowsDllImports(label, p);
   return p;
 };
 
@@ -122,10 +202,16 @@ const libretroCoreNames = (coreId) => {
   const aliases = {
     bsnes: names("bsnes_mercury_performance_libretro", "bsnes_mercury_balanced_libretro", "bsnes_libretro", "snes9x_libretro"),
     snes: names("bsnes_mercury_performance_libretro", "bsnes_mercury_balanced_libretro", "snes9x_libretro"),
+    snes9x: names("snes9x_libretro", "bsnes_mercury_performance_libretro", "bsnes_mercury_balanced_libretro"),
     gba: names("mgba_libretro"),
     mgba: names("mgba_libretro"),
+    gb: names("gambatte_libretro", "mgba_libretro"),
+    gbc: names("gambatte_libretro", "mgba_libretro"),
     nes: names("fceumm_libretro", "nestopia_libretro"),
     fceumm: names("fceumm_libretro"),
+    nestopia: names("nestopia_libretro", "fceumm_libretro"),
+    n64: names("mupen64plus_next_libretro"),
+    mupen64plus_next: names("mupen64plus_next_libretro"),
   };
   return aliases[String(coreId || "").trim().toLowerCase()] || (coreId ? [String(coreId)] : []);
 };
@@ -143,6 +229,7 @@ const modulesDir = path.join(runtimeRoot, "modules");
 const modules = isDir(modulesDir)
   ? fs.readdirSync(modulesDir, { withFileTypes: true }).filter((entry) => entry.isDirectory()).map((entry) => entry.name)
   : [];
+const forcedUnavailableModuleIds = readForcedUnavailableCatalogKeys();
 
 let hasSekaiemuModule = false;
 
@@ -151,6 +238,16 @@ for (const moduleId of modules) {
   if (!requirePath("module_manifest", manifestPath, isFile)) continue;
   const manifest = readJson(manifestPath);
   if (!manifest) continue;
+  const gameId = String(manifest.game_id || moduleId).trim();
+  const availabilityStatus = String(manifest.availability_status || "").trim().toLowerCase();
+  if (
+    forcedUnavailableModuleIds.has(moduleId) ||
+    forcedUnavailableModuleIds.has(gameId) ||
+    ["unavailable", "disabled", "in_learning"].includes(availabilityStatus)
+  ) {
+    warnings.push(`skip_force_unavailable_module:${moduleId}`);
+    continue;
+  }
 
   const emu = String(manifest.emu || "").trim().toLowerCase();
   const sekaiemu = manifest.sekaiemu && typeof manifest.sekaiemu === "object" ? manifest.sekaiemu : {};

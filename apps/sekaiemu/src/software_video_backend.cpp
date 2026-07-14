@@ -1,11 +1,15 @@
 #include "software_video_backend.hpp"
 
+#include "window_chrome.hpp"
+
 #include <algorithm>
 #include <cstring>
 
 namespace sekaiemu::spike {
 
 namespace {
+
+constexpr int kClientCoreTitlebarHeight = 34;
 
 Uint32 ToSdlPixelFormat(retro_pixel_format pixel_format) {
   switch (pixel_format) {
@@ -33,16 +37,18 @@ SDL_Rect ComputePresentationRect(SDL_Renderer* renderer,
   if (reserve_sidebar) {
     output_width = std::max(1, output_width - static_cast<int>(sidebar_width));
   }
+  const int content_top = kClientCoreTitlebarHeight;
+  const int available_height = std::max(1, output_height - content_top);
 
   const double source_aspect = static_cast<double>(geometry.width) / static_cast<double>(geometry.height);
   int target_width = output_width;
   int target_height = static_cast<int>(target_width / source_aspect);
-  if (target_height > output_height) {
-    target_height = output_height;
+  if (target_height > available_height) {
+    target_height = available_height;
     target_width = static_cast<int>(target_height * source_aspect);
   }
   const int target_x = (output_width - target_width) / 2;
-  const int target_y = (output_height - target_height) / 2;
+  const int target_y = content_top + (available_height - target_height) / 2;
   return SDL_Rect{target_x, target_y, std::max(target_width, 1), std::max(target_height, 1)};
 }
 
@@ -58,11 +64,12 @@ bool SoftwareVideoBackend::Initialize(const VideoGeometry& geometry, std::string
                                SDL_WINDOWPOS_CENTERED,
                                640,
                                480,
-                               SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+                               SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_BORDERLESS);
     if (!window_) {
       error = std::string("SDL_CreateWindow failed: ") + SDL_GetError();
       return false;
     }
+    EnableBorderlessTitlebarDrag(window_);
   }
 
   if (!renderer_) {
@@ -185,8 +192,17 @@ void SoftwareVideoBackend::NotifyHardwareFrame(const void*, unsigned, unsigned, 
 
 void SoftwareVideoBackend::SetMenuVisible(bool visible, const VideoGeometry& geometry) {
   const bool changed = menu_visible_ != visible;
+  if (changed && visible && window_ && window_mode_ != WindowMode::Fullscreen) {
+    SDL_GetWindowSize(window_, &menu_restore_width_, &menu_restore_height_);
+    menu_restore_size_valid_ = menu_restore_width_ > 0 && menu_restore_height_ > 0;
+  }
   menu_visible_ = visible;
   geometry_ = geometry;
+  if (changed && !visible && window_ && window_mode_ != WindowMode::Fullscreen && menu_restore_size_valid_) {
+    SDL_SetWindowSize(window_, menu_restore_width_, menu_restore_height_);
+    menu_restore_size_valid_ = false;
+    return;
+  }
   if (changed && visible) {
     ApplyWindowSizing(geometry_);
   }
@@ -206,18 +222,19 @@ void SoftwareVideoBackend::SetTrackerSidebarLayout(bool enabled,
   }
 }
 
-bool SoftwareVideoBackend::ToggleFullscreen(std::string& error) {
+bool SoftwareVideoBackend::SetWindowMode(WindowMode mode, std::string& error) {
   if (!window_) {
     error = "Software video window is not initialized.";
     return false;
   }
-  const Uint32 flag = fullscreen_ ? 0u : SDL_WINDOW_FULLSCREEN_DESKTOP;
-  if (SDL_SetWindowFullscreen(window_, flag) != 0) {
+  const Uint32 fullscreen_flag = mode == WindowMode::Fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0u;
+  if (SDL_SetWindowFullscreen(window_, fullscreen_flag) != 0) {
     error = std::string("SDL_SetWindowFullscreen failed: ") + SDL_GetError();
     return false;
   }
-  fullscreen_ = !fullscreen_;
-  if (!fullscreen_) {
+  window_mode_ = mode;
+  if (mode != WindowMode::Fullscreen) {
+    SDL_SetWindowBordered(window_, mode == WindowMode::Window ? SDL_TRUE : SDL_FALSE);
     ApplyWindowSizing(geometry_);
   }
   return true;
@@ -317,7 +334,7 @@ void SoftwareVideoBackend::ApplyWindowSizing(const VideoGeometry& geometry) {
   if (!window_) {
     return;
   }
-  if (fullscreen_) {
+  if (window_mode_ == WindowMode::Fullscreen) {
     return;
   }
 
@@ -325,7 +342,7 @@ void SoftwareVideoBackend::ApplyWindowSizing(const VideoGeometry& geometry) {
   const unsigned base_height = geometry.height == 0 ? 240u : geometry.height;
 
   int target_width = ScaledDimension(base_width);
-  int target_height = ScaledDimension(base_height);
+  int target_height = ScaledDimension(base_height) + kClientCoreTitlebarHeight;
 
   if (menu_visible_) {
     const int scale_x =
@@ -334,7 +351,7 @@ void SoftwareVideoBackend::ApplyWindowSizing(const VideoGeometry& geometry) {
         std::max(1, (kMenuMinimumHeight + static_cast<int>(base_height) - 1) / static_cast<int>(base_height));
     const int scale = std::max(scale_x, scale_y);
     target_width = static_cast<int>(base_width) * scale;
-    target_height = static_cast<int>(base_height) * scale;
+    target_height = static_cast<int>(base_height) * scale + kClientCoreTitlebarHeight;
   }
 
   if (tracker_sidebar_enabled_ && !menu_visible_) {
@@ -344,7 +361,7 @@ void SoftwareVideoBackend::ApplyWindowSizing(const VideoGeometry& geometry) {
   int current_width = 0;
   int current_height = 0;
   SDL_GetWindowSize(window_, &current_width, &current_height);
-  if (current_width >= target_width && current_height >= target_height) {
+  if (current_width == target_width && current_height == target_height) {
     return;
   }
 

@@ -37,7 +37,7 @@
     "ap_game": "SMZ3"
   },
   "tracker_pack_uid": "https://github.com/dessyreqt/smz3-ap-tracker",
-  "tracker_web_url": "",
+  "tracker_web_url": "https://github.com/Dessyreqt/smz3-ap-tracker/releases/latest",
   "tracker_asset_regex": "\\.zip$",
   "default_tracker_variant": "standard",
   "tracker_status": "github_verified",
@@ -60,6 +60,9 @@
       ],
       "md5": [
         "21f3e98df4780ee1c667b84e57d88675"
+      ],
+      "sha256": [
+        "12b77c4bc9c1832cee8881244659065ee1d84c70c3d29e6eaf92e6798cc2ca72"
       ]
     }
   },

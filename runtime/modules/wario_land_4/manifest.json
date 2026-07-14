@@ -40,7 +40,7 @@
     "ap_game": "Wario Land 4"
   },
   "tracker_pack_uid": "",
-  "tracker_web_url": "",
+  "tracker_web_url": "https://github.com/JackTHerbert/wl4_jth/releases/latest",
   "support_status": "supported",
   "availability_status": "available_beta3_confirmed",
   "tracker_pack_path": "poptracker/packs/wario_land_4/pack/wl4_jth-main",

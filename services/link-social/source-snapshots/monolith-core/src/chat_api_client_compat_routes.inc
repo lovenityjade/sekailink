@@ -35,6 +35,7 @@ ChatApiHttpResponse ChatApiService::handle_client_compat(
             {"download_url", download_url},
             {"sha256", first_string_limited(release, {"sha256"}, "", 128)},
             {"signature", first_string_limited(release, {"signature"}, "", 2048)},
+            {"release_sequence", release.value("release_sequence", 0ull)},
             {"public_key", first_string_limited(release, {"public_key"}, "", 2048)},
             {"artifact_type", first_string_limited(release, {"artifact_type"}, "", 80)},
             {"requires_client_updater", first_string_limited(release, {"requires_client_updater"}, "", 80)},

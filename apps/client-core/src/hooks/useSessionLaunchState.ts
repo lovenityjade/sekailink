@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getLaunchErrorMessage, getLaunchRecoveryAction, type LaunchRecoveryAction } from "../services/launchRecovery";
 import { runtime } from "../services/runtime";
 
@@ -36,6 +36,7 @@ export const useSessionLaunchState = (options: UseSessionLaunchStateOptions = {}
   const [launchProgress, setLaunchProgress] = useState<number>(0);
   const [launchDownloadPct, setLaunchDownloadPct] = useState<number | null>(null);
   const [trackerVariantModal, setTrackerVariantModal] = useState<TrackerVariantModalState | null>(null);
+  const trackerVariantRespondingRef = useRef(false);
 
   useEffect(() => {
     const off = runtime.onSessionEvent?.((data: unknown) => {
@@ -167,8 +168,10 @@ export const useSessionLaunchState = (options: UseSessionLaunchStateOptions = {}
   };
 
   const respondTrackerVariantModal = async (cancel: boolean) => {
+    if (trackerVariantRespondingRef.current) return;
     const modal = trackerVariantModal;
     if (!modal) return;
+    trackerVariantRespondingRef.current = true;
     setTrackerVariantModal(null);
     try {
       await runtime.sessionTrackerVariantResponse?.({
@@ -178,6 +181,8 @@ export const useSessionLaunchState = (options: UseSessionLaunchStateOptions = {}
       });
     } catch {
       // ignore
+    } finally {
+      trackerVariantRespondingRef.current = false;
     }
   };
 

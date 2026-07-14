@@ -61,10 +61,12 @@ void ApplyRuntimeMenuAction(RuntimeMenuAction action,
     case RuntimeMenuAction::DecreaseMasterVolume:
     case RuntimeMenuAction::IncreaseMasterVolume:
     case RuntimeMenuAction::ToggleNotifications:
+    case RuntimeMenuAction::ToggleActivityFeed:
     case RuntimeMenuAction::CycleTrackerDisplayMode:
     case RuntimeMenuAction::ToggleTrackerScreen:
     case RuntimeMenuAction::ToggleTrackerAutoFollow:
     case RuntimeMenuAction::ToggleBridgeTerminal:
+    case RuntimeMenuAction::CycleWindowMode:
       break;
     case RuntimeMenuAction::ApplyCoreSettings:
       core_option_manager.ApplyPendingChanges();

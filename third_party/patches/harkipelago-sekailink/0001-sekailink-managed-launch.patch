@@ -1,0 +1,196 @@
+--- a/soh/soh/OTRGlobals.cpp
++++ b/soh/soh/OTRGlobals.cpp
+@@ -7,6 +7,8 @@
+ #include <vector>
+ #include <chrono>
+ #include <optional>
++#include <stdexcept>
++#include <string_view>
+
+ #include "ResourceManagerHelpers.h"
+ #include <fast/Fast3dWindow.h>
+@@ -72,6 +74,7 @@
+ #include "soh/Network/CrowdControl/CrowdControl.h"
+ #include "soh/Network/Sail/Sail.h"
+ #include "soh/Network/Anchor/Anchor.h"
++#include "soh/Network/Archipelago/Archipelago.h"
+ #include "Enhancements/mods.h"
+ #include "Enhancements/game-interactor/GameInteractor.h"
+ #include "Enhancements/randomizer/draw.h"
+@@ -388,6 +391,59 @@
+ extern std::shared_ptr<SohGui::SohMenu> mSohMenu;
+ }
+
++namespace {
++struct SekaiLinkLaunchOptions {
++    std::optional<std::filesystem::path> manifestPath;
++    std::vector<char*> passthroughArgs;
++};
++
++SekaiLinkLaunchOptions ParseSekaiLinkLaunchOptions(int argc, char* argv[]) {
++    SekaiLinkLaunchOptions result;
++    result.passthroughArgs.reserve(argc);
++    result.passthroughArgs.push_back(argv[0]);
++
++    for (int i = 1; i < argc; ++i) {
++        const std::string_view argument(argv[i]);
++        if (argument == "--sekailink-launch") {
++            if (++i >= argc) {
++                throw std::runtime_error("--sekailink-launch requires a manifest path");
++            }
++            result.manifestPath = std::filesystem::path(argv[i]);
++            continue;
++        }
++        result.passthroughArgs.push_back(argv[i]);
++    }
++    return result;
++}
++
++void ApplySekaiLinkLaunchManifest(const std::filesystem::path& manifestPath) {
++    std::ifstream input(manifestPath);
++    if (!input) {
++        throw std::runtime_error("Unable to open SekaiLink launch manifest: " + manifestPath.string());
++    }
++
++    const nlohmann::json manifest = nlohmann::json::parse(input);
++    if (manifest.value("schema", "") != "sekailink.pc-launch/v1" ||
++        manifest.value("gameId", "") != "ship-of-harkinian") {
++        throw std::runtime_error("Unsupported SekaiLink launch manifest");
++    }
++
++    const auto connection = manifest.at("connection");
++    const std::string server = connection.at("server").get<std::string>();
++    const std::string slot = connection.at("slot").get<std::string>();
++    const std::string password = connection.value("password", "");
++    if (server.empty() || slot.empty()) {
++        throw std::runtime_error("SekaiLink launch manifest requires connection.server and connection.slot");
++    }
++
++    CVarSetString(CVAR_REMOTE_ARCHIPELAGO("ServerAddress"), server.c_str());
++    CVarSetString(CVAR_REMOTE_ARCHIPELAGO("SlotName"), slot.c_str());
++    CVarSetString(CVAR_REMOTE_ARCHIPELAGO("Password"), password.c_str());
++    CVarSetInteger(CVAR_REMOTE_ARCHIPELAGO("SekaiLinkManaged"), 1);
++    CVarSetInteger(CVAR_REMOTE_ARCHIPELAGO("SekaiLinkAutoConnect"), connection.value("autoConnect", true));
++}
++} // namespace
++
+ void OTRGlobals::RunExtract(int argc, char* argv[]) {
+     bool extractDone = false;
+     ExtractSteps extractStep = ES_PORT_ARCHIVE;
+@@ -1454,10 +1510,29 @@
+ }
+
+ extern "C" void InitOTR(int argc, char* argv[]) {
++    SekaiLinkLaunchOptions sekaiLinkOptions;
++    try {
++        sekaiLinkOptions = ParseSekaiLinkLaunchOptions(argc, argv);
++    } catch (const std::exception& ex) {
++        fprintf(stderr, "SekaiLink launch error: %s\n", ex.what());
++        exit(2);
++    }
++
+     OTRGlobals::Instance = new OTRGlobals();
+-    OTRGlobals::Instance->RunExtract(argc, argv);
++    OTRGlobals::Instance->RunExtract(static_cast<int>(sekaiLinkOptions.passthroughArgs.size()),
++                                     sekaiLinkOptions.passthroughArgs.data());
+
+     OTRGlobals::Instance->Initialize();
++    CVarSetInteger(CVAR_REMOTE_ARCHIPELAGO("SekaiLinkManaged"), 0);
++    CVarSetInteger(CVAR_REMOTE_ARCHIPELAGO("SekaiLinkAutoConnect"), 0);
++    if (sekaiLinkOptions.manifestPath.has_value()) {
++        try {
++            ApplySekaiLinkLaunchManifest(*sekaiLinkOptions.manifestPath);
++        } catch (const std::exception& ex) {
++            fprintf(stderr, "SekaiLink launch error: %s\n", ex.what());
++            exit(2);
++        }
++    }
+     CustomMessageManager::Instance = new CustomMessageManager();
+     ItemTableManager::Instance = new ItemTableManager();
+     GameInteractor::Instance = new GameInteractor();
+@@ -1533,6 +1608,10 @@
+     ShipInit::InitAll();
+     Rando::StaticData::InitHashMaps();
+     OTRGlobals::Instance->gRandoContext->AddExcludedOptions();
++    if (CVarGetInteger(CVAR_REMOTE_ARCHIPELAGO("SekaiLinkManaged"), 0) != 0 &&
++        CVarGetInteger(CVAR_REMOTE_ARCHIPELAGO("SekaiLinkAutoConnect"), 0) != 0) {
++        ArchipelagoClient::GetInstance().StartClient();
++    }
+ }
+
+ extern "C" void SaveManager_ThreadPoolWait() {
+--- a/soh/soh/Network/Archipelago/ArchipelagoSettingsWindow.cpp
++++ b/soh/soh/Network/Archipelago/ArchipelagoSettingsWindow.cpp
+@@ -8,8 +8,14 @@
+
+ void ArchipelagoSettingsWindow::DrawElement() {
+     ArchipelagoClient& apClient = ArchipelagoClient::GetInstance();
++    const bool sekaiLinkManaged = CVarGetInteger(CVAR_REMOTE_ARCHIPELAGO("SekaiLinkManaged"), 0) != 0;
+
+-    ImGui::SeparatorText("Connection info");
++    ImGui::SeparatorText(sekaiLinkManaged ? "SekaiLink connection" : "Connection info");
++
++    if (sekaiLinkManaged) {
++        ImGui::TextWrapped("This session is managed by SekaiLink Client Core.");
++        ImGui::BeginDisabled();
++    }
+
+     UIWidgets::PushStyleCombobox(THEME_COLOR);
+     ImGui::PushStyleColor(ImGuiCol_Border, UIWidgets::ColorValues.at(THEME_COLOR));
+@@ -38,6 +44,10 @@
+     ImGui::PopStyleColor();
+     UIWidgets::PopStyleCombobox();
+
++    if (sekaiLinkManaged) {
++        ImGui::EndDisabled();
++    }
++
+     if (!apClient.IsConnected()) {
+         if (UIWidgets::Button("Connect", UIWidgets::ButtonOptions().Color(THEME_COLOR).Size(ImVec2(0.0, 0.0)))) {
+             bool success = apClient.StartClient();
+--- a/soh/soh/Network/Archipelago/Archipelago.cpp
++++ b/soh/soh/Network/Archipelago/Archipelago.cpp
+@@ -52,8 +52,10 @@
+ }
+
+ bool ArchipelagoClient::StartClient() {
++    const bool sekaiLinkManaged = CVarGetInteger(CVAR_REMOTE_ARCHIPELAGO("SekaiLinkManaged"), 0) != 0;
+     const std::string newUri = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("ServerAddress"), "localhost:38281");
+-    const std::string newPassword = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("Password"), "");
++    const std::string configuredPassword = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("Password"), "");
++    const std::string newPassword = sekaiLinkManaged && !password.empty() ? password : configuredPassword;
+     const std::string newSlot = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("SlotName"), "");
+
+     // Already connected (e.g. via ImGui): do not reset the client or scouts never complete.
+@@ -74,6 +76,9 @@
+     retries = 0;
+     uri = newUri;
+     password = newPassword;
++    if (sekaiLinkManaged) {
++        CVarSetString(CVAR_REMOTE_ARCHIPELAGO("Password"), "");
++    }
+
+     uuid = ap_get_uuid(Ship::Context::GetPathRelativeToAppDirectory("ap-client-uuid"));
+     const std::string cert = Ship::Context::LocateFileAcrossAppDirs("networking/cacert.pem");
+@@ -1381,7 +1386,9 @@
+                                     ARRAY_COUNT(gSaveContext.ship.quest.data.archipelago.slotName));
+     SohUtils::CopyStringToCharArray(gSaveContext.ship.quest.data.archipelago.archiUri, client.uri,
+                                     ARRAY_COUNT(gSaveContext.ship.quest.data.archipelago.archiUri));
+-    SohUtils::CopyStringToCharArray(gSaveContext.ship.quest.data.archipelago.roomPass, client.password,
++    const std::string persistedPassword =
++        CVarGetInteger(CVAR_REMOTE_ARCHIPELAGO("SekaiLinkManaged"), 0) != 0 ? "" : client.password;
++    SohUtils::CopyStringToCharArray(gSaveContext.ship.quest.data.archipelago.roomPass, persistedPassword,
+                                     ARRAY_COUNT(gSaveContext.ship.quest.data.archipelago.roomPass));
+
+     for (uint32_t i = 0; i < scoutedItems.size(); i++) {
+--- a/soh/CMakeLists.txt
++++ b/soh/CMakeLists.txt
+@@ -396,7 +396,7 @@
+         file(STRINGS /etc/os-release distro REGEX "^NAME=")
+         string(REGEX REPLACE "NAME=\"(.*)\"" "\\1" distro "${distro}")
+
+-        if(${distro} MATCHES "Fedora Linux")
++        if(${distro} MATCHES "Fedora Linux|Nobara Linux")
+             set(OPENSSL_USE_STATIC_LIBS OFF)
+         endif()
+     endif()

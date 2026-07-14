@@ -1,0 +1,17 @@
+﻿{
+  "name": "Oracle of Ages Randomizer",
+  "game_name": "Oracle of Ages",
+  "package_version": "0.9.3",
+  "package_uid": "ooa_brooty",
+  "author": "Brooty, Dranzior",
+  "variants": {
+    "standard": {
+      "display_name": "Map Tracker (AP)",
+      "flags": [
+        "ap"
+      ]
+    }
+  },
+  "versions_url": "https://raw.githubusercontent.com/Dranzior/ooa_brooty/master/versions.json",
+  "min_poptracker_version": "0.27.0"
+}

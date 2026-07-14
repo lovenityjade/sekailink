@@ -1,6 +1,7 @@
 import { apiFetch, apiJson } from "./api";
 import { lookupFeaturedGridUrl } from "../data/steamGridDbFeatured";
 import { trace, traceError } from "./trace";
+import { publicAssetUrl } from "../utils/publicAssets";
 
 export interface SeedGameEntry {
   game_key: string;
@@ -107,7 +108,7 @@ export const ALTTP_SHOWCASE_GAME: SeedGameEntry = {
   display_name: "A Link to the Past",
   description:
     "Classic Hyrule multiworld showcase with item sharing, live tracker support, and Sekaiemu launch integration.",
-  boxart: lookupFeaturedGridUrl("A Link to the Past") || "/assets/boxart/a_link_to_the_past.png",
+  boxart: lookupFeaturedGridUrl("A Link to the Past") || publicAssetUrl("assets/boxart/a_link_to_the_past.png"),
 };
 
 export const EASY_SEED_CHOICES: EasySeedChoice[] = [
@@ -357,26 +358,30 @@ const isPlainObject = (value: unknown): value is Record<string, unknown> =>
 const normalizeOption = (option: any): SeedOptionDefinition | null => {
   const optionKey = String(option?.option_key || option?.name || option?.yaml_key || "").trim();
   if (!optionKey) return null;
+  const choices = Array.isArray(option?.choices)
+    ? option.choices
+        .map((choice: any) => ({
+          choice_key: String(choice?.choice_key || choice?.value || choice?.yaml_value || ""),
+          yaml_value: String(choice?.yaml_value ?? choice?.value ?? choice?.choice_key ?? ""),
+          label: String(choice?.label || choice?.name || choice?.choice_key || choice?.yaml_value || ""),
+          description: typeof choice?.description === "string" ? choice.description : "",
+        }))
+        .filter((choice: SeedOptionChoice) => choice.yaml_value || choice.choice_key)
+    : [];
+  const rawType = String(option?.type || "string");
   return {
     option_key: optionKey,
     yaml_key: typeof option?.yaml_key === "string" ? option.yaml_key : optionKey,
     label: String(option?.label || option?.display_name || optionKey.replace(/_/g, " ")),
     description: typeof option?.description === "string" ? option.description : "",
-    type: String(option?.type || "string"),
+    // PlandoBosses remains a string in Nexus for custom YAML, while the normal
+    // config surface should constrain boss shuffle to its supported choices.
+    type: optionKey === "boss_shuffle" && choices.length ? "enum" : rawType,
     default_value: option?.default_value,
     required: option?.required !== false,
     validation_rules: isPlainObject(option?.validation_rules) ? option.validation_rules : null,
     visibility_rules: isPlainObject(option?.visibility_rules) ? option.visibility_rules : null,
-    choices: Array.isArray(option?.choices)
-      ? option.choices
-          .map((choice: any) => ({
-            choice_key: String(choice?.choice_key || choice?.value || choice?.yaml_value || ""),
-            yaml_value: String(choice?.yaml_value ?? choice?.value ?? choice?.choice_key ?? ""),
-            label: String(choice?.label || choice?.name || choice?.choice_key || choice?.yaml_value || ""),
-            description: typeof choice?.description === "string" ? choice.description : "",
-          }))
-          .filter((choice: SeedOptionChoice) => choice.yaml_value || choice.choice_key)
-      : [],
+    choices,
   };
 };
 

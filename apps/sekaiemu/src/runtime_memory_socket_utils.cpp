@@ -13,6 +13,7 @@ using NativeSocket = SOCKET;
 #else
 #include <cerrno>
 #include <fcntl.h>
+#include <signal.h>
 #include <sys/socket.h>
 #include <unistd.h>
 using NativeSocket = int;
@@ -28,6 +29,13 @@ bool EnsureSocketRuntime() {
   }();
   return initialized;
 #else
+  static bool initialized = [] {
+#if defined(SIGPIPE)
+    signal(SIGPIPE, SIG_IGN);
+#endif
+    return true;
+  }();
+  (void)initialized;
   return true;
 #endif
 }
@@ -68,10 +76,17 @@ bool SendAll(std::intptr_t fd, const std::string& payload) {
   std::size_t sent = 0;
   while (sent < payload.size()) {
     const auto remaining = payload.size() - sent;
+#if defined(_WIN32)
+    constexpr int flags = 0;
+#elif defined(MSG_NOSIGNAL)
+    constexpr int flags = MSG_NOSIGNAL;
+#else
+    constexpr int flags = 0;
+#endif
     const auto written = send(static_cast<NativeSocket>(fd),
                               payload.data() + sent,
                               static_cast<int>(remaining),
-                              0);
+                              flags);
     if (written <= 0) {
       return false;
     }

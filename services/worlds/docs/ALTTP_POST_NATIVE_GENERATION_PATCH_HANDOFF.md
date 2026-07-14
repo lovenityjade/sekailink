@@ -12,7 +12,7 @@ Command used:
 
 ```bash
 /tmp/sekailink-worlds-generic-build/sekailink_generic_generation_probe \
-  /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp
+  <local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp
 ```
 
 Observed result on 2026-05-11:
@@ -68,7 +68,7 @@ is generic:
   "rng_seed": "deterministic-seed-alttp-test",
   "output_root": "/tmp/sekailink-alttp-packages",
   "linkedworld_roots": [
-    "/home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp"
+    "<local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp"
   ],
   "slots": [
     {
@@ -318,9 +318,9 @@ After the package contains `patches/slot-1.aplttp`, the patch-first Sekaiemu
 launch contract is:
 
 ```bash
-/home/thelovenityjade/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/build/sekaiemu_libretro_spike \
+<local-home>/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/build/sekaiemu_libretro_spike \
   --probe-only \
-  --profile /home/thelovenityjade/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/profiles/alttp-starter.profile \
+  --profile <local-home>/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/profiles/alttp-starter.profile \
   --core /usr/lib64/libretro/bsnes_mercury_performance_libretro.so \
   --patch {package_dir}/patches/slot-1.aplttp \
   --base-rom {user_supplied_alttp_japan_1_0_rom} \

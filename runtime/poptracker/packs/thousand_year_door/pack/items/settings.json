@@ -1,0 +1,369 @@
+[
+  {
+        "name": "Hidden Items",
+        "type": "toggle",
+        "img": "images/items/BadgePointPM2.png",
+        "img_mods": "",
+        "codes": "HiddenOn"
+    },
+    {
+        "name": "Chapter Clears",
+        "type": "progressive",
+        "stages": [
+            {
+                "name": "Chapter 0",
+                "img": "images/items/CrystalStar.png",
+                "img_mods": "overlay|/images/Items/Overlay0.png,",
+                "inherit_codes": false,
+                "codes": "Chapter0, Chapter_Clears, Palace_Stars, DoorReq"
+            },
+            {
+                "name": "Chapter 1",
+                "img": "images/items/CrystalStar.png",
+                "img_mods": "overlay|/images/Items/Overlay1.png,",
+                "inherit_codes": false,
+                "codes": "Chapter1, Chapter_Clears, Palace_Stars, DoorReq"
+            },
+            {
+                "name": "Chapter 2",
+                "img": "images/items/CrystalStar.png",
+                "img_mods": "overlay|/images/Items/Overlay2.png,",
+                "inherit_codes": false,
+                "codes": "Chapter2, Chapter_Clears, Palace_Stars, DoorReq"
+            },
+            {
+                "name": "Chapter 3",
+                "img": "images/items/CrystalStar.png",
+                "img_mods": "overlay|/images/Items/Overlay3.png,",
+                "inherit_codes": false,
+                "codes": "Chapter3, Chapter_Clears, Palace_Stars, DoorReq"
+            },
+            {
+                "name": "Chapter 4",
+                "img": "images/items/CrystalStar.png",
+                "img_mods": "overlay|/images/Items/Overlay4.png,",
+                "inherit_codes": false,
+                "codes": "Chapter4, Chapter_Clears, Palace_Stars, DoorReq"
+            },
+            {
+                "name": "Chapter 5",
+                "img": "images/items/CrystalStar.png",
+                "img_mods": "overlay|/images/Items/Overlay5.png,",
+                "inherit_codes": false,
+                "codes": "Chapter5, Chapter_Clears, Palace_Stars, DoorReq"
+            },
+            {
+                "name": "Chapter 6",
+                "img": "images/items/CrystalStar.png",
+                "img_mods": "overlay|/images/Items/Overlay6.png,",
+                "inherit_codes": false,
+                "codes": "Chapter6, Chapter_Clears, Palace_Stars, DoorReq"
+            },
+            {
+                "name": "Chapter 7",
+                "img": "images/items/CrystalStar.png",
+                "img_mods": "overlay|/images/Items/Overlay7.png,",
+                "inherit_codes": false,
+                "codes": "Chapter7, Chapter_Clears, Palace_Stars, DoorReq"
+            }
+        ]
+    },
+    {
+        "name": "Is The Pit of 100 Trials Included?",
+        "type": "progressive",
+        "allow_disabled": false,
+        "stages": [
+            {
+                "name": "No Pit Included",
+                "img": "images/items/BigChestDim.png",
+                "inherit_codes": false,
+                "codes": "NoPit, Pit_Items"
+            },
+            {
+                "name": "Pit is Included",
+                "img": "images/items/BigChest.png",
+                "inherit_codes": false,
+                "codes": "YesPit, Pit_Items"
+            }
+        ]
+    },
+    {
+        "name": "ZobeePlays on Discord!",
+        "type": "static",
+        "img": "images/items/Zobee.png",
+        "codes": "Zobee"
+    },
+    {
+        "name": "earthor1 on Discord!",
+        "type": "static",
+        "img": "images/items/Earth.png",
+        "codes": "Earth"
+    },
+    {
+        "name": "PillarAngel on Discord!",
+        "type": "static",
+        "img": "images/items/Pillar.png",
+        "codes": "Pillar"
+    },
+    {
+        "name": "https://discord.gg/zar9H8vfya",
+        "type": "static",
+        "img": "images/items/Discord.png",
+        "codes": "Discord"
+    },
+    {
+        "name": "Chapter 1",
+        "type": "toggle",
+        "initial_active_state": true,
+        "img": "images/items/Hooktail.png",
+        "codes": "Ch1"
+    },
+    {
+        "name": "Chapter 2",
+        "type": "toggle",
+        "initial_active_state": true,
+        "img": "images/items/MagnusVonGrapple.png",
+        "codes": "Ch2"
+    },
+    {
+        "name": "Chapter 3",
+        "type": "toggle",
+        "initial_active_state": true,
+        "img": "images/items/MachoGrubba.png",
+        "codes": "Ch3"
+    },
+    {
+        "name": "Chapter 4",
+        "type": "toggle",
+        "initial_active_state": true,
+        "img": "images/items/Doopliss.png",
+        "codes": "Ch4"
+    },
+    {
+        "name": "Chapter 5",
+        "type": "toggle",
+        "initial_active_state": true,
+        "img": "images/items/Cortez.png",
+        "codes": "Ch5"
+    },
+    {
+        "name": "Chapter 6",
+        "type": "toggle",
+        "initial_active_state": true,
+        "img": "images/items/Smorg.png",
+        "codes": "Ch6"
+    },
+    {
+        "name": "Chapter 7",
+        "type": "toggle",
+        "initial_active_state": true,
+        "img": "images/items/MagnusVonGrapple2.png",
+        "codes": "Ch7"
+    },
+    {
+        "name": "Chapter 8",
+        "type": "progressive",
+        "initial_stage_idx": 1,
+        "allow_disabled": false,
+        "stages": [
+            {
+                "name": "Chapter 8",
+                "img": "images/items/ShadowQueenDim.png",
+                "inherit_codes": false,
+                "codes": "NoChap8, limit_chapter_eight, Ch8"
+            },
+            {
+                "name": "Chapter 8",
+                "img": "images/items/ShadowQueen.png",
+                "inherit_codes": false,
+                "codes": "YesChap8, limit_chapter_eight, Ch8"
+            }
+        ]
+    },
+    {
+        "name": "Palace Skip",
+        "type": "progressive",
+        "allow_disabled": false,
+        "stages": [
+            {
+                "name": "Palace Skip Off",
+                "img": "images/items/Gloomtail.png",
+                "inherit_codes": false,
+                "codes": "NoPalaceSkip, palace_skip"
+            },
+            {
+                "name": "Palace Skip On",
+                "img": "images/items/ShadowQueen.png",
+                "inherit_codes": false,
+                "codes": "YesPalaceSkip, palace_skip"
+            }
+        ]
+    },
+    {
+        "name": "Open Westside",
+        "type": "progressive",
+        "allow_disabled": false,
+        "stages": [
+            {
+                "name": "Closed Westside",
+                "img": "images/items/ZessTDim.png",
+                "inherit_codes": false,
+                "codes": "west_closed, open_westside"
+            },
+            {
+                "name": "Open Westside",
+                "img": "images/items/ZessT.png",
+                "inherit_codes": false,
+                "codes": "west_open, open_westside"
+            }
+        ]
+    },
+    {
+        "name": "Auto Tab Switching",
+        "type": "toggle",
+        "initial_active_state": true,
+        "img": "images/items/MagicalMap.png",
+        "codes": "AutoTabOn"
+    },
+    {
+        "name": "Player Tracking",
+        "type": "toggle",
+        "initial_active_state": true,
+        "img": "images/items/Mario.png",
+        "codes": "PlayerTrackOn"
+    },
+    {
+        "name": "Glitched Logic",
+        "type": "progressive",
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "Hazard Respawn Glitch Off",
+                "img": "images/items/BluePipeDim.png",
+                "codes": "noGlitchedLogic",
+                "inherit_codes": false
+            },
+            {
+                "name": "Hazard Respawn Glitch On",
+                "img": "images/items/BluePipe.png",
+                "inherit_codes": false,
+                "codes": "GlitchedLogic"
+            }
+        ]
+    },
+    {
+        "name": "Tattlesanity",
+        "type": "progressive",
+        "allow_disabled":false,
+        "stages":[
+            {
+                "name": "Tattlesanity off",
+                "img": "images/items/PeekabooDim.png",
+                "codes": "TattlesanityOff, Tattlesanity",
+                "inherit_codes": false
+            },
+            {
+                "name": "Tattlesanity on",
+                "img": "images/items/Peekaboo.png",
+                "codes": "TattlesanityOn, Tattlesanity",
+                "inherit_codes": false
+            }
+        ]
+    },
+    {
+          "name": "Disable Intermission",
+          "type": "progressive",
+          "allow_disabled": false,
+          "stages":[
+              {
+                  "name": "Disable Intermission off",
+                  "img": "images/items/DisableIntermissionOff.png",
+                  "codes": "disableIntermissionOff, disable_intermissions",
+                  "inherit_codes": false
+              },
+              {
+                  "name": "Disable Intermission on",
+                  "img": "images/items/DisableIntermissionOn.png",
+                  "codes": "disableIntermissionOn, disable_intermissions",
+                  "inherit_codes": false
+              }
+          ]
+      },
+      {
+          "name": "Goal",
+          "type": "progressive",
+          "allow_disabled": false,
+          "stages":[
+              {
+                  "name": "Goal: Defeat Shadow Queen",
+                  "img": "images/items/ShadowQueen.png",
+                  "codes": "goal, defeat_shadow_queen",
+                  "inherit_codes": false
+              },
+              {
+                  "name": "Goal: Crystal Star Hunt",
+                  "img": "images/items/CrystalStar.png",
+                  "codes": "goal, crystal_star",
+                  "inherit_codes": false
+              },
+              {
+                  "name": "Goal: Defeat Bonetail",
+                  "img": "/images/tattles/Bonetail.png",
+                  "codes": "goal, defeat_bonetail",
+                  "inherit_codes": false
+              }
+          ]
+      },
+      {
+          "name": "Piecesanity",
+          "type": "progressive",
+          "allow_disabled": false,
+          "stages":[
+              {
+                  "name": "Vanilla: No Star Pieces Randomized",
+                  "img": "/images/items/StarPieceOpen.png",
+                  "codes": "piecesanity, piecesanity_vanilla",
+                  "inherit_codes": false
+              },
+              {
+                  "name": "Non-Panel: Non-Panel Pieces Randomized",
+                  "img": "/images/items/StarPieceClosed.png",
+                  "codes": "piecesanity, piecesanity_no_panel",
+                  "inherit_codes": false
+              },
+              {
+                  "name": "All: All Star Pieces Randomized",
+                  "img": "/images/items/StarPiecePanel.png",
+                  "codes": "piecesanity, piecesanity_full, piecesanity_no_panel",
+                  "inherit_codes": false
+              }
+          ]
+      },
+      {
+        "name": "Dazzle Rewards",
+        "type": "progressive",
+        "allow_disabled": false,
+        "initial_stage_idx": 3,
+        "stages": [
+          {
+              "name": "Dazzle Rewards Vanilla",
+              "img": "/images/items/Dazzle_Vanilla.png",
+              "codes": "dazzle_vanilla, dazzle_rewards",
+              "inherit_codes": false
+          },
+          {
+              "name": "Dazzle Rewards Filler",
+              "img": "/images/items/Dazzle_Filler.png",
+              "codes": "dazzle_filler, dazzle_rewards",
+              "inherit_codes": false
+          },
+          {
+              "name": "Dazzle Rewards All Random",
+              "img": "/images/items/Dazzle.png",
+              "codes": "dazzle_all, dazzle_rewards",
+              "inherit_codes": false
+          }
+        ]
+      }
+]

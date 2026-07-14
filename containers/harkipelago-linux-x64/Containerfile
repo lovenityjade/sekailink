@@ -1,0 +1,74 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update -qq && apt-get install -y -qq --no-install-recommends \
+    build-essential \
+    ca-certificates \
+    curl \
+    file \
+    gcc-12 \
+    g++-12 \
+    git \
+    imagemagick \
+    libasio-dev \
+    libbz2-dev \
+    libespeak-ng-dev \
+    libglew-dev \
+    libogg-dev \
+    libopus-dev \
+    libopusfile-dev \
+    libpng-dev \
+    libsdl2-dev \
+    libsdl2-net-dev \
+    libspdlog-dev \
+    libssl-dev \
+    libtinyxml2-dev \
+    libusb-dev \
+    libusb-1.0-0-dev \
+    libvorbis-dev \
+    libwebsocketpp-dev \
+    libzip-dev \
+    lsb-release \
+    nlohmann-json3-dev \
+    opus-tools \
+    python3-pip \
+    wget \
+    zipcmp \
+    zipmerge \
+    ziptool \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN python3 -m pip install --no-cache-dir cmake==3.31.6 ninja
+
+RUN wget -q https://github.com/tristanpenman/valijson/archive/refs/tags/v1.0.6.tar.gz -O /tmp/valijson.tar.gz \
+    && mkdir /tmp/valijson \
+    && tar -xzf /tmp/valijson.tar.gz -C /tmp/valijson --strip-components=1 \
+    && cmake -S /tmp/valijson -B /tmp/valijson/build -G Ninja \
+    && cmake --install /tmp/valijson/build \
+    && rm -rf /tmp/valijson /tmp/valijson.tar.gz
+
+RUN wget -q https://github.com/leethomason/tinyxml2/archive/refs/tags/10.0.0.tar.gz -O /tmp/tinyxml2.tar.gz \
+    && mkdir /tmp/tinyxml2 \
+    && tar -xzf /tmp/tinyxml2.tar.gz -C /tmp/tinyxml2 --strip-components=1 \
+    && cmake -S /tmp/tinyxml2 -B /tmp/tinyxml2/build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+    && cmake --build /tmp/tinyxml2/build \
+    && cmake --install /tmp/tinyxml2/build \
+    && rm -rf /tmp/tinyxml2 /tmp/tinyxml2.tar.gz
+
+RUN wget -q https://github.com/libsdl-org/SDL_net/releases/download/release-2.2.0/SDL2_net-2.2.0.tar.gz -O /tmp/sdl2-net.tar.gz \
+    && mkdir /tmp/sdl2-net \
+    && tar -xzf /tmp/sdl2-net.tar.gz -C /tmp/sdl2-net --strip-components=1 \
+    && cmake -S /tmp/sdl2-net -B /tmp/sdl2-net/build -G Ninja \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DSDL2NET_SAMPLES=OFF \
+    && cmake --build /tmp/sdl2-net/build \
+    && cmake --install /tmp/sdl2-net/build \
+    && rm -rf /tmp/sdl2-net /tmp/sdl2-net.tar.gz
+
+# Ubuntu 22.04 websocketpp needs its C++20 constructor compatibility patch.
+RUN sed -i 's/endpoint<connection,config>(/endpoint(/g' /usr/include/websocketpp/endpoint.hpp \
+    && sed -i 's/basic<concurrency,names>(/basic(/g' /usr/include/websocketpp/logger/basic.hpp \
+    && sed -i 's/server<config>(/server(/g' /usr/include/websocketpp/roles/server_endpoint.hpp
+
+WORKDIR /src

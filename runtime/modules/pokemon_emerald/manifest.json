@@ -37,9 +37,10 @@
     "ap_game": "Pokemon Emerald"
   },
   "tracker_pack_uid": "https://github.com/seto10987/Archipelago-Emerald-AP-Tracker",
-  "tracker_web_url": "",
+  "tracker_web_url": "https://github.com/seto10987/Archipelago-Emerald-AP-Tracker/releases/latest",
   "tracker_asset_regex": "\\.zip$",
-  "support_status": "not_available",
-  "availability_status": "unavailable_gba_pending_tester",
-  "compatibility_notes": "Temporarily unavailable for BETA-3 launch: runtime connects and receives, but check send behavior still needs a focused Emerald tester/regression pass."
+  "support_status": "canari_test",
+  "availability_status": "available_canari_test",
+  "compatibility_notes": "Canari test frozen: Linux bilateral send/reception confirmed through Sekaiemu/mGBA with the BizHawk-compatible runtime memory bridge. Windows validation is still required before Canonical promotion.",
+  "tracker_pack_path": "poptracker/packs/pokemon_emerald/pack/seto10987-Archipelago-Emerald-AP-Tracker-7c8db82"
 }

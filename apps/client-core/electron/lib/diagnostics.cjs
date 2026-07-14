@@ -13,10 +13,91 @@ const createDiagnostics = ({
   getBootstrapInstallState,
   getArchipelagoClientStats = () => ({}),
   getArchipelagoTraceTail = () => "",
+  getRuntimeLogPaths = () => [],
   getMainWindow = () => null,
   nowIso = () => new Date().toISOString(),
 }) => {
   let logFilePath = "";
+  const sessionStartedAtMs = Date.now();
+
+  const redactText = (value) => String(value || "")
+    .replace(/(authorization\s*[:=]\s*(?:bearer\s+)?)[^\s,;]+/gi, "$1[REDACTED]")
+    .replace(/((?:token|password|secret|api[_-]?key|ap[_-]?pass)\s*[:=]\s*)[^\s,;]+/gi, "$1[REDACTED]")
+    .replace(/([?&](?:token|key|signature|password)=)[^&\s]+/gi, "$1[REDACTED]")
+    .replaceAll(String(os.hostname?.() || ""), "[REDACTED-COMPUTER]")
+    .replaceAll(String(app.getPath("home") || ""), "[REDACTED-HOME]");
+
+  const collectSessionLogFiles = () => {
+    const roots = [
+      path.join(app.getPath("userData"), "logs"),
+      path.join(app.getPath("appData"), "sekailink-bootloader", "logs"),
+    ];
+    const explicit = Array.isArray(getRuntimeLogPaths?.()) ? getRuntimeLogPaths() : [];
+    const found = new Set();
+    const visit = (candidate, depth = 0) => {
+      if (!candidate || depth > 5) return;
+      try {
+        const stat = fs.statSync(candidate);
+        if (stat.isDirectory()) {
+          for (const name of fs.readdirSync(candidate)) visit(path.join(candidate, name), depth + 1);
+          return;
+        }
+        if (!stat.isFile() || stat.mtimeMs < sessionStartedAtMs - 5 * 60 * 1000) return;
+        if (!/\.(?:log|jsonl|txt)$/i.test(candidate)) return;
+        found.add(path.resolve(candidate));
+      } catch (_err) {
+        // Missing runtime logs are recorded in the manifest separately.
+      }
+    };
+    roots.forEach((root) => visit(root));
+    explicit.forEach((entry) => visit(String(entry || "")));
+    return { files: Array.from(found).sort(), requested: [...roots, ...explicit.map(String)] };
+  };
+
+  const buildSessionLogBundle = async () => {
+    const archiver = require("archiver");
+    const { PassThrough } = require("stream");
+    const { files, requested } = collectSessionLogFiles();
+    const manifest = {
+      schema_version: "sekailink-bug-report-bundle-v2",
+      created_at: nowIso(),
+      session_started_at: new Date(sessionStartedAtMs).toISOString(),
+      retention_days: 30,
+      privacy: { hostname_redacted: true, home_paths_redacted: true, secrets_redacted: true },
+      requested_sources: requested.map((entry) => redactText(entry)),
+      files: [],
+    };
+    const output = new PassThrough();
+    const chunks = [];
+    output.on("data", (chunk) => chunks.push(Buffer.from(chunk)));
+    const archive = archiver("zip", { zlib: { level: 9 } });
+    const completed = new Promise((resolve, reject) => {
+      output.on("end", resolve);
+      output.on("error", reject);
+      archive.on("error", reject);
+    });
+    archive.pipe(output);
+    for (let index = 0; index < files.length; index += 1) {
+      const filePath = files[index];
+      try {
+        const raw = fs.readFileSync(filePath, "utf8");
+        const name = `${String(index + 1).padStart(3, "0")}-${path.basename(filePath).replace(/[^A-Za-z0-9_.-]/g, "_")}`;
+        const redacted = redactText(raw);
+        archive.append(redacted, { name: `logs/${name}` });
+        manifest.files.push({ name, source: redactText(filePath), bytes: Buffer.byteLength(redacted, "utf8"), status: "included" });
+      } catch (err) {
+        manifest.files.push({ source: redactText(filePath), status: "unreadable", error: String(err?.message || err || "") });
+      }
+    }
+    archive.append(JSON.stringify(manifest, null, 2) + "\n", { name: "manifest.json" });
+    await archive.finalize();
+    await completed;
+    const buffer = Buffer.concat(chunks);
+    if (buffer.length > 40 * 1024 * 1024) {
+      throw new Error(`bug_report_bundle_too_large:${buffer.length}`);
+    }
+    return { buffer, manifest };
+  };
 
   const startFileLogging = () => {
     logger.start();
@@ -102,9 +183,9 @@ const createDiagnostics = ({
     const apClientTraceTail = getArchipelagoTraceTail();
     const logsText = apClientTraceTail ? `${logTail || ""}\n\n[Archipelago client trace]\n${apClientTraceTail}`.trim() : logTail;
 
-    let screenshotBase64 = "";
+    let screenshotBase64 = String(options?.screenshotBase64 || "").trim();
     const mainWindow = getMainWindow();
-    if (includeScreenshot && mainWindow && !mainWindow.isDestroyed()) {
+    if (includeScreenshot && !screenshotBase64 && mainWindow && !mainWindow.isDestroyed()) {
       try {
         const image = await mainWindow.capturePage();
         screenshotBase64 = image.toPNG().toString("base64");
@@ -134,15 +215,19 @@ const createDiagnostics = ({
     const cpuModel = cpus[0] && typeof cpus[0].model === "string" ? cpus[0].model : "";
     const bootstrap = getBootstrapInstallState() || {};
     const apStats = getArchipelagoClientStats() || {};
+    const bundle = await buildSessionLogBundle();
     return {
       screenshotBase64,
       logsText: logsText || "",
+      bundleBase64: bundle.buffer.toString("base64"),
+      bundleBytes: bundle.buffer.length,
+      bundleManifest: bundle.manifest,
       systemInfo: {
         os: os.type(),
         os_release: os.release(),
         platform: processRef.platform,
         arch: processRef.arch,
-        hostname: os.hostname(),
+        hostname: "[REDACTED-COMPUTER]",
         cpu_model: cpuModel,
         cpu_count: cpus.length || 0,
         memory_total: Number(os.totalmem?.() || 0),

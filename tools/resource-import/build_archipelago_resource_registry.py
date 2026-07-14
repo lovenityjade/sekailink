@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -103,7 +104,7 @@ def main() -> int:
         "schema_version": 1,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "source": {
-            "xlsx": "/home/thelovenityjade/Archipelago Games Sheet.xlsx",
+            "xlsx": str(Path(os.environ.get("SEKAILINK_ARCHIPELAGO_SHEET", "Archipelago Games Sheet.xlsx"))),
             "inventory": str(SOURCE_DIR / "inventory.json"),
             "download_report": str(SOURCE_DIR / "download-report.json"),
         },
@@ -127,7 +128,7 @@ def main() -> int:
     lines = [
         "# Archipelago Resource Index",
         "",
-        "Generated from `/home/thelovenityjade/Archipelago Games Sheet.xlsx`.",
+        "Generated from the configured Archipelago games sheet.",
         "",
         "This file is a URL registry, not a vendored dependency folder. Servers and clients can use it to fetch APWorlds and tracker packs on demand without re-scraping the XLSX.",
         "",

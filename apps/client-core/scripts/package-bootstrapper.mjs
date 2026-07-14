@@ -14,15 +14,45 @@ const nativeDir = path.join(appDir, "native-bootloader");
 const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
 const dateDir = String(process.env.SEKAILINK_RELEASE_DATE || today).trim();
 const version = String(process.env.SEKAILINK_BOOTSTRAPPER_VERSION || `1.0.0-${dateDir}`).trim();
-const channel = String(process.env.SEKAILINK_RELEASE_CHANNEL || "test").trim();
+const normalizeReleaseChannel = (value) => {
+  const raw = String(value || "").trim().toLowerCase();
+  if (raw === "canary") return "canari";
+  if (raw === "test" || raw === "stable" || raw === "release") return "canonical";
+  return raw === "canari" ? "canari" : "canonical";
+};
+const channel = normalizeReleaseChannel(process.env.SEKAILINK_RELEASE_CHANNEL || "canonical");
 const build = String(process.env.SEKAILINK_RELEASE_BUILD || "release").trim();
-const baseUrl = String(process.env.SEKAILINK_BOOTSTRAPPER_BASE_URL || `https://sekailink.com/downloads/client/bootstrapper/${dateDir}`).replace(/\/+$/, "");
-const outputDir = path.join(releaseDir, "bootstrapper", dateDir);
+const baseUrl = String(process.env.SEKAILINK_BOOTSTRAPPER_BASE_URL || `https://sekailink.com/downloads/client/bootstrapper/${channel}/${dateDir}`).replace(/\/+$/, "");
+const outputDir = path.join(releaseDir, "bootstrapper", channel, dateDir);
 const linuxBuildDir = path.join(outputDir, "native-build-linux");
 const winBuildDir = path.join(outputDir, "native-build-windows");
 const defaultMsysRoot = process.platform === "win32" ? "C:\\msys64\\ucrt64" : "/mnt/windows/msys64/ucrt64";
 const msysRoot = String(process.env.SEKAILINK_MSYS2_UCRT_ROOT || defaultMsysRoot).trim();
 const msysBin = path.join(msysRoot, "bin");
+const requiredWindowsBootloaderDlls = [
+  "libgcc_s_seh-1.dll",
+  "libwinpthread-1.dll",
+  "libstdc++-6.dll",
+  "libcurl-4.dll",
+  "libcrypto-3-x64.dll",
+  "libssl-3-x64.dll",
+  "SDL2.dll",
+  "zlib1.dll",
+  "libidn2-0.dll",
+  "libintl-8.dll",
+  "libnghttp2-14.dll",
+  "libnghttp3-9.dll",
+  "libngtcp2-16.dll",
+  "libngtcp2_crypto_ossl-0.dll",
+  "libpsl-5.dll",
+  "libssh2-1.dll",
+  "libunistring-5.dll",
+  "libbrotlicommon.dll",
+  "libbrotlidec.dll",
+  "libbrotlienc.dll",
+  "libiconv-2.dll",
+  "libzstd.dll",
+];
 
 const sha256File = (filePath) => crypto.createHash("sha256").update(fs.readFileSync(filePath)).digest("hex");
 
@@ -35,6 +65,35 @@ const commandOutput = (cmd, args, options = {}) => {
   const res = spawnSync(cmd, args, { cwd: repoDir, encoding: "utf8", ...options });
   if (res.status !== 0) return "";
   return String(res.stdout || "");
+};
+
+const commandPath = (cmd) => {
+  const lookup = process.platform === "win32" ? "where" : "which";
+  return commandOutput(lookup, [cmd])
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .find(Boolean) || "";
+};
+
+const toMsysPath = (value) => {
+  if (process.platform !== "win32") return value;
+  const normalized = String(value || "").replaceAll("\\", "/");
+  const match = normalized.match(/^([A-Za-z]):\/(.*)$/);
+  if (!match) return value;
+  return `/${match[1].toLowerCase()}/${match[2]}`;
+};
+
+const cmakePathArgs = (args) => {
+  const cmake = commandPath("cmake").replaceAll("\\", "/").toLowerCase();
+  const cmakeIsMsys = process.platform === "win32" && cmake.includes("/msys64/usr/bin/");
+  if (!cmakeIsMsys) return args;
+  return args.map((arg) => {
+    const value = String(arg);
+    if (value.startsWith("-DSEKAILINK_MSYS2_UCRT_ROOT=")) {
+      return `-DSEKAILINK_MSYS2_UCRT_ROOT=${toMsysPath(value.slice("-DSEKAILINK_MSYS2_UCRT_ROOT=".length))}`;
+    }
+    return toMsysPath(value);
+  });
 };
 
 const copyFile = (source, target) => {
@@ -90,13 +149,13 @@ const tarGzFiles = (items, outPath) => {
 
 const buildLinux = () => {
   fs.rmSync(linuxBuildDir, { recursive: true, force: true });
-  run("cmake", ["-S", nativeDir, "-B", linuxBuildDir, "-DCMAKE_BUILD_TYPE=Release"]);
-  run("cmake", ["--build", linuxBuildDir, "-j4"]);
+  run("cmake", cmakePathArgs(["-S", nativeDir, "-B", linuxBuildDir, "-DCMAKE_BUILD_TYPE=Release"]));
+  run("cmake", cmakePathArgs(["--build", linuxBuildDir, "-j4"]));
 };
 
 const buildWindows = () => {
   fs.rmSync(winBuildDir, { recursive: true, force: true });
-  run("cmake", [
+  run("cmake", cmakePathArgs([
     "-S", nativeDir,
     "-B", winBuildDir,
     "-DCMAKE_BUILD_TYPE=Release",
@@ -104,8 +163,8 @@ const buildWindows = () => {
     "-DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc",
     "-DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++",
     `-DSEKAILINK_MSYS2_UCRT_ROOT=${msysRoot}`,
-  ]);
-  run("cmake", ["--build", winBuildDir, "-j4"]);
+  ]));
+  run("cmake", cmakePathArgs(["--build", winBuildDir, "-j4"]));
 };
 
 const systemDll = (name) => {
@@ -145,21 +204,32 @@ const importedDlls = (filePath) => {
 const copyWindowsDllClosure = (seed, targetDir) => {
   const queue = [seed];
   const seen = new Set();
+  const copyDll = (dll) => {
+    const key = dll.toLowerCase();
+    if (seen.has(key)) return "";
+    const source = path.join(msysBin, dll);
+    if (!fs.existsSync(source)) {
+      throw new Error(`missing_windows_dll:${dll}`);
+    }
+    seen.add(key);
+    const target = path.join(targetDir, dll);
+    copyFile(source, target);
+    return target;
+  };
+
   while (queue.length) {
     const current = queue.shift();
     for (const dll of importedDlls(current)) {
       if (systemDll(dll)) continue;
-      const key = dll.toLowerCase();
-      if (seen.has(key)) continue;
-      const source = path.join(msysBin, dll);
-      if (!fs.existsSync(source)) {
-        throw new Error(`missing_windows_dll:${dll}`);
-      }
-      seen.add(key);
-      const target = path.join(targetDir, dll);
-      copyFile(source, target);
+      const target = copyDll(dll);
+      if (!target) continue;
       queue.push(target);
     }
+  }
+
+  for (const dll of requiredWindowsBootloaderDlls) {
+    const target = copyDll(dll);
+    if (target) queue.push(target);
   }
   return [...seen].sort();
 };
@@ -230,7 +300,16 @@ const manifest = {
   windows_dlls: copiedDlls,
   artifacts,
 };
-fs.writeFileSync(path.join(outputDir, `sekailink-bootstrapper-release-${dateDir}.json`), `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
+const manifestFileName = `sekailink-bootstrapper-release-${dateDir}.json`;
+fs.writeFileSync(path.join(outputDir, manifestFileName), `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
+
+const latestDir = path.join(releaseDir, "bootstrapper", channel, "latest");
+fs.rmSync(latestDir, { recursive: true, force: true });
+fs.mkdirSync(latestDir, { recursive: true });
+for (const artifact of artifacts) {
+  copyFile(path.join(outputDir, artifact.fileName), path.join(latestDir, artifact.fileName));
+}
+fs.writeFileSync(path.join(latestDir, "sekailink-bootstrapper-release-latest.json"), `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
 fs.rmSync(staged, { recursive: true, force: true });
 
 for (const artifact of artifacts) {

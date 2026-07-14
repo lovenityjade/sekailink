@@ -1,0 +1,1094 @@
+
+
+[
+  {
+    "name": "DMC - hint",
+    "chest_unopened_img": "/images/items/close.png",
+    "chest_opened_img": "/images/items/open.png",
+    "overlay_background": "#000000",
+    "access_rules": [
+        "{}"
+    ],
+    "children": [
+        {
+            "name": "Lower - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Lower Crater - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Sheik in Crater - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_lower_lower_crater_sheik_in_crater"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Bean Patch GS - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_lower_lower_crater_bean_patch_gs"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "DMC",
+                            "x": "840",
+                            "y": "766",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                },
+                {
+                    "name": "Volcano Freestanding PoH - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Volcano Freestanding PoH - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_lower_volcano_freestanding_poh_volcano_freestanding_poh"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "DMC",
+                            "x": "856",
+                            "y": "548",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                },
+                {
+                    "name": "Adult - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Green Rupee 1 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_lower_adult_green_rupee_1"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Green Rupee 2 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_lower_adult_green_rupee_2"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Green Rupee 3 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_lower_adult_green_rupee_3"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Green Rupee 4 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_lower_adult_green_rupee_4"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Green Rupee 5 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_lower_adult_green_rupee_5"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Green Rupee 6 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_lower_adult_green_rupee_6"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Red Rupee - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_lower_adult_red_rupee"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "DMC",
+                            "x": "450",
+                            "y": "839",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                },
+                {
+                    "name": "Child - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Red Rupee 1 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_lower_child_red_rupee_1"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Red Rupee 2 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_lower_child_red_rupee_2"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Blue Rupee 1 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_lower_child_blue_rupee_1"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Blue Rupee 2 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_lower_child_blue_rupee_2"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Blue Rupee 3 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_lower_child_blue_rupee_3"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Blue Rupee 4 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_lower_child_blue_rupee_4"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Blue Rupee 5 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_lower_child_blue_rupee_5"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Blue Rupee 6 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_lower_child_blue_rupee_6"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "DMC",
+                            "x": "574",
+                            "y": "873",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Upper - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Wall Freestanding PoH - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Wall Freestanding PoH - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_upper_wall_freestanding_poh_wall_freestanding_poh"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "DMC",
+                            "x": "522",
+                            "y": "614",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                },
+                {
+                    "name": "Upper Grotto - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Chest - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_upper_upper_grotto_chest"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Beehive 1 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_upper_upper_grotto_beehive_1"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Beehive 2 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_upper_upper_grotto_beehive_2"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "DMC",
+                            "x": "403",
+                            "y": "462",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                },
+                {
+                    "name": "Crate - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "GS - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_upper_crate_gs"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "DMC",
+                            "x": "554",
+                            "y": "366",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                }
+            ],
+            "sections": [
+                {
+                    "name": "Deku Scrub - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "dmc_upper_deku_scrub"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "DMC",
+                    "x": "698",
+                    "y": "563",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Middle - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Deku Scrub Grotto - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Left - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_middle_deku_scrub_grotto_left"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Center - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_middle_deku_scrub_grotto_center"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Right - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_middle_deku_scrub_grotto_right"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Beehive - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "dmc_middle_deku_scrub_grotto_beehive"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "DMC",
+                            "x": "1150",
+                            "y": "623",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                }
+            ],
+            "sections": [
+                {
+                    "name": "Pot 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "dmc_middle_pot_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "dmc_middle_pot_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "dmc_middle_pot_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 4 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "dmc_middle_pot_4"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "DMC",
+                    "x": "1041",
+                    "y": "603",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        }
+    ],
+    "sections": [
+        {
+            "name": "Great Fairy Reward - hint",
+            "access_rules": [],
+            "visibility_rules": [
+                "dmc_great_fairy_reward"
+            ],
+            "item_count": 1
+        }
+    ],
+    "map_locations": [
+        {
+            "map": "DMC",
+            "x": "1486",
+            "y": "962",
+            "size": 22,
+                    "shape": "diamond"
+        }
+    ]
+},
+    {
+      "name": "DMC",
+      "chest_unopened_img": "/images/Items/close.png",
+      "chest_opened_img": "/images/Items/open.png",
+      "overlay_background": "#000000",
+      "access_rules": [
+        " "
+      ],
+      "children": [
+        {
+          "name": "Upper",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "Crate",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child DMC GS Crate",
+                "^$CanReach|Adult DMC GS Crate"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "DMC",
+                  "x": 532,
+                  "y": 344,
+                  "size": 24
+                }
+              ]
+            },
+            {
+              "name": "Upper Grotto",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Chest",
+                    "access_rules": [
+                    "^$CanReach|Child DMC Upper Grotto Chest",
+                    "^$CanReach|Adult DMC Upper Grotto Chest"
+                    ],
+                    // "visibility_rules": [
+                    //   "$Show|"
+                    // ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Beehive 1",
+                "access_rules": [
+                "^$CanReach|Child DMC Upper Grotto Beehive 1",
+                "^$CanReach|Adult DMC Upper Grotto Beehive 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_beehives"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Beehive 2",
+                "access_rules": [
+                "^$CanReach|Child DMC Upper Grotto Beehive 2",
+                "^$CanReach|Adult DMC Upper Grotto Beehive 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_beehives"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "DMC",
+                  "x": 381,
+                  "y": 440,
+                  "size": 24
+                }
+              ]
+            },
+            {
+              "name": "Wall Freestanding PoH",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Wall Freestanding PoH",
+                  "access_rules": [
+                    "^$CanReach|Child DMC Wall Freestanding PoH",
+                    "^$CanReach|Adult DMC Wall Freestanding PoH"
+                  ],
+                    // "visibility_rules": [
+                    //   "$Show|"
+                    // ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "DMC",
+                  "x": 500,
+                  "y": 592,
+                  "size": 24
+                }
+              ]
+            }
+          ],
+          "sections": [
+            {
+              "name": "Deku Scrub",
+                "access_rules": [
+                "^$CanReach|Child DMC Deku Scrub",
+                "^$CanReach|Adult DMC Deku Scrub"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_scrubs"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "DMC",
+              "x": 676,
+              "y": 541,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Middle",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "Deku Scrub Grotto",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Left",
+                "access_rules": [
+                "^$CanReach|Child DMC Deku Scrub Grotto Left",
+                "^$CanReach|Adult DMC Deku Scrub Grotto Left"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_scrubs"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Center",
+                "access_rules": [
+                "^$CanReach|Child DMC Deku Scrub Grotto Center",
+                "^$CanReach|Adult DMC Deku Scrub Grotto Center"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_scrubs"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Right",
+                "access_rules": [
+                "^$CanReach|Child DMC Deku Scrub Grotto Right",
+                "^$CanReach|Adult DMC Deku Scrub Grotto Right"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_scrubs"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Beehive",
+                "access_rules": [
+                "^$CanReach|Child DMC Hammer Grotto Beehive",
+                "^$CanReach|Adult DMC Hammer Grotto Beehive"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_beehives"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "DMC",
+                  "x": 1127,
+                  "y": 601,
+                  "size": 24
+                }
+              ]
+            }
+          ],
+          "sections": [
+            {
+              "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child DMC Near GC Pot 1",
+                "^$CanReach|Adult DMC Near GC Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child DMC Near GC Pot 2",
+                "^$CanReach|Adult DMC Near GC Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 3",
+                "access_rules": [
+                "^$CanReach|Child DMC Near GC Pot 3",
+                "^$CanReach|Adult DMC Near GC Pot 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 4",
+                "access_rules": [
+                "^$CanReach|Child DMC Near GC Pot 4",
+                "^$CanReach|Adult DMC Near GC Pot 4"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "DMC",
+              "x": 1019,
+              "y": 581,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Lower",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "Volcano Freestanding PoH",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Volcano Freestanding PoH",
+                  "access_rules": [
+                    "^$CanReach|Child DMC Volcano Freestanding PoH",
+                    "^$CanReach|Adult DMC Volcano Freestanding PoH"
+                  ],
+                    // "visibility_rules": [
+                    //   "$Show|"
+                    // ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "DMC",
+                  "x": 834,
+                  "y": 526,
+                  "size": 24
+                }
+              ]
+            },
+            {
+              "name": "Lower Crater",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Sheik in Crater",
+                  "access_rules": [
+                    "^$CanReach|Child Sheik in Crater",
+                    "^$CanReach|Adult Sheik in Crater"
+                  ],
+                    // "visibility_rules": [
+                    //   "$Show|"
+                    // ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Bean Patch GS",
+                "access_rules": [
+                "^$CanReach|Child DMC GS Bean Patch",
+                "^$CanReach|Adult DMC GS Bean Patch"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "DMC",
+                  "x": 818,
+                  "y": 744,
+                  "size": 24
+                }
+              ]
+            },
+            {
+              "name": "Adult",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Green Rupee 1",
+                "access_rules": [
+                "^$CanReach|Child DMC Adult Green Rupee 1",
+                "^$CanReach|Adult DMC Adult Green Rupee 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Green Rupee 2",
+                "access_rules": [
+                "^$CanReach|Child DMC Adult Green Rupee 2",
+                "^$CanReach|Adult DMC Adult Green Rupee 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Green Rupee 3",
+                "access_rules": [
+                "^$CanReach|Child DMC Adult Green Rupee 3",
+                "^$CanReach|Adult DMC Adult Green Rupee 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Green Rupee 4",
+                "access_rules": [
+                "^$CanReach|Child DMC Adult Green Rupee 4",
+                "^$CanReach|Adult DMC Adult Green Rupee 4"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Green Rupee 5",
+                "access_rules": [
+                "^$CanReach|Child DMC Adult Green Rupee 5",
+                "^$CanReach|Adult DMC Adult Green Rupee 5"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Green Rupee 6",
+                "access_rules": [
+                "^$CanReach|Child DMC Adult Green Rupee 6",
+                "^$CanReach|Adult DMC Adult Green Rupee 6"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Red Rupee",
+                "access_rules": [
+                "^$CanReach|Child DMC Adult Red Rupee",
+                "^$CanReach|Adult DMC Adult Red Rupee"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "DMC",
+                  "x": 428,
+                  "y": 817,
+                  "size": 24
+                }
+              ]
+            },
+            {
+              "name": "Child",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Red Rupee 1",
+                "access_rules": [
+                "^$CanReach|Child DMC Child Red Rupee 1",
+                "^$CanReach|Adult DMC Child Red Rupee 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Red Rupee 2",
+                "access_rules": [
+                "^$CanReach|Child DMC Child Red Rupee 2",
+                "^$CanReach|Adult DMC Child Red Rupee 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Blue Rupee 1",
+                "access_rules": [
+                "^$CanReach|Child DMC Child Blue Rupee 1",
+                "^$CanReach|Adult DMC Child Blue Rupee 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Blue Rupee 2",
+                "access_rules": [
+                "^$CanReach|Child DMC Child Blue Rupee 2",
+                "^$CanReach|Adult DMC Child Blue Rupee 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Blue Rupee 3",
+                "access_rules": [
+                "^$CanReach|Child DMC Child Blue Rupee 3",
+                "^$CanReach|Adult DMC Child Blue Rupee 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Blue Rupee 4",
+                "access_rules": [
+                "^$CanReach|Child DMC Child Blue Rupee 4",
+                "^$CanReach|Adult DMC Child Blue Rupee 4"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Blue Rupee 5",
+                "access_rules": [
+                "^$CanReach|Child DMC Child Blue Rupee 5",
+                "^$CanReach|Adult DMC Child Blue Rupee 5"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Blue Rupee 6",
+                "access_rules": [
+                "^$CanReach|Child DMC Child Blue Rupee 6",
+                "^$CanReach|Adult DMC Child Blue Rupee 6"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "DMC",
+                  "x": 552,
+                  "y": 851,
+                  "size": 24
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "name": "Great Fairy Reward",
+          "access_rules": [
+            "^$CanReach|Child DMC Great Fairy Reward",
+            "^$CanReach|Adult DMC Great Fairy Reward"
+          ],
+            // "visibility_rules": [
+            //   "$Show|"
+            // ],
+          "item_count": 1
+        }
+      ],
+      "map_locations": [
+        {
+          "map": "DMC",
+          "x": 793,
+          "y": 504,
+          "size": 24
+        }
+      ]
+    }
+  ]

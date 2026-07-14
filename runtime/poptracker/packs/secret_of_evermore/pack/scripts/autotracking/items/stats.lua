@@ -1,0 +1,14 @@
+MONEY_START_ADDR = 0x7E0AC6
+MONEY_TYPES = {
+    "talons",
+    "jewels",
+    "gold",
+    "credits"
+}
+DOG_ATTACK_LVL_ADDR = 0x7E0B07
+BOY_EXP_ADDR = 0x7E0A49          -- to 0x7E0A4C
+BOY_LVL_ADDR = 0x7E0A50          -- to 0x7E0A51
+DOG_EXP_ADDR = 0x7E0A93          -- to 0x7E0A96
+DOG_LVL_ADDR = 0x7E0A9A          -- to 0x7E0A9B
+BOY_EXP_NEXT_LVL_ADDR = 0x7E4F1D -- to 0x7E4F20
+DOG_EXP_NEXT_LVL_ADDR = 0x7E4FCB -- to 0x7E4FCE

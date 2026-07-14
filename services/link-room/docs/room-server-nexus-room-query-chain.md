@@ -42,8 +42,8 @@ The mutation path in this repo is:
 
 For live MySQL projection, the relevant pieces are:
 
-- [src/room_projection_mysql.cpp](/home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-link-room/src/room_projection_mysql.cpp:1)
-- [src/room_projection_sql.cpp](/home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-link-room/src/room_projection_sql.cpp:28)
+- [src/room_projection_mysql.cpp](<local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-link-room/src/room_projection_mysql.cpp:1)
+- [src/room_projection_sql.cpp](<local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-link-room/src/room_projection_sql.cpp:28)
 
 The MySQL schema currently contains:
 
@@ -60,8 +60,8 @@ Each row stores:
 
 This repo already includes the query helpers used to read the projection:
 
-- [include/room_projection_query.hpp](/home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-link-room/include/room_projection_query.hpp:1)
-- [src/room_projection_query.cpp](/home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-link-room/src/room_projection_query.cpp:1)
+- [include/room_projection_query.hpp](<local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-link-room/include/room_projection_query.hpp:1)
+- [src/room_projection_query.cpp](<local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-link-room/src/room_projection_query.cpp:1)
 
 The important read functions are:
 

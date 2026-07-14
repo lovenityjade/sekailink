@@ -102,4 +102,44 @@ describe("seed config service", () => {
       },
     });
   });
+
+  it("renders ALTTP boss shuffle choices as a constrained enum", async () => {
+    const fetchMock = vi.mocked(globalThis.fetch as unknown as typeof fetch);
+    fetchMock.mockResolvedValueOnce(
+      jsonResponse({
+        ok: true,
+        game: {
+          game_key: "a_link_to_the_past",
+          display_name: "A Link to the Past",
+          options: [
+            {
+              option_key: "boss_shuffle",
+              type: "string",
+              default_value: "none",
+              choices: [
+                { choice_key: "none", yaml_value: "none", label: "None" },
+                { choice_key: "basic", yaml_value: "basic", label: "Basic" },
+                { choice_key: "full", yaml_value: "full", label: "Full" },
+              ],
+            },
+          ],
+        },
+      })
+    );
+
+    const schema = await listSeedOptions({
+      game_key: "a_link_to_the_past",
+      display_name: "A Link to the Past",
+    });
+
+    expect(schema.options[0]).toMatchObject({
+      option_key: "boss_shuffle",
+      type: "enum",
+      choices: [
+        { yaml_value: "none" },
+        { yaml_value: "basic" },
+        { yaml_value: "full" },
+      ],
+    });
+  });
 });

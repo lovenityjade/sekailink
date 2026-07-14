@@ -158,6 +158,9 @@ export const createLobby = async (input: CreateLobbyInput): Promise<{ lobbyId?: 
   if (!response.ok) {
     const error = String((data as any)?.error || "Unable to create lobby.");
     trace("lobby-client", "create_lobby_failed", { status: response.status, error }, "warn");
+    if (error === "async_room_requires_patreon_tier_2_or_3") {
+      throw new Error("Async rooms require an active Patreon Tier 2 (Super Supporter) or Tier 3 (Ultra Supporter) membership.");
+    }
     throw new Error(error);
   }
   const lobbyId = String((data as any)?.lobby_id || (data as any)?.id || parseLobbyIdFromUrl((data as any)?.url));

@@ -1,6 +1,6 @@
 # Archipelago Sheet Resource Import
 
-Generated from `/home/thelovenityjade/Archipelago Games Sheet.xlsx`.
+Generated from `<local-home>/Archipelago Games Sheet.xlsx`.
 
 - Inventory rows with URLs: 806
 - Downloaded/existing matching assets: 0

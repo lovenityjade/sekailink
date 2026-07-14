@@ -6,8 +6,17 @@ function safeStringify(value) {
   }
 }
 
+const MAX_LOG_LINE_CHARS = 4000;
+const MAX_LOG_FILE_BYTES = 8 * 1024 * 1024;
+const MAX_LOG_FILES = 30;
 const SENSITIVE_KEY_RE = /(pass(word)?|secret|token|auth(entication|orization)?|cookie|session|api[-_]?key|credential|private[-_]?key|refresh)/i;
 const SENSITIVE_QUERY_RE = /^(token|access_token|refresh_token|auth|authorization|key|api_key|apikey|password|pass|secret|signature|sig|code|session|cookie)$/i;
+
+function truncateLogText(value, maxLength = MAX_LOG_LINE_CHARS) {
+  const text = String(value || "");
+  if (text.length <= maxLength) return text;
+  return `${text.slice(0, maxLength)}...[truncated ${text.length - maxLength} chars]`;
+}
 
 function scrubSecretString(value) {
   let text = String(value || "");
@@ -59,6 +68,9 @@ function createLogger({ app, fs, path }) {
   const nowIso = () => new Date().toISOString();
   let logStream = null;
   let logFilePath = "";
+  let logStamp = "";
+  let logPart = 0;
+  let logBytes = 0;
 
   function writeConsole(level, ...args) {
     try {
@@ -75,14 +87,61 @@ function createLogger({ app, fs, path }) {
     return path.join(app.getPath("userData"), "logs");
   }
 
+  function pruneOldLogs(dir) {
+    try {
+      const entries = fs.readdirSync(dir)
+        .filter((name) => /^sekailink-.*\.log$/i.test(name))
+        .map((name) => {
+          const filePath = path.join(dir, name);
+          const stat = fs.statSync(filePath);
+          return { filePath, mtimeMs: stat.mtimeMs };
+        })
+        .sort((a, b) => b.mtimeMs - a.mtimeMs);
+      for (const entry of entries.slice(MAX_LOG_FILES)) {
+        try {
+          fs.rmSync(entry.filePath, { force: true });
+        } catch (_err) {
+          // Best-effort cleanup only.
+        }
+      }
+    } catch (_err) {
+      // Best-effort cleanup only.
+    }
+  }
+
+  function openLogStream(reason = "started") {
+    const dir = getLogsDir();
+    fs.mkdirSync(dir, { recursive: true });
+    if (!logStamp) logStamp = nowIso().replace(/[:.]/g, "-");
+    const suffix = logPart > 0 ? `-part${String(logPart + 1).padStart(2, "0")}` : "";
+    logFilePath = path.join(dir, `sekailink-${logStamp}${suffix}.log`);
+    logStream = fs.createWriteStream(logFilePath, { flags: "a" });
+    logBytes = 0;
+    const line = `[${nowIso()}] [info] logger: ${reason} path=${logFilePath}\n`;
+    logStream.write(line);
+    logBytes += Buffer.byteLength(line);
+    pruneOldLogs(dir);
+  }
+
+  function rotateLogStream() {
+    try {
+      if (logStream) {
+        logStream.write(`[${nowIso()}] [info] logger: rotating max_bytes=${MAX_LOG_FILE_BYTES}\n`);
+        logStream.end();
+      }
+    } catch (_err) {
+      // ignore
+    }
+    logStream = null;
+    logPart += 1;
+    openLogStream("rotated");
+  }
+
   function start() {
     try {
-      const dir = getLogsDir();
-      fs.mkdirSync(dir, { recursive: true });
-      const stamp = nowIso().replace(/[:.]/g, "-");
-      logFilePath = path.join(dir, `sekailink-${stamp}.log`);
-      logStream = fs.createWriteStream(logFilePath, { flags: "a" });
-      logStream.write(`[${nowIso()}] [info] logger: started path=${logFilePath}\n`);
+      logStamp = nowIso().replace(/[:.]/g, "-");
+      logPart = 0;
+      openLogStream("started");
     } catch (err) {
       logStream = null;
       logFilePath = "";
@@ -103,10 +162,16 @@ function createLogger({ app, fs, path }) {
   }
 
   function writeLine(level, scope, message) {
-    const safeMessage = scrubSecretString(message);
+    const safeMessage = truncateLogText(scrubSecretString(message));
     const line = `[${nowIso()}] [${level}] ${scope}: ${safeMessage}`;
     try {
-      if (logStream) logStream.write(line + "\n");
+      if (logStream) {
+        const payload = line + "\n";
+        const bytes = Buffer.byteLength(payload);
+        if (logBytes + bytes > MAX_LOG_FILE_BYTES) rotateLogStream();
+        logStream.write(payload);
+        logBytes += bytes;
+      }
     } catch (_err) {
       // ignore
     }
@@ -115,9 +180,15 @@ function createLogger({ app, fs, path }) {
 
   function writeJson(scope, obj) {
     const safeObj = scrubSecretsForLog(obj);
-    const line = `[${nowIso()}] [json] ${scope}: ${safeStringify(safeObj)}`;
+    const line = truncateLogText(`[${nowIso()}] [json] ${scope}: ${safeStringify(safeObj)}`);
     try {
-      if (logStream) logStream.write(line + "\n");
+      if (logStream) {
+        const payload = line + "\n";
+        const bytes = Buffer.byteLength(payload);
+        if (logBytes + bytes > MAX_LOG_FILE_BYTES) rotateLogStream();
+        logStream.write(payload);
+        logBytes += bytes;
+      }
     } catch (_err) {
       // ignore
     }

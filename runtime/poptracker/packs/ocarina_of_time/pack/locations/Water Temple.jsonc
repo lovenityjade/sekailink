@@ -1,0 +1,4587 @@
+[
+    {
+        "name": "Water Temple - hint",
+        "chest_unopened_img": "/images/items/close.png",
+        "chest_opened_img": "/images/items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "{}"
+        ],
+        "children": [
+            {
+                "name": "Compass Room - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Compass Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_compass_room_compass_chest"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_compass_room_pot_1"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_compass_room_pot_2"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_compass_room_pot_3"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": "788",
+                        "y": "497",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Map Room - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Map Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_map_room_map_chest"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": "789",
+                        "y": "631",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Cracked Wall - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_cracked_wall_chest"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": "766",
+                        "y": "976",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Torches - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_torches_chest"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": "1248",
+                        "y": "631",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Boss Key Room - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Boss Key Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_boss_key_room_boss_key_chest"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": "882",
+                        "y": "219",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Below Central Pillar - Raise Water - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_below_central_pillar_-_raise_water_chest"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": "1208",
+                        "y": "768",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Central Bow Target - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Bow Target Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_central_bow_target_bow_target_chest"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Bow Target Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_central_bow_target_bow_target_pot_1"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Bow Target Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_central_bow_target_bow_target_pot_2"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": "672",
+                        "y": "1071",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Longshot - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Longshot Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_longshot_longshot_chest"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": "165",
+                        "y": "66",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "River - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_river_chest"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "GS - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_river_gs"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Recovery Heart 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_river_recovery_heart_1"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Recovery Heart 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_river_recovery_heart_2"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Recovery Heart 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_river_recovery_heart_3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Recovery Heart 4 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_river_recovery_heart_4"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_river_pot_1"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": 323,
+                        "y": 922,
+                        "size": 22,
+                    "shape": "diamond"
+                    },
+                    {
+                        "map": "Water Temple",
+                        "x": 164,
+                        "y": 38,
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Dragon Statue - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_dragon_statue_chest"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": "756",
+                        "y": "344",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Behind Gate - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "GS - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_behind_gate_gs"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_behind_gate_pot_1"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_behind_gate_pot_2"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_behind_gate_pot_3"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 4 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_behind_gate_pot_4"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": "744",
+                        "y": "724",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Near Boss Key - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "GS - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_near_boss_key_gs"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": "887",
+                        "y": "307",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Central Pillar - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "GS - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_central_pillar_gs"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": "547",
+                        "y": "560",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Falling Platform Room - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "GS - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_falling_platform_room_gs"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": "350",
+                        "y": "545",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Boss Room - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Morpha Heart - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_boss_room_morpha_heart,_mq_water_temple_boss_room"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": "561",
+                        "y": "264",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Main Room L2 - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_main_room_l2_pot_1"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_main_room_l2_pot_2"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": "630",
+                        "y": "929",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Before Midboss - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_before_midboss_pot_1"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_before_midboss_pot_2"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": "165",
+                        "y": "392",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "North Basement Block Puzzle - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_north_basement_block_puzzle_pot_1"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_north_basement_block_puzzle_pot_2"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": "1044",
+                        "y": "95",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "L1 Torch - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_l1_torch_pot_1"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "water_temple_l1_torch_pot_2"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "Water Temple",
+                        "x": "1190",
+                        "y": "631",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "MQ Water Temple - hint",
+        "chest_unopened_img": "/images/items/close.png",
+        "chest_opened_img": "/images/items/open.png",
+        "overlay_background": "#000000",
+        "access_rules": [
+            "{}"
+        ],
+        "children": [
+            {
+                "name": "Longshot Room - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Longshot Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_longshot_room"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Water Temple",
+                        "x": "2490",
+                        "y": "1670",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Map Room - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Map Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_map_room"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Water Temple",
+                        "x": "2207",
+                        "y": "635",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Compass Room - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Compass Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_compass_room"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Water Temple",
+                        "x": "1578",
+                        "y": "1879",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Central Pillar - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_central_pillar"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Upper Crate 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_central_pillar"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Upper Crate 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_central_pillar"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_central_pillar"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_central_pillar"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_central_pillar"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 4 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_central_pillar"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 5 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_central_pillar"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 6 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_central_pillar"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 7 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_central_pillar"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 8 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_central_pillar"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 9 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_central_pillar"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 10 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_central_pillar"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 11 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_central_pillar"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 12 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_central_pillar"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 13 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_central_pillar"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 14 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_central_pillar"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Water Temple",
+                        "x": "713",
+                        "y": "762",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Boss Key Room - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Boss Key Chest - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_boss_key_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_boss_key_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Upper Crate - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_boss_key_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_boss_key_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_boss_key_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_boss_key_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 4 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_boss_key_room"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Water Temple",
+                        "x": "1731",
+                        "y": "290",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Freestanding Key - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Freestanding Key - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "GS - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate Behind Gate 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate Behind Gate 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate Behind Gate 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate Behind Gate 4 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Front Crate 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Front Crate 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Submerged Crate 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Submerged Crate 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Submerged Crate 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Submerged Crate 4 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Submerged Crate 5 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Submerged Crate 6 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate 4 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate 5 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_freestanding_key"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Water Temple",
+                        "x": "533",
+                        "y": "2460",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Lizalfos Hallway - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "GS - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_lizalfos_hallway"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_lizalfos_hallway"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_lizalfos_hallway"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_lizalfos_hallway"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Gate Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_lizalfos_hallway"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Gate Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_lizalfos_hallway"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Gate Crate 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_lizalfos_hallway"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Gate Crate 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_lizalfos_hallway"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Room Crate 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_lizalfos_hallway"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Room Crate 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_lizalfos_hallway"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Room Crate 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_lizalfos_hallway"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Room Crate 4 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_lizalfos_hallway"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Room Crate 5 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_lizalfos_hallway"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Hall Crate 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_lizalfos_hallway"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Hall Crate 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_lizalfos_hallway"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Hall Crate 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_lizalfos_hallway"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Water Temple",
+                        "x": "1349",
+                        "y": "2191",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Before Upper Water Switch - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "GS - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_before_upper_water_switch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_before_upper_water_switch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_before_upper_water_switch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_before_upper_water_switch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_before_upper_water_switch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_before_upper_water_switch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_before_upper_water_switch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 4 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_before_upper_water_switch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 5 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_before_upper_water_switch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 6 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_before_upper_water_switch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Upper Crate 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_before_upper_water_switch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Upper Crate 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_before_upper_water_switch"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Water Temple",
+                        "x": "227",
+                        "y": "2392",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "River - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "GS - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_river"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_river"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Water Temple",
+                        "x": "1874",
+                        "y": "2086",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Triple Wall Torch - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "GS - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_triple_wall_torch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_triple_wall_torch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_triple_wall_torch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_triple_wall_torch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 4 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_triple_wall_torch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Submerged Crate 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_triple_wall_torch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Submerged Crate 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_triple_wall_torch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Submerged Crate 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_triple_wall_torch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Submerged Crate 4 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_triple_wall_torch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Submerged Crate 5 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_triple_wall_torch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Submerged Crate 6 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_triple_wall_torch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate Behind Gate 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_triple_wall_torch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate Behind Gate 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_triple_wall_torch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate Behind Gate 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_triple_wall_torch"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Water Temple",
+                        "x": "1364",
+                        "y": "873",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Storage Room - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_storage_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_storage_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_storage_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_storage_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_storage_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_storage_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate 4 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_storage_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate 5 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_storage_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate 6 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_storage_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate 7 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_storage_room"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Water Temple",
+                        "x": "560",
+                        "y": "930",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Dark Link Room - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Before Top Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dark_link_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Before Top Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dark_link_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Before Lower Pot - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dark_link_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Room After Pot - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dark_link_room"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Water Temple",
+                        "x": "2360",
+                        "y": "150",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Dodongo Room - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dodongo_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dodongo_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dodongo_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dodongo_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Lower Crate 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dodongo_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Upper Crate - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dodongo_room"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Hall Crate - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dodongo_room"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Water Temple",
+                        "x": "589",
+                        "y": "220",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "L1 Torch - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Pot 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_l1_torch"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Pot 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_l1_torch"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Water Temple",
+                        "x": "2494",
+                        "y": "875",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            },
+            {
+                "name": "Dragon Statue - hint",
+                "chest_unopened_img": "/images/items/close.png",
+                "chest_opened_img": "/images/items/open.png",
+                "overlay_background": "#000000",
+                "access_rules": [
+                    "{}"
+                ],
+                "sections": [
+                    {
+                        "name": "Crate By Torches 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dragon_statue"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate By Torches 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dragon_statue"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Submerged Crate 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dragon_statue"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Submerged Crate 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dragon_statue"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Submerged Crate 3 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dragon_statue"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Submerged Crate 4 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dragon_statue"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate Near Door 1 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dragon_statue"
+                        ],
+                        "item_count": 1
+                    },
+                    {
+                        "name": "Crate Near Door 2 - hint",
+                        "access_rules": [],
+                        "visibility_rules": [
+                            "mq_water_temple_dragon_statue"
+                        ],
+                        "item_count": 1
+                    }
+                ],
+                "map_locations": [
+                    {
+                        "map": "MQ Water Temple",
+                        "x": "427",
+                        "y": "2271",
+                        "size": 22,
+                    "shape": "diamond"
+                    }
+                ]
+            }
+        ]
+    },
+  {
+      "name": "Water Temple",
+      "chest_unopened_img": "/images/Items/close.png",
+      "chest_opened_img": "/images/Items/open.png",
+      "overlay_background": "#000000",
+      "access_rules": [
+          " "
+      ],
+      "visibility_rules": [
+          "^$Visibility_helper|MQ_water_temple|true"
+      ],
+      "children": [
+          {
+              "name": "Compass Room",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Compass Chest",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Compass Chest",
+                          "^$CanReach|Adult Water Temple Compass Chest"
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 1",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Near Compass Pot 1",
+                          "^$CanReach|Adult Water Temple Near Compass Pot 1"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 2",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Near Compass Pot 2",
+                          "^$CanReach|Adult Water Temple Near Compass Pot 2"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 3",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Near Compass Pot 3",
+                          "^$CanReach|Adult Water Temple Near Compass Pot 3"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 766,
+                      "y": 475,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Map Room",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Map Chest",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Map Chest",
+                          "^$CanReach|Adult Water Temple Map Chest"
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 767,
+                      "y": 609,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Cracked Wall",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Chest",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Cracked Wall Chest",
+                          "^$CanReach|Adult Water Temple Cracked Wall Chest"
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 744,
+                      "y": 954,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Torches",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Chest",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Torches Chest",
+                          "^$CanReach|Adult Water Temple Torches Chest"
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 1226,
+                      "y": 609,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Near Boss Key",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "GS",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple GS Near Boss Key Chest",
+                          "^$CanReach|Adult Water Temple GS Near Boss Key Chest"
+                      ],
+                      "visibility_rules": [
+                          "$Show|tokensanity|1|==",
+                          "$Show|tokensanity|3"
+                      ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 865,
+                      "y": 285,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Boss Key Room",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Boss Key Chest",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Boss Key Chest",
+                          "^$CanReach|Adult Water Temple Boss Key Chest"
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 850,
+                      "y": 197,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Below Central Pillar - Raise Water",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Chest",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Central Pillar Chest",
+                          "^$CanReach|Adult Water Temple Central Pillar Chest"
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 1186,
+                      "y": 746,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Central Pillar",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "GS",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple GS Central Pillar",
+                          "^$CanReach|Adult Water Temple GS Central Pillar"
+                      ],
+                      "visibility_rules": [
+                          "$Show|tokensanity|1|==",
+                          "$Show|tokensanity|3"
+                      ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 525,
+                      "y": 538,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Central Bow Target",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Bow Target Chest",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Central Bow Target Chest",
+                          "^$CanReach|Adult Water Temple Central Bow Target Chest"
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Bow Target Pot 1",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Central Bow Target Pot 1",
+                          "^$CanReach|Adult Water Temple Central Bow Target Pot 1"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Bow Target Pot 2",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Central Bow Target Pot 2",
+                          "^$CanReach|Adult Water Temple Central Bow Target Pot 2"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 650,
+                      "y": 1049,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Longshot",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Longshot Chest",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Longshot Chest",
+                          "^$CanReach|Adult Water Temple Longshot Chest"
+                      ],
+                      "visibility_rules": [
+                        //   "$Show|tokensanity|1|==",
+                        //   "$Show|tokensanity|3"
+                      ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 143,
+                      "y": 44,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Before Midboss",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Pot 1",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Like Like Pot 1",
+                          "^$CanReach|Adult Water Temple Like Like Pot 1"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 2",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Like Like Pot 2",
+                          "^$CanReach|Adult Water Temple Like Like Pot 2"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 143,
+                      "y": 370,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "River",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Chest",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple River Chest",
+                          "^$CanReach|Adult Water Temple River Chest"
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "GS",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple GS River",
+                          "^$CanReach|Adult Water Temple GS River"
+                      ],
+                      "visibility_rules": [
+                          "$Show|tokensanity|1|==",
+                          "$Show|tokensanity|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Recovery Heart 1",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple River Recovery Heart 1",
+                          "^$CanReach|Adult Water Temple River Recovery Heart 1"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_freestanding_items|1|==",
+                          "$Show|shuffle_freestanding_items|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Recovery Heart 2",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple River Recovery Heart 2",
+                          "^$CanReach|Adult Water Temple River Recovery Heart 2"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_freestanding_items|1|==",
+                          "$Show|shuffle_freestanding_items|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Recovery Heart 3",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple River Recovery Heart 3",
+                          "^$CanReach|Adult Water Temple River Recovery Heart 3"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_freestanding_items|1|==",
+                          "$Show|shuffle_freestanding_items|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Recovery Heart 4",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple River Recovery Heart 4",
+                          "^$CanReach|Adult Water Temple River Recovery Heart 4"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_freestanding_items|1|==",
+                          "$Show|shuffle_freestanding_items|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 1",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple River Pot 1",
+                          "^$CanReach|Adult Water Temple River Pot 1"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 301,
+                      "y": 900,
+                      "size": 24
+                  },
+                  {
+                      "map": "Water Temple",
+                      "x": 142,
+                      "y": 16,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Dragon Statue",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Chest",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Dragon Chest",
+                          "^$CanReach|Adult Water Temple Dragon Chest"
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 734,
+                      "y": 322,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Behind Gate",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "GS",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple GS Behind Gate",
+                          "^$CanReach|Adult Water Temple GS Behind Gate"
+                      ],
+                      "visibility_rules": [
+                          "$Show|tokensanity|1|==",
+                          "$Show|tokensanity|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 1",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Behind Gate Pot 1",
+                          "^$CanReach|Adult Water Temple Behind Gate Pot 1"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 2",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Behind Gate Pot 2",
+                          "^$CanReach|Adult Water Temple Behind Gate Pot 2"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 3",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Behind Gate Pot 3",
+                          "^$CanReach|Adult Water Temple Behind Gate Pot 3"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 4",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Behind Gate Pot 4",
+                          "^$CanReach|Adult Water Temple Behind Gate Pot 4"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 722,
+                      "y": 702,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Falling Platform Room",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "GS",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple GS Falling Platform Room",
+                          "^$CanReach|Adult Water Temple GS Falling Platform Room"
+                      ],
+                      "visibility_rules": [
+                          "$Show|tokensanity|1|==",
+                          "$Show|tokensanity|3"
+                      ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 328,
+                      "y": 523,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Boss Room",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Morpha Heart",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Morpha Heart",
+                          "^$CanReach|Adult Water Temple Morpha Heart"
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 539,
+                      "y": 242,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Main Room L2",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Pot 1",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Main Room L2 Pot 1",
+                          "^$CanReach|Adult Water Temple Main Room L2 Pot 1"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 2",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Main Room L2 Pot 2",
+                          "^$CanReach|Adult Water Temple Main Room L2 Pot 2"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 608,
+                      "y": 907,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "North Basement Block Puzzle",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Pot 1",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple North Basement Block Puzzle Pot 1",
+                          "^$CanReach|Adult Water Temple North Basement Block Puzzle Pot 1"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 2",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple North Basement Block Puzzle Pot 2",
+                          "^$CanReach|Adult Water Temple North Basement Block Puzzle Pot 2"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 1022,
+                      "y": 73,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "L1 Torch",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Pot 1",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple L1 Torch Pot 1",
+                          "^$CanReach|Adult Water Temple L1 Torch Pot 1"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 2",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple L1 Torch Pot 2",
+                          "^$CanReach|Adult Water Temple L1 Torch Pot 2"
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 1168,
+                      "y": 609,
+                      "size": 24
+                  }
+              ]
+          }
+      ]
+  },
+  {
+      "name": "MQ Water Temple",
+      "chest_unopened_img": "/images/Items/close.png",
+      "chest_opened_img": "/images/Items/open.png",
+      "overlay_background": "#000000",
+      "access_rules": [
+          " "
+      ],
+      "visibility_rules": [
+          "^$Visibility_helper|MQ_water_temple|false"
+      ],
+      "children": [
+          {
+              "name": "Boss Room",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Morpha Heart",
+                      "access_rules": [
+                          "^$CanReach|Child Water Temple Morpha Heart",
+                          "^$CanReach|Adult Water Temple Morpha Heart"
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 537,
+                      "y": 239,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Longshot Room",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Longshot Chest",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 746,
+                      "y": 956,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Map Room",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Map Chest",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 766,
+                      "y": 609,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Compass Room",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Compass Chest",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 1222,
+                      "y": 608,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+            "name": "Central Pillar Upper",
+            "chest_unopened_img": "/images/Items/close.png",
+            "chest_opened_img": "/images/Items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                " "
+            ],
+            "sections": [
+                {
+                    "name": "Upper Crate 1",
+                    "access_rules": [
+                        "^$CanReach|Child ",
+                        "^$CanReach|Adult "
+                    ],
+                    "visibility_rules": [
+                        "$Show|shuffle_crates|1|==",
+                        "$Show|shuffle_crates|3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Upper Crate 2",
+                    "access_rules": [
+                        "^$CanReach|Child ",
+                        "^$CanReach|Adult "
+                    ],
+                    "visibility_rules": [
+                        "$Show|shuffle_crates|1|==",
+                        "$Show|shuffle_crates|3"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Water Temple",
+                    "x": 538,
+                    "y": 541,
+                    "size": 24
+                }
+            ]
+        },
+          {
+              "name": "Central Pillar",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Chest",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 3",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 4",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 5",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 6",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 7",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 8",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 9",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 10",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 11",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 12",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 13",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 14",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 1135,
+                      "y": 724,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Boss Key Room",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Boss Key Chest",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Upper Crate",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 3",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 4",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_crates|1|==",
+                          "$Show|shuffle_crates|3"
+                      ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 868,
+                      "y": 415,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+            "name": "Freestanding Key Area",
+            "chest_unopened_img": "/images/Items/close.png",
+            "chest_opened_img": "/images/Items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                " "
+            ],
+            "sections": [
+                {
+                    "name": "GS",
+                    "access_rules": [
+                        "^$CanReach|Child ",
+                        "^$CanReach|Adult "
+                    ],
+                    "visibility_rules": [
+                        "$Show|tokensanity|1|==",
+                        "$Show|tokensanity|3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Crate Behind Gate 1",
+                    "access_rules": [
+                        "^$CanReach|Child ",
+                        "^$CanReach|Adult "
+                    ],
+                    // "visibility_rules": [
+                    //     "$Show|"
+                    // ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Crate Behind Gate 2",
+                    "access_rules": [
+                        "^$CanReach|Child ",
+                        "^$CanReach|Adult "
+                    ],
+                    // "visibility_rules": [
+                    //     "$Show|"
+                    // ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Crate Behind Gate 3",
+                    "access_rules": [
+                        "^$CanReach|Child ",
+                        "^$CanReach|Adult "
+                    ],
+                    // "visibility_rules": [
+                    //     "$Show|"
+                    // ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Crate Behind Gate 4",
+                    "access_rules": [
+                        "^$CanReach|Child ",
+                        "^$CanReach|Adult "
+                    ],
+                    // "visibility_rules": [
+                    //     "$Show|"
+                    // ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Front Crate 1",
+                    "access_rules": [
+                        "^$CanReach|Child ",
+                        "^$CanReach|Adult "
+                    ],
+                    // "visibility_rules": [
+                    //     "$Show|"
+                    // ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Front Crate 2",
+                    "access_rules": [
+                        "^$CanReach|Child ",
+                        "^$CanReach|Adult "
+                    ],
+                    // "visibility_rules": [
+                    //     "$Show|"
+                    // ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Submerged Crate 1",
+                    "access_rules": [
+                        "^$CanReach|Child ",
+                        "^$CanReach|Adult "
+                    ],
+                    // "visibility_rules": [
+                    //     "$Show|"
+                    // ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Submerged Crate 2",
+                    "access_rules": [
+                        "^$CanReach|Child ",
+                        "^$CanReach|Adult "
+                    ],
+                    // "visibility_rules": [
+                    //     "$Show|"
+                    // ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Submerged Crate 3",
+                    "access_rules": [
+                        "^$CanReach|Child ",
+                        "^$CanReach|Adult "
+                    ],
+                    // "visibility_rules": [
+                    //     "$Show|"
+                    // ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Submerged Crate 4",
+                    "access_rules": [
+                        "^$CanReach|Child ",
+                        "^$CanReach|Adult "
+                    ],
+                    // "visibility_rules": [
+                    //     "$Show|"
+                    // ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Submerged Crate 5",
+                    "access_rules": [
+                        "^$CanReach|Child ",
+                        "^$CanReach|Adult "
+                    ],
+                    // "visibility_rules": [
+                    //     "$Show|"
+                    // ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Submerged Crate 6",
+                    "access_rules": [
+                        "^$CanReach|Child ",
+                        "^$CanReach|Adult "
+                    ],
+                    // "visibility_rules": [
+                    //     "$Show|"
+                    // ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Water Temple",
+                    "x": 995,
+                    "y": 238,
+                    "size": 24
+                }
+            ]
+        },
+          {
+              "name": "Freestanding Key Room",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Freestanding Key",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Crate 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Crate 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Crate 3",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Crate 4",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Crate 5",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 848,
+                      "y": 196,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Lizalfos Hallway",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "GS",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 3",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Gate Pot 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Gate Pot 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Gate Crate 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Gate Crate 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Room Crate 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Room Crate 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Room Crate 3",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Room Crate 4",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Room Crate 5",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Hall Crate 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Hall Crate 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Hall Crate 3",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 639,
+                      "y": 1004,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Before Upper Water Switch",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "GS",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 3",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 3",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 4",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 5",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 6",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Upper Crate 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Upper Crate 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 423,
+                      "y": 926,
+                      "size": 24
+                  },
+                  {
+                    "map": "Water Temple",
+                    "x": 424,
+                    "y": 607,
+                    "size": 24
+                }
+              ]
+          },
+          {
+              "name": "River",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "GS",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 166,
+                      "y": 891,
+                      "size": 24
+                  },
+                  {
+                    "map": "Water Temple",
+                    "x": 143,
+                    "y": 16,
+                    "size": 24
+                }
+              ]
+          },
+          {
+              "name": "Triple Wall Torch",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "GS",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 3",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 4",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Submerged Crate 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Submerged Crate 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Submerged Crate 3",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Submerged Crate 4",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Submerged Crate 5",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Submerged Crate 6",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Crate Behind Gate 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Crate Behind Gate 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Crate Behind Gate 3",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 812,
+                      "y": 700,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Storage Room",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Pot 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 3",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Crate 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Crate 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Crate 3",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Crate 4",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Crate 5",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Crate 6",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Crate 7",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 740,
+                      "y": 474,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Before Dark Link Room",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Before Top Pot 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Before Top Pot 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Before Lower Pot",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      "visibility_rules": [
+                          "$Show|shuffle_pots|1|==",
+                          "$Show|shuffle_pots|3"
+                      ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 139,
+                      "y": 493,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+            "name": "After Dark Link Room",
+            "chest_unopened_img": "/images/Items/close.png",
+            "chest_opened_img": "/images/Items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                " "
+            ],
+            "sections": [
+                {
+                    "name": "Room After Pot",
+                    "access_rules": [
+                        "^$CanReach|Child ",
+                        "^$CanReach|Adult "
+                    ],
+                    "visibility_rules": [
+                        "$Show|shuffle_pots|1|==",
+                        "$Show|shuffle_pots|3"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Water Temple",
+                    "x": 144,
+                    "y": 44,
+                    "size": 24
+                }
+            ]
+        },
+          {
+              "name": "Dodongo Room",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Pot 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Lower Crate 3",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Upper Crate",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Hall Crate",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 996,
+                      "y": 95,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "L1 Torch",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Pot 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Pot 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 1157,
+                      "y": 610,
+                      "size": 24
+                  }
+              ]
+          },
+          {
+              "name": "Dragon Statue",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                  " "
+              ],
+              "sections": [
+                  {
+                      "name": "Crate By Torches 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Crate By Torches 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Submerged Crate 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Submerged Crate 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Submerged Crate 3",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Submerged Crate 4",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Crate Near Door 1",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  },
+                  {
+                      "name": "Crate Near Door 2",
+                      "access_rules": [
+                          "^$CanReach|Child ",
+                          "^$CanReach|Adult "
+                      ],
+                      // "visibility_rules": [
+                      //     "$Show|"
+                      // ],
+                      "item_count": 1
+                  }
+              ],
+              "map_locations": [
+                  {
+                      "map": "Water Temple",
+                      "x": 804,
+                      "y": 322,
+                      "size": 24
+                  }
+              ]
+          }
+      ]
+  }
+]

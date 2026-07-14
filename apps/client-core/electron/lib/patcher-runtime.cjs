@@ -69,7 +69,15 @@ const createPatcherRuntime = (deps = {}) => {
     const args = [wrapperPath, "--patch", patchPath];
     if (configPath) args.push("--config", configPath);
     if (patchWorldModule) args.push("--world-module", patchWorldModule);
-    const romPath = normalizeIpcPath(options.romPath || options.rom || resolveConfiguredRomForModule(moduleId, manifest));
+    const patchExtension = path.extname(patchPath).toLowerCase();
+    const preferredRomId = patchExtension === ".apleafgreen"
+      ? "pokemon_leafgreen"
+      : patchExtension === ".apfirered"
+        ? "pokemon_firered"
+        : "";
+    const romPath = normalizeIpcPath(
+      options.romPath || options.rom || resolveConfiguredRomForModule(moduleId, manifest, preferredRomId)
+    );
     if (romPath) args.push("--rom", romPath);
     args.push("--out-dir", options.outDir || romDir);
   

@@ -4,10 +4,54 @@
 #include <backends/imgui_impl_sdl2.h>
 #include <imgui.h>
 
+#include <array>
+#include <filesystem>
+
 namespace sekaiemu::spike {
 namespace {
 
 SekaiemuImGuiRuntime* g_active_runtime = nullptr;
+
+bool IsGameControllerEvent(const SDL_Event& event) {
+  switch (event.type) {
+    case SDL_CONTROLLERDEVICEADDED:
+    case SDL_CONTROLLERDEVICEREMOVED:
+    case SDL_CONTROLLERBUTTONDOWN:
+    case SDL_CONTROLLERBUTTONUP:
+    case SDL_CONTROLLERAXISMOTION:
+    case SDL_JOYDEVICEADDED:
+    case SDL_JOYDEVICEREMOVED:
+    case SDL_JOYBUTTONDOWN:
+    case SDL_JOYBUTTONUP:
+    case SDL_JOYAXISMOTION:
+    case SDL_JOYHATMOTION:
+      return true;
+    default:
+      return false;
+  }
+}
+
+void LoadSekaiemuFonts() {
+  ImGuiIO& io = ImGui::GetIO();
+  const std::array<const char*, 8> candidates{{
+      "apps/client-core/public/assets/fonts/Inter-SemiBold.ttf",
+      "apps/client-core/dist/assets/fonts/Inter-SemiBold.ttf",
+      "apps/client-core/public/assets/fonts/Inter-Medium.ttf",
+      "third_party/imgui/misc/fonts/Roboto-Medium.ttf",
+      "runtime/poptracker/assets/DejaVuSans-Bold.ttf",
+      "<local-home>/SekaiLink/canonical/apps/client-core/public/assets/fonts/Inter-SemiBold.ttf",
+      "<local-home>/.fonts/Roboto-Medium.ttf",
+      "/usr/share/fonts/google-noto/NotoSans-SemiBold.ttf",
+  }};
+
+  for (const char* path : candidates) {
+    if (path != nullptr && std::filesystem::exists(path)) {
+      io.Fonts->AddFontFromFileTTF(path, 17.0f);
+      return;
+    }
+  }
+  io.FontGlobalScale = 1.02f;
+}
 
 }  // namespace
 
@@ -18,42 +62,50 @@ SekaiemuImGuiRuntime::~SekaiemuImGuiRuntime() {
 void ApplySekaiemuImGuiStyle() {
   ImGui::StyleColorsDark();
   ImGuiStyle& style = ImGui::GetStyle();
-  style.WindowRounding = 8.0f;
-  style.ChildRounding = 6.0f;
-  style.FrameRounding = 6.0f;
-  style.PopupRounding = 6.0f;
+  style.WindowRounding = 10.0f;
+  style.ChildRounding = 10.0f;
+  style.FrameRounding = 8.0f;
+  style.PopupRounding = 8.0f;
   style.ScrollbarRounding = 8.0f;
   style.GrabRounding = 6.0f;
   style.WindowBorderSize = 1.0f;
+  style.ChildBorderSize = 1.0f;
   style.FrameBorderSize = 0.0f;
-  style.WindowPadding = ImVec2(14.0f, 12.0f);
-  style.FramePadding = ImVec2(10.0f, 7.0f);
-  style.ItemSpacing = ImVec2(10.0f, 8.0f);
+  style.Alpha = 0.98f;
+  style.WindowPadding = ImVec2(15.0f, 15.0f);
+  style.FramePadding = ImVec2(8.0f, 5.0f);
+  style.ItemSpacing = ImVec2(11.0f, 11.0f);
   style.ItemInnerSpacing = ImVec2(8.0f, 6.0f);
+  style.WindowTitleAlign = ImVec2(0.02f, 0.50f);
 
   ImVec4* colors = style.Colors;
-  colors[ImGuiCol_Text] = ImVec4(0.93f, 0.97f, 0.98f, 1.00f);
-  colors[ImGuiCol_TextDisabled] = ImVec4(0.48f, 0.55f, 0.58f, 1.00f);
-  colors[ImGuiCol_WindowBg] = ImVec4(0.03f, 0.05f, 0.08f, 0.96f);
-  colors[ImGuiCol_ChildBg] = ImVec4(0.06f, 0.08f, 0.11f, 0.92f);
-  colors[ImGuiCol_PopupBg] = ImVec4(0.04f, 0.06f, 0.09f, 0.98f);
-  colors[ImGuiCol_Border] = ImVec4(0.18f, 0.30f, 0.33f, 0.78f);
-  colors[ImGuiCol_FrameBg] = ImVec4(0.10f, 0.15f, 0.18f, 0.90f);
-  colors[ImGuiCol_FrameBgHovered] = ImVec4(0.18f, 0.34f, 0.35f, 0.90f);
-  colors[ImGuiCol_FrameBgActive] = ImVec4(0.28f, 0.80f, 0.74f, 0.88f);
-  colors[ImGuiCol_TitleBg] = ImVec4(0.04f, 0.06f, 0.09f, 1.00f);
-  colors[ImGuiCol_TitleBgActive] = ImVec4(0.08f, 0.13f, 0.17f, 1.00f);
-  colors[ImGuiCol_CheckMark] = ImVec4(0.31f, 0.80f, 0.77f, 1.00f);
-  colors[ImGuiCol_SliderGrab] = ImVec4(0.31f, 0.80f, 0.77f, 0.90f);
-  colors[ImGuiCol_Button] = ImVec4(0.13f, 0.20f, 0.24f, 0.94f);
-  colors[ImGuiCol_ButtonHovered] = ImVec4(0.92f, 0.38f, 0.22f, 0.90f);
-  colors[ImGuiCol_ButtonActive] = ImVec4(0.31f, 0.80f, 0.77f, 1.00f);
-  colors[ImGuiCol_Header] = ImVec4(0.13f, 0.25f, 0.28f, 0.85f);
-  colors[ImGuiCol_HeaderHovered] = ImVec4(0.22f, 0.48f, 0.47f, 0.88f);
-  colors[ImGuiCol_HeaderActive] = ImVec4(0.31f, 0.80f, 0.77f, 0.95f);
-  colors[ImGuiCol_Tab] = ImVec4(0.09f, 0.13f, 0.16f, 1.00f);
-  colors[ImGuiCol_TabHovered] = ImVec4(0.92f, 0.38f, 0.22f, 0.92f);
-  colors[ImGuiCol_TabActive] = ImVec4(0.14f, 0.31f, 0.33f, 1.00f);
+  colors[ImGuiCol_Text] = ImVec4(0.937f, 0.992f, 1.000f, 1.000f);
+  colors[ImGuiCol_TextDisabled] = ImVec4(0.596f, 0.776f, 0.824f, 1.000f);
+  colors[ImGuiCol_WindowBg] = ImVec4(0.027f, 0.082f, 0.118f, 1.000f);
+  colors[ImGuiCol_ChildBg] = ImVec4(0.071f, 0.149f, 0.204f, 1.000f);
+  colors[ImGuiCol_PopupBg] = ImVec4(0.094f, 0.204f, 0.271f, 1.000f);
+  colors[ImGuiCol_Border] = ImVec4(0.184f, 0.384f, 0.467f, 1.000f);
+  colors[ImGuiCol_FrameBg] = ImVec4(0.071f, 0.149f, 0.204f, 1.000f);
+  colors[ImGuiCol_FrameBgHovered] = ImVec4(0.129f, 0.282f, 0.357f, 1.000f);
+  colors[ImGuiCol_FrameBgActive] = ImVec4(0.055f, 0.455f, 0.565f, 1.000f);
+  colors[ImGuiCol_TitleBg] = ImVec4(0.027f, 0.082f, 0.118f, 1.000f);
+  colors[ImGuiCol_TitleBgActive] = ImVec4(0.047f, 0.145f, 0.200f, 1.000f);
+  colors[ImGuiCol_CheckMark] = ImVec4(0.133f, 0.827f, 0.933f, 1.000f);
+  colors[ImGuiCol_SliderGrab] = ImVec4(0.133f, 0.827f, 0.933f, 0.950f);
+  colors[ImGuiCol_SliderGrabActive] = ImVec4(0.210f, 0.900f, 0.980f, 1.000f);
+  colors[ImGuiCol_Button] = ImVec4(0.333f, 0.388f, 0.400f, 0.960f);
+  colors[ImGuiCol_ButtonHovered] = ImVec4(0.133f, 0.827f, 0.933f, 1.000f);
+  colors[ImGuiCol_ButtonActive] = ImVec4(0.055f, 0.455f, 0.565f, 1.000f);
+  colors[ImGuiCol_Header] = ImVec4(0.129f, 0.282f, 0.357f, 0.900f);
+  colors[ImGuiCol_HeaderHovered] = ImVec4(0.133f, 0.827f, 0.933f, 0.550f);
+  colors[ImGuiCol_HeaderActive] = ImVec4(0.133f, 0.827f, 0.933f, 0.900f);
+  colors[ImGuiCol_Separator] = ImVec4(0.184f, 0.384f, 0.467f, 0.900f);
+  colors[ImGuiCol_Tab] = ImVec4(0.027f, 0.082f, 0.118f, 1.000f);
+  colors[ImGuiCol_TabHovered] = ImVec4(0.133f, 0.827f, 0.933f, 0.520f);
+  colors[ImGuiCol_TabActive] = ImVec4(0.071f, 0.541f, 0.640f, 1.000f);
+  colors[ImGuiCol_ScrollbarBg] = ImVec4(0.027f, 0.082f, 0.118f, 0.880f);
+  colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.184f, 0.384f, 0.467f, 0.900f);
+  colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.133f, 0.827f, 0.933f, 0.600f);
 }
 
 bool SekaiemuImGuiRuntime::Initialize(SDL_Window* window, SDL_GLContext gl_context, std::string& error) {
@@ -69,7 +121,7 @@ bool SekaiemuImGuiRuntime::Initialize(SDL_Window* window, SDL_GLContext gl_conte
   ImGui::CreateContext();
   ImGuiIO& io = ImGui::GetIO();
   io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-  io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+  LoadSekaiemuFonts();
   ApplySekaiemuImGuiStyle();
 
   if (!ImGui_ImplSDL2_InitForOpenGL(window, gl_context)) {
@@ -89,7 +141,7 @@ bool SekaiemuImGuiRuntime::Initialize(SDL_Window* window, SDL_GLContext gl_conte
 }
 
 void SekaiemuImGuiRuntime::ProcessEvent(const SDL_Event& event) {
-  if (active_) {
+  if (active_ && !IsGameControllerEvent(event)) {
     ImGui_ImplSDL2_ProcessEvent(&event);
   }
 }

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <system_error>
+#include <unordered_set>
 #include <vector>
 
 #include <nlohmann/json.hpp>
@@ -18,6 +19,79 @@ std::string TrimCopy(std::string value) {
   }
   const auto last = value.find_last_not_of(" \t\r\n");
   return value.substr(first, last - first + 1);
+}
+
+std::vector<std::string> SplitStateValue(std::string_view value) {
+  std::vector<std::string> parts;
+  std::string part;
+  std::istringstream input{std::string(value)};
+  while (std::getline(input, part, '|')) {
+    parts.push_back(part);
+  }
+  return parts;
+}
+
+std::string RoomStatePendingItemLabel(std::string_view value) {
+  const auto parts = SplitStateValue(value);
+  if (parts.size() < 4) {
+    return {};
+  }
+  if (parts.size() >= 6) {
+    return TrimCopy(parts[5]);
+  }
+  if (parts.size() == 5) {
+    return TrimCopy(parts[4]);
+  }
+  return {};
+}
+
+std::string NormalizeItemDisplayName(std::string value) {
+  value = TrimCopy(std::move(value));
+  if (value == "Book" || value == "book") {
+    return "Book of Mudora";
+  }
+  if (value == "Fire" || value == "fire") {
+    return "Fire Rod";
+  }
+  if (value == "Ice" || value == "ice") {
+    return "Ice Rod";
+  }
+  if (value == "Small" || value == "small") {
+    return "Small Key";
+  }
+  return value;
+}
+
+bool IsGenericItemDisplayName(std::string_view value) {
+  const auto clean = TrimCopy(std::string(value));
+  return clean == "Small" || clean == "small" || clean == "Small Key" || clean == "small key" || clean == "Key" ||
+         clean == "key" || clean == "Big Key" || clean == "big key" || clean == "Map" || clean == "map" ||
+         clean == "Compass" || clean == "compass";
+}
+
+std::string BestItemDisplayName(std::initializer_list<std::string> values) {
+  std::string fallback;
+  for (const auto& value : values) {
+    auto clean = NormalizeItemDisplayName(value);
+    if (clean.empty() || clean == "-" || clean == "None") {
+      continue;
+    }
+    if (fallback.empty()) {
+      fallback = clean;
+    }
+    if (!IsGenericItemDisplayName(clean)) {
+      return clean;
+    }
+  }
+  return fallback;
+}
+
+std::string RoomStatePendingItemSender(std::string_view value) {
+  const auto parts = SplitStateValue(value);
+  if (parts.size() >= 6 && !TrimCopy(parts[4]).empty()) {
+    return "Player " + TrimCopy(parts[4]);
+  }
+  return "Sekailink";
 }
 
 std::unordered_map<std::string, std::string> ParseKeyValueDetail(std::string_view detail) {
@@ -37,6 +111,181 @@ std::unordered_map<std::string, std::string> ParseKeyValueDetail(std::string_vie
     fields[std::move(key)] = std::move(value);
   }
   return fields;
+}
+
+std::string DetailField(std::string_view detail,
+                        std::string_view key,
+                        std::initializer_list<std::string_view> known_keys) {
+  const auto text = std::string(detail);
+  const auto marker = std::string(key) + "=";
+  const auto start = text.find(marker);
+  if (start == std::string::npos) {
+    return {};
+  }
+  const auto value_start = start + marker.size();
+  auto value_end = text.size();
+  for (const auto next_key : known_keys) {
+    if (next_key == key) {
+      continue;
+    }
+    const auto next_marker = " " + std::string(next_key) + "=";
+    const auto next = text.find(next_marker, value_start);
+    if (next != std::string::npos) {
+      value_end = std::min(value_end, next);
+    }
+  }
+  return TrimCopy(text.substr(value_start, value_end - value_start));
+}
+
+std::string JsonStringField(const nlohmann::json& value,
+                            std::initializer_list<const char*> keys) {
+  if (!value.is_object()) {
+    return {};
+  }
+  for (const char* key : keys) {
+    const auto found = value.find(key);
+    if (found != value.end() && found->is_string()) {
+      const auto clean = TrimCopy(found->get<std::string>());
+      if (!clean.empty()) {
+        return clean;
+      }
+    }
+  }
+  return {};
+}
+
+std::string SnapshotStringField(const nlohmann::json& snapshot,
+                                std::initializer_list<const char*> keys) {
+  if (!snapshot.is_object()) {
+    return {};
+  }
+  for (const char* key : keys) {
+    const auto found = snapshot.find(key);
+    if (found != snapshot.end() && found->is_string()) {
+      const auto clean = TrimCopy(found->get<std::string>());
+      if (!clean.empty()) {
+        return clean;
+      }
+    }
+  }
+  if (const auto metadata = snapshot.find("room_metadata");
+      metadata != snapshot.end() && metadata->is_object()) {
+    return SnapshotStringField(*metadata, keys);
+  }
+  return {};
+}
+
+std::uint64_t NextSyntheticActivityMessageId() {
+  static std::uint64_t next = 2000000000000ULL;
+  return next++;
+}
+
+void AppendActivityMessage(TrackerRuntime& tracker_runtime,
+                           const std::string& kind,
+                           const std::string& text,
+                           const nlohmann::json& source_event) {
+  const auto clean_text = TrimCopy(text);
+  if (kind.empty() || clean_text.empty()) {
+    return;
+  }
+
+  auto snapshot = tracker_runtime.AuthoritativeState().snapshot;
+  if (!snapshot.is_object()) {
+    snapshot = nlohmann::json::object();
+  }
+  if (!snapshot.contains("chat_messages") || !snapshot["chat_messages"].is_array()) {
+    snapshot["chat_messages"] = nlohmann::json::array();
+  }
+
+  nlohmann::json message{
+      {"id", NextSyntheticActivityMessageId()},
+      {"kind", kind},
+      {"author", "SEKAILINK"},
+      {"text", clean_text},
+      {"source", "sklmi_runtime"},
+  };
+  if (source_event.contains("event_type")) {
+    message["event_type"] = source_event["event_type"];
+  }
+  if (source_event.contains("canonical_id")) {
+    message["canonical_id"] = source_event["canonical_id"];
+  }
+  if (source_event.contains("key")) {
+    message["key"] = source_event["key"];
+  }
+  if (source_event.contains("tick_index")) {
+    message["tick_index"] = source_event["tick_index"];
+  }
+  snapshot["chat_messages"].push_back(std::move(message));
+
+  if (kind == "queued-item") {
+    if (!snapshot.contains("pending_received_items") || !snapshot["pending_received_items"].is_array()) {
+      snapshot["pending_received_items"] = nlohmann::json::array();
+    }
+    nlohmann::json pending_item{
+        {"id", NextSyntheticActivityMessageId()},
+        {"text", clean_text},
+        {"source", "sklmi_runtime"},
+    };
+    if (source_event.contains("key")) {
+      pending_item["key"] = source_event["key"];
+    }
+    if (source_event.contains("canonical_id")) {
+      pending_item["canonical_id"] = source_event["canonical_id"];
+    }
+    snapshot["pending_received_items"].push_back(std::move(pending_item));
+    constexpr std::size_t kMaxPendingReceivedItems = 128;
+    auto& pending = snapshot["pending_received_items"];
+    if (pending.size() > kMaxPendingReceivedItems) {
+      pending.erase(pending.begin(),
+                    pending.begin() +
+                        static_cast<nlohmann::json::difference_type>(pending.size() - kMaxPendingReceivedItems));
+    }
+  }
+
+  constexpr std::size_t kMaxActivityMessages = 96;
+  auto& messages = snapshot["chat_messages"];
+  if (messages.size() > kMaxActivityMessages) {
+    messages.erase(messages.begin(),
+                   messages.begin() +
+                       static_cast<nlohmann::json::difference_type>(messages.size() - kMaxActivityMessages));
+  }
+
+  tracker_runtime.ApplyServerSnapshot(snapshot);
+}
+
+void AppendActivityForSklmiEvent(TrackerRuntime& tracker_runtime,
+                                 const nlohmann::json& event) {
+  const auto event_type = JsonStringField(event, {"event_type", "eventType", "type"});
+  if (event_type.empty() || event_type == "map_changed" || event_type == "slot_connected") {
+    return;
+  }
+
+  if (event_type == "item_received") {
+    const auto item = BestItemDisplayName({
+        JsonStringField(event, {"mapped_value", "mappedValue"}),
+        JsonStringField(event, {"label", "item_name", "itemName", "value"}),
+    });
+    if (!item.empty()) {
+      std::string sender = "Sekailink";
+      if (event.contains("player_number") && event["player_number"].is_number_unsigned()) {
+        sender = "Player " + std::to_string(event["player_number"].get<std::uint64_t>());
+      } else if (event.contains("player_number") && event["player_number"].is_number_integer()) {
+        sender = "Player " + std::to_string(event["player_number"].get<std::int64_t>());
+      }
+      AppendActivityMessage(tracker_runtime, "queued-item", sender + " sent you " + item, event);
+    }
+    return;
+  }
+
+  if (event_type == "trace") {
+    auto kind = JsonStringField(event, {"key"});
+    auto text = JsonStringField(event, {"value"});
+    if (kind == "item" || kind == "hint" || kind == "connection" || kind == "defeat") {
+      AppendActivityMessage(tracker_runtime, kind, text, event);
+    }
+    return;
+  }
 }
 
 void AssignRoomMetadataValue(nlohmann::json& room_metadata,
@@ -119,9 +368,23 @@ bool PumpTrackerRoomMetadata(const std::filesystem::path& room_state_path,
   std::string room_name;
   std::string room_type;
   std::string session_id;
+  std::vector<std::pair<std::string, std::string>> pending_room_items;
 
   std::string line;
   while (std::getline(input, line)) {
+    if (line.rfind("pending|", 0) == 0) {
+      const auto first = line.find('|');
+      const auto second = first == std::string::npos ? std::string::npos : line.find('|', first + 1);
+      if (second != std::string::npos) {
+        const auto delivery_id = TrimCopy(line.substr(first + 1, second - first - 1));
+        const auto value = TrimCopy(line.substr(second + 1));
+        const auto item_label = NormalizeItemDisplayName(RoomStatePendingItemLabel(value));
+        if (!delivery_id.empty() && !item_label.empty()) {
+          pending_room_items.emplace_back(delivery_id, RoomStatePendingItemSender(value) + " sent you " + item_label);
+        }
+      }
+      continue;
+    }
     if (line.rfind("meta|", 0) != 0) {
       continue;
     }
@@ -256,8 +519,23 @@ bool PumpTrackerRoomMetadata(const std::filesystem::path& room_state_path,
     }
   }
 
+  if (!pending_room_items.empty()) {
+    std::unordered_set<std::string> emitted;
+    nlohmann::json source_event{
+        {"event_type", "item_received"},
+        {"source", "room_state_pending"},
+    };
+    for (const auto& [delivery_id, text] : pending_room_items) {
+      if (text.empty() || !emitted.insert(delivery_id + "\x1f" + text).second) {
+        continue;
+      }
+      source_event["key"] = delivery_id;
+      AppendActivityMessage(tracker_runtime, "queued-item", text, source_event);
+    }
+  }
+
   last_write_time = write_time;
-  return !snapshot.empty();
+  return !snapshot.empty() || !pending_room_items.empty();
 }
 
 bool PumpTrackerTraceEvents(const std::filesystem::path& trace_path,
@@ -321,6 +599,7 @@ bool PumpTrackerTraceEvents(const std::filesystem::path& trace_path,
           }
         }
         tracker_runtime.ApplySklmiEvent(tracker_event);
+        AppendActivityForSklmiEvent(tracker_runtime, tracker_event);
         if (event_type == "slot_connected") {
           nlohmann::json snapshot = nlohmann::json::object();
           const auto linkedworld_id = tracker_event.value("linkedworld_id", std::string{});
@@ -351,16 +630,43 @@ bool PumpTrackerTraceEvents(const std::filesystem::path& trace_path,
         const auto detail = record.value("detail", std::string{});
         nlohmann::json snapshot = nlohmann::json::object();
         if (event == "room_item_pending") {
+          const std::initializer_list<std::string_view> kRoomItemKeys{
+              "delivery_id",
+              "ap_item_id",
+              "ap_location_id",
+              "ap_player_id",
+              "item_name",
+              "event_key",
+              "mapped_value",
+          };
           const auto fields = ParseKeyValueDetail(detail);
-          const auto item_name_it = fields.find("item_name");
-          if (item_name_it != fields.end() && !item_name_it->second.empty() &&
-              item_name_it->second != "None") {
+          const auto item_name = BestItemDisplayName({
+              DetailField(detail, "mapped_value", kRoomItemKeys),
+              DetailField(detail, "item_name", kRoomItemKeys),
+              DetailField(detail, "event_key", kRoomItemKeys),
+          });
+          if (!item_name.empty() && item_name != "None") {
             for (const char* key_name : {"event_key", "mapped_value", "ap_item_id", "delivery_id"}) {
               const auto key_it = fields.find(key_name);
               if (key_it != fields.end() && !key_it->second.empty()) {
-                item_label_by_key[key_it->second] = item_name_it->second;
+                item_label_by_key[key_it->second] = item_name;
               }
             }
+            const auto delivery_id = DetailField(detail, "delivery_id", kRoomItemKeys);
+            const auto sender_id = DetailField(detail, "ap_player_id", kRoomItemKeys);
+            nlohmann::json source_event{
+                {"event_type", "item_received"},
+                {"source", "room_item_pending"},
+            };
+            if (!delivery_id.empty()) {
+              source_event["key"] = delivery_id;
+            }
+            if (!sender_id.empty()) {
+              source_event["player_number"] = sender_id;
+            }
+            const auto sender = sender_id.empty() ? std::string{"Sekailink"} : "Player " + sender_id;
+            AppendActivityMessage(tracker_runtime, "queued-item", sender + " sent you " + item_name, source_event);
+            changed = true;
           }
         } else if (event == "room_client_ready") {
           const auto fields = ParseKeyValueDetail(detail);
@@ -370,6 +676,16 @@ bool PumpTrackerTraceEvents(const std::filesystem::path& trace_path,
           }
           if (const auto it = fields.find("slot_id"); it != fields.end()) {
             snapshot["slot_id"] = it->second;
+          }
+          if (const auto it = fields.find("ap_slot_name"); it != fields.end()) {
+            snapshot["slot_name"] = it->second;
+          }
+          if (const auto it = fields.find("player_alias"); it != fields.end()) {
+            snapshot["player_alias"] = it->second;
+            snapshot["player_display_name"] = it->second;
+          }
+          if (const auto it = fields.find("ap_game"); it != fields.end()) {
+            snapshot["game"] = it->second;
           }
         } else if (event == "room_metadata_ready") {
           const auto fields = ParseKeyValueDetail(detail);
@@ -410,6 +726,12 @@ bool PumpTrackerTraceEvents(const std::filesystem::path& trace_path,
     trace_offset = file_size;
   }
   return changed;
+}
+
+void AppendTrackerActivityMessage(TrackerRuntime& tracker_runtime,
+                                  const std::string& kind,
+                                  const std::string& text) {
+  AppendActivityMessage(tracker_runtime, kind, text, nlohmann::json::object());
 }
 
 }  // namespace sekaiemu::spike

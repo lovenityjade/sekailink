@@ -19,8 +19,10 @@ int main() {
   if (store.Values().settings_mode != RuntimeSettingsMode::Easy ||
       !store.Values().chat_overlay_enabled ||
       !store.Values().notifications_enabled ||
+      store.Values().activity_feed_enabled ||
       store.Values().bridge_terminal_enabled ||
-      store.Values().master_volume_percent != 50 ||
+      store.Values().background_gamepad_input ||
+      store.Values().master_volume_percent != 35 ||
       store.Values().tracker_display_mode != TrackerDisplayMode::SplitScreen ||
       !store.Values().tracker_screen_visible ||
       !store.Values().tracker_auto_follow) {
@@ -31,7 +33,9 @@ int main() {
   store.SetSettingsMode(RuntimeSettingsMode::Advanced);
   store.SetChatOverlayEnabled(false);
   store.SetNotificationsEnabled(false);
+  store.SetActivityFeedEnabled(true);
   store.SetBridgeTerminalEnabled(true);
+  store.SetBackgroundGamepadInput(true);
   store.SetMasterVolumePercent(65);
   store.SetTrackerDisplayMode(TrackerDisplayMode::ToggleScreen);
   store.SetTrackerScreenVisible(false);
@@ -47,7 +51,9 @@ int main() {
   if (loaded.Values().settings_mode != RuntimeSettingsMode::Advanced ||
       loaded.Values().chat_overlay_enabled ||
       loaded.Values().notifications_enabled ||
+      !loaded.Values().activity_feed_enabled ||
       !loaded.Values().bridge_terminal_enabled ||
+      !loaded.Values().background_gamepad_input ||
       loaded.Values().master_volume_percent != 65 ||
       loaded.Values().tracker_display_mode != TrackerDisplayMode::ToggleScreen ||
       loaded.Values().tracker_screen_visible ||
@@ -62,7 +68,9 @@ int main() {
     stream << "menu_mode=simple\n";
     stream << "chat_overlay=on\n";
     stream << "notification=on\n";
+    stream << "activity_feed=off\n";
     stream << "bridge_terminal=off\n";
+    stream << "system_wide_gamepad_input=on\n";
     stream << "volume=999\n";
     stream << "tracker_display=separate\n";
     stream << "tracker_screen=off\n";
@@ -73,7 +81,9 @@ int main() {
   if (aliased.Values().settings_mode != RuntimeSettingsMode::Easy ||
       !aliased.Values().chat_overlay_enabled ||
       !aliased.Values().notifications_enabled ||
+      aliased.Values().activity_feed_enabled ||
       aliased.Values().bridge_terminal_enabled ||
+      !aliased.Values().background_gamepad_input ||
       aliased.Values().master_volume_percent != 150 ||
       aliased.Values().tracker_display_mode != TrackerDisplayMode::SeparateWindow ||
       aliased.Values().tracker_screen_visible ||

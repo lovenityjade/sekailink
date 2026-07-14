@@ -9,6 +9,7 @@ const createRuntimeShutdown = (deps = {}) => {
     stopRetroarchMemoryBridge,
     stopAllWebApClients,
     stopBizHawkClientForCoupling,
+    stopSniBridge,
     sendPopTrackerRuntimeCommand,
     terminateChildProcess,
     purgeStaleSniBridgePortHolders,
@@ -47,7 +48,43 @@ const createRuntimeShutdown = (deps = {}) => {
           await terminateChildProcess(proc, "bizhawk", { graceMs: 1100 });
           bizhawkProcs.delete(otherPid);
         }
+        if (typeof stopAllWebApClients === "function") {
+          await stopAllWebApClients().catch((err) => {
+            writeLogLine("warn", "runtime-coupling", `web AP cleanup failed: ${String(err || "")}`);
+          });
+        }
+        for (const clientId of Array.from(archipelagoClientProcs.keys())) {
+          await stopArchipelagoClient(clientId).catch((err) => {
+            writeLogLine("warn", "runtime-coupling", `AP client cleanup failed client=${clientId}: ${String(err || "")}`);
+          });
+        }
+        for (const clientId of Array.from(retroarchMemoryBridgeProcs.keys())) {
+          await stopRetroarchMemoryBridge(clientId).catch((err) => {
+            writeLogLine("warn", "runtime-coupling", `memory bridge cleanup failed client=${clientId}: ${String(err || "")}`);
+          });
+        }
+        for (const [otherPid, proc] of Array.from(nativeGameProcs.entries())) {
+          if (Number(otherPid) === Number(pid)) continue;
+          await terminateChildProcess(proc, "native", { graceMs: 900 }).catch((err) => {
+            writeLogLine("warn", "runtime-coupling", `native cleanup failed pid=${otherPid}: ${String(err || "")}`);
+          });
+          nativeGameProcs.delete(otherPid);
+        }
+        for (const [otherPid, bridge] of Array.from(sekaiemuChatBridges.entries())) {
+          try {
+            bridge?.stop?.();
+          } catch (_err) {}
+          sekaiemuChatBridges.delete(otherPid);
+        }
+        if (typeof stopSniBridge === "function") {
+          await stopSniBridge().catch((err) => {
+            writeLogLine("warn", "runtime-coupling", `SNI bridge cleanup failed: ${String(err || "")}`);
+          });
+        }
         await stopBizHawkClientForCoupling();
+        await purgeStaleSniBridgePortHolders(23074, 0).catch((err) => {
+          writeLogLine("warn", "runtime-coupling", `stale SNI purge failed: ${String(err || "")}`);
+        });
       } catch (err) {
         writeLogLine("warn", "runtime-coupling", `teardown failed: ${String(err || "")}`);
       } finally {

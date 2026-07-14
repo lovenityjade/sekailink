@@ -1,0 +1,152 @@
+{
+    "key_layouts_d0": {
+    "type": "itemgrid",
+    "dock": "left",
+    "item_margin": "-6,-3",
+    "item_size": 18,
+    "rows": [
+      [
+        "",
+        "",
+        "pathkey",
+        "",
+        ""
+      ]
+    ]
+  },
+  "key_layouts_d1": {
+    "type": "itemgrid",
+    "dock": "left",
+    "item_margin": "-6,-3",
+    "item_size": 18,
+    "rows": [
+      [
+        "d1sk",
+        "",
+        "",
+        "",
+        "d1bk"
+      ]
+    ]
+  },
+  "key_layouts_d2": {
+    "type": "itemgrid",
+    "dock": "left",
+    "item_margin": "-6,-3",
+    "item_size": 18,
+    "rows": [
+      [
+        "d2sk",
+        "",
+        "",
+        "",
+        "d2bk"
+      ]
+    ]
+  },
+  "key_layouts_d3": {
+    "type": "itemgrid",
+    "dock": "left",
+    "item_margin": "-6,-3",
+    "item_size": 18,
+    "rows": [
+      [
+        "d3sk",
+        "",
+        "",
+        "",
+        "d3bk"
+      ]
+    ]
+  },
+  "key_layouts_d4": {
+    "type": "itemgrid",
+    "dock": "left",
+    "item_margin": "-6,-3",
+    "item_size": 18,
+    "rows": [
+      [
+        "d4sk",
+        "",
+        "",
+        "",
+        "d4bk"
+      ]
+    ]
+  },
+  "key_layouts_d5": {
+    "type": "itemgrid",
+    "dock": "left",
+    "item_margin": "-6,-3",
+    "item_size": 18,
+    "rows": [
+      [
+        "d5sk",
+        "",
+        "",
+        "",
+        "d5bk"
+      ]
+    ]
+  },
+  "key_layouts_d6": {
+    "type": "itemgrid",
+    "dock": "left",
+    "item_margin": "-6,-3",
+    "item_size": 18,
+    "rows": [
+      [
+        "d6_1sk",
+        "",
+        "d6_2sk",
+        "",
+        "d6bk"
+      ]
+    ]
+  },
+  "key_layouts_d7": {
+    "type": "itemgrid",
+    "dock": "left",
+    "item_margin": "-6,-3",
+    "item_size": 18,
+    "rows": [
+      [
+        "d7sk",
+        "",
+        "",
+        "",
+        "d7bk"
+      ]
+    ]
+  },
+  "key_layouts_d8": {
+    "type": "itemgrid",
+    "dock": "left",
+    "item_margin": "-6,-3",
+    "item_size": 18,
+    "rows": [
+      [
+        "d8sk",
+        "",
+        "d8bk",
+        "",
+        "d8slate"
+      ]
+    ]
+  },
+    "key_layouts_d11": {
+    "type": "itemgrid",
+    "dock": "left",
+    "item_margin": "-6,-3",
+    "item_size": 18,
+    "rows": [
+      [
+        "",
+        "",
+        "d11sk",
+        "",
+        ""
+      ]
+    ]
+  }
+}

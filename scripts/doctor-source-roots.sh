@@ -4,12 +4,12 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 blocked_patterns=(
-  "/home/thelovenityjade/Projects/Sekaiemu-Libretro-Spike-Codex"
-  "/home/thelovenityjade/DevSSD/sekailink-beta-3-final"
-  "/home/thelovenityjade/DevSSD/sekailink-canonical"
-  "/home/thelovenityjade/DevSSD/_sekailink_quarantine"
-  "/home/thelovenityjade/DevSSD/sekailink-legacy-quarantine-2026-05-17"
-  "/home/thelovenityjade/SekaiLinkDev"
+  "<local-home>/Projects/Sekaiemu-Libretro-Spike-Codex"
+  "<local-home>/DevSSD/sekailink-beta-3-final"
+  "<local-home>/DevSSD/sekailink-canonical"
+  "<local-home>/DevSSD/_sekailink_quarantine"
+  "<local-home>/DevSSD/sekailink-legacy-quarantine-2026-05-17"
+  "<local-home>/SekaiLinkDev"
 )
 
 status=0

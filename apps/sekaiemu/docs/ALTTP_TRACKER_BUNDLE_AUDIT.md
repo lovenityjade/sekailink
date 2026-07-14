@@ -4,7 +4,7 @@ Date: 2026-05-21
 
 Bundle audited:
 
-`/home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.bundle`
+`<local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.bundle`
 
 ## Snapshot
 

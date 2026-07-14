@@ -1,4 +1,4 @@
-# SekaiLink Bug Report Payload v1
+# SekaiLink Bug Report Payload v1/v2
 
 Date: 2026-06-11
 
@@ -20,6 +20,8 @@ applications must not ship Discord bot tokens or `X-SekaiLink-Bot-Key`.
   "reporter_name": "SekaiLink User",
   "screenshot_base64": "",
   "logs_text": "tail of the relevant log",
+  "bundle_base64": "base64 ZIP containing redacted session logs",
+  "bundle_manifest": {},
   "system_info": {},
   "app_info": {
     "source": "bootloader",
@@ -82,6 +84,21 @@ The current Discord bot contract accepts:
 
 The Link API trims oversized screenshots to 16 MiB of base64 text and logs to
 1 MiB before forwarding to the bot.
+
+## Diagnostic bundle v2
+
+Client Core v2 reports include a ZIP assembled from every session log found for Client Core, bootstrapper, Sekaiemu, SKLMI, AP wrappers, tracker and runtime social. `manifest.json` lists included and unavailable sources. Hostname, home paths, credentials, tokens, signed query values and passwords are redacted before compression.
+
+The screenshot remains optional and is captured only after the user selects a display. Submission requires explicit consent. Private bundles are stored by social-bots on Link for 30 days under an opaque report ID and are never exposed through a public URL.
+
+Administrative endpoints, protected by `X-SekaiLink-Bot-Key`:
+
+```text
+GET  /discord/bug-reports/bundle/{report_id}
+POST /discord/bug-reports/export
+```
+
+The export accepts status filters (`OPEN`, `ONGOING`, `FIXED`, `CLOSED`) and produces a ZIP containing thread transcripts in JSON and Markdown, embeds, screenshots, attachments and available private diagnostic bundles.
 
 ## Server Forwarding
 

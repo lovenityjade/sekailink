@@ -1,0 +1,1925 @@
+
+
+[
+  {
+    "name": "Kak - hint",
+    "chest_unopened_img": "/images/items/close.png",
+    "chest_opened_img": "/images/items/open.png",
+    "overlay_background": "#000000",
+    "access_rules": [
+        "{}"
+    ],
+    "children": [
+        {
+            "name": "Windmill - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Song from Windmill - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_windmill_song_from_windmill"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Freestanding PoH - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_windmill_freestanding_poh"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kakariko Village",
+                    "x": "1359",
+                    "y": "488",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Sheik - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Sheik in Kakariko - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_sheik_sheik_in_kakariko"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kakariko Village",
+                    "x": "621",
+                    "y": "618",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Anju - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "as Child - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_anju_as_child"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "as Adult - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_anju_as_adult"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kakariko Village",
+                    "x": "977",
+                    "y": "775",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Impas House - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Near Impas House - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Pot 1 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "kak_impas_house_near_impas_house_pot_1"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 2 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "kak_impas_house_near_impas_house_pot_2"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 3 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "kak_impas_house_near_impas_house_pot_3"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Kakariko Village",
+                            "x": "827",
+                            "y": "817",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                }
+            ],
+            "sections": [
+                {
+                    "name": "Freestanding PoH - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_impas_house_freestanding_poh"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Cow - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_impas_house_cow"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "GS Above - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_impas_house_gs_above"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kakariko Village",
+                    "x": "898",
+                    "y": "808",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Open Grotto - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Chest - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_open_grotto_chest"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Beehive 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_open_grotto_beehive_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Beehive 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_open_grotto_beehive_2"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kakariko Village",
+                    "x": "1071",
+                    "y": "436",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Redead Grotto - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Chest - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_redead_grotto_chest"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kakariko Village",
+                    "x": "833",
+                    "y": "566",
+                    "size": 22,
+                    "shape": "diamond"
+                },
+                {
+                  "map": "Kakariko Village",
+                  "x": "372",
+                  "y": "788",
+                  "size": 22,
+                    "shape": "diamond"
+              }
+            ]
+        },
+        {
+            "name": "Shooting Gallery - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Reward - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_shooting_gallery_reward"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kakariko Village",
+                    "x": "950",
+                    "y": "646",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Skulltula House - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "10 GS Reward - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_skulltula_house_10_gs_reward"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "20 GS Reward - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_skulltula_house_20_gs_reward"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "30 GS Reward - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_skulltula_house_30_gs_reward"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "40 GS Reward - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_skulltula_house_40_gs_reward"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "50 GS Reward - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_skulltula_house_50_gs_reward"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_skulltula_house_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kakariko Village",
+                    "x": "851",
+                    "y": "667",
+                    "size": 22,
+                    "shape": "diamond"
+                },
+                {
+                  "map": "Kakariko Village",
+                  "x": "528",
+                  "y": "880",
+                  "size": 22,
+                    "shape": "diamond"
+              }
+            ]
+        },
+        {
+            "name": "Tree - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_tree_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kakariko Village",
+                    "x": "738",
+                    "y": "589",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Guards House - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Near Guards House - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "GS - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "kak_guards_house_near_guards_house_gs"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 1 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "kak_guards_house_near_guards_house_pot_1"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 2 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "kak_guards_house_near_guards_house_pot_2"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 3 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "kak_guards_house_near_guards_house_pot_3"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Kakariko Village",
+                            "x": "827",
+                            "y": "320",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Watchtower - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_watchtower_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kakariko Village",
+                    "x": "904",
+                    "y": "452",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "House Under Construction - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_house_under_construction_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kakariko Village",
+                    "x": "979",
+                    "y": "689",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Bazaar - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Item 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_bazaar_item_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_bazaar_item_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_bazaar_item_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 4 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_bazaar_item_4"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 5 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_bazaar_item_5"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 6 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_bazaar_item_6"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 7 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_bazaar_item_7"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 8 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_bazaar_item_8"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                  "map": "Kakariko Village",
+                  "x": 861,
+                  "y": 361,
+                  "size": 22,
+                    "shape": "diamond"
+                },
+                {
+                  "map": "Kakariko Village",
+                  "x": 483,
+                  "y": 129,
+                  "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Potion Shop - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Near Potion Shop - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Pot 1 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "kak_potion_shop_near_potion_shop_pot_1"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 2 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "kak_potion_shop_near_potion_shop_pot_2"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 3 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "kak_potion_shop_near_potion_shop_pot_3"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Kakariko Village",
+                            "x": "967",
+                            "y": "423",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                }
+            ],
+            "sections": [
+                {
+                    "name": "Item 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_potion_shop_item_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_potion_shop_item_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_potion_shop_item_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 4 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_potion_shop_item_4"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 5 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_potion_shop_item_5"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 6 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_potion_shop_item_6"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 7 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_potion_shop_item_7"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 8 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_potion_shop_item_8"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                  "map": "Kakariko Village",
+                  "x": 971,
+                  "y": 372,
+                  "size": 22,
+                    "shape": "diamond"
+                },
+                {
+                  "map": "Kakariko Village",
+                  "x": 1264,
+                  "y": 85,
+                  "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Odd Medicine Building - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Near Odd Medicine Building - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Pot 1 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "kak_odd_medicine_building_near_odd_medicine_building_pot_1"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 2 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "kak_odd_medicine_building_near_odd_medicine_building_pot_2"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Kakariko Village",
+                            "x": "1061",
+                            "y": "492",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Adult Red Rupee Crate - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Day Night different - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_adult_red_rupee_crate_day_night_different"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                  "map": "Kakariko Village",
+                  "x": 1111,
+                  "y": 489,
+                  "size": 22,
+                    "shape": "diamond"
+                },
+                {
+                  "map": "Kakariko Village",
+                  "x": 1003,
+                  "y": 420,
+                  "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Adult Arrows Crate - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Day Beggar, Night Shooting Range - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kak_adult_arrows_crate_day_beggar,_night_shooting_range"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                  "map": "Kakariko Village",
+                  "x": 815,
+                  "y": 410,
+                  "size": 22,
+                    "shape": "diamond"
+                },
+                {
+                  "map": "Kakariko Village",
+                  "x": 937,
+                  "y": 617,
+                  "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        }
+    ],
+    "sections": [
+        {
+            "name": "Man on Roof - hint",
+            "access_rules": [],
+            "visibility_rules": [
+                "kak_man_on_roof"
+            ],
+            "item_count": 1
+        }
+    ],
+    "map_locations": [
+        {
+            "map": "Kakariko Village",
+            "x": "980",
+            "y": "502",
+            "size": 22,
+                    "shape": "diamond"
+        }
+    ]
+},
+    {
+      "name": "Kak",
+      "chest_unopened_img": "/images/Items/close.png",
+      "chest_opened_img": "/images/Items/open.png",
+      "overlay_background": "#000000",
+      "access_rules": [
+        " "
+      ],
+      "children": [
+        {
+          "name": "Anju",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "as Child",
+                "access_rules": [
+                "^$CanReach|Child Kak Anju as Child",
+                "^$CanReach|Adult Kak Anju as Child"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "as Adult",
+                "access_rules": [
+                "^$CanReach|Child Kak Anju as Adult",
+                "^$CanReach|Adult Kak Anju as Adult"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kakariko Village",
+              "x": 955,
+              "y": 753,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Sheik",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Sheik in Kakariko",
+                "access_rules": [
+                "^$CanReach|Child Sheik in Kakariko",
+                "^$CanReach|Adult Sheik in Kakariko"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kakariko Village",
+              "x": 599,
+              "y": 596,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Impas House",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "Near Impas House",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child Kak Near Impas House Pot 1",
+                "^$CanReach|Adult Kak Near Impas House Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child Kak Near Impas House Pot 2",
+                "^$CanReach|Adult Kak Near Impas House Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 3",
+                "access_rules": [
+                "^$CanReach|Child Kak Near Impas House Pot 3",
+                "^$CanReach|Adult Kak Near Impas House Pot 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Kakariko Village",
+                  "x": 805,
+                  "y": 795,
+                  "size": 24
+                }
+              ]
+            }
+          ],
+          "sections": [
+            {
+              "name": "Freestanding PoH",
+                "access_rules": [
+                "^$CanReach|Child Kak Impas House Freestanding PoH",
+                "^$CanReach|Adult Kak Impas House Freestanding PoH"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Cow",
+                "access_rules": [
+                "^$CanReach|Child Kak Impas House Cow",
+                "^$CanReach|Adult Kak Impas House Cow"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_cows"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "GS Above",
+                "access_rules": [
+                "^$CanReach|Child Kak GS Above Impas House",
+                "^$CanReach|Adult Kak GS Above Impas House"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kakariko Village",
+              "x": 876,
+              "y": 786,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Windmill",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Song from Windmill",
+              "access_rules": [
+                "^$CanReach|Child Song from Windmill",
+                "^$CanReach|Adult Song from Windmill"
+              ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Freestanding PoH",
+                "access_rules": [
+                "^$CanReach|Child Kak Windmill Freestanding PoH",
+                "^$CanReach|Adult Kak Windmill Freestanding PoH"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kakariko Village",
+              "x": 1337,
+              "y": 466,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Open Grotto",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Chest",
+                "access_rules": [
+                "^$CanReach|Child Kak Open Grotto Chest",
+                "^$CanReach|Adult Kak Open Grotto Chest"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Beehive 1",
+                "access_rules": [
+                "^$CanReach|Child Kak Open Grotto Beehive 1",
+                "^$CanReach|Adult Kak Open Grotto Beehive 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_beehives"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Beehive 2",
+                "access_rules": [
+                "^$CanReach|Child Kak Open Grotto Beehive 2",
+                "^$CanReach|Adult Kak Open Grotto Beehive 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_beehives"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kakariko Village",
+              "x": 1049,
+              "y": 414,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Redead Grotto",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Chest",
+                "access_rules": [
+                "^$CanReach|Child Kak Redead Grotto Chest",
+                "^$CanReach|Adult Kak Redead Grotto Chest"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kakariko Village",
+              "x": 811,
+              "y": 544,
+              "size": 24
+            },
+            {
+              "map": "Kakariko Village",
+              "x": 350,
+              "y": 766,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Shooting Gallery",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Reward",
+                "access_rules": [
+                "^$CanReach|Child Kak Shooting Gallery Reward",
+                "^$CanReach|Adult Kak Shooting Gallery Reward"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kakariko Village",
+              "x": 928,
+              "y": 624,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Skulltula House",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "10 GS Reward",
+                "access_rules": [
+                "^$CanReach|Child Kak 10 Gold Skulltula Reward",
+                "^$CanReach|Adult Kak 10 Gold Skulltula Reward"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "20 GS Reward",
+                "access_rules": [
+                "^$CanReach|Child Kak 20 Gold Skulltula Reward",
+                "^$CanReach|Adult Kak 20 Gold Skulltula Reward"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "30 GS Reward",
+                "access_rules": [
+                "^$CanReach|Child Kak 30 Gold Skulltula Reward",
+                "^$CanReach|Adult Kak 30 Gold Skulltula Reward"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "40 GS Reward",
+                "access_rules": [
+                "^$CanReach|Child Kak 40 Gold Skulltula Reward",
+                "^$CanReach|Adult Kak 40 Gold Skulltula Reward"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "50 GS Reward",
+                "access_rules": [
+                "^$CanReach|Child Kak 50 Gold Skulltula Reward",
+                "^$CanReach|Adult Kak 50 Gold Skulltula Reward"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child Kak GS Skulltula House",
+                "^$CanReach|Adult Kak GS Skulltula House"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kakariko Village",
+              "x": 829,
+              "y": 645,
+              "size": 24
+            },
+            {
+              "map": "Kakariko Village",
+              "x": 506,
+              "y": 858,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Tree",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child Kak GS Tree",
+                "^$CanReach|Adult Kak GS Tree"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kakariko Village",
+              "x": 716,
+              "y": 567,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Guards House",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "Near Guards House",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child Kak GS Near Gate Guard",
+                "^$CanReach|Adult Kak GS Near Gate Guard"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child Kak Near Guards House Pot 1",
+                "^$CanReach|Adult Kak Near Guards House Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child Kak Near Guards House Pot 2",
+                "^$CanReach|Adult Kak Near Guards House Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 3",
+                "access_rules": [
+                "^$CanReach|Child Kak Near Guards House Pot 3",
+                "^$CanReach|Adult Kak Near Guards House Pot 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Kakariko Village",
+                  "x": 805,
+                  "y": 298,
+                  "size": 24
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Watchtower",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child Kak GS Watchtower",
+                "^$CanReach|Adult Kak GS Watchtower"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kakariko Village",
+              "x": 882,
+              "y": 430,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "House Under Construction",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child Kak GS House Under Construction",
+                "^$CanReach|Adult Kak GS House Under Construction"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kakariko Village",
+              "x": 957,
+              "y": 667,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Bazaar",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Item 1",
+                "access_rules": [
+                "^$CanReach|Child Kak Bazaar Item 1",
+                "^$CanReach|Adult Kak Bazaar Item 1"
+                ],
+                "visibility_rules": [
+                  "$Show|"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 2",
+                "access_rules": [
+                "^$CanReach|Child Kak Bazaar Item 2",
+                "^$CanReach|Adult Kak Bazaar Item 2"
+                ],
+                "visibility_rules": [
+                  "$Show|"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 3",
+                "access_rules": [
+                "^$CanReach|Child Kak Bazaar Item 3",
+                "^$CanReach|Adult Kak Bazaar Item 3"
+                ],
+                "visibility_rules": [
+                  "$Show|"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 4",
+                "access_rules": [
+                "^$CanReach|Child Kak Bazaar Item 4",
+                "^$CanReach|Adult Kak Bazaar Item 4"
+                ],
+                "visibility_rules": [
+                  "$Show|"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 5",
+                "access_rules": [
+                "^$CanReach|Child Kak Bazaar Item 5",
+                "^$CanReach|Adult Kak Bazaar Item 5"
+                ],
+                "visibility_rules": [
+                  "$Show|shopsanity, $ShopSlotHelper|67143|1"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 6",
+                "access_rules": [
+                "^$CanReach|Child Kak Bazaar Item 6",
+                "^$CanReach|Adult Kak Bazaar Item 6"
+                ],
+                "visibility_rules": [
+                  "$Show|shopsanity, $ShopSlotHelper|67144|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 7",
+                "access_rules": [
+                "^$CanReach|Child Kak Bazaar Item 7",
+                "^$CanReach|Adult Kak Bazaar Item 7"
+                ],
+                "visibility_rules": [
+                  "$Show|shopsanity, $ShopSlotHelper|67145|3"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 8",
+                "access_rules": [
+                "^$CanReach|Child Kak Bazaar Item 8",
+                "^$CanReach|Adult Kak Bazaar Item 8"
+                ],
+                "visibility_rules": [
+                  "$Show|shopsanity, $ShopSlotHelper|67146|4"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kakariko Village",
+              "x": 839,
+              "y": 339,
+              "size": 24
+            },
+            {
+              "map": "Kakariko Village",
+              "x": 461,
+              "y": 107,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Potion Shop",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "Near Potion Shop",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child Kak Near Potion Shop Pot 1",
+                "^$CanReach|Adult Kak Near Potion Shop Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child Kak Near Potion Shop Pot 2",
+                "^$CanReach|Adult Kak Near Potion Shop Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 3",
+                "access_rules": [
+                "^$CanReach|Child Kak Near Potion Shop Pot 3",
+                "^$CanReach|Adult Kak Near Potion Shop Pot 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Kakariko Village",
+                  "x": 945,
+                  "y": 401,
+                  "size": 24
+                }
+              ]
+            }
+          ],
+          "sections": [
+            {
+              "name": "Item 1",
+                "access_rules": [
+                "^$CanReach|Child Kak Potion Shop Item 1",
+                "^$CanReach|Adult Kak Potion Shop Item 1"
+                ],
+                "visibility_rules": [
+                  "$Show|"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 2",
+                "access_rules": [
+                "^$CanReach|Child Kak Potion Shop Item 2",
+                "^$CanReach|Adult Kak Potion Shop Item 2"
+                ],
+                "visibility_rules": [
+                  "$Show|"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 3",
+                "access_rules": [
+                "^$CanReach|Child Kak Potion Shop Item 3",
+                "^$CanReach|Adult Kak Potion Shop Item 3"
+                ],
+                "visibility_rules": [
+                  "$Show|"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 4",
+                "access_rules": [
+                "^$CanReach|Child Kak Potion Shop Item 4",
+                "^$CanReach|Adult Kak Potion Shop Item 4"
+                ],
+                "visibility_rules": [
+                  "$Show|"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 5",
+                "access_rules": [
+                "^$CanReach|Child Kak Potion Shop Item 5",
+                "^$CanReach|Adult Kak Potion Shop Item 5"
+                ],
+                "visibility_rules": [
+                  "$Show|shopsanity, $ShopSlotHelper|67151|1"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 6",
+                "access_rules": [
+                "^$CanReach|Child Kak Potion Shop Item 6",
+                "^$CanReach|Adult Kak Potion Shop Item 6"
+                ],
+                "visibility_rules": [
+                  "$Show|shopsanity, $ShopSlotHelper|67152|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 7",
+                "access_rules": [
+                "^$CanReach|Child Kak Potion Shop Item 7",
+                "^$CanReach|Adult Kak Potion Shop Item 7"
+                ],
+                "visibility_rules": [
+                  "$Show|shopsanity, $ShopSlotHelper|67153|3"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 8",
+                "access_rules": [
+                "^$CanReach|Child Kak Potion Shop Item 8",
+                "^$CanReach|Adult Kak Potion Shop Item 8"
+                ],
+                "visibility_rules": [
+                  "$Show|shopsanity, $ShopSlotHelper|67154|4"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kakariko Village",
+              "x": 949,
+              "y": 350,
+              "size": 24
+            },
+            {
+              "map": "Kakariko Village",
+              "x": 1242,
+              "y": 63,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Odd Medicine Building",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "Near Odd Medicine Building",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child Kak Near Odd Medicine Building Pot 1",
+                "^$CanReach|Adult Kak Near Odd Medicine Building Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child Kak Near Odd Medicine Building Pot 2",
+                "^$CanReach|Adult Kak Near Odd Medicine Building Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Kakariko Village",
+                  "x": 1039,
+                  "y": 470,
+                  "size": 24
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Adult Red Rupee Crate",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Day Night different",
+                "access_rules": [
+                "^$CanReach|Child Kak Adult Red Rupee Crate",
+                "^$CanReach|Adult Kak Adult Red Rupee Crate"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_crates|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kakariko Village",
+              "x": 1089,
+              "y": 467,
+              "size": 24
+            },
+            {
+              "map": "Kakariko Village",
+              "x": 981,
+              "y": 398,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Adult Arrows Crate",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Day Beggar, Night Shooting Range",
+                "access_rules": [
+                "^$CanReach|Child Kak Adult Arrows Crate",
+                "^$CanReach|Adult Kak Adult Arrows Crate"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_crates|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kakariko Village",
+              "x": 793,
+              "y": 388,
+              "size": 24
+            },
+            {
+              "map": "Kakariko Village",
+              "x": 915,
+              "y": 595,
+              "size": 24
+            }
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "name": "Man on Roof",
+          "access_rules": [
+            "^$CanReach|Child Kak Man on Roof",
+            "^$CanReach|Adult Kak Man on Roof"
+          ],
+            // "visibility_rules": [
+            //   "$Show|"
+            // ],
+          "item_count": 1
+        }
+      ],
+      "map_locations": [
+        {
+          "map": "Kakariko Village",
+          "x": 958,
+          "y": 480,
+          "size": 24
+        }
+      ]
+    }
+  ]

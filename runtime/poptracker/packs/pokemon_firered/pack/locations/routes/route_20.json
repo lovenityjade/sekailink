@@ -1,0 +1,285 @@
+[
+  {
+    "name": "Route 20",
+    "children": [
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Routes/Route 20 West/Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Routes/Route 20 West/Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Routes/Route 20 West/Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Routes/Route 20 West/Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_20_west",
+            "x": 624,
+            "y": 12
+          },
+          {
+            "map": "route_20_center",
+            "x": 624,
+            "y": 12
+          },
+          {
+            "map": "route_20_east",
+            "x": 624,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Northwest Island Hidden Item",
+        "sections": [
+          {
+            "ref": "Routes/Route 20 West/Northwest Island Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_20_west",
+            "x": 376,
+            "y": 104
+          }
+        ]
+      },
+      {
+        "name": "Swimmer Shirley",
+        "sections": [
+          {
+            "ref": "Routes/Route 20 East/Swimmer Shirley Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_20_east",
+            "x": 216,
+            "y": 168
+          }
+        ]
+      },
+      {
+        "name": "Swimmer Tiffany",
+        "sections": [
+          {
+            "ref": "Routes/Route 20 East/Swimmer Tiffany Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_20_center",
+            "x": 232,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Swimmer Barry",
+        "sections": [
+          {
+            "ref": "Routes/Route 20 East/Swimmer Barry Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_20_east",
+            "x": 504,
+            "y": 152
+          }
+        ]
+      },
+      {
+        "name": "Swimmer Darrin",
+        "sections": [
+          {
+            "ref": "Routes/Route 20 East/Swimmer Darrin Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Routes/Route 20 East/Swimmer Darrin Rematch Reward (8 Badges-Gyms)",
+            "name": "Rematch Reward (8 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_20_east",
+            "x": 424,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Camper",
+        "sections": [
+          {
+            "ref": "Routes/Route 20 East/Camper Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_20_center",
+            "x": 472,
+            "y": 56
+          }
+        ]
+      },
+      {
+        "name": "Picnicker Irene",
+        "sections": [
+          {
+            "ref": "Routes/Route 20 West/Picnicker Irene Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_20_center",
+            "x": 536,
+            "y": 264
+          }
+        ]
+      },
+      {
+        "name": "Bird Keeper Roger",
+        "sections": [
+          {
+            "ref": "Routes/Route 20 West/Bird Keeper Roger Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_20_center",
+            "x": 56,
+            "y": 152
+          }
+        ]
+      },
+      {
+        "name": "Picnicker Missy",
+        "sections": [
+          {
+            "ref": "Routes/Route 20 West/Picnicker Missy Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Routes/Route 20 West/Picnicker Missy Rematch Reward (6 Badges-Gyms)",
+            "name": "Rematch Reward (6 Badges-Gyms)"
+          },
+          {
+            "ref": "Routes/Route 20 West/Picnicker Missy Rematch Reward (8 Badges-Gyms)",
+            "name": "Rematch Reward (8 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_20_west",
+            "x": 264,
+            "y": 232
+          }
+        ]
+      },
+      {
+        "name": "Swimmer Melissa",
+        "sections": [
+          {
+            "ref": "Routes/Route 20 West/Swimmer Melissa Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Routes/Route 20 West/Swimmer Melissa Rematch Reward (6 Badges-Gyms)",
+            "name": "Rematch Reward (6 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_20_west",
+            "x": 136,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Swimmer Nora",
+        "sections": [
+          {
+            "ref": "Routes/Route 20 West/Swimmer Nora Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_20_west",
+            "x": 552,
+            "y": 120
+          }
+        ]
+      },
+      {
+        "name": "Swimmer Dean",
+        "sections": [
+          {
+            "ref": "Routes/Route 20 West/Swimmer Dean Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_20_west",
+            "x": 376,
+            "y": 168
+          }
+        ]
+      },
+      {
+        "name": "Seafoam Islands South Entrance",
+        "sections": [
+          {
+            "ref": "Routes/Route 20 West/Seafoam Islands South Entrance",
+            "name": "Entrance"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_20_center",
+            "x": 520,
+            "y": 232
+          }
+        ]
+      },
+      {
+        "name": "Seafoam Islands North Entrance",
+        "sections": [
+          {
+            "ref": "Routes/Route 20 East/Seafoam Islands North Entrance",
+            "name": "Entrance"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_20_center",
+            "x": 328,
+            "y": 136
+          }
+        ]
+      }
+    ]
+  }
+]

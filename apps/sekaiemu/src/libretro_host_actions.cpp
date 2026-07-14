@@ -109,6 +109,18 @@ bool PointInsideTrackerPanel(OverlayPoint point, const TrackerPanelLayout& layou
          point.y >= layout.y && point.y < layout.y + layout.height;
 }
 
+WindowMode NextWindowMode(WindowMode mode) {
+  switch (mode) {
+    case WindowMode::Window:
+      return WindowMode::BorderlessWindow;
+    case WindowMode::BorderlessWindow:
+      return WindowMode::Fullscreen;
+    case WindowMode::Fullscreen:
+    default:
+      return WindowMode::Window;
+  }
+}
+
 int TrackerMenuBodyY(const TrackerInteractionGeometry& geometry) {
   const int header_height = geometry.compact ? 24 : 44;
   return geometry.layout.y + header_height + 6;
@@ -199,9 +211,15 @@ void LibretroHost::Impl::ToggleFullscreen() {
     return;
   }
   std::string error;
-  if (!video_backend->ToggleFullscreen(error)) {
-    std::cerr << "[sekaiemu] fullscreen toggle failed: " << error << "\n";
+  const WindowMode next_mode = NextWindowMode(video_backend->CurrentWindowMode());
+  if (!video_backend->SetWindowMode(next_mode, error)) {
+    std::cerr << "[sekaiemu] window mode toggle failed: " << error << "\n";
+    return;
   }
+  frontend_settings_.SetWindowMode(next_mode);
+  SaveFrontendSettingsNow();
+  tracker_last_render_frame_ = 0;
+  tracker_force_next_render_ = true;
 }
 
 void LibretroHost::Impl::CycleTrackerDisplayMode() {
@@ -480,6 +498,10 @@ void LibretroHost::Impl::ApplyMenuAction(RuntimeMenuAction action) {
       ToggleNotifications();
       PersistRuntimeMenuSettingsIfNeeded();
       return;
+    case RuntimeMenuAction::ToggleActivityFeed:
+      ToggleActivityFeed();
+      PersistRuntimeMenuSettingsIfNeeded();
+      return;
     case RuntimeMenuAction::CycleTrackerDisplayMode:
       CycleTrackerDisplayMode();
       PersistRuntimeMenuSettingsIfNeeded();
@@ -494,6 +516,10 @@ void LibretroHost::Impl::ApplyMenuAction(RuntimeMenuAction action) {
       return;
     case RuntimeMenuAction::ToggleBridgeTerminal:
       ToggleBridgeTerminal();
+      PersistRuntimeMenuSettingsIfNeeded();
+      return;
+    case RuntimeMenuAction::CycleWindowMode:
+      ToggleFullscreen();
       PersistRuntimeMenuSettingsIfNeeded();
       return;
     default:

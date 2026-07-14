@@ -1,0 +1,43 @@
+[
+    {
+        "name": "Glitzville Main Square",
+        "children": [
+            {"sections": [{"ref": "Magical Map/Glitzville Main Square/Glitzville Main Square - Inn Coupon"}],
+                "map_locations": [{"map": "Glitzville", "x": 1066, "y": 600}]},
+            {"sections": [{"name": "Glitzville Main Square - Power Plus P","ref": "Magical Map/Glitzville Main Square/Glitzville Main Square - Power Plus P"},
+                        {"name": "Glitzville Main Square - Super Hammer","ref": "Magical Map/Glitzville Main Square/Glitzville Main Square - Super Hammer"}],
+                "map_locations": [{"map": "Glitzville", "x": 1074, "y": 711}]},
+            {"sections": [{"name": "Glitzville Main Square - Shine Sprite","ref": "Magical Map/Glitzville Main Square/Glitzville Main Square - Shine Sprite"},
+                        {"name": "Glitzville Main Square - Coin","ref": "Magical Map/Glitzville Main Square/Glitzville Main Square - Coin"}],
+                "map_locations": [{"map": "Glitzville", "x": 999, "y": 568}]},
+            {"sections": [{"ref": "Magical Map/Glitzville Main Square/Glitzville Main Square - Star Piece 1"}],
+                "map_locations": [{"map": "Glitzville", "x": 1126, "y": 702}]},
+            {"sections": [{"ref": "Magical Map/Glitzville Main Square/Glitzville Main Square - Star Piece 2"}],
+                "map_locations": [{"map": "Glitzville", "x": 458, "y": 420}]},
+            {"sections": [{"ref": "Magical Map/Glitzville Main Square/Glitzville Main Square - Star Piece 3"}],
+                "map_locations": [{"map": "Glitzville", "x": 969, "y": 496}]},
+            {"sections": [{"ref": "Magical Map/Glitzville Main Square/Glitzville Main Square - Star Piece 4"}],
+                "map_locations": [{"map": "Glitzville", "x": 597, "y": 766}]},
+            {"sections": [{"ref": "Magical Map/Glitzville Main Square/Glitzville Main Square - Star Piece 5"}],
+                "map_locations": [{"map": "Glitzville", "x": 1077, "y": 656}]},
+            {"sections": [{"ref": "Magical Map/Glitzville Main Square/Glitzville Main Square - Storage Key 1"}],
+                "map_locations": [{"map": "Glitzville", "x": 454, "y": 465}]}
+        ]
+    },
+    {
+        "name": "Glitzville Main Square Shops",
+        "children": [
+            {"sections": [{"name": "Souvenir Shop - Earth Quake Purchase","ref": "Magical Map/Glitzville Main Square Shops/Souvenir Shop - Earth Quake Purchase"},
+            {"name": "Souvenir Shop - Thunder Bolt Purchase","ref": "Magical Map/Glitzville Main Square Shops/Souvenir Shop - Thunder Bolt Purchase"},
+                        {"name": "Souvenir Shop - Power Punch Purchase","ref": "Magical Map/Glitzville Main Square Shops/Souvenir Shop - Power Punch Purchase"},
+                        {"name": "Souvenir Shop - Repel Cape Purchase","ref": "Magical Map/Glitzville Main Square Shops/Souvenir Shop - Repel Cape Purchase"},
+                        {"name": "Souvenir Shop - Point Swap Purchase","ref": "Magical Map/Glitzville Main Square Shops/Souvenir Shop - Point Swap Purchase"},
+                        {"name": "Souvenir Shop - Super Shroom Purchase","ref": "Magical Map/Glitzville Main Square Shops/Souvenir Shop - Super Shroom Purchase"}],
+                "map_locations": [{"map": "Glitzville", "x": 584, "y": 423}]},
+            {"sections": [{"ref": "Magical Map/Glitzville Main Square Shops/Hot Dog Stand - Hot Dog Purchase"}],
+                "map_locations": [{"map": "Glitzville", "x": 750, "y": 405}]},
+            {"sections": [{"ref": "Magical Map/Glitzville Main Square Shops/Businessman - Hot Sauce Purchase"}],
+                "map_locations": [{"map": "Glitzville", "x": 840, "y": 450}]}
+        ]
+    }
+]

@@ -30,7 +30,7 @@ void VulkanVideoBackend::SetMenuVisible(bool, const VideoGeometry&) {}
 
 void VulkanVideoBackend::SetTrackerSidebarLayout(bool, unsigned, const VideoGeometry&) {}
 
-bool VulkanVideoBackend::ToggleFullscreen(std::string& error) {
+bool VulkanVideoBackend::SetWindowMode(WindowMode, std::string& error) {
   error = "Vulkan backend is not implemented yet.";
   return false;
 }

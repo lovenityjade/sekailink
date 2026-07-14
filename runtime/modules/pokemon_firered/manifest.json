@@ -10,7 +10,8 @@
   "patch_world_module": "worlds.pokemon_frlg",
   "ap_world": "pokemon_frlg",
   "required_roms": [
-    "pokemon_firered"
+    "pokemon_firered",
+    "pokemon_leafgreen"
   ],
   "client_mode": "archipelago",
   "ap_client": "bizhawk",
@@ -41,8 +42,9 @@
     "ap_game": "Pokemon FireRed and LeafGreen"
   },
   "tracker_pack_uid": "",
-  "tracker_web_url": "",
-  "support_status": "not_available",
-  "availability_status": "unavailable_gba_pending_tester",
-  "compatibility_notes": "Temporarily unavailable for BETA-3 launch: GBA support is frozen to confirmed bilateral games only until a focused tester validates this title."
+  "tracker_web_url": "https://github.com/vyneras/pokemon-frlg-tracker/releases/latest",
+  "support_status": "canari_test",
+  "availability_status": "available_canari_test",
+  "compatibility_notes": "Canari test frozen: Linux bilateral send/reception confirmed through Sekaiemu/mGBA with the BizHawk-compatible runtime memory bridge. Windows validation is still required before Canonical promotion.",
+  "tracker_pack_path": "poptracker/packs/pokemon_firered/pack"
 }

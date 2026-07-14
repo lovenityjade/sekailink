@@ -40,7 +40,7 @@
     "ap_game": "Kirby's Dream Land 3"
   },
   "tracker_pack_uid": "",
-  "tracker_web_url": "universal_tracker_partial",
+  "tracker_web_url": "https://github.com/The-ROT8/Kirby_Dream_Land_3_AP_Poptracker",
   "tracker_pack_path": "poptracker/packs/kirbys_dream_land_3/pack/Kirby_Dream_Land_3_AP_Poptracker-main",
   "default_tracker_variant": "ap_map_tracker"
 }

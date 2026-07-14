@@ -62,7 +62,7 @@ ConnectionRefused: InvalidSlot
 The patch inspected at:
 
 ```text
-/home/thelovenityjade/.config/sekailink-client/runtime/downloads/AP_53368305998360213434_P1_thelov-metr-ee09 (2).apmzm
+<local-home>/.config/sekailink-client/runtime/downloads/AP_53368305998360213434_P1_thelov-metr-ee09 (2).apmzm
 ```
 
 contained:

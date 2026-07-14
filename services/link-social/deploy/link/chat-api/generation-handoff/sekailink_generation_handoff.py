@@ -9,8 +9,10 @@ directory to the configured backend generation service.
 from __future__ import annotations
 
 import argparse
+import asyncio
 import ast
 import hashlib
+import io
 import json
 import os
 import pickle
@@ -22,6 +24,7 @@ import socket
 import subprocess
 import sys
 import time
+import uuid
 import warnings
 import zlib
 from urllib.parse import quote
@@ -32,6 +35,35 @@ from typing import Any
 
 os.environ.setdefault("SKIP_REQUIREMENTS_UPDATE", "1")
 os.environ.setdefault("PYTHONNOUSERSITE", "1")
+
+
+MAX_MULTIDATA_BYTES = 128 * 1024 * 1024
+ALLOWED_MULTIDATA_GLOBALS = {
+    ("NetUtils", "Hint"),
+    ("NetUtils", "NetworkItem"),
+    ("NetUtils", "NetworkSlot"),
+    ("NetUtils", "SlotType"),
+    ("Utils", "Version"),
+}
+
+
+class RestrictedMultidataUnpickler(pickle.Unpickler):
+    def find_class(self, module: str, name: str) -> Any:
+        if (module, name) not in ALLOWED_MULTIDATA_GLOBALS:
+            raise pickle.UnpicklingError(f"multidata_global_forbidden:{module}.{name}")
+        __import__(module)
+        return getattr(sys.modules[module], name)
+
+
+def safe_load_multidata(payload: bytes) -> Any:
+    decompressor = zlib.decompressobj()
+    decoded = decompressor.decompress(payload, MAX_MULTIDATA_BYTES + 1)
+    if len(decoded) > MAX_MULTIDATA_BYTES or decompressor.unconsumed_tail:
+        raise ValueError("multidata_too_large")
+    decoded += decompressor.flush()
+    if len(decoded) > MAX_MULTIDATA_BYTES or not decompressor.eof:
+        raise ValueError("multidata_invalid_or_too_large")
+    return RestrictedMultidataUnpickler(io.BytesIO(decoded)).load()
 
 
 def safe_component(value: str, fallback: str) -> str:
@@ -395,20 +427,31 @@ def now_unix() -> int:
 
 def match_sync_entry(member: str, slot: int | None, sync_entries: list[dict[str, Any]]) -> dict[str, Any]:
     member_key = normalized_token(Path(member).stem)
+    slot_name = normalized_token(zip_member_slot_name(member))
+    if slot_name:
+        for entry in sync_entries:
+            for candidate in (
+                str(entry.get("slot_name", "")),
+                str(entry.get("compat_player_name", "")),
+                str(entry.get("source_slot_name", "")),
+            ):
+                token = normalized_token(candidate)
+                if token and token == slot_name:
+                    return entry
+    if slot is not None:
+        for entry in sync_entries:
+            if int(entry.get("slot_index") or 0) == slot:
+                return entry
     for entry in sync_entries:
         candidates = [
             str(entry.get("slot_name", "")),
             str(entry.get("player_file_stem", "")),
-            str(entry.get("username", "")),
             str(entry.get("title", "")),
+            str(entry.get("username", "")),
         ]
         for candidate in candidates:
             token = normalized_token(candidate)
             if token and (token in member_key or member_key in token):
-                return entry
-    if slot is not None:
-        for entry in sync_entries:
-            if int(entry.get("slot_index") or 0) == slot:
                 return entry
     return {}
 
@@ -547,8 +590,9 @@ def allocate_room_runtime_port(host: str) -> int:
             raise ValueError("room_runtime_port_range_invalid")
         bind_host = local_probe_host(host)
         for port in range(start, end + 1):
+            if tcp_connectable(bind_host, port):
+                continue
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-                sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
                 try:
                     sock.bind((bind_host, port))
                     return port
@@ -636,7 +680,7 @@ def patch_multidata_server_password(multidata_path: str, server_password: str) -
         module_path = getattr(sys.modules.get(module_name), "__file__", "")
         if module_path and not str(module_path).startswith(decode_dir):
             sys.modules.pop(module_name, None)
-    decoded = pickle.loads(zlib.decompress(data[1:]))
+    decoded = safe_load_multidata(data[1:])
     if not isinstance(decoded, dict):
         return multidata_path
     server_options = decoded.get("server_options")
@@ -1165,6 +1209,7 @@ def response_from_state(state: dict[str, Any]) -> dict[str, Any]:
         "room_runtime_log": state.get("room_runtime_log", ""),
         "room_runtime_pid": int(state.get("room_runtime_pid") or 0),
         "room_runtime_alive": bool(state.get("room_runtime_alive", False)),
+        "compensator": state.get("compensator", {}),
     }
     if state.get("remote_players_dir"):
         response["remote_players_dir"] = state["remote_players_dir"]
@@ -1396,10 +1441,31 @@ def generation_status(request: dict[str, Any], state_path: Path) -> dict[str, An
             state["updated_at"] = int(time.time())
             atomic_write_json(state_path, state)
         elif not status_response.get("ok", False):
-            return {"ok": False, "status": "error", "error": status_response.get("error", "generation_status_failed")}
+            status_error = str(status_response.get("error") or "generation_status_failed")
+            local_artifact = latest_zip(Path(str(state.get("output_dir", "")))) or str(state.get("artifact_path", ""))
+            if status_error != "job_not_found" or not local_artifact:
+                return {"ok": False, "status": "error", "error": status_error}
+            state["status"] = "succeeded"
+            state["artifact_path"] = local_artifact
+            state["error"] = ""
+            state["updated_at"] = int(time.time())
+            atomic_write_json(state_path, state)
     artifact_path = latest_zip(Path(str(state.get("output_dir", "")))) or str(state.get("artifact_path", ""))
     status_text = str(state.get("status", "")).lower()
     if artifact_path and status_text not in {"failed", "error", "cancelled", "canceled"}:
+        try:
+            with zipfile.ZipFile(artifact_path, "r") as archive:
+                if "sekailink_compensator.json" in archive.namelist():
+                    metadata = json.loads(archive.read("sekailink_compensator.json").decode("utf-8"))
+                    if isinstance(metadata, dict) and metadata.get("active") is True:
+                        existing = state.get("compensator", {})
+                        if isinstance(existing, dict):
+                            for key in ("release_state", "last_release_at", "announcement_recorded", "announcement"):
+                                if key in existing:
+                                    metadata[key] = existing[key]
+                        state["compensator"] = metadata
+        except (OSError, ValueError, KeyError, zipfile.BadZipFile, json.JSONDecodeError):
+            pass
         sync_entries = state.get("sync_entries", [])
         if not isinstance(sync_entries, list):
             sync_entries = []
@@ -1434,6 +1500,134 @@ def generation_admin_secrets(request: dict[str, Any], state_path: Path) -> dict[
         "ap_admin_password": password,
         "ap_admin_password_source": state.get("room_ap_admin_password_source", ""),
     }
+
+
+def tail_log(path_value: Any, max_bytes: int = 160_000) -> str:
+    path = Path(str(path_value or ""))
+    if not path.is_file():
+        return ""
+    size = path.stat().st_size
+    with path.open("rb") as stream:
+        if size > max_bytes:
+            stream.seek(size - max_bytes)
+        data = stream.read(max_bytes)
+    return data.decode("utf-8", errors="replace")
+
+
+async def send_room_admin_command(
+    state: dict[str, Any], command: str, slot_name: str = "", game: str = "SekaiLink Compensator"
+) -> None:
+    import websockets
+
+    host = local_probe_host(str(state.get("room_bind_host") or state.get("room_host") or "127.0.0.1"))
+    port = int(state.get("room_port") or 0)
+    password = str(state.get("room_ap_admin_password") or "").strip()
+    metadata = state.get("compensator", {})
+    slot_name = str(slot_name or metadata.get("slot_name") or metadata.get("display_name") or "").strip()
+    if not bool(state.get("room_runtime_alive")) or not port:
+        raise RuntimeError("compensator_room_not_running")
+    if not password:
+        raise RuntimeError("room_ap_admin_password_missing")
+    if not slot_name:
+        raise RuntimeError("room_admin_slot_missing")
+
+    uri = f"ws://{host}:{port}"
+    async with websockets.connect(uri, open_timeout=8) as websocket:
+        await asyncio.wait_for(websocket.recv(), timeout=8)
+        connect_packet = {
+            "cmd": "Connect",
+            "password": "",
+            "name": slot_name,
+            "game": game,
+            "version": {"major": 0, "minor": 6, "build": 7, "class": "Version"},
+            "items_handling": 0,
+            "tags": ["AP", "Tracker", "TextOnly"],
+            "uuid": f"sekailink-compensator-control-{uuid.uuid4()}",
+        }
+        await websocket.send(json.dumps([connect_packet]))
+        while True:
+            batch = json.loads(await asyncio.wait_for(websocket.recv(), timeout=8))
+            if any(isinstance(packet, dict) and packet.get("cmd") == "ConnectionRefused" for packet in batch):
+                raise RuntimeError("compensator_control_connection_refused")
+            if any(isinstance(packet, dict) and packet.get("cmd") == "Connected" for packet in batch):
+                break
+        await websocket.send(json.dumps([
+            {"cmd": "Say", "text": f"!admin login {password}"},
+            {"cmd": "Say", "text": f"!admin {command}"},
+        ]))
+        await asyncio.sleep(0.25)
+
+
+async def send_compensator_command(state: dict[str, Any], mode: str) -> None:
+    await send_room_admin_command(state, f"/compensator release {mode}")
+
+
+def host_console_state(request: dict[str, Any], state_path: Path) -> dict[str, Any]:
+    if not state_path.exists():
+        return {"ok": False, "status": "error", "error": "generation_state_missing"}
+    state = read_json(state_path)
+    refresh_room_runtime_state(state)
+    generation_log = tail_log(state.get("generation_log_path"))
+    if generation_server_configured() and state.get("submitted"):
+        status_response = generation_tcp_request({"cmd": "job_status", "job_id": state.get("job_id", request.get("generation_id", ""))})
+        job = status_response.get("job", {}) if status_response.get("ok", False) else {}
+        if isinstance(job, dict):
+            generation_log = str(job.get("log_tail") or job.get("error_detail") or generation_log)
+    return {
+        "ok": True,
+        "generation_id": state.get("generation_id", request.get("generation_id", "")),
+        "lobby_id": state.get("lobby_id", ""),
+        "generation_status": state.get("status", ""),
+        "room_status": state.get("room_status", ""),
+        "room_runtime_alive": bool(state.get("room_runtime_alive", False)),
+        "generation_log": generation_log,
+        "room_server_log": tail_log(state.get("room_runtime_log")),
+        "updated_at": int(time.time()),
+    }
+
+
+def host_console_command(request: dict[str, Any], state_path: Path) -> dict[str, Any]:
+    if not state_path.exists():
+        return {"ok": False, "status": "error", "error": "generation_state_missing"}
+    command = " ".join(str(request.get("command") or "").strip().split())
+    if not command or len(command) > 400 or "\n" in command or "\r" in command:
+        return {"ok": False, "status": "error", "error": "invalid_admin_command"}
+    if not command.startswith("/"):
+        command = "/" + command
+    state = read_json(state_path)
+    refresh_room_runtime_state(state)
+    slot_name = str(request.get("slot_name") or "").strip()
+    game = ""
+    if not slot_name:
+        sync_entries = state.get("sync_entries", [])
+        if isinstance(sync_entries, list):
+            entry = next((entry for entry in sync_entries if isinstance(entry, dict) and entry.get("slot_name") and entry.get("game")), None)
+            if entry:
+                slot_name = str(entry.get("slot_name") or "").strip()
+                game = str(entry.get("game") or "").strip()
+    if not slot_name or not game:
+        raise RuntimeError("room_admin_slot_missing")
+    asyncio.run(send_room_admin_command(state, command, slot_name, game))
+    return {"ok": True, "status": "sent", "command": command, "sent_at": int(time.time())}
+
+
+def release_compensator(request: dict[str, Any], state_path: Path) -> dict[str, Any]:
+    if not state_path.exists():
+        return {"ok": False, "status": "error", "error": "generation_state_missing"}
+    mode = str(request.get("mode") or "all").strip().lower()
+    if mode not in {"all", "progression", "accelerate"}:
+        return {"ok": False, "status": "error", "error": "invalid_compensator_release_mode"}
+    state = read_json(state_path)
+    refresh_room_runtime_state(state)
+    asyncio.run(send_compensator_command(state, mode))
+    metadata = state.get("compensator", {})
+    if isinstance(metadata, dict):
+        metadata["release_state"] = mode
+        metadata["last_release_at"] = int(time.time())
+        state["compensator"] = metadata
+    state["updated_at"] = int(time.time())
+    atomic_write_json(state_path, state)
+    return {"ok": True, "status": "released", "mode": mode, "compensator": metadata}
 
 
 def validate_seed_config(request: dict[str, Any], state_path: Path, spool_root: Path) -> dict[str, Any]:
@@ -1542,6 +1736,12 @@ def main() -> int:
           response = generation_status(request, state_path)
       elif action == "generation_admin_secrets":
           response = generation_admin_secrets(request, state_path)
+      elif action == "release_compensator":
+          response = release_compensator(request, state_path)
+      elif action == "host_console_state":
+          response = host_console_state(request, state_path)
+      elif action == "host_console_command":
+          response = host_console_command(request, state_path)
       elif action == "validate_seed_config":
           response = validate_seed_config(request, state_path, spool_root)
       elif action == "stop_generation":

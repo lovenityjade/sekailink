@@ -267,8 +267,8 @@
       "world": "tloz_ooa",
       "wrapper": "bizhawk",
       "client_file": "worlds/tloz_ooa/Client.py",
-      "status": "runtime_unavailable",
-      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+      "status": "enabled",
+      "notes": "Canari test frozen: Linux bilateral send/reception confirmed through Sekaiemu/Gambatte with the BizHawk-compatible runtime memory bridge. Windows validation is still required before Canonical promotion."
     },
     {
       "game_key": "oracle_of_seasons",
@@ -277,8 +277,8 @@
       "world": "tloz_oos",
       "wrapper": "bizhawk",
       "client_file": "worlds/tloz_oos/Client.py",
-      "status": "runtime_unavailable",
-      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+      "status": "enabled",
+      "notes": "Canari test frozen: Linux bilateral send/reception confirmed after aligning the local apworld to the active Worlds generator version 13.7.4. Windows validation is still required before Canonical promotion."
     },
     {
       "game_key": "pokemon_crystal",
@@ -288,7 +288,7 @@
       "wrapper": "bizhawk",
       "client_file": "worlds/pokemon_crystal/client.py",
       "status": "runtime_unavailable",
-      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+      "notes": "Temporarily unavailable: Pokemon Crystal reaches gameplay in forced GBC mode but then freezes/graphically corrupts. Oracle of Ages and Pokemon Red/Blue confirm the general Sekaiemu/Gambatte GB/GBC path works, so this remains a Crystal-specific patch/runtime investigation."
     },
     {
       "game_key": "pokemon_emerald",
@@ -297,8 +297,8 @@
       "world": "pokemon_emerald",
       "wrapper": "bizhawk",
       "client_file": "worlds/pokemon_emerald/client.py",
-      "status": "runtime_unavailable",
-      "notes": "Temporarily unavailable for BETA-3 launch: runtime connects and receives, but check send behavior still needs a focused Emerald tester/regression pass."
+      "status": "enabled",
+      "notes": "Canari test frozen: Linux bilateral send/reception confirmed through Sekaiemu/mGBA with the BizHawk-compatible runtime memory bridge. Windows validation is still required before Canonical promotion."
     },
     {
       "game_key": "pokemon_firered",
@@ -307,8 +307,8 @@
       "world": "pokemon_frlg",
       "wrapper": "bizhawk",
       "client_file": "worlds/pokemon_frlg/client.py",
-      "status": "runtime_unavailable",
-      "notes": "Temporarily unavailable for BETA-3 launch: GBA support is frozen to confirmed bilateral games only until a focused tester validates this title."
+      "status": "enabled",
+      "notes": "Canari test frozen: Linux bilateral send/reception confirmed through Sekaiemu/mGBA with the BizHawk-compatible runtime memory bridge. Windows validation is still required before Canonical promotion."
     },
     {
       "game_key": "pokemon_red_blue",
@@ -317,8 +317,8 @@
       "world": "pokemon_rb",
       "wrapper": "bizhawk",
       "client_file": "worlds/pokemon_rb/client.py",
-      "status": "runtime_unavailable",
-      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+      "status": "enabled",
+      "notes": "Canari test frozen: Linux bilateral send/reception confirmed through Sekaiemu/Gambatte with the BizHawk-compatible runtime memory bridge. Windows validation is still required before Canonical promotion."
     },
     {
       "game_key": "super_mario_land_2",
@@ -400,7 +400,7 @@
       "world": "ladx_beta",
       "wrapper": "module",
       "client_file": "worlds/ladx_beta/LinksAwakeningClient.py",
-      "status": "runtime_unavailable",
+      "status": "enabled",
       "module": "worlds.ladx_beta.LinksAwakeningClient",
       "requires": [
         "game-specific connector/module runtime"
@@ -409,7 +409,7 @@
       "retroarch_port": 55355,
       "pass_patch": false,
       "pass_slot": false,
-      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+      "notes": "Canari test frozen: Linux bilateral send/reception confirmed through Sekaiemu/Gambatte plus the RetroArch UDP compatibility bridge on port 55355. Windows validation is still required before Canonical promotion."
     },
     {
       "game_key": "mario_kart_double_dash",
@@ -559,9 +559,30 @@
       "game": "Majora's Mask Recompiled",
       "platform": "N64/PC",
       "world": "mm_recomp",
-      "wrapper": "text",
+      "wrapper": "embedded",
       "client_file": "worlds/mm_recomp/__init__.py",
-      "status": "generator_only"
+      "status": "enabled",
+      "notes": "Canari test integration launches the private managed SM64EX SekaiLink package with a generated .apsm64ex slot file. Linux smoke-tested; Windows and live bilateral validation remain pending."
+    },
+    {
+      "game_key": "ship_of_harkinian",
+      "game": "Ship of Harkinian",
+      "platform": "N64/PC",
+      "world": "oot_soh",
+      "wrapper": "embedded",
+      "client_file": "worlds/oot_soh/Client.py",
+      "status": "enabled",
+      "notes": "Launches the managed SekaiLink Ship of Harkinian PC package with room connection details."
+    },
+    {
+      "game_key": "2_ship_2_harkinian",
+      "game": "2 Ship 2 Harkinian",
+      "platform": "N64/PC",
+      "world": "twoship",
+      "wrapper": "embedded",
+      "client_file": "worlds/twoship/Client.py",
+      "status": "enabled",
+      "notes": "Launches the managed SekaiLink 2Ship2Harkinian PC package with room connection details."
     },
     {
       "game_key": "secret_of_mana",
@@ -591,7 +612,7 @@
       "wrapper": "web_ap_client",
       "client_file": "third_party/upstream/ap-soeclient",
       "status": "enabled",
-      "notes": "Uses the upstream Evermizer browser AP client through SekaiLink's web_ap_client wrapper."
+      "notes": "Canari freeze note: Linux send/reception confirmed through the upstream Evermizer browser AP client and SekaiLink web_ap_client wrapper. Windows validation is still required before Canonical promotion."
     },
     {
       "game_key": "super_mario_64",

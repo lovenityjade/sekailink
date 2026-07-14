@@ -242,12 +242,12 @@ class PersistentApConnection:
                     batch = json.loads(raw)
                     self._remember("recv", batch)
                     if any(isinstance(packet, dict) and packet.get("cmd") == "Connected" for packet in batch):
-                        self.connected_event.set()
                         if self.admin_password and not self.admin_authenticated:
                             login_packet = {"cmd": "Say", "text": f"!admin login {self.admin_password}"}
                             await ws.send(json.dumps([login_packet]))
                             self._remember("send", [{"cmd": "Say", "text": "!admin login ***redacted***"}])
                             self.admin_authenticated = True
+                        self.connected_event.set()
                     if any(isinstance(packet, dict) and packet.get("cmd") == "ConnectionRefused" for packet in batch):
                         self.stop_event.set()
                         self.connected_event.clear()
@@ -278,6 +278,7 @@ class SekaiLinkRoomAdmin:
         self.ap_admin_password = args.ap_admin_password or os.getenv("SEKAILINK_AP_ADMIN_PASSWORD") or config.get("ap_admin_password", "")
         self.lobbies: list[LobbyRef] = []
         self.selected_lobby: LobbyRef | None = None
+        self.selected_generation: Any = None
         self.room = RoomTarget()
         self.ap_uri = ""
         self.history: list[dict[str, Any]] = []
@@ -285,7 +286,7 @@ class SekaiLinkRoomAdmin:
         self.ap_connection = PersistentApConnection(self)
         self.commands = [
             "help", "login", "whoami", "lobbies", "select", "generation", "status", "snapshot", "summary",
-            "ap-info", "events", "watch", "reports", "check", "item", "give", "raw", "ap-check", "ap-say",
+            "ap-info", "events", "watch", "reports", "check", "item", "give", "release", "raw", "ap-check", "ap-say",
             "ap-log", "ap-connect", "ap-disconnect", "secrets", "players", "items", "export", "config", "quit", "exit",
         ]
 
@@ -405,6 +406,8 @@ class SekaiLinkRoomAdmin:
             ("check <location_id>", "Injecte record_check via canal admin."),
             ("item <slot> <item_id> <name> [location_id]", "Injecte enqueue_received_item dans la room."),
             ("give <slotname> <item name...>", "Valide l'item AP et envoie !admin /send à ce slot."),
+            ("release <slotname>", "Envoie !admin /release pour ce slot via le moniteur AP admin."),
+            ("compensator [status|release <mode>]", "Inspecte ou libere le Compensator (all, progression, accelerate)."),
             ("players", "Liste les noms de slots disponibles pour autocomplete."),
             ("items [game]", "Liste les items AP connus pour le jeu."),
             ("raw <json>", "Envoie une commande admin brute au room server."),
@@ -558,10 +561,14 @@ class SekaiLinkRoomAdmin:
         self.selected_lobby = self.find_lobby(selector)
         self.console.print(f"[{SEKAI_TEAL}]Lobby sélectionné:[/] {self.selected_lobby.title}")
         generation = self.fetch_generation()
+        self.selected_generation = generation
         room_id, room_url = self.extract_room_identity(generation)
+        if not room_id:
+            room_id = self.selected_lobby.lobby_id
         if room_id:
             self.room.room_id = room_id
             self.room.room_url = room_url
+            self.apply_generation_endpoint(generation)
             self.cmd_status()
             self.cmd_ap_connect()
         else:
@@ -592,10 +599,67 @@ class SekaiLinkRoomAdmin:
                         candidates.append(str(response[key]))
         for url in candidates:
             parsed = urlparse(url)
+            if parsed.scheme and not parsed.netloc and ":" in url and "/" not in url:
+                return "", url
             parts = [part for part in parsed.path.split("/") if part]
             if parts:
                 return parts[-1], url
         return "", candidates[0] if candidates else ""
+
+    def generation_root(self, payload: Any | None = None) -> dict[str, Any]:
+        raw = self.selected_generation if payload is None else payload
+        if not isinstance(raw, dict):
+            return {}
+        generation = raw.get("generation") if isinstance(raw.get("generation"), dict) else raw
+        return generation if isinstance(generation, dict) else {}
+
+    def generation_response(self, payload: Any | None = None) -> dict[str, Any]:
+        root = self.generation_root(payload)
+        response = root.get("response")
+        return response if isinstance(response, dict) else {}
+
+    def apply_generation_endpoint(self, payload: Any | None = None) -> None:
+        root = self.generation_root(payload)
+        response = self.generation_response(payload)
+        host = str(root.get("room_host") or response.get("room_host") or "").strip()
+        port_raw = root.get("room_port") or root.get("last_port") or response.get("room_port") or response.get("last_port")
+        room_url = str(root.get("room_url") or response.get("room_url") or root.get("room_server_url") or response.get("room_server_url") or "").strip()
+        if (not host or not port_raw) and room_url:
+            parsed = urlparse(room_url if "://" in room_url else f"//{room_url}")
+            if parsed.hostname:
+                host = host or parsed.hostname
+            if parsed.port:
+                port_raw = port_raw or parsed.port
+        try:
+            port = int(port_raw or 0)
+        except (TypeError, ValueError):
+            port = 0
+        if host:
+            self.room.host = host
+        if port:
+            self.room.port = port
+            self.ap_uri = f"ws://{self.room.host or host}:{port}"
+
+    def merge_generation_status(self, status: dict[str, Any]) -> dict[str, Any]:
+        root = self.generation_root()
+        response = self.generation_response()
+        merged = dict(status)
+        for source in (response, root):
+            for key in (
+                "launch_entries",
+                "players",
+                "room_host",
+                "room_port",
+                "last_port",
+                "room_runtime_log",
+                "room_runtime_alive",
+                "room_status",
+                "sync_package_path",
+            ):
+                if key not in merged or merged.get(key) in (None, "", [], 0):
+                    if isinstance(source, dict) and source.get(key) not in (None, "", [], 0):
+                        merged[key] = source[key]
+        return merged
 
     def cmd_generation(self) -> None:
         payload = self.fetch_generation()
@@ -605,7 +669,7 @@ class SekaiLinkRoomAdmin:
         if not self.room.room_id:
             raise RuntimeError("room_id manquant")
         payload = self.api_get(f"/api/room_status/{self.room.room_id}")
-        status = payload if isinstance(payload, dict) else {}
+        status = self.merge_generation_status(payload if isinstance(payload, dict) else {})
         self.room.status = status
         parsed_base = urlparse(self.api_base)
         host = str(status.get("room_host") or parsed_base.hostname or "127.0.0.1")
@@ -717,7 +781,7 @@ class SekaiLinkRoomAdmin:
             if self.ap_admin_password:
                 self.console.print(f"[{SEKAI_MUTED}]AP admin login envoyé via !admin.[/]")
             else:
-                self.console.print(f"[{SEKAI_CORAL}]AP admin password absent:[/] `give` ne peut pas exécuter /send. Définis SEKAILINK_AP_ADMIN_PASSWORD.")
+                self.console.print(f"[{SEKAI_CORAL}]AP admin password absent:[/] `give`/`release` ne peuvent pas exécuter les commandes admin. Définis SEKAILINK_AP_ADMIN_PASSWORD.")
         else:
             self.console.print(f"[{SEKAI_CORAL}]AP monitor non connecté après timeout.[/] Consulte `ap-log`.")
 
@@ -1020,6 +1084,38 @@ class SekaiLinkRoomAdmin:
         time.sleep(0.4)
         self.cmd_ap_log(12)
 
+    def cmd_release(self, slot_name: str) -> None:
+        game = self.game_for_slot_name(slot_name)
+        self.console.print(f"[{SEKAI_TEAL}]Release:[/] {slot_name} ({game})")
+        self.console.print(
+            f"[{SEKAI_MUTED}]Note:[/] `release` envoie `!admin /release <slot>` via la connexion AP monitor persistante "
+            "en mode tracker/admin (items_handling=0)."
+        )
+        if not self.ap_connection.connected_for(self.ap_uri, slot_name, game):
+            self.cmd_ap_connect(slot_name, game)
+        if not self.ap_admin_password:
+            raise RuntimeError("SEKAILINK_AP_ADMIN_PASSWORD manquant: /release doit passer par !admin login puis !admin /release")
+        self.ap_connection.send({"cmd": "Say", "text": f"!admin /release {slot_name}"})
+        time.sleep(0.4)
+        self.cmd_ap_log(12)
+
+    def cmd_compensator(self, args: list[str]) -> None:
+        action = args[0].lower() if args else "status"
+        if action == "status":
+            command = "!admin /compensator status"
+        elif action == "release" and len(args) == 2 and args[1].lower() in {"all", "progression", "accelerate"}:
+            command = f"!admin /compensator release {args[1].lower()}"
+        else:
+            raise RuntimeError("usage: compensator [status|release <all|progression|accelerate>]")
+        slot_name, game = self.default_player()
+        if not self.ap_connection.connected_for(self.ap_uri, slot_name, game):
+            self.cmd_ap_connect(slot_name, game)
+        if not self.ap_admin_password:
+            raise RuntimeError("SEKAILINK_AP_ADMIN_PASSWORD manquant: compensator requiert l'admin AP")
+        self.ap_connection.send({"cmd": "Say", "text": command})
+        time.sleep(0.4)
+        self.cmd_ap_log(12)
+
     async def ap_room_info(self) -> list[dict[str, Any]]:
         if not self.ap_uri:
             if not self.room.ready():
@@ -1068,7 +1164,7 @@ class SekaiLinkRoomAdmin:
         if len(parts) == 1 and not line[:begin].endswith(" "):
             return self.commands
         players = [name for name, _game in self.room_players()]
-        if command in {"give", "ap-say", "ap-check"} and len(parts) <= 2:
+        if command in {"give", "release", "ap-say", "ap-check"} and len(parts) <= 2:
             return players
         if command == "give" and len(parts) >= 2:
             try:
@@ -1174,6 +1270,12 @@ class SekaiLinkRoomAdmin:
             if len(args) < 2:
                 raise RuntimeError("usage: give <slotname> <item name...>")
             self.cmd_give(args[0], " ".join(args[1:]))
+        elif command == "release":
+            if not args:
+                raise RuntimeError("usage: release <slotname>")
+            self.cmd_release(args[0])
+        elif command == "compensator":
+            self.cmd_compensator(args)
         elif command == "raw":
             if not args:
                 raise RuntimeError('usage: raw \'{"cmd":"room_summary","room_id":"..."}\'')
@@ -1236,7 +1338,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--room-admin-token", default="", help="Token admin du room server.")
     parser.add_argument("--room-runtime-token", default="", help="Token runtime du room server.")
     parser.add_argument("--room-admin-tool-token", default="", help="Token outil pour /api/room_admin_secrets/<room_id>.")
-    parser.add_argument("--ap-admin-password", default="", help="Mot de passe remote admin Archipelago pour !admin /send.")
+    parser.add_argument("--ap-admin-password", default="", help="Mot de passe remote admin Archipelago pour !admin /send et !admin /release.")
     return parser
 
 

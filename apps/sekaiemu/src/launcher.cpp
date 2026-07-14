@@ -1,6 +1,7 @@
 #include "launcher.hpp"
 
 #include "bug_report_client.hpp"
+#include "input_capture_mode.hpp"
 #include "layout_preview.hpp"
 #include "libretro_host.hpp"
 #include "logger.hpp"
@@ -171,6 +172,21 @@ LaunchResult RunSekaiemu(const LaunchRequest& request) {
       LogError(error);
     } else {
       LogInfo("Sekaiemu layout preview exited cleanly.");
+    }
+    ShutdownLogger();
+    return result;
+  }
+
+  if (request.input_capture) {
+    std::string error;
+    result.exit_code = RunInputCaptureMode(request, error);
+    result.ok = result.exit_code == 0;
+    result.technical_message = error;
+    if (!result.ok) {
+      result.user_message = "Sekaiemu could not complete controller capture.";
+      LogError(error);
+    } else {
+      LogInfo("Sekaiemu input capture exited cleanly.");
     }
     ShutdownLogger();
     return result;

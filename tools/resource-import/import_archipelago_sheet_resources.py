@@ -402,7 +402,7 @@ def write_outputs(inventory: list[SheetResource], results: list[DownloadAsset], 
     lines = [
         "# Archipelago Sheet Resource Import",
         "",
-        "Generated from `/home/thelovenityjade/Archipelago Games Sheet.xlsx`.",
+        "Generated from the configured Archipelago games sheet.",
         "",
         f"- Inventory rows with URLs: {len(inventory)}",
         f"- Downloaded/existing matching assets: {len(downloaded)}",
@@ -426,7 +426,7 @@ def write_outputs(inventory: list[SheetResource], results: list[DownloadAsset], 
 def main() -> int:
     repo_root = Path(__file__).resolve().parents[2]
     parser = argparse.ArgumentParser()
-    parser.add_argument("--xlsx", default="/home/thelovenityjade/Archipelago Games Sheet.xlsx")
+    parser.add_argument("--xlsx", default=os.environ.get("SEKAILINK_ARCHIPELAGO_SHEET", "Archipelago Games Sheet.xlsx"))
     parser.add_argument("--out", default=str(repo_root / "runtime/downloaded-resources/archipelago-sheet"))
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()

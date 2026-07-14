@@ -185,20 +185,12 @@ void LibretroHost::Impl::RenderBridgeTerminal() {
 }
 
 void LibretroHost::Impl::ToggleChatOverlay() {
-  chat_overlay_.ToggleEnabled();
-  if (!chat_overlay_.Enabled()) {
-    SDL_StopTextInput();
-  }
+  client_core_hud_.SetButtonsVisible(!client_core_hud_.ButtonsVisible());
+  SDL_StopTextInput();
   SaveFrontendSettingsNow();
 }
 
 void LibretroHost::Impl::OpenChatInput() {
-  if (!chat_overlay_.Enabled()) {
-    return;
-  }
-  chat_overlay_.BeginTyping(frame_counter);
-  chat_ignore_open_key_text_ = true;
-  SDL_StartTextInput();
 }
 
 void LibretroHost::Impl::CancelChatInput() {

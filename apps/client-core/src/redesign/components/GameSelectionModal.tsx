@@ -96,10 +96,10 @@ export default function GameSelectionModal({ onClose, onSelectGame, mode, games:
   return (
     <>
       {/* Backdrop */}
-      <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50" onClick={onClose} />
+      <div className="fixed left-0 right-0 bottom-0 top-[32px] bg-black/80 backdrop-blur-sm z-50" onClick={onClose} />
 
       {/* Modal */}
-      <div className="fixed inset-0 z-[60] flex items-center justify-center p-8 pointer-events-none">
+      <div className="fixed left-0 right-0 bottom-0 top-[32px] z-[60] flex items-center justify-center p-8 pointer-events-none">
         <div className="bg-gradient-card border-2 border-[#4ecdc4] rounded-lg shadow-2xl max-w-5xl w-full pointer-events-auto" onClick={(e) => e.stopPropagation()}>
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-[#2a2b30]">

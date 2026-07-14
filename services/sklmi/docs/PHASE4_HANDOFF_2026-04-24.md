@@ -107,9 +107,9 @@ For SNES behavior, continue to use SNI as the reference model:
 
 The last active files before pause were:
 
-- `/home/thelovenityjade/DevSSD/SekaiLinkDev/sekailink-sklmi/include/sekailink_sklmi/api.hpp`
-- `/home/thelovenityjade/DevSSD/SekaiLinkDev/sekailink-sklmi/src/api.cpp`
-- `/home/thelovenityjade/DevSSD/SekaiLinkDev/docs/roadmap/SKLMI_ROADMAP.md`
+- `<local-home>/DevSSD/SekaiLinkDev/sekailink-sklmi/include/sekailink_sklmi/api.hpp`
+- `<local-home>/DevSSD/SekaiLinkDev/sekailink-sklmi/src/api.cpp`
+- `<local-home>/DevSSD/SekaiLinkDev/docs/roadmap/SKLMI_ROADMAP.md`
 
 The next thing to do is:
 

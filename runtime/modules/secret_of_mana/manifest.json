@@ -39,7 +39,7 @@
     "ap_game": "Secret of Mana"
   },
   "tracker_pack_uid": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker",
-  "tracker_web_url": "",
+  "tracker_web_url": "https://github.com/Cyb3RGER/SoM-Open-Mode-Tracker/releases/latest",
   "tracker_asset_regex": "\\.zip$",
   "default_tracker_variant": "standard",
   "support_status": "supported",

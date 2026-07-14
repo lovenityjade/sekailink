@@ -23,8 +23,19 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
 
   if (parts.size() == 1 && method == "POST") {
     const auto request = body.value_or(nlohmann::json::object());
-    const auto name = sanitized_text(request.value("name", std::string("SekaiLink Room")), 80);
-    const auto description = sanitized_text(request.value("description", std::string{}), 240);
+    const auto requested_room_type = lower(json_string_or(request, "room_type", json_string_or(request, "mode")));
+    const auto async_requested = requested_room_type == "async" ||
+                                 request.value("asynchronous", false) ||
+                                 request.value("is_async", false);
+    if (async_requested && !patreon_async_room_eligible(user)) {
+      return {403, R"({"ok":false,"error":"async_room_requires_patreon_tier_2_or_3"})"};
+    }
+    const auto moderated_name = moderate_user_text(request.value("name", std::string("SekaiLink Room")), 80, ModerationMode::LobbyText);
+    if (!moderated_name.ok) return {400, moderation_error_json(moderated_name).dump()};
+    const auto moderated_description = moderate_user_text(request.value("description", std::string{}), 240, ModerationMode::LobbyText);
+    if (!moderated_description.ok) return {400, moderation_error_json(moderated_description).dump()};
+    const auto name = moderated_name.text;
+    const auto description = moderated_description.text;
     const auto password = sanitized_text(request.value("password", std::string{}), 120);
     const auto visibility = password.empty() ? std::string("public") : std::string("private");
     const auto lobby_id = safe_lobby_id_from_name(name, user_id);
@@ -199,7 +210,10 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
   }
   if (parts.size() == 3 && parts[2] == "messages" && method == "POST") {
     if (!body.has_value() || !body->is_object()) return {400, R"({"ok":false,"error":"invalid_body"})"};
-    const auto content = first_string_limited(*body, {"content", "message", "text"}, "", 400);
+    const auto raw_content = first_string_limited(*body, {"content", "message", "text"}, "", 400);
+    const auto moderated_content = moderate_user_text(raw_content, 400, ModerationMode::Chat);
+    if (!moderated_content.ok) return {400, moderation_error_json(moderated_content).dump()};
+    const auto content = moderated_content.text;
     if (content.empty()) {
       nlohmann::json keys = nlohmann::json::array();
       for (const auto& [key, value] : body->items()) {
@@ -329,6 +343,48 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
           error = handoff.error;
           changed = true;
         }
+        if (generation_response.contains("compensator") && generation_response.at("compensator").is_object()) {
+          auto compensator = generation_response.at("compensator");
+          if (compensator.value("active", false) && !compensator.value("announcement_recorded", false)) {
+            const auto name = compensator.value("display_name", compensator.value("slot_name", std::string("Compensator")));
+            const auto reason = compensator.value("reason", std::string());
+            const auto announcement = reason == "item_location_deficit"
+                ? "Because there were not enough locations for this sync, we summoned " + name + " to help you out."
+                : "Because this sync had more locations than its item pool could fill, we summoned " + name + " to bring extra supplies.";
+            const nlohmann::json system_identity = {
+                {"user", {
+                    {"id", "sekailink-system"},
+                    {"user_id", "sekailink-system"},
+                    {"username", "SekaiLink"},
+                    {"display_name", "SekaiLink"},
+                    {"avatar_url", ""},
+                }},
+            };
+            const auto relay = forward_to_gateway(
+                "POST",
+                "/channels/" + channel_id + "/messages",
+                nlohmann::json{
+                    {"author", "SekaiLink"},
+                    {"user_id", "sekailink-system"},
+                    {"username", "SekaiLink"},
+                    {"display_name", "SekaiLink"},
+                    {"avatar_url", ""},
+                    {"role", "system"},
+                    {"ready", false},
+                    {"content", announcement},
+                });
+            if (relay.status >= 200 && relay.status < 300) {
+              const auto remembered = remember_message(channel_id, system_identity, announcement);
+              if (remembered.status >= 200 && remembered.status < 300) {
+                compensator["announcement_recorded"] = true;
+                compensator["announcement"] = announcement;
+                generation_response["compensator"] = compensator;
+                response_json = generation_response.dump();
+                changed = true;
+              }
+            }
+          }
+        }
         if (changed && !config_.sqlite_path.empty()) {
           const auto refresh_time = utc_now_iso8601();
           std::unique_lock update_lock(store_mutex_);
@@ -389,6 +445,7 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
             {"sync_package_ready", !sync_package_path.empty()},
             {"sync_entries", sync_entries},
             {"launch_entries", launch_entries},
+            {"compensator", generation_response.value("compensator", nlohmann::json::object())},
             {"room_status", response_string(generation_response, "room_status")},
             {"room_host", response_string(generation_response, "room_host")},
             {"room_runtime_log", response_string(generation_response, "room_runtime_log")},
@@ -403,6 +460,19 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
         }.dump()};
   }
   if (parts.size() == 4 && parts[2] == "generation" && parts[3] == "reset" && method == "POST") {
+    const auto current = forward_to_lobby_runtime("GET", "/runtime/lobbies/" + lobby_id, std::nullopt);
+    const auto current_json = parse_body_json(current);
+    const auto current_status = response_status_from_body(current, current_json);
+    if (current_status != 200 || !current_json.value("ok", false) || !current_json.contains("lobby")) return {current_status, current.body};
+    if (!identity_matches_lobby_owner(identity, current_json.at("lobby"))) {
+      return {
+          403,
+          nlohmann::json{
+              {"ok", false},
+              {"error", "host_only"},
+              {"message", "Only the lobby host can reset generation."},
+          }.dump()};
+    }
     if (config_.sqlite_path.empty()) {
       return {200, nlohmann::json{{"ok", true}, {"status", "idle"}, {"reset", false}}.dump()};
     }
@@ -496,6 +566,125 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
             {"lobby_id", lobby_id},
             {"generation_id", generation_id},
         }.dump()};
+  }
+  if (parts.size() == 4 && parts[2] == "compensator" && parts[3] == "release" && method == "POST") {
+    const auto current = forward_to_lobby_runtime("GET", "/runtime/lobbies/" + lobby_id, std::nullopt);
+    const auto current_json = parse_body_json(current);
+    const auto current_status = response_status_from_body(current, current_json);
+    if (current_status != 200 || !current_json.value("ok", false) || !current_json.contains("lobby")) {
+      return {current_status, current.body};
+    }
+    if (!identity_matches_lobby_owner(identity, current_json.at("lobby"))) {
+      return {403, nlohmann::json{{"ok", false}, {"error", "host_only"}, {"message", "Only the lobby host can release the Compensator."}}.dump()};
+    }
+    const auto request = body.value_or(nlohmann::json::object());
+    const auto mode = request.value("mode", std::string("all"));
+    if (mode != "all" && mode != "progression" && mode != "accelerate") {
+      return {400, nlohmann::json{{"ok", false}, {"error", "invalid_compensator_release_mode"}}.dump()};
+    }
+    if (config_.sqlite_path.empty() || config_.generation_handoff_command.empty()) {
+      return {503, nlohmann::json{{"ok", false}, {"error", "generation_handoff_unavailable"}}.dump()};
+    }
+    std::string generation_id;
+    {
+      std::unique_lock lock(store_mutex_);
+      sqlite3* db = nullptr;
+      if (sqlite3_open(config_.sqlite_path.string().c_str(), &db) == SQLITE_OK && db != nullptr) {
+        ensure_lobby_generation_state_table(db);
+        sqlite3_stmt* stmt = nullptr;
+        if (sqlite3_prepare_v2(db, "SELECT generation_id FROM lobby_generation_state WHERE lobby_id = ? LIMIT 1;", -1, &stmt, nullptr) == SQLITE_OK) {
+          sqlite3_bind_text(stmt, 1, lobby_id.c_str(), -1, SQLITE_TRANSIENT);
+          if (sqlite3_step(stmt) == SQLITE_ROW) generation_id = sqlite_column_string(stmt, 0);
+          sqlite3_finalize(stmt);
+        }
+        sqlite3_close(db);
+      } else if (db != nullptr) {
+        sqlite3_close(db);
+      }
+    }
+    if (generation_id.empty()) {
+      return {404, nlohmann::json{{"ok", false}, {"error", "generation_state_missing"}}.dump()};
+    }
+    const auto handoff = run_generation_handoff(
+        config_, generation_id,
+        nlohmann::json{{"action", "release_compensator"}, {"generation_id", generation_id}, {"lobby_id", lobby_id}, {"mode", mode}, {"source", "link-chat-api"}});
+    if (!handoff.ok) {
+      return {502, nlohmann::json{{"ok", false}, {"error", "compensator_release_failed"}, {"detail", handoff.error}}.dump()};
+    }
+    if (handoff.response.is_object() && !handoff.response.empty()) {
+      std::unique_lock lock(store_mutex_);
+      sqlite3* db = nullptr;
+      if (sqlite3_open(config_.sqlite_path.string().c_str(), &db) == SQLITE_OK && db != nullptr) {
+        sqlite3_stmt* stmt = nullptr;
+        if (sqlite3_prepare_v2(
+                db,
+                "UPDATE lobby_generation_state SET response_json = json_patch(response_json, ?), updated_at = ? WHERE lobby_id = ? AND generation_id = ?;",
+                -1, &stmt, nullptr) == SQLITE_OK) {
+          const auto patch = nlohmann::json{{"compensator", handoff.response.value("compensator", nlohmann::json::object())}}.dump();
+          const auto now = utc_now_iso8601();
+          sqlite3_bind_text(stmt, 1, patch.c_str(), -1, SQLITE_TRANSIENT);
+          sqlite3_bind_text(stmt, 2, now.c_str(), -1, SQLITE_TRANSIENT);
+          sqlite3_bind_text(stmt, 3, lobby_id.c_str(), -1, SQLITE_TRANSIENT);
+          sqlite3_bind_text(stmt, 4, generation_id.c_str(), -1, SQLITE_TRANSIENT);
+          (void)sqlite3_step(stmt);
+          sqlite3_finalize(stmt);
+        }
+        sqlite3_close(db);
+      } else if (db != nullptr) {
+        sqlite3_close(db);
+      }
+    }
+    return {200, handoff.response.dump()};
+  }
+  if (parts.size() == 3 && parts[2] == "host-console" && (method == "GET" || method == "POST")) {
+    const auto current = forward_to_lobby_runtime("GET", "/runtime/lobbies/" + lobby_id, std::nullopt);
+    const auto current_json = parse_body_json(current);
+    const auto current_status = response_status_from_body(current, current_json);
+    if (current_status != 200 || !current_json.value("ok", false) || !current_json.contains("lobby")) {
+      return {current_status, current.body};
+    }
+    if (!identity_matches_lobby_owner(identity, current_json.at("lobby"))) {
+      return {403, nlohmann::json{{"ok", false}, {"error", "host_only"}, {"message", "Only the lobby host can use the Host Console."}}.dump()};
+    }
+    if (config_.sqlite_path.empty() || config_.generation_handoff_command.empty()) {
+      return {503, nlohmann::json{{"ok", false}, {"error", "generation_handoff_unavailable"}}.dump()};
+    }
+    std::string generation_id;
+    {
+      std::unique_lock lock(store_mutex_);
+      sqlite3* db = nullptr;
+      if (sqlite3_open(config_.sqlite_path.string().c_str(), &db) == SQLITE_OK && db != nullptr) {
+        ensure_lobby_generation_state_table(db);
+        sqlite3_stmt* stmt = nullptr;
+        if (sqlite3_prepare_v2(db, "SELECT generation_id FROM lobby_generation_state WHERE lobby_id = ? LIMIT 1;", -1, &stmt, nullptr) == SQLITE_OK) {
+          sqlite3_bind_text(stmt, 1, lobby_id.c_str(), -1, SQLITE_TRANSIENT);
+          if (sqlite3_step(stmt) == SQLITE_ROW) generation_id = sqlite_column_string(stmt, 0);
+          sqlite3_finalize(stmt);
+        }
+        sqlite3_close(db);
+      } else if (db != nullptr) {
+        sqlite3_close(db);
+      }
+    }
+    if (generation_id.empty()) {
+      return {404, nlohmann::json{{"ok", false}, {"error", "generation_state_missing"}}.dump()};
+    }
+    nlohmann::json request = {
+        {"action", method == "GET" ? "host_console_state" : "host_console_command"},
+        {"generation_id", generation_id},
+        {"lobby_id", lobby_id},
+        {"source", "link-chat-api"},
+    };
+    if (method == "POST") {
+      const auto payload = body.value_or(nlohmann::json::object());
+      request["command"] = payload.value("command", std::string{});
+      request["slot_name"] = payload.value("slot_name", std::string{});
+    }
+    const auto handoff = run_generation_handoff(config_, generation_id, request);
+    if (!handoff.ok) {
+      return {502, nlohmann::json{{"ok", false}, {"error", "host_console_failed"}, {"detail", handoff.error}}.dump()};
+    }
+    return {handoff.response.value("ok", false) ? 200 : 400, handoff.response.dump()};
   }
   if (parts.size() == 3 && parts[2] == "host-status" && method == "GET") {
     return {200, nlohmann::json{{"ok", true}, {"host_absent", false}, {"host_absent_seconds", 0}, {"candidate_name", ""}, {"vote_count", 0}, {"vote_needed", 0}}.dump()};
@@ -875,9 +1064,27 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
         }.dump()};
   }
   if (parts.size() == 3 && parts[2] == "close" && method == "POST") {
+    const auto current = forward_to_lobby_runtime("GET", "/runtime/lobbies/" + lobby_id, std::nullopt);
+    const auto current_json = parse_body_json(current);
+    const auto current_status = response_status_from_body(current, current_json);
+    if (current_status != 200 || !current_json.value("ok", false) || !current_json.contains("lobby")) {
+      return {current_status, current.body};
+    }
+    if (!identity_matches_lobby_owner(identity, current_json.at("lobby"))) {
+      return {
+          403,
+          nlohmann::json{
+              {"ok", false},
+              {"error", "host_only"},
+              {"message", "Only the lobby host can close the lobby."},
+          }.dump()};
+    }
     const auto upstream = forward_to_lobby_runtime("POST", "/runtime/lobbies/" + lobby_id + "/close", std::nullopt);
     const auto parsed = parse_body_json(upstream);
     const auto close_status = response_status_from_body(upstream, parsed);
+    if (close_status >= 200 && close_status < 300 && !config_.social_bots_control_api_key.empty()) {
+      (void)forward_to_social_bots("POST", "/discord/lobby-voice/delete", nlohmann::json{{"lobby_id", lobby_id}});
+    }
     if (close_status >= 200 && close_status < 300 &&
         !config_.generation_handoff_command.empty() && !config_.sqlite_path.empty()) {
       std::string generation_id;
@@ -939,6 +1146,38 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
     }
     return {close_status, upstream.body};
   }
+  if (parts.size() == 3 && parts[2] == "voice" && (method == "GET" || method == "POST")) {
+    const auto current = forward_to_lobby_runtime("GET", "/runtime/lobbies/" + lobby_id, std::nullopt);
+    const auto current_json = parse_body_json(current);
+    const auto current_status = response_status_from_body(current, current_json);
+    if (current_status != 200 || !current_json.value("ok", false) || !current_json.contains("lobby")) {
+      return {current_status, current.body};
+    }
+    const auto& lobby = current_json.at("lobby");
+    const auto member_name = legacy_display_name(user);
+    bool is_member = identity_matches_lobby_owner(identity, lobby);
+    if (lobby.contains("presence") && lobby.at("presence").is_array()) {
+      for (const auto& presence : lobby.at("presence")) {
+        if (normalized_text_equal(presence.value("username", std::string{}), member_name)) is_member = true;
+      }
+    }
+    if (!is_member) return {403, nlohmann::json{{"ok", false}, {"error", "lobby_members_only"}}.dump()};
+    if (config_.social_bots_control_api_key.empty()) return {503, nlohmann::json{{"ok", false}, {"error", "discord_voice_unavailable"}}.dump()};
+    if (method == "GET") {
+      const auto voice = forward_to_social_bots("GET", "/discord/lobby-voice/" + lobby_id, std::nullopt);
+      const auto voice_json = parse_body_json(voice);
+      return {voice.status, nlohmann::json{{"ok", voice.status >= 200 && voice.status < 300}, {"state", voice_json.contains("channel_id") ? "available" : "unavailable"}, {"voice", voice_json}}.dump()};
+    }
+    auto discord_id_text = user.contains("discord_id") && user.at("discord_id").is_string() ? user.at("discord_id").get<std::string>() : std::string{};
+    if (discord_id_text.empty() && user.contains("discord_id") && user.at("discord_id").is_number_unsigned()) discord_id_text = std::to_string(user.at("discord_id").get<std::uint64_t>());
+    if (discord_id_text.empty() || !std::all_of(discord_id_text.begin(), discord_id_text.end(), ::isdigit)) {
+      return {409, nlohmann::json{{"ok", false}, {"error", "discord_account_not_linked"}}.dump()};
+    }
+    const auto voice = forward_to_social_bots(
+        "POST", "/discord/lobby-voice/create",
+        nlohmann::json{{"lobby_id", lobby_id}, {"lobby_name", lobby.value("name", lobby_id)}, {"member_ids", nlohmann::json::array({std::stoull(discord_id_text)})}});
+    return {voice.status, voice.body};
+  }
   if (parts.size() == 3 && parts[2] == "settings" && method == "POST") {
     const auto request = body.value_or(nlohmann::json::object());
     const auto current = forward_to_lobby_runtime("GET", "/runtime/lobbies/" + lobby_id, std::nullopt);
@@ -974,7 +1213,17 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
     const auto parsed = parse_body_json(upstream);
     const auto runtime_status = response_status_from_body(upstream, parsed);
     if (runtime_status != 200 || !parsed.value("ok", false) || !parsed.contains("lobby")) return {runtime_status, upstream.body};
-    const auto members = legacy_members_from_runtime_lobby(parsed.at("lobby"));
+    const auto& lobby = parsed.at("lobby");
+    if (!identity_matches_lobby_owner(identity, lobby)) {
+      return {
+          403,
+          nlohmann::json{
+              {"ok", false},
+              {"error", "host_only"},
+              {"message", "Only the lobby host can start generation."},
+          }.dump()};
+    }
+    const auto members = legacy_members_from_runtime_lobby(lobby);
     if (members.empty()) return {400, R"({"ok":false,"error":"empty_lobby"})"};
     if (config_.sqlite_path.empty()) return {503, R"({"ok":false,"error":"selection_store_missing"})"};
 
@@ -1356,6 +1605,7 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
             {"sync_package_ready", !sync_package_path.empty()},
             {"sync_entries", sync_entries},
             {"launch_entries", launch_entries},
+            {"compensator", generation_response.value("compensator", nlohmann::json::object())},
             {"room_status", response_string(generation_response, "room_status")},
             {"room_host", response_string(generation_response, "room_host")},
             {"room_runtime_log", response_string(generation_response, "room_runtime_log")},

@@ -45,9 +45,9 @@ bool contains(const std::string& text, const std::string& needle) {
 
 int main() {
     auto transport = std::make_unique<ScriptedTransport>(std::vector<std::string>{
-        "[{\"cmd\":\"RoomInfo\",\"seed_name\":\"BETA3-ALTTP-AP\",\"datapackage_checksums\":{\"A Link to the Past\":\"abc\"}}]",
-        "[{\"cmd\":\"DataPackage\",\"data\":{\"games\":{\"A Link to the Past\":{\"item_name_to_id\":{\"Hookshot\":10,\"Rupees (20)\":54},\"location_name_to_id\":{\"Sanctuary\":60025,\"Link's House\":59836}}}}}]",
-        "[{\"cmd\":\"Connected\",\"team\":0,\"slot\":1,\"checked_locations\":[59836],\"slot_data\":{\"mode\":\"open\",\"goal\":\"ganon\"}},"
+        "[{\"cmd\":\"RoomInfo\",\"seed_name\":\"BETA3-ALTTP-AP\",\"games\":[\"A Link to the Past\",\"Super Mario World\"],\"datapackage_checksums\":{\"A Link to the Past\":\"abc\",\"Super Mario World\":\"def\"}}]",
+        "[{\"cmd\":\"DataPackage\",\"data\":{\"games\":{\"A Link to the Past\":{\"item_name_to_id\":{\"Hookshot\":10,\"Rupees (20)\":54},\"location_name_to_id\":{\"Sanctuary\":60025,\"Link's House\":59836}},\"Super Mario World\":{\"item_name_to_id\":{\"Swim\":1234},\"location_name_to_id\":{}}}}}]",
+        "[{\"cmd\":\"Connected\",\"team\":0,\"slot\":1,\"checked_locations\":[59836],\"slot_data\":{\"mode\":\"open\",\"goal\":\"ganon\"},\"slot_info\":{\"1\":{\"name\":\"Jade\",\"game\":\"A Link to the Past\",\"type\":\"player\"},\"2\":{\"name\":\"Mario\",\"game\":\"Super Mario World\",\"type\":\"player\"}}},"
         "{\"cmd\":\"ReceivedItems\",\"index\":0,\"items\":[{\"item\":10,\"location\":60025,\"player\":1,\"flags\":0}]}]",
         "[{\"cmd\":\"PrintJSON\",\"data\":[{\"text\":\"Jade\",\"type\":\"player_id\",\"player\":1},{\"text\":\": hello sync\"}],\"type\":\"Chat\"}]",
         "[{\"cmd\":\"PrintJSON\",\"data\":[{\"text\":\"Jade\",\"type\":\"player_id\",\"player\":1},"
@@ -57,6 +57,12 @@ int main() {
         "[{\"cmd\":\"PrintJSON\",\"data\":[{\"text\":\"1\",\"type\":\"player_id\"},"
         "{\"text\":\" found their \"},{\"text\":\"54\",\"type\":\"item_id\"},"
         "{\"text\":\" (\"},{\"text\":\"59836\",\"type\":\"location_id\"},{\"text\":\")\"}],\"type\":\"ItemCheat\"}]",
+        "[{\"cmd\":\"PrintJSON\",\"data\":[{\"text\":\"Jade\",\"type\":\"player_id\",\"player\":1},"
+        "{\"text\":\" sent \"},{\"text\":\"Swim\",\"type\":\"item_id\",\"item\":1234},"
+        "{\"text\":\" to \"},{\"text\":\"Mario\",\"type\":\"player_id\",\"player\":2},"
+        "{\"text\":\" at \"},{\"text\":\"Sanctuary\",\"type\":\"location_id\",\"location\":60025}],\"type\":\"ItemSend\"}]",
+        "[{\"cmd\":\"PrintJSON\",\"data\":[{\"text\":\"thelov-supe-3557\",\"type\":\"player_id\",\"player\":2},"
+        "{\"text\":\" (Team #1) Tracking a Link to the Past connected.\"}],\"type\":\"Join\"}]",
         "[{\"cmd\":\"PrintJSON\",\"data\":[{\"text\":\"Jade\"},{\"text\":\": raw echo\"}],\"type\":\"Chat\",\"team\":0,\"slot\":1,\"message\":\"raw echo\"}]",
     });
     auto* raw_transport = transport.get();
@@ -67,6 +73,7 @@ int main() {
     options.password = "secret";
     options.uuid = "sekailink-test-uuid";
     options.tags = {"AP", "SekaiLink", "SKLMI"};
+    options.player_aliases_by_slot_name = {{"thelov-supe-3557", "Certo"}, {"Mario", "Certo"}};
 
     ArchipelagoRoomClient client(std::move(transport), options);
     std::string error;
@@ -142,19 +149,31 @@ int main() {
     }
 
     const auto chat = client.poll_pending_chat(&error);
-    if (chat.size() != 4 ||
+    if (chat.size() != 6 ||
         chat[0].author != "Jade" ||
         chat[0].text != "hello sync" ||
         chat[0].id == 0 ||
         chat[1].author != "ITEM" ||
-        chat[1].text != "Jade sent Hookshot to Jade at Sanctuary" ||
+        chat[1].text != "Jade found their Hookshot in Sanctuary" ||
         chat[1].id <= chat[0].id ||
         chat[2].author != "ITEM" ||
-        chat[2].text != "Jade found their Rupees (20) (Link's House)" ||
+        chat[2].text != "Jade found their Rupees (20) in Link's House" ||
         chat[2].id <= chat[1].id ||
-        chat[3].author != "Jade" ||
-        chat[3].text != "raw echo" ||
+        chat[3].author != "ITEM" ||
+        chat[3].text != "Jade sent Swim to Certo's Super Mario World (Sanctuary)" ||
         chat[3].id <= chat[2].id) {
+        std::cerr << "chat_message_mismatch\n";
+        return EXIT_FAILURE;
+    }
+    if (chat[4].kind != "connection" ||
+        chat[4].text != "Certo connected." ||
+        chat[4].id <= chat[3].id) {
+        std::cerr << "chat_message_mismatch\n";
+        return EXIT_FAILURE;
+    }
+    if (chat[5].author != "Jade" ||
+        chat[5].text != "raw echo" ||
+        chat[5].id <= chat[4].id) {
         std::cerr << "chat_message_mismatch\n";
         return EXIT_FAILURE;
     }

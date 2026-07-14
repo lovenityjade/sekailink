@@ -4,7 +4,7 @@ const createRuntimeModuleLibrary = (deps = {}) => {
   const {
     fs,
     path,
-    processRef = process,
+    processRef = globalThis.process,
     getRuntimeModulesDirs,
     normalizeGameId,
     normalizeIpcString,
@@ -41,7 +41,7 @@ const createRuntimeModuleLibrary = (deps = {}) => {
     }
     return null;
   };
-  
+
   const listRuntimeModules = () => {
     const moduleIds = new Set();
     const results = [];
@@ -98,21 +98,77 @@ const createRuntimeModuleLibrary = (deps = {}) => {
     return Array.from(offsets.values()).sort((a, b) => a - b);
   };
   
+  const hashLengthForAlgo = (algo) => {
+    const normalized = String(algo || "").toLowerCase();
+    if (normalized === "md5") return 32;
+    if (normalized === "sha1") return 40;
+    if (normalized === "sha256" || normalized === "sha3-256") return 64;
+    return 0;
+  };
+
+  const normalizeHashValue = (value, algo = "") => {
+    const raw = String(value || "").trim().toLowerCase();
+    if (!raw) return "";
+    const expectedLength = hashLengthForAlgo(algo);
+    if (expectedLength) {
+      const match = raw.match(new RegExp(`[a-f0-9]{${expectedLength}}`));
+      return match ? match[0] : raw.replace(/[^a-f0-9]/g, "");
+    }
+    return raw.replace(/^[a-z0-9_-]+:/, "").replace(/[^a-f0-9]/g, "");
+  };
+
+  const normalizeHashList = (value, algo = "") => normalizeStringList(value)
+    .map((entry) => normalizeHashValue(entry, algo))
+    .filter(Boolean);
+
+  const getRomRequirementHashes = (manifest = {}) => {
+    const req = manifest.rom_requirements || {};
+    return [
+      { algo: "md5", values: normalizeHashList(req.md5, "md5") },
+      { algo: "sha1", values: normalizeHashList(req.sha1, "sha1") },
+      { algo: "sha256", values: normalizeHashList(req.sha256 || req.sha_256 || req["sha-256"], "sha256") },
+      { algo: "sha3-256", values: normalizeHashList(req.sha3_256 || req["sha3-256"] || req.sha3, "sha3-256") },
+    ].filter((entry) => entry.values.length);
+  };
+
   const findRomMatch = async (filePath, romIndex) => {
     const offsets = getRomHashOffsets(filePath);
-  
-    // Try md5 first (fast and used by most worlds), then sha1.
-    for (const start of offsets) {
-      const md5 = await hashFile(filePath, "md5", { start });
-      const match = romIndex.get(String(md5 || "").toLowerCase());
-      if (match) return { ...match, hash: md5, algo: "md5", start };
-    }
-    for (const start of offsets) {
-      const sha1 = await hashFile(filePath, "sha1", { start });
-      const match = romIndex.get(String(sha1 || "").toLowerCase());
-      if (match) return { ...match, hash: sha1, algo: "sha1", start };
+
+    for (const algo of ["md5", "sha1", "sha256", "sha3-256"]) {
+      for (const start of offsets) {
+        const hash = await hashFile(filePath, algo, { start });
+        const normalized = String(hash || "").toLowerCase();
+        const match = romIndex.get(`${algo}:${normalized}`) || romIndex.get(normalized);
+        if (match) return { ...match, hash, algo, start };
+      }
     }
     return null;
+  };
+
+  const describeExpectedHashes = (manifest = {}) => getRomRequirementHashes(manifest)
+    .flatMap((entry) => entry.values.map((value) => `${entry.algo}:${value}`))
+    .join(", ");
+
+  const verifyRomAgainstManifest = async (filePath, manifest = {}) => {
+    const requirements = getRomRequirementHashes(manifest);
+    if (!requirements.length) return { ok: true, unchecked: true };
+    const offsets = getRomHashOffsets(filePath);
+    const observed = [];
+    for (const requirement of requirements) {
+      for (const start of offsets) {
+        const hash = String(await hashFile(filePath, requirement.algo, { start }) || "").toLowerCase();
+        observed.push(`${requirement.algo}:${hash}${start ? `@${start}` : ""}`);
+        if (requirement.values.includes(hash)) {
+          return { ok: true, algo: requirement.algo, hash, start };
+        }
+      }
+    }
+    return {
+      ok: false,
+      error: "rom_checksum_mismatch",
+      expected: describeExpectedHashes(manifest),
+      observed: observed.join(", "),
+    };
   };
   
   const getRomImportCandidatesForExtension = (ext) => {
@@ -155,9 +211,22 @@ const createRuntimeModuleLibrary = (deps = {}) => {
           expected: candidates.length
             ? candidates.map((entry) => `${entry.displayName} (${entry.extensions.join(", ")})`).join(", ")
             : "No runtime module accepts this file extension.",
+          };
+      }
+      const selectedManifest = getModuleManifest(candidate.moduleId) || {};
+      const verification = await verifyRomAgainstManifest(filePath, selectedManifest);
+      if (!verification.ok) {
+        return {
+          ok: false,
+          error: verification.error,
+          expected: verification.expected,
+          observed: verification.observed,
+          displayName: candidate.displayName,
+          gameId: candidate.gameId,
+          moduleId: candidate.moduleId,
         };
       }
-      return { ok: true, ...candidate, matchKind: "selected" };
+      return { ok: true, ...candidate, matchKind: verification.unchecked ? "selected-unchecked" : "selected-checksum", hash: verification.hash, algo: verification.algo };
     }
   
     const found = await findRomMatch(filePath, romIndex);
@@ -215,14 +284,13 @@ const createRuntimeModuleLibrary = (deps = {}) => {
         try {
           const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
           const req = manifest.rom_requirements || {};
-          const md5s = normalizeStringList(req.md5);
-          const sha1s = normalizeStringList(req.sha1);
           const gameId = String(manifest.game_id || entry.name || "").trim();
-          for (const md5 of md5s) {
-            index.set(md5.toLowerCase(), { gameId, moduleId: entry.name, algo: "md5" });
-          }
-          for (const sha1 of sha1s) {
-            index.set(sha1.toLowerCase(), { gameId, moduleId: entry.name, algo: "sha1" });
+          for (const requirement of getRomRequirementHashes(manifest)) {
+            for (const value of requirement.values) {
+              const payload = { gameId, moduleId: entry.name, algo: requirement.algo };
+              index.set(`${requirement.algo}:${value}`, payload);
+              index.set(value, payload);
+            }
           }
         } catch (_err) {
           // ignore malformed manifest
@@ -243,12 +311,15 @@ const createRuntimeModuleLibrary = (deps = {}) => {
     add(manifest?.game_id);
     add(manifest?.game_key);
     add(manifest?.ap_world);
+    add(manifest?.display_name);
+    add(manifest?.game_name);
+    add(manifest?.archipelago_client?.game_key);
     for (const value of Array.isArray(manifest?.required_roms) ? manifest.required_roms : []) add(value);
     for (const value of Array.isArray(manifest?.aliases) ? manifest.aliases : []) add(value);
     return Array.from(keys.values());
   };
   
-  const resolveConfiguredRomForModule = (moduleId, manifest = null) => {
+  const resolveConfiguredRomForModule = (moduleId, manifest = null, preferredRomId = "") => {
     const safeModuleId = normalizeIpcString(moduleId, 200);
     const m = manifest && typeof manifest === "object"
       ? manifest
@@ -257,7 +328,10 @@ const createRuntimeModuleLibrary = (deps = {}) => {
         : null;
     const config = readConfig();
     const roms = config.roms && typeof config.roms === "object" ? config.roms : {};
-    for (const gameId of getRomConfigKeysForManifest(safeModuleId, m)) {
+    const lookupKeys = getRomConfigKeysForManifest(safeModuleId, m);
+    const preferredKey = normalizeGameId(preferredRomId);
+    if (preferredKey) lookupKeys.unshift(preferredKey);
+    for (const gameId of Array.from(new Set(lookupKeys))) {
       const romPath = String(roms[gameId] || "").trim();
       if (romPath && fileExists(romPath)) return romPath;
     }
@@ -329,8 +403,15 @@ const createRuntimeModuleLibrary = (deps = {}) => {
     if (!target) return null;
     for (const info of listRuntimeModules()) {
       const manifest = info.manifest || {};
-      const name = String(manifest.display_name || manifest.game_name || "").trim().toLowerCase();
-      if (name && name === target) return info.moduleId;
+      const names = [
+        manifest.ap_world,
+        manifest.game_name,
+        manifest.display_name,
+        manifest.game_key,
+        manifest.game_id,
+        ...(Array.isArray(manifest.aliases) ? manifest.aliases : []),
+      ].map((value) => String(value || "").trim().toLowerCase()).filter(Boolean);
+      if (names.includes(target)) return info.moduleId;
     }
     return null;
   };
@@ -390,6 +471,22 @@ const createRuntimeModuleLibrary = (deps = {}) => {
   const validateSetupForModule = async (moduleId) => {
     const manifest = getModuleManifest(moduleId);
     if (!manifest) return { ok: false, error: "manifest_missing" };
+
+    const supportStatus = String(manifest.support_status || "").trim().toLowerCase();
+    const availabilityStatus = String(manifest.availability_status || "").trim().toLowerCase();
+    const runtimeStatus = String(manifest.archipelago_client?.status || manifest.runtime_status || "").trim().toLowerCase();
+    if (
+      ["not_available", "unsupported", "disabled"].includes(supportStatus) ||
+      availabilityStatus.startsWith("unavailable") ||
+      ["runtime_unavailable", "generator_only", "tracker_only", "disabled"].includes(runtimeStatus)
+    ) {
+      return {
+        ok: false,
+        error: "runtime_module_unavailable",
+        detail: manifest.compatibility_notes || manifest.notes || availabilityStatus || supportStatus || runtimeStatus,
+        setupArea: "support",
+      };
+    }
   
     // Install per-module system/runtime dependencies during the setup phase,
     // so we fail early with actionable errors (instead of failing mid-launch).
@@ -444,6 +541,21 @@ const createRuntimeModuleLibrary = (deps = {}) => {
       }
     }
   
+    const romValidation = await validateRomForModule(moduleId, manifest);
+    if (!romValidation.ok) return romValidation;
+
+    // Separate PopTracker is only for legacy/non-Sekaiemu launch flows. Sekaiemu passes packs to SKLMI.
+    if (manifest.tracker_pack_uid && emu !== "sekaiemu" && emu !== "sekaiemu-libretro") {
+      const trackerStatus = getPopTrackerStatus();
+      if (!trackerStatus.exists) return { ok: false, error: "poptracker_missing", setupArea: "paths" };
+    }
+
+    return { ok: true, manifest };
+  };
+
+  const validateRomForModule = async (moduleId, knownManifest = null) => {
+    const manifest = knownManifest || getModuleManifest(moduleId);
+    if (!manifest) return { ok: false, error: "manifest_missing", setupArea: "roms" };
     const config = readConfig();
     const roms = config.roms || {};
     const requiredRomIds = Array.isArray(manifest.required_roms)
@@ -452,7 +564,11 @@ const createRuntimeModuleLibrary = (deps = {}) => {
         ? [manifest.game_id]
         : [];
     for (const gameId of requiredRomIds) {
-      const romPath = String(roms[gameId] || "").trim();
+      const lookupKeys = Array.from(new Set([
+        normalizeGameId(gameId),
+        ...getRomConfigKeysForManifest(gameId, getModuleManifest(gameId) || null),
+      ].filter(Boolean)));
+      const romPath = lookupKeys.map((key) => String(roms[key] || "").trim()).find(Boolean) || "";
       if (!romPath) return { ok: false, error: "rom_missing", gameId, setupArea: "roms" };
       if (!fs.existsSync(romPath)) {
         return { ok: false, error: "rom_missing", gameId, detail: "rom_path_not_found", setupArea: "roms" };
@@ -462,18 +578,22 @@ const createRuntimeModuleLibrary = (deps = {}) => {
         if (!stat.isFile()) {
           return { ok: false, error: "rom_missing", gameId, detail: "rom_path_not_file", setupArea: "roms" };
         }
+        const verification = await verifyRomAgainstManifest(romPath, manifest);
+        if (!verification.ok) {
+          return {
+            ok: false,
+            error: verification.error,
+            gameId,
+            detail: verification.observed,
+            expected: verification.expected,
+            setupArea: "roms",
+          };
+        }
       } catch (_err) {
         return { ok: false, error: "rom_missing", gameId, detail: "rom_path_unreadable", setupArea: "roms" };
       }
     }
-  
-    // Separate PopTracker is only for legacy/non-Sekaiemu launch flows. Sekaiemu passes packs to SKLMI.
-    if (manifest.tracker_pack_uid && emu !== "sekaiemu" && emu !== "sekaiemu-libretro") {
-      const trackerStatus = getPopTrackerStatus();
-      if (!trackerStatus.exists) return { ok: false, error: "poptracker_missing", setupArea: "paths" };
-    }
-  
-    return { ok: true, manifest };
+    return { ok: true, manifest, required: requiredRomIds.length > 0, setupArea: "roms" };
   };
   
   const scanRomFolder = async (folderPath) => {
@@ -575,6 +695,7 @@ const createRuntimeModuleLibrary = (deps = {}) => {
     resolveConfiguredRomForModule,
     resolveModuleForDownload,
     findModuleByApGameName,
+    validateRomForModule,
     validateSetupForModule,
     scanRomFolder,
     importRomFile,

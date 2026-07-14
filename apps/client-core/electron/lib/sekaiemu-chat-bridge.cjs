@@ -47,6 +47,21 @@ const createSekaiemuChatBridge = (deps = {}) => {
       kind: String(payload.kind || "system"),
     });
   };
+
+  const appendSekaiemuActivity = (bridge, payload) => {
+    if (!bridge?.inboxPath) return;
+    const text = String(payload?.text || "").trim();
+    const kind = String(payload?.kind || "item").trim().toLowerCase();
+    if (!text || !kind) return;
+    appendChatBridgeLine(bridge.inboxPath, {
+      id: payload.id || `sekaiemu-activity:${kind}:${Date.now()}:${crypto.randomBytes(4).toString("hex")}`,
+      author: String(payload.author || "SEKAILINK").slice(0, 32),
+      text: text.slice(0, 500),
+      created_at: nowIso(),
+      kind: `activity:${kind}`,
+      source: String(payload.source || "client-core"),
+    });
+  };
   
   const readNewChatBridgeLines = (filePath, state) => {
     try {
@@ -271,6 +286,7 @@ const createSekaiemuChatBridge = (deps = {}) => {
       moduleId,
       inboxPath: bridge.inboxPath,
       outboxPath: bridge.outboxPath,
+      appendActivity: (payload) => appendSekaiemuActivity(bridge, payload),
       stop: () => {
         bridge.stopped = true;
         for (const timer of bridge.timers) clearInterval(timer);
@@ -280,6 +296,7 @@ const createSekaiemuChatBridge = (deps = {}) => {
 
   return {
     appendSekaiemuSystemChat,
+    appendSekaiemuActivity,
     startSekaiemuChatBridge,
   };
 };

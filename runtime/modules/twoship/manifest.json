@@ -1,0 +1,26 @@
+{
+  "game_id": "majoras_mask",
+  "game_key": "2_ship_2_harkinian",
+  "display_name": "Majora's Mask - 2Ship2Harkinian",
+  "ap_world": "2 Ship 2 Harkinian",
+  "aliases": [
+    "2ship",
+    "2ship2harkinian",
+    "twoship",
+    "majora's mask"
+  ],
+  "emu": "2ship",
+  "patcher": "none",
+  "required_roms": [],
+  "client_mode": "embedded",
+  "rom_requirements": {
+    "extensions": [],
+    "md5": [],
+    "sha1": []
+  },
+  "features": {
+    "auto_connect": true,
+    "managed_pc_package": true,
+    "native_archipelago": true
+  }
+}

@@ -1,0 +1,207 @@
+[
+  {
+    "name": "Lavender Town",
+    "children": [
+      {
+        "name": "Visit",
+        "sections": [
+          {
+            "ref": "Cities/Lavender Town/Unlock Fly Destination"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "lavender_town",
+            "x": 12,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Pokémon Center",
+        "sections": [
+          {
+            "ref": "Cities/Lavender Town/PC Item",
+            "name": "PC Item"
+          },
+          {
+            "ref": "Cities/Lavender Town/Balding Man Info",
+            "name": "Balding Man Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "lavender_town",
+            "x": 104,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Volunteer Pokémon House",
+        "sections": [
+          {
+            "ref": "Cities/Lavender Town/Little Girl Info",
+            "name": "Little Girl Info"
+          },
+          {
+            "ref": "Cities/Lavender Town/Journal Info",
+            "name": "Journal Info"
+          },
+          {
+            "ref": "Cities/Lavender Town/Mr. Fuji Gift",
+            "name": "Mr. Fuji Gift"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "lavender_town",
+            "x": 168,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Poké Mart",
+        "sections": [
+          {
+            "ref": "Cities/Lavender Town/Shop Items"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "lavender_town",
+            "x": 328,
+            "y": 248
+          }
+        ]
+      },
+      {
+        "name": "Pokémon Tower Entrance",
+        "sections": [
+          {
+            "ref": "Cities/Lavender Town/Pokémon Tower Entrance",
+            "name": "Entrance"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "lavender_town",
+            "x": 296,
+            "y": 104
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Lavender Pokémon Center 1F",
+    "children": [
+      {
+        "name": "PC",
+        "sections": [
+          {
+            "ref": "Cities/Lavender Town/PC Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "lavender_pokemon_center_1f",
+            "x": 184,
+            "y": 24
+          }
+        ]
+      },
+      {
+        "name": "Balding Man",
+        "sections": [
+          {
+            "ref": "Cities/Lavender Town/Balding Man Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "lavender_pokemon_center_1f",
+            "x": 232,
+            "y": 104
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Volunteer Pokémon House",
+    "children": [
+      {
+        "name": "Little Girl",
+        "sections": [
+          {
+            "ref": "Cities/Lavender Town/Little Girl Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "volunteer_pokemon_house",
+            "x": 120,
+            "y": 40
+          }
+        ]
+      },
+      {
+        "name": "Journal",
+        "sections": [
+          {
+            "ref": "Cities/Lavender Town/Journal Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "volunteer_pokemon_house",
+            "x": 88,
+            "y": 72
+          }
+        ]
+      },
+      {
+        "name": "Mr. Fuji",
+        "sections": [
+          {
+            "ref": "Cities/Lavender Town/Mr. Fuji Gift",
+            "name": "Gift"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "volunteer_pokemon_house",
+            "x": 56,
+            "y": 56
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Lavender Mart",
+    "children": [
+      {
+        "name": "Poké Mart Clerk",
+        "sections": [
+          {
+            "ref": "Cities/Lavender Town/Shop Items"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "lavender_mart",
+            "x": 40,
+            "y": 56
+          }
+        ]
+      }
+    ]
+  }
+]

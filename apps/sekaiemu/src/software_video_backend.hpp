@@ -35,7 +35,8 @@ class SoftwareVideoBackend final : public VideoBackend {
   void SetTrackerSidebarLayout(bool enabled,
                                unsigned sidebar_width,
                                const VideoGeometry& geometry) override;
-  bool ToggleFullscreen(std::string& error) override;
+  bool SetWindowMode(WindowMode mode, std::string& error) override;
+  WindowMode CurrentWindowMode() const override { return window_mode_; }
   void Present() override;
   void Shutdown() override;
 
@@ -68,9 +69,12 @@ class SoftwareVideoBackend final : public VideoBackend {
   unsigned chat_overlay_width_ = 0;
   unsigned chat_overlay_height_ = 0;
   bool menu_visible_ = false;
+  bool menu_restore_size_valid_ = false;
+  int menu_restore_width_ = 0;
+  int menu_restore_height_ = 0;
   bool tracker_sidebar_enabled_ = false;
   unsigned tracker_sidebar_width_ = 0;
-  bool fullscreen_ = false;
+  WindowMode window_mode_ = WindowMode::BorderlessWindow;
 };
 
 }  // namespace sekaiemu::spike

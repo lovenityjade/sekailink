@@ -9,7 +9,7 @@ const { spawn } = require("node:child_process");
 const extractZipPackage = require("extract-zip");
 
 const DEFAULT_API_BASE_URL = process.env.SEKAILINK_API_BASE_URL || "https://sekailink.com";
-const DEFAULT_CHANNEL = process.env.SEKAILINK_CHANNEL || "test";
+const DEFAULT_CHANNEL = process.env.SEKAILINK_CHANNEL || "canonical";
 const DEFAULT_BUILD = process.env.SEKAILINK_BUILD || "release";
 
 let mainWindow = null;

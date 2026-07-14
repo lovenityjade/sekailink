@@ -1,0 +1,275 @@
+[
+  {
+    "name": "Four Island Town",
+    "children": [
+      {
+        "name": "Visit",
+        "sections": [
+          {
+            "ref": "Islands/Four Island Town/Unlock Fly Destination"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "four_island",
+            "x": 12,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Islands/Four Island Town/Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Islands/Four Island Town/Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Islands/Four Island Town/Good Rod Encounters",
+            "name": "Good Rod Encountes"
+          },
+          {
+            "ref": "Islands/Four Island Town/Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "four_island",
+            "x": 752,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Pokémon Center",
+        "sections": [
+          {
+            "ref": "Islands/Four Island Town/PC Item",
+            "name": "PC Item"
+          },
+          {
+            "ref": "Islands/Four Island Town/Bookshelf Info",
+            "name": "Bookshelf Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "four_island",
+            "x": 296,
+            "y": 328
+          }
+        ]
+      },
+      {
+        "name": "Beach Southeast Hidden Item",
+        "sections": [
+          {
+            "ref": "Islands/Four Island Town/Beach Southeast Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "four_island",
+            "x": 360,
+            "y": 552
+          }
+        ]
+      },
+      {
+        "name": "Beach Northwest Hidden Item",
+        "sections": [
+          {
+            "ref": "Islands/Four Island Town/Beach Northwest Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "four_island",
+            "x": 104,
+            "y": 344
+          }
+        ]
+      },
+      {
+        "name": "Beach Item",
+        "sections": [
+          {
+            "ref": "Islands/Four Island Town/Beach Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "four_island",
+            "x": 88,
+            "y": 104
+          }
+        ]
+      },
+      {
+        "name": "Northeast Island Item",
+        "sections": [
+          {
+            "ref": "Islands/Four Island Town/Northeast Island Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "four_island",
+            "x": 520,
+            "y": 312
+          }
+        ]
+      },
+      {
+        "name": "Poké Mart",
+        "sections": [
+          {
+            "ref": "Islands/Four Island Town/Old Man Info",
+            "name": "Old Man Info"
+          },
+          {
+            "ref": "Islands/Four Island Town/Shop Items",
+            "name": "Shop Items"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "four_island",
+            "x": 360,
+            "y": 424
+          }
+        ]
+      },
+      {
+        "name": "Little Girl",
+        "sections": [
+          {
+            "ref": "Islands/Four Island Town/Little Girl Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "four_island",
+            "x": 504,
+            "y": 344
+          }
+        ]
+      },
+      {
+        "name": "Old Woman",
+        "sections": [
+          {
+            "ref": "Islands/Four Island Town/Old Woman Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "four_island",
+            "x": 424,
+            "y": 312
+          }
+        ]
+      },
+      {
+        "name": "Icefall Cave Entrance",
+        "sections": [
+          {
+            "ref": "Islands/Four Island Town/Icefall Cave Entrance",
+            "name": "Entrance"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "four_island",
+            "x": 616,
+            "y": 200
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Four Island Pokémon Center 1F",
+    "children": [
+      {
+        "name": "PC",
+        "sections": [
+          {
+            "ref": "Islands/Four Island Town/PC Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "four_island_pokemon_center_1f",
+            "x": 184,
+            "y": 24
+          }
+        ]
+      },
+      {
+        "name": "Bookshelf",
+        "sections": [
+          {
+            "ref": "Islands/Four Island Town/Bookshelf Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "four_island_pokemon_center_1f",
+            "x": 48,
+            "y": 32
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Four Island Mart",
+    "children": [
+      {
+        "name": "Old Man",
+        "sections": [
+          {
+            "ref": "Islands/Four Island Town/Old Man Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "four_island_mart",
+            "x": 104,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Poké Mart Clerk",
+        "sections": [
+          {
+            "ref": "Islands/Four Island Town/Shop Items"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "four_island_mart",
+            "x": 40,
+            "y": 56
+          }
+        ]
+      }
+    ]
+  }
+]

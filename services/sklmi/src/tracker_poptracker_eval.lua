@@ -3,6 +3,7 @@ local function script_dir()
     if source:sub(1, 1) == "@" then
         source = source:sub(2)
     end
+    source = source:gsub("\\", "/")
     local directory = source:match("^(.*)/[^/]*$")
     return directory or "."
 end

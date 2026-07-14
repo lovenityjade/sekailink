@@ -210,6 +210,13 @@ void AudioOutput::SetMasterVolumePercent(int percent) {
   master_volume_percent_ = std::clamp(percent, 0, 150);
 }
 
+void AudioOutput::SetPlaybackPaused(bool paused) {
+  playback_paused_ = paused;
+  if (device_ && audio_started_) {
+    SDL_PauseAudioDevice(device_, paused ? 1 : 0);
+  }
+}
+
 void AudioOutput::LogQueueSummary() const {
   if (!device_ || queued_batches_ == 0) {
     return;
@@ -351,7 +358,7 @@ void AudioOutput::WriteOutputSamples(const int16_t* samples, std::size_t sample_
     written += write_count;
     if (should_start) {
       audio_started_ = true;
-      SDL_PauseAudioDevice(device_, 0);
+      SDL_PauseAudioDevice(device_, playback_paused_ ? 1 : 0);
     }
     if (write_count == 0) {
       ++full_waits_;

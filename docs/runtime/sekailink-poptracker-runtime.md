@@ -28,7 +28,7 @@ third_party/upstream/poptracker-sekailink/
 It is based on the local PopTracker reference source:
 
 ```text
-/home/thelovenityjade/Projects/reference-repos/PopTracker
+<local-home>/Projects/reference-repos/PopTracker
 ```
 
 Upstream reference:
@@ -121,6 +121,7 @@ Supported commands:
 { "command": "health" }
 { "command": "reload" }
 { "command": "force_reload" }
+{ "command": "show_broadcast" }
 { "command": "quit" }
 ```
 
@@ -128,6 +129,9 @@ Supported commands:
 
 `reload` and `force_reload` call PopTracker's existing reload path. They do not
 change pack logic.
+
+`show_broadcast` opens or raises PopTracker's existing broadcast view when the
+loaded pack defines `tracker_broadcast`.
 
 `quit` requests a clean shutdown.
 

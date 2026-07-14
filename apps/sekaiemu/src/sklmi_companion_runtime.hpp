@@ -22,6 +22,7 @@ struct SklmiCompanionOptions {
   std::string ap_game;
   std::string ap_slot_name;
   std::string player_alias;
+  std::string player_alias_map_json;
   std::string ap_password;
   std::string ap_uuid;
   std::string ap_tags;

@@ -1,4 +1,4 @@
-import { resolvePlayerApGameName, resolvePlayerSlotId } from "./lobbyLaunchContext";
+import { indexPlayersByName, resolvePlayerApGameName, resolvePlayerSlotId } from "./lobbyLaunchContext";
 import { type LaunchRecoveryAction } from "./launchRecovery";
 import {
   executeSessionLaunch,
@@ -41,6 +41,7 @@ type RoomSessionLaunchOptions<TGeneration extends RoomServerGeneration> = {
   loadLatestGeneration: () => Promise<TGeneration | null>;
   playerName?: string;
   playerAlias?: string;
+  playerAliasMap?: Record<string, string>;
   apGameName?: string;
   trackerVariant?: string;
   playersByName: Map<string, number>;
@@ -56,6 +57,7 @@ type RoomSessionLaunchOptions<TGeneration extends RoomServerGeneration> = {
     apGameName?: string;
     slot?: string;
     playerAlias?: string;
+    playerAliasMap?: Record<string, string>;
     trackerVariant?: string;
   }>;
 };
@@ -77,6 +79,7 @@ export const executeRoomSessionLaunch = async <TGeneration extends RoomServerGen
   loadLatestGeneration,
   playerName,
   playerAlias,
+  playerAliasMap,
   apGameName: preferredApGameName,
   trackerVariant,
   playersByName,
@@ -112,7 +115,11 @@ export const executeRoomSessionLaunch = async <TGeneration extends RoomServerGen
     };
   }
 
-  const slotId = resolvePlayerSlotId(playersByName, slot);
+  const resolvedPlayersByName = indexPlayersByName(roomLaunchContext.roomStatus?.players);
+  const slotId = resolvePlayerSlotId(
+    resolvedPlayersByName.size ? resolvedPlayersByName : playersByName,
+    slot
+  );
   const knownSlots = listKnownRoomSlots(roomLaunchContext.roomStatus);
   const slotExists = knownSlots.some((knownSlot) => knownSlot === slot);
   if (knownSlots.length > 0 && !slotExists) {
@@ -131,6 +138,7 @@ export const executeRoomSessionLaunch = async <TGeneration extends RoomServerGen
       serverAddress: roomLaunchContext.serverAddress,
       slot,
       playerAlias,
+      playerAliasMap,
       password,
       apGameName,
       trackerVariant,

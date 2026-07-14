@@ -1,8 +1,8 @@
 # SekaiLink Full Repository Audit
 
 Date: 2026-06-27  
-Audited from: `/home/thelovenityjade`  
-Primary canonical repo: `/home/thelovenityjade/SekaiLink/canonical`  
+Audited from: `<local-home>`  
+Primary canonical repo: `<local-home>/SekaiLink/canonical`  
 Directive: documentation only. No code movement, no deletion, no deploy, no cleanup-by-force.
 
 ## Executive Summary
@@ -23,7 +23,7 @@ The immediate risk is not that work is missing. The risk is source confusion: mu
 The safe source of truth for active SekaiLink work remains:
 
 ```text
-/home/thelovenityjade/SekaiLink/canonical
+<local-home>/SekaiLink/canonical
 ```
 
 Everything else is either reference, quarantine, archive, local runtime state, test lab, or external upstream.
@@ -77,7 +77,7 @@ flowchart TD
 
 | Field | Value |
 |---|---|
-| Path | `/home/thelovenityjade/SekaiLink/canonical` |
+| Path | `<local-home>/SekaiLink/canonical` |
 | Branch | `main` |
 | HEAD | `d4517bc` |
 | HEAD date | 2026-06-19 19:00:13 -0400 |
@@ -298,7 +298,7 @@ Documentation health:
 
 | Repo | Branch | Head | Dirty | Role | Relationship |
 |---|---|---|---:|---|---|
-| `/home/thelovenityjade/SekaiLink/canonical` | `main` | `d4517bc` | 410 | Active SekaiLink canonical monorepo. | Only active source of truth for current work. |
+| `<local-home>/SekaiLink/canonical` | `main` | `d4517bc` | 410 | Active SekaiLink canonical monorepo. | Only active source of truth for current work. |
 
 ### Canonical Nested Upstream / Third-Party Repos
 
@@ -315,22 +315,22 @@ Documentation health:
 
 | Repo | Branch | Dirty | Role | Relationship |
 |---|---|---:|---|---|
-| `/home/thelovenityjade/DevSSD/_sekailink_quarantine/20260601-pre-e2e/.../sekailink-monorepo` | `debug-topaz` | 492 | Old full SekaiLink monorepo snapshot. | Historical reference only. Do not copy blindly. |
-| `/home/thelovenityjade/DevSSD/_sekailink_quarantine/.../sekailink-core` | `main` | 19 | Old split client/core repo. | Superseded by canonical. |
-| `/home/thelovenityjade/DevSSD/_sekailink_quarantine/.../sekailink-emu` | `main` | 45 | Old emulator repo. | Superseded by `apps/sekaiemu`. |
-| `/home/thelovenityjade/DevSSD/_sekailink_quarantine/.../sekailink-servers/link` | `main` | 15 | Old Link server split repo. | Historical; risk of wrong live rebuild if confused with current code. |
-| `/home/thelovenityjade/DevSSD/_sekailink_quarantine/.../sekailink-servers/nexus` | `main` | 0 | Old Nexus split repo. | Historical. |
-| `/home/thelovenityjade/DevSSD/_sekailink_quarantine/.../sekailink-servers/worlds` | `main` | 25 | Old Worlds split repo. | Historical. |
-| `/home/thelovenityjade/DevSSD/_sekailink_quarantine/.../sekailink-soh` | `main` | 0 | Old SoH integration repo. | Historical/future research. |
-| `/home/thelovenityjade/DevSSD/_sekailink_quarantine/.../sekailink-beta-3-final` | `main` | 97131 | Large abandoned/pre-final monorepo. | Archive only; too dirty to use directly. |
-| `/home/thelovenityjade/DevSSD/_sekailink_quarantine/.../Sekaiemu-Libretro-Spike-Codex/workspace/src/*` | various libretro upstreams | mostly 0 | Old libretro core build workspace. | Historical source of cores and early Sekaiemu research. |
+| `<local-home>/DevSSD/_sekailink_quarantine/20260601-pre-e2e/.../sekailink-monorepo` | `debug-topaz` | 492 | Old full SekaiLink monorepo snapshot. | Historical reference only. Do not copy blindly. |
+| `<local-home>/DevSSD/_sekailink_quarantine/.../sekailink-core` | `main` | 19 | Old split client/core repo. | Superseded by canonical. |
+| `<local-home>/DevSSD/_sekailink_quarantine/.../sekailink-emu` | `main` | 45 | Old emulator repo. | Superseded by `apps/sekaiemu`. |
+| `<local-home>/DevSSD/_sekailink_quarantine/.../sekailink-servers/link` | `main` | 15 | Old Link server split repo. | Historical; risk of wrong live rebuild if confused with current code. |
+| `<local-home>/DevSSD/_sekailink_quarantine/.../sekailink-servers/nexus` | `main` | 0 | Old Nexus split repo. | Historical. |
+| `<local-home>/DevSSD/_sekailink_quarantine/.../sekailink-servers/worlds` | `main` | 25 | Old Worlds split repo. | Historical. |
+| `<local-home>/DevSSD/_sekailink_quarantine/.../sekailink-soh` | `main` | 0 | Old SoH integration repo. | Historical/future research. |
+| `<local-home>/DevSSD/_sekailink_quarantine/.../sekailink-beta-3-final` | `main` | 97131 | Large abandoned/pre-final monorepo. | Archive only; too dirty to use directly. |
+| `<local-home>/DevSSD/_sekailink_quarantine/.../Sekaiemu-Libretro-Spike-Codex/workspace/src/*` | various libretro upstreams | mostly 0 | Old libretro core build workspace. | Historical source of cores and early Sekaiemu research. |
 
 Quarantine size:
 
 | Path | Approx size | Interpretation |
 |---|---:|---|
-| `/home/thelovenityjade/DevSSD/_sekailink_quarantine` | 78G | Full archive. Must not be used as active source. |
-| `/home/thelovenityjade/DevSSD/sekailink-legacy-quarantine-2026-05-17` | 41G | Older split-repo archive and APTest runtime reference. |
+| `<local-home>/DevSSD/_sekailink_quarantine` | 78G | Full archive. Must not be used as active source. |
+| `<local-home>/DevSSD/sekailink-legacy-quarantine-2026-05-17` | 41G | Older split-repo archive and APTest runtime reference. |
 
 ### Legacy Quarantine Repos
 
@@ -349,50 +349,50 @@ Quarantine size:
 
 | Repo | Remote | Dirty | Role | Link to SekaiLink |
 |---|---|---:|---|---|
-| `/home/thelovenityjade/Projects/reference-repos/Archipelago` | `https://github.com/ArchipelagoMW/Archipelago.git` | 0 | Clean upstream Archipelago reference. | Compare protocols, clients, APWorld behavior. |
-| `/home/thelovenityjade/Projects/reference-repos/PopTracker` | `https://github.com/black-sliver/PopTracker.git` | 0 | Clean upstream PopTracker reference. | Compare forked Sekailink Edition changes. |
-| `/home/thelovenityjade/Projects/reference-repos/sni` | `https://github.com/alttpo/sni.git` | 0 | Clean upstream SNI reference. | Compare SNES SNI protocol behavior. |
-| `/home/thelovenityjade/Projects/reference-repos/alttp-ap-poptracker-pack` | `https://github.com/StripesOO7/alttp-ap-poptracker-pack.git` | 0 | ALttP PopTracker pack reference. | Source/reference for ALttP tracker integration. |
+| `<local-home>/Projects/reference-repos/Archipelago` | `https://github.com/ArchipelagoMW/Archipelago.git` | 0 | Clean upstream Archipelago reference. | Compare protocols, clients, APWorld behavior. |
+| `<local-home>/Projects/reference-repos/PopTracker` | `https://github.com/black-sliver/PopTracker.git` | 0 | Clean upstream PopTracker reference. | Compare forked Sekailink Edition changes. |
+| `<local-home>/Projects/reference-repos/sni` | `https://github.com/alttpo/sni.git` | 0 | Clean upstream SNI reference. | Compare SNES SNI protocol behavior. |
+| `<local-home>/Projects/reference-repos/alttp-ap-poptracker-pack` | `https://github.com/StripesOO7/alttp-ap-poptracker-pack.git` | 0 | ALttP PopTracker pack reference. | Source/reference for ALttP tracker integration. |
 
 ### Game/Port Research Repos
 
 | Repo | Remote | Dirty | Role | Link to SekaiLink |
 |---|---|---:|---|---|
-| `/home/thelovenityjade/Projects/tp-dusk-ap-lab/archipelago-soh` | HarbourMasters Archipelago-SoH | 0 | SoH AP client/world reference. | Future SoH integration. |
-| `/home/thelovenityjade/Projects/tp-dusk-ap-lab/archipelago-upstream` | Archipelago upstream | 1 | Additional upstream AP checkout. | Research only. |
-| `/home/thelovenityjade/Projects/tp-dusk-ap-lab/dusk` | `https://github.com/TwilitRealm/dusk.git` | 56 | Twilight Princess/Dusk research. | Future TP integration research. |
-| `/home/thelovenityjade/Projects/tp-dusk-ap-lab/multiworldgg-tp-apworld-source` | MultiworldGG | 0 | TP APWorld source reference. | Future TP integration research. |
-| `/home/thelovenityjade/Projects/zsrtp-Randomizer` | ZSR TP randomizer | 0 | Twilight Princess randomizer source. | Research only. |
-| `/home/thelovenityjade/Projects/zsrtp-Randomizer-Web-Generator` | ZSR TP web generator | 0 | TP generator reference. | Research only. |
-| `/home/thelovenityjade/Games/SkywardSword/SS-Randomizer-Tracker` | SS tracker fork/upstream | 16 | Skyward Sword tracker/reference. | Future SS support research. |
-| `/home/thelovenityjade/Games/SkywardSword/SS-Randomizer-Tracker/robojumper-SS-Randomizer-Tracker` | robojumper SS tracker | 0 | Alternate SS tracker. | Research only. |
-| `/home/thelovenityjade/DevSSD/third-party/azahar-latest` | Azahar emulator | 0 | 3DS emulator research. | Not BETA-3. |
-| `/home/thelovenityjade/Projects/sekaiemu-bios-boot` | none | 7 | BIOS/boot investigation. | Sekaiemu research, not active release code. |
+| `<local-home>/Projects/tp-dusk-ap-lab/archipelago-soh` | HarbourMasters Archipelago-SoH | 0 | SoH AP client/world reference. | Future SoH integration. |
+| `<local-home>/Projects/tp-dusk-ap-lab/archipelago-upstream` | Archipelago upstream | 1 | Additional upstream AP checkout. | Research only. |
+| `<local-home>/Projects/tp-dusk-ap-lab/dusk` | `https://github.com/TwilitRealm/dusk.git` | 56 | Twilight Princess/Dusk research. | Future TP integration research. |
+| `<local-home>/Projects/tp-dusk-ap-lab/multiworldgg-tp-apworld-source` | MultiworldGG | 0 | TP APWorld source reference. | Future TP integration research. |
+| `<local-home>/Projects/zsrtp-Randomizer` | ZSR TP randomizer | 0 | Twilight Princess randomizer source. | Research only. |
+| `<local-home>/Projects/zsrtp-Randomizer-Web-Generator` | ZSR TP web generator | 0 | TP generator reference. | Research only. |
+| `<local-home>/Games/SkywardSword/SS-Randomizer-Tracker` | SS tracker fork/upstream | 16 | Skyward Sword tracker/reference. | Future SS support research. |
+| `<local-home>/Games/SkywardSword/SS-Randomizer-Tracker/robojumper-SS-Randomizer-Tracker` | robojumper SS tracker | 0 | Alternate SS tracker. | Research only. |
+| `<local-home>/DevSSD/third-party/azahar-latest` | Azahar emulator | 0 | 3DS emulator research. | Not BETA-3. |
+| `<local-home>/Projects/sekaiemu-bios-boot` | none | 7 | BIOS/boot investigation. | Sekaiemu research, not active release code. |
 
 ### Labs And Side Projects
 
 | Path | Status | Role | Link |
 |---|---|---|---|
-| `/home/thelovenityjade/SekaiLink-Labs/poptracker-imgui-lab` | Lab, 17M | Attempt to build native ImGui PopTracker-like loader. | Proved native tracker is not BETA-3 ready. |
-| `/home/thelovenityjade/SekaiLinkReports` | Reports, 780K | Generated reports and room/admin exports. | Evidence only. |
-| `/home/thelovenityjade/Projects/SekaiPieces` | Side project | Puzzle/APWorld idea. | Not part of SekaiLink core. |
-| `/home/thelovenityjade/Documents/Archipelago-vulgarisation` | Documentation | Archipelago educational docs. | Conceptual learning reference. |
-| `/home/thelovenityjade/Documents/PopTracker-vulgarisation` | Documentation | PopTracker educational docs. | Conceptual learning reference. |
-| `/home/thelovenityjade/Documents/APWorld-vulgarisation` | Documentation | APWorld educational docs. | Conceptual learning reference. |
+| `<local-home>/SekaiLink-Labs/poptracker-imgui-lab` | Lab, 17M | Attempt to build native ImGui PopTracker-like loader. | Proved native tracker is not BETA-3 ready. |
+| `<local-home>/SekaiLinkReports` | Reports, 780K | Generated reports and room/admin exports. | Evidence only. |
+| `<local-home>/Projects/SekaiPieces` | Side project | Puzzle/APWorld idea. | Not part of SekaiLink core. |
+| `<local-home>/Documents/Archipelago-vulgarisation` | Documentation | Archipelago educational docs. | Conceptual learning reference. |
+| `<local-home>/Documents/PopTracker-vulgarisation` | Documentation | PopTracker educational docs. | Conceptual learning reference. |
+| `<local-home>/Documents/APWorld-vulgarisation` | Documentation | APWorld educational docs. | Conceptual learning reference. |
 
 ### Runtime/User State Outside Repos
 
 | Path | Role | Use |
 |---|---|---|
-| `/home/thelovenityjade/.config/sekailink-client` | Local Client Core runtime config/logs/cache. | Runtime state, not source. |
-| `/home/thelovenityjade/.config/sekailink-room-admin` | Room admin TUI config/token. | Runtime/admin state. |
-| `/home/thelovenityjade/.local/state/sekailink-room-admin` | Room admin local state. | Reports/session state. |
-| `/home/thelovenityjade/.local/state/sekailink-bootloader` | Bootloader state. | Update/runtime state. |
-| `/home/thelovenityjade/.cache/Archipelago`, `.cache/MultiworldGG` | AP datapackage caches. | Useful for debugging, not source. |
-| `/home/thelovenityjade/.local/share/Archipelago/custom_worlds` | Local AP custom worlds. | Can influence local AP runs; must not be confused with canonical runtime/ap. |
-| `/home/thelovenityjade/PopTracker/packs` | User PopTracker packs. | Reference/staging, not bundled runtime unless imported. |
-| `/home/thelovenityjade/mnt/gdrive/Backups/sekailink-windows-vm-prep-2026-06-10/sekailink-canonical` | Backup copy. | Backup only. |
-| `/home/thelovenityjade/mnt/servers/link`, `/nexus`, `/worlds` | Mounted server surfaces. | Operational/live access, not canonical source. |
+| `<local-home>/.config/sekailink-client` | Local Client Core runtime config/logs/cache. | Runtime state, not source. |
+| `<local-home>/.config/sekailink-room-admin` | Room admin TUI config/token. | Runtime/admin state. |
+| `<local-home>/.local/state/sekailink-room-admin` | Room admin local state. | Reports/session state. |
+| `<local-home>/.local/state/sekailink-bootloader` | Bootloader state. | Update/runtime state. |
+| `<local-home>/.cache/Archipelago`, `.cache/MultiworldGG` | AP datapackage caches. | Useful for debugging, not source. |
+| `<local-home>/.local/share/Archipelago/custom_worlds` | Local AP custom worlds. | Can influence local AP runs; must not be confused with canonical runtime/ap. |
+| `<local-home>/PopTracker/packs` | User PopTracker packs. | Reference/staging, not bundled runtime unless imported. |
+| `<local-home>/mnt/gdrive/Backups/sekailink-windows-vm-prep-2026-06-10/sekailink-canonical` | Backup copy. | Backup only. |
+| `<local-home>/mnt/servers/link`, `/nexus`, `/worlds` | Mounted server surfaces. | Operational/live access, not canonical source. |
 
 ## File Inventory: High-Risk Large Files
 

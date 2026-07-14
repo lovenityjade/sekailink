@@ -13,6 +13,9 @@ from worlds.generic.Rules import add_item_rule
 
 class FillError(RuntimeError):
     def __init__(self, *args: typing.Union[str, typing.Any], **kwargs) -> None:
+        self.code = str(kwargs.pop("code", "") or "")
+        self.deficits = dict(kwargs.pop("deficits", {}) or {})
+        self.multiworld = kwargs.get("multiworld")
         if "multiworld" in kwargs and isinstance(args[0], str):
             placements = (args[0] + f"\nAll Placements:\n" +
                           f"{[(loc, loc.item) for loc in kwargs['multiworld'].get_filled_locations()]}")
@@ -607,11 +610,14 @@ def distribute_items_restrictive(multiworld: MultiWorld,
         else:
             raise ValueError(f"Generator Panic Method {panic_method} not recognized.")
         if progitempool:
+            deficits = Counter(item.player for item in progitempool)
             raise FillError(
                 f"Not enough locations for progression items. "
                 f"There are {len(progitempool)} more progression items than there are available locations.\n"
                 f"Unfilled locations:\n{multiworld.get_unfilled_locations()}.",
                 multiworld=multiworld,
+                code="item_location_deficit",
+                deficits=dict(deficits),
             )
         accessibility_corrections(multiworld, multiworld.state, defaultlocations)
 
@@ -626,10 +632,13 @@ def distribute_items_restrictive(multiworld: MultiWorld,
                    move_unplaceable_to_start_inventory=panic_method=="start_inventory")
 
     if excludedlocations:
+        deficits = Counter(location.player for location in excludedlocations)
         raise FillError(
             f"Not enough filler items for excluded locations. "
             f"There are {len(excludedlocations)} more excluded locations than excludable items.",
             multiworld=multiworld,
+            code="filler_item_deficit",
+            deficits=dict(deficits),
         )
 
     restitempool = filleritempool + usefulitempool
@@ -659,14 +668,22 @@ def distribute_items_restrictive(multiworld: MultiWorld,
                 logging.warning(
                     f"Player {multiworld.get_player_name(player)} had {more_items[player]} more items than locations.")
         if unfilled:
+            deficits = Counter(location.player for location in unfilled)
             raise FillError(
                 f"Unable to fill all locations.\n" +
-                f"Unfilled locations({len(unfilled)}): {unfilled}"
+                f"Unfilled locations({len(unfilled)}): {unfilled}",
+                multiworld=multiworld,
+                code="filler_item_deficit",
+                deficits=dict(deficits),
             )
         else:
-            logging.warning(
+            deficits = Counter(item.player for item in unplaced)
+            raise FillError(
                 f"Unable to place all items.\n" +
-                f"Unplaced items({len(unplaced)}): {unplaced}"
+                f"Unplaced items({len(unplaced)}): {unplaced}",
+                multiworld=multiworld,
+                code="item_location_deficit",
+                deficits=dict(deficits),
             )
 
 

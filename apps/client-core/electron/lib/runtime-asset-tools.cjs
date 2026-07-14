@@ -7,6 +7,7 @@ const createRuntimeAssetTools = (deps = {}) => {
     http,
     https,
     processRef = process,
+    spawnSync,
     sanitizeHeaders,
     resolveRedirectUrl,
     downloadToFile,

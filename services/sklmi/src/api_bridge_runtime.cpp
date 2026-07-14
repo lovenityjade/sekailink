@@ -22,6 +22,10 @@ constexpr std::uint64_t kStateSaveTickInterval = 60;
 constexpr std::uint64_t kTraceHeartbeatTickInterval = 300;
 constexpr std::size_t kMaxRoomChatMessages = 64;
 
+bool IsActivityChatKind(std::string_view kind) {
+    return kind == "item" || kind == "hint" || kind == "connection" || kind == "defeat";
+}
+
 }  // namespace
 
 MinimalBridgeSession::MinimalBridgeSession(std::string domain_id, std::uint64_t watch_address, std::byte trigger_value, std::uint64_t inject_address)
@@ -523,6 +527,15 @@ bool RoomSynchronizedRuntimeSession::drain_room_chat(const TickContext& context)
             next_room_chat_id_ = std::max(next_room_chat_id_, message.id + 1);
         }
         room_chat_messages_.push_back(std::move(message));
+        const auto& stored_message = room_chat_messages_.back();
+        if (IsActivityChatKind(stored_message.kind)) {
+            sink_.emit({EventType::trace,
+                        stored_message.kind,
+                        stored_message.text,
+                        driver_instance_id_,
+                        linkedworld_id_,
+                        core_profile_});
+        }
         while (room_chat_messages_.size() > kMaxRoomChatMessages) {
             room_chat_messages_.erase(room_chat_messages_.begin());
         }

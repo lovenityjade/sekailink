@@ -1,0 +1,30 @@
+[Unit]
+Description=SekaiLink Social Bots API (Discord/Twitch/AI)
+After=network.target
+
+[Service]
+Type=simple
+User=sekailink
+Group=sekailink
+WorkingDirectory=/opt/sekailink/services/social-bots
+Environment=PYTHONPATH=/opt/sekailink/services/social-bots/src
+EnvironmentFile=/opt/sekailink/services/social-bots/.env
+ExecStart=/opt/sekailink/services/social-bots/.venv/bin/python -m sekailink_social_bots.main
+Restart=always
+RestartSec=2
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+CapabilityBoundingSet=
+LockPersonality=true
+MemoryDenyWriteExecute=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=multi-user.target

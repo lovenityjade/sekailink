@@ -1,0 +1,152 @@
+{
+  "kanto_pokemon_layout": {
+    "type": "dock",
+    "dock": "top",
+    "v_alignment": "stretch",
+    "content": [
+      {
+        "type": "group",
+        "header": "Kanto Pokemon",
+        "dock": "left",
+        "content": {
+          "type": "layout",
+          "key": "kanto_grid"
+        }
+      },
+      {
+        "type": "group",
+        "header": "Settings",
+        "dock": "left",
+        "content": {
+          "type": "layout",
+          "key": "pack_settings_grid"
+        }
+      }
+    ]
+  },
+  "johto_pokemon_layout": {
+    "type": "dock",
+    "dock": "top",
+    "v_alignment": "stretch",
+    "content": [
+      {
+        "type": "group",
+        "header": "Johto Pokemon",
+        "dock": "left",
+        "content": {
+          "type": "layout",
+          "key": "johto_grid"
+        }
+      },
+      {
+        "type": "group",
+        "header": "Settings",
+        "dock": "left",
+        "content": {
+          "type": "layout",
+          "key": "pack_settings_grid"
+        }
+      }
+    ]
+  },
+  "hoenn_pokemon_layout": {
+    "type": "dock",
+    "dock": "top",
+    "v_alignment": "stretch",
+    "content": [
+      {
+        "type": "group",
+        "header": "Hoenn Pokemon",
+        "dock": "left",
+        "content": {
+          "type": "layout",
+          "key": "hoenn_grid"
+        }
+      },
+      {
+        "type": "group",
+        "header": "Settings",
+        "dock": "left",
+        "content": {
+          "type": "layout",
+          "key": "pack_settings_grid"
+        }
+      }
+    ]
+  },
+    "kanto_pokemon_layout_vertical": {
+    "type": "dock",
+    "dock": "top",
+    "v_alignment": "stretch",
+    "content": [
+      {
+        "type": "group",
+        "header": "Kanto Pokemon",
+        "dock": "top",
+        "content": {
+          "type": "layout",
+          "key": "kanto_grid_vertical"
+        }
+      },
+      {
+        "type": "group",
+        "header": "Settings",
+        "dock": "top",
+        "content": {
+          "type": "layout",
+          "key": "pack_settings_grid_vertical"
+        }
+      }
+    ]
+  },
+  "johto_pokemon_layout_vertical": {
+    "type": "dock",
+    "dock": "top",
+    "v_alignment": "stretch",
+    "content": [
+      {
+        "type": "group",
+        "header": "Johto Pokemon",
+        "dock": "top",
+        "content": {
+          "type": "layout",
+          "key": "johto_grid_vertical"
+        }
+      },
+      {
+        "type": "group",
+        "header": "Settings",
+        "dock": "top",
+        "content": {
+          "type": "layout",
+          "key": "pack_settings_grid_vertical"
+        }
+      }
+    ]
+  },
+  "hoenn_pokemon_layout_vertical": {
+    "type": "dock",
+    "dock": "top",
+    "v_alignment": "stretch",
+    "content": [
+      {
+        "type": "group",
+        "header": "Hoenn Pokemon",
+        "dock": "top",
+        "content": {
+          "type": "layout",
+          "key": "hoenn_grid_vertical"
+        }
+      },
+      {
+        "type": "group",
+        "header": "Settings",
+        "dock": "top",
+        "content": {
+          "type": "layout",
+          "key": "pack_settings_grid_vertical"
+        }
+      }
+    ]
+  }
+}

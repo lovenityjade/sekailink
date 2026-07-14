@@ -16,7 +16,7 @@
 
 namespace sekaiemu::spike {
 
-bool InitializeFrontendSdl(bool probe_only, std::string& error);
+bool InitializeFrontendSdl(bool probe_only, bool background_gamepad_input, std::string& error);
 bool LoadCoreLibrarySession(const std::filesystem::path& core_path,
                             void*& core_handle,
                             CoreApi& core,

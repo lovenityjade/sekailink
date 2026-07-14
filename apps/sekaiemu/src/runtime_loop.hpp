@@ -38,6 +38,7 @@ struct RuntimeLoopContext {
   std::function<void()> on_save_state;
   std::function<void()> on_load_state;
   std::function<void()> on_begin_frame;
+  std::function<void()> on_emulation_frame_ran;
   std::function<bool()> core_run_enabled;
   std::function<void()> on_audio_buffer_status;
   std::function<void()> on_cycle_tracker_display_mode;
@@ -45,6 +46,7 @@ struct RuntimeLoopContext {
   std::function<void()> on_cycle_tracker_tab;
   std::function<void()> on_toggle_tracker_auto_follow;
   std::function<void()> on_toggle_fullscreen;
+  std::function<void()> on_test_goal_completion;
   std::function<void()> on_open_tracker_map_menu;
   std::function<bool(int, int)> on_open_tracker_map_menu_at;
   std::function<bool()> on_activate_tracker_map_menu;
@@ -64,6 +66,7 @@ struct RuntimeLoopContext {
   std::function<void()> on_autocomplete_chat_input;
   std::function<void(std::string_view)> on_append_chat_input;
   std::function<bool(const SDL_Event&)> on_runtime_debug_event;
+  std::function<bool(const SDL_Event&)> on_goal_completion_event;
   std::function<void()> on_present_frame;
   std::function<void()> on_update_menu_overlay;
   std::function<void()> on_reset_core;

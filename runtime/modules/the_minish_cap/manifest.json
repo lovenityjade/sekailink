@@ -39,7 +39,7 @@
     "ap_game": "The Minish Cap"
   },
   "tracker_pack_uid": "",
-  "tracker_web_url": "",
+  "tracker_web_url": "https://github.com/deoxis9001/tmcrando_maptracker_deoxis/releases/latest",
   "support_status": "supported",
   "availability_status": "available_beta3_confirmed",
   "compatibility_notes": "BETA-3 confirmed bilateral item/check communication.",

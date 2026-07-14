@@ -92,9 +92,9 @@ Exit criteria:
 Read-only commands:
 
 ```bash
-git -C /home/thelovenityjade/SekaiLink/canonical status --short
-git -C /home/thelovenityjade/SekaiLink/canonical diff --stat
-git -C /home/thelovenityjade/SekaiLink/canonical log -1 --date=iso --oneline
+git -C <local-home>/SekaiLink/canonical status --short
+git -C <local-home>/SekaiLink/canonical diff --stat
+git -C <local-home>/SekaiLink/canonical log -1 --date=iso --oneline
 ```
 
 ## Phase 1: Freeze Source Map
@@ -151,9 +151,9 @@ Priority order:
 Read-only commands:
 
 ```bash
-git -C /home/thelovenityjade/SekaiLink/canonical status --short
-git -C /home/thelovenityjade/SekaiLink/canonical diff --name-status
-git -C /home/thelovenityjade/SekaiLink/canonical diff --numstat
+git -C <local-home>/SekaiLink/canonical status --short
+git -C <local-home>/SekaiLink/canonical diff --name-status
+git -C <local-home>/SekaiLink/canonical diff --numstat
 ```
 
 ## Phase 3: Acceptance Buckets By System
@@ -334,12 +334,12 @@ Do not execute these now. This is the future release-safe order.
 These are safe during scellage:
 
 ```bash
-git -C /home/thelovenityjade/SekaiLink/canonical status --short
-git -C /home/thelovenityjade/SekaiLink/canonical diff --stat
-git -C /home/thelovenityjade/SekaiLink/canonical diff --name-status
-git -C /home/thelovenityjade/SekaiLink/canonical diff --numstat
-git -C /home/thelovenityjade/SekaiLink/canonical log -5 --date=iso --oneline
-find /home/thelovenityjade/SekaiLink/canonical/docs -type f -printf '%TY-%Tm-%Td %TH:%TM\t%s\t%p\n' | sort -r
+git -C <local-home>/SekaiLink/canonical status --short
+git -C <local-home>/SekaiLink/canonical diff --stat
+git -C <local-home>/SekaiLink/canonical diff --name-status
+git -C <local-home>/SekaiLink/canonical diff --numstat
+git -C <local-home>/SekaiLink/canonical log -5 --date=iso --oneline
+find <local-home>/SekaiLink/canonical/docs -type f -printf '%TY-%Tm-%Td %TH:%TM\t%s\t%p\n' | sort -r
 ```
 
 Avoid during scellage:

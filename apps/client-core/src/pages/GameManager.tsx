@@ -39,7 +39,7 @@ type RuntimeModuleInfo = {
 };
 
 type TrackerBadge = {
-  label: "Poptracker" | "Webtracker" | "No Tracker";
+  label: "Poptracker" | "Webtracker" | "Universal Tracker" | "No Tracker";
   className: "poptracker" | "webtracker" | "no-tracker";
 };
 
@@ -297,11 +297,15 @@ const GameManagerPage: React.FC = () => {
       const display = normalizeTrackerKey(manifest.display_name);
       const trackerPack = String(manifest.tracker_pack_uid || "").trim();
       const trackerWeb = String(manifest.tracker_web_url || "").trim();
-      const badge: TrackerBadge = trackerWeb
-        ? { label: "Webtracker", className: "webtracker" }
-          : trackerPack
-          ? { label: "Poptracker", className: "poptracker" }
-          : { label: "No Tracker", className: "no-tracker" };
+      const trackerType = normalizeTrackerKey(manifest.tracker_type || trackerWeb);
+      const badge: TrackerBadge =
+        trackerType === "universal_tracker" || trackerType === "universaltracker"
+          ? { label: "Universal Tracker", className: "webtracker" }
+          : trackerWeb
+            ? { label: "Webtracker", className: "webtracker" }
+            : trackerPack
+              ? { label: "Poptracker", className: "poptracker" }
+              : { label: "No Tracker", className: "no-tracker" };
       if (gameId) map[gameId] = badge;
       if (display) map[display] = badge;
     }

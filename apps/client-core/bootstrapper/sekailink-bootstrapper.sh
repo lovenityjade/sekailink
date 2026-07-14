@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-channel="${SEKAILINK_CHANNEL:-test}"
+channel="${SEKAILINK_CHANNEL:-canonical}"
 build="${SEKAILINK_BUILD:-release}"
 platform="${SEKAILINK_PLATFORM:-linux-x64}"
 api_base_url="${SEKAILINK_API_BASE_URL:-https://sekailink.com}"

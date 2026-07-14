@@ -1,6 +1,7 @@
 #pragma once
 
 #include "audio_output.hpp"
+#include "activity_feed_window_presenter.hpp"
 #include "bridge_runtime_status.hpp"
 #include "core_option_manager.hpp"
 #include "input_script.hpp"
@@ -13,8 +14,10 @@
 #include "profile_bridge.hpp"
 #include "runtime_chat_overlay.hpp"
 #include "runtime_chat_bridge.hpp"
+#include "runtime_client_core_hud.hpp"
 #include "bridge_terminal_presenter.hpp"
 #include "runtime_frontend_settings.hpp"
+#include "runtime_goal_completion.hpp"
 #include "runtime_memory_server.hpp"
 #include "runtime_menu.hpp"
 #include "save_state_manager.hpp"
@@ -66,11 +69,13 @@ struct LibretroHost::Impl {
   bool InitializeVideoBackend();
   bool LoadLaunchProfileMetadata();
   void LoadFrontendSettings();
+  void ApplyFrontendWindowSettings();
   void ApplyFrontendTrackerSettings();
   void SaveFrontendSettingsNow();
   void PersistRuntimeMenuSettingsIfNeeded();
   void AdjustMasterVolume(int delta_percent);
   void ToggleNotifications();
+  void ToggleActivityFeed();
   void ToggleBridgeTerminal();
   void RenderBridgeTerminal();
   bool InitializeTrackerRuntime();
@@ -96,6 +101,13 @@ struct LibretroHost::Impl {
   void TickSklmiCompanion();
   void TickTrackerRuntime();
   void TickCoreChatBridge();
+  void TickClientCoreHud();
+  void RenderClientCoreHud();
+  void TriggerGoalCompletion(std::string source);
+  void TickGoalCompletionTimer();
+  bool GoalCompletionScreenActive() const;
+  bool HandleGoalCompletionEvent(const SDL_Event& event);
+  void RenderGoalCompletionScreen();
   BridgeRuntimeStatus CurrentBridgeRuntimeStatus() const;
   void DumpMemorySnapshot();
   std::vector<std::uint8_t> ReadProfileRegion(const WatchRegion& region);
@@ -147,8 +159,8 @@ struct LibretroHost::Impl {
   void RestartBridgeRuntime();
 
   static constexpr std::uint64_t kTrackerAutosaveFrameInterval = 30 * 60;
-  static constexpr std::uint64_t kTrackerPollFrameInterval = 30;
-  static constexpr std::uint64_t kTrackerSnapshotPollFrameInterval = 30;
+  static constexpr std::uint64_t kTrackerPollFrameInterval = 300;
+  static constexpr std::uint64_t kTrackerSnapshotPollFrameInterval = 300;
   static constexpr std::uint64_t kTrackerRenderFrameInterval = 30;
   static constexpr std::uint64_t kChatRenderFrameInterval = 30;
 
@@ -159,6 +171,7 @@ struct LibretroHost::Impl {
   TrackerRuntime tracker_runtime_;
   HostTrackerAssetResolver tracker_asset_resolver_;
   TrackerWindowPresenter tracker_window_presenter_;
+  ActivityFeedWindowPresenter activity_feed_window_presenter_;
   BridgeTerminalPresenter bridge_terminal_presenter_;
   std::filesystem::path tracker_state_path_;
   std::filesystem::path tracker_snapshot_path_;
@@ -185,11 +198,14 @@ struct LibretroHost::Impl {
   bool tracker_force_next_render_ = false;
   RuntimeChatOverlay chat_overlay_;
   RuntimeChatBridge core_chat_bridge_;
+  RuntimeClientCoreHud client_core_hud_;
+  RuntimeGoalCompletion goal_completion_;
   RuntimeFrontendSettingsStore frontend_settings_;
   std::uint64_t chat_snapshot_mutation_serial_ = 0;
   std::uint64_t bridge_terminal_last_mutation_serial_ = 0;
   std::uint64_t bridge_terminal_last_render_frame_ = 0;
   bool notifications_enabled_ = true;
+  bool activity_feed_enabled_ = false;
   bool chat_ignore_open_key_text_ = false;
   void* core_handle = nullptr;
   CoreApi core{};

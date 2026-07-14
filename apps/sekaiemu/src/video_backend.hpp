@@ -22,6 +22,12 @@ enum class VideoBackendType {
   Vulkan,
 };
 
+enum class WindowMode {
+  Window,
+  BorderlessWindow,
+  Fullscreen,
+};
+
 class VideoBackend {
  public:
   virtual ~VideoBackend() = default;
@@ -52,7 +58,8 @@ class VideoBackend {
   virtual void SetTrackerSidebarLayout(bool enabled,
                                        unsigned sidebar_width,
                                        const VideoGeometry& geometry) = 0;
-  virtual bool ToggleFullscreen(std::string& error) = 0;
+  virtual bool SetWindowMode(WindowMode mode, std::string& error) = 0;
+  virtual WindowMode CurrentWindowMode() const = 0;
   virtual void SetImGuiDrawCallback(std::function<void()> callback) { (void)callback; }
   virtual void Present() = 0;
   virtual void Shutdown() = 0;

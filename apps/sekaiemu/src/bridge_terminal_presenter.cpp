@@ -1,5 +1,7 @@
 #include "bridge_terminal_presenter.hpp"
 
+#include "window_chrome.hpp"
+
 #include "opengl_loader.hpp"
 #include "overlay_canvas.hpp"
 #include "tracker_overlay_render_state.hpp"
@@ -613,10 +615,12 @@ bool BridgeTerminalPresenter::EnsureWindow(unsigned width, unsigned height) {
                                SDL_WINDOWPOS_CENTERED,
                                static_cast<int>(width),
                                static_cast<int>(height),
-                               SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+                               SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE |
+                                   SDL_WINDOW_BORDERLESS);
     if (!window_) {
       return false;
     }
+    EnableBorderlessTitlebarDrag(window_);
   }
   if (!gl_context_) {
     SDL_GL_ResetAttributes();

@@ -101,7 +101,7 @@ generator:
   logtime: false
 sni_options:
   # Set this to your SNI folder location if you want the MultiClient to attempt an auto start, does nothing if not found
-  sni_path: "/home/thelovenityjade/.config/sekailink-client/runtime/downloads/AP_34750077294005127499_P1_thelov-alin-b9eb (3).aplttp"
+  sni_path: ""
   # Set this to false to never autostart a rom (such as after patching)
   # True for operating system default program
   # Alternatively, a path to a program to open the .sfc file with
@@ -119,15 +119,15 @@ dk64_options:
   release_branch: "master"
   enable_minimal_logic_dk64: false
 dkc2_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/donkey_kong_country_2.sfc"
+  rom_file: "roms/donkey_kong_country_2.sfc"
   ut_poptracker_path: ""
   trivia_path: "data/trivia/dkc2"
 dkc3_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/donkey_kong_country_3.sfc"
+  rom_file: "roms/donkey_kong_country_3.sfc"
 dkc_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/donkey_kong_country.smc"
+  rom_file: "roms/donkey_kong_country.smc"
 earthbound_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/earthbound.sfc"
+  rom_file: "roms/earthbound.sfc"
 ff4fe_options:
   rom_file: "Final Fantasy II (USA) (Rev A).sfc"
   rom_start: true
@@ -135,13 +135,13 @@ ffr_options:
   display_msgs: true
 ffta_options:
   # File name of your Final Fantasy Tactics Advance ROM
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/final_fantasy_tactics_advance.gba"
+  rom_file: "roms/final_fantasy_tactics_advance.gba"
 ffvcd_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/final_fantasy_v.sfc"
+  rom_file: "roms/final_fantasy_v.sfc"
 kdl3_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/kirbys_dream_land_3.sfc"
+  rom_file: "roms/kirbys_dream_land_3.sfc"
 ladx_beta_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/links_awakening_dx.gbc"
+  rom_file: "roms/links_awakening_dx.gbc"
   rom_start: true
   gfx_mod_file: ""
   retroarch_host: "127.0.0.1:55355"
@@ -151,9 +151,9 @@ ladx_options:
   gfx_mod_file: ""
 lttp_options:
   # File name of the v1.0 J rom
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/alttp.sfc"
+  rom_file: "roms/alttp.sfc"
 lufia2ac_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/lufia_ii.sfc"
+  rom_file: "roms/lufia_ii.sfc"
 luigismansion_options:
   iso_file: "None"
   dolphin_settings:
@@ -162,26 +162,26 @@ luigismansion_options:
     auto_start: true
   dolphin_process_name: ""
 metroidfusion_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/metroid_fusion.gba"
+  rom_file: "roms/metroid_fusion.gba"
   rom_start: true
   display_location_found_messages: true
 metroidprime_options:
   rom_file: "Metroid_Prime.iso"
   rom_start: false
 mlss_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/mario_luigi_superstar_saga.gba"
+  rom_file: "roms/mario_luigi_superstar_saga.gba"
   rom_start: true
 mm2_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/mega_man_2.nes"
+  rom_file: "roms/mega_man_2.nes"
 mm3_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/mega_man_3.nes"
+  rom_file: "roms/mega_man_3.nes"
 mmbn3_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/mega_man_battle_network_3.gba"
+  rom_file: "roms/mega_man_battle_network_3.gba"
   rom_start: true
 mmx3_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/mega_man_x3.sfc"
+  rom_file: "roms/mega_man_x3.sfc"
 mzm_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/metroid_zero_mission.gba"
+  rom_file: "roms/metroid_zero_mission.gba"
   rom_start: true
   universal_tracker_setings:
     show_tricks: "next_level"
@@ -192,38 +192,38 @@ paper_mario_settings:
   rom_file: "Paper Mario (USA).z64"
   rom_start: true
 pokemon_crystal_settings:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/pokemon_crystal.gbc"
+  rom_file: "roms/pokemon_crystal.gbc"
 pokemon_emerald_settings:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/pokemon_emerald.gba"
+  rom_file: "roms/pokemon_emerald.gba"
 pokemon_frlg_settings:
-  firered_rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/pokemon_firered.gba"
-  leafgreen_rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/pokemon_leafgreen.gba"
+  firered_rom_file: "roms/pokemon_firered.gba"
+  leafgreen_rom_file: "roms/pokemon_leafgreen.gba"
   ut_poptracker_path: ""
 pokemon_rb_options:
-  red_rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/pokemon_red.gb"
-  blue_rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/pokemon_red.gb"
+  red_rom_file: "roms/pokemon_red.gb"
+  blue_rom_file: "roms/pokemon_red.gb"
 sf64_options:
   rom_path: ""
   patch_path: ""
   program_path: ""
-  program_args: "--lua=/home/thelovenityjade/SekaiLink/canonical/runtime/ap/data/lua/connector_sf64_bizhawk.lua"
+  program_args: "--lua=runtime/ap/data/lua/connector_sf64_bizhawk.lua"
   enable_tracker: true
 sm_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/super_metroid.sfc"
+  rom_file: "roms/super_metroid.sfc"
 sml2_options:
   rom_file: "Super Mario Land 2 - 6 Golden Coins (USA, Europe).gb"
 sms_options:
   iso_file: "None"
 smw_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/super_mario_world.sfc"
+  rom_file: "roms/super_mario_world.sfc"
 soe_options:
-  rom_file: "Secret of Evermore (USA).sfc"
+  rom_file: "roms/secret_of_evermore.sfc"
 som_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/secret_of_mana.sfc"
+  rom_file: "roms/secret_of_mana.sfc"
 tetrisattack_options:
   rom_file: "Tetris Attack (USA) (En,Ja).sfc"
 tloz_ooa_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/oracle_of_ages.gbc"
+  rom_file: "roms/oracle_of_ages.gbc"
   heart_beep_interval: "vanilla"
   character_sprite: "link"
   character_palette: "green"
@@ -232,7 +232,7 @@ tloz_ooa_options:
   skip_tokkey_dance: false
   skip_boi_joke: false
 tloz_oos_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/oracle_of_seasons.gbc"
+  rom_file: "roms/oracle_of_seasons.gbc"
   ages_rom_file: "Legend of Zelda, The - Oracle of Ages (USA).gbc"
   rom_start: true
   character_sprite: "link"
@@ -241,20 +241,20 @@ tloz_oos_options:
   heart_beep_interval: "vanilla"
   remove_music: false
 tloz_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/the_legend_of_zelda.nes"
+  rom_file: "roms/the_legend_of_zelda.nes"
   rom_start: true
   display_msgs: true
 tmc_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/the_minish_cap.gba"
+  rom_file: "roms/the_minish_cap.gba"
   rom_start: true
 ttyd_options:
   dolphin_path: "None"
   rom_file: "Paper Mario - The Thousand-Year Door (USA).iso"
   rom_start: true
 wl4_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/wario_land_4.gba"
+  rom_file: "roms/wario_land_4.gba"
   rom_start: true
 wl_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/wario_land.gb"
+  rom_file: "roms/wario_land.gb"
 zelda2_options:
-  rom_file: "/home/thelovenityjade/.config/sekailink-client/roms/zelda_ii.nes"
+  rom_file: "roms/zelda_ii.nes"

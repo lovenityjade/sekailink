@@ -6,9 +6,9 @@ not only against an in-process fake transport.
 ## Runtime
 
 - Server binary:
-  `/home/thelovenityjade/Games/The Legend of Jade/clients/squashfs-root/opt/MultiworldGG/MultiworldGGServer`
+  `<local-home>/Games/The Legend of Jade/clients/squashfs-root/opt/MultiworldGG/MultiworldGGServer`
 - Seed archive:
-  `/home/thelovenityjade/Downloads/AP_78856210104802680998.zip`
+  `<local-home>/Downloads/AP_78856210104802680998.zip`
 - Local endpoint:
   `127.0.0.1:38283`
 - SKLMI probe:

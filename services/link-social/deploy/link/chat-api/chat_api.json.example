@@ -1,8 +1,8 @@
 {
   "http_port": 19099,
   "listen_host": "127.0.0.1",
-  "identity_host": "nexus.sekailink.com",
-  "identity_port": 19095,
+  "identity_host": "127.0.0.1",
+  "identity_port": 19295,
   "chat_gateway_host": "127.0.0.1",
   "chat_gateway_port": 19098,
   "chat_gateway_token": "replace-chat-gateway-token",

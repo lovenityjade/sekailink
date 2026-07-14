@@ -33,6 +33,7 @@ using NativeSocket = int;
 #include <cctype>
 #include <cerrno>
 #include <cstddef>
+#include <cstdlib>
 #include <cstring>
 #include <fstream>
 #include <iostream>
@@ -40,6 +41,111 @@ using NativeSocket = int;
 #include <vector>
 
 namespace sekaiemu::spike {
+
+namespace {
+
+bool IsGameBoyWramDomain(std::string_view normalized_domain) {
+  return normalized_domain == "system_ram" || normalized_domain == "ram" ||
+         normalized_domain == "wram";
+}
+
+const std::uint8_t* ResolveGameBoyLibretroMemory(const CoreApi& core,
+                                                 std::string_view normalized_domain,
+                                                 const std::vector<std::uint8_t>& rom_data,
+                                                 std::uint32_t address,
+                                                 std::uint32_t size) {
+  if (!core.retro_get_memory_data || !core.retro_get_memory_size) {
+    return nullptr;
+  }
+  const std::size_t length = static_cast<std::size_t>(size);
+  if (length == 0) {
+    return nullptr;
+  }
+
+  auto resolve_region = [&](unsigned region_id, std::uint32_t offset) -> const std::uint8_t* {
+    auto* base = static_cast<const std::uint8_t*>(core.retro_get_memory_data(region_id));
+    const std::size_t region_size = core.retro_get_memory_size(region_id);
+    const std::size_t start = static_cast<std::size_t>(offset);
+    if (!base || start > region_size || length > region_size - start) {
+      return nullptr;
+    }
+    return base + start;
+  };
+
+  if (IsGameBoyWramDomain(normalized_domain)) {
+    return resolve_region(RETRO_MEMORY_SYSTEM_RAM, address);
+  }
+  if (IsGameBoyCartRamDomain(normalized_domain)) {
+    return resolve_region(RETRO_MEMORY_SAVE_RAM, address);
+  }
+  if (!IsGameBoyBusDomain(normalized_domain)) {
+    return nullptr;
+  }
+
+  if (!rom_data.empty() && address < 0x8000u) {
+    const std::size_t start = static_cast<std::size_t>(address);
+    if (start <= rom_data.size() && length <= rom_data.size() - start) {
+      return rom_data.data() + start;
+    }
+    return nullptr;
+  }
+  if (address >= 0xA000u && address < 0xC000u) {
+    return resolve_region(RETRO_MEMORY_SAVE_RAM, address - 0xA000u);
+  }
+  if (address >= 0xC000u && address < 0xE000u) {
+    return resolve_region(RETRO_MEMORY_SYSTEM_RAM, address - 0xC000u);
+  }
+  if (address >= 0xE000u && address < 0xFE00u) {
+    return resolve_region(RETRO_MEMORY_SYSTEM_RAM, address - 0xE000u);
+  }
+  return nullptr;
+}
+
+std::uint8_t* ResolveGameBoyLibretroMemoryMutable(CoreApi& core,
+                                                  std::string_view normalized_domain,
+                                                  std::uint32_t address,
+                                                  std::uint32_t size) {
+  if (!core.retro_get_memory_data || !core.retro_get_memory_size) {
+    return nullptr;
+  }
+  const std::size_t length = static_cast<std::size_t>(size);
+  if (length == 0) {
+    return nullptr;
+  }
+
+  auto resolve_region = [&](unsigned region_id, std::uint32_t offset) -> std::uint8_t* {
+    auto* base = static_cast<std::uint8_t*>(core.retro_get_memory_data(region_id));
+    const std::size_t region_size = core.retro_get_memory_size(region_id);
+    const std::size_t start = static_cast<std::size_t>(offset);
+    if (!base || start > region_size || length > region_size - start) {
+      return nullptr;
+    }
+    return base + start;
+  };
+
+  if (IsGameBoyWramDomain(normalized_domain)) {
+    return resolve_region(RETRO_MEMORY_SYSTEM_RAM, address);
+  }
+  if (IsGameBoyCartRamDomain(normalized_domain)) {
+    return resolve_region(RETRO_MEMORY_SAVE_RAM, address);
+  }
+  if (!IsGameBoyBusDomain(normalized_domain)) {
+    return nullptr;
+  }
+
+  if (address >= 0xA000u && address < 0xC000u) {
+    return resolve_region(RETRO_MEMORY_SAVE_RAM, address - 0xA000u);
+  }
+  if (address >= 0xC000u && address < 0xE000u) {
+    return resolve_region(RETRO_MEMORY_SYSTEM_RAM, address - 0xC000u);
+  }
+  if (address >= 0xE000u && address < 0xFE00u) {
+    return resolve_region(RETRO_MEMORY_SYSTEM_RAM, address - 0xE000u);
+  }
+  return nullptr;
+}
+
+}  // namespace
 
 RuntimeMemoryServer::~RuntimeMemoryServer() {
   Shutdown();
@@ -415,7 +521,9 @@ std::vector<RuntimeMemoryDomainInfo> RuntimeMemoryServer::BuildDomainList() cons
   // it through libretro memory maps at read/write time.
   if (memory_domains_ &&
       (!memory_domains_->Descriptors().empty() || IsGbaSystem(system_name_) || IsGameBoySystem(system_name_))) {
-    constexpr std::size_t kVirtualBusSize = static_cast<std::size_t>(0x100000000ull);
+    const std::size_t kVirtualBusSize = IsGameBoySystem(system_name_)
+        ? static_cast<std::size_t>(0x10000u)
+        : static_cast<std::size_t>(0x100000000ull);
     add_domain("System Bus", kVirtualBusSize);
     add_domain("system_bus", kVirtualBusSize);
     add_domain("bus", kVirtualBusSize);
@@ -745,13 +853,10 @@ const std::uint8_t* RuntimeMemoryServer::ResolveReadOnly(std::string_view domain
   if (!core_) {
     return nullptr;
   }
-  if (IsGameBoySystem(system_name_) && IsGameBoyBusDomain(normalized_domain)) {
-    if (!rom_data_.empty() && address < 0x8000u) {
-      const std::size_t offset = static_cast<std::size_t>(address);
-      const std::size_t length = static_cast<std::size_t>(size);
-      if (offset <= rom_data_.size() && length <= rom_data_.size() - offset) {
-        return rom_data_.data() + offset;
-      }
+  if (IsGameBoySystem(system_name_)) {
+    if (const auto* game_boy_resolved =
+            ResolveGameBoyLibretroMemory(*core_, normalized_domain, rom_data_, address, size)) {
+      return game_boy_resolved;
     }
   }
   if (IsGbaSystem(system_name_) &&
@@ -804,6 +909,12 @@ std::uint8_t* RuntimeMemoryServer::ResolveWritable(std::string_view domain_id,
     }
     return nullptr;
   }
+  if (IsGameBoySystem(system_name_)) {
+    if (auto* game_boy_resolved =
+            ResolveGameBoyLibretroMemoryMutable(*core_, normalized_domain, address, size)) {
+      return game_boy_resolved;
+    }
+  }
   if (IsGbaSystem(system_name_) &&
       (IsGbaEwramDomain(normalized_domain) || IsGbaIwramDomain(normalized_domain) ||
        IsGbaSramDomain(normalized_domain) || IsGbaBusDomain(normalized_domain))) {
@@ -848,12 +959,11 @@ void RuntimeMemoryServer::TraceMemoryRequest(std::string_view type,
     count = ++guard_trace_count_;
   }
 
+  const bool verbose_trace = std::getenv("SEKAIEMU_MEMORY_TRACE_VERBOSE") != nullptr;
   const bool should_trace =
       !ok ||
       type_text == "WRITE" ||
-      type_text == "GUARD" ||
-      count <= 24 ||
-      count % 1000 == 0;
+      (verbose_trace && (type_text == "GUARD" || count <= 24 || count % 1000 == 0));
   if (!should_trace) {
     return;
   }

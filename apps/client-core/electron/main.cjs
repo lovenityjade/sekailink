@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, shell, screen, dialog, clipboard } = require("electron");
+const { app, BrowserWindow, Menu, ipcMain, shell, screen, dialog, clipboard, desktopCapturer } = require("electron");
 const { spawn, spawnSync } = require("child_process");
 const readline = require("readline");
 const fs = require("fs"), os = require("os"), crypto = require("crypto"), https = require("https"), http = require("http"), net = require("net"), path = require("path");
@@ -19,8 +19,10 @@ const { createArchipelagoClientRuntime } = require("./lib/archipelago-client-run
 const { createWebApClientRuntime } = require("./lib/web-ap-client-runtime.cjs");
 const { createSekaiemuChatBridge } = require("./lib/sekaiemu-chat-bridge.cjs");
 const { createSekaiemuRuntime } = require("./lib/sekaiemu-runtime.cjs");
+const { createSekaiemuRuntimeSocial } = require("./lib/sekaiemu-runtime-social.cjs");
 const { createNativeGameRuntime } = require("./lib/native-game-runtime.cjs");
 const { createRuntimeModuleLibrary } = require("./lib/runtime-module-library.cjs");
+const { createPcPackageRuntime } = require("./lib/pc-package-runtime.cjs");
 const { createAutoLaunchRuntime } = require("./lib/autolaunch-runtime.cjs");
 const { registerMainIpcHandlers } = require("./lib/main-ipc-handlers.cjs");
 const { createClientRuntimeConfig } = require("./lib/client-runtime-config.cjs");
@@ -66,7 +68,7 @@ const archipelagoClientProcs = new Map(), archipelagoClientReadlines = new Map()
 const archipelagoClientSessions = new Map(), retroarchMemoryBridgeProcs = new Map(), bizhawkProcs = new Map();
 const trackerProcs = new Map(), trackerRuntimeControls = new Map(), trackerWebWindows = new Set();
 const nativeGameProcs = new Map(), linkedWorldProcs = new Map(), sekaiemuChatBridges = new Map();
-let sekaiemuLab = null, archipelagoClientRuntime = null, webApClientRuntime = null;
+let sekaiemuLab = null, sekaiemuRuntimeSocial = null, archipelagoClientRuntime = null, webApClientRuntime = null;
 let clearPopTrackerRuntimeCache = () => {}, clearRuntimeModuleCaches = () => {};
 
 const COMMONCLIENT_EVENT_CHANNEL = "commonclient:event", BIZHAWKCLIENT_EVENT_CHANNEL = "bizhawkclient:event";
@@ -99,11 +101,28 @@ const {
   getBootstrapLaunchTokenStatus,
   validateBootstrapLaunchToken,
   getBootstrapInstallState,
+  getPreferredReleaseChannel,
+  setPreferredReleaseChannel,
+  fetchBootstrapperLatest,
+  checkAndApplyBootstrapperUpdate,
   resolveBootstrapperExecutable,
   getBootstrapperDownloadUrl,
   spawnDetachedBootstrapper,
   launchBootstrapperAndQuit,
-} = createBootstrapperControl({ app, crypto, fs, path, spawn, processRef: process });
+} = createBootstrapperControl({
+  app,
+  crypto,
+  fs,
+  path,
+  spawn,
+  spawnSync,
+  processRef: process,
+  httpGetJson: (...args) => httpGetJson(...args),
+  downloadToDirWithProgress: (...args) => downloadToDirWithProgress(...args),
+  extractZip: (...args) => extractZip(...args),
+  ensureDir: (...args) => ensureDir(...args),
+  writeLogLine,
+});
 
 const readJsonFileSafe = (filePath) => {
   try {
@@ -159,6 +178,7 @@ const {
     traceEvents: 0,
   }),
   getArchipelagoTraceTail: () => archipelagoClientRuntime?.formatArchipelagoClientTraceTail?.() || "",
+  getRuntimeLogPaths: () => sekaiemuRuntimeSocial?.getLogPaths?.() || [],
   getMainWindow: () => appShell.getMainWindow(),
   nowIso,
 });
@@ -166,6 +186,7 @@ const {
 const appShell = createElectronAppShell({
   app,
   BrowserWindow,
+  Menu,
   dialog,
   screen,
   fs,
@@ -284,6 +305,10 @@ const {
   normalizeSha256,
 } = createDownloadTools({ fs, path, http, https, crypto, processRef: process, ensureDir, writeLogLine });
 
+const pcPackageRuntime = createPcPackageRuntime({
+  app, fs, path, https, spawnSync, processRef: process, ensureDir, downloadToDirWithProgress, writeLogLine,
+});
+
 
 const runtimeAssetTools = createRuntimeAssetTools({
   fs,
@@ -291,6 +316,7 @@ const runtimeAssetTools = createRuntimeAssetTools({
   http,
   https,
   processRef: process,
+  spawnSync,
   sanitizeHeaders,
   resolveRedirectUrl,
   downloadToFile,
@@ -353,10 +379,18 @@ const sekaiemuRuntime = createSekaiemuRuntime({
   spawnMaybeGamescope: (...args) => spawnMaybeGamescope(...args),
   startSekaiemuChatBridge: (...args) => startSekaiemuChatBridge(...args),
   stopArchipelagoClientsForSession: (...args) => stopArchipelagoClientsForSession(...args),
+  triggerCoupledRuntimeTeardown: (...args) => triggerCoupledRuntimeTeardown(...args),
   nativeGameProcs,
   sekaiemuChatBridges,
-  rememberSekaiemuSession: (...args) => sekaiemuLab?.rememberSession?.(...args),
-  forgetSekaiemuSession: (...args) => sekaiemuLab?.forgetSession?.(...args),
+  rememberSekaiemuSession: (...args) => {
+    sekaiemuLab?.rememberSession?.(...args);
+    sekaiemuRuntimeSocial?.rememberSession?.(...args);
+  },
+  forgetSekaiemuSession: (...args) => {
+    sekaiemuLab?.forgetSession?.(...args);
+    sekaiemuRuntimeSocial?.forgetSession?.(...args);
+  },
+  emitSessionEvent: (...args) => emitSessionEvent(...args),
 });
 
 const {
@@ -370,6 +404,7 @@ const {
   resolveSklmiManifestDirForSekaiemu,
   resolveSekaiemuTrackerPackPath,
   tryLaunchSekaiemu,
+  tryCaptureSekaiemuInput,
 } = sekaiemuRuntime;
 
 sekaiemuLab = createSekaiemuLab({
@@ -392,6 +427,24 @@ sekaiemuLab = createSekaiemuLab({
   terminateChildProcess,
   secureIpcHandle,
   tryLaunchSekaiemu,
+  tryCaptureSekaiemuInput,
+});
+
+sekaiemuRuntimeSocial = createSekaiemuRuntimeSocial({
+  app,
+  BrowserWindow,
+  fs,
+  path,
+  processRef: process,
+  ensureDir,
+  writeLogLine,
+  nowIso,
+  isDev,
+  devServerUrl,
+  dirname: __dirname,
+  secureIpcHandle,
+  readConfig,
+  emitSessionEvent: (...args) => emitSessionEvent(...args),
 });
 
 const runtimeModuleLibrary = createRuntimeModuleLibrary({
@@ -426,6 +479,7 @@ const {
   resolveConfiguredRomForModule,
   resolveModuleForDownload,
   findModuleByApGameName,
+  validateRomForModule,
   validateSetupForModule,
   scanRomFolder,
   importRomFile,
@@ -434,10 +488,14 @@ const {
 clearRuntimeModuleCaches = clearRuntimeModuleCachesImpl;
 
 const emitSessionEvent = (payload) => {
-  const win = appShell.getMainWindow();
-  if (!win || win.isDestroyed()) return;
   writeLogJson("session", payload);
-  win.webContents.send(SESSION_EVENT_CHANNEL, payload);
+  try {
+    const win = appShell.getMainWindow();
+    if (!win || win.isDestroyed() || !win.webContents || win.webContents.isDestroyed()) return;
+    win.webContents.send(SESSION_EVENT_CHANNEL, payload);
+  } catch (err) {
+    writeLogLine("warn", "session", `session event dispatch skipped: ${String(err?.message || err || "")}`);
+  }
 };
 
 const emitUpdaterEvent = (payload) => {
@@ -509,6 +567,7 @@ archipelagoClientRuntime = createArchipelagoClientRuntime({
   archipelagoClientChatBridges,
   archipelagoClientSessions,
   retroarchMemoryBridgeProcs,
+  notifyRuntimeItem: (...args) => sekaiemuRuntimeSocial?.notifyRuntimeItem?.(...args),
 });
 
 const {
@@ -537,6 +596,8 @@ webApClientRuntime = createWebApClientRuntime({
   nowIso,
   normalizeIpcString,
   appendSekaiemuSystemChat,
+  notifyRuntimeItem: (...args) => sekaiemuRuntimeSocial?.notifyRuntimeItem?.(...args),
+  notifyRuntimeActivity: (...args) => sekaiemuRuntimeSocial?.notifyRuntimeActivity?.(...args),
 });
 
 const {
@@ -601,6 +662,7 @@ const {
 
 const {
   tryLaunchSoh,
+  tryLaunch2Ship,
   tryLaunchSm64Ex,
   tryLaunchGzDoom,
   tryHandleDownloadedArtifact,
@@ -609,7 +671,14 @@ const {
   fs,
   path,
   processRef: process,
+  spawn,
   ensureDir,
+  readConfig,
+  getModuleManifest,
+  resolveGithubRepo,
+  which,
+  pcPackageRuntime,
+  writeLogLine,
   isPlainObject,
   normalizeIpcString,
   getRuntimeToolsDir,
@@ -629,6 +698,7 @@ const runtimeShutdown = createRuntimeShutdown({
   stopRetroarchMemoryBridge: (...args) => stopRetroarchMemoryBridge(...args),
   stopAllWebApClients: (...args) => stopAllWebApClients(...args),
   stopBizHawkClientForCoupling: (...args) => stopBizHawkClient(...args),
+  stopSniBridge: (...args) => stopSniBridge(...args),
   sendPopTrackerRuntimeCommand: (...args) => sendPopTrackerRuntimeCommand(...args),
   terminateChildProcess,
   purgeStaleSniBridgePortHolders,
@@ -687,6 +757,7 @@ const popTrackerRuntime = createPopTrackerRuntime({
   trackerWebWindows,
   terminateChildProcess,
   triggerCoupledRuntimeTeardown,
+  startArchipelagoClient,
 });
 
 const {
@@ -702,6 +773,7 @@ const {
   stopPopTracker,
   readPopTrackerRuntimeStatus,
   sendPopTrackerRuntimeCommand,
+  openPopTrackerBroadcast,
   handleTrackerVariantResponse,
   clearRuntimeCache: clearPopTrackerRuntimeCacheImpl,
 } = popTrackerRuntime;
@@ -803,6 +875,7 @@ const {
   moduleHasExternalTracker,
   launchBizHawk,
   tryLaunchSoh,
+  tryLaunch2Ship,
   tryLaunchSekaiemu,
   startCommonClient,
   sendCommonClientCommand,
@@ -835,12 +908,29 @@ const {
 
 appShell.registerAppLifecycle();
 
+app.whenReady().then(() => {
+  setTimeout(() => {
+    void checkAndApplyBootstrapperUpdate()
+      .then((result) => {
+        if (result?.ok) {
+          writeLogLine("info", "bootstrapper", `startup check ok updated=${Boolean(result.updated)} channel=${String(result.channel || "")} version=${String(result.version || "")}`);
+          return;
+        }
+        writeLogLine("warn", "bootstrapper", `startup check skipped: ${String(result?.error || "unknown")}`);
+      })
+      .catch((err) => {
+        writeLogLine("warn", "bootstrapper", `startup check failed: ${String(err || "")}`);
+      });
+  }, 2500);
+});
+
 registerMainIpcHandlers({
-  app, BrowserWindow, shell, dialog, clipboard, screen, fs, path, spawn, spawnSync, readline,
-  processRef: process, dirname: __dirname,
+  app, BrowserWindow, shell, dialog, clipboard, screen, desktopCapturer, fs, path, spawn, spawnSync, readline,
+  processRef: process, dirname: __dirname, isDev, devServerUrl,
   secureIpcHandle, isPlainObject, isSafeExternalUrl, normalizeIpcString, normalizeIpcPath, normalizeGameId,
   openExternalSafely, getMainWindow: () => appShell.getMainWindow(), createDashboardWindow: (...args) => appShell.createDashboardWindow(...args),
   getBootstrapInstallState, getClientBundleInstallDir, validateBootstrapLaunchToken, resolveBootstrapperExecutable,
+  getPreferredReleaseChannel, setPreferredReleaseChannel, fetchBootstrapperLatest, checkAndApplyBootstrapperUpdate,
   getBootstrapperDownloadUrl, launchBootstrapperAndQuit,
   readConfig, writeConfig, getGamescopePath, getWmctrlPath,
   collectDiagnosticsReport, submitDiagnosticsReport, collectBugReportArtifacts,
@@ -850,15 +940,20 @@ registerMainIpcHandlers({
   },
   startClientUpdaterDownload, downloadAndApplyClientUpdate, openDownloadedUpdaterFile, syncIncrementalClientFiles,
   scanRomFolder, importRomFile, runPatcher, resolvePatchedRomPlan, patchedRomCache,
+  clearRuntimeCaches: () => {
+    clearRuntimeModuleCaches();
+    clearPopTrackerRuntimeCache();
+  },
   startCommonClient, sendCommonClientCommand, stopCommonClient,
   startBizHawkClient, sendBizHawkClientCommand, stopBizHawkClient, launchBizHawk, stopBizHawk,
   readArchipelagoClientRegistry, startArchipelagoClient, sendArchipelagoClientCommand, stopArchipelagoClient,
-  sekaiemuLab,
-  launchPopTracker, stopPopTracker, readPopTrackerRuntimeStatus, sendPopTrackerRuntimeCommand,
+  sekaiemuLab, sekaiemuRuntimeSocial,
+  launchPopTracker, stopPopTracker, readPopTrackerRuntimeStatus, sendPopTrackerRuntimeCommand, openPopTrackerBroadcast,
   installTrackerPack, getPopTrackerStatus, getInstalledTrackerPack, validatePackDir,
   listPopTrackerPackVariants, setTrackerVariant, handleTrackerVariantResponse,
   writeLogJson, writeLogLine, emitSessionEvent, findFreeLocalPort,
-  resolveModuleForDownload, planSessionAutoLaunch, getModuleManifest, validateSetupForModule, listRuntimeModules,
+  resolveModuleForDownload, planSessionAutoLaunch, getModuleManifest, validateRomForModule, validateSetupForModule, listRuntimeModules,
+  pcPackageRuntime,
   createLinkedWorldRuntime, nativeGameProcs, linkedWorldProcs, autoLaunchFromPatchUrl,
   listMultiGameSession, switchMultiGame,
 });

@@ -1,0 +1,269 @@
+[
+  {
+    "name": "Water Path",
+    "children": [
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Islands/Water Path/Land Encounters",
+            "name": "Land Encounters"
+          },
+          {
+            "ref": "Islands/Water Path/Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Islands/Water Path/Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Islands/Water Path/Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Islands/Water Path/Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "water_path_north",
+            "x": 368,
+            "y": 12
+          },
+          {
+            "map": "water_path_center",
+            "x": 368,
+            "y": 12
+          },
+          {
+            "map": "water_path_south",
+            "x": 368,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Tall Grass North Hidden Item",
+        "sections": [
+          {
+            "ref": "Islands/Water Path/Tall Grass North Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "water_path_center",
+            "x": 216,
+            "y": 472
+          }
+        ]
+      },
+      {
+        "name": "Tall Grass South Hidden Item",
+        "sections": [
+          {
+            "ref": "Islands/Water Path/Tall Grass South Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "water_path_south",
+            "x": 248,
+            "y": 168
+          }
+        ]
+      },
+      {
+        "name": "South Island Item",
+        "sections": [
+          {
+            "ref": "Islands/Water Path/South Island Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "water_path_south",
+            "x": 280,
+            "y": 344
+          }
+        ]
+      },
+      {
+        "name": "North Island Hidden Item",
+        "sections": [
+          {
+            "ref": "Islands/Water Path/North Island Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "water_path_north",
+            "x": 56,
+            "y": 136
+          }
+        ]
+      },
+      {
+        "name": "North Island Item",
+        "sections": [
+          {
+            "ref": "Islands/Water Path/North Island Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "water_path_north",
+            "x": 280,
+            "y": 312
+          }
+        ]
+      },
+      {
+        "name": "Hiker Earl",
+        "sections": [
+          {
+            "ref": "Islands/Water Path/Hiker Earl Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Islands/Water Path/Hiker Earl Rematch Reward (8 Badges-Gyms)",
+            "name": "Rematch Reward (8 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "water_path_south",
+            "x": 184,
+            "y": 168
+          }
+        ]
+      },
+      {
+        "name": "Juggler Edward",
+        "sections": [
+          {
+            "ref": "Islands/Water Path/Juggler Edward Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "water_path_center",
+            "x": 184,
+            "y": 296
+          }
+        ]
+      },
+      {
+        "name": "Swimmer Denise",
+        "sections": [
+          {
+            "ref": "Islands/Water Path/Swimmer Denise Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "water_path_center",
+            "x": 248,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Swimmer Samir",
+        "sections": [
+          {
+            "ref": "Islands/Water Path/Swimmer Samir Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Islands/Water Path/Swimmer Samir Rematch Reward (8 Badges-Gyms)",
+            "name": "Rematch Reward (8 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "water_path_center",
+            "x": 216,
+            "y": 24
+          }
+        ]
+      },
+      {
+        "name": "Aroma Lady Rose",
+        "sections": [
+          {
+            "ref": "Islands/Water Path/Aroma Lady Rose Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "water_path_north",
+            "x": 200,
+            "y": 216
+          }
+        ]
+      },
+      {
+        "name": "Twins Miu & Mia Rose",
+        "sections": [
+          {
+            "ref": "Islands/Water Path/Twins Miu & Mia Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "water_path_north",
+            "x": 112,
+            "y": 344
+          }
+        ]
+      },
+      {
+        "name": "Heracross Woman's House",
+        "sections": [
+          {
+            "ref": "Islands/Water Path/Woman Gift (Show Heracross)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "water_path_north",
+            "x": 88,
+            "y": 216
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Water Path Heracross Woman's House",
+    "children": [
+      {
+        "name": "Woman",
+        "sections": [
+          {
+            "ref": "Islands/Water Path/Woman Gift (Show Heracross)",
+            "name": "Gift (Show Heracross)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "water_path_heracross_womans_house",
+            "x": 56,
+            "y": 72
+          }
+        ]
+      }
+    ]
+  }
+]

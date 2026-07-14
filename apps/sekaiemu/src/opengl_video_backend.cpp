@@ -1,6 +1,7 @@
 #include "opengl_loader.hpp"
 #include "opengl_video_backend.hpp"
 #include "opengl_video_utils.hpp"
+#include "window_chrome.hpp"
 
 #include <algorithm>
 #include <cstring>
@@ -12,6 +13,7 @@ namespace sekaiemu::spike {
 namespace {
 
 constexpr auto kSoftwareContextType = RETRO_HW_CONTEXT_OPENGL_CORE;
+constexpr int kClientCoreTitlebarHeight = 34;
 
 std::uint32_t ReadU32(const std::uint8_t* source) {
   std::uint32_t value = 0;
@@ -88,11 +90,9 @@ unsigned ResolveSoftwareFrameWidth(const void* data,
     return callback_width;
   }
 
-  const auto left_visible = CountVisiblePixels(data, 0, callback_width, height, pitch, pixel_format);
   const auto right_visible = CountVisiblePixels(data, callback_width, callback_width, height, pitch, pixel_format);
-  const auto left_dark_threshold = static_cast<std::size_t>(callback_width) * height / 64u;
   const auto right_visible_threshold = static_cast<std::size_t>(callback_width) * height / 128u;
-  if (left_visible <= left_dark_threshold && right_visible > right_visible_threshold) {
+  if (right_visible > right_visible_threshold) {
     return callback_width * 2u;
   }
   return callback_width;
@@ -143,6 +143,8 @@ OpenGlVideoBackend::~OpenGlVideoBackend() { Shutdown(); }
 
 bool OpenGlVideoBackend::Initialize(const VideoGeometry& geometry, std::string& error) {
   geometry_ = geometry;
+  active_frame_width_ = geometry.width;
+  active_frame_height_ = geometry.height;
   if (!CreateSoftwareContext(geometry, error)) {
     return false;
   }
@@ -151,11 +153,16 @@ bool OpenGlVideoBackend::Initialize(const VideoGeometry& geometry, std::string& 
 }
 
 bool OpenGlVideoBackend::UpdateGeometry(const VideoGeometry& geometry, std::string& error) {
+  const bool had_window = window_ != nullptr;
   geometry_ = geometry;
+  active_frame_width_ = geometry.width;
+  active_frame_height_ = geometry.height;
   if (!CreateSoftwareContext(geometry, error)) {
     return false;
   }
-  ApplyWindowSizing(geometry);
+  if (!had_window) {
+    ApplyWindowSizing(geometry);
+  }
   return true;
 }
 
@@ -171,13 +178,15 @@ bool OpenGlVideoBackend::UploadSoftwareFrame(const void* data,
   const auto bytes_per_pixel = BytesPerPixel(geometry_.pixel_format);
   const auto stride_width = bytes_per_pixel > 0 ? static_cast<unsigned>(pitch / bytes_per_pixel) : width;
   if (stride_width > width &&
-      (!stride_probe_logged_ || stride_probe_sample_count_ < 8 || !stride_probe_visible_logged_)) {
+      (!stride_probe_logged_ || stride_probe_sample_count_ < 3 || !stride_probe_visible_logged_)) {
     const auto left_visible = CountVisiblePixels(data, 0, width, height, pitch, geometry_.pixel_format);
     const auto right_visible = stride_width >= width * 2u
       ? CountVisiblePixels(data, width, width, height, pitch, geometry_.pixel_format)
       : 0u;
     const bool has_visible_pixels = left_visible > 0 || right_visible > 0;
-    const bool should_log_sample = !stride_probe_logged_ || stride_probe_sample_count_ < 8 || has_visible_pixels;
+    const bool should_log_sample =
+        !stride_probe_logged_ || stride_probe_sample_count_ < 3 ||
+        (!stride_probe_visible_logged_ && has_visible_pixels);
     if (should_log_sample) {
       std::cerr << "[sekaiemu-libretro-spike] software frame stride probe callback="
                 << width << " stride_width=" << stride_width
@@ -190,9 +199,8 @@ bool OpenGlVideoBackend::UploadSoftwareFrame(const void* data,
     stride_probe_logged_ = true;
     if (has_visible_pixels) {
       stride_probe_visible_logged_ = true;
-    } else {
-      ++stride_probe_sample_count_;
     }
+    ++stride_probe_sample_count_;
   }
   const unsigned display_width = ResolveSoftwareFrameWidth(data, width, height, pitch, geometry_.pixel_format);
   if (display_width != width && !stride_width_logged_) {
@@ -201,9 +209,9 @@ bool OpenGlVideoBackend::UploadSoftwareFrame(const void* data,
               << " pitch=" << pitch << "\n";
     stride_width_logged_ = true;
   }
-  if (geometry_.width != display_width || geometry_.height != height) {
-    geometry_.width = display_width;
-    geometry_.height = height;
+  if (active_frame_width_ != display_width || active_frame_height_ != height) {
+    active_frame_width_ = display_width;
+    active_frame_height_ = height;
     DestroyCoreFramebufferResources();
   }
 
@@ -301,8 +309,18 @@ void OpenGlVideoBackend::NotifyHardwareFrame(const void* data,
 
 void OpenGlVideoBackend::SetMenuVisible(bool visible, const VideoGeometry& geometry) {
   const bool changed = menu_visible_ != visible;
+  if (changed && visible && window_ && window_mode_ != WindowMode::Fullscreen) {
+    SDL_GetWindowSize(window_, &menu_restore_width_, &menu_restore_height_);
+    menu_restore_size_valid_ = menu_restore_width_ > 0 && menu_restore_height_ > 0;
+  }
   menu_visible_ = visible;
   geometry_ = geometry;
+  if (changed && !visible && window_ && window_mode_ != WindowMode::Fullscreen && menu_restore_size_valid_) {
+    SDL_SetWindowSize(window_, menu_restore_width_, menu_restore_height_);
+    menu_restore_size_valid_ = false;
+    frame_ready_ = true;
+    return;
+  }
   if (changed && visible) {
     ApplyWindowSizing(geometry_);
   }
@@ -324,18 +342,19 @@ void OpenGlVideoBackend::SetTrackerSidebarLayout(bool enabled,
   frame_ready_ = true;
 }
 
-bool OpenGlVideoBackend::ToggleFullscreen(std::string& error) {
+bool OpenGlVideoBackend::SetWindowMode(WindowMode mode, std::string& error) {
   if (!window_) {
     error = "OpenGL window is not initialized.";
     return false;
   }
-  const Uint32 flag = fullscreen_ ? 0u : SDL_WINDOW_FULLSCREEN_DESKTOP;
-  if (SDL_SetWindowFullscreen(window_, flag) != 0) {
+  const Uint32 fullscreen_flag = mode == WindowMode::Fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0u;
+  if (SDL_SetWindowFullscreen(window_, fullscreen_flag) != 0) {
     error = std::string("SDL_SetWindowFullscreen failed: ") + SDL_GetError();
     return false;
   }
-  fullscreen_ = !fullscreen_;
-  if (!fullscreen_) {
+  window_mode_ = mode;
+  if (mode != WindowMode::Fullscreen) {
+    SDL_SetWindowBordered(window_, mode == WindowMode::Window ? SDL_TRUE : SDL_FALSE);
     ApplyWindowSizing(geometry_);
   }
   frame_ready_ = true;
@@ -485,11 +504,13 @@ bool OpenGlVideoBackend::EnsureWindow(const VideoGeometry& geometry, std::string
                                SDL_WINDOWPOS_CENTERED,
                                WindowWidth(geometry.width),
                                WindowHeight(geometry.height),
-                               SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+                               SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE |
+                                   SDL_WINDOW_BORDERLESS);
     if (!window_) {
       error = std::string("SDL_CreateWindow failed: ") + SDL_GetError();
       return false;
     }
+    EnableBorderlessTitlebarDrag(window_);
   }
   return true;
 }
@@ -516,7 +537,7 @@ void OpenGlVideoBackend::ApplyWindowSizing(const VideoGeometry& geometry) {
   if (!window_) {
     return;
   }
-  if (fullscreen_) {
+  if (window_mode_ == WindowMode::Fullscreen) {
     return;
   }
 
@@ -524,7 +545,7 @@ void OpenGlVideoBackend::ApplyWindowSizing(const VideoGeometry& geometry) {
   const unsigned base_height = geometry.height == 0 ? 480u : geometry.height;
 
   int target_width = ScaledDimension(base_width);
-  int target_height = ScaledDimension(base_height);
+  int target_height = ScaledDimension(base_height) + kClientCoreTitlebarHeight;
 
   if (menu_visible_) {
     const int scale_x =
@@ -533,7 +554,7 @@ void OpenGlVideoBackend::ApplyWindowSizing(const VideoGeometry& geometry) {
         std::max(1, (kMenuMinimumHeight + static_cast<int>(base_height) - 1) / static_cast<int>(base_height));
     const int scale = std::max(scale_x, scale_y);
     target_width = static_cast<int>(base_width) * scale;
-    target_height = static_cast<int>(base_height) * scale;
+    target_height = static_cast<int>(base_height) * scale + kClientCoreTitlebarHeight;
   }
 
   if (tracker_sidebar_enabled_ && !menu_visible_) {
@@ -543,7 +564,7 @@ void OpenGlVideoBackend::ApplyWindowSizing(const VideoGeometry& geometry) {
   int current_width = 0;
   int current_height = 0;
   SDL_GetWindowSize(window_, &current_width, &current_height);
-  if (current_width >= target_width && current_height >= target_height) {
+  if (current_width == target_width && current_height == target_height) {
     return;
   }
 
@@ -551,8 +572,8 @@ void OpenGlVideoBackend::ApplyWindowSizing(const VideoGeometry& geometry) {
 }
 
 bool OpenGlVideoBackend::EnsureCoreFramebufferResources(std::string& error) {
-  const unsigned width = geometry_.width == 0 ? 1u : geometry_.width;
-  const unsigned height = geometry_.height == 0 ? 1u : geometry_.height;
+  const unsigned width = active_frame_width_ == 0 ? (geometry_.width == 0 ? 1u : geometry_.width) : active_frame_width_;
+  const unsigned height = active_frame_height_ == 0 ? (geometry_.height == 0 ? 1u : geometry_.height) : active_frame_height_;
   if (core_framebuffer_ != 0 && core_frame_width_ == width && core_frame_height_ == height) {
     return true;
   }
@@ -767,7 +788,7 @@ int OpenGlVideoBackend::WindowWidth(unsigned width) const {
 }
 
 int OpenGlVideoBackend::WindowHeight(unsigned height) const {
-  return ScaledDimension(height == 0 ? 480u : height);
+  return ScaledDimension(height == 0 ? 480u : height) + kClientCoreTitlebarHeight;
 }
 
 int OpenGlVideoBackend::ScaledDimension(unsigned size) const {

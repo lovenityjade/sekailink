@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_from": [
-    "/home/thelovenityjade/deep-research-report.md",
+    "<local-home>/deep-research-report.md",
     "runtime/ap/worlds",
     "runtime/sklmi/manifests",
     "runtime/profiles"
@@ -187,7 +187,7 @@
       "sklmi_manifest": null,
       "sekaiemu_profile": null,
       "tier": 0,
-      "notes": "Local APWorld is staged in runtime/ap/worlds/soe. Runtime uses the upstream Evermizer browser AP client through web_ap_client."
+      "notes": "Linux send/reception confirmed through the upstream Evermizer browser AP client and SekaiLink web_ap_client wrapper. Windows validation is still required before Canonical promotion."
     },
     {
       "game_key": "tloz",
@@ -257,7 +257,7 @@
       "game_key": "pokemon_emerald",
       "display_name": "Pokemon Emerald",
       "platform": "gba",
-      "archipelago_status": "not_available",
+      "archipelago_status": "canari_test",
       "apworld_url": "https://github.com/ArchipelagoMW/Archipelago",
       "apworld_local_path": "runtime/ap/worlds/pokemon_emerald",
       "tracker_status": "github_verified",
@@ -267,13 +267,13 @@
       "sklmi_manifest": null,
       "sekaiemu_profile": null,
       "tier": 1,
-      "notes": "Temporarily unavailable for BETA-3 launch: runtime connects and receives, but check send behavior still needs a focused Emerald tester/regression pass."
+      "notes": "Canari test frozen: Linux bilateral send/reception confirmed through Sekaiemu/mGBA with the BizHawk-compatible runtime memory bridge. Windows validation is still required before Canonical promotion."
     },
     {
       "game_key": "pokemon_frlg",
       "display_name": "Pokemon FireRed and LeafGreen",
       "platform": "gba",
-      "archipelago_status": "not_available",
+      "archipelago_status": "canari_test",
       "apworld_url": null,
       "apworld_local_path": "runtime/ap/worlds/pokemon_frlg",
       "tracker_status": "github_via_source",
@@ -283,7 +283,7 @@
       "sklmi_manifest": null,
       "sekaiemu_profile": "runtime/profiles/firered-starter.profile",
       "tier": 1,
-      "notes": "Temporarily unavailable for BETA-3 launch: GBA support is frozen to confirmed bilateral games only until a focused tester validates this title."
+      "notes": "Canari test frozen: Linux bilateral send/reception confirmed through Sekaiemu/mGBA with the BizHawk-compatible runtime memory bridge. Windows validation is still required before Canonical promotion."
     },
     {
       "game_key": "metroid_zero_mission",
@@ -305,7 +305,7 @@
       "game_key": "pokemon_red_blue",
       "display_name": "Pokemon Red and Blue",
       "platform": "gb",
-      "archipelago_status": "not_available",
+      "archipelago_status": "canari_test",
       "apworld_url": "https://github.com/ArchipelagoMW/Archipelago",
       "apworld_local_path": "runtime/ap/worlds/pokemon_rb",
       "tracker_status": "github_via_source",
@@ -315,7 +315,7 @@
       "sklmi_manifest": null,
       "sekaiemu_profile": null,
       "tier": 1,
-      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+      "notes": "Canari test frozen: Linux bilateral send/reception confirmed through Sekaiemu/Gambatte with the BizHawk-compatible runtime memory bridge. Windows validation is still required before Canonical promotion."
     },
     {
       "game_key": "pokemon_crystal",
@@ -331,13 +331,13 @@
       "sklmi_manifest": null,
       "sekaiemu_profile": null,
       "tier": 1,
-      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+      "notes": "Temporarily unavailable: Pokemon Crystal reaches gameplay in forced GBC mode but then freezes/graphically corrupts. Oracle of Ages and Pokemon Red/Blue confirm the general Sekaiemu/Gambatte GB/GBC path works, so this remains a Crystal-specific patch/runtime investigation."
     },
     {
       "game_key": "oracle_of_ages_seasons",
       "display_name": "The Legend of Zelda: Oracle of Ages / Oracle of Seasons",
       "platform": "gbc",
-      "archipelago_status": "not_available",
+      "archipelago_status": "canari_test",
       "apworld_url": null,
       "apworld_local_path": "runtime/ap/worlds/tloz_oos",
       "tracker_status": "github_via_source",
@@ -347,7 +347,7 @@
       "sklmi_manifest": null,
       "sekaiemu_profile": null,
       "tier": 1,
-      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+      "notes": "Canari test frozen: Linux bilateral send/reception confirmed for Oracle of Ages and Oracle of Seasons. Oracle of Seasons is aligned to the active Worlds generator apworld version 13.7.4. Windows validation is still required before Canonical promotion."
     },
     {
       "game_key": "actraiser",
@@ -401,17 +401,17 @@
       "game_key": "ladx",
       "display_name": "The Legend of Zelda: Link's Awakening DX",
       "platform": "gbc",
-      "archipelago_status": "not_available",
+      "archipelago_status": "canari_test",
       "apworld_url": null,
       "apworld_local_path": null,
-      "tracker_status": "web_only",
+      "tracker_status": "specialized_external",
       "poptracker_url": null,
-      "web_tracker_url": "MagpieTracker",
+      "web_tracker_url": "magpie",
       "setup_url": null,
       "sklmi_manifest": null,
       "sekaiemu_profile": "runtime/profiles/ladx-starter.profile",
       "tier": 1,
-      "notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+      "notes": "Canari test frozen: Linux bilateral send/reception confirmed through Sekaiemu/Gambatte plus the RetroArch UDP compatibility bridge on port 55355. Windows validation is still required before Canonical promotion."
     },
     {
       "game_key": "secret_of_mana",

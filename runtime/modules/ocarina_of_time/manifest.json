@@ -1,6 +1,8 @@
 {
   "game_id": "ocarina_of_time",
   "display_name": "Ocarina of Time",
+  "support_status": "superseded_by_oot_soh",
+  "availability_status": "unavailable",
   "emu": "sekaiemu-libretro",
   "patcher": "archipelago",
   "patch_extensions": [
@@ -41,5 +43,6 @@
     "ap_game": "Ocarina of Time"
   },
   "tracker_pack_uid": "",
-  "tracker_web_url": ""
+  "tracker_web_url": "https://github.com/StripesOO7/oot-tracker/releases/latest",
+  "tracker_pack_path": "poptracker/packs/ocarina_of_time/pack"
 }

@@ -12,7 +12,7 @@ const errorCodeFrom = (code?: string, message?: string) => {
 
 export function LoadingModal({ title, message }: { title: string; message?: string }) {
   return (
-    <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/80 backdrop-blur-sm p-8">
+    <div className="fixed left-0 right-0 bottom-0 top-[32px] z-[80] flex items-center justify-center bg-black/80 backdrop-blur-sm p-8">
       <div className="w-full max-w-sm bg-[#161b22] rounded-xl border-2 border-[#4ecdc4] shadow-2xl card-float p-8 text-center">
         <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-[#4ecdc4]/10 border border-[#4ecdc4]/40 flex items-center justify-center">
           <Loader2 className="w-8 h-8 text-[#4ecdc4] animate-spin" />
@@ -37,7 +37,7 @@ export function ErrorModal({
 }) {
   const errorCode = errorCodeFrom(code, message);
   return (
-    <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/80 backdrop-blur-sm p-8">
+    <div className="fixed left-0 right-0 bottom-0 top-[32px] z-[90] flex items-center justify-center bg-black/80 backdrop-blur-sm p-8">
       <div className="w-full max-w-lg bg-[#161b22] rounded-xl border-2 border-[#f85149] shadow-2xl card-float overflow-hidden">
         <div className="p-5 border-b-2 border-[#2a2b30] bg-gradient-to-r from-[#1c1d22] to-[#161b22] flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -64,6 +64,12 @@ export function ErrorModal({
             className="mt-6 w-full py-3 bg-[#2a2b30] hover:bg-[#3a3b40] rounded-lg font-medium transition-colors"
           >
             Close
+          </button>
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent('sekailink:report-bug', { detail: { title, description: `${errorCode}: ${message}`.slice(0, 200) } }))}
+            className="mt-3 w-full py-3 bg-[#f85149]/15 hover:bg-[#f85149]/25 text-[#ff8b82] border border-[#f85149]/40 rounded-lg font-medium transition-colors"
+          >
+            Report Bug
           </button>
         </div>
       </div>

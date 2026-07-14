@@ -1,0 +1,200 @@
+[
+  {
+    "name": "Memorial Pillar",
+    "children": [
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Islands/Memorial Pillar/Land Encounter",
+            "name": "Land Encounter"
+          },
+          {
+            "ref": "Islands/Memorial Pillar/Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Islands/Memorial Pillar/Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Islands/Memorial Pillar/Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Islands/Memorial Pillar/Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "memorial_pillar_north",
+            "x": 368,
+            "y": 12
+          },
+          {
+            "map": "memorial_pillar_south",
+            "x": 368,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Tall Grass North Hidden Item",
+        "sections": [
+          {
+            "ref": "Islands/Memorial Pillar/Tall Grass North Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "memorial_pillar_north",
+            "x": 248,
+            "y": 120
+          }
+        ]
+      },
+      {
+        "name": "Tall Grass South Hidden Item (Left)",
+        "sections": [
+          {
+            "ref": "Islands/Memorial Pillar/Tall Grass South Hidden Item (Left)",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "memorial_pillar_north",
+            "x": 232,
+            "y": 408
+          }
+        ]
+      },
+      {
+        "name": "Tall Grass South Hidden Item (Right)",
+        "sections": [
+          {
+            "ref": "Islands/Memorial Pillar/Tall Grass South Hidden Item (Right)",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "memorial_pillar_north",
+            "x": 280,
+            "y": 360
+          }
+        ]
+      },
+      {
+        "name": "Memorial Man",
+        "sections": [
+          {
+            "ref": "Islands/Memorial Pillar/Memorial Man Gift",
+            "name": "Gift"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "memorial_pillar_south",
+            "x": 136,
+            "y": 152
+          }
+        ]
+      },
+      {
+        "name": "South Island Item",
+        "sections": [
+          {
+            "ref": "Islands/Memorial Pillar/South Island Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "memorial_pillar_south",
+            "x": 72,
+            "y": 200
+          }
+        ]
+      },
+      {
+        "name": "South Beach Hidden Item",
+        "sections": [
+          {
+            "ref": "Islands/Memorial Pillar/South Beach Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "memorial_pillar_south",
+            "x": 136,
+            "y": 280
+          }
+        ]
+      },
+      {
+        "name": "Bird Keeper Chaz",
+        "sections": [
+          {
+            "ref": "Islands/Memorial Pillar/Bird Keeper Chaz Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Islands/Memorial Pillar/Bird Keeper Chaz Rematch Reward (8 Badges-Gyms)",
+            "name": "Rematch Reward (8 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "memorial_pillar_north",
+            "x": 232,
+            "y": 280
+          }
+        ]
+      },
+      {
+        "name": "Bird Keeper Harold",
+        "sections": [
+          {
+            "ref": "Islands/Memorial Pillar/Bird Keeper Harold Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Islands/Memorial Pillar/Bird Keeper Harold Rematch Reward (8 Badges-Gyms)",
+            "name": "Rematch Reward (8 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "memorial_pillar_north",
+            "x": 280,
+            "y": 504
+          }
+        ]
+      },
+      {
+        "name": "Bird Keeper Milo",
+        "sections": [
+          {
+            "ref": "Islands/Memorial Pillar/Bird Keeper Milo Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Islands/Memorial Pillar/Bird Keeper Milo Rematch Reward (8 Badges-Gyms)",
+            "name": "Rematch Reward (8 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "memorial_pillar_north",
+            "x": 200,
+            "y": 104
+          }
+        ]
+      }
+    ]
+  }
+]

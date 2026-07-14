@@ -1,0 +1,79 @@
+{
+  "schema": "sekailink.pc-package-catalog/v1",
+  "generatedAt": "2026-07-12T02:10:00Z",
+  "packages": [
+    {
+      "id": "ship-of-harkinian-sekailink",
+      "gameId": "ship-of-harkinian",
+      "name": "Ship of Harkinian - SekaiLink Edition",
+      "summary": "Native Ocarina of Time port with managed Archipelago connectivity.",
+      "kind": "game-integration",
+      "status": "testing",
+      "requiresUserGameData": true,
+      "launchContract": "sekailink.pc-launch/v1",
+      "releases": [
+        {
+          "version": "1.1.0-sekailink.1",
+          "channel": "canari",
+          "platform": "linux-x64",
+          "url": "https://sekailink.com/downloads/pc-packages/v1/releases/ship-of-harkinian-sekailink-1.1.0-sekailink.1-linux-x64.tar.gz",
+          "bytes": 36423990,
+          "sha256": "7dcd4cbbfaa5296ef121560d094fe2701b8754967c67f8329eed34006d946885",
+          "executable": "game.appimage"
+        },
+        {
+          "version": "1.1.0-sekailink.1",
+          "channel": "canari",
+          "platform": "win32-x64",
+          "url": "https://sekailink.com/downloads/pc-packages/v1/releases/ship-of-harkinian-sekailink-1.1.0-sekailink.1-win32-x64.tar.gz",
+          "bytes": 77193007,
+          "sha256": "9dc5071da52f5873d0b4e1f027a7ea60c7d80fffbdcc7a88867ce3dc6ad37ce5",
+          "executable": "soh.exe"
+        }
+      ]
+    },
+    {
+      "id": "2ship2harkinian-sekailink",
+      "gameId": "2ship2harkinian",
+      "name": "2Ship2Harkinian - SekaiLink Edition",
+      "summary": "Native Majora's Mask port integration for SekaiLink.",
+      "kind": "game-integration",
+      "status": "testing",
+      "requiresUserGameData": true,
+      "launchContract": "sekailink.pc-launch/v1",
+      "releases": [
+        {
+          "version": "4.0.2-sekailink.1",
+          "channel": "canari",
+          "platform": "linux-x64",
+          "url": "https://sekailink.com/downloads/pc-packages/v1/releases/2ship2harkinian-sekailink-4.0.2-sekailink.1-linux-x64.tar.gz",
+          "bytes": 28584879,
+          "sha256": "c5f725bd47c635bbd2647be678e6da72d2938b4bb21900b0c85467f50eb88870",
+          "executable": "game.appimage"
+        },
+        {
+          "version": "4.0.2-sekailink.1",
+          "channel": "canari",
+          "platform": "win32-x64",
+          "url": "https://sekailink.com/downloads/pc-packages/v1/releases/2ship2harkinian-sekailink-4.0.2-sekailink.1-win32-x64.tar.gz",
+          "bytes": 54671426,
+          "sha256": "93c8b66c00eb6dd6fdef488962025867aa03a1941776d42e5eeec6e634430182",
+          "executable": "2ship.exe"
+        }
+      ]
+    },
+    {
+      "id": "sm64ex-sekailink",
+      "gameId": "super_mario_64",
+      "name": "Super Mario 64 - SekaiLink Edition",
+      "summary": "Native Super Mario 64 port with embedded Archipelago connectivity.",
+      "kind": "game-integration",
+      "status": "development",
+      "upstream": "https://github.com/N00byKing/sm64ex",
+      "license": "upstream",
+      "requiresUserGameData": true,
+      "launchContract": "sm64ap-file/v1",
+      "releases": []
+    }
+  ]
+}

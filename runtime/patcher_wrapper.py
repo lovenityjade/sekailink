@@ -223,7 +223,21 @@ def _import_patch_world(ap_root: str, patch_path: str, world_module: str = "") -
     return module_name
 
 
-def _apply_rom_settings(config: Dict[str, Any]) -> None:
+def _direct_rom_override(patch_path: str, rom_path: str) -> tuple[str, str] | None:
+    if not rom_path:
+        return None
+    ext = os.path.splitext(patch_path or "")[1].lower()
+    by_patch_extension = {
+        ".apfirered": ("pokemon_frlg_settings", "firered_rom_file"),
+        ".apleafgreen": ("pokemon_frlg_settings", "leafgreen_rom_file"),
+    }
+    target = by_patch_extension.get(ext)
+    if target is None:
+        return None
+    return target[0], target[1]
+
+
+def _apply_rom_settings(config: Dict[str, Any], patch_path: str = "", rom_path: str = "") -> None:
     roms = (config or {}).get("roms", {})
     if not isinstance(roms, dict):
         return
@@ -347,6 +361,13 @@ def _apply_rom_settings(config: Dict[str, Any]) -> None:
         _set_option(_get_option_group("pokemon_rb_options"), "red_rom_file", roms["pokemon_red_blue"])
         _set_option(_get_option_group("pokemon_rb_options"), "blue_rom_file", roms["pokemon_red_blue"])
 
+    # The launch resolver has already selected and validated the base ROM for
+    # this patch. Prefer that exact file over a stale persisted AP setting.
+    direct_override = _direct_rom_override(patch_path, rom_path)
+    if direct_override is not None:
+        group_name, option_name = direct_override
+        _set_option(_get_option_group(group_name), option_name, os.path.abspath(rom_path))
+
     rom_group_aliases = {
         "donkey_kong_country": "dkc",
         "donkey_kong_country_2": "dkc2",
@@ -411,7 +432,7 @@ def main() -> int:
         import Patch
 
         config = _load_config(args.config)
-        _apply_rom_settings(config)
+        _apply_rom_settings(config, patch_path=args.patch, rom_path=args.rom)
 
         meta, output_path = Patch.create_rom_file(args.patch)
         final_path = output_path

@@ -15,6 +15,7 @@
 #include <sstream>
 #include <string>
 #include <string_view>
+#include <unordered_set>
 #include <vector>
 
 namespace sekaiemu::spike {
@@ -67,7 +68,22 @@ std::string FirstSnapshotString(const nlohmann::json& snapshot,
 }
 
 bool IsActivityKind(std::string_view kind) {
-  return kind == "item" || kind == "connection" || kind == "defeat" || kind == "hint";
+  return kind == "item" || kind == "queued-item" || kind == "connection" || kind == "defeat" || kind == "hint";
+}
+
+bool IsLegacyLowLevelActivity(std::string_view kind, std::string_view detail) {
+  const auto text = Trim(std::string(detail));
+  if (text.empty()) {
+    return true;
+  }
+  if (kind == "check") {
+    return true;
+  }
+  std::smatch match;
+  static const std::regex received_their(R"(^player\s+received\s+their\s+.+$)",
+                                         std::regex_constants::icase);
+  static const std::regex checked_location(R"(^player\s+checked\s+.+$)", std::regex_constants::icase);
+  return std::regex_match(text, match, received_their) || std::regex_match(text, match, checked_location);
 }
 
 std::string Lower(std::string_view text) {
@@ -136,6 +152,12 @@ std::string HumanizeItemText(std::string_view raw_text,
   static const std::regex found_their_item(
       R"(^(.+?)\s+found\s+their\s+(.+?)(?:\s+\((.+)\))?\.?$)",
       std::regex_constants::icase);
+  static const std::regex sent_item(
+      R"(^(.+?)\s+sent\s+(.+?)\s+to\s+(.+?)(?:\s+\((.+)\))?\.?$)",
+      std::regex_constants::icase);
+  static const std::regex sent_item_with_game(
+      R"(^(.+?)\s+sent\s+(.+?)\s+to\s+(.+?)'s\s+(.+?)(?:\s+\((.+)\))?\.?$)",
+      std::regex_constants::icase);
   static const std::regex admin_sent_item(
       R"(^Cheat\s+console:\s+sending\s+\"?(.+?)\"?\s+to\s+(.+?)\.?$)",
       std::regex_constants::icase);
@@ -175,7 +197,50 @@ std::string HumanizeItemText(std::string_view raw_text,
         entry->recipient_game = game;
         entry->admin_grant = true;
       }
-      return recipient + " got her " + item + " from Sekailink";
+      return recipient + " got " + item + " from Sekailink";
+    }
+  }
+
+  if (std::regex_match(text, match, sent_item_with_game)) {
+    const auto sender = Trim(match[1].str());
+    const auto item = Trim(match[2].str());
+    const auto recipient = Trim(match[3].str());
+    const auto recipient_game = Trim(match[4].str());
+    const auto location = match.size() > 5 ? Trim(match[5].str()) : std::string{};
+    if (!sender.empty() && !item.empty() && !recipient.empty() && !recipient_game.empty()) {
+      if (entry != nullptr) {
+        entry->sender = sender;
+        entry->recipient = recipient;
+        entry->item = item;
+        entry->recipient_game = recipient_game;
+        entry->location = location;
+      }
+      auto formatted = sender + " sent " + item + " to " + recipient + "'s " + recipient_game;
+      if (!location.empty()) {
+        formatted += " (" + location + ")";
+      }
+      return formatted;
+    }
+  }
+
+  if (std::regex_match(text, match, sent_item)) {
+    const auto sender = Trim(match[1].str());
+    const auto item = Trim(match[2].str());
+    const auto recipient = Trim(match[3].str());
+    const auto location = match.size() > 4 ? Trim(match[4].str()) : std::string{};
+    if (!sender.empty() && !item.empty() && !recipient.empty()) {
+      if (entry != nullptr) {
+        entry->sender = sender;
+        entry->recipient = recipient;
+        entry->item = item;
+        entry->recipient_game = game;
+        entry->location = location;
+      }
+      auto formatted = sender + " sent " + item + " to " + recipient + "'s " + game;
+      if (!location.empty()) {
+        formatted += " (" + location + ")";
+      }
+      return formatted;
     }
   }
 
@@ -265,9 +330,9 @@ ActivityEntry MakeActivityEntry(const nlohmann::json& message, const nlohmann::j
   entry.id = message.value("id", 0ULL);
   entry.kind = message.value("kind", "system");
   auto text = message.value("text", "");
-  if (entry.kind == "item") {
+  if (entry.kind == "item" || entry.kind == "queued-item") {
     text = HumanizeItemText(text, snapshot, &entry);
-    entry.title = "Item transfer";
+    entry.title = entry.kind == "queued-item" ? "Received item" : "Item transfer";
   } else if (entry.kind == "connection") {
     entry.title = "Connection";
   } else if (entry.kind == "defeat") {
@@ -283,7 +348,7 @@ ActivityEntry MakeActivityEntry(const nlohmann::json& message, const nlohmann::j
 }
 
 std::string CompactToastText(const ActivityEntry& entry) {
-  if (entry.kind == "item" && !entry.sender.empty() && !entry.item.empty()) {
+  if ((entry.kind == "item" || entry.kind == "queued-item") && !entry.sender.empty() && !entry.item.empty()) {
     const auto recipient = entry.recipient.empty() ? std::string{"?"} : entry.recipient;
     const auto game = entry.recipient_game.empty() ? std::string{"?"} : entry.recipient_game;
     if (entry.admin_grant) {
@@ -303,23 +368,55 @@ std::vector<ActivityEntry> CollectActivityEntries(const nlohmann::json& snapshot
     return entries;
   }
   const auto messages = snapshot.find("chat_messages");
-  if (messages == snapshot.end() || !messages->is_array()) {
-    return entries;
-  }
-
-  for (const auto& message : *messages) {
-    if (!message.is_object()) {
-      continue;
-    }
-    const auto kind = message.value("kind", "chat");
-    if (!IsActivityKind(kind)) {
-      continue;
-    }
-    auto entry = MakeActivityEntry(message, snapshot);
-    if (!entry.detail.empty()) {
-      entries.push_back(std::move(entry));
+  if (messages != snapshot.end() && messages->is_array()) {
+    for (const auto& message : *messages) {
+      if (!message.is_object()) {
+        continue;
+      }
+      const auto kind = message.value("kind", "chat");
+      if (!IsActivityKind(kind)) {
+        continue;
+      }
+      auto entry = MakeActivityEntry(message, snapshot);
+      if (!entry.detail.empty() && !IsLegacyLowLevelActivity(entry.kind, entry.detail)) {
+        entries.push_back(std::move(entry));
+      }
     }
   }
+  const auto pending_received = snapshot.find("pending_received_items");
+  if (pending_received != snapshot.end() && pending_received->is_array()) {
+    for (const auto& item : *pending_received) {
+      if (!item.is_object()) {
+        continue;
+      }
+      const auto text = item.value("text", std::string{});
+      if (text.empty()) {
+        continue;
+      }
+      nlohmann::json message{
+          {"id", item.value("id", 0ULL)},
+          {"kind", "queued-item"},
+          {"text", text},
+          {"author", "SEKAILINK"},
+      };
+      if (item.contains("key")) {
+        message["key"] = item["key"];
+      }
+      auto entry = MakeActivityEntry(message, snapshot);
+      if (!entry.detail.empty()) {
+        entries.push_back(std::move(entry));
+      }
+    }
+  }
+  std::sort(entries.begin(), entries.end(), [](const auto& left, const auto& right) {
+    return left.id < right.id;
+  });
+  entries.erase(std::unique(entries.begin(),
+                            entries.end(),
+                            [](const auto& left, const auto& right) {
+                              return left.kind == right.kind && left.detail == right.detail;
+                            }),
+                entries.end());
   if (entries.size() > limit) {
     entries.erase(entries.begin(), entries.begin() + static_cast<std::ptrdiff_t>(entries.size() - limit));
   }
@@ -342,6 +439,12 @@ ImVec4 ActivityAccent(std::string_view kind) {
   return ImVec4(0.72f, 0.62f, 1.0f, 1.0f);
 }
 
+struct QueuedReceivedItem {
+  std::uint64_t id = 0;
+  std::string text;
+  double created_at = 0.0;
+};
+
 void ApplySekailinkActivityStyle() {
   ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.035f, 0.047f, 0.058f, 0.92f));
   ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.16f, 0.82f, 0.78f, 0.55f));
@@ -362,9 +465,9 @@ std::vector<ToastEntry>& ToastQueue() {
   return queue;
 }
 
-std::uint64_t& LastToastEventId() {
-  static std::uint64_t last_id = 0;
-  return last_id;
+std::unordered_set<std::string>& SeenToastSignatures() {
+  static std::unordered_set<std::string> seen;
+  return seen;
 }
 
 std::uint64_t& UnreadNotificationCount() {
@@ -377,27 +480,61 @@ std::uint64_t NextSyntheticToastId() {
   return next_id++;
 }
 
+std::vector<QueuedReceivedItem>& ReceivedItemQueue() {
+  static std::vector<QueuedReceivedItem> queue;
+  return queue;
+}
+
+std::unordered_set<std::string>& SeenReceivedItemQueueSignatures() {
+  static std::unordered_set<std::string> seen;
+  return seen;
+}
+
+double& ReceivedItemsModalOpenedAt() {
+  static double opened_at = 0.0;
+  return opened_at;
+}
+
+bool& ReceivedItemsModalVisible() {
+  static bool visible = true;
+  return visible;
+}
+
+bool& ReceivedItemsModalInitialized() {
+  static bool initialized = false;
+  return initialized;
+}
+
+bool ReceivedItemsModalSyncPending() {
+  constexpr double kSyncGraceSeconds = 3.0;
+  return ReceivedItemsModalVisible() && ReceivedItemQueue().empty() &&
+         (ImGui::GetTime() - ReceivedItemsModalOpenedAt()) < kSyncGraceSeconds;
+}
+
 void PushLocalTestNotification() {
   ToastQueue().push_back(ToastEntry{
       NextSyntheticToastId(),
-      "Alice -> Hookshot (Bob - A Link to the Past)",
+      "Test notification",
       ImGui::GetTime(),
   });
 }
 
 void UpdateToastQueue(const std::vector<ActivityEntry>& entries, bool game_loaded) {
-  auto& last_id = LastToastEventId();
   auto& queue = ToastQueue();
   auto& unread = UnreadNotificationCount();
+  auto& seen = SeenToastSignatures();
   const double now = ImGui::GetTime();
   if (game_loaded) {
     unread = 0;
   }
   for (const auto& entry : entries) {
-    if ((entry.kind != "item" && entry.kind != "hint") || entry.id == 0 || entry.id <= last_id) {
+    if ((entry.kind != "item" && entry.kind != "queued-item" && entry.kind != "hint") || entry.detail.empty()) {
       continue;
     }
-    last_id = entry.id;
+    const auto signature = entry.kind + "\x1f" + entry.detail;
+    if (!seen.insert(signature).second) {
+      continue;
+    }
     if (game_loaded) {
       queue.push_back(ToastEntry{entry.id, CompactToastText(entry), now});
     } else {
@@ -413,6 +550,124 @@ void UpdateToastQueue(const std::vector<ActivityEntry>& entries, bool game_loade
   if (queue.size() > 5) {
     queue.erase(queue.begin(), queue.begin() + static_cast<std::ptrdiff_t>(queue.size() - 5));
   }
+}
+
+void UpdateReceivedItemQueue(const std::vector<ActivityEntry>& entries) {
+  auto& initialized = ReceivedItemsModalInitialized();
+  auto& visible = ReceivedItemsModalVisible();
+  if (!initialized) {
+    initialized = true;
+    visible = true;
+    ReceivedItemsModalOpenedAt() = ImGui::GetTime();
+  }
+  const bool collecting_return_items = visible;
+  auto& queue = ReceivedItemQueue();
+  auto& seen = SeenReceivedItemQueueSignatures();
+  const double now = ImGui::GetTime();
+  for (const auto& entry : entries) {
+    if (entry.kind != "queued-item" || entry.detail.empty()) {
+      continue;
+    }
+    const auto signature = entry.kind + "\x1f" + entry.detail;
+    if (!seen.insert(signature).second) {
+      continue;
+    }
+    if (collecting_return_items) {
+      queue.push_back(QueuedReceivedItem{entry.id, entry.detail, now});
+    }
+  }
+}
+
+void DrawReceivedItemsModal() {
+  if (!ReceivedItemsModalVisible()) {
+    return;
+  }
+
+  const ImVec2 display = ImGui::GetIO().DisplaySize;
+  ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Always);
+  ImGui::SetNextWindowSize(display, ImGuiCond_Always);
+  ImGui::SetNextWindowBgAlpha(0.62f);
+  if (ImGui::Begin("##sekailink-received-items-dim",
+                   nullptr,
+                   ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove |
+                       ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings |
+                       ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoNav)) {
+  }
+  ImGui::End();
+
+  const float width = std::clamp(display.x * 0.54f, 420.0f, 680.0f);
+  const float height = std::clamp(display.y * 0.50f, 300.0f, 520.0f);
+  ImGui::SetNextWindowPos(ImVec2((display.x - width) * 0.5f, (display.y - height) * 0.5f), ImGuiCond_Always);
+  ImGui::SetNextWindowSize(ImVec2(width, height), ImGuiCond_Always);
+  ImGui::SetNextWindowBgAlpha(0.98f);
+  ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.035f, 0.090f, 0.115f, 0.98f));
+  ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.16f, 0.82f, 0.78f, 0.85f));
+  ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.055f, 0.145f, 0.185f, 0.96f));
+  ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.12f, 0.74f, 0.84f, 1.0f));
+  ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.17f, 0.84f, 0.93f, 1.0f));
+  ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.08f, 0.54f, 0.62f, 1.0f));
+  ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 10.0f);
+  ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 1.0f);
+  ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(24.0f, 22.0f));
+  ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 7.0f);
+  if (ImGui::Begin("While you were gone...",
+                   nullptr,
+                   ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize |
+                       ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings)) {
+    ImGui::SetWindowFontScale(1.08f);
+    ImGui::TextColored(ImVec4(0.92f, 0.97f, 0.98f, 1.0f), "While you were gone...");
+    ImGui::SetWindowFontScale(1.0f);
+    ImGui::TextDisabled("Sekailink caught up with the room server.");
+    ImGui::Spacing();
+    ImGui::Separator();
+    ImGui::Spacing();
+
+    const float button_height = 42.0f;
+    const float list_height = std::max(104.0f, ImGui::GetContentRegionAvail().y - button_height - 24.0f);
+    ImGui::BeginChild("##received-items-list", ImVec2(0.0f, list_height), true);
+    const auto& queue = ReceivedItemQueue();
+    if (queue.empty()) {
+      ImGui::SetWindowFontScale(1.02f);
+      if (ReceivedItemsModalSyncPending()) {
+        ImGui::TextDisabled("Checking received items...");
+      } else {
+        ImGui::TextDisabled("No item received.");
+      }
+      ImGui::SetWindowFontScale(1.0f);
+    } else {
+      const double now = ImGui::GetTime();
+      for (const auto& item : queue) {
+        const float alpha = std::clamp(static_cast<float>((now - item.created_at) / 0.35), 0.18f, 1.0f);
+        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.93f, 0.98f, 0.98f, alpha));
+        ImGui::PushTextWrapPos(ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x - 10.0f);
+        ImGui::BulletText("%s", item.text.c_str());
+        ImGui::PopTextWrapPos();
+        ImGui::PopStyleColor();
+        ImGui::Spacing();
+      }
+      if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY() - 6.0f) {
+        ImGui::SetScrollHereY(1.0f);
+      }
+    }
+    ImGui::EndChild();
+
+    const float button_width = 190.0f;
+    ImGui::SetCursorPosX((ImGui::GetWindowWidth() - button_width) * 0.5f);
+    const bool can_continue = !ReceivedItemsModalSyncPending();
+    if (!can_continue) {
+      ImGui::BeginDisabled();
+    }
+    if (ImGui::Button(can_continue ? "Continue Playing" : "Checking...", ImVec2(button_width, button_height))) {
+      ReceivedItemsModalVisible() = false;
+      ReceivedItemQueue().clear();
+    }
+    if (!can_continue) {
+      ImGui::EndDisabled();
+    }
+  }
+  ImGui::End();
+  ImGui::PopStyleVar(4);
+  ImGui::PopStyleColor(6);
 }
 
 void DrawToast(const ToastEntry& toast, std::size_t stack_index) {
@@ -596,23 +851,23 @@ void DrawHintPopup(const TrackerRuntime* tracker_runtime,
 }  // namespace
 
 void RenderRuntimeActivityFeedImGui(const TrackerRuntime& tracker_runtime) {
-  constexpr bool kGameLoaded = true;
-  const auto entries = CollectActivityEntries(tracker_runtime.AuthoritativeState().snapshot, 24);
-  UpdateToastQueue(entries, kGameLoaded);
+  // Runtime-social surfaces are owned by Client Core. Keep this path inert so
+  // item/feed bursts cannot affect emulator frame pacing.
+  (void)tracker_runtime;
+}
+
+bool RuntimeReceivedItemsModalOpen() {
+  return false;
 }
 
 void RenderRuntimeContextMenuImGui(RuntimeMenu& runtime_menu,
                                    const TrackerRuntime* tracker_runtime,
                                    const std::function<void(std::string_view)>& send_chat_command) {
   ApplySekailinkActivityStyle();
-  const auto& queue = ToastQueue();
-  for (std::size_t index = 0; index < queue.size(); ++index) {
-    DrawToast(queue[index], index);
-  }
-  DrawBellIcon(UnreadNotificationCount());
   PopSekailinkActivityStyle();
 
-  DrawHintPopup(tracker_runtime, send_chat_command);
+  (void)tracker_runtime;
+  (void)send_chat_command;
   if (runtime_menu.Visible()) {
     return;
   }
@@ -626,10 +881,6 @@ void RenderRuntimeContextMenuImGui(RuntimeMenu& runtime_menu,
   ImGui::PushStyleVar(ImGuiStyleVar_PopupRounding, 8.0f);
   ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(10.0f, 8.0f));
   if (ImGui::BeginPopup("sekaiemu-context-menu")) {
-    if (ImGui::MenuItem("Hint", nullptr, false, tracker_runtime != nullptr)) {
-      HintPopupOpen() = true;
-      HintSelectedIndex() = 0;
-    }
     if (ImGui::MenuItem("Test Notification")) {
       PushLocalTestNotification();
     }

@@ -22,6 +22,7 @@ LibretroHost::Impl::Impl(HostOptions host_options)
 LibretroHost::Impl::~Impl() { Shutdown(); }
 
 bool LibretroHost::Impl::Initialize() {
+  LoadFrontendSettings();
   if (!options.probe_only && !InitializeSdl()) {
     return false;
   }
@@ -59,6 +60,9 @@ bool LibretroHost::Impl::Initialize() {
   if (!options.probe_only && !InitializeVideoBackend()) {
     return false;
   }
+  if (!options.probe_only) {
+    ApplyFrontendWindowSettings();
+  }
   initialized = true;
   return true;
 }
@@ -66,7 +70,7 @@ bool LibretroHost::Impl::Initialize() {
 std::string LibretroHost::Impl::LastError() const { return last_error; }
 
 bool LibretroHost::Impl::InitializeSdl() {
-  return InitializeFrontendSdl(options.probe_only, last_error);
+  return InitializeFrontendSdl(options.probe_only, frontend_settings_.Values().background_gamepad_input, last_error);
 }
 
 bool LibretroHost::Impl::LoadCore() {
@@ -77,7 +81,9 @@ bool LibretroHost::Impl::InitializeCore() {
   active_host = this;
   core_option_manager.Initialize(options.save_directory, options.core_path, options.game_path);
   input_state.Initialize(options.save_directory, options.core_path, options.game_path);
-  LoadFrontendSettings();
+  goal_completion_.Initialize(options.save_directory,
+                              options.ap_game.empty() ? options.game_path.stem().string() : options.ap_game,
+                              options.player_alias.empty() ? options.ap_slot_name : options.player_alias);
 
   retro_log_callback log_callback{&Impl::LogPrintf};
   log_callback_ = log_callback;
@@ -300,6 +306,7 @@ bool LibretroHost::Impl::InitializeRuntimeMemoryServer() {
 void LibretroHost::Impl::Shutdown() {
   SaveFrontendSettingsNow();
   SaveTrackerState("shutdown");
+  goal_completion_.Shutdown();
   ShutdownSession(ShutdownSessionContext{
       .options = &options,
       .core = &core,
@@ -309,6 +316,7 @@ void LibretroHost::Impl::Shutdown() {
       .on_save_battery_on_shutdown = [this]() { SaveBatteryOnShutdown(); },
       .on_shutdown_video_backend = [this]() {
         tracker_window_presenter_.Shutdown();
+        activity_feed_window_presenter_.Shutdown();
         if (video_backend) {
           video_backend->Shutdown();
           video_backend.reset();

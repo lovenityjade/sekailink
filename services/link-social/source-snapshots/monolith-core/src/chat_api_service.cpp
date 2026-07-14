@@ -553,7 +553,10 @@ ChatApiHttpResponse ChatApiService::handle(
     const auto channel_id = url_decode(parts[1]);
     if (!is_safe_channel_id(channel_id)) return {400, R"({"ok":false,"error":"invalid_channel"})"};
     if (!is_public_channel_allowed(channel_id)) return {403, R"({"ok":false,"error":"channel_forbidden"})"};
-    const auto content = first_string_limited(*body, {"content", "message", "text"}, "", 400);
+    const auto raw_content = first_string_limited(*body, {"content", "message", "text"}, "", 400);
+    const auto moderated_content = moderate_user_text(raw_content, 400, ModerationMode::Chat);
+    if (!moderated_content.ok) return {400, moderation_error_json(moderated_content).dump()};
+    const auto content = moderated_content.text;
     if (content.empty()) {
       nlohmann::json keys = nlohmann::json::array();
       for (const auto& [key, value] : body->items()) {
@@ -563,9 +566,9 @@ ChatApiHttpResponse ChatApiService::handle(
       return {400, nlohmann::json{{"ok", false}, {"error", "empty_message"}, {"body_keys", keys}}.dump()};
     }
     const auto& user = identity->at("user");
-    const auto author = first_string(user, {"display_name", "username", "email"}, "SekaiLink");
+    const auto author = legacy_display_name(user);
     auto user_id = user_id_string(user);
-    const auto username = first_string(user, {"username", "email"}, author);
+    const auto username = legacy_username(user);
     auto avatar_url = chat_avatar_url_from_user(user);
     if (avatar_url.size() > 1024 || avatar_url.rfind("data:", 0) == 0) avatar_url.clear();
     if (user_id.empty()) user_id = username;

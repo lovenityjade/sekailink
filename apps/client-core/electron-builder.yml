@@ -11,6 +11,18 @@ extraResources:
   # Ship the SekaiLink runtime as real files (not inside app.asar), so Python/BizHawk/PopTracker can access them.
   - from: ../../runtime
     to: runtime
+    filter:
+      - "**/*"
+      - "!**/*.sfc"
+      - "!**/*.smc"
+      - "!**/*.gba"
+      - "!**/*.gb"
+      - "!**/*.gbc"
+      - "!**/*.nes"
+      - "!**/*.z64"
+      - "!**/*.n64"
+      - "!**/*.v64"
+      - "!**/*.rom"
   # Ship BizHawk (Linux) alongside the AppImage. The Electron main process resolves this via process.resourcesPath.
   - from: ../../third_party/emulators/BizHawk-2.10-linux-x64
     to: third_party/emulators/BizHawk-2.10-linux-x64

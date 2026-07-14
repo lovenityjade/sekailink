@@ -36,5 +36,6 @@
     "ap_game": "Super Mario Sunshine"
   },
   "tracker_pack_uid": "",
-  "tracker_web_url": ""
+  "tracker_web_url": "https://github.com/AmedMusl/Sunshine_Pop/releases/latest",
+  "tracker_pack_path": "poptracker/packs/super_mario_sunshine/pack"
 }

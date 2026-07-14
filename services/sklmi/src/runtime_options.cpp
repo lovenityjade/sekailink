@@ -1,6 +1,7 @@
 #include "runtime_options.hpp"
 
 #include <charconv>
+#include <regex>
 #include <sstream>
 
 namespace sekailink::sklmi {
@@ -28,6 +29,50 @@ bool RequireValue(const std::vector<std::string>& args, std::size_t index, std::
 
 std::uint16_t EffectivePort(std::uint16_t specific_port, std::uint16_t shared_port) {
     return specific_port != 0 ? specific_port : shared_port;
+}
+
+std::string UnescapeJsonString(std::string value) {
+    std::string out;
+    out.reserve(value.size());
+    bool escape = false;
+    for (const char ch : value) {
+        if (escape) {
+            switch (ch) {
+                case '"': out.push_back('"'); break;
+                case '\\': out.push_back('\\'); break;
+                case '/': out.push_back('/'); break;
+                case 'b': out.push_back('\b'); break;
+                case 'f': out.push_back('\f'); break;
+                case 'n': out.push_back('\n'); break;
+                case 'r': out.push_back('\r'); break;
+                case 't': out.push_back('\t'); break;
+                default: out.push_back(ch); break;
+            }
+            escape = false;
+        } else if (ch == '\\') {
+            escape = true;
+        } else {
+            out.push_back(ch);
+        }
+    }
+    return out;
+}
+
+std::unordered_map<std::string, std::string> ParseFlatStringMap(std::string_view text) {
+    std::unordered_map<std::string, std::string> map;
+    const std::string source(text);
+    const std::regex pair_pattern("\"((?:[^\"\\\\]|\\\\.)*)\"\\s*:\\s*\"((?:[^\"\\\\]|\\\\.)*)\"");
+    for (auto it = std::sregex_iterator(source.begin(), source.end(), pair_pattern);
+         it != std::sregex_iterator();
+         ++it) {
+        if (it->size() < 3) continue;
+        auto key = UnescapeJsonString((*it)[1].str());
+        auto value = UnescapeJsonString((*it)[2].str());
+        if (!key.empty() && !value.empty()) {
+            map[std::move(key)] = std::move(value);
+        }
+    }
+    return map;
 }
 
 std::vector<std::string> SplitCsv(std::string_view text) {
@@ -200,6 +245,10 @@ RuntimeParseResult ParseRuntimeOptions(const std::vector<std::string>& args) {
             if (!RequireValue(args, i, &value, &result.error)) return result;
             options.player_alias = value;
             ++i;
+        } else if (arg == "--player-alias-map") {
+            if (!RequireValue(args, i, &value, &result.error)) return result;
+            options.player_aliases_by_slot_name = ParseFlatStringMap(value);
+            ++i;
         } else if (arg == "--ap-password") {
             if (!RequireValue(args, i, &value, &result.error)) return result;
             options.ap_password = value;
@@ -356,6 +405,7 @@ std::string RuntimeUsage() {
         << "[--ap-game <game>] "
         << "[--ap-slot-name <slot>] "
         << "[--player-alias <name>] "
+        << "[--player-alias-map <json>] "
         << "[--ap-password <password>] "
         << "[--ap-uuid <uuid>] "
         << "[--ap-tags AP,SekaiLink,SKLMI] "

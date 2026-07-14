@@ -52,6 +52,18 @@ const char* TrackerDisplayModeToken(TrackerDisplayMode mode) {
   return "split-screen";
 }
 
+const char* WindowModeToken(WindowMode mode) {
+  switch (mode) {
+    case WindowMode::Window:
+      return "window";
+    case WindowMode::Fullscreen:
+      return "fullscreen";
+    case WindowMode::BorderlessWindow:
+    default:
+      return "borderless-window";
+  }
+}
+
 std::optional<RuntimeSettingsMode> ParseSettingsMode(std::string_view text) {
   const auto value = Lower(Trim(text));
   if (value == "advanced" || value == "expert") {
@@ -75,6 +87,20 @@ TrackerDisplayMode ParseTrackerDisplayMode(std::string_view text) {
     return TrackerDisplayMode::ToggleScreen;
   }
   return TrackerDisplayMode::SplitScreen;
+}
+
+std::optional<WindowMode> ParseWindowMode(std::string_view text) {
+  const auto value = Lower(Trim(text));
+  if (value == "window" || value == "windowed" || value == "bordered") {
+    return WindowMode::Window;
+  }
+  if (value == "fullscreen" || value == "full-screen" || value == "exclusive-fullscreen") {
+    return WindowMode::Fullscreen;
+  }
+  if (value == "borderless-window" || value == "borderless" || value == "borderless_window") {
+    return WindowMode::BorderlessWindow;
+  }
+  return std::nullopt;
 }
 
 std::optional<bool> ParseBool(std::string_view text) {
@@ -147,9 +173,31 @@ void RuntimeFrontendSettingsStore::Load() {
       if (const auto parsed = ParseBool(value)) {
         values_.notifications_enabled = *parsed;
       }
+    } else if (key == "activity_feed_enabled" || key == "activity_feed") {
+      if (const auto parsed = ParseBool(value)) {
+        values_.activity_feed_enabled = *parsed;
+      }
+    } else if (key == "client_core_hud_buttons_visible" || key == "client_core_hud_buttons" ||
+               key == "hud_buttons_visible") {
+      if (const auto parsed = ParseBool(value)) {
+        values_.client_core_hud_buttons_visible = *parsed;
+      }
     } else if (key == "bridge_terminal_enabled" || key == "bridge_terminal") {
       if (const auto parsed = ParseBool(value)) {
         values_.bridge_terminal_enabled = *parsed;
+      }
+    } else if (key == "background_gamepad_input" || key == "background_controller_input" ||
+               key == "system_wide_gamepad_input" || key == "system_wide_inputs") {
+      if (const auto parsed = ParseBool(value)) {
+        values_.background_gamepad_input = *parsed;
+      }
+    } else if (key == "window_mode" || key == "sekaiemu_window_mode") {
+      if (const auto parsed = ParseWindowMode(value)) {
+        values_.window_mode = *parsed;
+      }
+    } else if (key == "start_fullscreen") {
+      if (const auto parsed = ParseBool(value); parsed && *parsed) {
+        values_.window_mode = WindowMode::Fullscreen;
       }
     } else if (key == "master_volume_percent" || key == "volume_percent" || key == "volume") {
       if (const auto parsed = ParseInt(value)) {
@@ -194,7 +242,11 @@ bool RuntimeFrontendSettingsStore::Save(std::string& error) const {
     stream << "settings_mode=" << SettingsModeToken(values_.settings_mode) << "\n";
     stream << "chat_overlay_enabled=" << (values_.chat_overlay_enabled ? "true" : "false") << "\n";
     stream << "notifications_enabled=" << (values_.notifications_enabled ? "true" : "false") << "\n";
+    stream << "activity_feed_enabled=" << (values_.activity_feed_enabled ? "true" : "false") << "\n";
+    stream << "client_core_hud_buttons_visible=" << (values_.client_core_hud_buttons_visible ? "true" : "false") << "\n";
     stream << "bridge_terminal_enabled=" << (values_.bridge_terminal_enabled ? "true" : "false") << "\n";
+    stream << "background_gamepad_input=" << (values_.background_gamepad_input ? "true" : "false") << "\n";
+    stream << "window_mode=" << WindowModeToken(values_.window_mode) << "\n";
     stream << "master_volume_percent=" << values_.master_volume_percent << "\n";
     stream << "tracker_display_mode=" << TrackerDisplayModeToken(values_.tracker_display_mode) << "\n";
     stream << "tracker_screen_visible=" << (values_.tracker_screen_visible ? "true" : "false") << "\n";

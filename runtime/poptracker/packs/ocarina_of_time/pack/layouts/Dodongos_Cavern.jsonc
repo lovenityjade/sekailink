@@ -1,0 +1,18 @@
+{
+    "dungeon_items_dodongos_cavern":{
+    "type": "itemgrid",
+            "item_margin": "2, 2",
+            "h_alignment": "left",
+            "item_h_alignment": "center",
+            "item_v_alignment": "center",
+            "item_height": 36,
+            "item_width": 36,
+            "rows": [
+            ["Dodongos_Cavern"],
+            ["Map(DodongosCavern)"],
+            ["Compass(DodongosCavern)"],
+            ["SmallKey(DodongosCavern)"],
+            ["BossKey(DodongosCavern)"]
+            ]
+            }
+}

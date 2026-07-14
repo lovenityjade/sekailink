@@ -23,6 +23,7 @@ struct HostOptions {
   std::string ap_game;
   std::string ap_slot_name;
   std::string player_alias;
+  std::string player_alias_map_json;
   std::string ap_password;
   std::string ap_uuid = "sekailink-sekaiemu";
   std::string ap_tags = "AP,SekaiLink,SKLMI";
@@ -36,8 +37,11 @@ struct HostOptions {
   bool tracker_required = false;
   std::filesystem::path chat_inbox_path;
   std::filesystem::path chat_outbox_path;
+  std::filesystem::path client_core_hud_state_path;
+  std::filesystem::path client_core_hud_events_path;
   std::filesystem::path input_script_path;
   std::filesystem::path dump_frame_path;
+  std::uint64_t test_goal_completion_at_frame = 0;
   std::uint64_t save_state_at_frame = 0;
   std::uint64_t quit_after_frame = 0;
   std::uint64_t dump_frame_at_frame = 0;

@@ -8,7 +8,10 @@ import {
 import {
   buildRoomServerAddress,
   extractRoomIdFromUrl,
+  generationRoomUrl,
   isRoomServerReady,
+  resolveLaunchRoomServer,
+  roomStatusBelongsToGeneration,
 } from "../services/roomServerContext";
 
 describe("live launch context", () => {
@@ -37,6 +40,71 @@ describe("live launch context", () => {
   it("extracts room ids from SekaiLink room URLs", () => {
     expect(extractRoomIdFromUrl("/rooms/live-showcase")).toBe("live-showcase");
     expect(extractRoomIdFromUrl("https://link.sekailink.com/rooms/live-showcase")).toBe("live-showcase");
+  });
+
+  it("resolves room URLs from nested generation payloads", () => {
+    expect(
+      generationRoomUrl({
+        response: {
+          room_server_url: "https://link.sekailink.com/rooms/core-test-snes",
+        },
+      }),
+    ).toBe("https://link.sekailink.com/rooms/core-test-snes");
+  });
+
+  it("rejects a ready room status when it belongs to an older generated room", async () => {
+    const staleStatus = {
+      tracker: "old-room",
+      room_id: "old-room",
+      last_port: 38290,
+      room_host: "link.sekailink.com",
+      players: [{ slot: 1, name: "old-slot", game: "Metroid Zero Mission" }],
+    };
+    const currentStatus = {
+      tracker: "core-test-snes",
+      room_id: "core-test-snes",
+      last_port: 38291,
+      room_host: "link.sekailink.com",
+      players: [{ slot: 1, name: "snes-slot", game: "A Link to the Past" }],
+    };
+
+    expect(roomStatusBelongsToGeneration(staleStatus, { room_url: "/rooms/core-test-snes" })).toBe(false);
+
+    const resolved = await resolveLaunchRoomServer({
+      roomStatus: staleStatus,
+      generation: { response: { room_url: "/rooms/core-test-snes" } },
+      host: "api.sekailink.com",
+      fetchRoomStatus: async (roomUrl?: string) => {
+        expect(roomUrl).toBe("/rooms/core-test-snes");
+        return currentStatus;
+      },
+      loadLatestGeneration: async () => null,
+    });
+
+    expect(resolved.serverAddress).toBe("link.sekailink.com:38291");
+    expect(resolved.roomStatus?.players?.[0]?.game).toBe("A Link to the Past");
+  });
+
+  it("uses the lobby id for status lookup when room_url is already a direct AP endpoint", async () => {
+    const resolved = await resolveLaunchRoomServer({
+      roomStatus: null,
+      roomId: "core-test-snes-20260625213953-60",
+      generation: { room_url: "link.sekailink.com:38292" },
+      host: "api.sekailink.com",
+      fetchRoomStatus: async (roomUrl?: string) => {
+        expect(roomUrl).toBe("/rooms/core-test-snes-20260625213953-60");
+        return {
+          room_id: "core-test-snes-20260625213953-60",
+          last_port: 38292,
+          room_host: "link.sekailink.com",
+          players: [{ slot: 1, name: "snes-slot", game: "A Link to the Past" }],
+        };
+      },
+      loadLatestGeneration: async () => null,
+    });
+
+    expect(resolved.serverAddress).toBe("link.sekailink.com:38292");
+    expect(resolved.roomStatus?.players?.[0]?.game).toBe("A Link to the Past");
   });
 
   it("builds the current player's launch entry from slot downloads", () => {

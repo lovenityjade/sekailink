@@ -40,6 +40,7 @@
     "ap_game": "Donkey Kong Country 3"
   },
   "tracker_pack_uid": "https://github.com/PoryGone/DKC3_AP_Tracker/releases/",
-  "tracker_web_url": "",
-  "tracker_asset_regex": "\\.zip$"
+  "tracker_web_url": "https://github.com/PoryGone/DKC3_AP_Tracker/releases/latest",
+  "tracker_asset_regex": "\\.zip$",
+  "tracker_pack_path": "poptracker/packs/donkey_kong_country_3/pack"
 }

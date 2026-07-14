@@ -13,6 +13,11 @@ export interface SocialProfile {
   permissions?: string[];
   patreon_tier?: string;
   patreon_is_supporter?: boolean;
+  bio?: string;
+  banner_url?: string;
+  locale?: string;
+  allow_friend_requests?: boolean;
+  verified?: boolean;
 }
 
 export interface SocialRequest extends SocialProfile {
@@ -57,7 +62,7 @@ export const isPresenceOnline = (value: unknown) => {
 export const presenceStatusLabel = (value: unknown) => {
   const normalized = normalizePresenceStatus(value, "offline");
   if (normalized === "dnd" || normalized === "busy") return "Busy";
-  if (normalized === "afk") return "AFK";
+  if (normalized === "afk") return "Away";
   return normalized === "online" ? "Online" : "Offline";
 };
 
@@ -80,7 +85,29 @@ const normalizeProfile = (raw: any): SocialProfile | null => {
     permissions: Array.isArray(raw.permissions) ? raw.permissions.map((entry: unknown) => String(entry)) : [],
     patreon_tier: typeof raw.patreon_tier === "string" ? raw.patreon_tier : "",
     patreon_is_supporter: Boolean(raw.patreon_is_supporter),
+    bio: typeof raw.bio === "string" ? raw.bio : "",
+    banner_url: apiAssetUrl(raw.banner_url),
+    locale: typeof raw.locale === "string" ? raw.locale : "",
+    allow_friend_requests: raw.allow_friend_requests !== false,
+    verified: Boolean(raw.verified || raw.is_verified || ["admin", "ops"].includes(String(raw.role || "").toLowerCase())),
   };
+};
+
+export const loadPublicSocialProfile = async (handle: string): Promise<SocialProfile | null> => {
+  const normalizedHandle = String(handle || "").trim().replace(/^@/, "");
+  if (!normalizedHandle) return null;
+  trace("social-client", "public_profile_start", { handle: normalizedHandle });
+  const data = await apiJson<{ profile?: any; user?: any }>(
+    `/api/identity/social/profiles/${encodeURIComponent(normalizedHandle)}`,
+  );
+  const raw = data?.profile || data?.user;
+  const profile = normalizeProfile({
+    ...raw,
+    patreon_tier: raw?.patreon?.tier ?? raw?.patreon_tier,
+    patreon_is_supporter: raw?.patreon?.is_supporter ?? raw?.patreon_is_supporter,
+  });
+  trace("social-client", "public_profile_success", { handle: normalizedHandle, found: Boolean(profile) });
+  return profile;
 };
 
 const normalizeRequest = (raw: any): SocialRequest | null => {

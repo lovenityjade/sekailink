@@ -14,10 +14,12 @@ namespace sekaiemu::spike {
 
 namespace {
 
+constexpr std::uintmax_t kMaxSekaiemuLogBytes = 8u * 1024u * 1024u;
+
 class TeeStreambuf final : public std::streambuf {
  public:
-  TeeStreambuf(std::streambuf* primary, std::streambuf* secondary)
-      : primary_(primary), secondary_(secondary) {}
+  TeeStreambuf(std::streambuf* primary, std::streambuf* secondary, std::uintmax_t initial_secondary_bytes)
+      : primary_(primary), secondary_(secondary), secondary_bytes_(initial_secondary_bytes) {}
 
  protected:
   int overflow(int ch) override {
@@ -26,7 +28,18 @@ class TeeStreambuf final : public std::streambuf {
     }
 
     const int primary_result = primary_ ? primary_->sputc(static_cast<char>(ch)) : ch;
-    const int secondary_result = secondary_ ? secondary_->sputc(static_cast<char>(ch)) : ch;
+    int secondary_result = ch;
+    if (secondary_ && secondary_bytes_ < kMaxSekaiemuLogBytes) {
+      secondary_result = secondary_->sputc(static_cast<char>(ch));
+      if (secondary_result != EOF) {
+        ++secondary_bytes_;
+      }
+      if (secondary_bytes_ >= kMaxSekaiemuLogBytes && !limit_notice_written_) {
+        WriteLimitNotice();
+      }
+    } else if (secondary_ && !limit_notice_written_) {
+      WriteLimitNotice();
+    }
     return (primary_result == EOF || secondary_result == EOF) ? EOF : ch;
   }
 
@@ -42,8 +55,21 @@ class TeeStreambuf final : public std::streambuf {
   }
 
  private:
+  void WriteLimitNotice() {
+    if (!secondary_) {
+      return;
+    }
+    static constexpr char kNotice[] =
+        "\n[sekaiemu][log] file log limit reached; suppressing additional native log output\n";
+    secondary_->sputn(kNotice, sizeof(kNotice) - 1);
+    secondary_->pubsync();
+    limit_notice_written_ = true;
+  }
+
   std::streambuf* primary_ = nullptr;
   std::streambuf* secondary_ = nullptr;
+  std::uintmax_t secondary_bytes_ = 0;
+  bool limit_notice_written_ = false;
 };
 
 std::mutex g_logger_mutex;
@@ -84,13 +110,21 @@ bool InitializeLogger(const std::filesystem::path& log_path) {
     return false;
   }
 
+  std::uintmax_t initial_log_bytes = 0;
+  if (std::filesystem::exists(log_path, ec) && !ec) {
+    initial_log_bytes = std::filesystem::file_size(log_path, ec);
+    if (ec) {
+      initial_log_bytes = 0;
+    }
+  }
+
   g_log_stream.open(log_path, std::ios::app);
   if (!g_log_stream) {
     return false;
   }
 
   g_original_cerr = std::cerr.rdbuf();
-  g_cerr_tee = std::make_unique<TeeStreambuf>(g_original_cerr, g_log_stream.rdbuf());
+  g_cerr_tee = std::make_unique<TeeStreambuf>(g_original_cerr, g_log_stream.rdbuf(), initial_log_bytes);
   std::cerr.rdbuf(g_cerr_tee.get());
   g_active_log_path = log_path;
   return true;

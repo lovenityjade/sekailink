@@ -1,0 +1,113 @@
+/* This file was automatically generated via Phakager. Do not make manual edits to this file. */
+{
+    "logic_grid": {
+        "type": "array",
+        "orientation": "vertical",
+        "margin": "0, 0",
+        "content": [
+            {
+                "type": "array",
+                "orientation": "horizontal",
+                "h_alignment": "center",
+                "margin": "2, 2, 2, 12",
+                "content": [
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "0, 0",
+                        "item_size": "120, 18",
+                        "h_alignment": "left",
+                        "item_h_alignment": "right",
+                        "rows": [
+                            [
+                                "__label_100s"
+                            ],
+                            [
+                                "__label_1ups"
+                            ]
+                        ]
+                    },
+                    {
+                        "type": "itemgrid",
+                        "item_margin": "0, 0",
+                        "item_size": "120, 18",
+                        "h_alignment": "left",
+                        "item_h_alignment": "left",
+                        "rows": [
+                            [
+                                "__setting_100"
+                            ],
+                            [
+                                "__setting_1UB"
+                            ]
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "group",
+                "header": "Logic",
+                "h_alignment": "center",
+                "content": {
+                    "type": "array",
+                    "orientation": "horizontal",
+                    "content": [
+                        {
+                            "type": "itemgrid",
+                            "item_margin": "0, 0",
+                            "item_size": "120, 18",
+                            "h_alignment": "left",
+                            "item_h_alignment": "right",
+                            "rows": [
+                                [
+                                    "__label_caps"
+                                ],
+                                [
+                                    "__label_cannons"
+                                ],
+                                [
+                                    "__label_moves"
+                                ],
+                                [
+                                    "__null"
+                                ],
+                                [
+                                    "__null"
+                                ],
+                                [
+                                    "__label_goal"
+                                ]
+                            ]
+                        },
+                        {
+                            "type": "itemgrid",
+                            "item_margin": "0, 0",
+                            "item_size": "120, 18",
+                            "h_alignment": "left",
+                            "item_h_alignment": "left",
+                            "rows": [
+                                [
+                                    "__setting_SC"
+                                ],
+                                [
+                                    "__setting_SN"
+                                ],
+                                [
+                                    "__setting_SM"
+                                ],
+                                [
+                                    "__null"
+                                ],
+                                [
+                                    "__null"
+                                ],
+                                [
+                                    "__setting_GOAL"
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

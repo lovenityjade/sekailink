@@ -54,7 +54,7 @@ Command:
 
 ```bash
 /tmp/sekailink-worlds-generic-build/sekailink_generic_generation_probe \
-  /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp
+  <local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp
 ```
 
 Current result:

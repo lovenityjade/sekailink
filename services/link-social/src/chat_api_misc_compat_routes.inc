@@ -187,21 +187,23 @@ ChatApiHttpResponse ChatApiService::handle_misc_compat(
               sqlite3_stmt* update_stmt = nullptr;
               if (sqlite3_prepare_v2(
                       update_db,
-                      "UPDATE lobby_generation_state SET status = ?, error = ?, response_json = ?, updated_at = ? "
+                      "UPDATE lobby_generation_state SET status = ?, room_url = ?, error = ?, response_json = ?, updated_at = ? "
                       "WHERE lobby_id = ? AND generation_id = ?;",
                       -1,
                       &update_stmt,
                       nullptr) == SQLITE_OK) {
                 const auto next_status = handoff.status.empty() ? generation_state.value("status", std::string{}) : handoff.status;
+                const auto next_room_url = handoff.room_url.empty() ? generation_state.value("room_url", std::string{}) : handoff.room_url;
                 const auto next_error = handoff.error.empty() ? generation_state.value("error", std::string{}) : handoff.error;
                 const auto response_dump = generation_response.dump();
                 const auto updated_at = utc_now_iso8601();
                 sqlite3_bind_text(update_stmt, 1, next_status.c_str(), -1, SQLITE_TRANSIENT);
-                sqlite3_bind_text(update_stmt, 2, next_error.c_str(), -1, SQLITE_TRANSIENT);
-                sqlite3_bind_text(update_stmt, 3, response_dump.c_str(), -1, SQLITE_TRANSIENT);
-                sqlite3_bind_text(update_stmt, 4, updated_at.c_str(), -1, SQLITE_TRANSIENT);
-                sqlite3_bind_text(update_stmt, 5, generation_state.value("lobby_id", std::string{}).c_str(), -1, SQLITE_TRANSIENT);
-                sqlite3_bind_text(update_stmt, 6, generation_id.c_str(), -1, SQLITE_TRANSIENT);
+                sqlite3_bind_text(update_stmt, 2, next_room_url.c_str(), -1, SQLITE_TRANSIENT);
+                sqlite3_bind_text(update_stmt, 3, next_error.c_str(), -1, SQLITE_TRANSIENT);
+                sqlite3_bind_text(update_stmt, 4, response_dump.c_str(), -1, SQLITE_TRANSIENT);
+                sqlite3_bind_text(update_stmt, 5, updated_at.c_str(), -1, SQLITE_TRANSIENT);
+                sqlite3_bind_text(update_stmt, 6, generation_state.value("lobby_id", std::string{}).c_str(), -1, SQLITE_TRANSIENT);
+                sqlite3_bind_text(update_stmt, 7, generation_id.c_str(), -1, SQLITE_TRANSIENT);
                 (void)sqlite3_step(update_stmt);
                 sqlite3_finalize(update_stmt);
               }

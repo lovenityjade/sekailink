@@ -31,19 +31,26 @@ $downloadLabel = $escape($config['download_label']);
   <meta property="og:title" content="<?= $siteName ?> — <?= $tagline ?>">
   <meta property="og:description" content="<?= $heroSubtitle ?>">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="/assets/branding/landing-logo.png">
+  <meta property="og:image" content="/assets/branding/landing-announcement.png">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<div style="position:relative;z-index:10000;padding:14px 18px;text-align:center;background:linear-gradient(90deg,#0f766e,#14b8a6);color:#031412;font:700 15px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;box-shadow:0 10px 28px rgba(0,0,0,.28);">
-  SekaiLink is currently on a temporary hiatus for health reasons. Thank you for your patience and support.
-</div>
 <div class="skl-bg-gradient"></div>
 <canvas id="skl-bg-canvas"></canvas>
 <div class="skl-bg-overlay"></div>
 <div class="skl-wave"></div>
 <div class="skl-wave"></div>
 <div class="skl-wave"></div>
+
+<main class="skl-maintenance" aria-labelledby="maintenance-title">
+  <div class="skl-maintenance-card">
+    <div class="skl-maintenance-spinner" aria-hidden="true"></div>
+    <h1 id="maintenance-title">Maintenance in progress</h1>
+  </div>
+</main>
+</body>
+</html>
+<?php return; ?>
 
 <header class="skl-topbar" id="skl-topbar">
   <div class="skl-topbar-inner">
@@ -64,6 +71,23 @@ $downloadLabel = $escape($config['download_label']);
 </header>
 
 <div class="skl-landing">
+  <section class="skl-announcement" id="stress-test" aria-labelledby="stress-test-title">
+    <h1 class="skl-sr-only" id="stress-test-title">SekaiLink Public Stress Test is now available</h1>
+    <div class="skl-announcement-frame skl-reveal">
+      <img
+        class="skl-announcement-image"
+        src="/assets/branding/landing-announcement.png"
+        width="1672"
+        height="941"
+        alt="SekaiLink Public Stress Test is now available. Join our Discord, register, or go to the downloads."
+        fetchpriority="high"
+      >
+      <a class="skl-announcement-hotspot skl-announcement-hotspot--discord" href="<?= $discordUrl ?>" target="_blank" rel="noopener" aria-label="Join the SekaiLink Discord"></a>
+      <a class="skl-announcement-hotspot skl-announcement-hotspot--register" href="<?= $registerUrl ?>" aria-label="Register for SekaiLink"></a>
+      <a class="skl-announcement-hotspot skl-announcement-hotspot--download" href="<?= $downloadUrl ?>" aria-label="Go to the SekaiLink downloads"></a>
+    </div>
+  </section>
+
   <section class="skl-hero" id="hero">
     <div class="skl-hero-inner">
       <div class="skl-hero-copy skl-reveal">

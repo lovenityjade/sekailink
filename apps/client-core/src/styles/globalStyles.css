@@ -382,12 +382,12 @@ body.app-ui {
 }
 
 .skl-auth-actions {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 18px;
-    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    margin-top: 8px;
+    margin-top: 18px;
 }
 
 .skl-auth-actions .skl-btn {
@@ -396,6 +396,12 @@ body.app-ui {
     padding-inline: 22px;
     position: relative;
     z-index: 1;
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow:
+        0 18px 40px rgba(0,0,0,0.34),
+        inset 0 1px 0 rgba(255,255,255,0.22),
+        inset 0 -10px 20px rgba(0,0,0,0.16);
+    transform: translateY(0);
 }
 
 .skl-discord-btn {
@@ -481,38 +487,147 @@ body.app-ui {
     min-width: 210px;
 }
 
+.skl-auth-bezel-btn {
+    align-items: center;
+    appearance: none;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 10px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    font-weight: 750;
+    height: 46px;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    min-width: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.22);
+    touch-action: manipulation;
+    transition: border-color 0.14s ease, box-shadow 0.14s ease, transform 0.14s ease, background 0.14s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    white-space: nowrap;
+    will-change: transform;
+    z-index: 1;
+}
+
+.skl-auth-bezel-btn::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: 9px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0) 42%),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06), transparent 28%, transparent 72%, rgba(255, 255, 255, 0.05));
+    opacity: 0.78;
+    pointer-events: none;
+}
+
+.skl-auth-bezel-btn-connect {
+    background:
+        linear-gradient(180deg, #ff7d65 0%, #ff6244 55%, #d94d65 100%);
+    border-color: rgba(255, 142, 118, 0.42);
+    box-shadow:
+        0 12px 22px rgba(255, 88, 70, 0.18),
+        0 3px 8px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.24),
+        inset 0 -2px 0 rgba(92, 25, 34, 0.34);
+}
+
+.skl-auth-bezel-btn-quit {
+    background:
+        linear-gradient(180deg, rgba(17, 29, 28, 0.96) 0%, rgba(9, 17, 17, 0.96) 100%);
+    border-color: rgba(0, 255, 200, 0.26);
+    color: rgba(218, 255, 248, 0.88);
+    box-shadow:
+        0 8px 16px rgba(0, 0, 0, 0.26),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        inset 0 -2px 0 rgba(0, 255, 200, 0.10);
+}
+
+.skl-auth-bezel-btn:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 2px rgba(0, 255, 200, 0.20),
+        0 0 0 1px rgba(0, 255, 200, 0.70) inset,
+        0 10px 20px rgba(0, 0, 0, 0.30);
+}
+
+.skl-auth-bezel-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.skl-auth-bezel-btn-connect:hover:not(:disabled) {
+    border-color: rgba(255, 173, 150, 0.58);
+    box-shadow:
+        0 14px 24px rgba(255, 88, 70, 0.22),
+        0 4px 10px rgba(0, 0, 0, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.27),
+        inset 0 -2px 0 rgba(92, 25, 34, 0.38);
+}
+
+.skl-auth-bezel-btn-quit:hover:not(:disabled) {
+    border-color: rgba(0, 255, 200, 0.42);
+    color: rgba(236, 255, 252, 0.96);
+    box-shadow:
+        0 10px 18px rgba(0, 0, 0, 0.30),
+        0 0 18px rgba(0, 255, 200, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.10),
+        inset 0 -2px 0 rgba(0, 255, 200, 0.14);
+}
+
+.skl-auth-bezel-btn:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow:
+        inset 0 2px 8px rgba(0, 0, 0, 0.28),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.skl-auth-bezel-btn:disabled {
+    cursor: not-allowed;
+    filter: grayscale(0.45) brightness(0.72);
+    opacity: 0.66;
+    transform: none;
+}
+
 .skl-auth-web-links {
     display: inline-flex;
-    gap: 18px;
+    gap: 20px;
     align-items: center;
     justify-content: center;
     color: rgba(200, 255, 224, 0.42);
-    font-size: 13px;
-    margin-top: 2px;
+    font-size: 12px;
+    margin-top: 8px;
     position: relative;
     z-index: 1;
     -webkit-app-region: no-drag;
 }
 
 .skl-auth-web-links button {
-    border: 1px solid rgba(0, 255, 200, 0.34);
-    border-radius: 999px;
-    padding: 8px 18px;
-    background: rgba(0, 255, 200, 0.045);
-    color: var(--accent);
+    border: 0;
+    border-radius: 6px;
+    padding: 4px 2px;
+    background: transparent;
+    color: rgba(200, 255, 224, 0.70);
     font: inherit;
-    font-weight: 700;
+    font-weight: 650;
     cursor: pointer;
     text-decoration: none;
-    min-width: 142px;
-    transition: border-color 0.16s ease, color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+    min-width: auto;
+    transition: color 0.16s ease, text-shadow 0.16s ease;
 }
 
 .skl-auth-web-links button:hover {
-    border-color: rgba(0, 255, 200, 0.62);
-    background: rgba(0, 255, 200, 0.09);
     color: var(--accent-2);
-    box-shadow: 0 0 18px rgba(0, 255, 200, 0.1);
+    text-shadow: 0 0 12px rgba(0, 255, 200, 0.22);
     text-decoration: none;
 }
 
@@ -1044,6 +1159,10 @@ body.app-ui .site-footer {
 
 .skl-btn:active{
     transform: translateY(1px);
+    box-shadow:
+        0 14px 34px rgba(0,0,0,0.30),
+        inset 0 1px 0 rgba(255,255,255,0.18),
+        inset 0 -8px 18px rgba(0,0,0,0.18);
 }
 
 .skl-btn.primary{

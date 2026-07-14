@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Tanoby Key",
+    "children": [
+      {
+        "name": "Boulder Puzzle",
+        "sections": [
+          {
+            "ref": "Dungeons/Tanoby Key/Unlock Ruins (Event)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "tanoby_key",
+            "x": 120,
+            "y": 40
+          }
+        ]
+      }
+    ]
+  }
+]

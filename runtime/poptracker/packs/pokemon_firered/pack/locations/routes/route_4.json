@@ -1,0 +1,247 @@
+[
+  {
+    "name": "Route 4",
+    "children": [
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Routes/Route 4 East/Land Encounters",
+            "name": "Land Encounters"
+          },
+          {
+            "ref": "Routes/Route 4 East/Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Routes/Route 4 East/Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Routes/Route 4 East/Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Routes/Route 4 East/Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_4_west",
+            "x": 880,
+            "y": 12
+          },
+          {
+            "map": "route_4_east",
+            "x": 816,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Pokémon Center",
+        "sections": [
+          {
+            "ref": "Routes/Route 4 West/Unlock Fly Destination",
+            "name": "Unlock Fly Destination"
+          },
+          {
+            "ref": "Routes/Route 4 West/PC Item",
+            "name": "PC Item"
+          },
+          {
+            "ref": "Routes/Route 4 West/Purchase Pokémon",
+            "name": "Purchase Pokémon"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_4_west",
+            "x": 200,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Boy",
+        "sections": [
+          {
+            "ref": "Routes/Route 4 West/Boy Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_4_west",
+            "x": 248,
+            "y": 232
+          }
+        ]
+      },
+      {
+        "name": "Hidden Item Near Pokémon Center",
+        "sections": [
+          {
+            "ref": "Routes/Route 4 West/Hidden Item Near Pokémon Center",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_4_west",
+            "x": 88,
+            "y": 72
+          }
+        ]
+      },
+      {
+        "name": "Hidden Item Near Move Tutors",
+        "sections": [
+          {
+            "ref": "Routes/Route 4 East/Hidden Item Near Move Tutors",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_4_west",
+            "x": 696,
+            "y": 40
+          }
+        ]
+      },
+      {
+        "name": "Hidden Item Below South Ledge",
+        "sections": [
+          {
+            "ref": "Routes/Route 4 East/Hidden Item Below South Ledge",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_4_east",
+            "x": 184,
+            "y": 280
+          }
+        ]
+      },
+      {
+        "name": "East Ledges Item",
+        "sections": [
+          {
+            "ref": "Routes/Route 4 East/East Ledges Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_4_east",
+            "x": 184,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Lass Crissy",
+        "sections": [
+          {
+            "ref": "Routes/Route 4 East/Lass Crissy Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_4_east",
+            "x": 312,
+            "y": 56
+          }
+        ]
+      },
+      {
+        "name": "Mt. Moon West Entrance",
+        "sections": [
+          {
+            "ref": "Routes/Route 4 West/Mt. Moon West Entrance",
+            "name": "Entrance"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_4_west",
+            "x": 312,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Mt. Moon East Entrance",
+        "sections": [
+          {
+            "ref": "Routes/Route 4 East/Mt. Moon East Entrance",
+            "name": "Entrance"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_4_west",
+            "x": 520,
+            "y": 88
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Route 4 Pokémon Center 1F",
+    "children": [
+      {
+        "name": "PC",
+        "sections": [
+          {
+            "ref": "Routes/Route 4 West/PC Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_4_pokemon_center_1f",
+            "x": 184,
+            "y": 24
+          }
+        ]
+      },
+      {
+        "name": "Visit",
+        "sections": [
+          {
+            "ref": "Routes/Route 4 West/Unlock Fly Destination"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_4_pokemon_center_1f",
+            "x": 12,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Balding Man",
+        "sections": [
+          {
+            "ref": "Routes/Route 4 West/Purchase Pokémon"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_4_pokemon_center_1f",
+            "x": 24,
+            "y": 56
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "packageId": "ship-of-harkinian-sekailink",
+  "version": "1.1.0-sekailink.1",
+  "channel": "canary",
+  "platform": "linux-x64",
+  "url": "https://sekailink.com/downloads/pc-packages/v1/releases/ship-of-harkinian-sekailink-1.1.0-sekailink.1-linux-x64.tar.gz",
+  "bytes": 36423990,
+  "sha256": "7dcd4cbbfaa5296ef121560d094fe2701b8754967c67f8329eed34006d946885",
+  "executable": "game.appimage",
+  "published": true,
+  "artifactHost": "gaming-pc",
+  "artifactPath": "/home/nobara-user/SekaiLink-PC-Ports/harkipelago-sekailink/artifacts/releases/ship-of-harkinian-sekailink-1.1.0-sekailink.1-linux-x64.tar.gz",
+  "audit": {
+    "appImageArchitecture": "x86-64",
+    "maximumGlibcSymbol": "2.34",
+    "audioLibraries": "ELF64 x86-64",
+    "includesUserGameData": false
+  }
+}

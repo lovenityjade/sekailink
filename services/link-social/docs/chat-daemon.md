@@ -29,7 +29,7 @@ Date: 2026-04-17
 - Binary: `/opt/sekailink/link/chat-api/bin/sekailink_chat_api_service`
 - Config: `/opt/sekailink/link/chat-api/config/chat_api.json`
 - Listener: `127.0.0.1:19099`
-- Identity upstream: `149.202.61.90:19095`
+- Identity upstream: Link's private Nexus tunnel at `127.0.0.1:19295`
 - Private gateway upstream: `127.0.0.1:19098`
 - Public exposure: Apache `/api/chat/` only
 

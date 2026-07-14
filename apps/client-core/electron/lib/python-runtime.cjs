@@ -338,6 +338,30 @@ for m in mods:
 print("ok")
 `.trim();
 
+  const PYTHON_RUNTIME_PIP_DEPS = [
+    "setuptools<70",
+    "wheel",
+    "pyyaml",
+    "pathspec",
+    "platformdirs",
+    "schema",
+    "jinja2",
+    "colorama",
+    "typing_extensions",
+    "jellyfish",
+    "bsdiff4",
+    "websockets",
+    "requests",
+    "certifi",
+    "orjson",
+    "pillow",
+    "python-dotenv",
+    "pyaes",
+    "docutils",
+    "dolphin-memory-engine",
+    "pyevermizer",
+  ];
+
   const verifyPythonRuntimeReady = async (pythonPath, env = {}) => {
     const p = String(pythonPath || "").trim();
     if (!p || !fs.existsSync(p)) return { ok: false, error: "python_missing", python: p };
@@ -350,6 +374,47 @@ print("ok")
       python: p,
       error: String(check.stderr || check.stdout || "python_runtime_import_check_failed").trim(),
     };
+  };
+
+  const repairBundledPythonRuntime = async (pythonPath) => {
+    const p = String(pythonPath || "").trim();
+    if (!p || !fs.existsSync(p)) return { ok: false, error: "python_missing", python: p };
+    const wheelhouseDir = getPythonRuntimeWheelhouseDir();
+    if (!wheelhouseDir || !fs.existsSync(wheelhouseDir)) {
+      return { ok: false, error: `python_wheelhouse_missing:${wheelhouseDir || "win-amd64-cp312"}`, python: p };
+    }
+    const pipEnv = {
+      ...processRef.env,
+      PYTHONNOUSERSITE: "1",
+      PYTHONDONTWRITEBYTECODE: "1",
+      SKIP_REQUIREMENTS_UPDATE: "1",
+      PIP_DISABLE_PIP_VERSION_CHECK: "1",
+      PIP_NO_INPUT: "1",
+      PIP_NO_INDEX: "1",
+      PIP_FIND_LINKS: wheelhouseDir,
+    };
+
+    const ensurePip = await runProcess(p, ["-m", "pip", "--version"], { env: pipEnv });
+    if (ensurePip.code !== 0) {
+      await runProcess(p, ["-m", "ensurepip", "--upgrade"], { env: pipEnv });
+    }
+
+    const runOfflineInstall = () => runProcess(p, getPythonPipInstallArgs(PYTHON_RUNTIME_PIP_DEPS), { env: pipEnv });
+    let install = await runOfflineInstall();
+    if (install.code !== 0) {
+      const firstMsg = String(install.stderr || install.stdout || "").trim();
+      writeLogLine("warn", "python-runtime", `bundled Python pip install failed; refreshing pip with ensurepip: ${firstMsg}`);
+      await runProcess(p, ["-m", "ensurepip", "--upgrade"], { env: pipEnv });
+      install = await runOfflineInstall();
+    }
+    if (install.code !== 0) {
+      return {
+        ok: false,
+        python: p,
+        error: String(install.stderr || install.stdout || "python_deps_install_failed").trim(),
+      };
+    }
+    return verifyPythonRuntimeReady(p, pipEnv);
   };
 
   const resolveBundledReadyPythonRuntime = async () => {
@@ -366,6 +431,13 @@ print("ok")
       seen.add(key);
       const result = await verifyPythonRuntimeReady(candidate);
       if (result.ok) return result.python;
+      if (processRef.platform === "win32") {
+        writeLogLine("warn", "python-runtime", `bundled Python missing deps; attempting offline repair: ${candidate}`);
+        const repaired = await repairBundledPythonRuntime(candidate);
+        if (repaired.ok) return repaired.python;
+        failures.push({ python: candidate, error: repaired.error || result.error });
+        continue;
+      }
       failures.push({ python: candidate, error: result.error });
     }
     const detail = failures.map((entry) => `${entry.python}: ${entry.error}`).join(" | ");
@@ -397,9 +469,13 @@ print("ok")
     if (pythonRuntimePromise) return pythonRuntimePromise;
     pythonRuntimePromise = (async () => {
       if (app.isPackaged && processRef.env.SEKAILINK_ALLOW_RUNTIME_BOOTSTRAP !== "1") {
-        const packagedPython = await resolveBundledReadyPythonRuntime();
-        writeLogLine("info", "python-runtime", `using bundled ready Python runtime: ${packagedPython}`);
-        return packagedPython;
+        try {
+          const packagedPython = await resolveBundledReadyPythonRuntime();
+          writeLogLine("info", "python-runtime", `using bundled ready Python runtime: ${packagedPython}`);
+          return packagedPython;
+        } catch (err) {
+          writeLogLine("warn", "python-runtime", `bundled ready Python unavailable; bootstrapping local venv from packaged Python: ${String(err || "")}`);
+        }
       }
 
       const bootstrap = await resolveBootstrapPython();

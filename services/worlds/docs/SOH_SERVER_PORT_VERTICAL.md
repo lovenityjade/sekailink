@@ -38,7 +38,7 @@ Commande de generation locale:
 
 ```sh
 /tmp/sekailink-worlds-cycle1-build/sekailink_generic_generation_package \
-  /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-soh \
+  <local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-soh \
   /tmp/sekailink-soh-cycle1-package \
   seed-soh-cycle1 \
   jade-soh-cycle1 \
@@ -46,7 +46,7 @@ Commande de generation locale:
   1001 \
   Jade \
   7001 \
-  /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-soh/presets/jade-soh.config-snapshot.json
+  <local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-soh/presets/jade-soh.config-snapshot.json
 ```
 
 Verification locale:

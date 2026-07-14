@@ -40,7 +40,8 @@ class OpenGlVideoBackend final : public VideoBackend {
   void SetTrackerSidebarLayout(bool enabled,
                                unsigned sidebar_width,
                                const VideoGeometry& geometry) override;
-  bool ToggleFullscreen(std::string& error) override;
+  bool SetWindowMode(WindowMode mode, std::string& error) override;
+  WindowMode CurrentWindowMode() const override { return window_mode_; }
   void SetImGuiDrawCallback(std::function<void()> callback) override;
   void Present() override;
   void Shutdown() override;
@@ -97,6 +98,8 @@ class OpenGlVideoBackend final : public VideoBackend {
   OpenGlOverlayRenderer chat_overlay_renderer_;
   std::vector<std::uint8_t> chat_overlay_pixels_;
   std::vector<std::uint8_t> software_frame_rgba_;
+  unsigned active_frame_width_ = 0;
+  unsigned active_frame_height_ = 0;
   unsigned core_framebuffer_ = 0;
   unsigned core_color_texture_ = 0;
   unsigned core_depth_stencil_rbo_ = 0;
@@ -108,9 +111,12 @@ class OpenGlVideoBackend final : public VideoBackend {
   unsigned stride_probe_sample_count_ = 0;
   bool stride_probe_visible_logged_ = false;
   bool menu_visible_ = false;
+  bool menu_restore_size_valid_ = false;
+  int menu_restore_width_ = 0;
+  int menu_restore_height_ = 0;
   bool tracker_sidebar_enabled_ = false;
   unsigned tracker_sidebar_width_ = 0;
-  bool fullscreen_ = false;
+  WindowMode window_mode_ = WindowMode::BorderlessWindow;
   SekaiemuImGuiRuntime imgui_runtime_;
   std::function<void()> imgui_draw_callback_;
 };

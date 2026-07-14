@@ -74,6 +74,9 @@ void PumpRuntimeEvents(RuntimeLoopContext& context) {
   SDL_Event event;
   while (SDL_PollEvent(&event)) {
     ProcessSekaiemuImGuiEvent(event);
+    if (context.on_goal_completion_event && context.on_goal_completion_event(event)) {
+      continue;
+    }
     if (context.on_runtime_debug_event && context.on_runtime_debug_event(event)) {
       continue;
     }
@@ -97,6 +100,12 @@ void PumpRuntimeEvents(RuntimeLoopContext& context) {
               (event.key.keysym.mod & KMOD_ALT) != 0))) {
           if (context.on_toggle_fullscreen) {
             context.on_toggle_fullscreen();
+          }
+          break;
+        }
+        if (event.key.repeat == 0 && event.key.keysym.scancode == SDL_SCANCODE_F4) {
+          if (context.on_test_goal_completion) {
+            context.on_test_goal_completion();
           }
           break;
         }
@@ -182,12 +191,6 @@ void PumpRuntimeEvents(RuntimeLoopContext& context) {
           if (event.key.repeat == 0 && context.on_toggle_tracker_screen) {
             context.on_toggle_tracker_screen();
           }
-        } else if (event.key.keysym.scancode == SDL_SCANCODE_T) {
-          if (event.key.repeat == 0 &&
-              (!context.chat_overlay_enabled || context.chat_overlay_enabled()) &&
-              context.on_open_chat_input) {
-            context.on_open_chat_input();
-          }
         } else if (event.key.keysym.scancode == SDL_SCANCODE_F10) {
           if (context.on_cycle_tracker_tab) {
             context.on_cycle_tracker_tab();
@@ -264,6 +267,12 @@ void PumpRuntimeEvents(RuntimeLoopContext& context) {
       case SDL_CONTROLLERBUTTONDOWN:
       case SDL_CONTROLLERBUTTONUP:
       case SDL_CONTROLLERAXISMOTION:
+      case SDL_JOYDEVICEADDED:
+      case SDL_JOYDEVICEREMOVED:
+      case SDL_JOYBUTTONDOWN:
+      case SDL_JOYBUTTONUP:
+      case SDL_JOYAXISMOTION:
+      case SDL_JOYHATMOTION:
         if (!context.input_state->HandleSdlEvent(event, context.runtime_menu->Visible()) &&
             context.runtime_menu->Visible() && event.type == SDL_CONTROLLERBUTTONDOWN &&
             event.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
@@ -302,6 +311,9 @@ int RunRuntimeLoop(RuntimeLoopContext& context) {
       }
       if (!context.core_run_enabled || context.core_run_enabled()) {
         context.on_core_run();
+        if (context.on_emulation_frame_ran) {
+          context.on_emulation_frame_ran();
+        }
       }
       context.on_tick_memory_server();
       context.on_tick_sklmi_companion();

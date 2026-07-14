@@ -131,14 +131,6 @@ bool InitializeSklmiCompanionForHost(const HostOptions& options,
 
   const auto companion_bridge_root =
       options.save_directory / "sklmi" / active_sklmi_bridge_spec->bridge_id / "runtime";
-  const auto companion_tracker_snapshot_path =
-      options.tracker_snapshot_path.empty()
-          ? companion_bridge_root / "tracker.snapshot.json"
-          : options.tracker_snapshot_path;
-  const auto companion_tracker_command_log_path =
-      options.tracker_command_log_path.empty()
-          ? companion_bridge_root / "tracker.commands.jsonl"
-          : options.tracker_command_log_path;
 
   std::string error;
   if (!sklmi_companion_runtime.Start(SklmiCompanionOptions{
@@ -153,13 +145,14 @@ bool InitializeSklmiCompanionForHost(const HostOptions& options,
                                          .ap_game = options.ap_game,
                                          .ap_slot_name = options.ap_slot_name,
                                          .player_alias = options.player_alias,
+                                         .player_alias_map_json = options.player_alias_map_json,
                                          .ap_password = options.ap_password,
                                          .ap_uuid = options.ap_uuid,
                                          .ap_tags = options.ap_tags,
                                          .tracker_pack_path = options.tracker_pack_path,
                                          .tracker_variant = options.tracker_variant,
-                                         .tracker_snapshot_path = companion_tracker_snapshot_path,
-                                         .tracker_command_log_path = companion_tracker_command_log_path,
+                                         .tracker_snapshot_path = {},
+                                         .tracker_command_log_path = {},
                                          .tracker_assets_root = options.tracker_assets_root,
                                      },
                                      error)) {
@@ -219,8 +212,9 @@ BridgeRuntimeStatus BuildBridgeRuntimeStatusForHost(
   status.ap_slot_name = options.ap_slot_name;
   status.runtime_memory_socket_path = runtime_memory_server.SocketPath().string();
   status.sekaiemu_log_path =
-      (options.log_directory.empty() ? options.save_directory / "logs" : options.log_directory) /
-      "sekaiemu.log";
+      ((options.log_directory.empty() ? options.save_directory / "logs" : options.log_directory) /
+       "sekaiemu.log")
+          .string();
   status.legacy_bridge_socket_path = profile_bridge.Active() ? profile_bridge.SocketPath().string() : "";
   status.manifest_path = sklmi_companion_runtime.ManifestPath().string();
   status.room_state_path = sklmi_companion_runtime.RoomStatePath().string();
@@ -269,6 +263,7 @@ void RestartSklmiCompanionForHost(const HostOptions& options,
                                          .ap_game = options.ap_game,
                                          .ap_slot_name = options.ap_slot_name,
                                          .player_alias = options.player_alias,
+                                         .player_alias_map_json = options.player_alias_map_json,
                                          .ap_password = options.ap_password,
                                          .ap_uuid = options.ap_uuid,
                                          .ap_tags = options.ap_tags,

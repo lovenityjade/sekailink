@@ -12,6 +12,9 @@
 namespace sekailink::sklmi {
 namespace {
 
+using NameMap = std::unordered_map<std::uint64_t, std::string>;
+using NamesByGameMap = std::unordered_map<std::string, NameMap>;
+
 std::string EscapeJson(const std::string& value) {
     return detail::escape_json(value);
 }
@@ -55,11 +58,22 @@ std::string BuildSayPacket(std::string_view text) {
     return "[{\"cmd\":\"Say\",\"text\":\"" + EscapeJson(std::string(text)) + "\"}]";
 }
 
-std::string BuildDataPackageRequestPacket(const std::string& game) {
+std::string BuildDataPackageRequestPacket(std::vector<std::string> games) {
+    games.push_back("Archipelago");
+    std::sort(games.begin(), games.end());
+    games.erase(std::remove_if(games.begin(), games.end(), [](const auto& game) {
+                    return game.empty();
+                }),
+                games.end());
+    games.erase(std::unique(games.begin(), games.end()), games.end());
+
     std::ostringstream out;
-    out << "[{\"cmd\":\"GetDataPackage\",\"games\":[\"";
-    out << EscapeJson(game);
-    out << "\",\"Archipelago\"]}]";
+    out << "[{\"cmd\":\"GetDataPackage\",\"games\":[";
+    for (std::size_t index = 0; index < games.size(); ++index) {
+        if (index != 0) out << ",";
+        out << "\"" << EscapeJson(games[index]) << "\"";
+    }
+    out << "]}]";
     return out.str();
 }
 
@@ -113,6 +127,24 @@ std::vector<std::uint64_t> ExtractUintArrayField(const std::string& text, const 
         if (auto parsed = detail::parse_u64((*it)[1].str()); parsed.has_value()) {
             values.push_back(*parsed);
         }
+    }
+    return values;
+}
+
+std::vector<std::string> ExtractStringArrayField(const std::string& text, const std::string& key) {
+    std::vector<std::string> values;
+    const auto key_pos = text.find("\"" + key + "\"");
+    if (key_pos == std::string::npos) return values;
+    const auto open = text.find('[', key_pos);
+    if (open == std::string::npos) return values;
+    const auto close = text.find(']', open);
+    if (close == std::string::npos || close <= open) return values;
+    const auto body = text.substr(open + 1, close - open - 1);
+    const std::regex string_pattern("\"([^\"]+)\"");
+    for (auto it = std::sregex_iterator(body.begin(), body.end(), string_pattern);
+         it != std::sregex_iterator();
+         ++it) {
+        if (it->size() > 1) values.push_back((*it)[1].str());
     }
     return values;
 }
@@ -198,6 +230,44 @@ std::string ResolveName(const std::unordered_map<std::uint64_t, std::string>& na
     return std::string(fallback);
 }
 
+const NameMap& EmptyNameMap() {
+    static const NameMap empty;
+    return empty;
+}
+
+const NameMap& NamesForGame(const NamesByGameMap& names_by_game, std::string_view game) {
+    if (!game.empty()) {
+        if (const auto it = names_by_game.find(std::string(game)); it != names_by_game.end()) {
+            return it->second;
+        }
+    }
+    return EmptyNameMap();
+}
+
+std::string GameForPlayer(const std::unordered_map<std::uint64_t, std::string>& player_games,
+                          std::uint64_t player_id,
+                          std::string_view fallback_game) {
+    if (player_id != 0) {
+        if (const auto it = player_games.find(player_id); it != player_games.end() && !it->second.empty()) {
+            return it->second;
+        }
+    }
+    return std::string(fallback_game);
+}
+
+std::string ResolveNameForPlayer(const NamesByGameMap& names_by_game,
+                                 const std::unordered_map<std::uint64_t, std::string>& player_games,
+                                 std::uint64_t player_id,
+                                 std::string_view fallback_game,
+                                 std::uint64_t id,
+                                 std::string_view fallback) {
+    const auto game = GameForPlayer(player_games, player_id, fallback_game);
+    const auto& game_names = NamesForGame(names_by_game, game);
+    const auto resolved = ResolveName(game_names, id, fallback);
+    if (!resolved.empty() && resolved != fallback) return resolved;
+    return ResolveName(NamesForGame(names_by_game, "Archipelago"), id, fallback);
+}
+
 std::uint64_t TokenIdFromFieldsOrText(const std::string& block,
                                       std::string_view primary_field,
                                       std::string_view secondary_field,
@@ -257,6 +327,18 @@ std::string LocalDisplayName(const ArchipelagoConnectOptions& options) {
     return alias.empty() ? options.slot_name : alias;
 }
 
+std::string DisplayNameForSlotName(const ArchipelagoConnectOptions& options, std::string slot_name) {
+    slot_name = TrimChatText(std::move(slot_name));
+    if (slot_name.empty()) {
+        return {};
+    }
+    if (const auto found = options.player_aliases_by_slot_name.find(slot_name);
+        found != options.player_aliases_by_slot_name.end() && !found->second.empty()) {
+        return found->second;
+    }
+    return slot_name;
+}
+
 std::string StripArchipelagoClientDetails(std::string text) {
     static const std::regex client_with_tags(R"(\s*Client\([^)]+\),?\s*\[[^\]]*\]\.?\s*)");
     static const std::regex client_only(R"(\s*Client\([^)]+\)\.?\s*)");
@@ -265,7 +347,9 @@ std::string StripArchipelagoClientDetails(std::string text) {
     return TrimChatText(std::move(text));
 }
 
-std::string SekaiLinkifyConnectionText(std::string text, std::string_view print_type) {
+std::string SekaiLinkifyConnectionText(std::string text,
+                                       std::string_view print_type,
+                                       const ArchipelagoConnectOptions& options) {
     text = StripArchipelagoClientDetails(std::move(text));
     const bool is_join = print_type == "Join";
     const bool is_part = print_type == "Part";
@@ -275,12 +359,17 @@ std::string SekaiLinkifyConnectionText(std::string text, std::string_view print_
 
     std::smatch match;
     if (is_join) {
+        static const std::regex tracking_link(
+            R"(^(.+?)\s+\(Team\s+#?\d+\)\s+Tracking\s+a\s+Link\s+to\s+the\s+Past\s+connected\.?$)",
+            std::regex_constants::icase);
         static const std::regex joined_with_game(
             R"(^(.+?)\s+\(Team\s+#?\d+\)\s+playing\s+.+?\s+has\s+joined\.?$)",
             std::regex_constants::icase);
         static const std::regex joined_plain(R"(^(.+?)\s+has\s+joined\.?$)", std::regex_constants::icase);
-        if (std::regex_match(text, match, joined_with_game) || std::regex_match(text, match, joined_plain)) {
-            auto name = TrimChatText(match[1].str());
+        if (std::regex_match(text, match, tracking_link) ||
+            std::regex_match(text, match, joined_with_game) ||
+            std::regex_match(text, match, joined_plain)) {
+            auto name = DisplayNameForSlotName(options, match[1].str());
             return name.empty() ? "A player connected." : name + " connected.";
         }
         return text.empty() ? "A player connected." : text;
@@ -293,7 +382,7 @@ std::string SekaiLinkifyConnectionText(std::string text, std::string_view print_
         R"(^(.+?)\s+(?:has\s+left|has\s+disconnected|left|disconnected).*$)",
         std::regex_constants::icase);
     if (std::regex_match(text, match, left_with_team) || std::regex_match(text, match, left_plain)) {
-        auto name = TrimChatText(match[1].str());
+        auto name = DisplayNameForSlotName(options, match[1].str());
         return name.empty() ? "A player disconnected." : name + " disconnected.";
     }
     return text.empty() ? "A player disconnected." : text;
@@ -356,7 +445,8 @@ std::optional<RoomChatMessage> MakeLogMessageFromPrintJson(
     const std::unordered_map<std::uint64_t, std::string>& location_names,
     const std::unordered_map<std::uint64_t, std::string>& player_names,
     std::uint64_t local_slot,
-    std::string_view local_slot_name) {
+    std::string_view local_slot_name,
+    const ArchipelagoConnectOptions& options) {
     const auto print_type = LastStringField(packet, "type");
 
     std::string author;
@@ -410,7 +500,7 @@ std::optional<RoomChatMessage> MakeLogMessageFromPrintJson(
     if (print_type == "Join" || print_type == "Part" || print_type == "CommandResult" ||
         print_type == "Hint" || print_type == "ServerChat") {
         auto text = PrintJsonPlainText(packet, item_names, location_names, player_names, local_slot, local_slot_name);
-        text = SekaiLinkifyConnectionText(std::move(text), print_type);
+        text = SekaiLinkifyConnectionText(std::move(text), print_type, options);
         if (text.empty()) {
             if (print_type == "Join") {
                 text = "A player connected.";
@@ -450,6 +540,125 @@ std::optional<RoomChatMessage> MakeLogMessageFromPrintJson(
     message.text = std::move(text);
     message.kind = "item";
     return message;
+}
+
+std::optional<RoomChatMessage> MakeStructuredItemMessageFromPrintJson(
+    const std::string& packet,
+    std::uint64_t id,
+    const NamesByGameMap& item_names_by_game,
+    const NamesByGameMap& location_names_by_game,
+    const std::unordered_map<std::uint64_t, std::string>& player_names,
+    const std::unordered_map<std::uint64_t, std::string>& player_games,
+    std::uint64_t local_slot,
+    std::string_view local_slot_name,
+    std::string_view fallback_game) {
+    const auto print_type = LastStringField(packet, "type");
+    if (print_type.find("Item") == std::string::npos) {
+        return std::nullopt;
+    }
+
+    std::vector<std::uint64_t> players;
+    std::uint64_t item_id = 0;
+    std::uint64_t item_player_id = 0;
+    std::uint64_t location_id = 0;
+    std::uint64_t location_player_id = 0;
+    for (const auto& block : detail::extract_object_blocks(packet, "data")) {
+        const auto token_type = detail::extract_string_field(block, "type").value_or("");
+        if (token_type == "player_id") {
+            const auto player_id = TokenIdFromFieldsOrText(block, "player", "slot", detail::extract_string_field(block, "text").value_or(""));
+            if (player_id != 0) players.push_back(player_id);
+        } else if (token_type == "item_id" && item_id == 0) {
+            item_id = TokenIdFromFieldsOrText(block, "item", "id", detail::extract_string_field(block, "text").value_or(""));
+            item_player_id = detail::extract_uint_field(block, "player").value_or(0);
+        } else if (token_type == "location_id" && location_id == 0) {
+            location_id = TokenIdFromFieldsOrText(block, "location", "id", detail::extract_string_field(block, "text").value_or(""));
+            location_player_id = detail::extract_uint_field(block, "player").value_or(0);
+        }
+    }
+    if (players.empty() || item_id == 0) {
+        return std::nullopt;
+    }
+
+    const auto sender_id = players.front();
+    const auto recipient_id = players.size() >= 2 ? players.back() : sender_id;
+    auto sender = sender_id == local_slot && !local_slot_name.empty()
+                      ? std::string(local_slot_name)
+                      : ResolveName(player_names, sender_id, "Player");
+    auto recipient = recipient_id == local_slot && !local_slot_name.empty()
+                         ? std::string(local_slot_name)
+                         : ResolveName(player_names, recipient_id, "Player");
+    if (item_player_id == 0) item_player_id = recipient_id;
+    if (location_player_id == 0) location_player_id = sender_id;
+    auto item = ResolveNameForPlayer(item_names_by_game, player_games, item_player_id, fallback_game, item_id, std::to_string(item_id));
+    auto location = ResolveNameForPlayer(location_names_by_game, player_games, location_player_id, fallback_game, location_id, "");
+    auto recipient_game = std::string(fallback_game);
+    if (const auto it = player_games.find(recipient_id); it != player_games.end() && !it->second.empty()) {
+        recipient_game = it->second;
+    }
+    if (recipient_game.empty()) {
+        recipient_game = "this world";
+    }
+
+    RoomChatMessage message;
+    message.id = id;
+    message.author = "ITEM";
+    message.kind = "item";
+    if (sender_id == recipient_id) {
+        message.text = sender + " found their " + item;
+        if (!location.empty()) {
+            message.text += " in " + location;
+        }
+    } else {
+        message.text = sender + " sent " + item + " to " + recipient + "'s " + recipient_game;
+        if (!location.empty()) {
+            message.text += " (" + location + ")";
+        }
+    }
+    return message;
+}
+
+void MergeSlotInfoPlayers(const std::string& command_packet,
+                          const ArchipelagoConnectOptions& options,
+                          std::unordered_map<std::uint64_t, std::string>& player_names,
+                          std::unordered_map<std::uint64_t, std::string>& player_games) {
+    const auto slot_info = detail::extract_object_field_block(command_packet, "slot_info");
+    if (!slot_info.has_value()) {
+        return;
+    }
+
+    const std::regex slot_key("\"([0-9]+)\"\\s*:\\s*\\{");
+    for (std::sregex_iterator it(slot_info->begin(), slot_info->end(), slot_key), end; it != end; ++it) {
+        const auto slot_id = detail::parse_u64((*it)[1].str()).value_or(0);
+        if (slot_id == 0) {
+            continue;
+        }
+        const auto open = static_cast<std::size_t>((*it).position(0) + (*it).length(0) - 1);
+        int depth = 0;
+        std::size_t close = std::string::npos;
+        for (std::size_t index = open; index < slot_info->size(); ++index) {
+            if ((*slot_info)[index] == '{') {
+                ++depth;
+            } else if ((*slot_info)[index] == '}') {
+                --depth;
+                if (depth == 0) {
+                    close = index;
+                    break;
+                }
+            }
+        }
+        if (close == std::string::npos) {
+            continue;
+        }
+        const auto block = slot_info->substr(open, close - open + 1);
+        auto name = detail::extract_string_field(block, "name").value_or("");
+        auto game = detail::extract_string_field(block, "game").value_or("");
+        if (!name.empty()) {
+            player_names[slot_id] = DisplayNameForSlotName(options, std::move(name));
+        }
+        if (!game.empty()) {
+            player_games[slot_id] = std::move(game);
+        }
+    }
 }
 
 std::optional<RoomChatMessage> MakeDefeatMessageFromBounce(const std::string& packet,
@@ -629,6 +838,10 @@ bool ArchipelagoRoomClient::process_packet(std::string_view packet_view, std::st
         if (const auto check_points = detail::extract_uint_field(command_packet, "location_check_points"); check_points.has_value()) {
             metadata_["location_check_points"] = std::to_string(*check_points);
         }
+        room_games_ = ExtractStringArrayField(command_packet, "games");
+        if (std::find(room_games_.begin(), room_games_.end(), options_.game) == room_games_.end()) {
+            room_games_.push_back(options_.game);
+        }
         if (!data_package_request_sent_ && !send_data_package_request(error)) {
             return false;
         }
@@ -652,14 +865,20 @@ bool ArchipelagoRoomClient::process_packet(std::string_view packet_view, std::st
                 auto name = detail::extract_string_field(block, "name")
                                 .value_or(detail::extract_string_field(block, "alias")
                                               .value_or(detail::extract_string_field(block, "slot_name").value_or("")));
+                auto game = detail::extract_string_field(block, "game").value_or("");
                 if (player_id != 0 && !name.empty()) {
-                    player_id_to_name_[player_id] = std::move(name);
+                    player_id_to_name_[player_id] = DisplayNameForSlotName(options_, std::move(name));
+                }
+                if (player_id != 0 && !game.empty()) {
+                    player_id_to_game_[player_id] = std::move(game);
                 }
             }
         }
+        MergeSlotInfoPlayers(command_packet, options_, player_id_to_name_, player_id_to_game_);
         const auto local_display_name = LocalDisplayName(options_);
         if (slot_ != 0 && !local_display_name.empty()) {
             player_id_to_name_[slot_] = local_display_name;
+            player_id_to_game_[slot_] = options_.game;
         }
         if (const auto block = detail::extract_object_field_block(command_packet, "slot_data"); block.has_value()) {
             metadata_["slot_data"] = *block;
@@ -669,36 +888,75 @@ bool ArchipelagoRoomClient::process_packet(std::string_view packet_view, std::st
     if (cmd == "ReceivedItems") {
         const auto packet_index = detail::extract_uint_field(command_packet, "index").value_or(received_index_);
         std::uint64_t local_index = packet_index;
+        const auto& local_item_names = NamesForGame(item_id_to_name_by_game_, options_.game);
         for (const auto& block : detail::extract_object_blocks(command_packet, "items")) {
-            pending_items_.push_back(MakeRoomItemFromApBlock(block, local_index, item_id_to_name_));
+            pending_items_.push_back(MakeRoomItemFromApBlock(block, local_index, local_item_names));
             ++local_index;
         }
         received_index_ = local_index;
         return true;
     }
     if (cmd == "DataPackage") {
-        if (const auto game_block = detail::extract_object_field_block(command_packet, options_.game); game_block.has_value()) {
+        auto games = room_games_;
+        if (std::find(games.begin(), games.end(), options_.game) == games.end()) {
+            games.push_back(options_.game);
+        }
+        for (const auto& game : games) {
+            if (const auto game_block = detail::extract_object_field_block(command_packet, game); game_block.has_value()) {
             if (const auto item_block = detail::extract_object_field_block(*game_block, "item_name_to_id"); item_block.has_value()) {
-                item_id_to_name_ = ParseNameToIdObject(*item_block);
-                metadata_["item_name_count"] = std::to_string(item_id_to_name_.size());
+                auto parsed = ParseNameToIdObject(*item_block);
+                auto& target = item_id_to_name_by_game_[game];
+                target.insert(parsed.begin(), parsed.end());
+                if (game == options_.game) {
+                    item_id_to_name_ = target;
+                }
+                std::size_t total = 0;
+                for (const auto& [name, entries] : item_id_to_name_by_game_) {
+                    (void)name;
+                    total += entries.size();
+                }
+                metadata_["item_name_count"] = std::to_string(total);
             }
             if (const auto location_block = detail::extract_object_field_block(*game_block, "location_name_to_id"); location_block.has_value()) {
-                location_id_to_name_ = ParseNameToIdObject(*location_block);
-                metadata_["location_name_count"] = std::to_string(location_id_to_name_.size());
+                auto parsed = ParseNameToIdObject(*location_block);
+                auto& target = location_id_to_name_by_game_[game];
+                target.insert(parsed.begin(), parsed.end());
+                if (game == options_.game) {
+                    location_id_to_name_ = target;
+                }
+                std::size_t total = 0;
+                for (const auto& [name, entries] : location_id_to_name_by_game_) {
+                    (void)name;
+                    total += entries.size();
+                }
+                metadata_["location_name_count"] = std::to_string(total);
+            }
             }
         }
         return true;
     }
     if (cmd == "PrintJSON") {
-        if (auto message = MakeLogMessageFromPrintJson(command_packet,
+        if (auto message = MakeStructuredItemMessageFromPrintJson(command_packet,
                                                        ++chat_message_counter_,
-                                                       item_id_to_name_,
-                                                       location_id_to_name_,
+                                                       item_id_to_name_by_game_,
+                                                       location_id_to_name_by_game_,
                                                        player_id_to_name_,
+                                                       player_id_to_game_,
                                                        slot_,
-                                                       LocalDisplayName(options_));
+                                                       LocalDisplayName(options_),
+                                                       options_.game);
             message.has_value()) {
             pending_chat_.push_back(std::move(*message));
+        } else if (auto fallback_message = MakeLogMessageFromPrintJson(command_packet,
+                                                                       chat_message_counter_,
+                                                                       item_id_to_name_,
+                                                                       location_id_to_name_,
+                                                                       player_id_to_name_,
+                                                                       slot_,
+                                                                       LocalDisplayName(options_),
+                                                                       options_);
+            fallback_message.has_value()) {
+            pending_chat_.push_back(std::move(*fallback_message));
         }
         return true;
     }
@@ -741,7 +999,11 @@ bool ArchipelagoRoomClient::send_data_package_request(std::string* error) {
         if (error) *error = "archipelago_transport_missing";
         return false;
     }
-    if (!transport_->send_text(BuildDataPackageRequestPacket(options_.game), error)) {
+    auto games = room_games_;
+    if (std::find(games.begin(), games.end(), options_.game) == games.end()) {
+        games.push_back(options_.game);
+    }
+    if (!transport_->send_text(BuildDataPackageRequestPacket(std::move(games)), error)) {
         return false;
     }
     data_package_request_sent_ = true;

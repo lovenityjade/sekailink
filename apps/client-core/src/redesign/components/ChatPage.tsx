@@ -788,7 +788,7 @@ export default function ChatPage({ currentUser, friends = [], onOpenLobby }: Cha
       )}
 
       {profileModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-6" onClick={() => setProfileModal(null)}>
+        <div className="fixed left-0 right-0 bottom-0 top-[32px] z-50 flex items-center justify-center bg-black/60 p-6" onClick={() => setProfileModal(null)}>
           <div className="w-full max-w-md rounded-xl border border-[#2a2b30] bg-[#14151a] shadow-2xl" onClick={(event) => event.stopPropagation()}>
             <div className="flex items-center justify-between border-b border-[#2a2b30] p-5">
               <div className="flex items-center gap-3">

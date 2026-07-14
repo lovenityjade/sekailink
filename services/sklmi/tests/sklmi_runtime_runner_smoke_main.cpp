@@ -127,7 +127,11 @@ bool contains(const std::string& text, const std::string& needle) {
     return text.find(needle) != std::string::npos;
 }
 
+#endif
+
 }  // namespace
+
+#ifndef _WIN32
 
 int main(int argc, char** argv) {
     if (argc < 2) {

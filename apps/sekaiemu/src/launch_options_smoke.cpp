@@ -29,6 +29,8 @@ int main() {
       "/tmp/default.bundle",
       "--tracker-state",
       "/tmp/state.json",
+      "--test-goal-completion-at-frame",
+      "42",
   };
 
   const auto parsed = ParseLaunchArgs(args, cwd);
@@ -41,7 +43,8 @@ int main() {
       parsed.request.tracker_variant != "Map Tracker - AP" ||
       parsed.request.tracker_snapshot_path != fs::path("/tmp/tracker.snapshot.json") ||
       parsed.request.tracker_command_log_path != fs::path("/tmp/tracker.commands.jsonl") ||
-      parsed.request.tracker_assets_root != fs::path("/tmp/tracker-assets")) {
+      parsed.request.tracker_assets_root != fs::path("/tmp/tracker-assets") ||
+      parsed.request.test_goal_completion_at_frame != 42) {
     std::cerr << "launch_options_tracker_fields_failed\n";
     return 1;
   }
@@ -56,6 +59,7 @@ int main() {
       host.tracker_snapshot_path != fs::path("/tmp/tracker.snapshot.json") ||
       host.tracker_command_log_path != fs::path("/tmp/tracker.commands.jsonl") ||
       host.tracker_assets_root != fs::path("/tmp/tracker-assets") ||
+      host.test_goal_completion_at_frame != 42 ||
       host.tracker_required) {
     std::cerr << "launch_options_host_tracker_companion_fields_failed\n";
     return 1;

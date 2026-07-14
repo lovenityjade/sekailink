@@ -621,7 +621,8 @@ if __name__ == '__main__':
     confirmation = atexit.register(input, "Press enter to close.")
     erargs, seed = main()
     from Main import main as ERmain
-    multiworld = ERmain(erargs, seed)
+    from sekailink_compensation import run_generation_with_compensation
+    multiworld, _compensation = run_generation_with_compensation(erargs, seed, ERmain, roll_settings)
     if __debug__:
         import gc
         import sys

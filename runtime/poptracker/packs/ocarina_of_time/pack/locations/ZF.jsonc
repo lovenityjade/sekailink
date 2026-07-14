@@ -1,0 +1,860 @@
+
+
+[
+  {
+    "name": "ZF - hint",
+    "chest_unopened_img": "/images/items/close.png",
+    "chest_opened_img": "/images/items/open.png",
+    "overlay_background": "#000000",
+    "access_rules": [
+        "{}"
+    ],
+    "children": [
+        {
+            "name": "Iceberg - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Freestanding PoH - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_iceberg_freestanding_poh"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Zoras Fountain",
+                    "x": "760",
+                    "y": "550",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Bottom - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Freestanding PoH - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_freestanding_poh"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_green_rupee_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_green_rupee_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_green_rupee_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 4 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_green_rupee_4"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 5 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_green_rupee_5"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 6 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_green_rupee_6"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 7 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_green_rupee_7"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 8 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_green_rupee_8"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 9 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_green_rupee_9"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 10 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_green_rupee_10"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 11 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_green_rupee_11"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 12 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_green_rupee_12"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 13 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_green_rupee_13"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 14 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_green_rupee_14"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 15 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_green_rupee_15"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 16 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_green_rupee_16"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 17 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_green_rupee_17"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 18 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_bottom_green_rupee_18"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Zoras Fountain",
+                    "x": "581",
+                    "y": "535",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Above the Log - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_above_the_log_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Zoras Fountain",
+                    "x": "250",
+                    "y": "845",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Tree - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_tree_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Zoras Fountain",
+                    "x": "626",
+                    "y": "926",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Hidden Cave - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_hidden_cave_gs"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_hidden_cave_pot_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_hidden_cave_pot_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_hidden_cave_pot_3"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Zoras Fountain",
+                    "x": "784",
+                    "y": "871",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Near Jabu - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Pot 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_near_jabu_pot_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_near_jabu_pot_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_near_jabu_pot_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 4 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "zf_near_jabu_pot_4"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Zoras Fountain",
+                    "x": "315",
+                    "y": "525",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        }
+    ],
+    "sections": [
+        {
+            "name": "Great Fairy Reward - hint",
+            "access_rules": [],
+            "visibility_rules": [
+                "zf_great_fairy_reward"
+            ],
+            "item_count": 1
+        }
+    ],
+    "map_locations": [
+        {
+            "map": "Zoras Fountain",
+            "x": "643",
+            "y": "1019",
+            "size": 22,
+            "shape": "diamond"
+        }
+    ]
+},
+    {
+      "name": "ZF",
+      "chest_unopened_img": "/images/Items/close.png",
+      "chest_opened_img": "/images/Items/open.png",
+      "overlay_background": "#000000",
+      "access_rules": [
+        " "
+      ],
+      "children": [
+        {
+          "name": "Iceberg",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Freestanding PoH",
+              "access_rules": [
+                "^$CanReach|Child ZF Iceberg Freestanding PoH",
+                "^$CanReach|Adult ZF Iceberg Freestanding PoH"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Zoras Fountain",
+              "x": 738,
+              "y": 528,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Bottom",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Freestanding PoH",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Freestanding PoH",
+                "^$CanReach|Adult ZF Bottom Freestanding PoH"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 1",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Green Rupee 1",
+                "^$CanReach|Adult ZF Bottom Green Rupee 1"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 2",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Green Rupee 2",
+                "^$CanReach|Adult ZF Bottom Green Rupee 2"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 3",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Green Rupee 3",
+                "^$CanReach|Adult ZF Bottom Green Rupee 3"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 4",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Green Rupee 4",
+                "^$CanReach|Adult ZF Bottom Green Rupee 4"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 5",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Green Rupee 5",
+                "^$CanReach|Adult ZF Bottom Green Rupee 5"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 6",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Green Rupee 6",
+                "^$CanReach|Adult ZF Bottom Green Rupee 6"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 7",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Green Rupee 7",
+                "^$CanReach|Adult ZF Bottom Green Rupee 7"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 8",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Green Rupee 8",
+                "^$CanReach|Adult ZF Bottom Green Rupee 8"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 9",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Green Rupee 9",
+                "^$CanReach|Adult ZF Bottom Green Rupee 9"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 10",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Green Rupee 10",
+                "^$CanReach|Adult ZF Bottom Green Rupee 10"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 11",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Green Rupee 11",
+                "^$CanReach|Adult ZF Bottom Green Rupee 11"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 12",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Green Rupee 12",
+                "^$CanReach|Adult ZF Bottom Green Rupee 12"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 13",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Green Rupee 13",
+                "^$CanReach|Adult ZF Bottom Green Rupee 13"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 14",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Green Rupee 14",
+                "^$CanReach|Adult ZF Bottom Green Rupee 14"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 15",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Green Rupee 15",
+                "^$CanReach|Adult ZF Bottom Green Rupee 15"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 16",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Green Rupee 16",
+                "^$CanReach|Adult ZF Bottom Green Rupee 16"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 17",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Green Rupee 17",
+                "^$CanReach|Adult ZF Bottom Green Rupee 17"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 18",
+              "access_rules": [
+                "^$CanReach|Child ZF Bottom Green Rupee 18",
+                "^$CanReach|Adult ZF Bottom Green Rupee 18"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Zoras Fountain",
+              "x": 559,
+              "y": 513,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Above the Log",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS",
+              "access_rules": [
+                "^$CanReach|Child ZF GS Above the Log",
+                "^$CanReach|Adult ZF GS Above the Log"
+              ],
+              "visibility_rules": [
+                "$Show|tokensanity|2"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Zoras Fountain",
+              "x": 228,
+              "y": 823,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Tree",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS",
+              "access_rules": [
+                "^$CanReach|Child ZF GS Tree",
+                "^$CanReach|Adult ZF GS Tree"
+              ],
+              "visibility_rules": [
+                "$Show|tokensanity|2"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Zoras Fountain",
+              "x": 604,
+              "y": 904,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Hidden Cave",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS",
+              "access_rules": [
+                "^$CanReach|Child ZF GS Hidden Cave",
+                "^$CanReach|Adult ZF GS Hidden Cave"
+              ],
+              "visibility_rules": [
+                "$Show|tokensanity|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 1",
+              "access_rules": [
+                "^$CanReach|Child ZF Hidden Cave Pot 1",
+                "^$CanReach|Adult ZF Hidden Cave Pot 1"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_pots|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 2",
+              "access_rules": [
+                "^$CanReach|Child ZF Hidden Cave Pot 2",
+                "^$CanReach|Adult ZF Hidden Cave Pot 2"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_pots|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 3",
+              "access_rules": [
+                "^$CanReach|Child ZF Hidden Cave Pot 3",
+                "^$CanReach|Adult ZF Hidden Cave Pot 3"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_pots|2"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Zoras Fountain",
+              "x": 762,
+              "y": 839,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Near Jabu",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Pot 1",
+              "access_rules": [
+                "^$CanReach|Child ZF Near Jabu Pot 1",
+                "^$CanReach|Adult ZF Near Jabu Pot 1"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_pots|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 2",
+              "access_rules": [
+                "^$CanReach|Child ZF Near Jabu Pot 2",
+                "^$CanReach|Adult ZF Near Jabu Pot 2"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_pots|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 3",
+              "access_rules": [
+                "^$CanReach|Child ZF Near Jabu Pot 3",
+                "^$CanReach|Adult ZF Near Jabu Pot 3"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_pots|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 4",
+              "access_rules": [
+                "^$CanReach|Child ZF Near Jabu Pot 4",
+                "^$CanReach|Adult ZF Near Jabu Pot 4"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_pots|2"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Zoras Fountain",
+              "x": 293,
+              "y": 503,
+              "size": 24
+            }
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "name": "Great Fairy Reward",
+          "access_rules": [
+            "^$CanReach|Child ZF Great Fairy Reward",
+            "^$CanReach|Adult ZF Great Fairy Reward"
+          ],
+          "item_count": 1
+        }
+      ],
+      "map_locations": [
+        {
+          "map": "Zoras Fountain",
+          "x": 621,
+          "y": 997,
+          "size": 24
+        }
+      ]
+    }]

@@ -3,6 +3,8 @@
 interface Window {
   sekailink?: {
     getEnv?: () => Promise<Record<string, unknown>> | Record<string, unknown>;
+    authGetDesktopSession?: () => Promise<{ ok: boolean; session?: { token?: string; user?: unknown; session?: unknown } | null; error?: string }>;
+    authSetDesktopSession?: (payload: { token?: string; user?: unknown; session?: unknown; updated_at?: string } | null) => Promise<{ ok: boolean; error?: string }>;
     openExternal?: (url: string) => Promise<{ ok?: boolean; error?: string; detail?: string } | void> | { ok?: boolean; error?: string; detail?: string } | void;
     windowMinimize?: () => Promise<void> | void;
     windowToggleMaximize?: () => Promise<void> | void;
@@ -11,6 +13,7 @@ interface Window {
     collectDiagnostics?: (options?: Record<string, unknown>) => Promise<{ ok: boolean; report?: Record<string, unknown>; error?: string }> | { ok: boolean; report?: Record<string, unknown>; error?: string };
     submitDiagnostics?: (options: Record<string, unknown>) => Promise<{ ok: boolean; status?: number; error?: string }> | { ok: boolean; status?: number; error?: string };
     collectBugReportArtifacts?: (options?: Record<string, unknown>) => Promise<{ ok: boolean; artifacts?: Record<string, unknown>; error?: string }> | { ok: boolean; artifacts?: Record<string, unknown>; error?: string };
+    clearSeedCache?: () => Promise<{ ok: boolean; activeRuntimeCount?: number; cleared?: string[]; failed?: Array<Record<string, unknown>>; patchedRomCache?: Record<string, unknown>; error?: string }> | { ok: boolean; activeRuntimeCount?: number; cleared?: string[]; failed?: Array<Record<string, unknown>>; patchedRomCache?: Record<string, unknown>; error?: string };
     copyText?: (text: string) => Promise<{ ok: boolean; error?: string }> | { ok: boolean; error?: string };
     showItemInFolder?: (targetPath: string) => Promise<unknown> | unknown;
     openDashboard?: (url: string) => Promise<{ ok?: boolean; error?: string; detail?: string } | void> | { ok?: boolean; error?: string; detail?: string } | void;
@@ -19,6 +22,10 @@ interface Window {
     updaterOpenDownloaded?: (targetPath: string) => Promise<{ ok: boolean; error?: string }> | { ok: boolean; error?: string };
     updaterSyncIncremental?: (options: { manifestUrl?: string; url?: string; authToken?: string }) => Promise<{ ok: boolean; error?: string; changed?: number; deleted?: number; processed?: number; total?: number; downloadedBytes?: number }> | { ok: boolean; error?: string; changed?: number; deleted?: number; processed?: number; total?: number; downloadedBytes?: number };
     updaterLaunchBootstrapperAndQuit?: () => Promise<{ ok: boolean; path?: string; error?: string }> | { ok: boolean; path?: string; error?: string };
+    bootstrapperGetReleaseChannel?: () => Promise<{ ok: boolean; channel?: string; installedChannel?: string; installedVersion?: string; error?: string }> | { ok: boolean; channel?: string; installedChannel?: string; installedVersion?: string; error?: string };
+    bootstrapperSetReleaseChannel?: (channel: string) => Promise<{ ok: boolean; channel?: string; rebootRequired?: boolean; path?: string; error?: string }> | { ok: boolean; channel?: string; rebootRequired?: boolean; path?: string; error?: string };
+    bootstrapperCheckUpdate?: (options?: { channel?: string; force?: boolean }) => Promise<{ ok: boolean; updated?: boolean; channel?: string; version?: string; error?: string }> | { ok: boolean; updated?: boolean; channel?: string; version?: string; error?: string };
+    bootstrapperGetLatest?: (channel?: string) => Promise<{ ok: boolean; source?: string; url?: string; manifest?: Record<string, unknown>; error?: string }> | { ok: boolean; source?: string; url?: string; manifest?: Record<string, unknown>; error?: string };
     pickFile?: (options?: { title?: string; filters?: { name: string; extensions: string[] }[] }) => Promise<{ canceled: boolean; path?: string }> | { canceled: boolean; path?: string };
     pickFolder?: (options?: { title?: string }) => Promise<{ canceled: boolean; path?: string }> | { canceled: boolean; path?: string };
     configGet?: () => Promise<Record<string, any>> | Record<string, any>;
@@ -61,6 +68,7 @@ interface Window {
     trackerStop?: (pid: number) => Promise<unknown> | unknown;
     trackerRuntimeStatus?: (pid: number) => Promise<unknown> | unknown;
     trackerRuntimeCommand?: (pid: number, command: string, detail?: Record<string, unknown>) => Promise<unknown> | unknown;
+    trackerOpenBroadcast?: () => Promise<unknown> | unknown;
     trackerGetSession?: (pid: number) => Promise<unknown> | unknown;
     trackerListSessions?: () => Promise<unknown> | unknown;
     trackerInstallPack?: (options: Record<string, unknown>) => Promise<unknown> | unknown;
@@ -86,8 +94,12 @@ interface Window {
     smz3DeliverItem?: (options: Record<string, unknown>) => Promise<unknown> | unknown;
     resolveModuleForDownload?: (downloadUrl: string) => Promise<unknown> | unknown;
     getModuleManifest?: (moduleId: string) => Promise<unknown> | unknown;
+    validateRomForModule?: (moduleId: string) => Promise<unknown> | unknown;
     validateSetupForModule?: (moduleId: string) => Promise<unknown> | unknown;
     listRuntimeModules?: () => Promise<unknown> | unknown;
+    listPcPackages?: (options?: { refresh?: boolean }) => Promise<unknown> | unknown;
+    installPcPackage?: (packageId: string) => Promise<unknown> | unknown;
+    uninstallPcPackage?: (packageId: string) => Promise<unknown> | unknown;
     linkedWorldList?: () => Promise<unknown> | unknown;
     linkedWorldValidate?: (options: Record<string, unknown>) => Promise<unknown> | unknown;
     linkedWorldInstall?: (options: Record<string, unknown>) => Promise<unknown> | unknown;

@@ -53,7 +53,7 @@ Example local validation:
 ```bash
 /tmp/sekailink-sklmi-build/sekailink_sklmi_sekaiemu_runtime_proof \
   /tmp/sekailink-runtime-build/sekailink_runtime_snes \
-  "/home/thelovenityjade/DevSSD/SekaiLinkDev/archive/legacy/sekailink-monorepo/roms/snes/EarthBound (USA).sfc" \
+  "<local-home>/DevSSD/SekaiLinkDev/archive/legacy/sekailink-monorepo/roms/snes/EarthBound (USA).sfc" \
   /tmp/sklmi-earthbound-proof.srm
 ```
 

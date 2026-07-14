@@ -7,9 +7,10 @@ import { ErrorModal, LoadingModal } from './FeedbackModal';
 interface CreateLobbyModalProps {
   onClose: () => void;
   onCreateSuccess?: (lobbyId?: string, lobbyName?: string) => void;
+  asyncRoomEligible?: boolean;
 }
 
-export default function CreateLobbyModal({ onClose, onCreateSuccess }: CreateLobbyModalProps) {
+export default function CreateLobbyModal({ onClose, onCreateSuccess, asyncRoomEligible = false }: CreateLobbyModalProps) {
   const [roomName, setRoomName] = useState('');
   const [description, setDescription] = useState('');
   const [password, setPassword] = useState('');
@@ -55,7 +56,7 @@ export default function CreateLobbyModal({ onClose, onCreateSuccess }: CreateLob
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-8">
+    <div className="fixed left-0 right-0 bottom-0 top-[32px] bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-8">
       <div className="w-full max-w-2xl bg-[#161b22] rounded-xl shadow-2xl border-2 border-[#4dffd2] card-float overflow-hidden">
         {/* Header */}
         <div className="p-6 border-b-2 border-[#2a2b30] bg-gradient-to-r from-[#1c1d22] to-[#161b22] flex items-center justify-between">
@@ -175,9 +176,16 @@ export default function CreateLobbyModal({ onClose, onCreateSuccess }: CreateLob
             <h3 className="text-sm font-semibold text-[#e6edf3] mb-3">LOBBY LIFETIME</h3>
             <button
               type="button"
-              onClick={() => setAsynchronous((value) => !value)}
+              onClick={() => {
+                if (asyncRoomEligible) setAsynchronous((value) => !value);
+              }}
+              disabled={!asyncRoomEligible}
               className={`w-full p-4 border-2 rounded-lg text-left transition-colors ${
-                asynchronous ? 'border-[#aa96da] bg-[#aa96da]/10' : 'border-[#2a2b30] bg-[#0d1117] hover:border-[#aa96da]'
+                !asyncRoomEligible
+                  ? 'cursor-not-allowed border-[#2a2b30] bg-[#0d1117] opacity-55'
+                  : asynchronous
+                    ? 'border-[#aa96da] bg-[#aa96da]/10'
+                    : 'border-[#2a2b30] bg-[#0d1117] hover:border-[#aa96da]'
               }`}
             >
               <div className="flex items-center justify-between gap-4">
@@ -186,7 +194,11 @@ export default function CreateLobbyModal({ onClose, onCreateSuccess }: CreateLob
                   <p className="mt-1 text-xs text-[#8e8f94]">
                     Active lobbies expire after inactivity. Async lobbies stay until the host closes them or every participant reaches goal.
                   </p>
-                  <p className="mt-2 text-xs text-[#aa96da]">Patreon Tier 2/3 gate will be enforced by Nexus.</p>
+                  <p className="mt-2 text-xs text-[#aa96da]">
+                    {asyncRoomEligible
+                      ? 'Unlocked by your active Patreon Tier 2/3 membership.'
+                      : 'Requires active Patreon Tier 2 (Super Supporter) or Tier 3 (Ultra Supporter).'}
+                  </p>
                 </div>
                 <div className={`w-12 h-6 border-2 transition-all ${asynchronous ? 'bg-[#aa96da] border-[#aa96da]' : 'bg-[#2a2b30] border-[#2a2b30]'}`}>
                   <div className={`mt-0.5 w-4 h-4 bg-[#0d1117] transition-all ${asynchronous ? 'ml-6' : 'ml-0.5'}`} />

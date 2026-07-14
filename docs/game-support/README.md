@@ -10,9 +10,9 @@ which games can be installed, tested, certified, shipped, and promoted.
 - Local Sekaiemu profiles under `runtime/profiles` and `apps/sekaiemu/profiles`.
 - Local SKLMI manifests under `runtime/sklmi/manifests` and
   `services/sklmi/manifests`.
-- Deep Research report at `/home/thelovenityjade/deep-research-report.md`.
+- Deep Research report at `<local-home>/deep-research-report.md`.
 - Deep Research CSV at
-  `/home/thelovenityjade/Archipelago Games Sheet - Welcome Page.csv`.
+  `<local-home>/Archipelago Games Sheet - Welcome Page.csv`.
 
 The CSV found in the home directory is the welcome/FAQ page of the community
 sheet, not the dense game table. The Markdown report is therefore the primary

@@ -84,17 +84,22 @@ export const gameSetupRegistry: GameSetupEntry[] = [
     }
   },
   {
-    gameId: "oot",
-    apGameId: "Ocarina of Time",
-    displayName: "Ocarina of Time",
-    moduleId: "oot_bizhawk",
-    romKey: "oot"
+    gameId: "ocarina_of_time",
+    apGameId: "Ship of Harkinian",
+    displayName: "Ocarina of Time - Ship of Harkinian",
+    moduleId: "oot_soh"
   },
   {
-    gameId: "oot_soh",
-    apGameId: "Ship of Harkinian",
-    displayName: "Ship of Harkinian",
-    moduleId: "oot_soh"
+    gameId: "majoras_mask",
+    apGameId: "2 Ship 2 Harkinian",
+    displayName: "Majora's Mask - 2Ship2Harkinian",
+    moduleId: "twoship"
+  },
+  {
+    gameId: "super_mario_64",
+    apGameId: "Super Mario 64",
+    displayName: "Super Mario 64",
+    moduleId: "sm64ex"
   },
   {
     gameId: "mega_man_battle_network_3",

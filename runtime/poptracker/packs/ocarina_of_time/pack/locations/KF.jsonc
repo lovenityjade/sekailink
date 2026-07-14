@@ -1,0 +1,1474 @@
+
+
+[
+  {
+    "name": "KF - hint",
+    "chest_unopened_img": "/images/items/close.png",
+    "chest_opened_img": "/images/items/open.png",
+    "overlay_background": "#000000",
+    "access_rules": [
+        "{}"
+    ],
+    "children": [
+        {
+            "name": "Midos - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Grass Near Midos - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Green Rupee 1 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "kf_midos_grass_near_midos_green_rupee_1"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Green Rupee 2 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "kf_midos_grass_near_midos_green_rupee_2"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Kokiri Forest",
+                            "x": "886",
+                            "y": "485",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                }
+            ],
+            "sections": [
+                {
+                    "name": "Top Left Chest - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_midos_top_left_chest"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Top Right Chest - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_midos_top_right_chest"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Bottom Left Chest - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_midos_bottom_left_chest"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Bottom Right Chest - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_midos_bottom_right_chest"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Behind Midos Blue Rupee - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_midos_behind_midos_blue_rupee"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kokiri Forest",
+                    "x": "867",
+                    "y": "440",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Boulder Maze - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Kokiri Sword - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Chest - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "kf_boulder_maze_kokiri_sword_chest"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Kokiri Forest",
+                            "x": "463",
+                            "y": "573",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                }
+            ],
+            "sections": [
+                {
+                    "name": "Blue Rupee 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_boulder_maze_blue_rupee_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Blue Rupee 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_boulder_maze_blue_rupee_2"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kokiri Forest",
+                    "x": "476",
+                    "y": "523",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Storms Grotto - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Chest - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_storms_grotto_chest"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Beehive 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_storms_grotto_beehive_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Beehive 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_storms_grotto_beehive_2"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kokiri Forest",
+                    "x": "910",
+                    "y": "347",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Links House - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Cow - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_links_house_cow"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_links_house_pot"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kokiri Forest",
+                    "x": "645",
+                    "y": "539",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Know It All House - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_know_it_all_house_gs"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_know_it_all_house_pot_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_know_it_all_house_pot_2"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kokiri Forest",
+                    "x": "887",
+                    "y": "569",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Bean Patch - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_bean_patch_gs"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kokiri Forest",
+                    "x": "1052",
+                    "y": "543",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "House of Twins - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "GS Outside - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_house_of_twins_gs_outside"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_house_of_twins_pot_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_house_of_twins_pot_2"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kokiri Forest",
+                    "x": "594",
+                    "y": "436",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Shop - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Item 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_shop_item_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_shop_item_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_shop_item_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 4 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_shop_item_4"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 5 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_shop_item_5"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 6 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_shop_item_6"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 7 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_shop_item_7"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 8 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_shop_item_8"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Blue Rupee - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_shop_blue_rupee"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kokiri Forest",
+                    "x": "991",
+                    "y": "521",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Sarias House - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Top Recovery Heart 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_sarias_house_top_recovery_heart_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Top Recovery Heart 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_sarias_house_top_recovery_heart_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Top Recovery Heart 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_sarias_house_top_recovery_heart_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Recovery Heart 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_sarias_house_recovery_heart_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Recovery Heart 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_sarias_house_recovery_heart_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Recovery Heart 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_sarias_house_recovery_heart_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Recovery Heart 4 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_sarias_house_recovery_heart_4"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kokiri Forest",
+                    "x": "778",
+                    "y": "553",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Bean Platform - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Green Rupee 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_bean_platform_green_rupee_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_bean_platform_green_rupee_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_bean_platform_green_rupee_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 4 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_bean_platform_green_rupee_4"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 5 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_bean_platform_green_rupee_5"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 6 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_bean_platform_green_rupee_6"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Red Rupee - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_bean_platform_red_rupee"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kokiri Forest",
+                    "x": "1080",
+                    "y": "496",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Grass Near Ramp - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Green Rupee 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_grass_near_ramp_green_rupee_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Green Rupee 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "kf_grass_near_ramp_green_rupee_2"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Kokiri Forest",
+                    "x": "722",
+                    "y": "490",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        }
+    ],
+    "sections": [
+        {
+            "name": "End of Bridge Blue Rupee - hint",
+            "access_rules": [],
+            "visibility_rules": [
+                "kf_end_of_bridge_blue_rupee"
+            ],
+            "item_count": 1
+        }
+    ],
+    "map_locations": [
+        {
+            "map": "Kokiri Forest",
+            "x": "816",
+            "y": "474",
+            "size": 22,
+                    "shape": "diamond"
+        }
+    ]
+},
+    {
+      "name": "KF",
+      "chest_unopened_img": "/images/Items/close.png",
+      "chest_opened_img": "/images/Items/open.png",
+      "overlay_background": "#000000",
+      "access_rules": [
+        " "
+      ],
+      "children": [
+        {
+          "name": "Midos",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "Grass Near Midos",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Green Rupee 1",
+                "access_rules": [
+                "^$CanReach|Child KF Grass Near Midos Green Rupee 1",
+                "^$CanReach|Adult KF Grass Near Midos Green Rupee 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Green Rupee 2",
+                "access_rules": [
+                "^$CanReach|Child KF Grass Near Midos Green Rupee 2",
+                "^$CanReach|Adult KF Grass Near Midos Green Rupee 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Kokiri Forest",
+                  "x": 864,
+                  "y": 463,
+                  "size": 24
+                }
+              ]
+            }
+          ],
+          "sections": [
+            {
+              "name": "Top Left Chest",
+                "access_rules": [
+                "^$CanReach|Child KF Midos Top Left Chest",
+                "^$CanReach|Adult KF Midos Top Left Chest"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Top Right Chest",
+                "access_rules": [
+                "^$CanReach|Child KF Midos Top Right Chest",
+                "^$CanReach|Adult KF Midos Top Right Chest"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Bottom Left Chest",
+                "access_rules": [
+                "^$CanReach|Child KF Midos Bottom Left Chest",
+                "^$CanReach|Adult KF Midos Bottom Left Chest"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Bottom Right Chest",
+                "access_rules": [
+                "^$CanReach|Child KF Midos Bottom Right Chest",
+                "^$CanReach|Adult KF Midos Bottom Right Chest"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Behind Midos Blue Rupee",
+                "access_rules": [
+                "^$CanReach|Child KF Behind Midos Blue Rupee",
+                "^$CanReach|Adult KF Behind Midos Blue Rupee"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kokiri Forest",
+              "x": 845,
+              "y": 418,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Boulder Maze",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "Kokiri Sword",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Chest",
+                "access_rules": [
+                "^$CanReach|Child KF Kokiri Sword Chest",
+                "^$CanReach|Adult KF Kokiri Sword Chest"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Kokiri Forest",
+                  "x": 441,
+                  "y": 551,
+                  "size": 24
+                }
+              ]
+            }
+          ],
+          "sections": [
+            {
+              "name": "Blue Rupee 1",
+                "access_rules": [
+                "^$CanReach|Child KF Boulder Maze Blue Rupee 1",
+                "^$CanReach|Adult KF Boulder Maze Blue Rupee 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Blue Rupee 2",
+                "access_rules": [
+                "^$CanReach|Child KF Boulder Maze Blue Rupee 2",
+                "^$CanReach|Adult KF Boulder Maze Blue Rupee 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kokiri Forest",
+              "x": 454,
+              "y": 501,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Storms Grotto",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Chest",
+                "access_rules": [
+                "^$CanReach|Child KF Storms Grotto Chest",
+                "^$CanReach|Adult KF Storms Grotto Chest"
+                ],
+                // "visibility_rules": [
+                //   "$Show|"
+                // ],
+              "item_count": 1
+            },
+            {
+              "name": "Beehive 1",
+                "access_rules": [
+                "^$CanReach|Child KF Storms Grotto Beehive 1",
+                "^$CanReach|Adult KF Storms Grotto Beehive 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_beehives"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Beehive 2",
+                "access_rules": [
+                "^$CanReach|Child KF Storms Grotto Beehive 2",
+                "^$CanReach|Adult KF Storms Grotto Beehive 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_beehives"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kokiri Forest",
+              "x": 888,
+              "y": 325,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Links House",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Cow",
+                "access_rules": [
+                "^$CanReach|Child KF Links House Cow",
+                "^$CanReach|Adult KF Links House Cow"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_cows"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot",
+                "access_rules": [
+                "^$CanReach|Child KF Links House Pot",
+                "^$CanReach|Adult KF Links House Pot"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kokiri Forest",
+              "x": 623,
+              "y": 517,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Know It All House",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child KF GS Know It All House",
+                "^$CanReach|Adult KF GS Know It All House"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child KF Know it All House Pot 1",
+                "^$CanReach|Adult KF Know it All House Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child KF Know it All House Pot 2",
+                "^$CanReach|Adult KF Know it All House Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kokiri Forest",
+              "x": 865,
+              "y": 547,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Bean Patch",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS",
+                "access_rules": [
+                "^$CanReach|Child KF GS Bean Patch",
+                "^$CanReach|Adult KF GS Bean Patch"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kokiri Forest",
+              "x": 1030,
+              "y": 521,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "House of Twins",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "GS Outside",
+                "access_rules": [
+                "^$CanReach|Child KF GS House of Twins",
+                "^$CanReach|Adult KF GS House of Twins"
+                ],
+                "visibility_rules": [
+                  "$Show|tokensanity|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child KF House of Twins Pot 1",
+                "^$CanReach|Adult KF House of Twins Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child KF House of Twins Pot 2",
+                "^$CanReach|Adult KF House of Twins Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kokiri Forest",
+              "x": 572,
+              "y": 414,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Shop",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Item 1",
+                "access_rules": [
+                "^$CanReach|Child KF Shop Item 1",
+                "^$CanReach|Adult KF Shop Item 1"
+                ],
+                "visibility_rules": [
+                  "$Show|"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 2",
+                "access_rules": [
+                "^$CanReach|Child KF Shop Item 2",
+                "^$CanReach|Adult KF Shop Item 2"
+                ],
+                "visibility_rules": [
+                  "$Show|"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 3",
+                "access_rules": [
+                "^$CanReach|Child KF Shop Item 3",
+                "^$CanReach|Adult KF Shop Item 3"
+                ],
+                "visibility_rules": [
+                  "$Show|"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 4",
+                "access_rules": [
+                "^$CanReach|Child KF Shop Item 4",
+                "^$CanReach|Adult KF Shop Item 4"
+                ],
+                "visibility_rules": [
+                  "$Show|"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 5",
+                "access_rules": [
+                "^$CanReach|Child KF Shop Item 5",
+                "^$CanReach|Adult KF Shop Item 5"
+                ],
+                "visibility_rules": [
+                  "$Show|shopsanity, $ShopSlotHelper|67036|1"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 6",
+                "access_rules": [
+                "^$CanReach|Child KF Shop Item 6",
+                "^$CanReach|Adult KF Shop Item 6"
+                ],
+                "visibility_rules": [
+                  "$Show|shopsanity, $ShopSlotHelper|67037|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 7",
+                "access_rules": [
+                "^$CanReach|Child KF Shop Item 7",
+                "^$CanReach|Adult KF Shop Item 7"
+                ],
+                "visibility_rules": [
+                  "$Show|shopsanity, $ShopSlotHelper|67038|3"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 8",
+                "access_rules": [
+                "^$CanReach|Child KF Shop Item 8",
+                "^$CanReach|Adult KF Shop Item 8"
+                ],
+                "visibility_rules": [
+                  "$Show|shopsanity, $ShopSlotHelper|67039|4"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Blue Rupee",
+                "access_rules": [
+                "^$CanReach|Child KF Shop Blue Rupee",
+                "^$CanReach|Adult KF Shop Blue Rupee"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kokiri Forest",
+              "x": 969,
+              "y": 499,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Sarias House",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Top Recovery Heart 1",
+            "access_rules": [
+            "^$CanReach|Child KF Top of Sarias Recovery Heart 1",
+            "^$CanReach|Adult KF Top of Sarias Recovery Heart 1"
+            ],
+            "visibility_rules": [
+              "$Show|shuffle_freestanding_items|2"
+            ],
+              "item_count": 1
+            },
+            {
+              "name": "Top Recovery Heart 2",
+            "access_rules": [
+            "^$CanReach|Child KF Top of Sarias Recovery Heart 2",
+            "^$CanReach|Adult KF Top of Sarias Recovery Heart 2"
+            ],
+            "visibility_rules": [
+              "$Show|shuffle_freestanding_items|2"
+            ],
+              "item_count": 1
+            },
+            {
+              "name": "Top Recovery Heart 3",
+            "access_rules": [
+            "^$CanReach|Child KF Top of Sarias Recovery Heart 3",
+            "^$CanReach|Adult KF Top of Sarias Recovery Heart 3"
+            ],
+            "visibility_rules": [
+              "$Show|shuffle_freestanding_items|2"
+            ],
+              "item_count": 1
+            },
+            {
+              "name": "Recovery Heart 1",
+              "access_rules": [
+              "^$CanReach|Child KF Sarias House Recovery Heart 1",
+              "^$CanReach|Adult KF Sarias House Recovery Heart 1"
+                ],
+              "visibility_rules": [
+                "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+            },
+            {
+              "name": "Recovery Heart 2",
+              "access_rules": [
+              "^$CanReach|Child KF Sarias House Recovery Heart 2",
+              "^$CanReach|Adult KF Sarias House Recovery Heart 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+            },
+            {
+                  "name": "Recovery Heart 3",
+                "access_rules": [
+                "^$CanReach|Child KF Sarias House Recovery Heart 3",
+                "^$CanReach|Adult KF Sarias House Recovery Heart 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+            },
+            {
+                  "name": "Recovery Heart 4",
+                "access_rules": [
+                "^$CanReach|Child KF Sarias House Recovery Heart 4",
+                "^$CanReach|Adult KF Sarias House Recovery Heart 4"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+                  "item_count": 1
+            }
+            ],
+            "map_locations": [
+              {
+                  "map": "Kokiri Forest",
+                  "x": 756,
+                  "y": 531,
+                  "size": 24
+              }
+            ]
+        },
+        {
+          "name": "Bean Platform",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Green Rupee 1",
+                "access_rules": [
+                "^$CanReach|Child KF Bean Platform Green Rupee 1",
+                "^$CanReach|Adult KF Bean Platform Green Rupee 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 2",
+                "access_rules": [
+                "^$CanReach|Child KF Bean Platform Green Rupee 2",
+                "^$CanReach|Adult KF Bean Platform Green Rupee 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 3",
+                "access_rules": [
+                "^$CanReach|Child KF Bean Platform Green Rupee 3",
+                "^$CanReach|Adult KF Bean Platform Green Rupee 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 4",
+                "access_rules": [
+                "^$CanReach|Child KF Bean Platform Green Rupee 4",
+                "^$CanReach|Adult KF Bean Platform Green Rupee 4"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 5",
+                "access_rules": [
+                "^$CanReach|Child KF Bean Platform Green Rupee 5",
+                "^$CanReach|Adult KF Bean Platform Green Rupee 5"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 6",
+                "access_rules": [
+                "^$CanReach|Child KF Bean Platform Green Rupee 6",
+                "^$CanReach|Adult KF Bean Platform Green Rupee 6"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Red Rupee",
+                "access_rules": [
+                "^$CanReach|Child KF Bean Platform Red Rupee",
+                "^$CanReach|Adult KF Bean Platform Red Rupee"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kokiri Forest",
+              "x": 1058,
+              "y": 474,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Grass Near Ramp",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Green Rupee 1",
+                "access_rules": [
+                "^$CanReach|Child KF Grass Near Ramp Green Rupee 1",
+                "^$CanReach|Adult KF Grass Near Ramp Green Rupee 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Green Rupee 2",
+                "access_rules": [
+                "^$CanReach|Child KF Grass Near Ramp Green Rupee 2",
+                "^$CanReach|Adult KF Grass Near Ramp Green Rupee 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Kokiri Forest",
+              "x": 700,
+              "y": 468,
+              "size": 24
+            }
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "name": "End of Bridge Blue Rupee",
+                "access_rules": [
+                "^$CanReach|Child KF End of Bridge Blue Rupee",
+                "^$CanReach|Adult KF End of Bridge Blue Rupee"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_freestanding_items|2"
+                ],
+          "item_count": 1
+        }
+      ],
+      "map_locations": [
+        {
+          "map": "Kokiri Forest",
+          "x": 796,
+          "y": 452,
+          "size": 24
+        }
+      ]
+    }
+  ]

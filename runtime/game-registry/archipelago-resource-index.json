@@ -2,9 +2,9 @@
   "schema_version": 1,
   "generated_at": "2026-06-17T23:19:05.959380+00:00",
   "source": {
-    "xlsx": "/home/thelovenityjade/Archipelago Games Sheet.xlsx",
-    "inventory": "/home/thelovenityjade/SekaiLink/canonical/runtime/downloaded-resources/archipelago-sheet/inventory.json",
-    "download_report": "/home/thelovenityjade/SekaiLink/canonical/runtime/downloaded-resources/archipelago-sheet/download-report.json"
+    "xlsx": "<local-home>/Archipelago Games Sheet.xlsx",
+    "inventory": "<local-home>/SekaiLink/canonical/runtime/downloaded-resources/archipelago-sheet/inventory.json",
+    "download_report": "<local-home>/SekaiLink/canonical/runtime/downloaded-resources/archipelago-sheet/download-report.json"
   },
   "policy": {
     "included_statuses": [

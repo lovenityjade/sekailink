@@ -1,0 +1,19 @@
+--- a/libultraship/cmake/dependencies/common.cmake
++++ b/libultraship/cmake/dependencies/common.cmake
+@@ -10,6 +10,7 @@
+     ImGui
+     GIT_REPOSITORY https://github.com/ocornut/imgui.git
+     GIT_TAG v1.91.9b-docking
++    GIT_SHALLOW TRUE
+     PATCH_COMMAND ${imgui_apply_patch_command}
+ )
+ FetchContent_MakeAvailable(ImGui)
+--- a/soh/CMakeLists.txt
++++ b/soh/CMakeLists.txt
+@@ -370,6 +370,7 @@
+         dr_libs
+         GIT_REPOSITORY https://github.com/mackron/dr_libs.git
+         GIT_TAG da35f9d6c7374a95353fd1df1d394d44ab66cf01
++        GIT_SUBMODULES ""
+ )
+ FetchContent_MakeAvailable(dr_libs)

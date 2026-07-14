@@ -36,11 +36,14 @@
   },
   "sekaiemu": {
     "core_id": "gbc",
-    "ap_game": "Pokemon Crystal"
+    "ap_game": "Pokemon Crystal",
+    "core_options": {
+      "gambatte_gb_hwmode": "GBC"
+    }
   },
   "tracker_pack_uid": "",
   "tracker_web_url": "",
   "support_status": "not_available",
-  "availability_status": "unavailable_gb_gbc_pending_tester",
-  "compatibility_notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+  "availability_status": "unavailable_crystal_gbc_freeze",
+  "compatibility_notes": "Temporarily unavailable: Pokemon Crystal reaches gameplay in forced GBC mode but then freezes/graphically corrupts. Oracle of Ages and Pokemon Red/Blue confirm the general Sekaiemu/Gambatte GB/GBC path works, so this remains a Crystal-specific patch/runtime investigation."
 }

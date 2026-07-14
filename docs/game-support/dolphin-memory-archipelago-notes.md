@@ -10,13 +10,13 @@ from the local MultiworldGG world copy as the main examples.
 ## Sources Read
 
 - Upstream Archipelago:
-  - `/home/thelovenityjade/Projects/reference-repos/Archipelago/worlds/tww/TWWClient.py`
-  - `/home/thelovenityjade/Projects/reference-repos/Archipelago/worlds/tww/docs/setup_en.md`
-  - `/home/thelovenityjade/Projects/reference-repos/Archipelago/worlds/tww/requirements.txt`
+  - `<local-home>/Projects/reference-repos/Archipelago/worlds/tww/TWWClient.py`
+  - `<local-home>/Projects/reference-repos/Archipelago/worlds/tww/docs/setup_en.md`
+  - `<local-home>/Projects/reference-repos/Archipelago/worlds/tww/requirements.txt`
 - Local TTYD world copy:
-  - `/home/thelovenityjade/Games/SoH-SekaiLink-Edition-PRE-BETA3/worlds/ttyd/TTYDClient.py`
-  - `/home/thelovenityjade/Games/SoH-SekaiLink-Edition-PRE-BETA3/worlds/ttyd/Rom.py`
-  - `/home/thelovenityjade/Games/SoH-SekaiLink-Edition-PRE-BETA3/worlds/ttyd/docs/setup_en.md`
+  - `<local-home>/Games/SoH-SekaiLink-Edition-PRE-BETA3/worlds/ttyd/TTYDClient.py`
+  - `<local-home>/Games/SoH-SekaiLink-Edition-PRE-BETA3/worlds/ttyd/Rom.py`
+  - `<local-home>/Games/SoH-SekaiLink-Edition-PRE-BETA3/worlds/ttyd/docs/setup_en.md`
 - Dolphin Memory Engine reference:
   - `/tmp/dolphin-memory-engine-code/Source/DolphinProcess/DolphinAccessor.cpp`
   - `/tmp/dolphin-memory-engine-code/Source/DolphinProcess/Linux/LinuxDolphinProcess.cpp`
@@ -24,14 +24,14 @@ from the local MultiworldGG world copy as the main examples.
   - `/tmp/dolphin-memory-engine-code/Source/Common/MemoryCommon.h`
   - `/tmp/dolphin-memory-engine-code/Source/Common/CommonUtils.h`
 - Local Twilight Princess world copy:
-  - `/home/thelovenityjade/DevSSD/_sekailink_quarantine/20260601-pre-e2e/DevSSD/SekaiLinkDev/reference/upstream/multiworldgg/worlds/tp/TPClient.py`
-  - `/home/thelovenityjade/DevSSD/_sekailink_quarantine/20260601-pre-e2e/DevSSD/SekaiLinkDev/reference/upstream/multiworldgg/worlds/tp/ClientUtils.py`
-  - `/home/thelovenityjade/DevSSD/_sekailink_quarantine/20260601-pre-e2e/DevSSD/SekaiLinkDev/reference/upstream/multiworldgg/worlds/tp/__init__.py`
-  - `/home/thelovenityjade/.local/share/Archipelago/custom_worlds/tp/docs/setup_en.md`
-  - `/home/thelovenityjade/.local/share/Archipelago/custom_worlds/tp/docs/CurrentState.md`
+  - `<local-home>/DevSSD/_sekailink_quarantine/20260601-pre-e2e/DevSSD/SekaiLinkDev/reference/upstream/multiworldgg/worlds/tp/TPClient.py`
+  - `<local-home>/DevSSD/_sekailink_quarantine/20260601-pre-e2e/DevSSD/SekaiLinkDev/reference/upstream/multiworldgg/worlds/tp/ClientUtils.py`
+  - `<local-home>/DevSSD/_sekailink_quarantine/20260601-pre-e2e/DevSSD/SekaiLinkDev/reference/upstream/multiworldgg/worlds/tp/__init__.py`
+  - `<local-home>/.local/share/Archipelago/custom_worlds/tp/docs/setup_en.md`
+  - `<local-home>/.local/share/Archipelago/custom_worlds/tp/docs/CurrentState.md`
 - Twilight Princess randomizer source:
-  - `/home/thelovenityjade/Projects/zsrtp-Randomizer/GameCube/source/main.cpp`
-  - `/home/thelovenityjade/Projects/zsrtp-Randomizer/GameCube/source/rando/randomizer.cpp`
+  - `<local-home>/Projects/zsrtp-Randomizer/GameCube/source/main.cpp`
+  - `<local-home>/Projects/zsrtp-Randomizer/GameCube/source/rando/randomizer.cpp`
 
 ## What Archipelago Uses
 

@@ -87,7 +87,7 @@ Tracker bundle example using the current ALTTP LinkedWorld bundle:
 ```bash
 ./build/sekaiemu_libretro_spike \
   --profile ./profiles/alttp-starter.profile \
-  --tracker-bundle /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.bundle \
+  --tracker-bundle <local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.bundle \
   --tracker-state ./saves/tracker/default.bundle/state.json \
   /path/to/bsnes_mercury_performance_libretro.so \
   "/path/to/Zelda no Densetsu - Kamigami no Triforce (Japan).sfc" \
@@ -144,12 +144,12 @@ Native controller notes:
 
 Current launch-related source files:
 
-- [launch_options.hpp](/home/thelovenityjade/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/src/launch_options.hpp)
-- [launch_options.cpp](/home/thelovenityjade/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/src/launch_options.cpp)
-- [launcher.hpp](/home/thelovenityjade/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/src/launcher.hpp)
-- [launcher.cpp](/home/thelovenityjade/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/src/launcher.cpp)
-- [logger.hpp](/home/thelovenityjade/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/src/logger.hpp)
-- [logger.cpp](/home/thelovenityjade/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/src/logger.cpp)
+- [launch_options.hpp](<local-home>/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/src/launch_options.hpp)
+- [launch_options.cpp](<local-home>/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/src/launch_options.cpp)
+- [launcher.hpp](<local-home>/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/src/launcher.hpp)
+- [launcher.cpp](<local-home>/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/src/launcher.cpp)
+- [logger.hpp](<local-home>/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/src/logger.hpp)
+- [logger.cpp](<local-home>/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/src/logger.cpp)
 
 Behavior:
 
@@ -270,7 +270,7 @@ Current scope:
   size or `mtime` changes, while tracker presentation is refreshed every 30
   frames, so the tracker cannot compete with audio/video each frame
 - the preferred ALTTP example bundle for current internal live runs now lives in:
-  - `/home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.bundle`
+  - `<local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.bundle`
 - the older contract fixture remains available in:
   - `tracker-bundles/alttp-default/`
 - the runtime can now materialize an ALTTP `.aplttp` patch directly into:
@@ -301,7 +301,7 @@ Tracker runtime example using the current ALTTP fixture:
   --core /usr/lib64/libretro/bsnes_mercury_performance_libretro.so \
   --patch /path/to/AP_Seed.aplttp \
   --base-rom "/path/to/Zelda no Densetsu - Kamigami no Triforce (Japan).sfc" \
-  --tracker-bundle /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.bundle \
+  --tracker-bundle <local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.bundle \
   --system-dir ./system \
   --save-dir ./saves \
   --log-dir ./logs

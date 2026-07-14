@@ -1,0 +1,71 @@
+[
+  {
+    "name": "Cape Brink",
+    "children": [
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Islands/Cape Brink/Land Encounters",
+            "name": "Land Encounters"
+          },
+          {
+            "ref": "Islands/Cape Brink/Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Islands/Cape Brink/Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Islands/Cape Brink/Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Islands/Cape Brink/Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cape_brink",
+            "x": 368,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Hidden Item Across Pond",
+        "sections": [
+          {
+            "ref": "Islands/Cape Brink/Hidden Item Across Pond",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cape_brink",
+            "x": 264,
+            "y": 456
+          }
+        ]
+      },
+      {
+        "name": "Hidden Item Behind House",
+        "sections": [
+          {
+            "ref": "Islands/Cape Brink/Hidden Item Behind House",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "cape_brink",
+            "x": 248,
+            "y": 216
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -16,6 +16,7 @@ export type SessionLaunchRequest = {
   serverAddress: string;
   slot: string;
   playerAlias?: string;
+  playerAliasMap?: Record<string, string>;
   password?: string;
   apGameName?: string;
   trackerVariant?: string;
@@ -32,6 +33,7 @@ export type SessionLaunchRequest = {
     apGameName?: string;
     slot?: string;
     playerAlias?: string;
+    playerAliasMap?: Record<string, string>;
     trackerVariant?: string;
   }>;
 };
@@ -96,6 +98,7 @@ export const executeSessionLaunch = async (request: SessionLaunchRequest): Promi
     serverAddress: request.serverAddress,
     slot: request.slot,
     playerAlias: request.playerAlias,
+    playerAliasMap: request.playerAliasMap,
     password: request.password,
     apGameName: request.apGameName,
     trackerVariant: request.trackerVariant,

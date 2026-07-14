@@ -24,4 +24,8 @@ bool PumpTrackerTraceEvents(const std::filesystem::path& trace_path,
                             std::unordered_map<std::string, std::string>& item_label_by_key,
                             TrackerRuntime& tracker_runtime);
 
+void AppendTrackerActivityMessage(TrackerRuntime& tracker_runtime,
+                                  const std::string& kind,
+                                  const std::string& text);
+
 }  // namespace sekaiemu::spike

@@ -107,6 +107,7 @@ add_executable(sekaiemu_libretro_spike
   ${SEKAIEMU_IMGUI_DIR}/backends/imgui_impl_sdl2.cpp
   ${SEKAIEMU_IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
   src/audio_output.cpp
+  src/activity_feed_window_presenter.cpp
   src/bridge_adapters/alttp_adapter.cpp
   src/bridge_adapters/firered_adapter.cpp
   src/bridge_adapters/ladx_adapter.cpp
@@ -118,6 +119,7 @@ add_executable(sekaiemu_libretro_spike
   src/core_option_manager_utils.cpp
   src/host_io_utils.cpp
   src/input_script.cpp
+  src/input_capture_mode.cpp
   src/input_state.cpp
   src/input_state_config.cpp
   src/input_state_menu.cpp
@@ -163,6 +165,7 @@ add_executable(sekaiemu_libretro_spike
   src/opengl_overlay_renderer.cpp
   src/opengl_video_utils.cpp
   src/runtime_chat_bridge.cpp
+  src/runtime_client_core_hud.cpp
   src/runtime_activity_feed_imgui.cpp
   src/runtime_debug_log.cpp
   src/runtime_memory_server.cpp
@@ -170,6 +173,7 @@ add_executable(sekaiemu_libretro_spike
   src/runtime_memory_utils.cpp
   src/runtime_chat_overlay.cpp
   src/runtime_frontend_settings.cpp
+  src/runtime_goal_completion.cpp
   src/runtime_loop.cpp
   src/runtime_menu.cpp
   src/runtime_menu_imgui.cpp
@@ -191,6 +195,7 @@ add_executable(sekaiemu_libretro_spike
   src/software_video_backend.cpp
   src/opengl_video_backend.cpp
   src/vulkan_video_backend.cpp
+  src/window_chrome.cpp
 )
 
 target_include_directories(sekaiemu_libretro_spike
@@ -429,8 +434,12 @@ add_executable(runtime_frontend_settings_smoke
 
 target_include_directories(runtime_frontend_settings_smoke
   PRIVATE
+    ${SDL2_INCLUDE_DIRS}
+    ${SEKAIEMU_LIBRETRO_INCLUDE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/extern
 )
+
+target_compile_options(runtime_frontend_settings_smoke PRIVATE ${SDL2_CFLAGS_OTHER})
 
 add_test(
   NAME sekaiemu_runtime_frontend_settings_smoke

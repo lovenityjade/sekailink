@@ -294,6 +294,15 @@ int main(int argc, char** argv) {
     require(expect_login_response.find("100 Continue") != std::string::npos, "identity_expect_continue_status");
     require(expect_login_response.find("401 Unauthorized") != std::string::npos, "identity_expect_continue_final_status");
 
+    const auto email_username_response = http_request(
+        port,
+        "POST",
+        "/register",
+        "",
+        R"({"username":"jade@example.com","email":"jade@example.com","password":"sekailink-password"})");
+    require(email_username_response.find("400 Bad Request") != std::string::npos, "identity_register_email_username_status");
+    require(email_username_response.find("username_must_not_be_email") != std::string::npos, "identity_register_email_username_error");
+
     const auto register_response = http_request(
         port,
         "POST",
@@ -422,6 +431,7 @@ int main(int argc, char** argv) {
     require(login_two_factor_response.find("200 OK") != std::string::npos, "identity_login_two_factor_status");
     const auto login_json = nlohmann::json::parse(extract_body(login_two_factor_response));
     require(login_json.at("ok").get<bool>() == true, "identity_login_two_factor_ok");
+    require(login_json.at("user").at("username").get<std::string>() == "jade", "identity_email_login_keeps_public_username");
     const auto secondary_session_token = login_json.at("session").at("session_token").get<std::string>();
     const auto secondary_session_id = login_json.at("session").at("session_id").get<std::int64_t>();
     require(login_json.at("session").at("client").at("client_name").get<std::string>() == "connect-android", "identity_login_client_name");

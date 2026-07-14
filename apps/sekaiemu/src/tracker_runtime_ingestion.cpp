@@ -225,7 +225,7 @@ void MergeStaticSnapshotPayload(nlohmann::json& destination, const nlohmann::jso
   if (!destination.is_object() || !previous.is_object()) {
     return;
   }
-  for (const char* key : {"pack_layouts", "pack_item_visuals"}) {
+  for (const char* key : {"pack_layouts", "pack_item_visuals", "chat_messages", "pending_received_items"}) {
     if (!destination.contains(key) && previous.contains(key)) {
       destination[key] = previous.at(key);
     }

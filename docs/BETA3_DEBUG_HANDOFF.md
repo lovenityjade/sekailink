@@ -10,7 +10,7 @@ canonical tree. That already happened once and caused tracker layout/runtime reg
 
 Use only:
 
-`/home/thelovenityjade/SekaiLink/canonical`
+`<local-home>/SekaiLink/canonical`
 
 Current GitHub remote:
 
@@ -87,11 +87,11 @@ Bootstrapper MVP on 2026-06-04T09:45Z:
 
 Forbidden as active sources:
 
-- `/home/thelovenityjade/Projects/Sekaiemu-Libretro-Spike-Codex`
-- `/home/thelovenityjade/DevSSD/sekailink-beta-3-final`
-- `/home/thelovenityjade/SekaiLinkDev`
-- `/home/thelovenityjade/DevSSD/_sekailink_quarantine`
-- `/home/thelovenityjade/DevSSD/sekailink-legacy-quarantine-2026-05-17`
+- `<local-home>/Projects/Sekaiemu-Libretro-Spike-Codex`
+- `<local-home>/DevSSD/sekailink-beta-3-final`
+- `<local-home>/SekaiLinkDev`
+- `<local-home>/DevSSD/_sekailink_quarantine`
+- `<local-home>/DevSSD/sekailink-legacy-quarantine-2026-05-17`
 
 Those paths may be used only for historical comparison. Do not build, launch, package, or
 copy runtime artifacts from them unless Jade explicitly asks for a recovery comparison.
@@ -414,7 +414,7 @@ Known PopTracker-related history:
 
 ## Server Roles
 
-SSH aliases are in `/home/thelovenityjade/.ssh/config`.
+SSH aliases are in `<local-home>/.ssh/config`.
 
 Do not write secrets into docs/commits. Do not reset databases. Ask Jade before destructive or
 schema-risk server changes unless she has explicitly authorized that exact deploy.
@@ -482,7 +482,7 @@ Current live hotfix artifacts:
 Packaging commands:
 
 ```bash
-cd /home/thelovenityjade/SekaiLink/canonical/apps/client-core
+cd <local-home>/SekaiLink/canonical/apps/client-core
 npm run electron:pack
 npm run electron:pack:win
 SEKAILINK_RELEASE_VERSION=0.3.1-prebeta3.20260604.5 \
@@ -516,15 +516,15 @@ Expected harmless build warnings at handoff:
 
 Client logs:
 
-`/home/thelovenityjade/.config/sekailink-client/logs/`
+`<local-home>/.config/sekailink-client/logs/`
 
 Sekaiemu logs:
 
-`/home/thelovenityjade/.config/sekailink-client/logs/sekaiemu/sekaiemu.log`
+`<local-home>/.config/sekailink-client/logs/sekaiemu/sekaiemu.log`
 
 Common SKLMI runtime state for ALTTP:
 
-`/home/thelovenityjade/.config/sekailink-client/sekaiemu/alttp/saves/sklmi/alttp-phase1/`
+`<local-home>/.config/sekailink-client/sekaiemu/alttp/saves/sklmi/alttp-phase1/`
 
 Important files in that tree:
 
@@ -652,7 +652,7 @@ The exact manual script historically used:
 
 `apps/sekaiemu/tests/e2e/alttp_chest/run_alttp_manual_check_session.sh`
 
-Do not use the old script path under `/home/thelovenityjade/Projects/...`.
+Do not use the old script path under `<local-home>/Projects/...`.
 
 ## Server Deploy Safety
 
@@ -713,7 +713,7 @@ curl -fsS 'https://sekailink.com/api/client/version?channel=test&platform=linux-
 
 ## Practical First Steps For Next Agent
 
-1. Start in `/home/thelovenityjade/SekaiLink/canonical`.
+1. Start in `<local-home>/SekaiLink/canonical`.
 2. Run `git status --short`. If dirty, understand changes before touching anything.
 3. Read:
    - `docs/SOURCE_OF_TRUTH.md`

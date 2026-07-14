@@ -332,7 +332,9 @@ void RuntimeMenu::Render(OverlayCanvas& canvas,
                          int master_volume_percent,
                          bool chat_overlay_enabled,
                          bool notifications_enabled,
+                         bool activity_feed_enabled,
                          bool bridge_terminal_enabled) {
+  (void)activity_feed_enabled;
   canvas.Clear(UiColor{0, 0, 0, 0});
   canvas.FillRect(0, 0, static_cast<int>(canvas.Width()), static_cast<int>(canvas.Height()),
                   UiColor{0, 0, 0, 88});

@@ -40,6 +40,7 @@
     "ap_game": "Super Mario World"
   },
   "tracker_pack_uid": "https://github.com/PoryGone/SMW_AP_Tracker",
-  "tracker_web_url": "",
-  "tracker_asset_regex": "\\.zip$"
+  "tracker_web_url": "https://github.com/PoryGone/SMW_AP_Tracker/releases/latest",
+  "tracker_asset_regex": "\\.zip$",
+  "tracker_pack_path": "poptracker/packs/super_mario_world/pack/super_mario_world_randomizer_porygone"
 }

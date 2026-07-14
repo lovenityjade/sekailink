@@ -105,10 +105,13 @@ nlohmann::json to_json(const GenerationJob& job) {
   };
   const auto log_path = generation_log_path(job);
   payload["log_path"] = log_path.string();
+  const auto log_tail = tail_text_file(log_path);
+  if (!log_tail.empty()) {
+    payload["log_tail"] = log_tail;
+  }
   if (job.status == GenerationJobStatus::Failed) {
-    const auto detail = tail_text_file(log_path);
-    if (!detail.empty()) {
-      payload["error_detail"] = detail;
+    if (!log_tail.empty()) {
+      payload["error_detail"] = log_tail;
     }
   }
   return payload;

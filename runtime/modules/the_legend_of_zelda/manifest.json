@@ -40,7 +40,7 @@
     "ap_game": "The Legend of Zelda"
   },
   "tracker_pack_uid": "",
-  "tracker_web_url": "",
+  "tracker_web_url": "https://github.com/Br00ty/tloz_brooty/releases/latest",
   "tracker_pack_path": "poptracker/packs/the_legend_of_zelda/pack",
   "default_tracker_variant": "standard"
 }

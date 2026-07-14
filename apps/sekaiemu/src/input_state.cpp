@@ -3,6 +3,7 @@
 
 #include <array>
 #include <algorithm>
+#include <iostream>
 
 namespace sekaiemu::spike {
 
@@ -32,7 +33,10 @@ void InputState::BeginFrame() {
   scripted_controls_.fill(false);
 }
 
-void InputState::PollRequested() { poll_seen_this_frame_ = true; }
+void InputState::PollRequested() {
+  poll_seen_this_frame_ = true;
+  PollSelectedControllerState();
+}
 
 void InputState::SetScriptedControls(const std::vector<LogicalControl>& controls) {
   scripted_controls_.fill(false);
@@ -70,6 +74,22 @@ bool InputState::HandleSdlEvent(const SDL_Event& event, bool) {
       return false;
     case SDL_CONTROLLERAXISMOTION:
       UpdateControllerAxis(event.caxis);
+      return false;
+    case SDL_JOYDEVICEADDED:
+      AddController(event.jdevice.which);
+      return false;
+    case SDL_JOYDEVICEREMOVED:
+      RemoveController(event.jdevice.which);
+      return false;
+    case SDL_JOYBUTTONDOWN:
+    case SDL_JOYBUTTONUP:
+      UpdateJoystickButton(event.jbutton);
+      return false;
+    case SDL_JOYAXISMOTION:
+      UpdateJoystickAxis(event.jaxis);
+      return false;
+    case SDL_JOYHATMOTION:
+      UpdateJoystickHat(event.jhat);
       return false;
     default:
       return false;
@@ -148,27 +168,56 @@ void InputState::RefreshDefaultSelection() {
 }
 
 void InputState::AddController(int device_index) {
-  if (!SDL_IsGameController(device_index)) {
-    return;
+  SDL_GameController* controller = nullptr;
+  SDL_Joystick* joystick = nullptr;
+  bool game_controller = false;
+  if (SDL_IsGameController(device_index)) {
+    controller = SDL_GameControllerOpen(device_index);
+    if (controller) {
+      joystick = SDL_GameControllerGetJoystick(controller);
+      game_controller = true;
+    }
   }
-  SDL_GameController* controller = SDL_GameControllerOpen(device_index);
-  if (!controller) {
+  if (!joystick) {
+    joystick = SDL_JoystickOpen(device_index);
+  }
+  if (!joystick) {
+    std::cerr << "[sekaiemu][input] controller open failed index=" << device_index
+              << " error=" << SDL_GetError() << "\n";
     return;
   }
 
-  SDL_Joystick* joystick = SDL_GameControllerGetJoystick(controller);
-  if (!joystick) {
-    SDL_GameControllerClose(controller);
+  const SDL_JoystickID instance_id = SDL_JoystickInstanceID(joystick);
+  const auto duplicate = std::find_if(
+      controllers_.begin(), controllers_.end(), [&](const ControllerDevice& existing) {
+        return existing.instance_id == instance_id;
+      });
+  if (duplicate != controllers_.end()) {
+    if (controller) {
+      SDL_GameControllerClose(controller);
+    } else {
+      SDL_JoystickClose(joystick);
+    }
     return;
   }
 
   ControllerDevice device;
   device.handle = controller;
-  device.instance_id = SDL_JoystickInstanceID(joystick);
-  device.name = SDL_GameControllerName(controller) ? SDL_GameControllerName(controller) : "CONTROLLER";
+  device.joystick = joystick;
+  device.instance_id = instance_id;
+  device.game_controller = game_controller;
+  const char* name = controller ? SDL_GameControllerName(controller) : SDL_JoystickName(joystick);
+  device.name = name ? name : "CONTROLLER";
   char guid_buffer[64] = {};
   SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(joystick), guid_buffer, sizeof(guid_buffer));
   device.guid = guid_buffer;
+  std::cerr << "[sekaiemu][input] controller added index=" << device_index
+            << " instance=" << device.instance_id
+            << " mode=" << (device.game_controller ? "gamecontroller" : "joystick")
+            << " name=\"" << device.name << "\" guid=" << device.guid
+            << " axes=" << SDL_JoystickNumAxes(joystick)
+            << " buttons=" << SDL_JoystickNumButtons(joystick)
+            << " hats=" << SDL_JoystickNumHats(joystick) << "\n";
   controllers_.push_back(std::move(device));
   RefreshDefaultSelection();
 }
@@ -182,6 +231,9 @@ void InputState::RemoveController(SDL_JoystickID instance_id) {
         if (device.handle) {
           SDL_GameControllerClose(device.handle);
           device.handle = nullptr;
+        } else if (device.joystick) {
+          SDL_JoystickClose(device.joystick);
+          device.joystick = nullptr;
         }
         return true;
       }),
@@ -211,6 +263,93 @@ void InputState::UpdateControllerAxis(const SDL_ControllerAxisEvent& event) {
     return;
   }
   controller_axis_state_[static_cast<int>(event.axis)] = event.value;
+}
+
+void InputState::UpdateJoystickButton(const SDL_JoyButtonEvent& event) {
+  if (selected_controller_index_ < 0 ||
+      selected_controller_index_ >= static_cast<int>(controllers_.size())) {
+    return;
+  }
+  const auto& controller = controllers_[static_cast<std::size_t>(selected_controller_index_)];
+  if (controller.game_controller || event.which != controller.instance_id) {
+    return;
+  }
+  controller_button_state_[static_cast<int>(event.button)] = event.state == SDL_PRESSED;
+}
+
+void InputState::UpdateJoystickAxis(const SDL_JoyAxisEvent& event) {
+  if (selected_controller_index_ < 0 ||
+      selected_controller_index_ >= static_cast<int>(controllers_.size())) {
+    return;
+  }
+  const auto& controller = controllers_[static_cast<std::size_t>(selected_controller_index_)];
+  if (controller.game_controller || event.which != controller.instance_id) {
+    return;
+  }
+  controller_axis_state_[static_cast<int>(event.axis)] = event.value;
+}
+
+void InputState::UpdateJoystickHat(const SDL_JoyHatEvent& event) {
+  if (selected_controller_index_ < 0 ||
+      selected_controller_index_ >= static_cast<int>(controllers_.size())) {
+    return;
+  }
+  const auto& controller = controllers_[static_cast<std::size_t>(selected_controller_index_)];
+  if (controller.game_controller || event.which != controller.instance_id || event.hat != 0) {
+    return;
+  }
+  controller_button_state_[SDL_CONTROLLER_BUTTON_DPAD_UP] = (event.value & SDL_HAT_UP) != 0;
+  controller_button_state_[SDL_CONTROLLER_BUTTON_DPAD_DOWN] = (event.value & SDL_HAT_DOWN) != 0;
+  controller_button_state_[SDL_CONTROLLER_BUTTON_DPAD_LEFT] = (event.value & SDL_HAT_LEFT) != 0;
+  controller_button_state_[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] = (event.value & SDL_HAT_RIGHT) != 0;
+}
+
+void InputState::PollSelectedControllerState() {
+  if (selected_controller_index_ < 0 ||
+      selected_controller_index_ >= static_cast<int>(controllers_.size())) {
+    return;
+  }
+  auto& controller = controllers_[static_cast<std::size_t>(selected_controller_index_)];
+  if (controller.game_controller && controller.handle) {
+    for (const auto& binding : bindings_) {
+      if (binding.controller.kind == BindingKind::ControllerButton) {
+        const auto button = static_cast<SDL_GameControllerButton>(binding.controller.code);
+        controller_button_state_[binding.controller.code] =
+            SDL_GameControllerGetButton(controller.handle, button) != 0;
+      } else if (binding.controller.kind == BindingKind::ControllerAxisPositive ||
+                 binding.controller.kind == BindingKind::ControllerAxisNegative) {
+        const auto axis = static_cast<SDL_GameControllerAxis>(binding.controller.code);
+        controller_axis_state_[binding.controller.code] =
+            SDL_GameControllerGetAxis(controller.handle, axis);
+      }
+    }
+    return;
+  }
+
+  if (!controller.joystick) {
+    return;
+  }
+  for (const auto& binding : bindings_) {
+    if (binding.controller.kind == BindingKind::ControllerButton) {
+      const int button = binding.controller.code;
+      if (button >= 0 && button < SDL_JoystickNumButtons(controller.joystick)) {
+        controller_button_state_[button] = SDL_JoystickGetButton(controller.joystick, button) != 0;
+      }
+    } else if (binding.controller.kind == BindingKind::ControllerAxisPositive ||
+               binding.controller.kind == BindingKind::ControllerAxisNegative) {
+      const int axis = binding.controller.code;
+      if (axis >= 0 && axis < SDL_JoystickNumAxes(controller.joystick)) {
+        controller_axis_state_[axis] = SDL_JoystickGetAxis(controller.joystick, axis);
+      }
+    }
+  }
+  if (SDL_JoystickNumHats(controller.joystick) > 0) {
+    const Uint8 hat = SDL_JoystickGetHat(controller.joystick, 0);
+    controller_button_state_[SDL_CONTROLLER_BUTTON_DPAD_UP] = (hat & SDL_HAT_UP) != 0;
+    controller_button_state_[SDL_CONTROLLER_BUTTON_DPAD_DOWN] = (hat & SDL_HAT_DOWN) != 0;
+    controller_button_state_[SDL_CONTROLLER_BUTTON_DPAD_LEFT] = (hat & SDL_HAT_LEFT) != 0;
+    controller_button_state_[SDL_CONTROLLER_BUTTON_DPAD_RIGHT] = (hat & SDL_HAT_RIGHT) != 0;
+  }
 }
 
 bool InputState::HandleCaptureEvent(const SDL_Event& event) {
@@ -243,6 +382,53 @@ bool InputState::HandleCaptureEvent(const SDL_Event& event) {
                 : ControllerAxisNeg(static_cast<SDL_GameControllerAxis>(event.caxis.axis)),
             true);
         return true;
+      }
+      return false;
+    case SDL_JOYBUTTONDOWN:
+      if (selected_controller_index_ >= 0 &&
+          selected_controller_index_ < static_cast<int>(controllers_.size()) &&
+          !controllers_[static_cast<std::size_t>(selected_controller_index_)].game_controller &&
+          event.jbutton.which ==
+              controllers_[static_cast<std::size_t>(selected_controller_index_)].instance_id) {
+        CompleteCapture(InputBinding{BindingKind::ControllerButton,
+                                     static_cast<int>(event.jbutton.button)},
+                        true);
+        return true;
+      }
+      return false;
+    case SDL_JOYAXISMOTION:
+      if (selected_controller_index_ >= 0 &&
+          selected_controller_index_ < static_cast<int>(controllers_.size()) &&
+          !controllers_[static_cast<std::size_t>(selected_controller_index_)].game_controller &&
+          event.jaxis.which ==
+              controllers_[static_cast<std::size_t>(selected_controller_index_)].instance_id &&
+          std::abs(event.jaxis.value) >= kAxisThreshold) {
+        CompleteCapture(event.jaxis.value > 0
+                            ? InputBinding{BindingKind::ControllerAxisPositive,
+                                           static_cast<int>(event.jaxis.axis)}
+                            : InputBinding{BindingKind::ControllerAxisNegative,
+                                           static_cast<int>(event.jaxis.axis)},
+                        true);
+        return true;
+      }
+      return false;
+    case SDL_JOYHATMOTION:
+      if (selected_controller_index_ >= 0 &&
+          selected_controller_index_ < static_cast<int>(controllers_.size()) &&
+          !controllers_[static_cast<std::size_t>(selected_controller_index_)].game_controller &&
+          event.jhat.which ==
+              controllers_[static_cast<std::size_t>(selected_controller_index_)].instance_id &&
+          event.jhat.hat == 0 &&
+          event.jhat.value != SDL_HAT_CENTERED) {
+        int button = SDL_CONTROLLER_BUTTON_INVALID;
+        if ((event.jhat.value & SDL_HAT_UP) != 0) button = SDL_CONTROLLER_BUTTON_DPAD_UP;
+        else if ((event.jhat.value & SDL_HAT_DOWN) != 0) button = SDL_CONTROLLER_BUTTON_DPAD_DOWN;
+        else if ((event.jhat.value & SDL_HAT_LEFT) != 0) button = SDL_CONTROLLER_BUTTON_DPAD_LEFT;
+        else if ((event.jhat.value & SDL_HAT_RIGHT) != 0) button = SDL_CONTROLLER_BUTTON_DPAD_RIGHT;
+        if (button != SDL_CONTROLLER_BUTTON_INVALID) {
+          CompleteCapture(InputBinding{BindingKind::ControllerButton, button}, true);
+          return true;
+        }
       }
       return false;
     default:

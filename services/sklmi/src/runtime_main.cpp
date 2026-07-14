@@ -347,6 +347,7 @@ int main(int argc, char** argv) {
         connect_options.game = options.ap_game;
         connect_options.slot_name = options.ap_slot_name;
         connect_options.player_alias = options.player_alias;
+        connect_options.player_aliases_by_slot_name = options.player_aliases_by_slot_name;
         connect_options.password = options.ap_password;
         connect_options.uuid = options.ap_uuid;
         connect_options.tags = options.ap_tags;

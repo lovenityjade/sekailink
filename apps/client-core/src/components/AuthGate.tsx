@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { apiFetchWithTimeout, apiUrl, API_BASE_URL, getDesktopToken, getDeviceId, setDesktopToken, setWebAuthCache } from "../services/api";
+import { apiFetchWithTimeout, apiUrl, API_BASE_URL, getCachedCurrentUser, getDesktopToken, getDeviceId, hydrateDesktopAuthSession, setDesktopToken, setWebAuthCache } from "../services/api";
 import { isRuntimeLabCredentials, setRuntimeLabSession } from "../services/runtimeLab";
 import { hasSoloModeUrlFlag, setSoloModeEnabled } from "../services/soloMode";
 import AnimatedBackground from "./AnimatedBackground";
@@ -8,6 +8,7 @@ import UpdateNotesModal from "./UpdateNotesModal";
 import { emitUpdateAvailable } from "../services/toast";
 import { useI18n } from "../i18n";
 import { trace, traceError } from "../services/trace";
+import { publicAssetUrl } from "../utils/publicAssets";
 
 interface AuthGateProps {
   children: React.ReactNode;
@@ -69,11 +70,13 @@ const clientPlatformFromEnv = (env: Record<string, unknown> | null | undefined) 
 };
 
 const releaseChannelFromEnv = (env: Record<string, unknown> | null | undefined, appVersion: string) => {
-  const fromEnv = String((env && env.bootstrap_channel) || "").trim().toLowerCase();
-  if (fromEnv === "stable" || fromEnv === "debug" || fromEnv === "test") return fromEnv;
+  const fromEnv = String((env && (env.bootstrap_preferred_channel || env.bootstrap_channel)) || "").trim().toLowerCase();
+  if (fromEnv === "canary") return "canari";
+  if (fromEnv === "canari" || fromEnv === "canonical" || fromEnv === "debug") return fromEnv;
+  if (fromEnv === "stable" || fromEnv === "test" || fromEnv === "release") return "canonical";
   const v = appVersion.toLowerCase();
   if (v.includes("debug") || v.includes("nightly")) return "debug";
-  return "test";
+  return "canonical";
 };
 
 const releaseBuildFromEnv = (env: Record<string, unknown> | null | undefined) => {
@@ -246,7 +249,7 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
 
   useEffect(() => {
     try {
-      updateAudioRef.current = new Audio("/assets/sfx/sfx_update_notification.wav");
+      updateAudioRef.current = new Audio(publicAssetUrl("assets/sfx/sfx_update_notification.wav"));
       updateAudioRef.current.preload = "auto";
       updateAudioRef.current.volume = 0.65;
     } catch {
@@ -263,6 +266,13 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
     if (/^https?:\/\//i.test(url)) return url;
     return apiUrl(url.startsWith("/") ? url : `/${url}`);
   }, []);
+
+  const acceptCachedDesktopSession = useCallback((reason: string, payload?: Record<string, unknown>) => {
+    const cachedUser = getCachedCurrentUser();
+    setSoloModeEnabled(false);
+    setStatus("authed");
+    authTrace(reason, { ...(payload || {}), hasCachedUser: Boolean(cachedUser) });
+  }, [authTrace]);
 
   const markUpdateNotesSeen = useCallback((signature: string) => {
     const sig = String(signature || "").trim();
@@ -300,6 +310,7 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
     }
     // Desktop auth source of truth: local desktop token.
     // If it's missing, never treat the client as authenticated.
+    await hydrateDesktopAuthSession();
     const desktopToken = getDesktopToken();
     authTrace("check_auth_start", { hasToken: Boolean(desktopToken), tokenLen: desktopToken ? desktopToken.length : 0 });
     if (!desktopToken) {
@@ -327,16 +338,17 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
         } catch {
           // ignore and treat as unauth below
         }
-        setDesktopToken(null);
-        setWebAuthCache(null);
-        setStatus("unauth");
+        acceptCachedDesktopSession("check_auth_invalid_payload_using_cached_session", {
+          durationMs: Math.round(performance.now() - startedAt),
+        });
         return;
       }
       if (res.status === 401 || res.status === 403) {
         authTrace("check_auth_rejected", { status: res.status, durationMs: Math.round(performance.now() - startedAt) });
-        setDesktopToken(null);
-        setWebAuthCache(null);
-        setStatus("unauth");
+        acceptCachedDesktopSession("check_auth_rejected_using_cached_session", {
+          status: res.status,
+          durationMs: Math.round(performance.now() - startedAt),
+        });
         return;
       }
       authTrace("check_auth_unreachable_status", { status: res.status, durationMs: Math.round(performance.now() - startedAt) });
@@ -345,7 +357,7 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
       traceError("auth-gate", "check_auth_error", error, { durationMs: Math.round(performance.now() - startedAt) });
       setStatus("unreachable");
     }
-  }, []);
+  }, [acceptCachedDesktopSession, authTrace]);
 
   const checkVersion = useCallback(async () => {
     if (!API_BASE_URL) return { required: false, available: false };
@@ -1403,10 +1415,10 @@ const AuthGate: React.FC<AuthGateProps> = ({ children }) => {
               )}
               {authError && <p className="skl-auth-error">{authError}</p>}
               <div className="skl-auth-actions">
-                <button className="skl-btn primary skl-native-login-submit" type="submit" disabled={loginBusy || status === "checking" || status === "noapi"}>
+                <button className="skl-auth-bezel-btn skl-auth-bezel-btn-connect" type="submit" disabled={loginBusy || status === "checking" || status === "noapi"}>
                   {loginBusy ? "Connexion..." : "Se connecter"}
                 </button>
-                <button className="skl-btn ghost" type="button" onClick={quitApp}>
+                <button className="skl-auth-bezel-btn skl-auth-bezel-btn-quit" type="button" onClick={quitApp}>
                   {t("common.quit")}
                 </button>
               </div>

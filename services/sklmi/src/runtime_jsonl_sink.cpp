@@ -51,6 +51,9 @@ std::string EventToJson(const Event& event) {
     if (event.canonical_id != 0) {
         out << ",\"canonical_id\":" << event.canonical_id;
     }
+    if (event.player_number != 0) {
+        out << ",\"player_number\":" << event.player_number;
+    }
     if (!event.tab_id.empty()) {
         out << ",\"tab_id\":\"" << EscapeJson(event.tab_id) << "\"";
     }

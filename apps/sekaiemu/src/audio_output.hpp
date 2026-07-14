@@ -34,6 +34,7 @@ class AudioOutput {
   unsigned EffectiveSampleRate(unsigned fallback_sample_rate) const;
   void SetMasterVolumePercent(int percent);
   int MasterVolumePercent() const { return master_volume_percent_; }
+  void SetPlaybackPaused(bool paused);
 
  private:
   static void StaticAudioCallback(void* userdata, Uint8* stream, int len);
@@ -66,6 +67,7 @@ class AudioOutput {
   std::size_t ring_write_index_ = 0;
   std::size_t ring_size_samples_ = 0;
   bool audio_started_ = false;
+  bool playback_paused_ = false;
   std::uint64_t queued_batches_ = 0;
   std::uint64_t high_water_observations_ = 0;
   std::uint64_t possible_underruns_ = 0;
@@ -76,7 +78,7 @@ class AudioOutput {
   std::uint64_t panic_clears_ = 0;
   std::size_t max_buffered_samples_ = 0;
   std::size_t min_buffered_samples_ = 0;
-  int master_volume_percent_ = 50;
+  int master_volume_percent_ = 35;
   bool observed_buffered_samples_ = false;
 };
 

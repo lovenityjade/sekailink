@@ -17,7 +17,7 @@ Purpose:
 Generator command:
 
 ```bash
-python3 /home/thelovenityjade/DevSSD/sekailink-beta-3-final/sekaiemu/Generate.py \
+python3 <local-home>/DevSSD/sekailink-beta-3-final/sekaiemu/Generate.py \
   --player_files_path /tmp/sekailink-alttp-generate/Players \
   --outputpath /tmp/sekailink-alttp-generate/output \
   --seed 20260510 \
@@ -41,7 +41,7 @@ Patch:
 
 Base ROM used for validation:
 
-- Path: `/home/thelovenityjade/.local/share/MultiworldGG/Zelda no Densetsu - Kamigami no Triforce (Japan).sfc`
+- Path: `<local-home>/.local/share/MultiworldGG/Zelda no Densetsu - Kamigami no Triforce (Japan).sfc`
 - MD5: `03a63945398191337e896e5771f77173`
 
 ## Applied ROM
@@ -65,9 +65,9 @@ Sekaiemu patch materialization produced the same ROM hash:
 Direct patched ROM probe:
 
 ```bash
-/home/thelovenityjade/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/build/sekaiemu_libretro_spike \
+<local-home>/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/build/sekaiemu_libretro_spike \
   --probe-only \
-  --profile /home/thelovenityjade/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/profiles/alttp-starter.profile \
+  --profile <local-home>/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/profiles/alttp-starter.profile \
   --core /usr/lib64/libretro/bsnes_mercury_performance_libretro.so \
   --game /tmp/sekailink-alttp-generate/applied/AP_66054182889765821095_P1_Jade-ALTTP.sfc \
   --save-dir /tmp/sekaiemu-alttp-generated-probe-escalated \
@@ -87,12 +87,12 @@ Result:
 Patch-first Sekaiemu probe:
 
 ```bash
-/home/thelovenityjade/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/build/sekaiemu_libretro_spike \
+<local-home>/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/build/sekaiemu_libretro_spike \
   --probe-only \
-  --profile /home/thelovenityjade/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/profiles/alttp-starter.profile \
+  --profile <local-home>/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/profiles/alttp-starter.profile \
   --core /usr/lib64/libretro/bsnes_mercury_performance_libretro.so \
   --patch /tmp/sekailink-alttp-generate/extracted/AP_66054182889765821095_P1_Jade-ALTTP.aplttp \
-  --base-rom /home/thelovenityjade/.local/share/MultiworldGG/Zelda\ no\ Densetsu\ -\ Kamigami\ no\ Triforce\ \(Japan\).sfc \
+  --base-rom <local-home>/.local/share/MultiworldGG/Zelda\ no\ Densetsu\ -\ Kamigami\ no\ Triforce\ \(Japan\).sfc \
   --save-dir /tmp/sekaiemu-alttp-generated-patch-probe \
   --memory-socket /tmp/sekaiemu-alttp-generated-patch-probe/memory.sock
 ```

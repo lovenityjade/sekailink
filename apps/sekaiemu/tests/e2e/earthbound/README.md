@@ -27,7 +27,7 @@ tests/e2e/earthbound/run_earthbound_manual_session.sh
 Then connect the admin TUI:
 
 ```bash
-cd /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room
+cd <local-home>/DevSSD/sekailink-beta-3-final/clean-room
 scripts/sekailink_ap_admin_tui.sh \
   --host 127.0.0.1 \
   --port 38291 \

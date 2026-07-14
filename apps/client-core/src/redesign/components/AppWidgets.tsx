@@ -1,6 +1,5 @@
-import type { ReactNode } from 'react';
-import { Play, User, Users, Zap } from 'lucide-react';
-import { APP_TOAST_EVENT } from '../../services/toast';
+import { useState, type ReactNode } from 'react';
+import { Ban, ExternalLink, MessageCircle, Play, User, UserCircle, UserMinus, Users, Zap } from 'lucide-react';
 import type { SocialRequest } from '../../services/socialClient';
 import { EmoteText } from './EmoteText';
 
@@ -13,25 +12,33 @@ const formatMessageTime = (value: string) => {
 const profileName = (profile: SocialRequest | null) =>
   profile?.display_name || profile?.name || profile?.username || profile?.user_id || 'Player';
 
-export function NavItem({ icon, label, active, onClick }: {
+export function NavItem({ icon, label, active, onClick, disabled = false, badge }: {
   icon: ReactNode;
   label: string;
   active: boolean;
   onClick: () => void;
+  disabled?: boolean;
+  badge?: string;
 }) {
   return (
     <button
-      onClick={onClick}
+      onClick={disabled ? undefined : onClick}
+      disabled={disabled}
+      title={disabled ? `${label} is in learning` : undefined}
       className={`
         w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all
+        ${disabled ? 'cursor-not-allowed opacity-55' : ''}
         ${active
           ? 'bg-gradient-to-r from-[#ff6b35] to-[#f38181] text-white shadow-lg'
-          : 'text-[#8e8f94] hover:bg-[#1c1d22] hover:text-white'
+          : disabled
+            ? 'text-[#8e8f94]'
+            : 'text-[#8e8f94] hover:bg-[#1c1d22] hover:text-white'
         }
       `}
     >
       {icon}
       <span className="font-medium">{label}</span>
+      {badge && <span className="ml-auto rounded-full border border-[#38f3dd]/25 bg-[#10201f] px-2 py-0.5 text-[10px] font-bold text-[#8cf5e8]">{badge}</span>}
     </button>
   );
 }
@@ -110,7 +117,7 @@ export function GameCard({ title, platform, status, image, disabled }: {
   );
 }
 
-export function FriendCard({ name, avatarUrl, status, lobbyId, online, inGame, unreadCount = 0, onClick }: {
+export function FriendCard({ name, avatarUrl, status, lobbyId, online, inGame, unreadCount = 0, onClick, onViewProfile, onOpenPublicProfile, onRemove, onBlock }: {
   name: string;
   avatarUrl?: string;
   status: string;
@@ -119,15 +126,27 @@ export function FriendCard({ name, avatarUrl, status, lobbyId, online, inGame, u
   inGame?: boolean;
   unreadCount?: number;
   onClick?: () => void;
+  onViewProfile?: () => void;
+  onOpenPublicProfile?: () => void;
+  onRemove?: () => void;
+  onBlock?: () => void;
 }) {
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number } | null>(null);
+  const runAction = (action?: () => void) => {
+    setContextMenu(null);
+    action?.();
+  };
   return (
+    <>
     <div
       onClick={onClick}
       onContextMenu={(event) => {
         event.preventDefault();
-        window.dispatchEvent(new CustomEvent(APP_TOAST_EVENT, {
-          detail: { message: `Friend actions for ${name}: See Profile, Mute Messages, Block, Remove Friend.`, kind: 'info' },
-        }));
+        event.stopPropagation();
+        setContextMenu({
+          x: Math.min(event.clientX, window.innerWidth - 224),
+          y: Math.min(event.clientY, window.innerHeight - 244),
+        });
       }}
       className="p-3 rounded-lg bg-[#1c1d22] hover:bg-[#2a2b30] transition-colors cursor-pointer"
       title="Right-click for friend actions"
@@ -154,6 +173,54 @@ export function FriendCard({ name, avatarUrl, status, lobbyId, online, inGame, u
         </div>
       </div>
     </div>
+    {contextMenu && (
+      <>
+        <button
+          type="button"
+          aria-label="Close friend menu"
+          className="fixed inset-0 z-[70] cursor-default"
+          onClick={() => setContextMenu(null)}
+          onContextMenu={(event) => {
+            event.preventDefault();
+            setContextMenu(null);
+          }}
+        />
+        <div
+          className="fixed z-[71] w-52 overflow-hidden rounded-lg border border-[#34353b] bg-[#17191f] p-1.5 shadow-2xl"
+          style={{ left: contextMenu.x, top: contextMenu.y }}
+          role="menu"
+        >
+          <FriendContextAction icon={<UserCircle />} label="View profile" onClick={() => runAction(onViewProfile || onClick)} />
+          <FriendContextAction icon={<MessageCircle />} label="Message" onClick={() => runAction(onClick)} />
+          <FriendContextAction icon={<ExternalLink />} label="Open public profile" onClick={() => runAction(onOpenPublicProfile)} />
+          <div className="my-1.5 border-t border-[#34353b]" />
+          <FriendContextAction icon={<UserMinus />} label="Remove friend" danger onClick={() => runAction(onRemove)} />
+          <FriendContextAction icon={<Ban />} label="Block" danger onClick={() => runAction(onBlock)} />
+        </div>
+      </>
+    )}
+    </>
+  );
+}
+
+function FriendContextAction({ icon, label, danger = false, onClick }: {
+  icon: ReactNode;
+  label: string;
+  danger?: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      role="menuitem"
+      onClick={onClick}
+      className={`flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-left text-sm transition-colors ${
+        danger ? 'text-[#f38181] hover:bg-[#f85149]/10' : 'text-[#d7dde5] hover:bg-[#2a2b30]'
+      }`}
+    >
+      <span className="[&>svg]:h-4 [&>svg]:w-4">{icon}</span>
+      <span>{label}</span>
+    </button>
   );
 }
 

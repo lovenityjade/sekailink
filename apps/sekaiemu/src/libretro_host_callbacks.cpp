@@ -10,6 +10,7 @@
 #include <cstdint>
 #include <iostream>
 #include <string_view>
+#include <unordered_set>
 
 namespace sekaiemu::spike {
 
@@ -63,6 +64,9 @@ void LibretroHost::Impl::LogPrintf(enum retro_log_level level, const char* fmt, 
   if (!active_host || !fmt) {
     return;
   }
+  if (level == RETRO_LOG_DEBUG) {
+    return;
+  }
 
   va_list args;
   va_start(args, fmt);
@@ -70,14 +74,19 @@ void LibretroHost::Impl::LogPrintf(enum retro_log_level level, const char* fmt, 
   vsnprintf(buffer.data(), buffer.size(), fmt, args);
   va_end(args);
 
-  // bsnes-mercury reports this every frame for some enhancement-chip games
-  // with no cartridge SRAM (notably MMX3/Cx4). It makes real runtime failures
-  // almost impossible to read and can flood the Client Core log bridge.
-  if (std::string_view(buffer.data()) == "SRAM memory size: 0.\n") {
-    return;
+  const std::string_view message(buffer.data());
+
+  // Several cores report SRAM size through the libretro logger whenever the
+  // frontend queries battery memory. Keep the first line for diagnostics, then
+  // suppress the hot-loop repeats so Client Core stays responsive.
+  if (message.rfind("SRAM memory size: ", 0) == 0) {
+    static std::unordered_set<std::string> seen_sram_messages;
+    if (!seen_sram_messages.insert(std::string(message)).second) {
+      return;
+    }
   }
 
-  std::cerr << "[libretro][" << LogLevelName(level) << "] " << buffer.data();
+  std::cerr << "[libretro][" << LogLevelName(level) << "] " << message;
 }
 
 bool LibretroHost::Impl::SetRumbleState(unsigned, enum retro_rumble_effect, std::uint16_t) {

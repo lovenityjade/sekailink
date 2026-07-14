@@ -36,12 +36,22 @@ from apclient_events import (
     normalize_game_name_for_match,
     read_archipelago_patch_metadata,
     scrub_packet_for_trace,
+    summarize_print_json_item_send,
     summarize_network_item,
     summarize_server_send,
 )
 
 
-if "--nogui" not in sys.argv:
+def _is_universal_tracker_argv(argv: list[str]) -> bool:
+    try:
+        module_index = argv.index("--module")
+    except ValueError:
+        return False
+    module = argv[module_index + 1] if module_index + 1 < len(argv) else ""
+    return module == "worlds.tracker.TrackerClient"
+
+
+if not _is_universal_tracker_argv(sys.argv) and "--nogui" not in sys.argv:
     sys.argv.append("--nogui")
 os.environ.setdefault("KIVY_NO_ARGS", "1")
 os.environ.setdefault("KIVY_NO_FILELOG", "1")
@@ -112,6 +122,9 @@ def patch_context_events(ctx: Any) -> None:
         if callable(original_on_print_json):
             original_on_print_json(args)
         emit("print_json", data=args.get("data", []), raw=args)
+        item_send = summarize_print_json_item_send(ctx, args)
+        if item_send is not None:
+            emit("item_send", **item_send)
 
     def on_package(cmd: str, args: dict[str, Any]) -> None:
         nonlocal sekailink_room_games
@@ -166,6 +179,9 @@ def patch_context_events(ctx: Any) -> None:
             )
         elif cmd == "PrintJSON":
             emit("chat_json", data=args.get("data", []), raw=scrub_packet_for_trace(args))
+            item_send = summarize_print_json_item_send(ctx, args)
+            if item_send is not None:
+                emit("item_send", **item_send)
 
     async def connection_closed() -> None:
         if callable(original_connection_closed):
@@ -572,7 +588,8 @@ async def run_module_main_client(args: argparse.Namespace) -> None:
     entry = getattr(module, "launch", None) or getattr(module, "main", None) or getattr(module, "run", None)
     if not callable(entry):
         raise RuntimeError(f"module_has_no_entrypoint:{args.module}")
-    launch_args: list[str] = ["--nogui"]
+    uses_universal_tracker = args.module == "worlds.tracker.TrackerClient"
+    launch_args: list[str] = [] if uses_universal_tracker else ["--nogui"]
     if args.connect:
         launch_args.extend(["--connect", args.connect])
     if args.password:
@@ -630,7 +647,8 @@ async def async_main(argv: list[str] | None = None) -> int:
     parser.add_argument("--rom", default="")
     parser.add_argument("--nogui", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
-    install_headless_ap_hooks(Utils, rom_path=args.rom, patch_path=args.patch)
+    if not (args.kind == "module" and args.module == "worlds.tracker.TrackerClient"):
+        install_headless_ap_hooks(Utils, rom_path=args.rom, patch_path=args.patch)
 
     Utils.init_logging(f"SekaiLink-{args.kind}-Client", exception_logger="Client")
     install_json_logging()

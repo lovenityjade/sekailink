@@ -29,6 +29,9 @@
     ],
     "sha1": [
       "da957f0d63d14cb441d215462904c4fa8519c613"
+    ],
+    "sha256": [
+      "12b77c4bc9c1832cee8881244659065ee1d84c70c3d29e6eaf92e6798cc2ca72"
     ]
   },
   "features": {
@@ -40,6 +43,7 @@
     "ap_game": "Super Metroid"
   },
   "tracker_pack_uid": "https://github.com/Cyb3RGER/sm_ap_tracker",
-  "tracker_web_url": "",
-  "tracker_asset_regex": "\\.zip$"
+  "tracker_web_url": "https://github.com/Cyb3RGER/sm_ap_tracker/releases/latest",
+  "tracker_asset_regex": "\\.zip$",
+  "tracker_pack_path": "poptracker/packs/super_metroid/pack"
 }

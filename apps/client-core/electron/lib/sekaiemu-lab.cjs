@@ -18,6 +18,7 @@ const createSekaiemuLab = ({
   terminateChildProcess,
   secureIpcHandle,
   tryLaunchSekaiemu,
+  tryCaptureSekaiemuInput,
 }) => {
   const sessions = new Map();
 
@@ -185,6 +186,16 @@ const createSekaiemuLab = ({
         serverAddress: String(safe.apHost || "").trim(),
         slot: String(safe.apSlot || "").trim(),
         password: String(safe.apPass || ""),
+      });
+    });
+
+    secureIpcHandle("sekaiemu:inputCapture", async (_event, options) => {
+      if (typeof tryCaptureSekaiemuInput !== "function") {
+        return { ok: false, error: "input_capture_unavailable" };
+      }
+      const safe = isPlainObject(options) ? options : {};
+      return tryCaptureSekaiemuInput({
+        profile: String(safe.profile || safe.coreId || "snes").trim(),
       });
     });
 

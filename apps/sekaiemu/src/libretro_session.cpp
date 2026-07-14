@@ -9,10 +9,11 @@
 
 namespace sekaiemu::spike {
 
-bool InitializeFrontendSdl(bool probe_only, std::string& error) {
+bool InitializeFrontendSdl(bool probe_only, bool background_gamepad_input, std::string& error) {
   if (probe_only) {
     return true;
   }
+  SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, background_gamepad_input ? "1" : "0");
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS |
                SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK) != 0) {
     error = std::string("SDL_Init failed: ") + SDL_GetError();

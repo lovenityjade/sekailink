@@ -1,0 +1,29 @@
+{
+  "settings_popup": {
+      "type": "tabbed",
+      "tabs": [
+        {
+          "title": "Settings",
+          "content": {
+            "type": "layout",
+            "key": "settings_tab"
+          }
+        },
+        {
+          "title": "Dungeon Settings",
+          "content": {
+            "type": "layout",
+            "key": "dungeon_settings_tab"
+          }
+        },
+        {
+          "title": "Logic Tricks",
+          "content": {
+              "type": "layout",
+              "key": "logic_tricks"
+          }
+        }
+      ]
+    }
+  }
+//                         "margin": "5,1,5,5",

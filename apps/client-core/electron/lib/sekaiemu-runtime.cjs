@@ -7,7 +7,7 @@ const createSekaiemuRuntime = (deps = {}) => {
     os,
     path,
     crypto,
-    processRef = process,
+    processRef = globalThis.process,
     readConfig,
     ensureDir,
     writeLogLine,
@@ -25,18 +25,28 @@ const createSekaiemuRuntime = (deps = {}) => {
     spawnMaybeGamescope,
     startSekaiemuChatBridge,
     stopArchipelagoClientsForSession,
+    triggerCoupledRuntimeTeardown = () => {},
     nativeGameProcs,
     sekaiemuChatBridges,
     rememberSekaiemuSession = () => {},
     forgetSekaiemuSession = () => {},
+    emitSessionEvent = () => {},
   } = deps;
   const process = processRef;
 
   const getSekaiemuSettings = () => {
     const config = readConfig();
     const games = config.games && typeof config.games === "object" ? config.games : {};
+    const layout = config.layout && typeof config.layout === "object" ? config.layout : {};
+    const layoutSekaiemu = layout.sekaiemu && typeof layout.sekaiemu === "object" ? layout.sekaiemu : {};
+    const layoutInput = layout.input && typeof layout.input === "object" ? layout.input : {};
     const sekaiemu = games.sekaiemu && typeof games.sekaiemu === "object" ? games.sekaiemu : {};
-    const frontend = sekaiemu.frontend && typeof sekaiemu.frontend === "object" ? sekaiemu.frontend : {};
+    const frontend = {
+      ...(sekaiemu.frontend && typeof sekaiemu.frontend === "object" ? sekaiemu.frontend : {}),
+      ...(layoutSekaiemu.hud_buttons_visible !== undefined ? { client_core_hud_buttons_visible: layoutSekaiemu.hud_buttons_visible } : {}),
+      ...(layoutSekaiemu.background_gamepad_input !== undefined ? { background_gamepad_input: layoutSekaiemu.background_gamepad_input } : {}),
+      ...(layoutSekaiemu.chatbox_visible !== undefined ? { chat_overlay_enabled: false } : {}),
+    };
     const cores = sekaiemu.cores && typeof sekaiemu.cores === "object" ? sekaiemu.cores : {};
     return {
       exe_path: String(sekaiemu.exe_path || process.env.SEKAILINK_SEKAIEMU_PATH || "").trim(),
@@ -48,6 +58,7 @@ const createSekaiemuRuntime = (deps = {}) => {
       args: Array.isArray(sekaiemu.args) ? sekaiemu.args.map((entry) => String(entry || "").trim()).filter(Boolean) : [],
       frontend,
       cores,
+      input: layoutInput,
     };
   };
   
@@ -65,6 +76,192 @@ const createSekaiemuRuntime = (deps = {}) => {
     const clean = String(value || "").trim().toLowerCase();
     return allowed.includes(clean) ? clean : fallback;
   };
+
+  const windowModeConfigValue = (frontend) => {
+    const clean = String(frontend?.window_mode || "").trim().toLowerCase();
+    if (["window", "borderless-window", "fullscreen"].includes(clean)) return clean;
+    if (boolConfigValue(frontend?.start_fullscreen, false) === "true") return "fullscreen";
+    return "borderless-window";
+  };
+
+  const normalizeConfigKey = (value) => {
+    let output = "";
+    for (const char of String(value || "")) {
+      output += /[A-Za-z0-9]/.test(char) ? char.toLowerCase() : "_";
+    }
+    return output.replace(/_+$/g, "");
+  };
+
+  const appendLogTail = (current, chunk, maxLength = 8000) => {
+    const next = `${current || ""}${String(chunk || "")}`;
+    return next.length > maxLength ? next.slice(next.length - maxLength) : next;
+  };
+
+  const oneLine = (value, maxLength = 1200) => {
+    const clean = String(value || "").replace(/\s+/g, " ").trim();
+    return clean.length > maxLength ? `${clean.slice(0, maxLength)}...` : clean;
+  };
+
+  const logProcessStream = (stream, level, scope, prefix, tailRef) => {
+    if (!stream || typeof stream.on !== "function") return;
+    let lastLine = "";
+    let repeatCount = 0;
+    let reportedRepeatCount = 0;
+    let lastRepeatFlush = 0;
+
+    const flushRepeats = (force = false) => {
+      if (repeatCount <= 3) return;
+      const repeatedTotal = repeatCount - 3;
+      const repeatedDelta = repeatedTotal - reportedRepeatCount;
+      if (repeatedDelta <= 0) return;
+      const now = Date.now();
+      if (!force && now - lastRepeatFlush < 5000) return;
+      writeLogLine?.(level, scope, `${prefix}: suppressed ${repeatedDelta} repeated lines: ${lastLine}`);
+      reportedRepeatCount = repeatedTotal;
+      lastRepeatFlush = now;
+    };
+
+    const logLine = (line) => {
+      const clean = oneLine(line);
+      if (!clean) return;
+      if (clean === lastLine) {
+        repeatCount += 1;
+        if (repeatCount <= 3) {
+          writeLogLine?.(level, scope, `${prefix}: ${clean}`);
+        } else {
+          flushRepeats(false);
+        }
+        return;
+      }
+      flushRepeats(true);
+      lastLine = clean;
+      repeatCount = 1;
+      reportedRepeatCount = 0;
+      lastRepeatFlush = 0;
+      writeLogLine?.(level, scope, `${prefix}: ${clean}`);
+    };
+
+    stream.setEncoding?.("utf8");
+    stream.on("data", (chunk) => {
+      tailRef.value = appendLogTail(tailRef.value, chunk);
+      const lines = String(chunk || "").split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+      for (const line of lines.slice(-12)) {
+        logLine(line);
+      }
+    });
+    stream.once?.("end", () => flushRepeats(true));
+    stream.once?.("close", () => flushRepeats(true));
+  };
+
+  const describePathForLaunch = (targetPath) => {
+    const safe = String(targetPath || "").trim();
+    if (!safe) return "empty";
+    try {
+      const stat = fs.statSync(safe);
+      const type = stat.isFile() ? "file" : stat.isDirectory() ? "dir" : "other";
+      const mode = (stat.mode & 0o777).toString(8);
+      return `${type},size=${stat.size},mode=${mode}`;
+    } catch (err) {
+      const code = String(err?.code || "").trim();
+      return code ? `missing_or_blocked:${code}` : "missing_or_blocked";
+    }
+  };
+
+  const describeWindowsRuntimeDlls = (exePath) => {
+    if (process.platform !== "win32" || !exePath) return "";
+    const binDir = path.dirname(exePath);
+    const required = [
+      "SDL2.dll",
+      "libgcc_s_seh-1.dll",
+      "libstdc++-6.dll",
+      "libwinpthread-1.dll",
+    ];
+    const missing = required.filter((name) => !fileExists(path.join(binDir, name)));
+    return missing.length ? `; missing_dlls=${missing.join(",")}` : "; missing_dlls=none";
+  };
+
+  const formatLaunchSpawnError = (err, context = {}) => {
+    const parts = [
+      `message=${oneLine(err?.message || err || "spawn_failed", 500)}`,
+      err?.code ? `code=${err.code}` : "",
+      err?.errno !== undefined ? `errno=${err.errno}` : "",
+      err?.syscall ? `syscall=${err.syscall}` : "",
+      `platform=${process.platform}-${process.arch}`,
+      `packaged=${app.isPackaged ? "true" : "false"}`,
+      `exe=${context.exePath || ""} [${describePathForLaunch(context.exePath)}]`,
+      `core=${context.corePath || ""} [${describePathForLaunch(context.corePath)}]`,
+      `rom=${context.romPath || ""} [${describePathForLaunch(context.romPath)}]`,
+      `system=${context.systemDir || ""} [${describePathForLaunch(context.systemDir)}]`,
+      `save=${context.saveDir || ""} [${describePathForLaunch(context.saveDir)}]`,
+      `log=${context.logDir || ""} [${describePathForLaunch(context.logDir)}]`,
+      `arg_count=${Array.isArray(context.args) ? context.args.length : 0}`,
+      describeWindowsRuntimeDlls(context.exePath),
+      process.platform === "win32" && String(err?.code || "").toUpperCase() === "UNKNOWN"
+        ? "win_hint=Windows CreateProcess failed; check Security quarantine/Controlled Folder Access or a missing runtime DLL"
+        : "",
+    ].filter(Boolean);
+    return parts.join("; ");
+  };
+
+  const waitForSpawnFailure = (proc, timeoutMs = 250) => new Promise((resolve) => {
+    if (!proc || typeof proc.once !== "function") {
+      resolve(null);
+      return;
+    }
+    let settled = false;
+    const finish = (err) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      resolve(err || null);
+    };
+    const timer = setTimeout(() => finish(null), timeoutMs);
+    proc.once("error", finish);
+  });
+
+  const cleanupSklmiCompanionForSocket = (memorySocketPath, reason = "sekaiemu_exit") => {
+    const socket = String(memorySocketPath || "").trim();
+    if (!socket || process.platform === "win32") return;
+    let procEntries = [];
+    try {
+      procEntries = fs.readdirSync("/proc", { withFileTypes: true });
+    } catch (_err) {
+      return;
+    }
+    for (const entry of procEntries) {
+      if (!entry.isDirectory() || !/^\d+$/.test(entry.name)) continue;
+      const pid = Number(entry.name);
+      if (!Number.isFinite(pid) || pid <= 0 || pid === process.pid) continue;
+      let cmdline = "";
+      try {
+        cmdline = fs.readFileSync(path.join("/proc", entry.name, "cmdline"), "utf8").replace(/\0/g, " ");
+      } catch (_err) {
+        continue;
+      }
+      if (!cmdline.includes("sekailink_sklmi_runtime") || !cmdline.includes(socket)) continue;
+      try {
+        process.kill(pid, "SIGTERM");
+        writeLogLine?.("info", "sekaiemu", `stopped orphan SKLMI companion pid=${pid} reason=${reason}`);
+        setTimeout(() => {
+          try {
+            process.kill(pid, "SIGKILL");
+          } catch (_err) {
+            // Already gone.
+          }
+        }, 1200).unref?.();
+      } catch (err) {
+        writeLogLine?.("warn", "sekaiemu", `orphan SKLMI cleanup failed pid=${pid}: ${String(err?.message || err || "")}`);
+      }
+    }
+  };
+
+  const sklmiBridgeIdForGame = (gameName) => {
+    const clean = String(gameName || "").trim().toLowerCase();
+    if (clean === "earthbound") return "earthbound-phase1";
+    if (clean === "a link to the past") return "alttp-phase1";
+    if (clean === "the legend of zelda") return "tloz-phase1";
+    return "";
+  };
   
   const writeSekaiemuRuntimeConfig = (saveDir, settings) => {
     const configDir = path.join(saveDir, "frontend-config");
@@ -73,13 +270,17 @@ const createSekaiemuRuntime = (deps = {}) => {
       const frontend = settings.frontend && typeof settings.frontend === "object" ? settings.frontend : {};
       const settingsMode = enumConfigValue(frontend.settings_mode, ["easy", "advanced"], "easy");
       const trackerDisplayMode = "separate-window";
-      const volume = Math.max(0, Math.min(150, Number(frontend.master_volume_percent ?? 15) || 0));
+      const volume = Math.max(0, Math.min(150, Number(frontend.master_volume_percent ?? 35) || 0));
       const sekaiemuCfg = [
         "# Sekaiemu frontend settings generated by SekaiLink Client Core.",
         `settings_mode=${settingsMode}`,
         `chat_overlay_enabled=${boolConfigValue(frontend.chat_overlay_enabled, true)}`,
         `notifications_enabled=${boolConfigValue(frontend.notifications_enabled, true)}`,
+        `activity_feed_enabled=${boolConfigValue(frontend.activity_feed_enabled, false)}`,
+        `client_core_hud_buttons_visible=${boolConfigValue(frontend.client_core_hud_buttons_visible ?? frontend.hud_buttons_visible, true)}`,
         `bridge_terminal_enabled=${boolConfigValue(frontend.bridge_terminal_enabled, false)}`,
+        `background_gamepad_input=${boolConfigValue(frontend.background_gamepad_input ?? frontend.system_wide_gamepad_input ?? frontend.background_controller_input, false)}`,
+        `window_mode=${windowModeConfigValue(frontend)}`,
         `master_volume_percent=${volume}`,
         `tracker_display_mode=${trackerDisplayMode}`,
         "tracker_screen_visible=false",
@@ -105,6 +306,241 @@ const createSekaiemuRuntime = (deps = {}) => {
       const detail = String(err || "");
       writeLogLine("warn", "sekaiemu", `runtime frontend config write failed: ${detail}`);
       return { ok: false, error: "sekaiemu_runtime_config_write_failed", detail };
+    }
+  };
+
+  const sekaiemuInputDefaults = {
+    dpad_up: { keyboard: "key:Up", controller: "button:dpup" },
+    dpad_down: { keyboard: "key:Down", controller: "button:dpdown" },
+    dpad_left: { keyboard: "key:Left", controller: "button:dpleft" },
+    dpad_right: { keyboard: "key:Right", controller: "button:dpright" },
+    a: { keyboard: "key:X", controller: "button:a" },
+    b: { keyboard: "key:Z", controller: "button:b" },
+    x: { keyboard: "key:S", controller: "button:x" },
+    y: { keyboard: "key:A", controller: "button:y" },
+    l: { keyboard: "key:Q", controller: "button:leftshoulder" },
+    r: { keyboard: "key:W", controller: "button:rightshoulder" },
+    start: { keyboard: "key:Return", controller: "button:start" },
+    select: { keyboard: "key:Right Shift", controller: "button:back" },
+    analog_left: { keyboard: "key:Left", controller: "axis-:leftx" },
+    analog_right: { keyboard: "key:Right", controller: "axis+:leftx" },
+    analog_up: { keyboard: "key:Up", controller: "axis-:lefty" },
+    analog_down: { keyboard: "key:Down", controller: "axis+:lefty" },
+  };
+
+  const gamepadButtonIndexToSdl = {
+    0: "a",
+    1: "b",
+    2: "x",
+    3: "y",
+    4: "leftshoulder",
+    5: "rightshoulder",
+    8: "back",
+    9: "start",
+    10: "leftstick",
+    11: "rightstick",
+    12: "dpup",
+    13: "dpdown",
+    14: "dpleft",
+    15: "dpright",
+  };
+
+  const gamepadAxisIndexToSdl = {
+    0: "leftx",
+    1: "lefty",
+    2: "rightx",
+    3: "righty",
+  };
+
+  const controlLabelToSekaiemuKey = {
+    "D-Pad Up": "dpad_up",
+    "D-Pad Down": "dpad_down",
+    "D-Pad Left": "dpad_left",
+    "D-Pad Right": "dpad_right",
+    A: "a",
+    B: "b",
+    X: "x",
+    Y: "y",
+    L: "l",
+    R: "r",
+    Start: "start",
+    Select: "select",
+    "Stick Up": "analog_up",
+    "Stick Down": "analog_down",
+    "Stick Left": "analog_left",
+    "Stick Right": "analog_right",
+  };
+
+  const controlCoreIdForSekaiemuCore = (corePath, manifest) => {
+    const coreId = String(
+      manifest?.sekaiemu?.core_id ||
+      manifest?.libretro_core_id ||
+      manifest?.driver?.core_id ||
+      path.basename(String(corePath || ""), path.extname(String(corePath || "")))
+    ).toLowerCase();
+    const gameId = String(manifest?.game_id || manifest?.id || "").toLowerCase();
+    const haystack = `${coreId} ${gameId}`;
+    if (/(mupen|parallel|n64|z64|oot|dk64)/.test(haystack)) return "n64";
+    if (/(mgba|gba|game_boy_advance|zeromission|zero_mission|fire_red|firered)/.test(haystack)) return "gba";
+    if (/(gambatte|sameboy|gbc|gb|game_boy|ladx)/.test(haystack)) return "gbc";
+    if (/(fceumm|nestopia|nes|tloz)/.test(haystack)) return "nes";
+    return "snes";
+  };
+
+  const clientBindingToSekaiemuControllerToken = (binding) => {
+    const clean = String(binding || "").trim().toLowerCase();
+    if (/^(button|axis[+-]):[a-z0-9_+-]+$/i.test(String(binding || "").trim())) {
+      return String(binding || "").trim();
+    }
+    if (/^sdl:(button|axis[+-]):[a-z0-9_+-]+$/i.test(String(binding || "").trim())) {
+      return String(binding || "").trim().slice(4);
+    }
+    const buttonMatch = clean.match(/^(?:gamepad:)?button:(\d+)$/);
+    if (buttonMatch) {
+      const button = gamepadButtonIndexToSdl[Number(buttonMatch[1])];
+      return button ? `button:${button}` : "";
+    }
+    const axisMatch = clean.match(/^(?:gamepad:)?axis:(\d+)([+-])$/);
+    if (axisMatch) {
+      const axis = gamepadAxisIndexToSdl[Number(axisMatch[1])];
+      return axis ? `axis${axisMatch[2]}:${axis}` : "";
+    }
+    return "";
+  };
+
+  const sekaiemuControllerTokenToClientBinding = (token) => {
+    const clean = String(token || "").trim();
+    return clean ? `sdl:${clean}` : "";
+  };
+
+  const clientControlLabelForSekaiemuKey = (key) => {
+    const entries = Object.entries(controlLabelToSekaiemuKey);
+    const found = entries.find(([, value]) => value === key);
+    return found ? found[0] : "";
+  };
+
+  const parseSekaiemuInputConfigMappings = (configPath) => {
+    const mappings = {};
+    const text = fs.readFileSync(configPath, "utf8");
+    for (const rawLine of text.split(/\r?\n/)) {
+      const line = rawLine.trim();
+      if (!line || line.startsWith("#")) continue;
+      const equals = line.indexOf("=");
+      if (equals <= 0) continue;
+      const key = line.slice(0, equals).trim();
+      const value = line.slice(equals + 1).trim();
+      const match = key.match(/^([a-z0-9_]+)\.controller$/i);
+      if (!match) continue;
+      const label = clientControlLabelForSekaiemuKey(match[1].toLowerCase());
+      const binding = sekaiemuControllerTokenToClientBinding(value);
+      if (label && binding) mappings[label] = binding;
+    }
+    return mappings;
+  };
+
+  const writeSekaiemuCoreOptionOverrides = (saveDir, corePath, romPath, manifest = {}) => {
+    try {
+      if (!saveDir || !corePath || !romPath) return { ok: true, skipped: true };
+      const sekaiemu = manifest.sekaiemu && typeof manifest.sekaiemu === "object" ? manifest.sekaiemu : {};
+      const coreId = String(
+        sekaiemu.core_id ||
+          manifest.libretro_core_id ||
+          manifest?.driver?.core_id ||
+          ""
+      ).trim().toLowerCase();
+      const coreName = path.basename(corePath, path.extname(corePath)).toLowerCase();
+      const overrides = {};
+      if (coreId === "gbc" && coreName.includes("gambatte")) {
+        overrides.gambatte_gb_hwmode = "GBC";
+      }
+      if (sekaiemu.core_options && typeof sekaiemu.core_options === "object") {
+        for (const [rawKey, rawValue] of Object.entries(sekaiemu.core_options)) {
+          const key = String(rawKey || "").trim();
+          const value = String(rawValue ?? "").replace(/[\r\n]/g, " ").trim();
+          if (/^[A-Za-z0-9._-]+$/.test(key) && value) {
+            overrides[key] = value;
+          }
+        }
+      }
+      const entries = Object.entries(overrides);
+      if (!entries.length) return { ok: true, skipped: true };
+
+      const configDir = path.join(saveDir, "core-config");
+      ensureDir(configDir);
+      const coreKey = normalizeConfigKey(path.basename(corePath, path.extname(corePath)));
+      const gameKey = normalizeConfigKey(path.basename(romPath, path.extname(romPath)));
+      const merged = {};
+      const gameConfigPath = path.join(configDir, `${coreKey}__${gameKey}.cfg`);
+      if (fs.existsSync(gameConfigPath)) {
+        for (const rawLine of fs.readFileSync(gameConfigPath, "utf8").split(/\r?\n/)) {
+          const line = rawLine.trim();
+          if (!line || line.startsWith("#")) continue;
+          const equals = line.indexOf("=");
+          if (equals <= 0) continue;
+          const key = line.slice(0, equals).trim();
+          const value = line.slice(equals + 1).trim();
+          if (/^[A-Za-z0-9._-]+$/.test(key) && value) merged[key] = value;
+        }
+      }
+      for (const [key, value] of entries) merged[key] = value;
+      const lines = [
+        "# Sekaiemu core settings generated by SekaiLink Client Core.",
+        "# Game-specific overrides required for stable module launch.",
+        ...Object.entries(merged).sort(([a], [b]) => a.localeCompare(b)).map(([key, value]) => `${key}=${value}`),
+        "",
+      ];
+      fs.writeFileSync(gameConfigPath, lines.join("\n"), "utf8");
+      writeLogLine("info", "sekaiemu", `runtime core option overrides written: ${gameConfigPath}`);
+      return { ok: true, path: gameConfigPath, applied: entries.length };
+    } catch (err) {
+      const detail = String(err || "");
+      writeLogLine("warn", "sekaiemu", `runtime core option override write failed: ${detail}`);
+      return { ok: false, error: "sekaiemu_core_option_write_failed", detail };
+    }
+  };
+  
+  const writeSekaiemuInputConfig = (saveDir, corePath, manifest, settings) => {
+    try {
+      if (!saveDir || !corePath) return { ok: true, skipped: true };
+      const input = settings.input && typeof settings.input === "object" ? settings.input : {};
+      const allMappings = input.core_mappings && typeof input.core_mappings === "object" ? input.core_mappings : {};
+      const profileId = controlCoreIdForSekaiemuCore(corePath, manifest);
+      const fallbackProfileId = String(input.default_core_id || "").trim();
+      const selectedMappings = {
+        ...(fallbackProfileId && allMappings[fallbackProfileId] && typeof allMappings[fallbackProfileId] === "object" ? allMappings[fallbackProfileId] : {}),
+        ...(allMappings[profileId] && typeof allMappings[profileId] === "object" ? allMappings[profileId] : {}),
+      };
+      const bindings = JSON.parse(JSON.stringify(sekaiemuInputDefaults));
+      let applied = 0;
+      for (const [clientLabel, binding] of Object.entries(selectedMappings)) {
+        const key = controlLabelToSekaiemuKey[clientLabel];
+        if (!key || !bindings[key]) continue;
+        const token = clientBindingToSekaiemuControllerToken(binding);
+        if (!token) continue;
+        bindings[key].controller = token;
+        applied += 1;
+      }
+      const coreKey = normalizeConfigKey(path.basename(corePath, path.extname(corePath)));
+      const inputDir = path.join(saveDir, "input-config");
+      ensureDir(inputDir);
+      const lines = [
+        "# Sekaiemu core input configuration",
+        "# Generated by SekaiLink Client Core from Settings > Control Settings.",
+        "selected_controller_guid=",
+      ];
+      for (const [key, binding] of Object.entries(bindings)) {
+        lines.push(`${key}.keyboard=${binding.keyboard}`);
+        lines.push(`${key}.controller=${binding.controller}`);
+      }
+      lines.push("");
+      const configPath = path.join(inputDir, `${coreKey}.cfg`);
+      fs.writeFileSync(configPath, lines.join("\n"), "utf8");
+      writeLogLine("info", "sekaiemu", `runtime input config written: ${configPath} profile=${profileId} applied=${applied}`);
+      return { ok: true, path: configPath, profileId, applied };
+    } catch (err) {
+      const detail = String(err || "");
+      writeLogLine("warn", "sekaiemu", `runtime input config write failed: ${detail}`);
+      return { ok: false, error: "sekaiemu_input_config_write_failed", detail };
     }
   };
   
@@ -507,6 +943,24 @@ const createSekaiemuRuntime = (deps = {}) => {
       };
     }
     writeSekaiemuRuntimeConfig(saveDir, settings);
+    if (!layoutPreview) {
+      const coreOptionRes = writeSekaiemuCoreOptionOverrides(saveDir, corePath, romPath, manifest);
+      if (!coreOptionRes.ok) {
+        return {
+          ok: false,
+          error: coreOptionRes.error || "sekaiemu_core_option_write_failed",
+          detail: coreOptionRes.detail || "",
+        };
+      }
+      const inputConfigRes = writeSekaiemuInputConfig(saveDir, corePath, manifest, settings);
+      if (!inputConfigRes.ok) {
+        return {
+          ok: false,
+          error: inputConfigRes.error || "sekaiemu_input_config_write_failed",
+          detail: inputConfigRes.detail || "",
+        };
+      }
+    }
   
     const requestedMemorySocket = String(options.memorySocketPath || "").trim();
     const needsBizHawkProtocolPort = !layoutPreview && !requestedMemorySocket && moduleUsesBizHawkProtocolClient(manifest);
@@ -528,6 +982,15 @@ const createSekaiemuRuntime = (deps = {}) => {
     const args = layoutPreview
       ? ["--layout-preview", "--save-dir", saveDir, "--log-dir", logDir, options.startFullscreen ? "--fullscreen" : "--windowed"]
       : ["--core", corePath, "--game", romPath, "--system-dir", systemDir, "--save-dir", saveDir, "--log-dir", logDir, "--memory-socket", memorySocketPath];
+    const hudRoot = layoutPreview ? "" : path.join(app.getPath("userData"), "runtime", "sekaiemu-hud", safeModuleId, `${Date.now()}-${crypto.randomBytes(4).toString("hex")}`);
+    const hudStatePath = hudRoot ? path.join(hudRoot, "hud-state.json") : "";
+    const hudEventsPath = hudRoot ? path.join(hudRoot, "hud-events.jsonl") : "";
+    if (!layoutPreview) {
+      ensureDir(hudRoot);
+      fs.writeFileSync(hudStatePath, JSON.stringify({ chatUnread: 0, activityUnread: 0, buttonsVisible: true, toasts: [] }, null, 2), "utf8");
+      fs.writeFileSync(hudEventsPath, "", "utf8");
+      args.push("--client-core-hud-state", hudStatePath, "--client-core-hud-events", hudEventsPath);
+    }
     const runtimeDir = getBundledRuntimeDir();
     const overlayRuntimeDir = getOverlayRuntimeDir();
     const roots = [
@@ -547,7 +1010,16 @@ const createSekaiemuRuntime = (deps = {}) => {
     const apAddress = parseArchipelagoAddress(options.serverAddress);
     const apGame = String(sekaiemu.ap_game || manifest.ap_game || manifest.display_name || "").trim();
     const apSlot = String(options.slot || "").trim();
+    const sklmiBridgeId = !layoutPreview ? sklmiBridgeIdForGame(apGame) : "";
+    const sklmiTraceLogPath = sklmiBridgeId ? path.join(saveDir, "sklmi", sklmiBridgeId, "trace.jsonl") : "";
     const playerAlias = String(options.playerAlias || "").trim();
+    const playerAliasMap = isPlainObject(options.playerAliasMap) ? options.playerAliasMap : {};
+    const playerAliasMapJson = JSON.stringify(Object.fromEntries(
+      Object.entries(playerAliasMap)
+        .map(([slotName, alias]) => [String(slotName || "").trim(), String(alias || "").trim()])
+        .filter(([slotName, alias]) => slotName && alias)
+    ));
+    const allowSklmiPlayerAliasMap = process.env.SEKAILINK_ENABLE_SKLMI_PLAYER_ALIAS_MAP === "1";
     const cleanupModuleId = safeModuleId;
     const cleanupSlot = apSlot;
     if (!layoutPreview && apAddress?.host && apAddress.port && apGame && apSlot) {
@@ -561,6 +1033,13 @@ const createSekaiemuRuntime = (deps = {}) => {
       );
       if (options.password) args.push("--ap-password", String(options.password));
       if (playerAlias) args.push("--player-alias", playerAlias);
+      if (playerAliasMapJson !== "{}") {
+        if (allowSklmiPlayerAliasMap) {
+          args.push("--player-alias-map", playerAliasMapJson);
+        } else {
+          writeLogLine("info", "sekaiemu", "SKLMI player alias map disabled for runtime compatibility");
+        }
+      }
       args.push("--ap-tags", "AP,SekaiLink,SKLMI");
     }
     writeLogLine("info", "sekaiemu", `internal tracker disabled for BETA-3 runtime: module=${safeModuleId}`);
@@ -611,11 +1090,34 @@ const createSekaiemuRuntime = (deps = {}) => {
         spawnEnv.PATH = priorPath ? `${runtimeBinDir}${path.delimiter}${priorPath}` : runtimeBinDir;
         spawnEnv.Path = spawnEnv.PATH;
       }
-      const wrapped = spawnMaybeGamescope(exePath, args, { stdio: "ignore", env: spawnEnv });
+      writeLogLine?.("info", "sekaiemu", `launching runtime exe=${exePath} core=${corePath} rom=${romPath} system=${systemDir} save=${saveDir} log=${logDir}`);
+      const wrapped = spawnMaybeGamescope(exePath, args, { stdio: ["ignore", "pipe", "pipe"], env: spawnEnv });
       if (!wrapped.ok) {
         chatBridge?.stop?.();
         return { ok: false, error: wrapped.error || "sekaiemu_launch_failed", detail: wrapped.detail || "" };
       }
+      const immediateSpawnError = await waitForSpawnFailure(wrapped.proc);
+      if (immediateSpawnError) {
+        chatBridge?.stop?.();
+        const detail = formatLaunchSpawnError(immediateSpawnError, { exePath, corePath, romPath, systemDir, saveDir, logDir, args });
+        writeLogLine?.("warn", "sekaiemu", `runtime spawn failed: ${detail}`);
+        return { ok: false, error: "sekaiemu_launch_failed", detail };
+      }
+      const stdoutTail = { value: "" };
+      const stderrTail = { value: "" };
+      logProcessStream(wrapped.proc.stdout, "info", "sekaiemu", "stdout", stdoutTail);
+      logProcessStream(wrapped.proc.stderr, "warn", "sekaiemu", "stderr", stderrTail);
+      wrapped.proc.once("error", (err) => {
+        const detail = formatLaunchSpawnError(err, { exePath, corePath, romPath, systemDir, saveDir, logDir, args });
+        writeLogLine?.("warn", "sekaiemu", `runtime process error pid=${wrapped.proc.pid || ""}: ${detail}`);
+        emitSessionEvent({
+          event: "error",
+          step: "emu",
+          error: "sekaiemu_launch_failed",
+          detail,
+          moduleId: safeModuleId,
+        });
+      });
       nativeGameProcs.set(wrapped.proc.pid, wrapped.proc);
       rememberSekaiemuSession(wrapped.proc.pid, {
         exePath,
@@ -623,17 +1125,47 @@ const createSekaiemuRuntime = (deps = {}) => {
         romPath,
         memorySocketPath,
         moduleId: safeModuleId,
+        lobbyId: String(options?.chatBridge?.lobbyId || "").trim(),
+        lobbyTitle: String(options?.chatBridge?.lobbyTitle || options?.lobbyTitle || "").trim(),
+        channelId: String(options?.chatBridge?.channelId || (options?.chatBridge?.lobbyId ? `lobby:${options.chatBridge.lobbyId}` : "")).trim(),
+        slot: apSlot,
+        game: apGame,
+        apiBaseUrl: options.apiBaseUrl,
+        authToken: options.authToken,
+        deviceId: options.deviceId,
+        playerAlias,
+        playerAliasMap,
+        hudStatePath,
+        hudEventsPath,
+        traceLogPath: sklmiTraceLogPath,
         layoutPreview,
         launchedAt: nowIso(),
       });
       if (chatBridge) sekaiemuChatBridges.set(wrapped.proc.pid, chatBridge);
-      wrapped.proc.on("exit", () => {
+      wrapped.proc.on("exit", (code, signal) => {
+        const exitLevel = code === 0 ? "info" : "warn";
+        writeLogLine?.(exitLevel, "sekaiemu", `runtime exited pid=${wrapped.proc.pid} code=${code} signal=${signal || ""} stdout_tail=${oneLine(stdoutTail.value)} stderr_tail=${oneLine(stderrTail.value)}`);
         nativeGameProcs.delete(wrapped.proc.pid);
         forgetSekaiemuSession(wrapped.proc.pid);
+        emitSessionEvent({
+          event: "exited",
+          type: "exited",
+          source: "sekaiemu",
+          pid: wrapped.proc.pid,
+          moduleId: cleanupModuleId,
+          slot: cleanupSlot,
+          code,
+          signal,
+          at: nowIso(),
+        });
         if (!layoutPreview && cleanupSlot) {
           stopArchipelagoClientsForSession(cleanupModuleId, cleanupSlot, `sekaiemu_exit:${wrapped.proc.pid}`).catch((err) => {
             writeLogLine("warn", "archipelagoclient", `session cleanup after sekaiemu exit failed: ${String(err?.message || err || "")}`);
           });
+        }
+        if (!layoutPreview) {
+          cleanupSklmiCompanionForSocket(memorySocketPath, `sekaiemu_exit:${wrapped.proc.pid}`);
+          triggerCoupledRuntimeTeardown("sekaiemu", wrapped.proc.pid, { code, signal });
         }
         const activeBridge = sekaiemuChatBridges.get(wrapped.proc.pid);
         activeBridge?.stop?.();
@@ -642,7 +1174,54 @@ const createSekaiemuRuntime = (deps = {}) => {
       return { ok: true, pid: wrapped.proc.pid, method: "libretro-spike", exePath, corePath, romPath, memorySocketPath, layoutPreview, chatBridge };
     } catch (err) {
       chatBridge?.stop?.();
-      return { ok: false, error: "sekaiemu_launch_failed", detail: String(err || "") };
+      const detail = formatLaunchSpawnError(err, { exePath, corePath, romPath, systemDir, saveDir, logDir, args });
+      writeLogLine?.("warn", "sekaiemu", `runtime launch failed: ${detail}`);
+      return { ok: false, error: "sekaiemu_launch_failed", detail };
+    }
+  };
+
+  const tryCaptureSekaiemuInput = async (options = {}) => {
+    const profile = String(options.profile || options.coreId || "snes").trim() || "snes";
+    const exePath = resolveSekaiemuExecutable();
+    if (!exePath) return { ok: false, error: "sekaiemu_not_found" };
+    const root = path.join(app.getPath("userData"), "runtime", "sekaiemu-input-capture");
+    ensureDir(root);
+    const outputPath = path.join(root, `${Date.now()}-${crypto.randomBytes(4).toString("hex")}.cfg`);
+    const logDir = path.join(app.getPath("userData"), "logs", "sekaiemu");
+    ensureDir(logDir);
+    const args = ["--input-capture", outputPath, "--input-capture-profile", profile, "--save-dir", root, "--log-dir", logDir];
+    try {
+      const spawnEnv = { ...process.env };
+      if (process.platform === "win32") {
+        const runtimeBinDir = path.dirname(exePath);
+        const priorPath = spawnEnv.PATH || spawnEnv.Path || "";
+        spawnEnv.PATH = priorPath ? `${runtimeBinDir}${path.delimiter}${priorPath}` : runtimeBinDir;
+        spawnEnv.Path = spawnEnv.PATH;
+      }
+      writeLogLine?.("info", "sekaiemu", `launching input capture exe=${exePath} profile=${profile} output=${outputPath}`);
+      const wrapped = spawnMaybeGamescope(exePath, args, { stdio: ["ignore", "pipe", "pipe"], env: spawnEnv });
+      if (!wrapped.ok) return { ok: false, error: wrapped.error || "sekaiemu_input_capture_failed", detail: wrapped.detail || "" };
+      const immediateSpawnError = await waitForSpawnFailure(wrapped.proc);
+      if (immediateSpawnError) {
+        return { ok: false, error: "sekaiemu_input_capture_failed", detail: formatLaunchSpawnError(immediateSpawnError, { exePath, args }) };
+      }
+      const stdoutTail = { value: "" };
+      const stderrTail = { value: "" };
+      logProcessStream(wrapped.proc.stdout, "info", "sekaiemu", "input-capture stdout", stdoutTail);
+      logProcessStream(wrapped.proc.stderr, "warn", "sekaiemu", "input-capture stderr", stderrTail);
+      const exitCode = await new Promise((resolve) => wrapped.proc.once("exit", (code) => resolve(Number(code || 0))));
+      if (exitCode !== 0) {
+        return {
+          ok: false,
+          error: "sekaiemu_input_capture_cancelled",
+          detail: oneLine(stderrTail.value || stdoutTail.value || `exit=${exitCode}`),
+        };
+      }
+      if (!fileExists(outputPath)) return { ok: false, error: "sekaiemu_input_capture_missing_output" };
+      const mappings = parseSekaiemuInputConfigMappings(outputPath);
+      return { ok: true, profile, outputPath, mappings };
+    } catch (err) {
+      return { ok: false, error: "sekaiemu_input_capture_failed", detail: String(err?.message || err || "") };
     }
   };
 
@@ -660,6 +1239,7 @@ const createSekaiemuRuntime = (deps = {}) => {
     resolveSklmiManifestDirForSekaiemu,
     resolveSekaiemuTrackerPackPath,
     tryLaunchSekaiemu,
+    tryCaptureSekaiemuInput,
   };
 };
 

@@ -219,7 +219,7 @@ function Launch-Client([string]$TargetDir, [string]$StateDir, [string]$Executabl
   Start-Process -FilePath $exePath -WorkingDirectory $TargetDir | Out-Null
 }
 
-$Channel = Default-String $Channel (Default-String $env:SEKAILINK_CHANNEL "test")
+$Channel = Default-String $Channel (Default-String $env:SEKAILINK_CHANNEL "canonical")
 $Build = Default-String $Build (Default-String $env:SEKAILINK_BUILD "release")
 $Platform = Default-String $Platform (Default-String $env:SEKAILINK_PLATFORM "win32-x64")
 $ApiBaseUrl = Default-String $ApiBaseUrl (Default-String $env:SEKAILINK_API_BASE_URL "https://sekailink.com")

@@ -27,6 +27,8 @@ if TYPE_CHECKING:
 
 
 EXPECTED_ROM_NAME = "pokemon emerald version / AP 5"
+OLDALE_SHOP_TUTORIAL_FLAG = data.locations["NPC_GIFT_RECEIVED_POTION_OLDALE"].flag
+OLDALE_SHOP_TUTORIAL_LOCATION_ID = OLDALE_SHOP_TUTORIAL_FLAG + BASE_OFFSET
 
 DEFEATED_WALLACE_FLAG = data.constants["TRAINER_FLAGS_START"] + data.constants["TRAINER_WALLACE"]
 DEFEATED_STEVEN_FLAG = data.constants["TRAINER_FLAGS_START"] + data.constants["TRAINER_STEVEN"]
@@ -299,6 +301,8 @@ class PokemonEmeraldClient(BizHawkClient):
             defeated_legendaries = {legendary_name: False for legendary_name in LEGENDARY_NAMES.values()}
             caught_legendaries = {legendary_name: False for legendary_name in LEGENDARY_NAMES.values()}
             set_flag_count = 0
+            set_flag_sample: list[int] = []
+            oldale_shop_tutorial_seen = False
 
             # Check set flags
             for byte_i, byte in enumerate(flag_bytes):
@@ -306,6 +310,10 @@ class PokemonEmeraldClient(BizHawkClient):
                     if byte & (1 << i) != 0:
                         set_flag_count += 1
                         flag_id = byte_i * 8 + i
+                        if len(set_flag_sample) < 12:
+                            set_flag_sample.append(flag_id)
+                        if flag_id == OLDALE_SHOP_TUTORIAL_FLAG:
+                            oldale_shop_tutorial_seen = True
 
                         location_id = flag_id + BASE_OFFSET
                         if location_id in ctx.server_locations:
@@ -337,12 +345,19 @@ class PokemonEmeraldClient(BizHawkClient):
                             if location_id in ctx.server_locations:
                                 local_checked_locations.add(location_id)
 
+            server_locations = sorted(getattr(ctx, "server_locations", []) or [])
+            server_location_sample = server_locations[:8]
+            candidate_location_sample = [flag_id + BASE_OFFSET for flag_id in set_flag_sample[:8]]
             debug_snapshot = (
                 set_flag_count,
                 len(local_checked_locations),
                 sum(1 for value in local_set_events.values() if value),
                 sum(1 for value in local_found_key_items.values() if value),
                 len(pokedex_caught_bytes),
+                oldale_shop_tutorial_seen,
+                OLDALE_SHOP_TUTORIAL_LOCATION_ID in ctx.server_locations,
+                server_locations[0] if server_locations else None,
+                server_locations[-1] if server_locations else None,
             )
             if getattr(self, "_sekailink_last_location_debug", None) != debug_snapshot:
                 self._sekailink_last_location_debug = debug_snapshot
@@ -355,7 +370,16 @@ class PokemonEmeraldClient(BizHawkClient):
                     pokedex_bytes=len(pokedex_caught_bytes),
                     sb1_address=sb1_address,
                     sb2_address=sb2_address,
-                    server_location_count=len(getattr(ctx, "server_locations", []) or []),
+                    server_location_count=len(server_locations),
+                    server_location_min=server_locations[0] if server_locations else None,
+                    server_location_max=server_locations[-1] if server_locations else None,
+                    server_location_sample=server_location_sample,
+                    set_flag_sample=set_flag_sample,
+                    candidate_location_sample=candidate_location_sample,
+                    oldale_shop_tutorial_flag=OLDALE_SHOP_TUTORIAL_FLAG,
+                    oldale_shop_tutorial_location_id=OLDALE_SHOP_TUTORIAL_LOCATION_ID,
+                    oldale_shop_tutorial_seen=oldale_shop_tutorial_seen,
+                    oldale_shop_tutorial_in_server=OLDALE_SHOP_TUTORIAL_LOCATION_ID in ctx.server_locations,
                 )
 
             # Count legendary hunt flags

@@ -4,9 +4,9 @@ SekaiLink BETA-3 now uses the canonical repository as the active source tree.
 
 ## Forbidden As Active Sources
 
-- `/home/thelovenityjade/Projects/Sekaiemu-Libretro-Spike-Codex`
-- `/home/thelovenityjade/DevSSD/sekailink-beta-3-final`
-- `/home/thelovenityjade/SekaiLinkDev`
+- `<local-home>/Projects/Sekaiemu-Libretro-Spike-Codex`
+- `<local-home>/DevSSD/sekailink-beta-3-final`
+- `<local-home>/SekaiLinkDev`
 
 These paths may be used for historical comparison only. They must not be used by build,
 launch, or packaging scripts after canonical migration.

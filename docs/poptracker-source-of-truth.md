@@ -16,7 +16,7 @@ runtime module manifests, or release notes.
 The remaining tracker packs downloaded for review/import are currently staged
 in:
 
-`/home/thelovenityjade/Downloads`
+`<local-home>/Downloads`
 
 Observed downloads on 2026-06-21:
 

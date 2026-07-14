@@ -1,7 +1,8 @@
-import { X, Save, RotateCcw, Info, Gamepad2, Palette, Package, Plus, Search, Check } from 'lucide-react';
+import { X, Save, RotateCcw, Info, Gamepad2, Palette, Package, Plus, Search, Check, AlertTriangle, HardDrive } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { canonicalSeedGameKey, listSeedOptions, type SeedGameEntry, type SeedOptionDefinition } from '../../services/seedConfig';
 import { ErrorModal, LoadingModal } from './FeedbackModal';
+import { checkRomReadiness, type RomReadiness } from '../../services/romReadiness';
 
 interface AdvancedConfigModalProps {
   onClose: () => void;
@@ -12,7 +13,24 @@ interface AdvancedConfigModalProps {
   initialValues?: Record<string, unknown>;
   title?: string;
   saveLabel?: string;
+  onOpenRomImport?: (gameId: string) => void;
 }
+
+type AdvancedTabId = 'game' | 'cosmetic' | 'items';
+
+const advancedTabForOption = (option: SeedOptionDefinition): AdvancedTabId => {
+  const rules = option.validation_rules || {};
+  const key = String(rules.group_key || option.option_key || option.yaml_key || '').toLowerCase();
+  const label = String(rules.group_label || option.label || '').toLowerCase();
+  const text = `${key} ${label}`;
+  if (/\b(cosmetic|cosmetics|palette|palettes|sprite|sprites|music|sound|sfx|audio|color|colour)\b/.test(text)) {
+    return 'cosmetic';
+  }
+  if (/\b(item|items|location|locations|inventory|start_inventory|local|non_local|priority|exclude|excluded)\b/.test(text)) {
+    return 'items';
+  }
+  return 'game';
+};
 
 export default function AdvancedConfigModal({
   onClose,
@@ -23,14 +41,16 @@ export default function AdvancedConfigModal({
   initialValues = {},
   title = 'Advanced Seed Config',
   saveLabel = 'Save Config',
+  onOpenRomImport,
 }: AdvancedConfigModalProps) {
-  const [activeTab, setActiveTab] = useState('game');
+  const [activeTab, setActiveTab] = useState<AdvancedTabId>('game');
   const [configName, setConfigName] = useState('');
   const [liveOptions, setLiveOptions] = useState<SeedOptionDefinition[]>([]);
   const [liveValues, setLiveValues] = useState<Record<string, unknown>>({});
   const [liveSchemaError, setLiveSchemaError] = useState('');
   const [saveError, setSaveError] = useState('');
   const [saving, setSaving] = useState(false);
+  const [romReadiness, setRomReadiness] = useState<RomReadiness | null>(null);
 
   // Game Options State
   const [progressionBalancing, setProgressionBalancing] = useState(50);
@@ -95,6 +115,22 @@ export default function AdvancedConfigModal({
     };
   }, [game, seedGame]);
 
+  useEffect(() => {
+    let cancelled = false;
+    setRomReadiness(null);
+    checkRomReadiness(seedGame?.game_key || game)
+      .then((result) => {
+        if (!cancelled) setRomReadiness(result);
+      })
+      .catch(() => {
+        if (!cancelled) setRomReadiness({
+          state: 'unknown', game, importGameId: seedGame?.game_key || game,
+          required: false, blocksLobbyAdd: false, message: 'ROM verification is unavailable for this game.',
+        });
+      });
+    return () => { cancelled = true; };
+  }, [game, seedGame?.game_key]);
+
   const liveGroups = useMemo(() => {
     const groups = new Map<string, SeedOptionDefinition[]>();
     liveOptions.forEach((option) => {
@@ -106,6 +142,32 @@ export default function AdvancedConfigModal({
     });
     return Array.from(groups.entries()).map(([label, options]) => ({ label, options }));
   }, [liveOptions]);
+
+  const liveTabGroups = useMemo(() => {
+    const groups = new Map<AdvancedTabId, Array<{ label: string; options: SeedOptionDefinition[] }>>([
+      ['game', []],
+      ['cosmetic', []],
+      ['items', []],
+    ]);
+    liveGroups.forEach((group) => {
+      const tab = advancedTabForOption(group.options[0]);
+      groups.get(tab)?.push(group);
+    });
+    return groups;
+  }, [liveGroups]);
+
+  const hasCosmeticOptions = liveOptions.length > 0
+    ? (liveTabGroups.get('cosmetic') || []).length > 0
+    : true;
+  const hasItemOptions = liveOptions.length > 0
+    ? (liveTabGroups.get('items') || []).length > 0
+    : true;
+  const visibleLiveGroups = liveOptions.length > 0 ? liveTabGroups.get(activeTab) || [] : [];
+
+  useEffect(() => {
+    if (activeTab === 'cosmetic' && !hasCosmeticOptions) setActiveTab('game');
+    if (activeTab === 'items' && !hasItemOptions) setActiveTab('game');
+  }, [activeTab, hasCosmeticOptions, hasItemOptions]);
 
   const setLiveValue = (key: string, value: unknown) => {
     setLiveValues((current) => ({ ...current, [key]: value }));
@@ -185,7 +247,7 @@ export default function AdvancedConfigModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-8">
+    <div className="fixed left-0 right-0 bottom-0 top-[32px] bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-8">
       <div className="w-full max-w-4xl h-[90vh] bg-[#161b22] rounded-xl shadow-2xl border-2 border-[#aa96da] card-float overflow-hidden flex flex-col">
         {/* Header */}
         <div className="p-6 border-b-2 border-[#2a2b30] bg-gradient-to-r from-[#1c1d22] to-[#161b22]">
@@ -215,21 +277,57 @@ export default function AdvancedConfigModal({
               className="w-full px-4 py-2.5 bg-[#0d1117] border-2 border-[#2a2b30] rounded-lg text-white placeholder:text-[#8e8f94] focus:border-[#aa96da] outline-none transition-colors"
             />
           </div>
+
+          <div className={`mt-4 flex items-center justify-between gap-4 rounded-lg border px-4 py-3 ${
+            romReadiness?.state === 'verified' || romReadiness?.state === 'not-required'
+              ? 'border-[#4ecdc4]/45 bg-[#4ecdc4]/10'
+              : romReadiness?.blocksLobbyAdd
+                ? 'border-[#f69d50]/55 bg-[#f69d50]/10'
+                : 'border-[#2a2b30] bg-[#0d1117]'
+          }`}>
+            <div className="flex min-w-0 items-start gap-3">
+              {romReadiness?.blocksLobbyAdd
+                ? <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-[#f69d50]" />
+                : <HardDrive className="mt-0.5 h-5 w-5 shrink-0 text-[#4ecdc4]" />}
+              <div className="min-w-0">
+                <div className="text-sm font-bold text-white">ROM verification</div>
+                <div className="mt-0.5 text-xs text-[#b7bdc7]">
+                  {romReadiness?.message || 'Checking the local ROM library...'}
+                  {romReadiness?.blocksLobbyAdd && ' You can still save this config, but the ROM will be required before adding it to a lobby.'}
+                </div>
+              </div>
+            </div>
+            {romReadiness?.blocksLobbyAdd && onOpenRomImport && (
+              <button
+                type="button"
+                onClick={() => onOpenRomImport(romReadiness.importGameId)}
+                className="shrink-0 rounded-lg bg-[#f69d50] px-3 py-2 text-xs font-bold text-[#160d03] hover:bg-[#ffb36f]"
+              >
+                Import ROM
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Tabs */}
         <div className="flex gap-3 px-6 pt-6 pb-2 bg-[#14151a]/90">
           {[
-            { id: 'game', label: 'Game Options', icon: <Gamepad2 className="w-5 h-5" /> },
-            { id: 'cosmetic', label: 'Cosmetic Options', icon: <Palette className="w-5 h-5" /> },
-            { id: 'items', label: 'Item & Location Options', icon: <Package className="w-5 h-5" /> },
+            { id: 'game' as const, label: 'Game Options', icon: <Gamepad2 className="w-5 h-5" />, disabled: false },
+            { id: 'cosmetic' as const, label: 'Cosmetic Options', icon: <Palette className="w-5 h-5" />, disabled: !hasCosmeticOptions },
+            { id: 'items' as const, label: 'Item & Location Options', icon: <Package className="w-5 h-5" />, disabled: !hasItemOptions },
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => {
+                if (!tab.disabled) setActiveTab(tab.id);
+              }}
+              disabled={tab.disabled}
+              title={tab.disabled ? `No ${tab.label.toLowerCase()} for this game` : undefined}
               className={`flex-1 flex items-center justify-center gap-2 px-6 py-4 rounded-lg text-sm font-bold transition-all ${
                 activeTab === tab.id
                   ? 'bg-gradient-to-r from-[#aa96da] to-[#f38181] text-white shadow-lg'
+                  : tab.disabled
+                    ? 'bg-[#1c1d22] text-[#5f646d] opacity-60 cursor-not-allowed'
                   : 'bg-[#2a2b30] text-[#8e8f94] hover:bg-[#3a3b40] hover:text-white'
               }`}
             >
@@ -248,7 +346,7 @@ export default function AdvancedConfigModal({
           )}
           {liveOptions.length > 0 ? (
             <div className="space-y-6">
-              {liveGroups.map((group) => (
+              {visibleLiveGroups.map((group) => (
                 <div key={group.label} className="p-5 bg-[#1c1d22] border-2 border-[#2a2b30] rounded-lg">
                   <h3 className="text-sm font-bold text-[#e6edf3] mb-4">{group.label}</h3>
                   <div className="grid grid-cols-2 gap-4">
@@ -266,6 +364,11 @@ export default function AdvancedConfigModal({
                   </div>
                 </div>
               ))}
+              {visibleLiveGroups.length === 0 && (
+                <div className="p-5 bg-[#1c1d22] border-2 border-[#2a2b30] rounded-lg text-sm text-[#8e8f94]">
+                  No options available in this category for {game}.
+                </div>
+              )}
             </div>
           ) : activeTab === 'game' && (
             <div className="space-y-6">

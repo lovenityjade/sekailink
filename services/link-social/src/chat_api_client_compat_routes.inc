@@ -35,6 +35,7 @@ ChatApiHttpResponse ChatApiService::handle_client_compat(
             {"download_url", download_url},
             {"sha256", first_string_limited(release, {"sha256"}, "", 128)},
             {"signature", first_string_limited(release, {"signature"}, "", 2048)},
+            {"release_sequence", release.value("release_sequence", 0ull)},
             {"public_key", first_string_limited(release, {"public_key"}, "", 2048)},
             {"artifact_type", first_string_limited(release, {"artifact_type"}, "", 80)},
             {"requires_client_updater", first_string_limited(release, {"requires_client_updater"}, "", 80)},
@@ -44,6 +45,64 @@ ChatApiHttpResponse ChatApiService::handle_client_compat(
             {"fallback_public_key", first_string_limited(release, {"fallback_public_key"}, "", 2048)},
             {"fallback_artifact_type", first_string_limited(release, {"fallback_artifact_type"}, "", 80)},
             {"notes_url", first_string_limited(release, {"notes_url"}, "https://sekailink.com/progress.html", 2048)},
+        }.dump()};
+  }
+  if (method == "GET" && parts.size() == 2 && parts[1] == "bootstrapper-latest") {
+    auto bootstrapper = select_bootstrapper_manifest_entry(manifest, channel_query, platform_query, build_query);
+    if (bootstrapper.empty() && manifest.contains("bootstrapper") && manifest.at("bootstrapper").is_object()) {
+      const auto& raw_bootstrapper = manifest.at("bootstrapper");
+      if (raw_bootstrapper.contains("artifacts") && raw_bootstrapper.at("artifacts").is_array()) {
+        bootstrapper = raw_bootstrapper;
+      }
+    }
+    if (bootstrapper.empty()) {
+      return {404, nlohmann::json{{"ok", false}, {"error", "bootstrapper_release_not_found"}}.dump()};
+    }
+    nlohmann::json artifacts = nlohmann::json::array();
+    if (bootstrapper.contains("artifacts") && bootstrapper.at("artifacts").is_array()) {
+      for (const auto& artifact : bootstrapper.at("artifacts")) {
+        if (!artifact.is_object()) continue;
+        const auto file_name = first_string_limited(artifact, {"fileName", "file_name", "name"}, "", 240);
+        const auto url = first_string_limited(artifact, {"url", "download_url"}, "", 2048);
+        const auto sha256 = first_string_limited(artifact, {"sha256"}, "", 128);
+        if (url.empty() || sha256.empty()) continue;
+        artifacts.push_back({
+            {"fileName", file_name},
+            {"file_name", file_name},
+            {"url", url},
+            {"download_url", url},
+            {"sha256", sha256},
+            {"size", artifact.value("size", 0ull)},
+        });
+      }
+    } else {
+      const auto url = first_string_limited(bootstrapper, {"download_url", "url"}, "", 2048);
+      const auto sha256 = first_string_limited(bootstrapper, {"sha256"}, "", 128);
+      if (!url.empty() && !sha256.empty()) {
+        artifacts.push_back({
+            {"fileName", first_string_limited(bootstrapper, {"fileName", "file_name", "name"}, "", 240)},
+            {"file_name", first_string_limited(bootstrapper, {"fileName", "file_name", "name"}, "", 240)},
+            {"url", url},
+            {"download_url", url},
+            {"sha256", sha256},
+            {"size", bootstrapper.value("size", 0ull)},
+        });
+      }
+    }
+    if (artifacts.empty()) {
+      return {404, nlohmann::json{{"ok", false}, {"error", "bootstrapper_artifact_not_found"}}.dump()};
+    }
+    const auto normalized_channel = normalized_release_channel(first_string_limited(bootstrapper, {"channel"}, channel_query, 80));
+    return {
+        200,
+        nlohmann::json{
+            {"ok", true},
+            {"version", first_string_limited(bootstrapper, {"version", "latest"}, "0.0.0", 80)},
+            {"channel", normalized_channel},
+            {"build", first_string_limited(bootstrapper, {"build"}, build_query.empty() ? std::string("release") : build_query, 80)},
+            {"platform", normalized_release_platform(platform_query)},
+            {"implementation", first_string_limited(bootstrapper, {"implementation"}, "native-cpp-sdl2-miniz", 120)},
+            {"artifacts", artifacts},
         }.dump()};
   }
   if (method == "GET" && parts.size() == 2 && parts[1] == "runtime-versions") {
@@ -94,6 +153,10 @@ ChatApiHttpResponse ChatApiService::handle_client_compat(
       return {200, nlohmann::json{{"ok", true}, {"accepted", true}, {"forwarded", false}, {"reason", "compat_only"}}.dump()};
     }
     if (!body.has_value() || !body->is_object()) return {400, R"({"ok":false,"error":"invalid_body"})"};
+    if (body->contains("bundle_base64") && body->at("bundle_base64").is_string() &&
+        body->at("bundle_base64").get_ref<const std::string&>().size() > 64 * 1024 * 1024) {
+      return {413, R"({"ok":false,"error":"bug_report_bundle_too_large"})"};
+    }
 
     const auto raw_string = [](const nlohmann::json& object, const char* key, std::size_t max_len) {
       if (!object.contains(key) || !object.at(key).is_string()) return std::string{};
@@ -123,6 +186,8 @@ ChatApiHttpResponse ChatApiService::handle_client_compat(
         {"reporter_name", reporter},
         {"screenshot_base64", raw_string(*body, "screenshot_base64", 16 * 1024 * 1024)},
         {"logs_text", raw_string(*body, "logs_text", 1024 * 1024)},
+        {"bundle_base64", raw_string(*body, "bundle_base64", 64 * 1024 * 1024)},
+        {"bundle_manifest", body->contains("bundle_manifest") && body->at("bundle_manifest").is_object() ? body->at("bundle_manifest") : nlohmann::json::object()},
         {"system_info", system_info},
         {"app_info", app_info},
     };

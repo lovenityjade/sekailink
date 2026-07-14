@@ -6,8 +6,8 @@ It intentionally does not copy the archive or extracted assets into this repo.
 
 Canonical source checked on 2026-05-10:
 
-- archive: `/home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip`
-- extracted bundle: `/home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.bundle`
+- archive: `<local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip`
+- extracted bundle: `<local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.bundle`
 - fixture: `archive-fixture.json`
 
 ## Runtime Path
@@ -16,13 +16,13 @@ Sekaiemu accepts either the extracted bundle directory or the packaged zip file.
 The extracted directory remains useful while editing bundle contents directly:
 
 ```sh
---tracker-bundle /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.bundle
+--tracker-bundle <local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.bundle
 ```
 
 For packaged installs, pass the archive directly:
 
 ```sh
---tracker-bundle /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip
+--tracker-bundle <local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip
 ```
 
 The runtime materializes zip bundles into a local cache before loading. Do not
@@ -67,15 +67,15 @@ adapted static PopTracker data:
 Archive integrity:
 
 ```sh
-unzip -t /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip
+unzip -t <local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip
 ```
 
 Archive summary:
 
 ```sh
-sha256sum /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip
-stat -c '%s bytes' /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip
-zipinfo -t /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip
+sha256sum <local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip
+stat -c '%s bytes' <local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip
+zipinfo -t <local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip
 ```
 
 Native Sekaiemu tracker regression suite:
@@ -92,11 +92,11 @@ temporary zip bundle and loads it through `TrackerBundle::LoadFromPath`.
 Targeted archive entry checks:
 
 ```sh
-zipinfo -1 /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip manifest.json
-zipinfo -1 /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip maps/light_world.ppm
-zipinfo -1 /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip poptracker-adapted/sekailink-adaptation.json
-zipinfo -1 /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip poptracker-adapted/images/items/Hookshot.png
-zipinfo -1 /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip poptracker-adapted/images/maps/lttp_lightworld.png
+zipinfo -1 <local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip manifest.json
+zipinfo -1 <local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip maps/light_world.ppm
+zipinfo -1 <local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip poptracker-adapted/sekailink-adaptation.json
+zipinfo -1 <local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip poptracker-adapted/images/items/Hookshot.png
+zipinfo -1 <local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.zip poptracker-adapted/images/maps/lttp_lightworld.png
 ```
 
 ## Runtime Boundaries

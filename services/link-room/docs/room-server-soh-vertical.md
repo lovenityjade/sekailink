@@ -48,7 +48,7 @@ Etat valide le 2026-05-18:
 Commandes locales:
 
 ```sh
-cmake -S /home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-link-room \
+cmake -S <local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-link-room \
   -B /tmp/sekailink-link-room-cycle1-build
 
 cmake --build /tmp/sekailink-link-room-cycle1-build \

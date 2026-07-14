@@ -16,8 +16,8 @@ namespace sekailink_server {
 struct ChatApiServiceConfig {
   std::uint16_t http_port = 19099;
   std::string listen_host = "127.0.0.1";
-  std::string identity_host = "149.202.61.90";
-  std::uint16_t identity_port = 19095;
+  std::string identity_host = "127.0.0.1";
+  std::uint16_t identity_port = 19295;
   std::string chat_gateway_host = "127.0.0.1";
   std::uint16_t chat_gateway_port = 19098;
   std::string chat_gateway_token;

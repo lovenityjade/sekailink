@@ -1,5 +1,50 @@
 # Changelog
 
+## 2026-07-04
+
+- Homogenized Client Core language behavior around the explicit French/English
+  selector. The runtime i18n provider now normalizes stored/browser language to
+  supported Client Core locales only, updates the document language, and keeps
+  visible redesign literals aligned while navigating.
+- Removed the inactive Japanese choice from Settings until that translation is
+  complete, preventing the client from mixing unsupported language surfaces.
+- Hardened Windows patch/update packaging: every Windows update bundle must now
+  contain the full runtime DLL closure from `windows-runtime-contract.mjs`, and
+  update packaging fails fast if any required DLL/runtime file is missing.
+
+## 2026-07-03
+
+- Prepared hotfix `0.3.1-prebeta3.20260703.2` for Windows. Rebuilt and bundled
+  the Windows Sekaiemu executable so it accepts the BETA-3 Client Core launch
+  flags (`--client-core-hud-state`, `--client-core-hud-events`, input capture,
+  and goal-completion flags). The previous Windows update bundle still carried
+  an older June Sekaiemu binary, which exited immediately with an unknown option
+  before launch readiness and caused generalized `emu_exited_before_ready`
+  failures after tracker startup.
+- Prepared Canonical client update `0.3.1-prebeta3.20260703.1` for Linux and
+  Windows update bundles, including the updated runtime resources, bundled
+  PopTracker packs, and Universal Tracker support.
+- Added Universal Tracker as the fallback tracker path for active games without
+  a dedicated PopTracker pack. Client Core now routes
+  `tracker_type: universal_tracker` / `tracker_web_url: universal_tracker`
+  through the bundled `worlds.tracker.TrackerClient` instead of treating those
+  games as trackerless.
+- Bundled Universal Tracker as `runtime/ap/worlds/tracker.apworld` and verified
+  both Linux and Windows update bundles contain it.
+- Routed Lufia II Ancient Cave, Mega Man 3, Super Mario Land 2, and Wario Land
+  to Universal Tracker when a tracker is requested.
+- Re-enabled Super Mario Land 2 and Wario Land in the visual game catalog and
+  runtime manifests after validation through the generic GB/GBC
+  Sekaiemu/Gambatte path.
+- Updated the Game Manager tracker badge logic so Universal Tracker games show
+  as `Universal Tracker` instead of generic Webtracker/No Tracker.
+- Built and staged Canonical bootstrapper artifacts for Linux and Windows. The
+  Windows bootstrapper package now includes the required MSYS2 runtime DLLs,
+  including `libgcc_s_seh-1.dll` and `libwinpthread-1.dll`.
+- Verified the prepared Canonical bundles with Client Core build, Linux runtime
+  bundle verification, Windows runtime bundle verification, bundled tracker
+  content checks, and release manifest hash checks.
+
 ## 2026-06-25
 
 - Added a failed-generation recovery action in lobby rooms. When Worlds leaves a

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type React from 'react';
 import {
   Bot,
@@ -13,11 +13,15 @@ import {
   Link,
   Monitor,
   Radio,
+  RefreshCcw,
   Save,
+  Search,
   Server,
   Shield,
   SlidersHorizontal,
+  Trash2,
   Twitch,
+  Upload,
   Users,
   Volume2,
 } from 'lucide-react';
@@ -28,6 +32,7 @@ import { normalizeLocale, useI18n } from '../../i18n';
 import type { LocaleCode } from '../../i18n/types';
 import { applyClientTheme, normalizeClientTheme, type ClientTheme } from '../../services/theme';
 import { SEKAILINK_GAME_CATALOG } from '../../data/sekailinkGameCatalog';
+import { publicAssetUrl } from '../../utils/publicAssets';
 
 type SettingsSection =
   | 'general'
@@ -61,6 +66,8 @@ const sections: Array<{ id: SettingsSection; label: string; icon: React.ReactNod
 ];
 
 const serverNames = ['Nexus', 'Link', 'Worlds', 'Pulse', 'CDN'];
+const LEARNING_LABEL = 'In learning';
+const LEARNING_DESCRIPTION = 'SekaiLink is learning this flow. It is visible for planning, but disabled until the integration is reliable.';
 
 type ControlCoreId = 'snes' | 'nes' | 'gbc' | 'gba' | 'n64';
 type CoreControlMappings = Record<string, string>;
@@ -91,6 +98,44 @@ type RomImportCandidate = {
   gameId: string;
   moduleId?: string;
   displayName: string;
+};
+
+type RuntimeModuleInfo = {
+  moduleId?: string;
+  manifest?: Record<string, any>;
+};
+
+type RomRequirementComponent = {
+  label: string;
+  expectedBase: string;
+  crc32?: string;
+  md5?: string;
+  sha1?: string;
+  sha256?: string;
+  keys?: string[];
+};
+
+type RomRequirementInfo = {
+  gameKey: string;
+  platform?: string;
+  guidance?: string;
+  components: RomRequirementComponent[];
+};
+
+type CompatibleRomVersion = {
+  label: string;
+  expectedBase: string;
+  crc32: string[];
+  md5: string[];
+  sha1: string[];
+  sha256: string[];
+  key: string;
+};
+
+type CompatibleRomGroup = {
+  title: string;
+  mode: 'alternatives' | 'required';
+  versions: CompatibleRomVersion[];
 };
 
 const controlProfiles: Record<ControlCoreId, {
@@ -138,7 +183,7 @@ const hotkeyActions: Array<{ id: string; label: string; description: string; def
   { id: 'save_state', label: 'Save state', description: 'Save the current emulator state slot.', defaultBinding: 'keyboard:F6' },
   { id: 'load_state', label: 'Load state', description: 'Load the current emulator state slot.', defaultBinding: 'keyboard:F7' },
   { id: 'reload_connection', label: 'Reload connection', description: 'Reconnect the active AP/SKLMI runtime bridge.', defaultBinding: 'keyboard:F8' },
-  { id: 'toggle_fullscreen', label: 'Toggle fullscreen', description: 'Switch Sekaiemu between windowed and fullscreen.', defaultBinding: 'keyboard:F11' },
+  { id: 'toggle_fullscreen', label: 'Cycle window mode', description: 'Switch Sekaiemu between Window, Borderless Window, and Fullscreen.', defaultBinding: 'keyboard:F12' },
   { id: 'toggle_tracker', label: 'Toggle tracker', description: 'Show or hide the tracker panel/window.', defaultBinding: 'keyboard:F9' },
   { id: 'pause_emulation', label: 'Pause emulation', description: 'Pause or resume the emulator without closing the room.', defaultBinding: 'keyboard:Pause' },
   { id: 'screenshot', label: 'Screenshot', description: 'Capture the current emulator output for diagnostics or sharing.', defaultBinding: 'keyboard:F12' },
@@ -226,16 +271,357 @@ const defaultCoreSettings = (): CoreSettingsValues =>
 
 const normalizeClientLocale = (value?: string | null): LocaleCode => {
   const normalized = normalizeLocale(value);
-  return normalized === 'fr' || normalized === 'ja' ? normalized : 'en';
+  return normalized === 'fr' ? 'fr' : 'en';
 };
 
-export default function SettingsPage() {
+const normalizeRomKey = (value?: string | null) =>
+  String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+
+const ROM_REQUIREMENTS: Record<string, RomRequirementInfo> = {
+  a_link_to_the_past: {
+    gameKey: 'a_link_to_the_past',
+    platform: 'SNES',
+    guidance: 'Common Archipelago/SekaiLink base. Use a clean, unmodified ROM.',
+    components: [
+      {
+        label: 'A Link to the Past',
+        expectedBase: 'Zelda no Densetsu - Kamigami no Triforce (Japan).sfc',
+        md5: '03a63945398191337e896e5771f77173',
+        keys: ['a_link_to_the_past', 'alttp'],
+      },
+    ],
+  },
+  final_fantasy_tactics_advance: {
+    gameKey: 'final_fantasy_tactics_advance',
+    platform: 'GBA',
+    components: [
+      {
+        label: 'Final Fantasy Tactics Advance',
+        expectedBase: 'Final Fantasy Tactics Advance (USA, Australia).gba',
+        md5: 'cd99cdde3d45554c1b36fbeb8863b7bd',
+      },
+    ],
+  },
+  final_fantasy_v: {
+    gameKey: 'final_fantasy_v',
+    platform: 'SNES',
+    components: [
+      {
+        label: 'Final Fantasy V Career Day',
+        expectedBase: 'Final Fantasy V (J).sfc',
+        md5: 'd69b2115e17d1cf2cb3590d3f75febb9',
+      },
+    ],
+  },
+  pokemon_crystal: {
+    gameKey: 'pokemon_crystal',
+    platform: 'GBC',
+    components: [
+      {
+        label: 'Pokemon Crystal v1.0',
+        expectedBase: 'Pokemon - Crystal Version (USA, Europe).gbc',
+        crc32: 'EE6F5188',
+        md5: '9f2922b235a5eeb78d65594e82ef5dde',
+      },
+      {
+        label: 'Pokemon Crystal v1.1',
+        expectedBase: 'Pokemon - Crystal Version (USA, Europe) (Rev 1).gbc',
+        crc32: '3358E30A',
+        md5: '301899b8087289a6436b0a241fbbb474',
+      },
+    ],
+  },
+  pokemon_emerald: {
+    gameKey: 'pokemon_emerald',
+    platform: 'GBA',
+    components: [
+      {
+        label: 'Pokemon Emerald',
+        expectedBase: 'Pokemon - Emerald Version (USA, Europe).gba',
+        md5: '605b89b67018abcea91e693a4dd25be3',
+      },
+    ],
+  },
+  pokemon_firered: {
+    gameKey: 'pokemon_firered',
+    platform: 'GBA',
+    components: [
+      {
+        label: 'Pokemon FireRed v1.0',
+        expectedBase: 'Pokemon - FireRed Version (USA, Europe).gba',
+        crc32: 'DD88761C',
+        md5: 'e26ee0d44e809351c8ce2d73c7400cdd',
+      },
+      {
+        label: 'Pokemon FireRed v1.1',
+        expectedBase: 'Pokemon - FireRed Version (USA, Europe) (Rev 1).gba',
+        crc32: '84EE4776',
+        md5: '51901a6e40661b3914aa333c802e24e8',
+      },
+      {
+        label: 'Pokemon LeafGreen v1.0',
+        expectedBase: 'Pokemon - LeafGreen Version (USA, Europe).gba',
+        crc32: 'D69C96CC',
+        md5: '612ca9473451fa42b51d1711031ed5f6',
+      },
+      {
+        label: 'Pokemon LeafGreen v1.1',
+        expectedBase: 'Pokemon - LeafGreen Version (USA, Europe) (Rev 1).gba',
+        crc32: 'DAFFECEC',
+        md5: '9d33a02159e018d09073e700e1fd10fd',
+      },
+    ],
+  },
+  pokemon_red_blue: {
+    gameKey: 'pokemon_red_blue',
+    platform: 'GB',
+    guidance: 'Import the version used by the generated seed. Red and Blue validate separately.',
+    components: [
+      {
+        label: 'Pokemon Red',
+        expectedBase: 'Pokemon - Red Version (USA, Europe) (SGB Enhanced).gb',
+        md5: '3d45c1ee9abd5738df46d2bdda8b57dc',
+        keys: ['pokemon_red', 'pokemon_red_blue'],
+      },
+      {
+        label: 'Pokemon Blue',
+        expectedBase: 'Pokemon - Blue Version (USA, Europe) (SGB Enhanced).gb',
+        md5: '50927e843568814f7ed45ec4f944bd8b',
+        keys: ['pokemon_blue'],
+      },
+    ],
+  },
+  smz3: {
+    gameKey: 'smz3',
+    platform: 'SNES',
+    guidance: 'SMZ3 is a multi-ROM game. Import both base ROMs; there is no fake SMZ3 ROM.',
+    components: [
+      {
+        label: 'A Link to the Past',
+        expectedBase: 'Zelda no Densetsu - Kamigami no Triforce (Japan).sfc',
+        md5: '03a63945398191337e896e5771f77173',
+        keys: ['a_link_to_the_past', 'alttp'],
+      },
+      {
+        label: 'Super Metroid',
+        expectedBase: 'Super Metroid (JU).sfc',
+        md5: '21f3e98df4780ee1c667b84e57d88675',
+        keys: ['super_metroid'],
+      },
+    ],
+  },
+  super_metroid: {
+    gameKey: 'super_metroid',
+    platform: 'SNES',
+    components: [
+      {
+        label: 'Super Metroid',
+        expectedBase: 'Super Metroid (JU).sfc',
+        md5: '21f3e98df4780ee1c667b84e57d88675',
+      },
+    ],
+  },
+  secret_of_evermore: {
+    gameKey: 'secret_of_evermore',
+    platform: 'SNES',
+    guidance: 'Use this clean USA base ROM. SekaiLink can validate it by checksum.',
+    components: [
+      {
+        label: 'Secret of Evermore',
+        expectedBase: 'Secret of Evermore (USA).sfc',
+        md5: '6e9c94511d04fac6e0a1e582c170be3a',
+        keys: ['secret_of_evermore', 'soe'],
+      },
+    ],
+  },
+  wario_land: {
+    gameKey: 'wario_land',
+    platform: 'GB',
+    components: [
+      {
+        label: 'Wario Land',
+        expectedBase: 'Wario Land - Super Mario Land 3 (World).gb',
+        md5: 'd9d957771484ef846d4e8d241f6f2815',
+      },
+    ],
+  },
+};
+
+const platformForGameKey = (gameKey: string) => {
+  if (['metroid_fusion', 'metroid_zero_mission', 'the_minish_cap', 'wario_land_4'].includes(gameKey)) return 'GBA';
+  if (['mega_man_2', 'mega_man_3', 'the_legend_of_zelda', 'zelda_ii'].includes(gameKey)) return 'NES';
+  if (gameKey === 'wario_land') return 'GB';
+  if (gameKey.startsWith('pokemon_')) return gameKey === 'pokemon_crystal' ? 'GBC' : 'GBA/GB';
+  return 'SNES';
+};
+
+const componentLookupKeys = (gameKey: string, component: RomRequirementComponent, includeGameKey: boolean) =>
+  [includeGameKey ? gameKey : '', component.label, ...(component.keys || [])]
+    .map(normalizeRomKey)
+    .filter(Boolean);
+
+const hasChecksumValue = (value: unknown) =>
+  Array.isArray(value)
+    ? value.some((entry) => String(entry || '').trim())
+    : Boolean(String(value || '').trim());
+
+const ROM_GAME_ALIASES: Record<string, string[]> = {
+  a_link_to_the_past: ['alttp', 'zelda_no_densetsu_kamigami_no_triforce'],
+  super_mario_64: ['sm64ex', 'sm64'],
+  links_awakening_dx: ['ladx'],
+  ocarina_of_time: ['oot', 'oot_soh'],
+  the_minish_cap: ['tmc'],
+  the_legend_of_zelda: ['tloz'],
+};
+
+const APWORLD_EXPECTED_ROM_NAMES: Record<string, string[]> = {
+  a_link_between_worlds: ['A Link Between Worlds.3ds', 'A Link Between Worlds.cci'],
+  a_link_to_the_past: ['Zelda no Densetsu - Kamigami no Triforce (Japan).sfc'],
+  alttp: ['Zelda no Densetsu - Kamigami no Triforce (Japan).sfc'],
+  donkey_kong_64: ['dk64.z64'],
+  dk64: ['dk64.z64'],
+  donkey_kong_country: ['Donkey Kong Country (USA).sfc'],
+  donkey_kong_country_2: ["Donkey Kong Country 2 - Diddy's Kong Quest (USA).sfc"],
+  donkey_kong_country_3: ["Donkey Kong Country 3 - Dixie Kong's Double Trouble! (USA) (En,Fr).sfc"],
+  earthbound: ['EarthBound.sfc'],
+  final_fantasy: ['Final Fantasy (USA).nes', 'Final Fantasy(USA).nes'],
+  final_fantasy_iv: ['Final Fantasy II (USA) (Rev A).sfc'],
+  final_fantasy_mystic_quest: ['Final Fantasy - Mystic Quest (U) (V1.0).sfc', 'Final Fantasy - Mystic Quest (U) (V1.1).sfc'],
+  final_fantasy_tactics_advance: ['Final Fantasy Tactics Advance (USA).gba'],
+  final_fantasy_v: ['Final Fantasy V (J).sfc'],
+  kirbys_dream_land_3: ["Kirby's Dream Land 3.sfc"],
+  kdl3: ["Kirby's Dream Land 3.sfc"],
+  links_awakening_dx: ["Legend of Zelda, The - Link's Awakening DX (USA, Europe) (SGB Enhanced).gbc"],
+  ladx: ["Legend of Zelda, The - Link's Awakening DX (USA, Europe) (SGB Enhanced).gbc"],
+  lufia_ii: ['Lufia II - Rise of the Sinistrals (USA).sfc'],
+  lufia2ac: ['Lufia II - Rise of the Sinistrals (USA).sfc'],
+  mario_kart_double_dash: ['Mario Kart - Double Dash!! (USA).iso', 'Mario Kart - Double Dash!! (USA).rvz'],
+  mario_luigi_superstar_saga: ['Mario & Luigi - Superstar Saga (U).gba'],
+  mega_man_2: ['Mega Man 2 (USA).nes'],
+  mega_man_3: ['Mega Man 3 (USA).nes'],
+  mega_man_battle_network_3: ['Mega Man Battle Network 3 - Blue Version (USA).gba'],
+  mega_man_x3: ['Mega Man X3 (USA).sfc'],
+  metroid_fusion: ['Metroid Fusion (USA).gba'],
+  metroidfusion: ['Metroid Fusion (USA).gba'],
+  metroid_prime: ['Metroid_Prime.iso'],
+  metroid_zero_mission: ['Metroid - Zero Mission (USA).gba'],
+  mzm: ['Metroid - Zero Mission (USA).gba'],
+  ocarina_of_time: ['The Legend of Zelda - Ocarina of Time.z64'],
+  oot: ['The Legend of Zelda - Ocarina of Time.z64'],
+  oracle_of_ages: ['Legend of Zelda, The - Oracle of Ages (USA).gbc'],
+  oracle_of_seasons: ['Legend of Zelda, The - Oracle of Seasons (USA).gbc'],
+  paper_mario: ['Paper Mario (USA).z64'],
+  pokemon_crystal: ['Pokemon - Crystal Version (UE) v1.1.gbc'],
+  pokemon_emerald: ['Pokemon - Emerald Version (USA, Europe).gba'],
+  pokemon_firered: ['Pokemon - FireRed Version (USA, Europe).gba', 'Pokemon - LeafGreen Version (USA, Europe).gba'],
+  pokemon_red_blue: ['Pokemon Red (UE) [S][!].gb', 'Pokemon Blue (UE) [S][!].gb'],
+  secret_of_evermore: ['Secret of Evermore (USA).sfc'],
+  soe: ['Secret of Evermore (USA).sfc'],
+  secret_of_mana: ['Secret of Mana (USA).sfc'],
+  sm64ex: ['Super Mario 64 (USA).z64'],
+  super_mario_64: ['Super Mario 64 (USA).z64'],
+  super_mario_land_2: ['Super Mario Land 2 - 6 Golden Coins (USA, Europe).gb'],
+  super_mario_sunshine: ['Super Mario Sunshine (USA) NTSC-U.iso'],
+  sms: ['Super Mario Sunshine (USA) NTSC-U.iso'],
+  super_mario_world: ['Super Mario World (USA).sfc'],
+  smw: ['Super Mario World (USA).sfc'],
+  super_metroid: ['Super Metroid (JU).sfc'],
+  sm: ['Super Metroid (JU).sfc'],
+  the_legend_of_zelda: ['Legend of Zelda, The (U) (PRG0) [!].nes'],
+  tloz: ['Legend of Zelda, The (U) (PRG0) [!].nes'],
+  the_minish_cap: ['Legend of Zelda, The - The Minish Cap (Europe).gba'],
+  tmc: ['Legend of Zelda, The - The Minish Cap (Europe).gba'],
+  thousand_year_door: ['Paper Mario - The Thousand-Year Door (USA).iso'],
+  ttyd: ['Paper Mario - The Thousand-Year Door (USA).iso'],
+  the_wind_waker: ['Legend of Zelda, The - The Wind Waker (USA).iso'],
+  tww: ['Legend of Zelda, The - The Wind Waker (USA).iso'],
+  wario_land: ['Wario Land - Super Mario Land 3 (World).gb'],
+  wl: ['Wario Land - Super Mario Land 3 (World).gb'],
+  wario_land_4: ['Wario Land 4.gba'],
+  wl4: ['Wario Land 4.gba'],
+  zelda_ii: ['Zelda 2.nes'],
+  zelda2: ['Zelda 2.nes'],
+};
+
+const romGameLookupKeys = (gameKey: string) => {
+  const normalized = normalizeRomKey(gameKey);
+  return [normalized, ...(ROM_GAME_ALIASES[normalized] || [])].map(normalizeRomKey);
+};
+
+const expectedRomNamesFor = (gameKey: string, manifest?: Record<string, any>, moduleId?: string) => {
+  const keys = [
+    gameKey,
+    moduleId,
+    manifest?.game_id,
+    manifest?.game_key,
+    manifest?.ap_world,
+    manifest?.archipelago_client?.world,
+    manifest?.archipelago_client?.game_key,
+    ...(Array.isArray(manifest?.required_roms) ? manifest.required_roms : []),
+    ...romGameLookupKeys(gameKey),
+  ].map(normalizeRomKey);
+  return [...new Set(keys.flatMap((key) => APWORLD_EXPECTED_ROM_NAMES[key] || []))];
+};
+
+const romRequirementForGame = (gameKey: string, displayName: string, manifest?: Record<string, any>, moduleId?: string): RomRequirementInfo => {
+  const normalized = normalizeRomKey(gameKey);
+  const known = ROM_REQUIREMENTS[normalized];
+  if (known) return known;
+  const expectedNames = expectedRomNamesFor(normalized, manifest, moduleId);
+  return {
+    gameKey: normalized,
+    platform: platformForGameKey(normalized),
+  guidance: expectedNames.length
+      ? 'Use one of the listed base ROM filenames. SekaiLink validates checksums when that game provides them.'
+      : 'SekaiLink does not have a filename entry for this game yet. Use Select or Scan; if the game provides validation data, SekaiLink will still verify the file.',
+    components: expectedNames.length
+      ? expectedNames.map((expectedBase, index) => ({
+          label: expectedNames.length > 1 ? `${displayName} ${index + 1}` : displayName,
+          expectedBase,
+          keys: [normalized],
+        }))
+      : [
+          {
+            label: displayName,
+            expectedBase: `${displayName} base ROM filename not documented in SekaiLink yet`,
+            keys: [normalized],
+          },
+        ],
+  };
+};
+
+const summarizeRomRequirement = (requirement: RomRequirementInfo) =>
+  requirement.components
+    .map((component) => `${component.label}: ${component.expectedBase}${component.md5 ? ` (MD5 ${component.md5})` : ''}`)
+    .join(' | ');
+
+type SettingsPageProps = {
+  initialSection?: SettingsSection;
+  romImportRequest?: { gameId: string; nonce: number } | null;
+};
+
+export default function SettingsPage({ initialSection = 'general', romImportRequest = null }: SettingsPageProps) {
   const { locale, setLocale, t } = useI18n();
-  const [active, setActive] = useState<SettingsSection>('general');
+  const [active, setActive] = useState<SettingsSection>(initialSection);
   const [statusRows, setStatusRows] = useState<Array<{ name: string; status: string; cpu?: string; ram?: string; uptime?: string }>>([]);
   const [importStatus, setImportStatus] = useState('');
+  const [cacheStatus, setCacheStatus] = useState('');
+  const [releaseChannel, setReleaseChannel] = useState('canonical');
+  const [releaseChannelStatus, setReleaseChannelStatus] = useState('');
+  const [releaseChannelBusy, setReleaseChannelBusy] = useState(false);
+  const [trackerActionStatus, setTrackerActionStatus] = useState('');
+  const [clearingCache, setClearingCache] = useState(false);
   const [romImportGameId, setRomImportGameId] = useState('');
+  const [romImportModalGameId, setRomImportModalGameId] = useState('');
+  const [romSearch, setRomSearch] = useState('');
+  const [romShowAllGames, setRomShowAllGames] = useState(true);
   const [pendingRomImport, setPendingRomImport] = useState<{ filePath: string; candidates: RomImportCandidate[] } | null>(null);
+  const [configuredRoms, setConfiguredRoms] = useState<Record<string, string>>({});
+  const [runtimeModules, setRuntimeModules] = useState<RuntimeModuleInfo[]>([]);
   const [language, setLanguage] = useState<LocaleCode>(locale);
   const [theme, setTheme] = useState<ClientTheme>('default');
   const [diagnostics, setDiagnostics] = useState(true);
@@ -258,14 +644,18 @@ export default function SettingsPage() {
     startLayout: 'separate',
     emulationSize: 'x2',
     emuFullscreen: false,
+    emuWindowMode: 'borderless-window',
     broadcastWindow: true,
     preserveEmuAspect: true,
     preventTrackerOverflow: true,
+    hudButtonsVisible: true,
+    readyReminderEnabled: true,
+    backgroundGamepadInput: false,
     chatboxVisible: true,
     chatboxFontSize: 14,
     disableAutotabbing: false,
     masterVolume: 85,
-    emuVolume: 85,
+    emuVolume: 35,
     trackerVolume: 70,
     muteBackground: false,
     blockFriendRequests: false,
@@ -276,12 +666,104 @@ export default function SettingsPage() {
     hideAiUi: false,
     disableAiProcessing: false,
   });
+  const handledRomImportNonce = useRef<number | null>(null);
 
   const activeTitle = useMemo(() => t(sections.find((section) => section.id === active)?.label || 'Settings'), [active, t]);
   const romImportGames = useMemo(
     () => [...SEKAILINK_GAME_CATALOG].sort((a, b) => a.displayName.localeCompare(b.displayName)),
     []
   );
+  const romLibraryRows = useMemo(() => {
+    const normalizedRoms = Object.fromEntries(
+      Object.entries(configuredRoms || {}).map(([key, value]) => [normalizeRomKey(key), String(value || '')])
+    );
+    return romImportGames.map((game) => {
+      const gameKey = normalizeRomKey(game.key);
+      const gameLookupKeys = romGameLookupKeys(game.key);
+      const module = runtimeModules.find((entry) => {
+        const manifest = entry?.manifest || {};
+        const keys = [
+          entry?.moduleId,
+          manifest.game_id,
+          manifest.game_key,
+          manifest.ap_world,
+          manifest.display_name,
+          manifest.game_name,
+          manifest.archipelago_client?.game_key,
+          ...(Array.isArray(manifest.required_roms) ? manifest.required_roms : []),
+          ...(Array.isArray(manifest.aliases) ? manifest.aliases : []),
+        ].map(normalizeRomKey);
+        return gameLookupKeys.some((key) => keys.includes(key));
+      });
+      const manifest = module?.manifest || {};
+      const lookupKeys = [
+        game.key,
+        ...gameLookupKeys,
+        module?.moduleId,
+        manifest.game_id,
+        manifest.game_key,
+        manifest.ap_world,
+        manifest.display_name,
+        manifest.game_name,
+        manifest.archipelago_client?.game_key,
+        ...(Array.isArray(manifest.required_roms) ? manifest.required_roms : []),
+        ...(Array.isArray(manifest.aliases) ? manifest.aliases : []),
+      ].map(normalizeRomKey);
+      const romPath = lookupKeys.map((key) => normalizedRoms[key]).find(Boolean) || '';
+      const req = manifest.rom_requirements || {};
+      const requirement = romRequirementForGame(game.key, game.displayName, manifest, module?.moduleId);
+      const importedComponents = romPath
+        ? requirement.components.length
+        : requirement.components.filter((component) =>
+            componentLookupKeys(game.key, component, requirement.components.length === 1).some((key) => Boolean(normalizedRoms[key]))
+          ).length;
+      const requiredComponents = requirement.components.length;
+      const hasKnownChecksum = Boolean(
+        hasChecksumValue(req.md5) ||
+        hasChecksumValue(req.sha1) ||
+        hasChecksumValue(req.sha256) ||
+        hasChecksumValue(req.sha3) ||
+        hasChecksumValue(req.sha3_256) ||
+        hasChecksumValue(req['sha3-256']) ||
+        requirement.components.some((component) => hasChecksumValue(component.md5))
+      );
+      const supportStatus = String(manifest.support_status || '').trim();
+      const explicitlyUnavailable = Boolean(game.forceUnavailable || supportStatus === 'unsupported' || supportStatus === 'not_available');
+      const importable = Boolean(!explicitlyUnavailable && (game.available || module?.moduleId));
+      return {
+        key: game.key,
+        displayName: game.displayName,
+        asset: game.asset,
+        manifest,
+        moduleId: module?.moduleId || '',
+        supportStatus,
+        importable,
+        romPath,
+        hasRom: importedComponents >= requiredComponents,
+        isIncomplete: importedComponents > 0 && importedComponents < requiredComponents,
+        importedComponents,
+        requiredComponents,
+        hasKnownChecksum,
+        requirement,
+      };
+    });
+  }, [configuredRoms, romImportGames, runtimeModules]);
+  const selectedRomRow = useMemo(
+    () => romLibraryRows.find((entry) => entry.key === romImportGameId) || null,
+    [romImportGameId, romLibraryRows]
+  );
+  const modalRomRow = useMemo(
+    () => romLibraryRows.find((entry) => entry.key === romImportModalGameId) || null,
+    [romImportModalGameId, romLibraryRows]
+  );
+  const filteredRomLibraryRows = useMemo(() => {
+    const needle = normalizeRomKey(romSearch);
+    return romLibraryRows.filter((row) => {
+      if (!romShowAllGames && !row.importable) return false;
+      if (!needle) return true;
+      return `${normalizeRomKey(row.displayName)} ${normalizeRomKey(row.key)} ${normalizeRomKey(row.moduleId)}`.includes(needle);
+    });
+  }, [romLibraryRows, romSearch, romShowAllGames]);
 
   const changeLanguage = (value: string) => {
     const next = normalizeClientLocale(value);
@@ -293,10 +775,12 @@ export default function SettingsPage() {
     let cancelled = false;
     const loadConfig = async () => {
       try {
-        const config = await runtime.configGet?.();
-        if (cancelled || !config || typeof config !== 'object') return;
-        const root = config as any;
-        const layout = root.layout && typeof root.layout === 'object' ? root.layout : {};
+	        const config = await runtime.configGet?.();
+	        if (cancelled || !config || typeof config !== 'object') return;
+	        const root = config as any;
+	        const roms = root.roms && typeof root.roms === 'object' ? root.roms : {};
+	        setConfiguredRoms(roms as Record<string, string>);
+	        const layout = root.layout && typeof root.layout === 'object' ? root.layout : {};
         const ui = layout.ui && typeof layout.ui === 'object' ? layout.ui : {};
         const client = layout.client && typeof layout.client === 'object' ? layout.client : {};
         const sekaiemu = layout.sekaiemu && typeof layout.sekaiemu === 'object' ? layout.sekaiemu : {};
@@ -314,6 +798,9 @@ export default function SettingsPage() {
           const nextTheme = normalizeClientTheme(ui.theme);
           setTheme(nextTheme);
           applyClientTheme(nextTheme);
+        }
+        if (typeof ui.ready_reminder_enabled === 'boolean') {
+          setSettings((prev) => ({ ...prev, readyReminderEnabled: ui.ready_reminder_enabled }));
         }
         if (typeof root.crash_reporting_opt_in === 'boolean') setDiagnostics(root.crash_reporting_opt_in);
         if (typeof input.selected_controller_id === 'string') setSelectedController(input.selected_controller_id);
@@ -343,9 +830,14 @@ export default function SettingsPage() {
           startLayout: layout.mode === 'side_by_side' ? 'side-by-side' : layout.mode === 'separate_displays' ? 'separate' : (sekaiemu.start_layout || prev.startLayout),
           emulationSize: typeof sekaiemu.emulation_size === 'string' ? sekaiemu.emulation_size : prev.emulationSize,
           emuFullscreen: typeof sekaiemu.start_fullscreen === 'boolean' ? sekaiemu.start_fullscreen : prev.emuFullscreen,
+          emuWindowMode: typeof sekaiemu.window_mode === 'string'
+            ? sekaiemu.window_mode
+            : (sekaiemu.start_fullscreen === true ? 'fullscreen' : prev.emuWindowMode),
           broadcastWindow: typeof sekaiemu.broadcast_window === 'boolean' ? sekaiemu.broadcast_window : prev.broadcastWindow,
           preserveEmuAspect: typeof sekaiemu.preserve_aspect === 'boolean' ? sekaiemu.preserve_aspect : prev.preserveEmuAspect,
           preventTrackerOverflow: typeof sekaiemu.prevent_tracker_overflow === 'boolean' ? sekaiemu.prevent_tracker_overflow : prev.preventTrackerOverflow,
+          hudButtonsVisible: typeof sekaiemu.hud_buttons_visible === 'boolean' ? sekaiemu.hud_buttons_visible : prev.hudButtonsVisible,
+          backgroundGamepadInput: typeof sekaiemu.background_gamepad_input === 'boolean' ? sekaiemu.background_gamepad_input : prev.backgroundGamepadInput,
           chatboxVisible: typeof sekaiemu.chatbox_visible === 'boolean' ? sekaiemu.chatbox_visible : prev.chatboxVisible,
           chatboxFontSize: Number.isFinite(sekaiemu.chatbox_font_size) ? Number(sekaiemu.chatbox_font_size) : prev.chatboxFontSize,
           disableAutotabbing: typeof sekaiemu.disable_autotabbing === 'boolean' ? sekaiemu.disable_autotabbing : prev.disableAutotabbing,
@@ -367,6 +859,41 @@ export default function SettingsPage() {
       }
     };
     void loadConfig();
+    return () => {
+      cancelled = true;
+    };
+	  }, []);
+
+	  useEffect(() => {
+	    let cancelled = false;
+	    const loadRuntimeModules = async () => {
+	      try {
+	        const result = await runtime.listRuntimeModules?.();
+	        if (cancelled) return;
+	        setRuntimeModules(Array.isArray(result) ? result as RuntimeModuleInfo[] : []);
+	      } catch (error) {
+	        traceError('settings-page', 'runtime_modules_load_failed', error);
+	      }
+	    };
+	    void loadRuntimeModules();
+	    return () => {
+	      cancelled = true;
+	    };
+	  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    const loadReleaseChannel = async () => {
+      try {
+        const result = await runtime.bootstrapperGetReleaseChannel?.() as { ok?: boolean; channel?: string; installedChannel?: string; installedVersion?: string } | undefined;
+        if (cancelled) return;
+        const channel = String(result?.channel || 'canonical').trim().toLowerCase();
+        setReleaseChannel(channel === 'canari' ? 'canari' : 'canonical');
+      } catch (error) {
+        traceError('settings-page', 'release_channel_load_failed', error);
+      }
+    };
+    void loadReleaseChannel();
     return () => {
       cancelled = true;
     };
@@ -516,12 +1043,19 @@ export default function SettingsPage() {
     applyClientTheme(next);
   };
 
+  const refreshConfiguredRoms = async () => {
+    const config = await Promise.resolve(runtime.configGet?.()).catch(() => null);
+    if (config && typeof config === 'object' && (config as any).roms && typeof (config as any).roms === 'object') {
+      setConfiguredRoms((config as any).roms as Record<string, string>);
+    }
+  };
+
   const importRomPath = async (filePath: string, gameId?: string) => {
     const result = await runtime.romsImport?.(
       gameId ? { filePath, gameId } : filePath
     );
     const ok = Boolean((result as any)?.ok ?? result);
-    if (!ok) {
+	    if (!ok) {
       const error = String((result as any)?.error || 'ROM invalide.');
       const candidates = Array.isArray((result as any)?.candidates)
         ? (result as any).candidates
@@ -535,13 +1069,17 @@ export default function SettingsPage() {
       if (error === 'rom_game_ambiguous' && candidates.length) {
         setPendingRomImport({ filePath, candidates });
         setImportStatus('Plusieurs jeux peuvent utiliser cette ROM. Choisis le jeu cible ci-dessous.');
-        return;
+        return false;
       }
       setPendingRomImport(null);
       const expected = String((result as any)?.expected || (result as any)?.expected_checksum || '');
-      setImportStatus(expected ? `ROM invalide: ${error}. ROM attendue: ${expected}` : `ROM invalide: ${error}`);
-      return;
+      const selectedGame = romImportGames.find((game) => game.key === (gameId || romImportGameId));
+      const requirement = selectedGame ? romRequirementForGame(selectedGame.key, selectedGame.displayName) : null;
+      const expectedHint = requirement ? summarizeRomRequirement(requirement) : expected;
+      setImportStatus(expectedHint ? `ROM invalide: ${error}. ROM attendue: ${expectedHint}` : `ROM invalide: ${error}. Choisis le jeu cible si l'auto-detection ne reconnait pas cette ROM.`);
+      return false;
     }
+    await refreshConfiguredRoms();
     setPendingRomImport(null);
     const importedName = String((result as any)?.displayName || (result as any)?.gameId || '');
     const matchKind = String((result as any)?.matchKind || '');
@@ -550,6 +1088,7 @@ export default function SettingsPage() {
         ? `${t('ROM imported and cached locally.')} ${importedName}${matchKind ? ` (${matchKind})` : ''}.`
         : t('ROM imported and cached locally.')
     );
+    return true;
   };
 
   const importRom = async () => {
@@ -572,6 +1111,215 @@ export default function SettingsPage() {
     }
   };
 
+  const openRomImportModal = (gameId: string) => {
+    setRomImportGameId(gameId);
+    setRomImportModalGameId(gameId);
+    setPendingRomImport(null);
+    setImportStatus('');
+  };
+
+  useEffect(() => {
+    if (!romImportRequest?.gameId) return;
+    setActive('rom-library');
+    if (handledRomImportNonce.current === romImportRequest.nonce) return;
+    const requested = normalizeRomKey(romImportRequest.gameId);
+    const row = romLibraryRows.find((entry) =>
+      [entry.key, entry.displayName, entry.moduleId].map(normalizeRomKey).includes(requested)
+    );
+    if (row) {
+      handledRomImportNonce.current = romImportRequest.nonce;
+      openRomImportModal(row.key);
+    }
+  }, [romImportRequest?.nonce, romImportRequest?.gameId, romLibraryRows]);
+
+  const importModalRom = async (gameId: string) => {
+    setRomImportGameId(gameId);
+    setImportStatus('');
+    setPendingRomImport(null);
+    try {
+      const file = await runtime.pickFile?.({
+        title: t('Import ROM File'),
+        filters: [
+          { name: 'ROM files', extensions: ['sfc', 'smc', 'nes', 'gb', 'gbc', 'gba', 'z64', 'n64', 'iso', 'rvz', 'gcm'] },
+          { name: 'All files', extensions: ['*'] },
+        ],
+      });
+      const filePath = typeof file === 'string' ? file : String((file as any)?.path || '');
+      if (!filePath) return;
+      const imported = await importRomPath(filePath, gameId);
+      if (imported) {
+        setRomImportModalGameId('');
+      }
+    } catch (error) {
+      traceError('settings-page', 'rom_modal_import_failed', error);
+      setImportStatus(error instanceof Error ? `${t('ROM invalide')}: ${error.message}` : `${t('ROM invalide')}: unable to import file.`);
+    }
+  };
+
+  const importPendingRomCandidate = async (gameId: string) => {
+    const filePath = pendingRomImport?.filePath || '';
+    if (!filePath) return;
+    try {
+      const imported = await importRomPath(filePath, gameId);
+      if (imported) {
+        setRomImportModalGameId('');
+      }
+    } catch (error) {
+      traceError('settings-page', 'rom_modal_candidate_import_failed', error);
+      setImportStatus(error instanceof Error ? `${t('ROM invalide')}: ${error.message}` : `${t('ROM invalide')}: unable to import file.`);
+    }
+  };
+
+  const scanModalRoms = async () => {
+    setImportStatus('');
+    setPendingRomImport(null);
+    try {
+      const folder = await runtime.pickFolder?.({ title: t('Scan ROM folder') });
+      const folderPath = typeof folder === 'string' ? folder : String((folder as any)?.path || '');
+      if (!folderPath) return;
+      const result = await runtime.romsScan?.(folderPath);
+      const results = Array.isArray((result as any)?.results) ? (result as any).results : [];
+      await refreshConfiguredRoms();
+      setImportStatus(results.length ? `${results.length} ${t('ROM(s) imported from folder scan.')}` : t('No compatible ROM found in this folder.'));
+      if (results.length) {
+        setRomImportModalGameId('');
+      }
+    } catch (error) {
+      traceError('settings-page', 'rom_modal_scan_failed', error);
+      setImportStatus(error instanceof Error ? `${t('Scan failed')}: ${error.message}` : t('Scan failed'));
+    }
+  };
+
+  const configureWithSekaiemu = async () => {
+    setCaptureTarget(null);
+    setCaptureStatus(t('Opening Sekaiemu controller capture...'));
+    try {
+      const result = await runtime.sekaiEmuInputCapture?.({ profile: selectedControlCore, coreId: selectedControlCore });
+      if (!result?.ok) {
+        const detail = String(result?.detail || result?.error || 'capture_failed');
+        setCaptureStatus(`Sekaiemu capture failed: ${detail}`);
+        return;
+      }
+      const mappings = result.mappings && typeof result.mappings === 'object' ? result.mappings : {};
+      const nextCoreMappings = {
+        ...controlMappings,
+        [selectedControlCore]: {
+          ...(controlMappings[selectedControlCore] || {}),
+          ...mappings,
+        },
+      };
+      setControlMappings((prev) => ({
+        ...prev,
+        [selectedControlCore]: {
+          ...(prev[selectedControlCore] || {}),
+          ...mappings,
+        },
+      }));
+      const config = await runtime.configGet?.();
+      const currentLayout = config && typeof config === 'object' && (config as any).layout && typeof (config as any).layout === 'object'
+        ? (config as any).layout
+        : {};
+      await runtime.configSetLayout?.({
+        ...currentLayout,
+        input: {
+          ...(currentLayout.input && typeof currentLayout.input === 'object' ? currentLayout.input : {}),
+          capture_backend: 'sekaiemu-sdl',
+          selected_controller_id: selectedController,
+          default_core_id: defaultControlCore,
+          core_mappings: nextCoreMappings,
+        },
+      });
+      const count = Object.keys(mappings).length;
+      setCaptureStatus(count ? `Sekaiemu capture imported and saved ${count} bindings.` : 'Sekaiemu capture completed with no bindings.');
+    } catch (error) {
+      traceError('settings-page', 'sekaiemu_input_capture_failed', error);
+      setCaptureStatus(error instanceof Error ? `Sekaiemu capture failed: ${error.message}` : 'Sekaiemu capture failed.');
+    }
+  };
+
+  const clearSeedCache = async () => {
+    const confirmed = window.confirm(
+      [
+        'Clear generated seed cache?',
+        '',
+        'This removes cached generated seeds, downloaded patches, and patched ROM outputs.',
+        'Imported base ROMs stay in the ROM Library.',
+        '',
+        'If a sync is currently in progress, its generated seed files may be erased and you may need to relaunch/re-download that seed.',
+        '',
+        'Continue?',
+      ].join('\n')
+    );
+    if (!confirmed || clearingCache) return;
+    setClearingCache(true);
+    setCacheStatus('');
+    try {
+      const result = await runtime.clearSeedCache?.();
+      if (!result?.ok) {
+        const failedCount = Array.isArray(result?.failed) ? result.failed.length : 0;
+        setCacheStatus(`Cache cleanup finished with ${failedCount || 1} warning(s). Some files may still be in use.`);
+        return;
+      }
+      const clearedCount = Array.isArray(result.cleared) ? result.cleared.length : 0;
+      const activeCount = Number(result.activeRuntimeCount || 0);
+      setCacheStatus(
+        activeCount > 0
+          ? `Seed cache cleared (${clearedCount} folders). ${activeCount} runtime session(s) were active; relaunch any affected seed if needed.`
+          : `Seed cache cleared (${clearedCount} folders).`
+      );
+    } catch (error) {
+      traceError('settings-page', 'clear_seed_cache_failed', error);
+      setCacheStatus(error instanceof Error ? `Cache cleanup failed: ${error.message}` : 'Cache cleanup failed.');
+    } finally {
+      setClearingCache(false);
+    }
+  };
+
+  const switchReleaseChannel = async (channel: 'canonical' | 'canari') => {
+    if (releaseChannelBusy) return;
+    setReleaseChannelBusy(true);
+    setReleaseChannelStatus('');
+    try {
+      const result = await runtime.bootstrapperSetReleaseChannel?.(channel) as { ok?: boolean; channel?: string; error?: string } | undefined;
+      if (!result?.ok) {
+        setReleaseChannelStatus(result?.error || 'Unable to change release channel.');
+        return;
+      }
+      const next = String(result.channel || channel).toLowerCase() === 'canari' ? 'canari' : 'canonical';
+      setReleaseChannel(next);
+      setReleaseChannelStatus(
+        next === 'canari'
+          ? 'Canari enabled. Restart SekaiLink to let the bootstrapper download Canari builds.'
+          : 'Canonical selected. Restart SekaiLink to let the bootstrapper return to Canonical builds.'
+      );
+    } catch (error) {
+      traceError('settings-page', 'release_channel_set_failed', error);
+      setReleaseChannelStatus(error instanceof Error ? error.message : 'Unable to change release channel.');
+    } finally {
+      setReleaseChannelBusy(false);
+    }
+  };
+
+  const openPopTrackerBroadcast = async () => {
+    setTrackerActionStatus('');
+    try {
+      const result = await runtime.trackerOpenBroadcast?.() as { ok?: boolean; error?: string; detail?: string } | undefined;
+      if (!result?.ok) {
+        const message =
+          result?.error === 'no_runtime_tracker'
+            ? 'No active SekaiLink PopTracker runtime was found.'
+            : result?.error === 'runtime_control_unavailable'
+              ? 'The active PopTracker build does not expose runtime controls.'
+              : result?.error || result?.detail || 'Unable to open PopTracker broadcast.';
+        setTrackerActionStatus(message);
+        return;
+      }
+      setTrackerActionStatus('Broadcast view requested.');
+    } catch (error) {
+      setTrackerActionStatus(error instanceof Error ? error.message : 'Unable to open PopTracker broadcast.');
+    }
+  };
+
   const save = async () => {
     trace('settings-page', 'save_start', { active });
     await runtime.configSetLayout?.({
@@ -583,6 +1331,7 @@ export default function SettingsPage() {
       ui: {
         language,
         theme,
+        ready_reminder_enabled: settings.readyReminderEnabled,
       },
       client: {
         start_fullscreen: settings.clientFullscreen,
@@ -591,10 +1340,13 @@ export default function SettingsPage() {
       sekaiemu: {
         start_layout: settings.startLayout,
         emulation_size: settings.emulationSize,
-        start_fullscreen: settings.emuFullscreen,
+        start_fullscreen: settings.emuWindowMode === 'fullscreen',
+        window_mode: settings.emuWindowMode,
         broadcast_window: settings.broadcastWindow,
         preserve_aspect: settings.preserveEmuAspect,
         prevent_tracker_overflow: settings.preventTrackerOverflow,
+        hud_buttons_visible: settings.hudButtonsVisible,
+        background_gamepad_input: settings.backgroundGamepadInput,
         chatbox_visible: settings.chatboxVisible,
         chatbox_font_size: settings.chatboxFontSize,
         disable_autotabbing: settings.disableAutotabbing,
@@ -655,7 +1407,7 @@ export default function SettingsPage() {
         <div className="px-6 py-5 border-b border-[#2a2b30] flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold">{activeTitle}</h1>
-            <p className="text-sm text-[#8e8f94]">{t('Every visible setting is either wired now or explicitly marked Coming soon.')}</p>
+            <p className="text-sm text-[#8e8f94]">{t('Every visible setting is either wired now or clearly marked as In learning while the integration is being stabilized.')}</p>
           </div>
           <button onClick={() => void save()} className="px-4 py-2.5 rounded-lg bg-[#2a2b30] hover:bg-[#3a3b40] flex items-center gap-2 text-sm font-medium">
             <Save className="w-4 h-4" />
@@ -670,8 +1422,7 @@ export default function SettingsPage() {
                 <SelectRow label={t('UI Language')} value={language} onChange={changeLanguage} options={[
                   ['fr', t('Français')],
                   ['en', t('English')],
-                  ['ja', t('日本語')],
-                ]} description={t('First boot uses the system language. Translation cleanup is tracked as part of the BETA-3 pass.')} />
+                ]} description={t('Choose French or English. The full interface follows this setting on restart and while navigating.')} />
                 <SelectRow label={t('UI Theme')} value={theme} onChange={changeTheme} options={[
                   ['default', t('SekaiLink Default')],
                   ['light', t('Light')],
@@ -680,6 +1431,78 @@ export default function SettingsPage() {
               </SettingGroup>
               <SettingGroup title={t('Diagnostics')}>
                 <ToggleRow label={t('Diagnostic & crash reporting')} value={diagnostics} onChange={setDiagnostics} description={t('Reports will be stored in Nexus for admin/dev/mod review.')} />
+              </SettingGroup>
+              <SettingGroup title={t('Lobby guidance')}>
+                <ToggleRow
+                  label={t('Ready button reminder')}
+                  value={settings.readyReminderEnabled}
+                  onChange={(value) => patchSettings({ readyReminderEnabled: value })}
+                  description={t('Shows a bouncing reminder above Ready after you add a seed config to a lobby.')}
+                />
+              </SettingGroup>
+              <SettingGroup title={t('Maintenance')}>
+                <div className="rounded-xl border border-[#38f3dd]/25 bg-[#0f1b1d] p-4">
+                  <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 font-semibold text-[#f4f6fb]">
+                        <RefreshCcw className="h-4 w-4 text-[#38f3dd]" />
+                        {t('Release channel')}
+                      </div>
+                      <p className="mt-2 text-sm leading-5 text-[#d7dde5]">
+                        {releaseChannel === 'canari'
+                          ? t('Canari is active for the next bootstrapper launch. Builds stay Canari until they are approved as Canonical.')
+                          : t('Canonical is active. This is the default release track for players.')}
+                      </p>
+                      <p className="mt-2 text-xs leading-5 text-[#8e8f94]">
+                        {t('Changing this setting requires restarting SekaiLink so the bootstrapper can download the selected release.')}
+                      </p>
+                    </div>
+                    <div className="grid min-w-[260px] grid-cols-1 gap-2 sm:grid-cols-2">
+                      <button
+                        type="button"
+                        onClick={() => void switchReleaseChannel('canari')}
+                        disabled={releaseChannelBusy || releaseChannel === 'canari'}
+                        className="rounded-lg border border-[#f69d50]/60 bg-[#f69d50]/10 px-4 py-2.5 text-sm font-bold text-[#ffd6a3] transition hover:bg-[#f69d50]/20 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        {t('Enable Canari')}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => void switchReleaseChannel('canonical')}
+                        disabled={releaseChannelBusy || releaseChannel === 'canonical'}
+                        className="rounded-lg border border-[#4ecdc4]/60 bg-[#4ecdc4]/10 px-4 py-2.5 text-sm font-bold text-[#95e1d3] transition hover:bg-[#4ecdc4]/20 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        {t('Revert to Canonical')}
+                      </button>
+                    </div>
+                  </div>
+                  {releaseChannelStatus && <div className="mt-3 rounded-lg border border-[#2a2b30] bg-[#14151a] p-3 text-sm text-[#d7dde5]">{releaseChannelStatus}</div>}
+                </div>
+                <div className="rounded-xl border border-[#f38181]/35 bg-[#201316] p-4">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 font-semibold text-[#f4f6fb]">
+                        <CircleAlert className="h-4 w-4 text-[#f38181]" />
+                        {t('Generated seed cache')}
+                      </div>
+                      <p className="mt-2 text-sm leading-5 text-[#d7dde5]">
+                        {t('Clears cached generated seeds, downloaded patches, and patched ROM outputs. Imported base ROMs are kept.')}
+                      </p>
+                      <p className="mt-2 text-xs leading-5 text-[#f4b8ad]">
+                        {t('Warning: if a sync is currently running, its generated seed files may be erased and that seed may need to be relaunched.')}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => void clearSeedCache()}
+                      disabled={clearingCache}
+                      className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#f38181] px-4 py-2.5 text-sm font-bold text-[#12080a] hover:bg-[#ff9a9a] disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                      {clearingCache ? t('Clearing...') : t('Clear cache')}
+                    </button>
+                  </div>
+                  {cacheStatus && <div className="mt-3 rounded-lg border border-[#2a2b30] bg-[#14151a] p-3 text-sm text-[#d7dde5]">{cacheStatus}</div>}
+                </div>
               </SettingGroup>
               <SettingGroup title={t('AI Features')}>
                 <ToggleRow label={t('Opt out of AI UI')} value={settings.hideAiUi} onChange={(value) => patchSettings({ hideAiUi: value })} description={t('Future behavior: hides Pulse and guided AI configuration surfaces. Not active yet.')} />
@@ -691,40 +1514,98 @@ export default function SettingsPage() {
 
           {active === 'rom-library' && (
             <SettingGroup title="ROM Library">
-              <label className="block text-sm font-semibold text-[#f4f6fb]">
-                {t('Target game')}
-                <select
-                  value={romImportGameId}
-                  onChange={(event) => setRomImportGameId(event.target.value)}
-                  className="mt-2 w-full rounded-lg border border-[#2a2b30] bg-[#0b0d12] px-3 py-3 text-sm text-[#f4f6fb] outline-none focus:border-[#38f3dd]"
-                >
-                  <option value="">{t('Auto-detect from checksum')}</option>
-                  {romImportGames.map((game) => (
-                    <option key={game.key} value={game.key}>
-                      {game.displayName}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <button onClick={() => void importRom()} className="px-4 py-3 rounded-lg bg-gradient-to-r from-[#ff6b35] to-[#f38181] font-bold">Import ROM File</button>
-              <p className="text-sm text-[#8e8f94]">Imported ROMs are validated when checksums are known. If a runtime module does not have checksums yet, choose the target game before importing.</p>
-              {importStatus && <div className="rounded-lg border border-[#2a2b30] bg-[#14151a] p-3 text-sm">{importStatus}</div>}
-              {pendingRomImport && (
-                <div className="rounded-xl border border-[#38f3dd]/25 bg-[#10201f] p-3">
-                  <div className="mb-3 text-sm font-semibold text-[#f4f6fb]">{t('Import as')}</div>
-                  <div className="flex flex-wrap gap-2">
-                    {pendingRomImport.candidates.map((candidate) => (
-                      <button
-                        key={candidate.gameId}
-                        type="button"
-                        onClick={() => void importRomPath(pendingRomImport.filePath, candidate.gameId)}
-                        className="rounded-lg border border-[#38f3dd]/35 bg-[#173533] px-3 py-2 text-sm font-semibold text-[#f4f6fb] hover:bg-[#1f4744]"
-                      >
-                        {candidate.displayName}
-                      </button>
-                    ))}
+              <div className="rounded-xl border border-[#2a2b30] bg-[#101318] p-4">
+                <div className="mb-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                  <div>
+                    <div className="text-sm font-semibold text-[#f4f6fb]">{t('Choose a game')}</div>
+                    <div className="text-xs text-[#8e8f94]">{t('Games without a valid imported ROM are dimmed and marked Missing ROM.')}</div>
+                  </div>
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                    <div className="relative min-w-[240px]">
+                      <Search className="absolute left-3 top-2.5 h-4 w-4 text-[#8e8f94]" />
+                      <input
+                        value={romSearch}
+                        onChange={(event) => setRomSearch(event.target.value)}
+                        className="w-full rounded-lg border border-[#2a2b30] bg-[#0b0d12] py-2 pl-9 pr-3 text-sm text-[#f4f6fb] outline-none focus:border-[#38f3dd]"
+                        placeholder={t('Search game')}
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setRomShowAllGames((value) => !value)}
+                      className={`rounded-lg px-3 py-2 text-xs font-bold ${romShowAllGames ? 'bg-[#f69d50] text-[#130b03]' : 'bg-[#232830] text-[#d7dde5] hover:bg-[#303744]'}`}
+                    >
+                      {romShowAllGames ? t('All games') : t('Supported')}
+                    </button>
                   </div>
                 </div>
+
+                <div className="flex gap-4 overflow-x-auto pb-3">
+                  {filteredRomLibraryRows.map((row) => {
+                    const selected = romImportGameId === row.key;
+                    const missing = !row.hasRom;
+                    const manual = !row.hasKnownChecksum;
+                    return (
+                      <button
+                        key={row.key}
+                        type="button"
+                        onClick={() => openRomImportModal(row.key)}
+                        className={`group relative w-[210px] shrink-0 overflow-hidden rounded-lg border text-left transition-colors ${
+                          selected
+                            ? 'border-[#38f3dd] bg-[#12312f]'
+                            : 'border-[#252a33] bg-[#0b0d12] hover:border-[#4ecdc4]'
+                        }`}
+                      >
+                        <div className="relative aspect-[4/3] bg-[#080b10]">
+                          {row.asset ? (
+                            <img
+                              src={row.asset}
+                              alt=""
+                              className={`h-full w-full object-cover transition-transform duration-200 group-hover:scale-[1.03] ${missing ? 'grayscale opacity-45' : ''}`}
+                            />
+                          ) : (
+                            <div className={`grid h-full place-items-center px-3 text-center text-xs text-[#8e8f94] ${missing ? 'opacity-50' : ''}`}>{row.displayName}</div>
+                          )}
+                          {missing && <div className="absolute inset-0 bg-[#05070a]/35" />}
+                          <div className="absolute left-2 top-2 flex flex-wrap gap-1">
+                            <span className={`rounded-full px-2 py-1 text-[10px] font-bold ${row.hasRom ? 'bg-[#4ecdc4] text-[#061311]' : 'bg-[#f38181] text-[#16090b]'}`}>
+                              {row.hasRom ? t('Ready') : t('Missing ROM')}
+                            </span>
+                            <span className={`rounded-full px-2 py-1 text-[10px] font-bold ${manual ? 'bg-[#f69d50] text-[#160d03]' : 'bg-[#38f3dd] text-[#061311]'}`}>
+                              {manual ? t('Manual') : t('Verified')}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="p-3">
+                          <div className={`line-clamp-2 min-h-[2.25rem] text-sm font-semibold leading-[1.1rem] ${missing ? 'text-[#9ca0a8]' : 'text-[#f4f6fb]'}`}>{row.displayName}</div>
+                          <div className="mt-2 flex items-center justify-between gap-2 text-xs">
+                            <span className="truncate text-[#8e8f94]">{row.moduleId || row.key}</span>
+                            <span className={row.importable ? 'font-bold text-[#4ecdc4]' : 'font-bold text-[#8e8f94]'}>
+                              {row.importable ? t('Supported') : t(LEARNING_LABEL)}
+                            </span>
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                  {!filteredRomLibraryRows.length && <div className="rounded-lg border border-[#2a2b30] bg-[#0b0d12] p-3 text-sm text-[#8e8f94]">{t('No games match this search.')}</div>}
+                </div>
+              </div>
+
+              {importStatus && <div className="rounded-lg border border-[#2a2b30] bg-[#14151a] p-3 text-sm">{importStatus}</div>}
+              {modalRomRow && (
+                <RomImportModal
+                  row={modalRomRow}
+                  t={t}
+                  pendingRomImport={pendingRomImport}
+                  onClose={() => {
+                    setRomImportModalGameId('');
+                    setPendingRomImport(null);
+                  }}
+                  onSelect={() => void importModalRom(modalRomRow.key)}
+                  onScan={() => void scanModalRoms()}
+                  onImportCandidate={(candidateGameId) => void importPendingRomCandidate(candidateGameId)}
+                />
               )}
               <DisabledRow label="ROM list management" description="Trash bin removal remains available when the runtime library index is loaded. Show in Folder is intentionally removed." />
             </SettingGroup>
@@ -747,12 +1628,16 @@ export default function SettingsPage() {
                   ['x3', 'x3'],
                   ['x4', 'x4'],
                 ]} />
-                <ToggleRow label="Start Fullscreen" value={settings.emuFullscreen} onChange={(value) => patchSettings({ emuFullscreen: value })} />
+                <SelectRow label="Window Mode" value={settings.emuWindowMode} onChange={(value) => patchSettings({ emuWindowMode: value })} options={[
+                  ['borderless-window', 'Borderless Window'],
+                  ['window', 'Window'],
+                  ['fullscreen', 'Fullscreen'],
+                ]} />
                 <ToggleRow label="Show Broadcast Window" value={settings.broadcastWindow} onChange={(value) => patchSettings({ broadcastWindow: value })} />
                 <ToggleRow label="Preserve emulator aspect ratio" value={settings.preserveEmuAspect} onChange={(value) => patchSettings({ preserveEmuAspect: value })} description="Keeps NES, SNES, GB/GBC, and GBA layouts from stretching into the tracker." />
                 <ToggleRow label="Prevent tracker overflow" value={settings.preventTrackerOverflow} onChange={(value) => patchSettings({ preventTrackerOverflow: value })} />
-                <ToggleRow label="Chatbox visible" value={settings.chatboxVisible} onChange={(value) => patchSettings({ chatboxVisible: value })} />
-                <RangeRow label="Chatbox font size" value={settings.chatboxFontSize} min={10} max={24} onChange={(value) => patchSettings({ chatboxFontSize: value })} />
+                <ToggleRow label="Runtime HUD buttons" value={settings.hudButtonsVisible} onChange={(value) => patchSettings({ hudButtonsVisible: value })} />
+                <ToggleRow label="Background gamepad input" value={settings.backgroundGamepadInput} onChange={(value) => patchSettings({ backgroundGamepadInput: value })} description="Allows controller input to keep reaching Sekaiemu when another window has focus. Keyboard input still follows the focused window." />
                 <ToggleRow label="Disable autotabbing" value={settings.disableAutotabbing} onChange={(value) => patchSettings({ disableAutotabbing: value })} />
               </SettingGroup>
             </>
@@ -773,7 +1658,7 @@ export default function SettingsPage() {
                 <SelectRow label="Default core launch mode" value="managed" onChange={() => undefined} options={[['managed', 'Managed by SekaiLink']]} />
               </SettingGroup>
               <SettingGroup title="SM64EX">
-                <DisabledRow label="Install / Uninstall / Run Standalone" description="Coming soon" />
+              <DisabledRow label="Install / Uninstall / Run Standalone" description={LEARNING_DESCRIPTION} />
                 <ToggleRow label="Start Fullscreen" value={false} onChange={() => undefined} disabled />
                 <SelectRow label="Screen size" value="1280x720" onChange={() => undefined} options={[['1280x720', '1280x720'], ['1920x1080', '1920x1080']]} disabled />
               </SettingGroup>
@@ -782,7 +1667,14 @@ export default function SettingsPage() {
                 <ToggleRow label="Use HD Graphics" value={true} onChange={() => undefined} disabled />
               </SettingGroup>
               <SettingGroup title="WebView Games and Trackers">
-                <DisabledRow label="Persistent WebView settings" description="Coming soon: cache, permissions, zoom, audio, and tracker session restore." />
+                <ActionRow
+                  label="Open PopTracker Broadcast"
+                  description="Opens or focuses the broadcast view for the active SekaiLink PopTracker runtime."
+                  actionLabel="Open"
+                  onAction={openPopTrackerBroadcast}
+                />
+                {trackerActionStatus && <div className="rounded-lg border border-[#2a2b30] bg-[#0e0f13] px-3 py-2 text-sm text-[#8e8f94]">{trackerActionStatus}</div>}
+                <DisabledRow label="Persistent WebView settings" description="In learning: cache, permissions, zoom, audio, and tracker session restore are being stabilized." />
               </SettingGroup>
             </>
           )}
@@ -860,9 +1752,11 @@ export default function SettingsPage() {
               />
               <div className="grid grid-cols-[minmax(280px,420px)_1fr] gap-5 items-start">
                 <ControllerPreview
+                  coreId={selectedControlCore}
                   profile={controlProfiles[selectedControlCore]}
                   mappings={controlMappings[selectedControlCore] || {}}
                   captureTarget={captureTarget}
+                  disabled={!selectedController}
                 />
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-3 rounded-lg border border-[#2a2b30] bg-[#0e0f13] p-4">
@@ -883,16 +1777,24 @@ export default function SettingsPage() {
                         <div className="font-medium">{t('Button mapping')}</div>
                         <div className="text-sm text-[#8e8f94]">{t('Click a row, then press a controller input within 5 seconds.')}</div>
                       </div>
-                      <button
-                        onClick={() => {
-                          setControlMappings((prev) => ({ ...prev, [selectedControlCore]: {} }));
-                          setCaptureTarget(null);
-                          setCaptureStatus(t('Mapping cleared.'));
-                        }}
-                        className="px-3 py-2 rounded-lg bg-[#2a2b30] hover:bg-[#3a3b40] text-sm"
-                      >
-                        {t('Clear')}
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={configureWithSekaiemu}
+                          className="px-3 py-2 rounded-lg bg-[#4ecdc4] text-[#0d1117] hover:bg-[#7adbd5] text-sm font-bold"
+                        >
+                          {t('Configure with Sekaiemu')}
+                        </button>
+                        <button
+                          onClick={() => {
+                            setControlMappings((prev) => ({ ...prev, [selectedControlCore]: {} }));
+                            setCaptureTarget(null);
+                            setCaptureStatus(t('Mapping cleared.'));
+                          }}
+                          className="px-3 py-2 rounded-lg bg-[#2a2b30] hover:bg-[#3a3b40] text-sm"
+                        >
+                          {t('Clear')}
+                        </button>
+                      </div>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       {controlProfiles[selectedControlCore].buttons.map((button) => (
@@ -907,7 +1809,7 @@ export default function SettingsPage() {
                           }`}
                         >
                           <div className="text-sm font-bold">{button}</div>
-                          <div className="text-xs text-[#8e8f94]">{controlMappings[selectedControlCore]?.[button] || t('Unmapped')}</div>
+                          <div className="text-xs text-[#8e8f94]">{controlMappings[selectedControlCore]?.[button] ? formatBinding(controlMappings[selectedControlCore]?.[button] || '') : t('Unmapped')}</div>
                         </button>
                       ))}
                     </div>
@@ -970,7 +1872,7 @@ export default function SettingsPage() {
               <ToggleRow label="Aggressive reconnect checkups" value={settings.sklmiReconnect} onChange={(value) => patchSettings({ sklmiReconnect: value })} />
               <ToggleRow label="Verbose runtime logs" value={settings.sklmiVerbose} onChange={(value) => patchSettings({ sklmiVerbose: value })} />
               <ToggleRow label="Allow user diagnostic log extraction" value={settings.sklmiExtractLogs} onChange={(value) => patchSettings({ sklmiExtractLogs: value })} description="Lets support collect Sekaiemu/SKLMI logs from the client side with user consent." />
-              <DisabledRow label="Reconnect SKLMI command" description="Coming soon: admin-safe command endpoint and client runtime hook." />
+              <DisabledRow label="Reconnect SKLMI command" description="In learning: admin-safe command endpoint and client runtime hook are being stabilized." />
             </SettingGroup>
           )}
 
@@ -991,7 +1893,7 @@ export default function SettingsPage() {
 
           {active === 'twitch' && (
             <SettingGroup title="Twitch Bot">
-              <DisabledRow label="Bot Join / Bot Leave" description="Coming soon: Twitch account association is required before bot settings can be edited." />
+              <DisabledRow label="Bot Join / Bot Leave" description="In learning: Twitch account association is required before bot settings can be edited safely." />
               <DisabledRow label="Command prefix, moderation, lobby announce, stream-safe hints" description="Will be aligned with the Twitch bot source settings." />
             </SettingGroup>
           )}
@@ -1021,6 +1923,220 @@ export default function SettingsPage() {
   );
 }
 
+function checksumList(value: unknown) {
+  if (Array.isArray(value)) return value.map((entry) => String(entry || '').trim()).filter(Boolean);
+  const single = String(value || '').trim();
+  return single ? [single] : [];
+}
+
+const CRC32_BY_MD5: Record<string, string> = {
+  '03a63945398191337e896e5771f77173': '3322EFFC',
+  '07c211479386825042efb4ad31bb525f': '97822948',
+  '10a894199a9adc50ff88815fd9853e19': 'D0176B24',
+  '120abf304f0c40fe059f6a192ed4f947': '448EEC19',
+  '201e7658f6194458a3869dde36bf8ec2': 'EC8A48F6',
+  '21f3e98df4780ee1c667b84e57d88675': 'D63ED5F8',
+  '2af78edbe244b5de44471368ae2b6f0b': 'E8637292',
+  '301899b8087289a6436b0a241fbbb474': '3358E30A',
+  '30c5f292ff4cbbfcc00fd8fa96c2de3b': 'C946DCA0',
+  '337bd6f1a1163df31bf2633665589ab0': 'D7AE93DF',
+  '3d45c1ee9abd5738df46d2bdda8b57dc': '9F7FDD53',
+  '4b1a5897d89d9e74ec7f630eefdfd435': 'E718D850',
+  '50927e843568814f7ed45ec4f944bd8b': 'D6DA8A1A',
+  '51901a6e40661b3914aa333c802e24e8': '84EE4776',
+  '5bd1fe107bf8106b2ab6650abecd54d6': 'CD16C529',
+  '5fe47355a33e3fabec2a1607af88a404': 'D6141609',
+  '605b89b67018abcea91e693a4dd25be3': '1F1C08FB',
+  '612ca9473451fa42b51d1711031ed5f6': 'D69C96CC',
+  '6e9c94511d04fac6e0a1e582c170be3a': 'A5C0045E',
+  '6efc477d6203ed2b3b9133c1cd9e9c5d': '20F2AC29',
+  '6fe31df0144759b34ad666badaacc442': 'C0C780F9',
+  '75b924155cafee335c9ea7a01bfc8efb': '452D8089',
+  '764d36fa8a2450834da5e8194281035a': 'E3C788B0',
+  'a8413347d5df8c9d14f97f0330d67bce': 'D5EC24E4',
+  'a864b2e5c141d2dec1c4cbed75a42a85': 'DC9BB451',
+  '9d33a02159e018d09073e700e1fd10fd': 'DAFFECEC',
+  '9f2922b235a5eeb78d65594e82ef5dde': 'EE6F5188',
+  'af5040fc0f579800151ee2a683e2e5b5': '6C75479C',
+  'c4639cc61c049e5a085526bb6cac03bb': '3800A387',
+  'caaeb9ee3b52839de261fd16f93103e6': 'A9BD44BC',
+  'cdd3c8c37322978ca8669b34bc89c804': 'B19ED489',
+  'cd99cdde3d45554c1b36fbeb8863b7bd': '5645E56C',
+  'cfe8c11f0dce19e4fa5f3fd75775e47c': 'FA0FE671',
+  'd323e6bb4ccc85fd7b416f58350bc1a2': '4E2D90F4',
+  'd69b2115e17d1cf2cb3590d3f75febb9': 'C1BC267D',
+  'd9d957771484ef846d4e8d241f6f2815': '40BE3889',
+  'e26ee0d44e809351c8ce2d73c7400cdd': 'DD88761C',
+  'ebbce58109988b6da61ebb06c7a432d5': '5C61A844',
+  'f2dc6c4e093e4f8c6cbea80e8dbd62cb': 'D7E9F5D7',
+};
+
+const crc32ForMd5 = (md5Values: string[]) => [
+  ...new Set(md5Values.map((hash) => CRC32_BY_MD5[hash.toLowerCase()]).filter(Boolean)),
+];
+
+function compatibleRomGroup(row: any): CompatibleRomGroup {
+  const manifest = row?.manifest || {};
+  const req = manifest.rom_requirements || {};
+  const manifestMd5 = checksumList(req.md5);
+  const manifestSha1 = checksumList(req.sha1);
+  const manifestSha256 = [
+    ...checksumList(req.sha256),
+    ...checksumList(req.sha3_256),
+    ...checksumList(req['sha3-256']),
+  ];
+  const components = Array.isArray(row?.requirement?.components) ? row.requirement.components : [];
+  const requiredRomCount = Array.isArray(manifest.required_roms) ? manifest.required_roms.length : 0;
+  const isMultiRequired = row?.key === 'smz3' || requiredRomCount > 1 || components.some((component: RomRequirementComponent) => (component.keys || []).some((key) => normalizeRomKey(key) !== normalizeRomKey(row?.key)));
+  const versions = components.map((component: RomRequirementComponent, index: number) => {
+      const useManifestChecksums = components.length === 1;
+      return {
+        label: component.label,
+        expectedBase: component.expectedBase,
+        md5: checksumList(component.md5).concat(useManifestChecksums ? manifestMd5.filter((hash) => hash !== component.md5) : []),
+        crc32: checksumList(component.crc32).concat(crc32ForMd5(
+          checksumList(component.md5).concat(useManifestChecksums ? manifestMd5.filter((hash) => hash !== component.md5) : []),
+        ).filter((hash) => hash !== component.crc32)),
+        sha1: checksumList(component.sha1).concat(useManifestChecksums ? manifestSha1.filter((hash) => hash !== component.sha1) : []),
+        sha256: checksumList(component.sha256).concat(useManifestChecksums ? manifestSha256.filter((hash) => hash !== component.sha256) : []),
+        key: `${component.label}-${component.expectedBase}-${index}`,
+      };
+    });
+  return {
+    title: isMultiRequired ? 'Required ROMs' : 'Compatible versions',
+    mode: isMultiRequired ? 'required' : 'alternatives',
+    versions,
+  };
+}
+
+function RomImportModal({
+  row,
+  t,
+  pendingRomImport,
+  onClose,
+  onSelect,
+  onScan,
+  onImportCandidate,
+}: {
+  row: any;
+  t: (value: string) => string;
+  pendingRomImport: { filePath: string; candidates: RomImportCandidate[] } | null;
+  onClose: () => void;
+  onSelect: () => void;
+  onScan: () => void;
+  onImportCandidate: (gameId: string) => void;
+}) {
+  const romGroup = compatibleRomGroup(row);
+  return (
+    <div className="fixed inset-0 z-50 grid place-items-center bg-black/70 px-4 py-6 backdrop-blur-sm">
+      <div className="max-h-[92vh] w-full max-w-3xl overflow-hidden rounded-xl border border-[#38f3dd] bg-[#101318] shadow-[0_0_40px_rgba(56,243,221,0.18)]">
+        <div className="relative h-44 border-b border-[#2a2b30] bg-[#080b10]">
+          {row.asset ? <img src={row.asset} alt="" className={`h-full w-full object-cover ${row.hasRom ? '' : 'grayscale opacity-55'}`} /> : null}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#05070a] via-[#05070a]/45 to-[#05070a]/10" />
+          <div className="absolute bottom-4 left-5 right-5">
+            <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
+              <span className={`rounded-full px-2 py-1 ${row.hasRom ? 'bg-[#4ecdc4] text-[#061311]' : 'bg-[#f38181] text-[#16090b]'}`}>
+                {row.hasRom ? t('Ready') : t('Missing ROM')}
+              </span>
+              <span className={`rounded-full px-2 py-1 ${row.hasKnownChecksum ? 'bg-[#38f3dd] text-[#061311]' : 'bg-[#f69d50] text-[#160d03]'}`}>
+                {row.hasKnownChecksum ? t('Checksum verified') : t('Manual import')}
+              </span>
+              <span className="rounded-full bg-[#232830] px-2 py-1 text-[#d7dde5]">{row.importable ? t('Supported') : t(LEARNING_LABEL)}</span>
+            </div>
+            <div className="mt-2 text-2xl font-bold text-white">{row.displayName}</div>
+          </div>
+        </div>
+
+        <div className="max-h-[calc(92vh-11rem)] overflow-y-auto p-5">
+          <div className="mb-3">
+            <div className="text-sm font-semibold text-[#f4f6fb]">{t(romGroup.title)}</div>
+            <div className={`mt-2 rounded-lg border px-3 py-2 text-sm font-semibold ${
+              romGroup.mode === 'required'
+                ? 'border-[#f69d50]/35 bg-[#2a1a0c] text-[#ffd6a3]'
+                : 'border-[#38f3dd]/30 bg-[#10201f] text-[#8cf5e8]'
+            }`}>
+              {romGroup.mode === 'required'
+                ? t('Import every ROM listed here.')
+                : t('Use one of these compatible ROM versions.')}
+            </div>
+          </div>
+          <div className="grid gap-3">
+            {romGroup.versions.map((version: CompatibleRomVersion) => (
+              <div key={version.key} className="rounded-lg border border-[#2a2b30] bg-[#0b0d12] p-4">
+                <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    {romGroup.mode === 'required' && <div className="font-semibold text-[#f4f6fb]">{version.label}</div>}
+                    <div className="mt-2 text-[11px] font-bold uppercase text-[#8e8f94]">{t('Compatible filename')}</div>
+                    <div className="mt-1 break-words rounded-md bg-[#14151a] px-3 py-2 font-mono text-sm text-[#f4f6fb]">{version.expectedBase}</div>
+                  </div>
+                  {row.requirement?.platform && <div className="rounded-full border border-[#38f3dd]/25 px-2 py-1 text-xs font-semibold text-[#8cf5e8]">{row.requirement.platform}</div>}
+                </div>
+                <div className="mt-3 grid gap-2 text-xs text-[#8e8f94]">
+                  {version.crc32.length > 0 && <ChecksumLine label="CRC32" values={version.crc32} />}
+                  {version.md5.length > 0 && <ChecksumLine label="MD5" values={version.md5} />}
+                  {version.sha1.length > 0 && <ChecksumLine label="SHA1" values={version.sha1} />}
+                  {version.sha256.length > 0 && <ChecksumLine label="SHA256" values={version.sha256} />}
+                  {!version.crc32.length && !version.md5.length && !version.sha1.length && !version.sha256.length && (
+                    <div>{t('No verified checksum bundled yet. Select this game before importing.')}</div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {row.requirement?.guidance && <div className="mt-3 rounded-lg border border-[#2a2b30] bg-[#14151a] p-3 text-xs leading-5 text-[#d7dde5]">{row.requirement.guidance}</div>}
+          {row.romPath && <div className="mt-3 truncate rounded-lg border border-[#2a2b30] bg-[#14151a] p-3 text-xs text-[#8e8f94]">{row.romPath}</div>}
+          {pendingRomImport && (
+            <div className="mt-4 rounded-xl border border-[#38f3dd]/25 bg-[#10201f] p-3">
+              <div className="mb-3 text-sm font-semibold text-[#f4f6fb]">{t('Import as')}</div>
+              <div className="grid gap-2 sm:grid-cols-2">
+                {pendingRomImport.candidates.map((candidate) => (
+                  <button
+                    key={candidate.gameId}
+                    type="button"
+                    onClick={() => onImportCandidate(candidate.gameId)}
+                    className="rounded-lg border border-[#38f3dd]/35 bg-[#173533] px-3 py-2 text-left text-sm font-semibold text-[#f4f6fb] hover:bg-[#1f4744]"
+                  >
+                    <div>{candidate.displayName}</div>
+                    <div className="mt-1 text-xs font-normal text-[#8e8f94]">{candidate.moduleId || candidate.gameId}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-2 border-t border-[#2a2b30] bg-[#0b0d12] p-4 sm:flex-row sm:justify-end">
+          <button onClick={onClose} className="rounded-lg bg-[#2a2b30] px-4 py-2.5 text-sm font-bold hover:bg-[#3a3b40]">{t('Close')}</button>
+          <button onClick={onScan} className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#232830] px-4 py-2.5 text-sm font-bold text-[#f4f6fb] hover:bg-[#303744]">
+            <Search className="h-4 w-4" />
+            {t('Scan')}
+          </button>
+          <button
+            onClick={onSelect}
+            disabled={!row.importable}
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#ff6b35] to-[#f38181] px-4 py-2.5 text-sm font-bold text-[#180b08] disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <Upload className="h-4 w-4" />
+            {t('Select')}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ChecksumLine({ label, values }: { label: string; values: string[] }) {
+  return (
+    <div className="grid gap-1">
+      <div className="font-semibold text-[#d7dde5]">{label}</div>
+      {values.map((value) => (
+        <code key={value} className="break-all rounded-md bg-[#14151a] px-2 py-1 font-mono text-[11px] text-[#8e8f94]">{value}</code>
+      ))}
+    </div>
+  );
+}
+
 function SettingGroup({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="rounded-xl border border-[#2a2b30] bg-[#14151a]/90 p-5">
@@ -1044,7 +2160,7 @@ function ToggleRow({ label, value, onChange, description, disabled }: {
         {description && <div className="text-sm text-[#8e8f94]">{description}</div>}
       </div>
       <button
-        title={disabled ? 'Coming soon' : undefined}
+        title={disabled ? LEARNING_LABEL : undefined}
         disabled={disabled}
         onClick={() => onChange(!value)}
         className={`relative w-12 h-6 border-2 transition-all disabled:opacity-50 ${value ? 'bg-[#4ecdc4] border-[#4ecdc4]' : 'bg-[#2a2b30] border-[#2a2b30]'}`}
@@ -1070,7 +2186,7 @@ function SelectRow({ label, value, onChange, options, description, disabled }: {
         {description && <div className="text-sm text-[#8e8f94]">{description}</div>}
       </div>
       <select
-        title={disabled ? 'Coming soon' : undefined}
+        title={disabled ? LEARNING_LABEL : undefined}
         disabled={disabled}
         value={value}
         onChange={(event) => onChange(event.target.value)}
@@ -1101,14 +2217,39 @@ function RangeRow({ label, value, min, max, labels, onChange }: {
   );
 }
 
+function ActionRow({ label, description, actionLabel, onAction, disabled }: {
+  label: string;
+  description?: string;
+  actionLabel: string;
+  onAction: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <div className="grid grid-cols-[1fr_160px] items-center gap-5">
+      <div>
+        <div className="font-medium">{label}</div>
+        {description && <div className="text-sm text-[#8e8f94]">{description}</div>}
+      </div>
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={onAction}
+        className="rounded-lg border border-[#4ecdc4]/60 bg-[#4ecdc4]/10 px-4 py-2.5 text-sm font-bold text-[#95e1d3] transition hover:bg-[#4ecdc4]/20 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        {actionLabel}
+      </button>
+    </div>
+  );
+}
+
 function DisabledRow({ label, description }: { label: string; description: string }) {
   return (
-    <div title="Coming soon" className="rounded-lg border border-dashed border-[#3a3b40] bg-[#0e0f13]/70 p-4 opacity-70">
+    <div title={LEARNING_LABEL} className="rounded-lg border border-dashed border-[#3a3b40] bg-[#0e0f13]/70 p-4 opacity-70">
       <div className="flex items-center gap-2 font-medium">
         <CircleAlert className="w-4 h-4 text-[#f69d50]" />
         {label}
       </div>
-      <p className="mt-1 text-sm text-[#8e8f94]">{description || 'Coming soon'}</p>
+      <p className="mt-1 text-sm text-[#8e8f94]">{description || LEARNING_DESCRIPTION}</p>
     </div>
   );
 }
@@ -1120,10 +2261,10 @@ function ConnectionRow({ label }: { label: string }) {
         <Shield className="w-5 h-5 text-[#8e8f94]" />
         <div>
           <div className="font-medium">{label}</div>
-          <div className="text-sm text-[#8e8f94]">Coming soon</div>
+          <div className="text-sm text-[#8e8f94]">{LEARNING_LABEL}</div>
         </div>
       </div>
-      <button disabled title="Coming soon" className="px-4 py-2 rounded-lg bg-[#2a2b30] text-sm opacity-60">Connect</button>
+      <button disabled title={LEARNING_LABEL} className="px-4 py-2 rounded-lg bg-[#2a2b30] text-sm opacity-60">Connect</button>
     </div>
   );
 }
@@ -1182,6 +2323,9 @@ function formatBinding(binding: string) {
     const axis = binding.slice('gamepad:axis:'.length);
     return `Pad Axis ${axis.replace('+', ' +').replace('-', ' -')}`;
   }
+  if (binding.startsWith('sdl:button:')) return `SDL Button ${binding.slice('sdl:button:'.length)}`;
+  if (binding.startsWith('sdl:axis+:')) return `SDL Axis + ${binding.slice('sdl:axis+:'.length)}`;
+  if (binding.startsWith('sdl:axis-:')) return `SDL Axis - ${binding.slice('sdl:axis-:'.length)}`;
   if (binding.startsWith('button:')) return `Button ${binding.slice('button:'.length)}`;
   if (binding.startsWith('axis:')) return `Axis ${binding.slice('axis:'.length)}`;
   return binding;
@@ -1251,73 +2395,41 @@ function CoreSettingRow({ option, value, onChange }: {
   );
 }
 
-function ControllerPreview({ profile, mappings, captureTarget }: {
+const controllerPreviewAssets: Record<ControlCoreId, string> = {
+  snes: publicAssetUrl('assets/img/controllers/snes-controller.png'),
+  nes: publicAssetUrl('assets/img/controllers/nes-controller.png'),
+  gbc: publicAssetUrl('assets/img/controllers/gameboy-controller.png'),
+  gba: publicAssetUrl('assets/img/controllers/gba-controller.png'),
+  n64: publicAssetUrl('assets/img/controllers/n64-controller.png'),
+};
+
+function ControllerPreview({ coreId, profile, mappings, captureTarget, disabled }: {
+  coreId: ControlCoreId;
   profile: (typeof controlProfiles)[ControlCoreId];
   mappings: CoreControlMappings;
   captureTarget: string | null;
+  disabled: boolean;
 }) {
-  const mapped = new Set(Object.keys(mappings));
-  const isActive = (label: string) => captureTarget === label;
-  const hasMap = (label: string) => mapped.has(label);
-  const controllerClass = profile.controller === 'n64' ? 'aspect-[1.45]' : 'aspect-[1.7]';
+  const mappedCount = Object.keys(mappings).length;
+  const controllerAsset = controllerPreviewAssets[coreId] || controllerPreviewAssets.snes;
   return (
     <div className="rounded-xl border border-[#2a2b30] bg-[#0e0f13] p-5">
       <div className="mb-4">
         <div className="font-bold">{profile.label}</div>
         <div className="text-sm text-[#8e8f94]">{profile.description}</div>
       </div>
-      <div className={`relative w-full ${controllerClass} rounded-[42px] border-2 border-[#2a2b30] bg-gradient-to-br from-[#202127] to-[#111217] shadow-inner`}>
-        <PreviewButton label="D-Pad Up" active={isActive('D-Pad Up')} mapped={hasMap('D-Pad Up')} className="left-[16%] top-[28%]" />
-        <PreviewButton label="D-Pad Left" active={isActive('D-Pad Left')} mapped={hasMap('D-Pad Left')} className="left-[10%] top-[42%]" />
-        <PreviewButton label="D-Pad Right" active={isActive('D-Pad Right')} mapped={hasMap('D-Pad Right')} className="left-[22%] top-[42%]" />
-        <PreviewButton label="D-Pad Down" active={isActive('D-Pad Down')} mapped={hasMap('D-Pad Down')} className="left-[16%] top-[56%]" />
-        {profile.controller === 'n64' && (
-          <>
-            <PreviewButton label="Stick Up" active={isActive('Stick Up')} mapped={hasMap('Stick Up')} className="left-[40%] top-[40%]" />
-            <PreviewButton label="Z" active={isActive('Z')} mapped={hasMap('Z')} className="left-[45%] top-[62%]" />
-            <PreviewButton label="C Up" active={isActive('C Up')} mapped={hasMap('C Up')} className="left-[76%] top-[25%]" />
-            <PreviewButton label="C Left" active={isActive('C Left')} mapped={hasMap('C Left')} className="left-[70%] top-[39%]" />
-            <PreviewButton label="C Right" active={isActive('C Right')} mapped={hasMap('C Right')} className="left-[82%] top-[39%]" />
-            <PreviewButton label="C Down" active={isActive('C Down')} mapped={hasMap('C Down')} className="left-[76%] top-[53%]" />
-          </>
-        )}
-        <PreviewButton label="Select" active={isActive('Select')} mapped={hasMap('Select')} className="left-[39%] top-[48%]" small />
-        <PreviewButton label="Start" active={isActive('Start')} mapped={hasMap('Start')} className="left-[51%] top-[48%]" small />
-        <PreviewButton label="B" active={isActive('B')} mapped={hasMap('B')} className="left-[70%] top-[48%]" />
-        <PreviewButton label="A" active={isActive('A')} mapped={hasMap('A')} className="left-[82%] top-[38%]" />
-        <PreviewButton label="Y" active={isActive('Y')} mapped={hasMap('Y')} className="left-[64%] top-[34%]" />
-        <PreviewButton label="X" active={isActive('X')} mapped={hasMap('X')} className="left-[76%] top-[24%]" />
-        <PreviewButton label="L" active={isActive('L')} mapped={hasMap('L')} className="left-[22%] top-[8%]" small />
-        <PreviewButton label="R" active={isActive('R')} mapped={hasMap('R')} className="left-[70%] top-[8%]" small />
+      <div className="relative grid w-full aspect-[4/3] place-items-center overflow-hidden rounded-lg border border-[#20242c] bg-[#090b0f]">
+        <img
+          src={controllerAsset}
+          alt=""
+          draggable={false}
+          className={`h-full w-full object-contain ${disabled ? 'opacity-65 grayscale' : ''}`}
+        />
       </div>
-      <div className="mt-4 flex items-center gap-3 text-xs text-[#8e8f94]">
-        <span className="inline-flex items-center gap-1"><span className="h-2.5 w-2.5 rounded-full bg-[#4ecdc4]" />Mapped</span>
-        <span className="inline-flex items-center gap-1"><span className="h-2.5 w-2.5 rounded-full bg-[#f69d50]" />Listening</span>
+      <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-[#8e8f94]">
+        <span className="inline-flex items-center gap-1"><span className="h-2.5 w-2.5 rounded-full bg-[#4ecdc4]" />{mappedCount} mapped</span>
+        {captureTarget && <span className="inline-flex items-center gap-1"><span className="h-2.5 w-2.5 rounded-full bg-[#f69d50]" />Listening: {captureTarget}</span>}
       </div>
-    </div>
-  );
-}
-
-function PreviewButton({ label, active, mapped, className, small = false }: {
-  label: string;
-  active: boolean;
-  mapped: boolean;
-  className: string;
-  small?: boolean;
-}) {
-  const size = small ? 'h-8 min-w-12 px-2 text-[10px]' : 'h-10 min-w-10 px-2 text-xs';
-  return (
-    <div
-      className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full border font-bold flex items-center justify-center ${size} ${
-        active
-          ? 'border-[#f69d50] bg-[#f69d50] text-[#0d1117] shadow-[0_0_18px_rgba(246,157,80,0.8)]'
-          : mapped
-            ? 'border-[#4ecdc4] bg-[#4ecdc4] text-[#0d1117]'
-            : 'border-[#3a3b40] bg-[#14151a] text-[#8e8f94]'
-      } ${className}`}
-      title={label}
-    >
-      {label.replace('D-Pad ', '').replace('Stick ', '')}
     </div>
   );
 }

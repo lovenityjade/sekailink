@@ -13,7 +13,7 @@ Architectural intent:
 
 Current live ALTTP bundle:
 
-- `/home/thelovenityjade/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.bundle`
+- `<local-home>/DevSSD/sekailink-beta-3-final/clean-room/repos/sekailink-linkedworld-alttp/tracker/default.bundle`
   - preferred BETA-3 ALTTP tracker package
   - includes the strict LinkedWorld runtime metadata plus `poptracker-adapted/`
     maps/assets

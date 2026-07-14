@@ -1,4 +1,4 @@
-bridge_started|game=A Link to the Past|profile=/home/thelovenityjade/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/profiles/alttp-starter.profile
+bridge_started|game=A Link to the Past|profile=<local-home>/Sekaiemu-Libretro-Spike-Codex/workspace/sekaiemu-libretro-spike/profiles/alttp-starter.profile
 inject|item|0xC|player=0|progress=1|ALTTP live Blue Boomerang
 inject|item|0x44|player=0|progress=1|ALTTP live 10 arrows
 inject|item|0x31|player=0|progress=2|ALTTP live 10 bombs

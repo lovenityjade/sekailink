@@ -1,5 +1,7 @@
 #include "layout_preview.hpp"
 
+#include "window_chrome.hpp"
+
 #include "imgui_runtime.hpp"
 #include "imgui_tracker_renderer.hpp"
 
@@ -208,12 +210,14 @@ int RunLayoutPreview(const LaunchRequest& request, std::string& error) {
                                         SDL_WINDOWPOS_CENTERED,
                                         1280,
                                         720,
-                                        SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+                                        SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE |
+                                            SDL_WINDOW_BORDERLESS);
   if (window == nullptr) {
     error = std::string("SDL_CreateWindow failed: ") + SDL_GetError();
     SDL_Quit();
     return 1;
   }
+  EnableBorderlessTitlebarDrag(window);
   SDL_GLContext gl_context = SDL_GL_CreateContext(window);
   if (gl_context == nullptr) {
     error = std::string("SDL_GL_CreateContext failed: ") + SDL_GetError();

@@ -1,0 +1,135 @@
+[
+  {
+    "name": "Five Isle Meadow",
+    "children": [
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Islands/Five Isle Meadow/Land Encounters",
+            "name": "Land Encounters"
+          },
+          {
+            "ref": "Islands/Five Isle Meadow/Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Islands/Five Isle Meadow/Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Islands/Five Isle Meadow/Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Islands/Five Isle Meadow/Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "five_isle_meadow",
+            "x": 368,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Item Behind Cuttable Tree",
+        "sections": [
+          {
+            "ref": "Islands/Five Isle Meadow/Item Behind Cuttable Tree",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "five_isle_meadow",
+            "x": 200,
+            "y": 184
+          }
+        ]
+      },
+      {
+        "name": "Southwest Island Item",
+        "sections": [
+          {
+            "ref": "Islands/Five Isle Meadow/Southwest Island Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "five_isle_meadow",
+            "x": 56,
+            "y": 360
+          }
+        ]
+      },
+      {
+        "name": "North Team Rocket Grunt",
+        "sections": [
+          {
+            "ref": "Islands/Five Isle Meadow/North Team Rocket Grunt Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "five_isle_meadow",
+            "x": 280,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Center Team Rocket Grunt",
+        "sections": [
+          {
+            "ref": "Islands/Five Isle Meadow/Center Team Rocket Grunt Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "five_isle_meadow",
+            "x": 296,
+            "y": 296
+          }
+        ]
+      },
+      {
+        "name": "South Team Rocket Grunt",
+        "sections": [
+          {
+            "ref": "Islands/Five Isle Meadow/South Team Rocket Grunt Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "five_isle_meadow",
+            "x": 184,
+            "y": 440
+          }
+        ]
+      },
+      {
+        "name": "Rocket Warehouse Entrance",
+        "sections": [
+          {
+            "ref": "Islands/Five Isle Meadow/Rocket Warehouse Entrance",
+            "name": "Entrance"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "five_isle_meadow",
+            "x": 200,
+            "y": 344
+          }
+        ]
+      }
+    ]
+  }
+]

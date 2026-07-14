@@ -1,5 +1,7 @@
 "use strict";
 
+const { hardenBrowserWindow } = require("./browser-window-hardening.cjs");
+
 const createPopTrackerRuntime = (deps = {}) => {
   const {
     app,
@@ -41,11 +43,26 @@ const createPopTrackerRuntime = (deps = {}) => {
     trackerWebWindows,
     terminateChildProcess,
     triggerCoupledRuntimeTeardown,
+    startArchipelagoClient,
   } = deps;
   const process = processRef;
   let _popTrackerExeCache = "";
   let _popTrackerExeSource = "";
   const pendingTrackerVariantRequests = new Map();
+  const MAGPIE_VERSION = "1.1.2";
+  const MAGPIE_PORT = 16114;
+  const MAGPIE_PACKAGES = {
+    win32: {
+      url: "https://github.com/kbranch/Magpie/releases/download/magpie-1.1.2/magpie-local-windows.zip",
+      sha256: "e8f4e5c6faa9d10543ae2c447c540c56724749e43f1e64eb68a9782a5a65ec63",
+      executable: path.join("magpie-data", "magpie-data.exe"),
+    },
+    linux: {
+      url: "https://github.com/kbranch/Magpie/releases/download/magpie-1.1.2/magpie-local-linux.zip",
+      sha256: "4dc62186044313cca27466df7767f40f3e886bf3a22e6198fa7f021e12fb6546",
+      executable: path.join("magpie-data", "magpie-data"),
+    },
+  };
 
   const mainWindow = () => mainWindowRef?.() || null;
 
@@ -88,6 +105,9 @@ const createPopTrackerRuntime = (deps = {}) => {
   
     // Force local usb2snes/SNI endpoint (SekaiLink bridge) and ensure it's plain ws://.
     cfg.usb2snes = "ws://127.0.0.1:23074";
+    if (!cfg.window || typeof cfg.window !== "object" || Array.isArray(cfg.window)) cfg.window = {};
+    cfg.window.size = [520, 760];
+    if (!Array.isArray(cfg.window.pos)) cfg.window.pos = [80, 80];
     try {
       fs.writeFileSync(cfgPath, JSON.stringify(cfg, null, 2), "utf-8");
     } catch (_err) {
@@ -316,6 +336,22 @@ const createPopTrackerRuntime = (deps = {}) => {
       return { ok: false, error: "runtime_control_write_failed", detail: String(err?.message || err || ""), ...runtime };
     }
   };
+
+  const sendPopTrackerRuntimeCommandToLatest = (command, detail = {}) => {
+    let latestPid = 0;
+    let latestTime = 0;
+    for (const [pid, runtime] of trackerRuntimeControls.entries()) {
+      const time = Date.parse(runtime?.launchedAt || "") || 0;
+      if (time >= latestTime) {
+        latestPid = Number(pid);
+        latestTime = time;
+      }
+    }
+    if (!latestPid) return { ok: false, error: "no_runtime_tracker" };
+    return sendPopTrackerRuntimeCommand(latestPid, command, detail);
+  };
+
+  const openPopTrackerBroadcast = () => sendPopTrackerRuntimeCommandToLatest("show_broadcast");
   
   const getInstalledTrackerPack = (gameId) => {
     const config = readConfig();
@@ -537,6 +573,213 @@ const createPopTrackerRuntime = (deps = {}) => {
       return null;
     }
   };
+
+  const isUniversalTrackerRef = (value) => {
+    const normalized = String(value || "").trim().toLowerCase().replace(/[-\s]+/g, "_");
+    return normalized === "universal_tracker" || normalized === "universaltracker";
+  };
+
+  const moduleUsesUniversalTracker = (manifest = {}, trackerWebUrl = "") => {
+    return (
+      isUniversalTrackerRef(trackerWebUrl) ||
+      isUniversalTrackerRef(manifest?.tracker_type) ||
+      isUniversalTrackerRef(manifest?.tracker_web_url) ||
+      isUniversalTrackerRef(manifest?.tracker_status)
+    );
+  };
+
+  const moduleUsesMagpie = (manifest = {}, trackerWebUrl = "") => {
+    const values = [manifest?.tracker_type, manifest?.tracker_status, trackerWebUrl]
+      .map((value) => String(value || "").trim().toLowerCase().replace(/[-\s]+/g, "_"));
+    return values.some((value) => value === "magpie" || value === "magpietracker");
+  };
+
+  const waitForMagpie = async (timeoutMs = 15000) => {
+    const deadline = Date.now() + timeoutMs;
+    while (Date.now() < deadline) {
+      try {
+        const response = await fetch(`http://127.0.0.1:${MAGPIE_PORT}/api/init?enable_autotracker=1`);
+        if (response.ok) return true;
+      } catch (_err) {
+        // The local service may still be unpacking or starting.
+      }
+      await new Promise((resolve) => setTimeout(resolve, 250));
+    }
+    return false;
+  };
+
+  const ensureMagpieInstalled = async () => {
+    const packageInfo = MAGPIE_PACKAGES[process.platform];
+    if (!packageInfo) return { ok: false, error: "magpie_platform_unsupported" };
+
+    const rootDir = path.join(getRuntimeToolsDir(), "magpie", MAGPIE_VERSION, process.platform);
+    const executable = path.join(rootDir, packageInfo.executable);
+    const marker = path.join(rootDir, ".sekailink-magpie-version");
+    if (fs.existsSync(executable) && fs.existsSync(marker)) {
+      return { ok: true, rootDir, executable };
+    }
+
+    const downloadDir = path.join(getRuntimeToolsDir(), "magpie", "downloads");
+    ensureDir(downloadDir);
+    const zipPath = path.join(downloadDir, `magpie-${MAGPIE_VERSION}-${process.platform}.zip`);
+    emitTrackerClientLog("info", `Installing Magpie ${MAGPIE_VERSION} for ${process.platform}.`);
+    await downloadToFile(packageInfo.url, zipPath, {
+      expectedSha256: packageInfo.sha256,
+      requireHash: true,
+    });
+
+    const stagingDir = `${rootDir}.staging-${process.pid}-${Date.now()}`;
+    fs.rmSync(stagingDir, { recursive: true, force: true });
+    ensureDir(stagingDir);
+    try {
+      extractZip(zipPath, stagingDir);
+      const stagedExecutable = path.join(stagingDir, packageInfo.executable);
+      if (!fs.existsSync(stagedExecutable)) throw new Error("magpie_executable_missing");
+      if (process.platform !== "win32") fs.chmodSync(stagedExecutable, 0o755);
+      fs.writeFileSync(path.join(stagingDir, ".sekailink-magpie-version"), `${MAGPIE_VERSION}\n`, "utf8");
+      fs.rmSync(rootDir, { recursive: true, force: true });
+      fs.renameSync(stagingDir, rootDir);
+    } catch (err) {
+      fs.rmSync(stagingDir, { recursive: true, force: true });
+      throw err;
+    }
+    return { ok: true, rootDir, executable };
+  };
+
+  const launchMagpieTracker = async (options = {}) => {
+    let installed;
+    try {
+      installed = await ensureMagpieInstalled();
+    } catch (err) {
+      const detail = String(err || "magpie_install_failed");
+      emitTrackerClientLog("error", `Magpie installation failed: ${detail}`);
+      return { ok: false, error: "magpie_install_failed", detail };
+    }
+    if (!installed?.ok) return installed;
+
+    const workingDir = path.join(installed.rootDir, "magpie-data", "_internal");
+    const args = ["--local", "--no-gui", "--double-nested"];
+    const proc = spawn(installed.executable, args, {
+      cwd: workingDir,
+      env: { ...process.env },
+      stdio: ["ignore", "pipe", "pipe"],
+      windowsHide: true,
+    });
+    if (!proc.pid) return { ok: false, error: "magpie_spawn_failed" };
+    trackerProcs.set(proc.pid, proc);
+
+    let stopping = false;
+    let exitedBeforeReady = null;
+    const logStream = (stream, level) => stream?.on("data", (chunk) => {
+      for (const rawLine of String(chunk || "").split(/\r?\n/)) {
+        const line = rawLine.trim();
+        if (line) emitTrackerClientLog(level, `Magpie: ${line}`);
+      }
+    });
+    logStream(proc.stdout, "info");
+    logStream(proc.stderr, "warn");
+    proc.on("error", (err) => {
+      exitedBeforeReady = { error: String(err) };
+      emitTrackerClientLog("error", `Magpie process error: ${String(err)}`);
+    });
+    proc.once("exit", (code, signal) => {
+      exitedBeforeReady = { code, signal };
+    });
+
+    const ready = await waitForMagpie();
+    if (!ready || exitedBeforeReady) {
+      stopping = true;
+      if (!exitedBeforeReady) await terminateChildProcess(proc, "magpie", { graceMs: 900 });
+      trackerProcs.delete(proc.pid);
+      return {
+        ok: false,
+        error: exitedBeforeReady ? "magpie_exited_before_ready" : "magpie_start_timeout",
+        detail: exitedBeforeReady ? JSON.stringify(exitedBeforeReady) : "",
+      };
+    }
+
+    const title = String(options.title || "Link's Awakening DX - Magpie Tracker");
+    const win = new BrowserWindow({
+      width: 1180,
+      height: 820,
+      minWidth: 900,
+      minHeight: 620,
+      backgroundColor: "#05070A",
+      show: false,
+      title,
+      autoHideMenuBar: true,
+      icon: resolveWindowIconPath(),
+      webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true, devTools: false },
+    });
+    hardenBrowserWindow(win);
+    trackerWebWindows.add(win);
+    win.once("ready-to-show", () => { if (!win.isDestroyed()) win.show(); });
+    win.webContents.setWindowOpenHandler(({ url }) => {
+      void openExternalSafely(url, "magpie-window-open");
+      return { action: "deny" };
+    });
+    win.on("closed", () => {
+      trackerWebWindows.delete(win);
+      if (!stopping && trackerProcs.has(proc.pid)) {
+        stopping = true;
+        void terminateChildProcess(proc, "magpie", { graceMs: 900 });
+      }
+    });
+    proc.on("exit", (code, signal) => {
+      trackerProcs.delete(proc.pid);
+      if (!win.isDestroyed()) win.close();
+      if (!stopping) emitTrackerClientLog("warn", `Magpie exited (code=${code ?? "null"}, signal=${signal || "none"}).`);
+    });
+
+    const trackerUrl = `http://127.0.0.1:${MAGPIE_PORT}/?enable_autotracker=1&setting_autotrackerAddress=127.0.0.1`;
+    try {
+      await win.loadURL(trackerUrl);
+    } catch (err) {
+      stopping = true;
+      trackerWebWindows.delete(win);
+      if (!win.isDestroyed()) win.destroy();
+      await terminateChildProcess(proc, "magpie", { graceMs: 900 });
+      trackerProcs.delete(proc.pid);
+      return { ok: false, error: "magpie_window_load_failed", detail: String(err || "") };
+    }
+    emitTrackerClientLog("info", `Magpie ${MAGPIE_VERSION} connected to the LADX bridge on 127.0.0.1:17026.`);
+    return { ok: true, pid: proc.pid, mode: "magpie", url: trackerUrl };
+  };
+
+  const launchUniversalTracker = async (options = {}) => {
+    if (typeof startArchipelagoClient !== "function") {
+      emitTrackerClientLog("error", "Universal Tracker runtime is unavailable.");
+      return { ok: false, error: "universal_tracker_unavailable" };
+    }
+
+    const moduleId = String(options.moduleId || "").trim();
+    const manifest = options.manifest || (moduleId ? getModuleManifest(moduleId) : null) || {};
+    const gameId = String(manifest?.game_id || options.gameId || moduleId || "universal_tracker").trim();
+    const gameLabel = String(manifest?.display_name || manifest?.game_name || gameId || "Universal Tracker").trim();
+    const clientId = `universal-tracker-${gameId || "game"}-${Date.now()}`.replace(/[^a-z0-9_.:-]+/gi, "_");
+
+    emitTrackerClientLog("info", `Launching Universal Tracker for ${gameLabel}.`);
+    const res = await startArchipelagoClient({
+      clientId,
+      kind: "module",
+      module: "worlds.tracker.TrackerClient",
+      moduleId: moduleId || gameId,
+      game: gameLabel,
+      address: options.apHost || options.serverAddress || "",
+      slot: options.apSlot || options.slot || "",
+      password: options.apPass || options.password || "",
+    });
+    if (!res?.ok) {
+      emitTrackerClientLog("error", `Universal Tracker launch failed: ${res?.error || "unknown"}`);
+      return { ok: false, error: res?.error || "universal_tracker_failed", detail: res?.detail || "" };
+    }
+    return {
+      ok: true,
+      mode: "universal_tracker",
+      clientId: res.clientId,
+      pid: res.pid || null,
+    };
+  };
   
   const launchWebTrackerWindow = (options = {}) => {
     const finalUrl = buildWebTrackerLaunchUrl(options.url, options);
@@ -554,13 +797,16 @@ const createPopTrackerRuntime = (deps = {}) => {
       backgroundColor: "#05070A",
       show: false,
       title,
+      autoHideMenuBar: true,
       icon: resolveWindowIconPath(),
       webPreferences: {
         contextIsolation: true,
         nodeIntegration: false,
-        sandbox: true
+        sandbox: true,
+        devTools: false
       }
     });
+    hardenBrowserWindow(win);
   
     win.once("ready-to-show", () => {
       if (!win.isDestroyed()) win.show();
@@ -607,6 +853,12 @@ const createPopTrackerRuntime = (deps = {}) => {
       gameLabel = String(manifest?.display_name || manifest?.game_name || gameId || "").trim();
       trackerWebUrl = trackerWebUrl || String(manifest?.tracker_web_url || "").trim();
       trackerWebTitle = String(manifest?.tracker_web_title || gameLabel || "Web Tracker").trim();
+      if (moduleUsesMagpie(manifest, trackerWebUrl)) {
+        return launchMagpieTracker({ ...options, title: trackerWebTitle });
+      }
+      if (moduleUsesUniversalTracker(manifest, trackerWebUrl)) {
+        return launchUniversalTracker({ ...options, moduleId: options.moduleId, manifest, gameId });
+      }
       if (gameId) {
         const installed = getInstalledTrackerPack(gameId);
         if (installed?.path) packPath = installed.path;
@@ -662,6 +914,10 @@ const createPopTrackerRuntime = (deps = {}) => {
     if (packUid && isUrl(packUid)) {
       packUid = null;
     }
+
+    if (moduleUsesUniversalTracker(manifest || {}, trackerWebUrl)) {
+      return launchUniversalTracker({ ...options, manifest, gameId });
+    }
   
     if (packPath && fs.existsSync(packPath)) {
       const check = validatePackDir(packPath);
@@ -716,8 +972,9 @@ const createPopTrackerRuntime = (deps = {}) => {
     const exePath = getPopTrackerExePath();
     const baseDir = path.dirname(exePath);
     ensurePopTrackerPortableConfig(baseDir);
-    // FF4 pack can retain stale character states across reconnect/pause cycles; start clean per launch.
-    if (packPath && gameId === "ff4fe") clearPopTrackerAutosaveForPack(baseDir, packPath);
+    // PopTracker persists window geometry in pack autosaves. Start clean so a stale oversized
+    // tracker window cannot cover the showcase workspace on relaunch.
+    if (packPath) clearPopTrackerAutosaveForPack(baseDir, packPath);
     if (!fs.existsSync(exePath)) {
       if (trackerWebUrl) {
         return launchWebTrackerWindow({
@@ -954,6 +1211,7 @@ const createPopTrackerRuntime = (deps = {}) => {
     stopPopTracker,
     readPopTrackerRuntimeStatus,
     sendPopTrackerRuntimeCommand,
+    openPopTrackerBroadcast,
     handleTrackerVariantResponse,
     clearRuntimeCache,
   };

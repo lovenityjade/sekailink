@@ -40,6 +40,7 @@ namespace sekailink_server {
 namespace {
 
 constexpr std::uint32_t kMinimumSessionTtlSeconds = 60 * 60 * 24 * 30;
+constexpr std::uint32_t kMinimumEmailVerificationTtlSeconds = 60 * 60;
 
 std::string http_status_text(int status_code) {
   switch (status_code) {
@@ -336,6 +337,13 @@ std::string serialize_string_array_json(const std::vector<std::string>& values) 
 std::string lower(std::string value) {
   std::transform(value.begin(), value.end(), value.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
   return value;
+}
+
+bool username_exposes_email(const std::string& username, const std::string& email) {
+  const auto normalized_username = lower(trim(username));
+  const auto normalized_email = lower(trim(email));
+  return normalized_username.find('@') != std::string::npos ||
+         (!normalized_email.empty() && normalized_username == normalized_email);
 }
 
 std::string upper(std::string value) {
@@ -1398,6 +1406,8 @@ IdentityServiceConfig load_identity_service_config(const std::filesystem::path& 
   if (json.contains("email_verification_ttl_seconds")) {
     config.email_verification_ttl_seconds = json.at("email_verification_ttl_seconds").get<std::uint32_t>();
   }
+  config.email_verification_ttl_seconds =
+      std::max(config.email_verification_ttl_seconds, kMinimumEmailVerificationTtlSeconds);
   if (json.contains("public_base_url")) {
     config.public_base_url = json.at("public_base_url").get<std::string>();
   }
@@ -3447,6 +3457,9 @@ nlohmann::json IdentityService::handle_register(const nlohmann::json& body, cons
     if (username.empty() || email.empty() || password.size() < 8) {
       return {{"ok", false}, {"status", 400}, {"error", "invalid_registration_payload"}};
     }
+    if (username_exposes_email(username, email)) {
+      return {{"ok", false}, {"status", 400}, {"error", "username_must_not_be_email"}};
+    }
     const auto salt_b64 = random_token_b64(config_.password_salt_length);
     const auto hash_b64 = hash_password_argon2id_encoded(
         password,
@@ -4166,6 +4179,9 @@ nlohmann::json IdentityService::handle_admin_add_user(
     const auto email_verified = optional_bool(body, "email_verified").value_or(false);
     if (username.empty() || email.empty() || password.size() < 8) {
       return {{"ok", false}, {"status", 400}, {"error", "invalid_registration_payload"}};
+    }
+    if (username_exposes_email(username, email)) {
+      return {{"ok", false}, {"status", 400}, {"error", "username_must_not_be_email"}};
     }
     const auto salt_b64 = random_token_b64(config_.password_salt_length);
     const auto hash_b64 = hash_password_argon2id_encoded(
@@ -4888,7 +4904,7 @@ void IdentityService::send_password_reset_email(
   message << localized.expires_label << ": " << expires_at << "\n\n";
   message << localized.footer << "\n";
 
-  const auto command = config_.sendmail_path + " -t";
+  const auto command = config_.sendmail_path + " -f " + config_.mail_from + " -t";
   FILE* pipe = popen(command.c_str(), "w");
   if (pipe == nullptr) {
     throw std::runtime_error("identity_sendmail_open_failed");
@@ -4921,7 +4937,7 @@ void IdentityService::send_email_verification_email(
   message << localized.expires_label << ": " << expires_at << "\n\n";
   message << localized.footer << "\n";
 
-  const auto command = config_.sendmail_path + " -t";
+  const auto command = config_.sendmail_path + " -f " + config_.mail_from + " -t";
   FILE* pipe = popen(command.c_str(), "w");
   if (pipe == nullptr) {
     throw std::runtime_error("identity_sendmail_open_failed");

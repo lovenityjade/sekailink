@@ -3,10 +3,13 @@
 #include "libretro_bridge_host_helpers.hpp"
 #include "libretro_menu_presentation.hpp"
 #include "libretro_memory_tools.hpp"
+#include "runtime_activity_feed_imgui.hpp"
+#include "libretro_tracker_metadata_pump.hpp"
 #include "libretro_tracker_host_state.hpp"
 #include "profile_bridge.hpp"
 #include "runtime_loop.hpp"
 
+#include <cmath>
 #include <iostream>
 #include <sstream>
 #include <string_view>
@@ -51,8 +54,24 @@ int LibretroHost::Impl::Run() {
       .on_begin_frame = [this]() {
         ApplyFrameAutomation();
         TickCoreChatBridge();
+        TickClientCoreHud();
+        TickGoalCompletionTimer();
+        if (options.test_goal_completion_at_frame != 0 &&
+            frame_counter == options.test_goal_completion_at_frame) {
+          TriggerGoalCompletion("test_frame");
+        }
       },
-      .core_run_enabled = [this]() { return !runtime_memory_server.Locked(); },
+      .on_emulation_frame_ran = [this]() {
+        const double fps = std::isfinite(av_info.timing.fps) && av_info.timing.fps > 1.0
+                               ? av_info.timing.fps
+                               : 60.0;
+        goal_completion_.TickEmulationFrame(1.0 / fps, frame_counter);
+      },
+      .core_run_enabled = [this]() {
+        return !GoalCompletionScreenActive() &&
+               !runtime_memory_server.Locked() &&
+               !RuntimeReceivedItemsModalOpen();
+      },
       .on_audio_buffer_status = [this]() {
         if (!audio_buffer_status_callback) {
           return;
@@ -65,6 +84,7 @@ int LibretroHost::Impl::Run() {
       .on_cycle_tracker_tab = [this]() { CycleTrackerTab(); },
       .on_toggle_tracker_auto_follow = [this]() { ToggleTrackerAutoFollow(); },
       .on_toggle_fullscreen = [this]() { ToggleFullscreen(); },
+      .on_test_goal_completion = [this]() { TriggerGoalCompletion("test_hotkey"); },
       .on_open_tracker_map_menu = [this]() { OpenTrackerMapMenu(); },
       .on_open_tracker_map_menu_at = [this](int x, int y) { return OpenTrackerMapMenuAt(x, y); },
       .on_activate_tracker_map_menu = [this]() { return ActivateTrackerMapMenu(); },
@@ -109,6 +129,9 @@ int LibretroHost::Impl::Run() {
         bridge_terminal_last_render_frame_ = 0;
         return true;
       },
+      .on_goal_completion_event = [this](const SDL_Event& event) {
+        return HandleGoalCompletionEvent(event);
+      },
       .on_present_frame = [this]() { PresentFrame(); },
       .on_update_menu_overlay = [this]() { UpdateMenuOverlay(); },
       .on_reset_core = [this]() { core.retro_reset(); },
@@ -130,10 +153,17 @@ int LibretroHost::Impl::Run() {
 }
 
 void LibretroHost::Impl::PresentFrame() {
+  if (RuntimeReceivedItemsModalOpen()) {
+    frame_ready = true;
+  }
+  if (GoalCompletionScreenActive()) {
+    frame_ready = true;
+  }
   PresentFrameForHost(video_backend.get(),
                       tracker_window_presenter_,
                       runtime_menu.Visible(),
                       frame_ready);
+  activity_feed_window_presenter_.Present();
   bridge_terminal_presenter_.Present();
 }
 
@@ -143,20 +173,27 @@ void LibretroHost::Impl::UpdateMenuOverlay() {
                            core_option_manager,
                            input_state,
                            CurrentBridgeRuntimeStatus(),
-                           tracker_active_ ? &tracker_runtime_ : nullptr,
+                           &tracker_runtime_,
+                           tracker_active_,
                            save_state_manager,
                            CurrentVideoGeometry(),
                            system_info.library_name ? system_info.library_name : "Unknown Core",
                            options.game_path.stem().string(),
                            tracker_window_presenter_,
                            [this]() { RenderTrackerPresentation(); },
+                           [this]() { RenderClientCoreHud(); },
+                           [this]() { RenderGoalCompletionScreen(); },
                            audio_output.MasterVolumePercent(),
-                           chat_overlay_.Enabled(),
+                           client_core_hud_.ButtonsVisible(),
                            notifications_enabled_,
+                           activity_feed_enabled_,
                            bridge_terminal_presenter_.Enabled(),
                            [this](std::string_view text) {
                              EmitTrackerCommand(nlohmann::json{{"cmd", "chat.say"}, {"text", std::string(text)}});
                            });
+  // Activity feed moved to Client Core. Keep the old Sekaiemu presenter off
+  // even if a stale frontend config still has activity_feed_enabled=true.
+  activity_feed_window_presenter_.Shutdown();
   RenderBridgeTerminal();
 }
 
@@ -231,15 +268,50 @@ void LibretroHost::Impl::TickTrackerRuntime() {
 }
 
 void LibretroHost::Impl::TickCoreChatBridge() {
-  if (!core_chat_bridge_.Active()) {
+  // Client Core owns runtime chat/activity. Do not poll the bridge inbox from
+  // the emulator loop; file I/O here shows up as frame pacing jitter.
+}
+
+void LibretroHost::Impl::TickClientCoreHud() {
+  client_core_hud_.Tick(frame_counter);
+}
+
+void LibretroHost::Impl::RenderClientCoreHud() {
+  client_core_hud_.Render(CurrentBridgeRuntimeStatus());
+}
+
+void LibretroHost::Impl::TriggerGoalCompletion(std::string source) {
+  goal_completion_.Trigger(std::move(source), frame_counter);
+  audio_output.SetPlaybackPaused(true);
+  runtime_menu.Close();
+  if (video_backend) {
+    video_backend->SetMenuVisible(false, CurrentVideoGeometry());
+  }
+  frame_ready = true;
+}
+
+void LibretroHost::Impl::TickGoalCompletionTimer() {
+  goal_completion_.TickScreen(frame_counter);
+}
+
+bool LibretroHost::Impl::GoalCompletionScreenActive() const {
+  return goal_completion_.Active();
+}
+
+bool LibretroHost::Impl::HandleGoalCompletionEvent(const SDL_Event& event) {
+  const bool was_active = goal_completion_.Active();
+  const bool handled = goal_completion_.HandleSdlEvent(event);
+  if (was_active && !goal_completion_.Active()) {
+    audio_output.SetPlaybackPaused(false);
+  }
+  return handled;
+}
+
+void LibretroHost::Impl::RenderGoalCompletionScreen() {
+  if (!goal_completion_.Active()) {
     return;
   }
-  core_chat_bridge_.Tick(frame_counter);
-  for (const auto& message : core_chat_bridge_.DrainIncoming()) {
-    std::cerr << "[sekaiemu] chat bridge received: " << message.author
-              << ": " << message.text << "\n";
-    chat_overlay_.AddExternalMessage(message.id, message.author, message.text, message.kind, frame_counter);
-  }
+  goal_completion_.RenderImGui(goal_completion_.BuildStats(tracker_runtime_));
 }
 
 BridgeRuntimeStatus LibretroHost::Impl::CurrentBridgeRuntimeStatus() const {

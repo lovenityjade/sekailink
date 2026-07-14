@@ -172,6 +172,7 @@ struct ArchipelagoConnectOptions {
     std::string game;
     std::string slot_name;
     std::string player_alias;
+    std::unordered_map<std::string, std::string> player_aliases_by_slot_name;
     std::string password;
     std::string uuid;
     std::uint64_t version_major = 0;
@@ -258,7 +259,11 @@ class ArchipelagoRoomClient final : public RoomClient {
     std::unordered_map<std::string, std::string> metadata_;
     std::unordered_map<std::uint64_t, std::string> item_id_to_name_;
     std::unordered_map<std::uint64_t, std::string> location_id_to_name_;
+    std::unordered_map<std::string, std::unordered_map<std::uint64_t, std::string>> item_id_to_name_by_game_;
+    std::unordered_map<std::string, std::unordered_map<std::uint64_t, std::string>> location_id_to_name_by_game_;
     std::unordered_map<std::uint64_t, std::string> player_id_to_name_;
+    std::unordered_map<std::uint64_t, std::string> player_id_to_game_;
+    std::vector<std::string> room_games_;
     std::vector<RoomItem> pending_items_;
     std::vector<RoomChatMessage> pending_chat_;
     std::uint64_t chat_message_counter_ = 0;

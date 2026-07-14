@@ -1,0 +1,138 @@
+{
+  "tracker_default": {
+    "type": "container",
+    "background": "#000000",
+    "content": {
+      "type": "dock",
+      "dropshadow": true,
+      "content": [
+        {
+          "type": "dock",
+          "dock": "left",
+          "content": [
+            {
+              "type": "layout",
+              "key": "item_layout_vertical"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "settings_popup": {
+    "type": "dock",
+    "content": {
+      "type": "tabbed",
+      "tabs": [
+        {
+          "title": "Settings",
+          "content": {
+            "type": "array",
+            "orientation": "vertical",
+            "h_alignment": "left",
+            "content": [
+              {
+                "type": "group",
+                "header": "Goal/Shuffles",
+                "dock": "top",
+                "content": {
+                  "type": "layout",
+                  "key": "shuffle_grid"
+                }
+              },
+              {
+                "type": "group",
+                "header": "Logic",
+                "dock": "top",
+                "content": {
+                  "type": "layout",
+                  "key": "logic_grid"
+                }
+              },
+              {
+                "type": "group",
+                "header": "Additional Dark Caves",
+                "dock": "top",
+                "content": {
+                  "type": "layout",
+                  "key": "dark_cave_grid"
+                }
+              },
+              {
+                "type": "group",
+                "header": "Requirements",
+                "dock": "top",
+                "content": {
+                  "type": "layout",
+                  "key": "requirement_grid"
+                }
+              },
+              {
+                "type": "group",
+                "header": "Starting Town",
+                "dock": "top",
+                "content": {
+                  "type": "layout",
+                  "key": "start_town_grid"
+                }
+              },
+              {
+                "type": "group",
+                "header": "Free Fly Locations",
+                "dock": "top",
+                "content": {
+                  "type": "layout",
+                  "key": "free_fly_grid"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "title": "Fly Destinations",
+          "content": {
+            "type": "group",
+            "header": "Fly Destinations",
+            "dock": "top",
+            "content": {
+              "type": "layout",
+              "key": "fly_destination_grid"
+            }
+          }
+        },
+        {
+          "title": "Dungeon Entrance",
+          "content": {
+            "type": "tabbed",
+            "tabs": [
+              {
+                "title": "Kanto",
+                "content": {
+                  "type": "group",
+                  "header": "Kanto Dungeon Entrances",
+                  "dock": "top",
+                  "content": {
+                    "type": "layout",
+                    "key": "kanto_dungeon_entrance_grid"
+                  }
+                }
+              },
+              {
+                "title": "Sevii",
+                "content": {
+                  "type": "group",
+                  "header": "Sevii Dungeon Entrances",
+                  "dock": "top",
+                  "content": {
+                    "type": "layout",
+                    "key": "sevii_dungeon_entrance_grid"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

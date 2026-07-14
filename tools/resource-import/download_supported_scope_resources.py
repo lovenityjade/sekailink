@@ -131,14 +131,14 @@ LOCAL_RESOURCE_OVERRIDES: dict[str, list[dict[str, str]]] = {
             "status": "local",
             "game": "The Legend of Zelda: Twilight Princess",
             "file_name": "tp.apworld",
-            "path": "/home/thelovenityjade/.local/share/Archipelago/worlds/tp.apworld",
+            "path": "${ARCHIPELAGO_HOME}/worlds/tp.apworld",
         },
         {
             "kind": "poptracker",
             "status": "local",
             "game": "The Legend of Zelda: Twilight Princess",
             "file_name": "TPRAP_poptracker_v0.10.2.zip",
-            "path": "/home/thelovenityjade/PopTracker/packs/TPRAP_poptracker_v0.10.2.zip",
+            "path": "${POPTRACKER_PACKS}/TPRAP_poptracker_v0.10.2.zip",
         },
     ],
 }

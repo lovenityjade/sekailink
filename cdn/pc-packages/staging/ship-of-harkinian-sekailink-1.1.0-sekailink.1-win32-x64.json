@@ -1,0 +1,20 @@
+{
+  "packageId": "ship-of-harkinian-sekailink",
+  "version": "1.1.0-sekailink.1",
+  "channel": "canary",
+  "platform": "win32-x64",
+  "url": "https://sekailink.com/downloads/pc-packages/v1/releases/ship-of-harkinian-sekailink-1.1.0-sekailink.1-win32-x64.tar.gz",
+  "bytes": 77193007,
+  "sha256": "9dc5071da52f5873d0b4e1f027a7ea60c7d80fffbdcc7a88867ce3dc6ad37ce5",
+  "executable": "soh.exe",
+  "published": true,
+  "artifactHost": "sekailink-windows",
+  "artifactPath": "D:\\SEKAILINK\\artifacts\\pc-packages\\ship-of-harkinian-sekailink-1.1.0-sekailink.1-win32-x64.tar.gz",
+  "audit": {
+    "executableArchitecture": "PE32+ x86-64",
+    "audioLibraries": "statically linked x64",
+    "externalDlls": [],
+    "includesCertificateBundle": true,
+    "includesUserGameData": false
+  }
+}

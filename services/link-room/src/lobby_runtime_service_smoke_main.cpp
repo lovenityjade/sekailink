@@ -96,7 +96,10 @@ int main() {
                     << "}\n";
     }
 
-    const std::string binary = "/home/nobara-user/sekailink/build-server-core/sekailink_lobby_runtime_service";
+    const char* binary_env = std::getenv("SEKAILINK_LOBBY_RUNTIME_SERVICE_BIN");
+    const std::string binary = binary_env && *binary_env
+        ? std::string(binary_env)
+        : (fs::current_path() / "sekailink_lobby_runtime_service").string();
     const pid_t pid = ::fork();
     if (pid < 0) throw std::runtime_error("lobby_runtime_smoke_fork_failed");
     if (pid == 0) {
@@ -124,6 +127,14 @@ int main() {
         "lobby-runtime-secret",
         R"({"lobby_id":"runtime-alpha","name":"Runtime Alpha","visibility":"public","owner_username":"jade","metadata":{"game":"alttp"}})");
     require(open.find("200 OK") != std::string::npos, "lobby_runtime_open_status");
+
+    const auto blocked_open = http_request(
+        19097,
+        "POST",
+        "/admin/runtime/lobbies/open",
+        "lobby-runtime-secret",
+        R"({"lobby_id":"runtime-blocked","name":"!!!!!!!!!!!!","visibility":"public","owner_username":"jade"})");
+    require(blocked_open.find("400 Bad Request") != std::string::npos, "lobby_runtime_blocked_open_status");
 
     const auto join = http_request(
         19097,

@@ -1,4 +1,17 @@
-const createBootstrapperControl = ({ app, crypto, fs, path, spawn, processRef = process }) => {
+const createBootstrapperControl = ({
+  app,
+  crypto,
+  fs,
+  path,
+  spawn,
+  spawnSync,
+  processRef = process,
+  httpGetJson,
+  downloadToDirWithProgress,
+  extractZip,
+  ensureDir = (dir) => fs.mkdirSync(dir, { recursive: true }),
+  writeLogLine = () => {},
+}) => {
   const readJsonFileSafe = (filePath) => {
     try {
       if (!filePath || !fs.existsSync(filePath)) return null;
@@ -109,6 +122,63 @@ const createBootstrapperControl = ({ app, crypto, fs, path, spawn, processRef = 
     return null;
   };
 
+  const normalizeReleaseChannel = (value) => {
+    const raw = String(value || "").trim().toLowerCase();
+    if (raw === "canary") return "canari";
+    if (raw === "stable" || raw === "release" || raw === "test") return "canonical";
+    return raw === "canari" ? "canari" : "canonical";
+  };
+
+  const getBootloaderStateDir = () => {
+    if (processRef.platform === "win32") {
+      const appdata = String(processRef.env.APPDATA || "").trim();
+      const home = String(processRef.env.USERPROFILE || "").trim();
+      return path.join(appdata || path.join(home || processRef.cwd(), "AppData", "Roaming"), "sekailink-bootloader");
+    }
+    const xdgState = String(processRef.env.XDG_STATE_HOME || "").trim();
+    const home = String(processRef.env.HOME || "").trim();
+    return path.join(xdgState || path.join(home || processRef.cwd(), ".local", "state"), "sekailink-bootloader");
+  };
+
+  const getReleaseChannelPreferencePath = () => path.join(getBootloaderStateDir(), "release-channel.json");
+  const getBootstrapperUpdateStatePath = () => path.join(getBootloaderStateDir(), "bootstrapper-state.json");
+
+  const getPreferredReleaseChannel = () => {
+    const envChannel = String(processRef.env.SEKAILINK_RELEASE_CHANNEL || "").trim();
+    if (envChannel) return normalizeReleaseChannel(envChannel);
+    const parsed = readJsonFileSafe(getReleaseChannelPreferencePath());
+    if (parsed) return normalizeReleaseChannel(parsed.channel);
+    const state = getBootstrapInstallState();
+    return normalizeReleaseChannel(state?.channel || "canonical");
+  };
+
+  const setPreferredReleaseChannel = (channel) => {
+    const next = normalizeReleaseChannel(channel);
+    const stateDir = getBootloaderStateDir();
+    ensureDir(stateDir);
+    fs.writeFileSync(getReleaseChannelPreferencePath(), JSON.stringify({
+      channel: next,
+      updated_at: new Date().toISOString(),
+      reboot_required: true,
+    }, null, 2), "utf8");
+    writeLogLine("info", "bootstrapper", `release channel preference set channel=${next}`);
+    return { ok: true, channel: next, rebootRequired: true, path: getReleaseChannelPreferencePath() };
+  };
+
+  const getPlatformId = () => processRef.platform === "win32" ? "win32-x64" : "linux-x64";
+
+  const getBootstrapperManifestUrl = (channel = getPreferredReleaseChannel()) => {
+    const base = "https://sekailink.com";
+    const url = new URL("/api/client/bootstrapper-latest", base);
+    url.searchParams.set("channel", normalizeReleaseChannel(channel));
+    url.searchParams.set("platform", getPlatformId());
+    url.searchParams.set("build", "release");
+    return url.toString();
+  };
+
+  const getBootstrapperStaticManifestUrl = (channel = getPreferredReleaseChannel()) =>
+    `https://sekailink.com/downloads/client/bootstrapper/${normalizeReleaseChannel(channel)}/latest/sekailink-bootstrapper-release-latest.json`;
+
   const resolveBootstrapperExecutable = () => {
     const envExplicit = String(processRef.env.SEKAILINK_BOOTSTRAPPER_PATH || "").trim();
     if (envExplicit && fs.existsSync(envExplicit)) return envExplicit;
@@ -165,10 +235,133 @@ const createBootstrapperControl = ({ app, crypto, fs, path, spawn, processRef = 
   };
 
   const getBootstrapperDownloadUrl = () => {
+    const channel = getPreferredReleaseChannel();
     if (processRef.platform === "win32") {
-      return "https://sekailink.com/downloads/client/bootstrapper/latest/SekaiLink-bootstrapper-windows.zip";
+      return `https://sekailink.com/downloads/client/bootstrapper/${channel}/latest/SekaiLink-bootstrapper-windows.zip`;
     }
-    return "https://sekailink.com/downloads/client/bootstrapper/latest/SekaiLink-bootstrapper-linux.tar.gz";
+    return `https://sekailink.com/downloads/client/bootstrapper/${channel}/latest/SekaiLink-bootstrapper-linux.tar.gz`;
+  };
+
+  const normalizeBootstrapperArtifact = (manifest, channel) => {
+    const artifacts = Array.isArray(manifest?.artifacts) ? manifest.artifacts : [];
+    const platformNeedle = processRef.platform === "win32" ? "windows" : "linux";
+    const artifact = artifacts.find((entry) => {
+      const name = String(entry?.fileName || entry?.file_name || entry?.name || entry?.url || "").toLowerCase();
+      return name.includes(platformNeedle);
+    }) || artifacts[0];
+    if (!artifact) return null;
+    const downloadUrl = String(artifact.url || artifact.download_url || artifact.downloadUrl || "").trim();
+    const sha256 = String(artifact.sha256 || "").trim().toLowerCase();
+    if (!downloadUrl || !/^[a-f0-9]{64}$/.test(sha256)) return null;
+    return {
+      version: String(manifest?.version || "").trim(),
+      channel: normalizeReleaseChannel(manifest?.channel || channel),
+      downloadUrl,
+      sha256,
+      fileName: String(artifact.fileName || artifact.file_name || path.basename(new URL(downloadUrl).pathname) || "").trim(),
+    };
+  };
+
+  const fetchBootstrapperLatest = async (channel = getPreferredReleaseChannel()) => {
+    if (typeof httpGetJson !== "function") return { ok: false, error: "bootstrapper_manifest_fetch_unavailable" };
+    const primaryUrl = getBootstrapperManifestUrl(channel);
+    try {
+      const manifest = await httpGetJson(primaryUrl, { accept: "application/json" });
+      return { ok: true, source: "api", url: primaryUrl, manifest };
+    } catch (err) {
+      const fallbackUrl = getBootstrapperStaticManifestUrl(channel);
+      try {
+        const manifest = await httpGetJson(fallbackUrl, { accept: "application/json" });
+        return { ok: true, source: "static", url: fallbackUrl, manifest, primaryError: String(err || "") };
+      } catch (fallbackErr) {
+        return { ok: false, error: String(fallbackErr || err || "bootstrapper_manifest_fetch_failed"), url: primaryUrl, fallbackUrl };
+      }
+    }
+  };
+
+  const copyExtractedBootloader = (stagingDir, installRoot) => {
+    const wanted = processRef.platform === "win32" ? "SekaiLink Bootloader" : "SekaiLink Bootloader Linux";
+    const direct = path.join(stagingDir, wanted);
+    const source = fs.existsSync(direct)
+      ? direct
+      : (fs.readdirSync(stagingDir, { withFileTypes: true })
+          .filter((entry) => entry.isDirectory())
+          .map((entry) => path.join(stagingDir, entry.name))
+          .find((candidate) => {
+            const lower = path.basename(candidate).toLowerCase();
+            return lower.includes("sekailink") && (lower.includes("bootloader") || lower.includes("bootstrapper"));
+          }) || "");
+    if (!source) return { ok: false, error: "bootstrapper_extract_missing_payload" };
+    const target = path.join(installRoot, path.basename(source));
+    fs.cpSync(source, target, { recursive: true, force: true });
+    if (processRef.platform !== "win32") {
+      const exe = path.join(target, "sekailink-bootloader");
+      if (fs.existsSync(exe)) fs.chmodSync(exe, fs.statSync(exe).mode | 0o111);
+    }
+    return { ok: true, source, target };
+  };
+
+  const applyBootstrapperArchive = (archivePath, installRoot, stagingDir) => {
+    const lower = path.basename(archivePath).toLowerCase();
+    fs.rmSync(stagingDir, { recursive: true, force: true });
+    ensureDir(stagingDir);
+    if (lower.endsWith(".zip")) {
+      if (typeof extractZip !== "function") return { ok: false, error: "zip_extract_unavailable" };
+      extractZip(archivePath, stagingDir);
+    } else if (lower.endsWith(".tar.gz") || lower.endsWith(".tgz")) {
+      const res = spawnSync ? spawnSync("tar", ["-xzf", archivePath, "-C", stagingDir], { stdio: "ignore" }) : null;
+      if (!res || res.status !== 0) return { ok: false, error: "tar_extract_failed" };
+    } else {
+      return { ok: false, error: "unsupported_bootstrapper_archive" };
+    }
+    return copyExtractedBootloader(stagingDir, installRoot);
+  };
+
+  const checkAndApplyBootstrapperUpdate = async (options = {}) => {
+    if (!app.isPackaged && !options.force) {
+      return { ok: true, updated: false, skipped: true, reason: "not_packaged" };
+    }
+    const channel = normalizeReleaseChannel(options.channel || getPreferredReleaseChannel());
+    const latest = await fetchBootstrapperLatest(channel);
+    if (!latest.ok) return latest;
+    const artifact = normalizeBootstrapperArtifact(latest.manifest, channel);
+    if (!artifact?.version) return { ok: false, error: "bootstrapper_manifest_incomplete", source: latest.source };
+    const current = readJsonFileSafe(getBootstrapperUpdateStatePath()) || {};
+    if (!options.force && String(current.version || "") === artifact.version && normalizeReleaseChannel(current.channel) === artifact.channel) {
+      return { ok: true, updated: false, version: artifact.version, channel: artifact.channel, source: latest.source };
+    }
+    if (typeof downloadToDirWithProgress !== "function") return { ok: false, error: "bootstrapper_download_unavailable" };
+
+    const installState = getBootstrapInstallState() || {};
+    const installRoot = String(installState.installDir || processRef.env.SEKAILINK_BOOTSTRAP_INSTALL_DIR || path.dirname(processRef.execPath) || "").trim();
+    if (!installRoot) return { ok: false, error: "bootstrapper_install_root_missing" };
+    const workRoot = path.join(getBootloaderStateDir(), "bootstrapper-update-work");
+    const downloadsDir = path.join(workRoot, "downloads");
+    const stagingDir = path.join(workRoot, "extract");
+    fs.rmSync(workRoot, { recursive: true, force: true });
+    ensureDir(downloadsDir);
+    writeLogLine("info", "bootstrapper", `checking bootstrapper update channel=${artifact.channel} version=${artifact.version}`);
+    const downloaded = await downloadToDirWithProgress(artifact.downloadUrl, downloadsDir, {
+      sha256: artifact.sha256,
+      requireHash: true,
+      defaultName: artifact.fileName || "sekailink-bootstrapper.bin",
+    });
+    const applied = applyBootstrapperArchive(downloaded.path, installRoot, stagingDir);
+    if (!applied.ok) return applied;
+    ensureDir(path.dirname(getBootstrapperUpdateStatePath()));
+    fs.writeFileSync(getBootstrapperUpdateStatePath(), JSON.stringify({
+      version: artifact.version,
+      channel: artifact.channel,
+      platform: getPlatformId(),
+      source: latest.source,
+      manifest_url: latest.url,
+      artifact_url: artifact.downloadUrl,
+      installed_at: new Date().toISOString(),
+      target: applied.target,
+    }, null, 2), "utf8");
+    fs.rmSync(workRoot, { recursive: true, force: true });
+    writeLogLine("info", "bootstrapper", `bootstrapper updated version=${artifact.version} channel=${artifact.channel} target=${applied.target}`);
+    return { ok: true, updated: true, version: artifact.version, channel: artifact.channel, target: applied.target, source: latest.source };
   };
 
   const spawnDetachedBootstrapper = (bootstrapperPath) => {
@@ -219,6 +412,12 @@ const createBootstrapperControl = ({ app, crypto, fs, path, spawn, processRef = 
     getBootstrapLaunchTokenStatus,
     validateBootstrapLaunchToken,
     getBootstrapInstallState,
+    getPreferredReleaseChannel,
+    setPreferredReleaseChannel,
+    getBootstrapperManifestUrl,
+    getBootstrapperStaticManifestUrl,
+    fetchBootstrapperLatest,
+    checkAndApplyBootstrapperUpdate,
     resolveBootstrapperExecutable,
     getBootstrapperDownloadUrl,
     spawnDetachedBootstrapper,

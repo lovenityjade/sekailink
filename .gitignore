@@ -71,3 +71,7 @@ __pycache__/
 Thumbs.db
 *.swp
 *.swo
+
+# Local experimental tooling not part of public canonical snapshot
+tools/imgui-forge-builder/
+tools/imgui_forge_builder

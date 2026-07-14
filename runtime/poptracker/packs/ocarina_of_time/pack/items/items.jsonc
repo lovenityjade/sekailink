@@ -1,0 +1,2112 @@
+[
+    {
+        "name": "Bombs",
+        "type": "toggle",
+        // "type": "consumable",
+        // "allow_disabled": true,
+        // "min_quantity": 0,
+        // "max_quantity": 40,
+        // "increment": 10,
+        // "initial_quantity": 20,
+        "img": "/images/bombs.png",
+        // "overlay_background": "#000000",
+        "codes": "Bombs"
+    },
+    {
+        "name": "DekuNuts",
+        "type": "static",
+        "initial_active_state": true, 
+        // "type": "consumable",
+        // "allow_disabled": false,
+        // "min_quantity": 0,
+        // "max_quantity": 40,
+        // "increment": 10,
+        // "initial_quantity": 20,
+        "img": "/images/deku nuts.png",
+        // "overlay_background": "#000000",
+        "codes": "DekuNuts"
+    },
+    {
+        "name": "Bombchus",
+        "type": "toggle",
+        // "allow_disabled": true,
+        // "min_quantity": 0,
+        // "max_quantity": 50,
+        // "increment": 10,
+        // "initial_quantity": 0,
+        "img": "/images/bombchus.png",
+        // "overlay_background": "#000000",
+        "codes": "Bombchus"
+    },
+    {
+        "name": "Boomerang",
+        "type": "toggle",
+        "img": "/images/boomerang.png",
+        "codes": "Boomerang"
+    },
+
+    {
+        "name": "DekuStick",
+        "type": "static",
+        "initial_active_state": true, 
+        // "type": "consumable",
+        // "allow_disabled": false,
+        // "min_quantity": 0,
+        // "max_quantity": 30,
+        // "increment": 10,
+        // "initial_quantity": 10,
+        "img": "/images/deku stick.png",
+        // "overlay_background": "#000000",
+        "codes": "DekuStick"
+    },
+    {
+        "name": "LensofTruth",
+        "type": "toggle",
+        "img": "/images/lense.png",
+        "codes": "LensofTruth"
+    },
+
+    {
+        "name": "MegatonHammer",
+        "type": "toggle",
+        "img": "/images/megaton hammer.png",
+        "codes": "MegatonHammer"
+    },
+
+    {
+        "name": "Cojiro",
+        "type": "toggle",
+        "img": "/images/Cojiro.png",
+        "codes": "Cojiro"
+    },
+
+    {
+        "name": "Bottle",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 0,
+        "max_quantity": 4,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/bottle.png",
+        "overlay_background": "#000000",
+        "codes": "Bottle"
+    },
+    {
+        "name": "BottlewithMilk",
+        "type": "toggle",
+        "img": "/images/BottlewithMilk.png",
+        "codes": "BottlewithMilk"
+    },
+
+    {
+        "name": "RutosLetter",
+        "type": "toggle",
+        "img": "/images/RutosLetter.png",
+        "codes": "RutosLetter"
+    },
+    {
+        "name": "BottlewithBigPoe",
+        "type": "toggle",
+        "img": "/images/BottlewithBigPoe.png",
+        "codes": "BottlewithBigPoe"
+    },
+
+    {
+        "name": "MagicBean",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 0,
+        "max_quantity": 10,
+        "increment": 1,
+        "initial_quantity": 0,
+        "overlay_background": "#000000",
+        "img": "/images/beans.png",
+        "codes": "MagicBean"
+    },
+    {
+        "name": "ChildTradeQuest",
+        "type": "progressive_toggle",
+        "loop": false,
+        "stages": [
+            {
+                "name": "WeirdEgg",
+                "img": "/images/egg.png",
+                "codes": "WeirdEgg"
+            },
+            {
+                "name": "Zeldas Letter",
+                "img": "/images/zeldas letter.png",
+                "codes": "ZeldasLetter"
+            }
+        ],
+        "codes": "ChildTrade"
+    },
+    {
+        "name": "AdultTradeQuest",
+        "type": "progressive_toggle",
+        "loop": false,
+        "stages": [
+            {
+                "name": "PocketEgg",
+                "img": "/images/egg.png",
+                "codes": "PocketEgg"
+            },
+            {
+                "name": "PocketCucco",
+                "img": "/images/cucco.png",
+                "codes": "PocketCucco"
+            },
+            {
+                "name": "Cojiro",
+                "img": "/images/cojiro.png",
+                "codes": "Cojiro"
+            },
+            {
+                "name": "OddMushroom",
+                "img": "/images/odd mushroom.png",
+                "codes": "OddMushroom"
+            },
+            {
+                "name": "OddPotion",
+                "img": "/images/odd potion.png",
+                "codes": "OddPotion"
+            },
+            {
+                "name": "PoachersSaw",
+                "img": "/images/poucher saw.png",
+                "codes": "PoachersSaw"
+            },
+            {
+                "name": "BrokenSword",
+                "img": "/images/broken sword.png",
+                "codes": "BrokenSword"
+            },
+            {
+                "name": "Prescription",
+                "img": "/images/perscription.png",
+                "codes": "Prescription"
+            },
+            {
+                "name": "EyeballFrog",
+                "img": "/images/frog.png",
+                "codes": "EyeballFrog"
+            },
+            {
+                "name": "Eyedrops",
+                "img": "/images/eyedrops.png",
+                "codes": "Eyedrops"
+            },
+            {
+                "name": "ClaimCheck",
+                "img": "/images/claimcheck.png",
+                "codes": "ClaimCheck"
+            }
+        ],
+        "codes": "AdultTrade"
+    },
+    // {
+    //     "name": "PocketEgg",
+    //     "type": "toggle",
+    //     "img": "/images/egg.png",
+    //     "codes": "PocketEgg"
+    // },
+
+    // {
+    //     "name": "PocketCucco",
+    //     "type": "toggle",
+    //     "img": "/images/PocketCucco.png",
+    //     "codes": "PocketCucco"
+    // },
+
+    // {
+    //     "name": "OddMushroom",
+    //     "type": "toggle",
+    //     "img": "/images/OddMushroom.png",
+    //     "codes": "OddMushroom"
+    // },
+
+    // {
+    //     "name": "OddPotion",
+    //     "type": "toggle",
+    //     "img": "/images/odd potion.png",
+    //     "codes": "OddPotion"
+    // },
+
+    // {
+    //     "name": "PoachersSaw",
+    //     "type": "toggle",
+    //     "img": "/images/poucher saw.png",
+    //     "codes": "PoachersSaw"
+    // },
+
+    // {
+    //     "name": "BrokenSword",
+    //     "type": "toggle",
+    //     "img": "/images/BrokenSword.png",
+    //     "codes": "BrokenSword"
+    // },
+
+    // {
+    //     "name": "Prescription",
+    //     "type": "toggle",
+    //     "img": "/images/perscription.png",
+    //     "codes": "Prescription"
+    // },
+
+    // {
+    //     "name": "EyeballFrog",
+    //     "type": "toggle",
+    //     "img": "/images/EyeballFrog.png",
+    //     "codes": "EyeballFrog"
+    // },
+
+    // {
+    //     "name": "Eyedrops",
+    //     "type": "toggle",
+    //     "img": "/images/Eyedrops.png",
+    //     "codes": "Eyedrops"
+    // },
+
+    // {
+    //     "name": "ClaimCheck",
+    //     "type": "toggle",
+    //     "img": "/images/claimcheck.png",
+    //     "codes": "ClaimCheck"
+    // },
+
+    {
+        "name": "KokiriSword",
+        "type": "toggle",
+        "img": "/images/kokiri sword.png",
+        "codes": "KokiriSword"
+    },
+
+    {
+        "name": "MasterSword",
+        "type": "toggle",
+        "img": "/images/mastersword.png",
+        "codes": "MasterSword"
+    },
+
+    {
+        "name": "DekuShield",
+        "type": "toggle",
+        "img": "/images/deku shield.png",
+        "codes": "DekuShield"
+    },
+
+    {
+        "name": "HylianShield",
+        "type": "toggle",
+        "img": "/images/hylian shield.png",
+        "codes": "HylianShield"
+    },
+
+    {
+        "name": "MirrorShield",
+        "type": "toggle",
+        "img": "/images/mirror shield.png",
+        "codes": "MirrorShield"
+    },
+
+    {
+        "name": "GoronTunic",
+        "type": "toggle",
+        "img": "/images/goron tunic.png",
+        "codes": "GoronTunic"
+    },
+
+    {
+        "name": "ZoraTunic",
+        "type": "toggle",
+        "img": "/images/zora tunic.png",
+        "codes": "ZoraTunic"
+    },
+
+    {
+        "name": "IronBoots",
+        "type": "toggle",
+        "img": "/images/iron boots.png",
+        "codes": "IronBoots"
+    },
+
+    {
+        "name": "HoverBoots",
+        "type": "toggle",
+        "img": "/images/hover boots.png",
+        "codes": "HoverBoots"
+    },
+
+    {
+        "name": "StoneofAgony",
+        "type": "toggle",
+        "img": "/images/stone of agony.png",
+        "codes": "StoneofAgony"
+    },
+
+    {
+        "name": "GerudoMembershipCard",
+        "type": "toggle",
+        "img": "/images/membership card.png",
+        "codes": "GerudoMembershipCard"
+    },
+
+    {
+        "name": "HeartContainer",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 0,
+        "max_quantity": 8,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/heart container.png",
+        "overlay_background": "#000000",
+        "codes": "HeartContainer"
+    },
+    {
+        "name": "PieceofHeart",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "increment": 1, 
+        "max_quantity": 36,
+        "stages": [
+            {
+                "name": "PieceofHeart 4-4",
+                "img": "/images/4-4poh.png"
+            },
+            {
+                "name": "PieceofHeart 1-4",
+                "img": "/images/1-4 Poh.png"
+            },
+            {
+                "name": "PieceofHeart 2-4",
+                "img": "/images/2-4poh.png"
+            },
+            {
+                "name": "PieceofHeart 3-4",
+                "img": "/images/3-4poh.png"
+            }
+        ],
+        "codes": "PieceofHeart"
+    },
+
+    // {
+    //     "name": "WeirdEgg",
+    //     "type": "toggle",
+    //     "img": "/images/egg.png",
+    //     "codes": "WeirdEgg"
+    // },
+
+    {
+        "name": "RecoveryHeart",
+        "type": "toggle",
+        "img": "/images/RecoveryHeart.png",
+        "codes": "RecoveryHeart"
+    },
+
+    {
+        "name": "BiggoronSword",
+        "type": "toggle",
+        "img": "/images/biggoron sword.png",
+        "codes": "BiggoronSword"
+    },
+
+    {
+        "name": "FireArrows",
+        "type": "toggle",
+        "img": "/images/fire arrows.png",
+        "codes": "FireArrows"
+    },
+
+    {
+        "name": "IceArrows",
+        "type": "toggle",
+        "img": "/images/ice arrows.png",
+        "codes": "IceArrows"
+    },
+
+    {
+        "name": "LightArrows",
+        "type": "toggle",
+        "img": "/images/light arrows.png",
+        "codes": "LightArrows"
+    },
+
+    {
+        "name": "GoldSkulltulaToken",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 0,
+        "max_quantity": 100,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/golden skulltulas.png",
+        "overlay_background": "#000000",
+        "codes": "GoldSkulltulaToken"
+    },
+    {
+        "name": "DinsFire",
+        "type": "toggle",
+        "img": "/images/dins fire.png",
+        "codes": "DinsFire"
+    },
+
+    {
+        "name": "NayrusLove",
+        "type": "toggle",
+        "img": "/images/nayrus love.png",
+        "codes": "NayrusLove"
+    },
+
+    {
+        "name": "FaroresWind",
+        "type": "toggle",
+        "img": "/images/farores wind.png",
+        "codes": "FaroresWind"
+    },
+
+    {
+        "name": "DekuSeeds",
+        "type": "toggle",
+        // "type": "consumable",
+        // "allow_disabled": true,
+        // "min_quantity": 0,
+        // "max_quantity": 10,
+        // "increment": 1,
+        // "initial_quantity": 0,
+        "img": "/images/deku seeds.png",
+        // "overlay_background": "#000000",
+        "codes": "DekuSeeds"
+    },
+
+    {
+        "name": "IceTrap",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 0,
+        "max_quantity": 699,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/icetrap.png",
+        "overlay_background": "#000000",
+        "codes": "IceTrap"
+    },
+
+    {
+    "name": "ProgressiveHookshot",
+    "type": "progressive",
+    "loop": false,
+    "inherit_codes": false,
+    "stages": [
+        {
+            "name": "Hookshot",
+            "img": "/images/hookshot.png",
+            "codes": "Hookshot"
+        },
+        {
+            "name": "Longshot",
+            "img": "/images/longshot.png",
+            "codes": "Longshot"
+        }
+    ],
+    "codes": "ProgressiveHookshot"
+    },
+
+    {
+    "name": "ProgressiveStrengthUpgrade",
+    "type": "progressive",
+    "loop": false,
+    "inherit_codes": false,
+    "stages": [
+        {
+            "name": "Goron Braclet",
+            "img": "/images/goron bracelet.png",
+            "codes": "GoronBracelet"
+        },
+        {
+            "name": "Silver Gauntlets",
+            "img": "/images/silver gauntlet.png",
+            "codes": "SilverGauntlets"
+        },
+        {
+            "name": "Golden Gauntlets",
+            "img": "/images/golde gauntlet.png",
+            "codes": "GoldenGauntlets"
+        }
+    ],
+    "codes": "ProgressiveStrengthUpgrade"
+    },
+
+    {
+        "name": "Bow",
+        "type": "toggle",
+        // "type": "consumable",
+        // "min_quantity": 0,
+        // "max_quantity": 50,
+        // "increment": 10,
+        // "initial_quantity": 30,
+        // "overlay_background": "#000000",
+        "img": "/images/bow.png",
+        "codes": "Bow"
+    },
+
+    {
+        "name": "Slingshot",
+        "type": "toggle",
+        "img": "/images/Slingshot.png",
+        "codes": "Slingshot"
+    },
+
+    {
+    "name": "ProgressiveWallet",
+    "type": "progressive",
+    "loop": false,
+    "allow_disabled": false,
+    "stages": [
+        {
+            "name": "99 Rupees Wallet",
+            "img": "/images/bombbag1.png",
+            "codes": "99rupees"
+        },
+        {
+            "name": "200 Rupees Wallet",
+            "img": "/images/wallet1.png",
+            "codes": "200rupees"
+        },
+        {
+            "name": "500 Rupees Wallet",
+            "img": "/images/wallet2.png",
+            "codes": "500rupees"
+        }
+    ],
+    "codes": "ProgressiveWallet"
+    },
+
+    {
+    "name": "ProgressiveScale",
+    "type": "progressive",
+    "loop": false,
+    // "inherit_codes":false, 
+    "stages": [
+        {
+            "name": "Silver Scale",
+            "img": "/images/silver scale.png",
+            "codes": "SilverScale"
+        },
+        {
+            "name": "Golden Scale",
+            "img": "/images/golden scale.png",
+            "codes": "GoldenScale"
+        }
+    ],
+    "codes": "ProgressiveScale"
+    },
+
+    {
+        "name": "MagicMeter",
+        "type": "progressive",
+        "loop": false,
+        // "inherit_codes":false, 
+        "stages": [
+            {
+                "img": "/images/magic meter1.png",
+                "codes": "magic"
+            },
+            {
+                "img": "/images/magic meter2.png",
+                "codes": "halfmagic"
+            }
+        ],
+        "codes": "MagicMeter"
+    },
+
+    {
+        "name": "Ocarina",
+        "type": "progressive",
+        "loop": false,
+        // "inherit_codes":false, 
+        "stages": [
+            {
+                "img": "/images/ocarina.png"
+            },
+            {
+                "img": "/images/ocarina of time.png"
+            }
+        ],
+        "codes": "Ocarina"
+    },
+
+    {
+        "name": "BossKey(ForestTemple)",
+        "type": "toggle",
+        "img": "/images/bosskey.png",
+        "codes": "BossKey(ForestTemple)"
+    },
+
+    {
+        "name": "BossKey(FireTemple)",
+        "type": "toggle",
+        "img": "/images/bosskey.png",
+        "codes": "BossKey(FireTemple)"
+    },
+
+    {
+        "name": "BossKey(WaterTemple)",
+        "type": "toggle",
+        "img": "/images/bosskey.png",
+        "codes": "BossKey(WaterTemple)"
+    },
+
+    {
+        "name": "BossKey(SpiritTemple)",
+        "type": "toggle",
+        "img": "/images/bosskey.png",
+        "codes": "BossKey(SpiritTemple)"
+    },
+
+    {
+        "name": "BossKey(ShadowTemple)",
+        "type": "toggle",
+        "img": "/images/bosskey.png",
+        "codes": "BossKey(ShadowTemple)"
+    },
+
+    {
+        "name": "BossKey(GanonsCastle)",
+        "type": "toggle",
+        "img": "/images/bosskey.png",
+        "codes": "BossKey(GanonsCastle)"
+    },
+
+    {
+        "name": "Compass(DekuTree)",
+        "type": "toggle",
+        "img": "/images/compass.png",
+        "codes": "Compass(DekuTree)"
+    },
+
+    {
+        "name": "Compass(DodongosCavern)",
+        "type": "toggle",
+        "img": "/images/compass.png",
+        "codes": "Compass(DodongosCavern)"
+    },
+
+    {
+        "name": "Compass(JabuJabusBelly)",
+        "type": "toggle",
+        "img": "/images/compass.png",
+        "codes": "Compass(JabuJabusBelly)"
+    },
+
+    {
+        "name": "Compass(ForestTemple)",
+        "type": "toggle",
+        "img": "/images/compass.png",
+        "codes": "Compass(ForestTemple)"
+    },
+
+    {
+        "name": "Compass(FireTemple)",
+        "type": "toggle",
+        "img": "/images/compass.png",
+        "codes": "Compass(FireTemple)"
+    },
+
+    {
+        "name": "Compass(WaterTemple)",
+        "type": "toggle",
+        "img": "/images/compass.png",
+        "codes": "Compass(WaterTemple)"
+    },
+
+    {
+        "name": "Compass(SpiritTemple)",
+        "type": "toggle",
+        "img": "/images/compass.png",
+        "codes": "Compass(SpiritTemple)"
+    },
+
+    {
+        "name": "Compass(ShadowTemple)",
+        "type": "toggle",
+        "img": "/images/compass.png",
+        "codes": "Compass(ShadowTemple)"
+    },
+
+    {
+        "name": "Compass(BottomoftheWell)",
+        "type": "toggle",
+        "img": "/images/compass.png",
+        "codes": "Compass(BottomoftheWell)"
+    },
+
+    {
+        "name": "Compass(IceCavern)",
+        "type": "toggle",
+        "img": "/images/compass.png",
+        "codes": "Compass(IceCavern)"
+    },
+
+    {
+        "name": "Map(DekuTree)",
+        "type": "toggle",
+        "img": "/images/map.png",
+        "codes": "Map(DekuTree)"
+    },
+
+    {
+        "name": "Map(DodongosCavern)",
+        "type": "toggle",
+        "img": "/images/map.png",
+        "codes": "Map(DodongosCavern)"
+    },
+
+    {
+        "name": "Map(JabuJabusBelly)",
+        "type": "toggle",
+        "img": "/images/map.png",
+        "codes": "Map(JabuJabusBelly)"
+    },
+
+    {
+        "name": "Map(ForestTemple)",
+        "type": "toggle",
+        "img": "/images/map.png",
+        "codes": "Map(ForestTemple)"
+    },
+
+    {
+        "name": "Map(FireTemple)",
+        "type": "toggle",
+        "img": "/images/map.png",
+        "codes": "Map(FireTemple)"
+    },
+
+    {
+        "name": "Map(WaterTemple)",
+        "type": "toggle",
+        "img": "/images/map.png",
+        "codes": "Map(WaterTemple)"
+    },
+
+    {
+        "name": "Map(SpiritTemple)",
+        "type": "toggle",
+        "img": "/images/map.png",
+        "codes": "Map(SpiritTemple)"
+    },
+
+    {
+        "name": "Map(ShadowTemple)",
+        "type": "toggle",
+        "img": "/images/map.png",
+        "codes": "Map(ShadowTemple)"
+    },
+
+    {
+        "name": "Map(BottomoftheWell)",
+        "type": "toggle",
+        "img": "/images/map.png",
+        "codes": "Map(BottomoftheWell)"
+    },
+
+    {
+        "name": "Map(IceCavern)",
+        "type": "toggle",
+        "img": "/images/map.png",
+        "codes": "Map(IceCavern)"
+    },
+
+    {
+        "name": "SmallKey(ForestTemple)",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 5,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/smallkey.png",
+        "overlay_background": "#000000",
+        "codes": "SmallKey(ForestTemple)"
+    },
+    {
+        "name": "MQ SmallKey(ForestTemple)",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 6,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/smallkey.png",
+        "overlay_background": "#000000",
+        "codes": "MQSmallKey(ForestTemple)"
+    },
+    {
+        "name": "SmallKey(FireTemple)",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 8,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/smallkey.png",
+        "overlay_background": "#000000",
+        "codes": "SmallKey(FireTemple)"
+    },
+    {
+        "name": "MQ SmallKey(FireTemple)",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 5,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/smallkey.png",
+        "overlay_background": "#000000",
+        "codes": "MQSmallKey(FireTemple)"
+    },
+    {
+        "name": "SmallKey(WaterTemple)",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 6,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/smallkey.png",
+        "overlay_background": "#000000",
+        "codes": "SmallKey(WaterTemple)"
+    },
+    {
+        "name": "MQ SmallKey(WaterTemple)",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 2,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/smallkey.png",
+        "overlay_background": "#000000",
+        "codes": "MQSmallKey(WaterTemple)"
+    },
+    {
+        "name": "SmallKey(SpiritTemple)",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 5,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/smallkey.png",
+        "overlay_background": "#000000",
+        "codes": "SmallKey(SpiritTemple)"
+    },
+    {
+        "name": "MQ SmallKey(SpiritTemple)",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 7,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/smallkey.png",
+        "overlay_background": "#000000",
+        "codes": "MQSmallKey(SpiritTemple)"
+    },
+    {
+        "name": "SmallKey(ShadowTemple)",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 5,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/smallkey.png",
+        "overlay_background": "#000000",
+        "codes": "SmallKey(ShadowTemple)"
+    },
+    {
+        "name": "MQ SmallKey(ShadowTemple)",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 6,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/smallkey.png",
+        "overlay_background": "#000000",
+        "codes": "MQSmallKey(ShadowTemple)"
+    },
+    {
+        "name": "SmallKey(BottomoftheWell)",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 3,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/smallkey.png",
+        "overlay_background": "#000000",
+        "codes": "SmallKey(BottomoftheWell)"
+    },
+    {
+        "name": "MQ SmallKey(BottomoftheWell)",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 2,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/smallkey.png",
+        "overlay_background": "#000000",
+        "codes": "MQSmallKey(BottomoftheWell)"
+    },
+    {
+        "name": "SmallKey(GerudoTrainingGround)",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 9,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/smallkey.png",
+        "overlay_background": "#000000",
+        "codes": "SmallKey(GerudoTrainingGround)"
+    },
+    {
+        "name": "MQ SmallKey(GerudoTrainingGround)",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 3,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/smallkey.png",
+        "overlay_background": "#000000",
+        "codes": "MQSmallKey(GerudoTrainingGround)"
+    },
+    {
+        "name": "SmallKey(ThievesHideout)",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 4,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/smallkey.png",
+        "overlay_background": "#000000",
+        "codes": "SmallKey(ThievesHideout)"
+    },
+    {
+        "name": "MQ SmallKey(ThievesHideout)",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 4,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/smallkey.png",
+        "overlay_background": "#000000",
+        "codes": "MQSmallKey(ThievesHideout)"
+    },
+    {
+        "name": "SmallKey(GanonsCastle)",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 4,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/smallkey.png",
+        "overlay_background": "#000000",
+        "codes": "SmallKey(GanonsCastle)"
+    },
+    {
+        "name": "MQ SmallKey(GanonsCastle)",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 3,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/smallkey.png",
+        "overlay_background": "#000000",
+        "codes": "MQSmallKey(GanonsCastle)"
+    },
+    {
+        "name": "DoubleDefense",
+        "type": "toggle",
+        "img": "/images/items/DoubleDefense.png",
+        "codes": "DoubleDefense"
+    },
+
+    {
+        "name": "TriforcePiece",
+        "type": "consumable",
+        "min_quantity": 0,
+        "max_quantity": 160,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/triforcepiece.png",
+        "overlay_background": "#000000",
+        "codes": "TriforcePiece"
+    },
+    // {
+    //     "name": "ZeldasLetter",
+    //     "type": "toggle",
+    //     "img": "/images/zeldas letter.png",
+    //     "codes": "ZeldasLetter"
+    // },
+
+    {
+        "name": "MinuetofForest",
+        "type": "toggle",
+        "img": "/images/minuet of forest.png",
+        "codes": "MinuetofForest"
+    },
+
+    {
+        "name": "BoleroofFire",
+        "type": "toggle",
+        "img": "/images/bolero of fire.png",
+        "codes": "BoleroofFire"
+    },
+
+    {
+        "name": "SerenadeofWater",
+        "type": "toggle",
+        "img": "/images/serenade of water.png",
+        "codes": "SerenadeofWater"
+    },
+
+    {
+        "name": "RequiemofSpirit",
+        "type": "toggle",
+        "img": "/images/requiem of spirit.png",
+        "codes": "RequiemofSpirit"
+    },
+
+    {
+        "name": "NocturneofShadow",
+        "type": "toggle",
+        "img": "/images/nocturne of shadow.png",
+        "codes": "NocturneofShadow"
+    },
+
+    {
+        "name": "PreludeofLight",
+        "type": "toggle",
+        "img": "/images/prelude of light.png",
+        "codes": "PreludeofLight"
+    },
+
+    {
+        "name": "ZeldasLullaby",
+        "type": "toggle",
+        "img": "/images/zeldas lullaby.png",
+        "codes": "ZeldasLullaby"
+    },
+
+    {
+        "name": "EponasSong",
+        "type": "toggle",
+        "img": "/images/eponas song.png",
+        "codes": "EponasSong"
+    },
+
+    {
+        "name": "SariasSong",
+        "type": "toggle",
+        "img": "/images/sarias song.png",
+        "codes": "SariasSong"
+    },
+
+    {
+        "name": "SunsSong",
+        "type": "toggle",
+        "img": "/images/suns song.png",
+        "codes": "SunsSong"
+    },
+
+    {
+        "name": "SongofTime",
+        "type": "toggle",
+        "img": "/images/song of time.png",
+        "codes": "SongofTime"
+    },
+
+    {
+        "name": "SongofStorms",
+        "type": "toggle",
+        "img": "/images/song of storms.png",
+        "codes": "SongofStorms"
+    },
+
+    {
+        "name": "SmallKeyRing(ForestTemple)",
+        "type": "toggle",
+        "img": "/images/labels/forest_temple_generic.png",
+        "codes": "SmallKeyRing(ForestTemple)"
+    },
+
+    {
+        "name": "SmallKeyRing(ForestTemple)",
+        "type": "toggle",
+        "img": "/images/labels/forest_temple_generic.png",
+        "codes": "SmallKeyRing(ForestTemple)_setting"
+    },
+
+    {
+        "name": "SmallKeyRing(FireTemple)",
+        "type": "toggle",
+        "img": "/images/labels/fire_temple_generic.png",
+        "codes": "SmallKeyRing(FireTemple)"
+    },
+
+    {
+        "name": "SmallKeyRing(FireTemple)",
+        "type": "toggle",
+        "img": "/images/labels/fire_temple_generic.png",
+        "codes": "SmallKeyRing(FireTemple)_setting"
+    },
+
+    {
+        "name": "SmallKeyRing(WaterTemple)",
+        "type": "toggle",
+        "img": "/images/labels/water_temple_generic.png",
+        "codes": "SmallKeyRing(WaterTemple)"
+    },
+
+    {
+        "name": "SmallKeyRing(WaterTemple)",
+        "type": "toggle",
+        "img": "/images/labels/water_temple_generic.png",
+        "codes": "SmallKeyRing(WaterTemple)_setting"
+    },
+
+    {
+        "name": "SmallKeyRing(SpiritTemple)",
+        "type": "toggle",
+        "img": "/images/labels/spirit_temple_generic.png",
+        "codes": "SmallKeyRing(SpiritTemple)"
+    },
+
+    {
+        "name": "SmallKeyRing(SpiritTemple)",
+        "type": "toggle",
+        "img": "/images/labels/spirit_temple_generic.png",
+        "codes": "SmallKeyRing(SpiritTemple)_setting"
+    },
+
+    {
+        "name": "SmallKeyRing(ShadowTemple)",
+        "type": "toggle",
+        "img": "/images/labels/shadow_temple_generic.png",
+        "codes": "SmallKeyRing(ShadowTemple)"
+    },
+
+    {
+        "name": "SmallKeyRing(ShadowTemple)",
+        "type": "toggle",
+        "img": "/images/labels/shadow_temple_generic.png",
+        "codes": "SmallKeyRing(ShadowTemple)_setting"
+    },
+
+    {
+        "name": "SmallKeyRing(BottomoftheWell)",
+        "type": "toggle",
+        "img": "/images/labels/bottom_of_the_well_generic.png",
+        "codes": "SmallKeyRing(BottomoftheWell)"
+    },
+
+    {
+        "name": "SmallKeyRing(BottomoftheWell)",
+        "type": "toggle",
+        "img": "/images/labels/bottom_of_the_well_generic.png",
+        "codes": "SmallKeyRing(BottomoftheWell)_setting"
+    },
+
+    {
+        "name": "SmallKeyRing(GerudoTrainingGround)",
+        "type": "toggle",
+        "img": "/images/labels/gerudo_training_grounds_generic.png",
+        "codes": "SmallKeyRing(GerudoTrainingGround)"
+    },
+
+    {
+        "name": "SmallKeyRing(GerudoTrainingGround)",
+        "type": "toggle",
+        "img": "/images/labels/gerudo_training_grounds_generic.png",
+        "codes": "SmallKeyRing(GerudoTrainingGround)_setting"
+    },
+
+    {
+        "name": "SmallKeyRing(ThievesHideout)",
+        "type": "toggle",
+        "img": "/images/labels/thieves_hideout_generic.png",
+        "codes": "SmallKeyRing(ThievesHideout)"
+    },
+
+    {
+        "name": "SmallKeyRing(ThievesHideout)",
+        "type": "toggle",
+        "img": "/images/labels/thieves_hideout_generic.png",
+        "codes": "SmallKeyRing(ThievesHideout)_setting"
+    },
+
+    {
+        "name": "SmallKeyRing(GanonsCastle)",
+        "type": "toggle",
+        "img": "/images/labels/ganons_tower_generic.png",
+        "codes": "SmallKeyRing(GanonsCastle)"
+    },
+
+    {
+        "name": "SmallKeyRing(GanonsCastle)",
+        "type": "toggle",
+        "img": "/images/labels/ganons_tower_generic.png",
+        "codes": "SmallKeyRing(GanonsCastle)_setting"
+    },
+    {
+        "name": "Deku_Tree_Label",
+        "type": "static",
+        "img": "/images/labels/Deku_Tree.png",
+        "codes": "Deku_Tree"
+    },
+    {
+        "name": "Dodongos_Cavern_Label",
+        "type": "static",
+        "img": "/images/labels/Dodongos_Cavern.png",
+        "codes": "Dodongos_Cavern"
+    },
+    {
+        "name": "Jabu_Jabus_Belly_Label",
+        "type": "static",
+        "img": "/images/labels/Jabu_Jabus_Belly.png",
+        "codes": "Jabu_Jabus_Belly"
+    },
+    {
+        "name": "Forest_Temple_Label",
+        "type": "static",
+        "img": "/images/labels/Forest_Temple.png",
+        "codes": "Forest_Temple"
+    },
+    {
+        "name": "Fire_Temple_Label",
+        "type": "static",
+        "img": "/images/labels/Fire_Temple.png",
+        "codes": "Fire_Temple"
+    },
+    {
+        "name": "Water_Temple_Label",
+        "type": "static",
+        "img": "/images/labels/Water_Temple.png",
+        "codes": "Water_Temple"
+    },
+    {
+        "name": "Spirit_Temple_Label",
+        "type": "static",
+        "img": "/images/labels/Spirit_Temple.png",
+        "codes": "Spirit_Temple"
+    },
+    {
+        "name": "Shadow_Temple_Label",
+        "type": "static",
+        "img": "/images/labels/Shadow_Temple.png",
+        "codes": "Shadow_Temple"
+    },
+    {
+        "name": "Bottom_of_the_Well_Label",
+        "type": "static",
+        "img": "/images/labels/Bottom_of_the_Well.png",
+        "codes": "Bottom_of_the_Well"
+    },
+    {
+        "name": "Gerudo_Training_Grounds",
+        "type": "static",
+        "img": "/images/labels/Gerudo_Training_Grounds.png",
+        "codes": "Gerudo_Training_Ground"
+    },
+    {
+        "name": "Ice_Cavern_Label",
+        "type": "static",
+        "img": "/images/labels/Ice_Cavern.png",
+        "codes": "Ice_Cavern"
+    },
+    {
+        "name": "Ganons_Castle_Label",
+        "type": "static",
+        "img": "/images/labels/Ganons_Castle.png",
+        "codes": "Ganons_Castle"
+    },
+    {
+        "name": "Hideout_Lable",
+        "type": "static",
+        "img": "/images/labels/Gerudo_Fortress.png",
+        "codes": "Gerudo_Fortress_Lable"
+    },
+    {
+        "name": "Kokiri_Emerald",
+        "type": "progressive_toggle",
+        "img": "/images/kokiris emerald.png",
+        "stages": [
+            {
+                "name": "Kokiri_Emerald in Deku Tree",
+                "img": "/images/kokiris emerald.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_DT.png",
+                "codes": "Kokiri_Emerald, stones"
+            },
+            {
+                "name": "Kokiri_Emerald in Dodongos Cavern",
+                "img": "/images/kokiris emerald.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_DC.png",
+                "codes": "Kokiri_Emerald, stones"
+            },
+            {
+                "name": "Kokiri_Emerald in Jabu Jabus Belly",
+                "img": "/images/kokiris emerald.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_JJB.png",
+                "codes": "Kokiri_Emerald, stones"
+            },
+            {
+                "name": "Kokiri_Emerald in Forest Temple",
+                "img": "/images/kokiris emerald.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_FoT.png",
+                "codes": "Kokiri_Emerald, stones"
+            },
+            {
+                "name": "Kokiri_Emerald in Fire Temple",
+                "img": "/images/kokiris emerald.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_FiT.png",
+                "codes": "Kokiri_Emerald, stones"
+            },
+            {
+                "name": "Kokiri_Emerald in Water Temple",
+                "img": "/images/kokiris emerald.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_WT.png",
+                "codes": "Kokiri_Emerald, stones"
+            },
+            {
+                "name": "Kokiri_Emerald in Shadow Temple",
+                "img": "/images/kokiris emerald.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_ShT.png",
+                "codes": "Kokiri_Emerald, stones"
+            },
+            {
+                "name": "Kokiri_Emerald in Spirit Temple",
+                "img": "/images/kokiris emerald.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_SPT.png",
+                "codes": "Kokiri_Emerald, stones"
+            },
+            {
+                "name": "Kokiri_Emerald Free",
+                "img_mods": "overlay|/images/reward_placement/Overlay_Free.png",
+                "img": "/images/kokiris emerald.png",
+                "codes": "Kokiri_Emerald, stones"
+            }
+        ],
+        "codes": "Kokiri_Emerald, stones"
+    },
+    {
+        "name": "Gorons_Ruby",
+        "type": "progressive_toggle",
+        "img": "/images/gorons ruby.png",
+        "stages": [
+            {
+                "name": "Gorons_Ruby in Deku Tree",
+                "img": "/images/gorons ruby.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_DT.png",
+                "codes": "Gorons_Ruby, stones"
+            },
+            {
+                "name": "Gorons_Ruby in Dodongos Cavern",
+                "img": "/images/gorons ruby.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_DC.png",
+                "codes": "Gorons_Ruby, stones"
+            },
+            {
+                "name": "Gorons_Ruby in Jabu Jabus Belly",
+                "img": "/images/gorons ruby.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_JJB.png",
+                "codes": "Gorons_Ruby, stones"
+            },
+            {
+                "name": "Gorons_Ruby in Forest Temple",
+                "img": "/images/gorons ruby.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_FoT.png",
+                "codes": "Gorons_Ruby, stones"
+            },
+            {
+                "name": "Gorons_Ruby in Fire Temple",
+                "img": "/images/gorons ruby.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_FiT.png",
+                "codes": "Gorons_Ruby, stones"
+            },
+            {
+                "name": "Gorons_Ruby in Water Temple",
+                "img": "/images/gorons ruby.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_WT.png",
+                "codes": "Gorons_Ruby, stones"
+            },
+            {
+                "name": "Gorons_Ruby in Shadow Temple",
+                "img": "/images/gorons ruby.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_ShT.png",
+                "codes": "Gorons_Ruby, stones"
+            },
+            {
+                "name": "Gorons_Ruby in Spirit Temple",
+                "img": "/images/gorons ruby.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_SPT.png",
+                "codes": "Gorons_Ruby, stones"
+            },
+            {
+                "name": "Gorons_Ruby Free",
+                "img_mods": "overlay|/images/reward_placement/Overlay_Free.png",
+                "img": "/images/gorons ruby.png",
+                "codes": "Gorons_Ruby, stones"
+            }
+        ],
+        "codes": "Gorons_Ruby, stones"
+    },
+    {
+        "name": "Zora_Sapphire",
+        "type": "progressive_toggle",
+        "img": "/images/zoras sapphire.png",
+        "stages": [
+            {
+                "name": "Zora_Sapphire in Deku Tree",
+                "img": "/images/zoras sapphire.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_DT.png",
+                "codes": "Zora_Sapphire, stones"
+            },
+            {
+                "name": "Zora_Sapphire in Dodongos Cavern",
+                "img": "/images/zoras sapphire.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_DC.png",
+                "codes": "Zora_Sapphire, stones"
+            },
+            {
+                "name": "Zora_Sapphire in Jabu Jabus Belly",
+                "img": "/images/zoras sapphire.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_JJB.png",
+                "codes": "Zora_Sapphire, stones"
+            },
+            {
+                "name": "Zora_Sapphire in Forest Temple",
+                "img": "/images/zoras sapphire.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_FoT.png",
+                "codes": "Zora_Sapphire, stones"
+            },
+            {
+                "name": "Zora_Sapphire in Fire Temple",
+                "img": "/images/zoras sapphire.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_FiT.png",
+                "codes": "Zora_Sapphire, stones"
+            },
+            {
+                "name": "Zora_Sapphire in Water Temple",
+                "img": "/images/zoras sapphire.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_WT.png",
+                "codes": "Zora_Sapphire, stones"
+            },
+            {
+                "name": "Zora_Sapphire in Shadow Temple",
+                "img": "/images/zoras sapphire.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_ShT.png",
+                "codes": "Zora_Sapphire, stones"
+            },
+            {
+                "name": "Zora_Sapphire in Spirit Temple",
+                "img": "/images/zoras sapphire.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_SPT.png",
+                "codes": "Zora_Sapphire, stones"
+            },
+            {
+                "name": "Zora_Sapphire Free",
+                "img_mods": "overlay|/images/reward_placement/Overlay_Free.png",
+                "img": "/images/zoras sapphire.png",
+                "codes": "Zora_Sapphire, stones"
+            }
+        ],
+        "codes": "Zora_Sapphire, stones"
+    },
+    {
+        "name": "Forest_medallion",
+        "type": "progressive_toggle",
+        "img": "/images/forest medallion.png",
+        "stages": [
+            {
+                "name": "Forest_medallion in Deku Tree",
+                "img": "/images/forest medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_DT.png",
+                "codes": "forest_medallion, medallions"
+            },
+            {
+                "name": "Forest_medallion in Dodongos Cavern",
+                "img": "/images/forest medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_DC.png",
+                "codes": "forest_medallion, medallions"
+            },
+            {
+                "name": "Forest_medallion in Jabu Jabus Belly",
+                "img": "/images/forest medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_JJB.png",
+                "codes": "forest_medallion, medallions"
+            },
+            {
+                "name": "Forest_medallion in Forest Temple",
+                "img": "/images/forest medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_FoT.png",
+                "codes": "forest_medallion, medallions"
+            },
+            {
+                "name": "Forest_medallion in Fire Temple",
+                "img": "/images/forest medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_FiT.png",
+                "codes": "forest_medallion, medallions"
+            },
+            {
+                "name": "Forest_medallion in Water Temple",
+                "img": "/images/forest medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_WT.png",
+                "codes": "forest_medallion, medallions"
+            },
+            {
+                "name": "Forest_medallion in Shadow Temple",
+                "img": "/images/forest medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_ShT.png",
+                "codes": "forest_medallion, medallions"
+            },
+            {
+                "name": "Forest_medallion in Spirit Temple",
+                "img": "/images/forest medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_SPT.png",
+                "codes": "forest_medallion, medallions"
+            },
+            {
+                "name": "Forest_medallion Free",
+                "img_mods": "overlay|/images/reward_placement/Overlay_Free.png",
+                "img": "/images/forest medallion.png",
+                "codes": "forest_medallion, medallions"
+            }
+        ],
+        "codes": "forest_medallion, medallions"
+    },
+    {
+        "name": "Fire_medallion",
+        "type": "progressive_toggle",
+        "img": "/images/fire medallion.png",
+        "stages": [
+            {
+                "name": "Fire_medallion in Deku Tree",
+                "img": "/images/fire medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_DT.png",
+                "codes": "fire_medallion, medallions"
+            },
+            {
+                "name": "Fire_medallion in Dodongos Cavern",
+                "img": "/images/fire medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_DC.png",
+                "codes": "fire_medallion, medallions"
+            },
+            {
+                "name": "Fire_medallion in Jabu Jabus Belly",
+                "img": "/images/fire medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_JJB.png",
+                "codes": "fire_medallion, medallions"
+            },
+            {
+                "name": "Fire_medallion in Forest Temple",
+                "img": "/images/fire medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_FoT.png",
+                "codes": "fire_medallion, medallions"
+            },
+            {
+                "name": "Fire_medallion in Fire Temple",
+                "img": "/images/fire medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_FiT.png",
+                "codes": "fire_medallion, medallions"
+            },
+            {
+                "name": "Fire_medallion in Water Temple",
+                "img": "/images/fire medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_WT.png",
+                "codes": "fire_medallion, medallions"
+            },
+            {
+                "name": "Fire_medallion in Shadow Temple",
+                "img": "/images/fire medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_ShT.png",
+                "codes": "fire_medallion, medallions"
+            },
+            {
+                "name": "Fire_medallion in Spirit Temple",
+                "img": "/images/fire medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_SPT.png",
+                "codes": "fire_medallion, medallions"
+            },
+            {
+                "name": "Fire_medallion Free",
+                "img_mods": "overlay|/images/reward_placement/Overlay_Free.png",
+                "img": "/images/fire medallion.png",
+                "codes": "fire_medallion, medallions"
+            }
+        ],
+        "codes": "fire_medallion, medallions"
+    },
+    {
+        "name": "Water_medallion",
+        "type": "progressive_toggle",
+        "img": "/images/water medallion.png",
+        "stages": [
+            {
+                "name": "Water_medallion in Deku Tree",
+                "img": "/images/water medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_DT.png",
+                "codes": "water_medallion, medallions"
+            },
+            {
+                "name": "Water_medallion in Dodongos Cavern",
+                "img": "/images/water medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_DC.png",
+                "codes": "water_medallion, medallions"
+            },
+            {
+                "name": "Water_medallion in Jabu Jabus Belly",
+                "img": "/images/water medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_JJB.png",
+                "codes": "water_medallion, medallions"
+            },
+            {
+                "name": "Water_medallion in Forest Temple",
+                "img": "/images/water medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_FoT.png",
+                "codes": "water_medallion, medallions"
+            },
+            {
+                "name": "Water_medallion in Fire Temple",
+                "img": "/images/water medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_FiT.png",
+                "codes": "water_medallion, medallions"
+            },
+            {
+                "name": "Water_medallion in Water Temple",
+                "img": "/images/water medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_WT.png",
+                "codes": "water_medallion, medallions"
+            },
+            {
+                "name": "Water_medallion in Shadow Temple",
+                "img": "/images/water medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_ShT.png",
+                "codes": "water_medallion, medallions"
+            },
+            {
+                "name": "Water_medallion in Spirit Temple",
+                "img": "/images/water medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_SPT.png",
+                "codes": "water_medallion, medallions"
+            },
+            {
+                "name": "Water_medallion Free",
+                "img_mods": "overlay|/images/reward_placement/Overlay_Free.png",
+                "img": "/images/water medallion.png",
+                "codes": "water_medallion, medallions"
+            }
+        ],
+        "codes": "water_medallion, medallions"
+    },
+    {
+        "name": "Spirit_medallion",
+        "type": "progressive_toggle",
+        "img": "/images/spirit medallion.png",
+        "stages": [
+            {
+                "name": "Spirit_medallion in Deku Tree",
+                "img": "/images/spirit medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_DT.png",
+                "codes": "spirit_medallion, medallions"
+            },
+            {
+                "name": "Spirit_medallion in Dodongos Cavern",
+                "img": "/images/spirit medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_DC.png",
+                "codes": "spirit_medallion, medallions"
+            },
+            {
+                "name": "Spirit_medallion in Jabu Jabus Belly",
+                "img": "/images/spirit medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_JJB.png",
+                "codes": "spirit_medallion, medallions"
+            },
+            {
+                "name": "Spirit_medallion in Forest Temple",
+                "img": "/images/spirit medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_FoT.png",
+                "codes": "spirit_medallion, medallions"
+            },
+            {
+                "name": "Spirit_medallion in Fire Temple",
+                "img": "/images/spirit medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_FiT.png",
+                "codes": "spirit_medallion, medallions"
+            },
+            {
+                "name": "Spirit_medallion in Water Temple",
+                "img": "/images/spirit medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_WT.png",
+                "codes": "spirit_medallion, medallions"
+            },
+            {
+                "name": "Spirit_medallion in Shadow Temple",
+                "img": "/images/spirit medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_ShT.png",
+                "codes": "spirit_medallion, medallions"
+            },
+            {
+                "name": "Spirit_medallion in Spirit Temple",
+                "img": "/images/spirit medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_SPT.png",
+                "codes": "spirit_medallion, medallions"
+            },
+            {
+                "name": "Spirit_medallion Free",
+                "img_mods": "overlay|/images/reward_placement/Overlay_Free.png",
+                "img": "/images/spirit medallion.png",
+                "codes": "spirit_medallion, medallions"
+            }
+        ],
+        "codes": "spirit_medallion, medallions"
+    },
+    {
+        "name": "Shadow_medallion",
+        "type": "progressive_toggle",
+        "img": "/images/shadow medallion.png",
+        "stages": [
+            {
+                "name": "Shadow_medallion in Deku Tree",
+                "img": "/images/shadow medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_DT.png",
+                "codes": "shadow_medallion, medallions"
+            },
+            {
+                "name": "Shadow_medallion in Dodongos Cavern",
+                "img": "/images/shadow medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_DC.png",
+                "codes": "shadow_medallion, medallions"
+            },
+            {
+                "name": "Shadow_medallion in Jabu Jabus Belly",
+                "img": "/images/shadow medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_JJB.png",
+                "codes": "shadow_medallion, medallions"
+            },
+            {
+                "name": "Shadow_medallion in Forest Temple",
+                "img": "/images/shadow medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_FoT.png",
+                "codes": "shadow_medallion, medallions"
+            },
+            {
+                "name": "Shadow_medallion in Fire Temple",
+                "img": "/images/shadow medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_FiT.png",
+                "codes": "shadow_medallion, medallions"
+            },
+            {
+                "name": "Shadow_medallion in Water Temple",
+                "img": "/images/shadow medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_WT.png",
+                "codes": "shadow_medallion, medallions"
+            },
+            {
+                "name": "Shadow_medallion in Shadow Temple",
+                "img": "/images/shadow medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_ShT.png",
+                "codes": "shadow_medallion, medallions"
+            },
+            {
+                "name": "Shadow_medallion in Spirit Temple",
+                "img": "/images/shadow medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_SPT.png",
+                "codes": "shadow_medallion, medallions"
+            },
+            {
+                "name": "Shadow_medallion Free",
+                "img_mods": "overlay|/images/reward_placement/Overlay_Free.png",
+                "img": "/images/shadow medallion.png",
+                "codes": "shadow_medallion, medallions"
+            }
+        ],
+        "codes": "shadow_medallion, medallions"
+    },
+    {
+        "name": "Light_medallion",
+        "type": "progressive_toggle",
+        "img": "/images/light medallion.png",
+        "stages": [
+            {
+                "name": "Light_medallion in Deku Tree",
+                "img": "/images/light medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_DT.png",
+                "codes": "light_medallion, medallions"
+            },
+            {
+                "name": "Light_medallion in Dodongos Cavern",
+                "img": "/images/light medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_DC.png",
+                "codes": "light_medallion, medallions"
+            },
+            {
+                "name": "Light_medallion in Jabu Jabus Belly",
+                "img": "/images/light medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_JJB.png",
+                "codes": "light_medallion, medallions"
+            },
+            {
+                "name": "Light_medallion in Forest Temple",
+                "img": "/images/light medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_FoT.png",
+                "codes": "light_medallion, medallions"
+            },
+            {
+                "name": "Light_medallion in Fire Temple",
+                "img": "/images/light medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_FiT.png",
+                "codes": "light_medallion, medallions"
+            },
+            {
+                "name": "Light_medallion in Water Temple",
+                "img": "/images/light medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_WT.png",
+                "codes": "light_medallion, medallions"
+            },
+            {
+                "name": "Light_medallion in Shadow Temple",
+                "img": "/images/light medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_ShT.png",
+                "codes": "light_medallion, medallions"
+            },
+            {
+                "name": "Light_medallion in Spirit Temple",
+                "img": "/images/light medallion.png",
+                "img_mods": "overlay|/images/reward_placement/Overlay_SPT.png",
+                "codes": "light_medallion, medallions"
+            },
+            {
+                "name": "Light_medallion Free",
+                "img_mods": "overlay|/images/reward_placement/Overlay_Free.png",
+                "img": "/images/light medallion.png",
+                "codes": "light_medallion, medallions"
+            }
+        ],
+        "codes": "light_medallion, medallions"
+    },
+    {
+        "name": "Skull Mask",
+        "type": "toggle",
+        "img": "/images/Skull Mask.png",
+        "codes": "SkullMask"
+    },
+    {
+        "name": "Mask of Truth",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "MaskofTruth"
+    },
+
+
+
+    {
+        "name": "Showed_Mido_Sword_and_Shield",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Showed_Mido_Sword_and_Shield"
+    },
+    {
+        "name": "Odd_Mushroom_Access",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Odd_Mushroom_Access"
+    },
+    {
+        "name": "Poachers_Saw_Access",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Poachers_Saw_Access"
+    },
+    {
+        "name": "Bonooru",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Bonooru"
+    },
+    {
+        "name": "Eyedrops_Access",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Eyedrops_Access"
+    },
+    {
+        "name": "Broken_Sword_Access",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Broken_Sword_Access"
+    },
+    {
+        "name": "GF_Gate_Open",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_GF_Gate_Open"
+    },
+    {
+        "name": "Hideout_1_Torch_Jail_Gerudo",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Hideout_1_Torch_Jail_Gerudo"
+    },
+    {
+        "name": "Hideout_1_Torch_Jail_Carpenter",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Hideout_1_Torch_Jail_Carpenter"
+    },
+    {
+        "name": "Hideout_2_Torches_Jail_Gerudo",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Hideout_2_Torches_Jail_Gerudo"
+    },
+    {
+        "name": "Hideout_2_Torches_Jail_Carpenter",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Hideout_2_Torches_Jail_Carpenter"
+    },
+    {
+        "name": "Hideout_3_Torches_Jail_Gerudo",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Hideout_3_Torches_Jail_Gerudo"
+    },
+    {
+        "name": "Hideout_3_Torches_Jail_Carpenter",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Hideout_3_Torches_Jail_Carpenter"
+    },
+    {
+        "name": "Hideout_4_Torches_Jail_Gerudo",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Hideout_4_Torches_Jail_Gerudo"
+    },
+    {
+        "name": "Hideout_4_Torches_Jail_Carpenter",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Hideout_4_Torches_Jail_Carpenter"
+    },
+    {
+        "name": "Sell_Big_Poe",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Sell_Big_Poe"
+    },
+    {
+        "name": "Skull_Mask",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Skull_Mask"
+    },
+    {
+        "name": "Mask_of_Truth",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Mask_of_Truth"
+    },
+    {
+        "name": "Cojiro_Access",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Cojiro_Access"
+    },
+    {
+        "name": "Kakariko_Village_Gate_Open",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Kakariko_Village_Gate_Open"
+    },
+    {
+        "name": "Wake_Up_Adult_Talon",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Wake_Up_Adult_Talon"
+    },
+    {
+        "name": "Drain_Well",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Drain_Well"
+    },
+    {
+        "name": "Odd_Potion_Access",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Odd_Potion_Access"
+    },
+    {
+        "name": "Dampes_Windmill_Access",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Dampes_Windmill_Access"
+    },
+    {
+        "name": "Prescription_Access",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Prescription_Access"
+    },
+    {
+        "name": "Goron_City_Child_Fire",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Goron_City_Child_Fire"
+    },
+    {
+        "name": "GC_Woods_Warp_Open",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_GC_Woods_Warp_Open"
+    },
+    {
+        "name": "Stop_GC_Rolling_Goron_as_Adult",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Stop_GC_Rolling_Goron_as_Adult"
+    },
+    {
+        "name": "King_Zora_Thawed",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_King_Zora_Thawed"
+    },
+    {
+        "name": "Eyeball_Frog_Access",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Eyeball_Frog_Access"
+    },
+    {
+        "name": "Epona",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Epona"
+    },
+    {
+        "name": "Links_Cow",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Links_Cow"
+    },
+    {
+        "name": "Deku_Tree_Clear",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Deku_Tree_Clear"
+    },
+    {
+        "name": "Water_Temple_Clear",
+        "type": "toggle",
+        "img": "/images/Mask of Truth.png",
+        "codes": "hidden_item_Water_Temple_Clear"
+    }
+
+]

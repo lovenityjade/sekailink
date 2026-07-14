@@ -27,6 +27,9 @@ export type RoomServerLaunchEntry = {
 
 export type RoomServerStatus = {
   tracker?: string;
+  room_id?: string;
+  id?: string;
+  room_url?: string;
   players?: RoomServerPlayer[];
   last_port?: number;
   room_port?: number;
@@ -36,7 +39,18 @@ export type RoomServerStatus = {
 };
 
 export type RoomServerGeneration = {
+  lobby_id?: string;
+  generation_id?: string;
+  sync_id?: string;
   room_url?: string;
+  room_server_url?: string;
+  response?: Record<string, unknown> & {
+    lobby_id?: string;
+    generation_id?: string;
+    sync_id?: string;
+    room_url?: string;
+    room_server_url?: string;
+  };
 };
 
 type FetchRoomStatusOptions = {
@@ -57,6 +71,7 @@ type ProbeRoomServerOptions = {
 type ResolveLaunchRoomServerOptions<TGeneration extends RoomServerGeneration> = {
   roomStatus?: RoomServerStatus | null;
   generation?: TGeneration | null;
+  roomId?: string;
   host: string;
   fetchRoomStatus: (roomUrl?: string, retries?: number) => Promise<RoomServerStatus | null>;
   loadLatestGeneration: () => Promise<TGeneration | null>;
@@ -86,6 +101,64 @@ export const isRoomServerReady = (roomStatus?: RoomServerStatus | null) =>
 export const roomStatusMatchesUrl = (roomStatusRoomId?: string, roomUrl?: string) => {
   const roomId = extractRoomIdFromUrl(roomUrl);
   return Boolean(roomId && roomStatusRoomId && roomId === roomStatusRoomId);
+};
+
+export const generationRoomUrl = (generation?: RoomServerGeneration | null) =>
+  String(
+    generation?.room_url ||
+      generation?.room_server_url ||
+      generation?.response?.room_url ||
+      generation?.response?.room_server_url ||
+      ""
+  ).trim();
+
+const looksLikeRoomRoute = (value?: string) => {
+  const raw = String(value || "").trim();
+  if (!raw) return false;
+  if (raw.startsWith("/rooms/")) return true;
+  try {
+    const parsed = new URL(raw, window.location.origin);
+    return parsed.pathname.split("/").filter(Boolean)[0] === "rooms";
+  } catch {
+    return raw.split("?")[0].split("#")[0].split("/").filter(Boolean)[0] === "rooms";
+  }
+};
+
+export const generationRoomLookupUrl = (generation?: RoomServerGeneration | null, roomId?: string) => {
+  const explicitRoomId = String(
+    roomId ||
+      generation?.lobby_id ||
+      generation?.sync_id ||
+      generation?.response?.lobby_id ||
+      generation?.response?.sync_id ||
+      ""
+  ).trim();
+  if (explicitRoomId) return `/rooms/${explicitRoomId}`;
+  const candidates = [
+    generation?.room_server_url,
+    generation?.response?.room_server_url,
+    generation?.room_url,
+    generation?.response?.room_url,
+  ];
+  return String(candidates.find((candidate) => looksLikeRoomRoute(candidate)) || "").trim();
+};
+
+const roomStatusIdentity = (roomStatus?: RoomServerStatus | null) =>
+  String(roomStatus?.room_id || roomStatus?.id || roomStatus?.tracker || roomStatus?.room_url || "").trim();
+
+export const roomStatusBelongsToGeneration = (
+  roomStatus?: RoomServerStatus | null,
+  generation?: RoomServerGeneration | null
+) => {
+  const roomUrl = generationRoomLookupUrl(generation) || generationRoomUrl(generation);
+  if (!roomUrl) return true;
+  const expectedRoomId = extractRoomIdFromUrl(roomUrl);
+  if (!expectedRoomId) return true;
+  const statusIdentity = roomStatusIdentity(roomStatus);
+  if (!statusIdentity) return false;
+  if (statusIdentity === expectedRoomId) return true;
+  if (extractRoomIdFromUrl(statusIdentity) === expectedRoomId) return true;
+  return statusIdentity.includes(expectedRoomId);
 };
 
 export const buildRoomServerAddress = (host: string, roomStatus?: RoomServerStatus | null) =>
@@ -155,6 +228,7 @@ export const probeRoomServerStatus = async ({
 export const resolveLaunchRoomServer = async <TGeneration extends RoomServerGeneration>({
   roomStatus,
   generation,
+  roomId,
   host,
   fetchRoomStatus,
   loadLatestGeneration,
@@ -162,10 +236,12 @@ export const resolveLaunchRoomServer = async <TGeneration extends RoomServerGene
   launchRetries = 10,
 }: ResolveLaunchRoomServerOptions<TGeneration>) => {
   let resolvedGeneration = generation || null;
-  let resolvedRoomStatus = roomStatus || null;
+  let resolvedRoomStatus = roomStatus && roomStatusBelongsToGeneration(roomStatus, resolvedGeneration)
+    ? roomStatus
+    : null;
 
   if (!isRoomServerReady(resolvedRoomStatus)) {
-    const roomUrl = String(resolvedGeneration?.room_url || "").trim();
+    const roomUrl = generationRoomLookupUrl(resolvedGeneration, roomId);
     if (roomUrl) {
       resolvedRoomStatus = await fetchRoomStatus(roomUrl, launchRetries);
     } else {
@@ -173,7 +249,7 @@ export const resolveLaunchRoomServer = async <TGeneration extends RoomServerGene
       if (latestGeneration) {
         resolvedGeneration = latestGeneration;
         onGenerationResolved?.(latestGeneration);
-        const latestRoomUrl = String(latestGeneration.room_url || "").trim();
+        const latestRoomUrl = generationRoomLookupUrl(latestGeneration, roomId);
         if (latestRoomUrl) {
           resolvedRoomStatus = await fetchRoomStatus(latestRoomUrl, launchRetries);
         }

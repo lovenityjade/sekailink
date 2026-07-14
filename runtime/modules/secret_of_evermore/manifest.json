@@ -25,7 +25,9 @@
       ".sfc",
       ".smc"
     ],
-    "md5": [],
+    "md5": [
+      "6e9c94511d04fac6e0a1e582c170be3a"
+    ],
     "sha1": []
   },
   "features": {
@@ -37,8 +39,9 @@
     "ap_game": "Secret of Evermore"
   },
   "tracker_pack_uid": "",
-  "tracker_web_url": "",
+  "tracker_web_url": "https://github.com/Cyb3RGER/evermizer-tracker-package/releases/latest",
   "support_status": "supported",
   "tracker_status": "trackerless_supported",
-  "compatibility_notes": "SNES/SNI game. Uses the upstream Evermizer browser AP client through SekaiLink's web_ap_client wrapper. Uses Snes9x core to match the Evermizer/SNI browser-client runtime path without changing the default SNES core."
+  "compatibility_notes": "Linux send/reception confirmed through the upstream Evermizer browser AP client and SekaiLink web_ap_client wrapper. Uses Snes9x core to match the Evermizer/SNI browser-client runtime path. Windows validation is still required before Canonical promotion.",
+  "tracker_pack_path": "poptracker/packs/secret_of_evermore/pack"
 }

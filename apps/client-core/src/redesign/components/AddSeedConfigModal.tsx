@@ -10,7 +10,7 @@ export default function AddSeedConfigModal({ onClose }: AddSeedConfigModalProps)
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
-    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-8">
+    <div className="fixed left-0 right-0 bottom-0 top-[32px] bg-black/80 flex items-center justify-center z-50 p-8">
       <div className="w-full max-w-4xl h-[80vh] bg-[#161b22] border-2 border-[#4dffd2] flex flex-col shadow-[0_0_40px_rgba(77,255,210,0.2)]">
         {/* Header */}
         <div className="border-b-2 border-[#30363d] p-6 flex items-center justify-between">

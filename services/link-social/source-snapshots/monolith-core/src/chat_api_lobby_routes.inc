@@ -23,8 +23,19 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
 
   if (parts.size() == 1 && method == "POST") {
     const auto request = body.value_or(nlohmann::json::object());
-    const auto name = sanitized_text(request.value("name", std::string("SekaiLink Room")), 80);
-    const auto description = sanitized_text(request.value("description", std::string{}), 240);
+    const auto requested_room_type = lower(json_string_or(request, "room_type", json_string_or(request, "mode")));
+    const auto async_requested = requested_room_type == "async" ||
+                                 request.value("asynchronous", false) ||
+                                 request.value("is_async", false);
+    if (async_requested && !patreon_async_room_eligible(user)) {
+      return {403, R"({"ok":false,"error":"async_room_requires_patreon_tier_2_or_3"})"};
+    }
+    const auto moderated_name = moderate_user_text(request.value("name", std::string("SekaiLink Room")), 80, ModerationMode::LobbyText);
+    if (!moderated_name.ok) return {400, moderation_error_json(moderated_name).dump()};
+    const auto moderated_description = moderate_user_text(request.value("description", std::string{}), 240, ModerationMode::LobbyText);
+    if (!moderated_description.ok) return {400, moderation_error_json(moderated_description).dump()};
+    const auto name = moderated_name.text;
+    const auto description = moderated_description.text;
     const auto password = sanitized_text(request.value("password", std::string{}), 120);
     const auto visibility = password.empty() ? std::string("public") : std::string("private");
     const auto lobby_id = safe_lobby_id_from_name(name, user_id);
@@ -199,7 +210,10 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
   }
   if (parts.size() == 3 && parts[2] == "messages" && method == "POST") {
     if (!body.has_value() || !body->is_object()) return {400, R"({"ok":false,"error":"invalid_body"})"};
-    const auto content = first_string_limited(*body, {"content", "message", "text"}, "", 400);
+    const auto raw_content = first_string_limited(*body, {"content", "message", "text"}, "", 400);
+    const auto moderated_content = moderate_user_text(raw_content, 400, ModerationMode::Chat);
+    if (!moderated_content.ok) return {400, moderation_error_json(moderated_content).dump()};
+    const auto content = moderated_content.text;
     if (content.empty()) {
       nlohmann::json keys = nlohmann::json::array();
       for (const auto& [key, value] : body->items()) {
@@ -403,6 +417,19 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
         }.dump()};
   }
   if (parts.size() == 4 && parts[2] == "generation" && parts[3] == "reset" && method == "POST") {
+    const auto current = forward_to_lobby_runtime("GET", "/runtime/lobbies/" + lobby_id, std::nullopt);
+    const auto current_json = parse_body_json(current);
+    const auto current_status = response_status_from_body(current, current_json);
+    if (current_status != 200 || !current_json.value("ok", false) || !current_json.contains("lobby")) return {current_status, current.body};
+    if (!identity_matches_lobby_owner(identity, current_json.at("lobby"))) {
+      return {
+          403,
+          nlohmann::json{
+              {"ok", false},
+              {"error", "host_only"},
+              {"message", "Only the lobby host can reset generation."},
+          }.dump()};
+    }
     if (config_.sqlite_path.empty()) {
       return {200, nlohmann::json{{"ok", true}, {"status", "idle"}, {"reset", false}}.dump()};
     }
@@ -974,7 +1001,17 @@ ChatApiHttpResponse ChatApiService::handle_legacy_lobbies(
     const auto parsed = parse_body_json(upstream);
     const auto runtime_status = response_status_from_body(upstream, parsed);
     if (runtime_status != 200 || !parsed.value("ok", false) || !parsed.contains("lobby")) return {runtime_status, upstream.body};
-    const auto members = legacy_members_from_runtime_lobby(parsed.at("lobby"));
+    const auto& lobby = parsed.at("lobby");
+    if (!identity_matches_lobby_owner(identity, lobby)) {
+      return {
+          403,
+          nlohmann::json{
+              {"ok", false},
+              {"error", "host_only"},
+              {"message", "Only the lobby host can start generation."},
+          }.dump()};
+    }
+    const auto members = legacy_members_from_runtime_lobby(lobby);
     if (members.empty()) return {400, R"({"ok":false,"error":"empty_lobby"})"};
     if (config_.sqlite_path.empty()) return {503, R"({"ok":false,"error":"selection_store_missing"})"};
 

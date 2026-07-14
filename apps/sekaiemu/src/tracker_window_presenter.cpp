@@ -1,5 +1,7 @@
 #include "tracker_window_presenter.hpp"
 
+#include "window_chrome.hpp"
+
 #include "overlay_canvas.hpp"
 #include "opengl_loader.hpp"
 #include "tracker_overlay_renderer.hpp"
@@ -30,10 +32,12 @@ bool TrackerWindowPresenter::EnsureWindow(unsigned width, unsigned height) {
                                SDL_WINDOWPOS_CENTERED,
                                static_cast<int>(width),
                                static_cast<int>(height),
-                               SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+                               SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE |
+                                   SDL_WINDOW_BORDERLESS);
     if (!window_) {
       return false;
     }
+    EnableBorderlessTitlebarDrag(window_);
     created_window = true;
   }
   if (!gl_context_) {

@@ -1,0 +1,283 @@
+﻿{
+	"layouts": {
+		"tracker_default": {
+			"type": "container",
+			"background": "#212121",
+			"content": {
+				"type": "dock",
+				"dropshadow": true,
+				"content": [
+					{
+						"type": "dock",
+						"dock": "left",
+						"content": [
+							{
+								"type": "dock",
+								"dock": "top",
+								"v_alignment": "stretch",
+								"content": [
+									{
+										"type": "group",
+										"header": "Items",
+										"dock": "top",
+										"content": {
+											"type": "layout",
+											"key": "item_grid"
+										}
+									},
+									{
+										"type": "group",
+										"header": "Teleports",
+										"dock": "top",
+										"content": {
+											"type": "layout",
+											"key": "teleport_grid"
+										}
+									},
+									{
+										"type": "group",
+										"header": "Characters",
+										"dock": "top",
+										"content": {
+											"type": "layout",
+											"key": "char_grid"
+										}
+									},
+									{
+										"type": "group",
+										"header": "Melodies",
+										"dock": "top",
+										"content": {
+											"type": "layout",
+											"key": "melody_grid"
+										}
+									}
+								]
+							}
+						]
+					},
+					{
+						"type": "dock",
+						"dock": "left",
+						"content": [
+							{
+								"type": "dock",
+								"dock": "top",
+								"v_alignment": "stretch",
+								"content": [
+									{
+										"type": "group",
+										"dock": "top",
+										"content": {
+											"type": "layout",
+											"key": "extra_item_array"
+										}
+									}
+								]
+							}
+						]
+					},
+					{
+						"type": "array",
+						"v_alignment": "stretch",
+						"margin": "0, 0",
+						"content": [
+							{
+								"title": "Maps",
+								"type": "tabbed",
+								"tabs": [
+									{
+									"title": "Onett",
+									"content": {
+									"type": "map",
+									"maps": ["onett"]
+										}
+									},
+									{
+										"title": "Twoson",
+										"content": {
+										"type": "map",
+										"maps": ["twoson"]
+											}
+										},
+									{
+										"title": "Happy-Happy Village",
+										"content": {
+										"type": "map",
+										"maps": ["happyhappy"]
+											}
+										},
+									{
+										"title": "Threed",
+										"content": {
+										"type": "map",
+										"maps": ["threed"]
+											}
+										},
+									{
+										"title": "Grapefruit Falls",
+										"content": {
+										"type": "map",
+										"maps": ["grapefruitfalls"]
+											}
+										},
+									{
+										"title": "Saturn Valley",
+										"content": {
+										"type": "map",
+										"maps": ["saturnvalley"]
+											}
+										},
+									{
+										"title": "Dusty Dunes Desert",
+										"content": {
+										"type": "map",
+										"maps": ["dustydunes"]
+											}
+										},
+									{
+										"title": "Fourside",
+										"content": {
+										"type": "map",
+										"maps": ["fourside"]
+											}
+										},
+									{
+										"title": "Winters",
+										"content": {
+										"type": "map",
+										"maps": ["winters"]
+											}
+										},
+									{
+										"title": "Summers",
+										"content": {
+										"type": "map",
+										"maps": ["summers"]
+											}
+										},
+									{
+										"title": "Dalaam",
+										"content": {
+										"type": "map",
+										"maps": ["dalaam"]
+											}
+										},
+									{
+										"title": "Scaraba",
+										"content": {
+										"type": "map",
+										"maps": ["scaraba"]
+											}
+										},
+									{
+										"title": "Deep Darkness",
+										"content": {
+										"type": "map",
+										"maps": ["deepdarkness"]
+											}
+										},
+									{
+										"title": "Tenda Village",
+										"content": {
+										"type": "map",
+										"maps": ["tendavillage"]
+											}
+										},
+									{
+										"title": "Lost Underworld",
+										"content": {
+										"type": "map",
+										"maps": ["underworld"]
+											}
+										},
+									{
+										"title": "Magicant",
+										"content": {
+										"type": "map",
+										"maps": ["magicant"]
+											}
+										}
+								]
+							  }
+						]
+					}
+				]
+			}
+		},
+	    "settings_popup":
+		{
+			"type": "array",
+			"orientation": "horizontal",
+			"h_alignment": "left",
+			"content": [
+				{
+				"type": "group",
+				"header": "Starting Area",
+				"dock": "bottom",
+				"content": {
+				"type": "layout",
+				"key": "settings"
+					}	
+				},
+				{
+					"type": "group",
+					"header": "Monkey Caves",
+					"dock": "bottom",
+					"content": {
+					"type": "layout",
+					"key": "settings2"
+						}	
+					},
+					{
+						"type": "group",
+						"header": "No Free Sanctuaries",
+						"dock": "bottom",
+						"content": {
+						"type": "layout",
+						"key": "settings3"
+							}	
+						},
+						{
+							"type": "group",
+							"header": "Shopsanity",
+							"dock": "bottom",
+							"content": {
+							"type": "layout",
+							"key": "settings4"
+								}	
+							}
+			]
+		},
+		"tracker_broadcast":
+		{
+			"type": "array",
+			"background": "#ED00FF",
+			"orientation": "horizontal",
+			"h_alignment": "left",
+			"content": [
+				{
+					"type": "itemgrid",
+					"h_alignment": "center",
+					"item_margin": "3,2",
+					"item_size": 40,
+					"rows": [
+						["shackkey", "cabinkey", "towerkey", "lockerkey", "badkeymachine","tinykey"],
+						["pencileraser", "erasereraser", "yogurtdispenser", "engine", "zombiepaper","lavapants"],
+						["pakofbubblegum", "kingbanana", "signedbanana", "tendakraut", "flyhoney"],
+						["wadofbills", "tinyruby", "diamond", "meteoritepiece", "hieroglyph"],
+						["franklinbadge", "hawkeye", "pignose", "carrotkey", "shynessbook"],
+						["policebadge", "letter", "insignificantitem", "permit", "lens"],
+						["onettwarp", "twosonwarp", "happywarp", "threedwarp", "valleywarp"],
+						["desertwarp", "foursidewarp", "winterswarp", "summerswarp", "scarabawarp"],
+						["dalaamwarp", "darkwarp", "tendawarp", "underwarp", "magicwarp"],
+						["Ness", "Paula", "Jeff", "Poo"],
+						["giantstep", "lilliputsteps", "milkywell", "rainycircle"],
+						["magnethill","pinkcloud","luminehall","firespring"],
+						["earth"]
+					]
+					}
+			]
+		}
+	}
+}

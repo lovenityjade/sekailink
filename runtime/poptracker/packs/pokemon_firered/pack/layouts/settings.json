@@ -1,0 +1,421 @@
+{
+  "shuffle_grid": {
+    "type": "array",
+    "orientation": "vertical",
+    "margin": "0,0",
+    "content": [
+      {
+        "type": "itemgrid",
+        "item_margin": "2,2",
+        "h_alignment": "center",
+        "item_size": "32,40",
+        "rows": [
+          [
+            "goal_setting",
+            "skip_elite_four_setting",
+            "kanto_only_setting",
+            "hidden_setting",
+            "extra_key_items_setting",
+            "shopsanity_setting",
+            "vending_machines_setting",
+            "prizesanity_setting",
+            "trainersanity_setting",
+            "rematchsanity_setting",
+            "famesanity_setting",
+            "fly_unlocks_setting"
+          ],
+          [
+            "pokemon_request_setting",
+            "card_keys_setting",
+            "island_passes_setting",
+            "teas_setting",
+            "gym_keys_setting",
+            "post_goal_setting",
+            "game_version_setting",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    ]
+  },
+  "logic_grid": {
+    "type": "array",
+    "orientation": "vertical",
+    "margin": "0,0",
+    "content": [
+      {
+        "type": "itemgrid",
+        "item_margin": "2,2",
+        "h_alignment": "center",
+        "item_size": "32,40",
+        "rows": [
+          [
+            "itemfinder_setting",
+            "flash_setting",
+            "fame_checker_setting",
+            "bicycle_jumping_shoes_setting",
+            "acrobatic_bicycle_setting",
+            "viridian_city_setting",
+            "pewter_city_setting",
+            "cerulean_roadblock_setting",
+            "modify_route_2_setting",
+            "block_tunnels_setting",
+            "modify_route_9_setting",
+            "modify_route_10_setting"
+          ],
+          [
+            "block_tower_setting",
+            "route_12_boulders_setting",
+            "modify_route_12_setting",
+            "modify_route_16_setting",
+            "open_silph_setting",
+            "saffron_rockets_setting",
+            "route_23_trees_setting",
+            "modify_route_23_setting",
+            "victory_road_rocks_setting",
+            "early_gossipers_setting",
+            "block_sailing_setting",
+            "randomize_fly_destinations_setting"
+          ],
+          [
+            "shuffle_dungeons_setting",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    ]
+  },
+  "dark_cave_grid": {
+    "type": "array",
+    "orientation": "vertical",
+    "margin": "0,0",
+    "content": [
+      {
+        "type": "itemgrid",
+        "item_margin": "2,2",
+        "h_alignment": "center",
+        "item_size": "32,40",
+        "rows": [
+          [
+            "mt_moon_dark_setting",
+            "digletts_cave_dark_setting",
+            "victory_road_dark_setting"
+          ]
+        ]
+      }
+    ]
+  },
+  "requirement_grid": {
+    "type": "array",
+    "orientation": "vertical",
+    "margin": "0,0",
+    "content": [
+      {
+        "type": "itemgrid",
+        "item_margin": "2,2",
+        "h_alignment": "center",
+        "item_size": "32,40",
+        "rows": [
+          [
+            "elite_four_setting",
+            "elite_four_rematch_setting",
+            "route_22_gate_setting",
+            "route_23_guard_setting",
+            "viridian_gym_setting",
+            "ceruelan_cave_setting",
+            "route_2_oaks_aide",
+            "route_10_oaks_aide",
+            "route_11_oaks_aide",
+            "route_16_oaks_aide",
+            "route_15_oaks_aide",
+            "fossil_scientist"
+          ],
+          [
+            "elite_four_requirement",
+            "elite_four_rematch_requirement",
+            "route_22_gate_requirement",
+            "route_23_guard_requirement",
+            "viridian_gym_requirement",
+            "cerulean_cave_requirement",
+            "route_2_oaks_aide_requirement",
+            "route_10_oaks_aide_requirement",
+            "route_11_oaks_aide_requirement",
+            "route_16_oaks_aide_requirement",
+            "route_15_oaks_aide_requirement",
+            "fossil_requirement"
+          ]
+        ]
+      }
+    ]
+  },
+  "start_town_grid": {
+    "type": "array",
+    "orientation": "horizontal",
+    "margin": "0,0",
+    "content": [
+      {
+        "type": "itemgrid",
+        "item_margin": "2,2",
+        "h_alignment": "center",
+        "item_size": "184,32",
+        "rows": [
+          [
+            "start_town_setting"
+          ]
+        ]
+      }
+    ]
+  },
+  "free_fly_grid": {
+    "type": "array",
+    "orientation": "horizontal",
+    "margin": "0,0",
+    "content": [
+      {
+        "type": "itemgrid",
+        "item_margin": "2,2",
+        "h_alignment": "center",
+        "item_size": "184,32",
+        "rows": [
+          [
+            "free_fly_setting",
+            "town_map_fly_setting"
+          ]
+        ]
+      }
+    ]
+  },
+  "fly_destination_grid": {
+    "type": "array",
+    "orientation": "horizontal",
+    "margin": "0,0",
+    "content": [
+      {
+        "type": "itemgrid",
+        "item_margin": "2,2",
+        "h_alignment": "center",
+        "item_size": "392,32",
+        "rows": [
+          [
+            "pallet_fly_destination"
+          ],
+          [
+            "viridian_fly_destination"
+          ],
+          [
+            "pewter_fly_destination"
+          ],
+          [
+            "route_4_fly_destination"
+          ],
+          [
+            "cerulean_fly_destination"
+          ],
+          [
+            "vermilion_fly_destination"
+          ],
+          [
+            "route_10_fly_destination"
+          ],
+          [
+            "lavender_fly_destination"
+          ],
+          [
+            "celadon_fly_destination"
+          ],
+          [
+            "fuchsia_fly_destination"
+          ],
+          [
+            "saffron_fly_destination"
+          ],
+          [
+            "cinnabar_fly_destination"
+          ],
+          [
+            "indigo_fly_destination"
+          ],
+          [
+            "one_island_fly_destination"
+          ],
+          [
+            "two_island_fly_destination"
+          ],
+          [
+            "three_island_fly_destination"
+          ],
+          [
+            "four_island_fly_destination"
+          ],
+          [
+            "five_island_fly_destination"
+          ],
+          [
+            "six_island_fly_destination"
+          ],
+          [
+            "seven_island_fly_destination"
+          ]
+        ]
+      }
+    ]
+  },
+  "kanto_dungeon_entrance_grid": {
+    "type": "array",
+    "orientation": "horizontal",
+    "margin": "0,0",
+    "content": [
+      {
+        "type": "itemgrid",
+        "item_margin": "2,2",
+        "h_alignment": "center",
+        "item_size": "392,32",
+        "rows": [
+          [
+            "viridian_forest_south_entrance"
+          ],
+          [
+            "viridian_forest_north_entrance"
+          ],
+          [
+            "mt_moon_west_entrance"
+          ],
+          [
+            "mt_moon_east_entrance"
+          ],
+          [
+            "ss_anne_entrance"
+          ],
+          [
+            "digletts_cave_north_entrance"
+          ],
+          [
+            "digletts_cave_south_entrance"
+          ],
+          [
+            "rock_tunnel_north_entrance"
+          ],
+          [
+            "rock_tunnel_south_entrance"
+          ],
+          [
+            "power_plant_front_entrance"
+          ],
+          [
+            "power_plant_back_entrance"
+          ],
+          [
+            "pokemon_tower_entrance"
+          ],
+          [
+            "rocket_hideout_entrance"
+          ],
+          [
+            "safari_zone_entrance"
+          ],
+          [
+            "silph_co_entrance"
+          ],
+          [
+            "seafoam_islands_north_entrance"
+          ],
+          [
+            "seafoam_islands_south_entrance"
+          ],
+          [
+            "pokemon_mansion_entrance"
+          ],
+          [
+            "victory_road_west_entrance"
+          ],
+          [
+            "victory_road_east_entrance"
+          ],
+          [
+            "cerulean_cave_entrance"
+          ],
+          [
+            "navel_rock_entrance"
+          ]
+        ]
+      }
+    ]
+  },
+  "sevii_dungeon_entrance_grid": {
+    "type": "array",
+    "orientation": "horizontal",
+    "margin": "0,0",
+    "content": [
+      {
+        "type": "itemgrid",
+        "item_margin": "2,2",
+        "h_alignment": "center",
+        "item_size": "392,32",
+        "rows": [
+          [
+            "mt_ember_entrance"
+          ],
+          [
+            "berry_forest_entrance"
+          ],
+          [
+            "icefall_cave_entrance"
+          ],
+          [
+            "rocket_warehouse_entrance"
+          ],
+          [
+            "lost_cave_entrance"
+          ],
+          [
+            "dotted_hole_entrance"
+          ],
+          [
+            "pattern_bush_east_entrance"
+          ],
+          [
+            "pattern_bush_west_entrance"
+          ],
+          [
+            "altering_cave_entrance"
+          ],
+          [
+            "monean_chamber_entrance"
+          ],
+          [
+            "liptoo_chamber_entrance"
+          ],
+          [
+            "weepth_chamber_entrance"
+          ],
+          [
+            "dilford_chamber_entrance"
+          ],
+          [
+            "scufib_chamber_entrance"
+          ],
+          [
+            "rixy_chamber_entrance"
+          ],
+          [
+            "viapois_chamber_entrance"
+          ]
+        ]
+      }
+    ]
+  }
+}

@@ -2,7 +2,7 @@
 
 Backup root:
 
-`/home/thelovenityjade/mnt/gdrive/Backups/SekaiLink/sekailink-pre-canonical-20260601-135453`
+`<local-home>/mnt/gdrive/Backups/SekaiLink/sekailink-pre-canonical-20260601-135453`
 
 Archives:
 

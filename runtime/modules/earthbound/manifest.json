@@ -35,7 +35,7 @@
   "tracker_pack_uid": "https://github.com/PinkSwitch/earthbound_poptracker/releases/tag/ebpoptracker1.0",
   "tracker_asset_regex": "\\.zip$",
   "default_tracker_variant": "Map Tracker",
-  "tracker_web_url": "",
+  "tracker_web_url": "https://github.com/PinkSwitch/Archipelago/releases/download/earthboundap3.2/earthbound_maptracker_3.2.zip",
   "ap_client": "sni",
   "ap_world": "earthbound",
   "archipelago_client": {
@@ -43,5 +43,6 @@
     "world": "earthbound",
     "wrapper": "sni",
     "client_file": "worlds/earthbound/Client.py"
-  }
+  },
+  "tracker_pack_path": "poptracker/packs/earthbound/pack/earthbound_new"
 }

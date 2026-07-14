@@ -1,9 +1,12 @@
 "use strict";
 
+const { hardenBrowserWindow } = require("./browser-window-hardening.cjs");
+
 const createElectronAppShell = (deps = {}) => {
   const {
     app,
     BrowserWindow,
+    Menu,
     dialog,
     screen,
     fs,
@@ -132,13 +135,16 @@ const createElectronAppShell = (deps = {}) => {
       minHeight: 700,
       backgroundColor: "#05070A",
       show: false,
+      autoHideMenuBar: true,
       icon: resolveWindowIconPath(),
       webPreferences: {
         contextIsolation: true,
         nodeIntegration: false,
-        sandbox: true
+        sandbox: true,
+        devTools: false
       }
     });
+    hardenBrowserWindow(win);
   
     const loadingPath = path.join(dirname, "loading.html");
     let loaded = false;
@@ -185,6 +191,7 @@ const createElectronAppShell = (deps = {}) => {
       minHeight: 720,
       frame: false,
       titleBarStyle: "hidden",
+      autoHideMenuBar: true,
       backgroundColor: "#05070A",
       show: false,
       icon: resolveWindowIconPath(),
@@ -192,9 +199,11 @@ const createElectronAppShell = (deps = {}) => {
         preload: path.join(dirname, "preload.cjs"),
         contextIsolation: true,
         nodeIntegration: false,
-        sandbox: true
+        sandbox: true,
+        devTools: false
       }
     });
+    hardenBrowserWindow(mainWindow);
   
     mainWindow.on("moved", saveMainWindowBounds);
     mainWindow.on("resized", saveMainWindowBounds);
@@ -257,7 +266,6 @@ const createElectronAppShell = (deps = {}) => {
       const currentUrl = mainWindow.webContents.getURL();
       if (currentUrl.startsWith("file:") && currentUrl.endsWith("loading.html")) return;
       mainTargetLoaded = true;
-      if (shouldOpenDevTools) mainWindow.webContents.openDevTools({ mode: "detach" });
       deliverPendingAuthUrl();
     });
     setTimeout(() => {
@@ -274,6 +282,11 @@ const createElectronAppShell = (deps = {}) => {
 
   const registerAppLifecycle = () => {
     app.whenReady().then(() => {
+      try {
+        Menu?.setApplicationMenu?.(null);
+      } catch (_err) {
+        // ignore menu cleanup failures
+      }
       startFileLogging();
       writeLogJson("env", {
         app_version: app.getVersion ? app.getVersion() : "",

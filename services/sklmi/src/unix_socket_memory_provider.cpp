@@ -1,5 +1,7 @@
 #include "sekailink_sklmi/api.hpp"
 
+#include <utility>
+
 #ifndef _WIN32
 
 #include <sys/socket.h>
@@ -328,6 +330,86 @@ bool UnixSocketMemoryProvider::refresh_remote_metadata(std::string* error) {
         return false;
     }
     return true;
+}
+
+}  // namespace sekailink::sklmi
+
+#else
+
+namespace sekailink::sklmi {
+
+UnixSocketMemoryProvider::UnixSocketMemoryProvider(std::filesystem::path socket_path)
+    : socket_path_(std::move(socket_path)) {}
+
+UnixSocketMemoryProvider::~UnixSocketMemoryProvider() = default;
+
+bool UnixSocketMemoryProvider::connect(std::string* error) {
+    if (error) *error = "unix_socket_memory_provider_unsupported_on_windows";
+    return false;
+}
+
+void UnixSocketMemoryProvider::disconnect() {
+    socket_ = -1;
+    protocol_version_.reset();
+    system_name_.clear();
+    descriptors_.clear();
+}
+
+bool UnixSocketMemoryProvider::connected() const {
+    return false;
+}
+
+std::optional<int> UnixSocketMemoryProvider::protocol_version() const {
+    return std::nullopt;
+}
+
+const std::string& UnixSocketMemoryProvider::system_name() const {
+    return system_name_;
+}
+
+std::vector<MemoryDomainDescriptor> UnixSocketMemoryProvider::domains() const {
+    return {};
+}
+
+bool UnixSocketMemoryProvider::has_domain(std::string_view domain_id) const {
+    (void)domain_id;
+    return false;
+}
+
+bool UnixSocketMemoryProvider::is_address_valid(std::string_view domain_id,
+                                                std::uint64_t address,
+                                                std::size_t size) const {
+    (void)domain_id;
+    (void)address;
+    (void)size;
+    return false;
+}
+
+bool UnixSocketMemoryProvider::read(std::string_view domain_id,
+                                    std::uint64_t address,
+                                    std::byte* buffer,
+                                    std::size_t size) const {
+    (void)domain_id;
+    (void)address;
+    (void)buffer;
+    (void)size;
+    return false;
+}
+
+bool UnixSocketMemoryProvider::write(std::string_view domain_id,
+                                     std::uint64_t address,
+                                     const std::byte* buffer,
+                                     std::size_t size) {
+    (void)domain_id;
+    (void)address;
+    (void)buffer;
+    (void)size;
+    return false;
+}
+
+bool UnixSocketMemoryProvider::refresh_remote_metadata(std::string* error) {
+    if (error) *error = "unix_socket_memory_provider_unsupported_on_windows";
+    return false;
 }
 
 }  // namespace sekailink::sklmi

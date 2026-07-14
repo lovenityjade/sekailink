@@ -1,0 +1,277 @@
+[
+  {
+    "name": "Three Island Town",
+    "children": [
+      {
+        "name": "Visit",
+        "sections": [
+          {
+            "ref": "Islands/Three Island Town/Unlock Fly Destination"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "three_island",
+            "x": 12,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Pokémon Center",
+        "sections": [
+          {
+            "ref": "Islands/Three Island Town/PC Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "three_island",
+            "x": 232,
+            "y": 440
+          }
+        ]
+      },
+      {
+        "name": "Anti-Biker",
+        "sections": [
+          {
+            "ref": "Islands/Three Island Town/Anti-Biker Gift",
+            "name": "Gift"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "three_island",
+            "x": 120,
+            "y": 392
+          }
+        ]
+      },
+      {
+        "name": "Sabrina Fan's House",
+        "sections": [
+          {
+            "ref": "Islands/Three Island Town/Sabrina Fan Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "three_island",
+            "x": 72,
+            "y": 104
+          }
+        ]
+      },
+      {
+        "name": "Item Behind East Fence",
+        "sections": [
+          {
+            "ref": "Islands/Three Island Town/Item Behind East Fence",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "three_island",
+            "x": 296,
+            "y": 280
+          }
+        ]
+      },
+      {
+        "name": "Hidden Item Behind West Fence",
+        "sections": [
+          {
+            "ref": "Islands/Three Island Town/Hidden Item Behind West Fence",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "three_island",
+            "x": 88,
+            "y": 216
+          }
+        ]
+      },
+      {
+        "name": "Biker Goon 1",
+        "sections": [
+          {
+            "ref": "Islands/Three Island Town/Biker Goon 1 Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "three_island",
+            "x": 152,
+            "y": 392
+          }
+        ]
+      },
+      {
+        "name": "Biker Goon 2",
+        "sections": [
+          {
+            "ref": "Islands/Three Island Town/Biker Goon 2 Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "three_island",
+            "x": 168,
+            "y": 392
+          }
+        ]
+      },
+      {
+        "name": "Biker Goon 3",
+        "sections": [
+          {
+            "ref": "Islands/Three Island Town/Biker Goon 3 Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "three_island",
+            "x": 152,
+            "y": 376
+          }
+        ]
+      },
+      {
+        "name": "Cue Ball Paxton",
+        "sections": [
+          {
+            "ref": "Islands/Three Island Town/Cue Ball Paxton Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "three_island",
+            "x": 136,
+            "y": 392
+          }
+        ]
+      },
+      {
+        "name": "Lostelle's House",
+        "sections": [
+          {
+            "ref": "Islands/Three Island Town/Lostelle Gift"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "three_island",
+            "x": 56,
+            "y": 504
+          }
+        ]
+      },
+      {
+        "name": "Poké Mart",
+        "sections": [
+          {
+            "ref": "Islands/Three Island Town/Shop Items"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "three_island",
+            "x": 296,
+            "y": 200
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Three Island Pokémon Center 1F",
+    "children": [
+      {
+        "name": "PC",
+        "sections": [
+          {
+            "ref": "Islands/Three Island Town/PC Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "three_island_pokemon_center_1f",
+            "x": 184,
+            "y": 24
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Lostelle's House",
+    "children": [
+      {
+        "name": "Lostelle",
+        "sections": [
+          {
+            "ref": "Islands/Three Island Town/Lostelle Gift",
+            "name": "Gift"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "three_island_lostelles_house",
+            "x": 56,
+            "y": 72
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Sabrina Fan's House",
+    "children": [
+      {
+        "name": "Sabrina Fan",
+        "sections": [
+          {
+            "ref": "Islands/Three Island Town/Sabrina Fan Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "three_island_sabrina_fans_house",
+            "x": 120,
+            "y": 72
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Three Island Mart",
+    "children": [
+      {
+        "name": "Poké Mart Clerk",
+        "sections": [
+          {
+            "ref": "Islands/Three Island Town/Shop Items"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "three_island_mart",
+            "x": 40,
+            "y": 56
+          }
+        ]
+      }
+    ]
+  }
+]

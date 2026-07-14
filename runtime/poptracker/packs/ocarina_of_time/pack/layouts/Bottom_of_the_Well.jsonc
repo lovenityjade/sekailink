@@ -1,0 +1,18 @@
+{
+    "dungeon_items_bottom_of_the_well":{
+    "type": "itemgrid",
+            "item_margin": "2, 2",
+            "h_alignment": "left",
+            "item_h_alignment": "center",
+            "item_v_alignment": "center",
+            "item_height": 36,
+            "item_width": 36,
+            "rows": [
+            ["Bottom_of_the_Well"],
+            ["Map(BottomoftheWell)"],
+            ["Compass(BottomoftheWell)"],
+            ["SmallKey(BottomoftheWell)"],
+            ["BossKey(BottomoftheWell)"]
+            ]
+            }
+}

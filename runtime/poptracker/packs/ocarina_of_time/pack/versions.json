@@ -1,0 +1,116 @@
+{
+	"versions": [
+		{
+			"package_version": "0.0.7",
+			"download_url": "https://github.com/StripesOO7/oot-tracker/releases/download/v0.0.7/oot-ap-tracker-v0.0.7.zip",
+			"sha256": "",
+			"changelog": [
+				"fixed",
+				"- fixed multiple child-only locations being shown as accessible for adult with not child access.",
+				"- keyrings should now be handled correctly as in getting the keyring should set the keyount to its max.",
+				"- added MQ locations and placed them correct on the map (Thanks Superfid2006), they still have no logic",
+				"- hints now reset on reconnect instead of needing to do it manually",
+				"- fixed issue with hiding locations depending on settings",
+				"- always show GT boss key chest instead of hiding it when GT Bosskey is removed since there is still an item shuffled in there. ",
+				
+				"known issues",
+				"- locations where you have to be there first as Child and then clear the way for Adult have problems because the age-swap occurs too soon in the logic so that not every location is checked for Child. ",
+				"- ocarina+warp songs falsely give child access",
+				"-hint overshadowing the locations below it and thus not being able to see all the unhinted locations accessibility",
+				
+				"whats next:",
+				"- add MQ logic",
+				"- fixing child<>adult interactions between the same location",
+				"- fix order of operations for moving through the locations. this should move the age swap at the end of the current age "
+			]
+		},
+		{
+			"package_version": "0.0.6",
+			"download_url": "https://github.com/StripesOO7/oot-tracker/releases/download/v0.0.6/oot-ap-tracker-v0.0.6.zip",
+			"sha256": "a128bc649c352a043ed5421259b5ad97090fb7d5f36ac86a63fc8add4032b255",
+			"changelog": [
+				"fix logic not updateing after connect",
+				"add handling for closed forest forcing startingage to child",
+				"activates all maps and compass when selecting 'start with'",	
+				"fixes wrong GTG rule to show/hide non-/MQ depending on setting",
+				
+				"TO-DO:",
+				"the whole settings popup need a restructure as in whats clustered where etc.",
+				"Add logic to MQ dungeon and coirrectly place them in the maps"
+			]
+		},
+		{
+			"package_version": "0.0.5",
+			"download_url": "https://github.com/StripesOO7/oot-tracker/releases/download/v0.0.5/oot-ap-tracker-v0.0.5.zip",
+			"sha256": "3078f1cc9d518ec16d03fb0c9345c3ca13ed0442229626b19f20aa0f5bb1200f",
+			"changelog": [
+				"fix a bug where connecting to seeds that are more than 50% done could result in an endless loop",
+				"add a visual hint system, feedback is very welcome",
+				"adds another tab to the settings popup for MQ dungeon list, Keyrinmg list and dungeon shortcuts list",
+				"internal restrucutre of MQ dungeon locations",
+				"max ice traps now at 699. if anyone hits that max lets me know",
+				"some smaller logic errors fixed",				
+				
+				"TO-DO:",
+				"the whole settings popup need a restructure as in whats clustered where etc.",
+				"Add logic to MQ dungeon and coirrectly place them in the maps"
+			]
+		},
+		{
+			"package_version": "0.0.4",
+			"download_url": "https://github.com/StripesOO7/oot-tracker/releases/download/v0.0.4/oot-ap-tracker-v0.0.4.zip",
+			"sha256": "000ed1fb17ad75f1b66d1e159795a177230a1da0073241ca4a0cf97e034f03e9",
+			"changelog": [
+				"fixed LH scrub again to not be shown by default",
+				"fixed check position for Dodongos Cavern Compass Chest",
+				"fixed typo in logic check, which cause the wild turning green of locations at the start",
+				"fixed fortress setting check...fixes canyon crossing",
+				"fixed typo in JJB rules",
+				"addes Gerduo Fortress lable and moves key below Deku Tree",
+				"small chnge in bottle logic to take the occupied bottle from Rutos letter into account...big poe bcoming later",
+				"moves GS OGC indo overworld visibility and out of dungeon",
+				"addes Hearts and Magic back to vertical layout",
+
+				"added a MIT License"
+			]
+		},
+		{
+			"package_version": "0.0.3",
+			"download_url": "https://github.com/StripesOO7/oot-tracker/releases/download/v0.0.3/oot-ap-tracker-v0.0.3.zip",
+			"sha256": "10525a2df42c180048f95995a43dbcd9b14a92e401420bc99557afa923044d87",
+			"changelog": [
+				"fixed Freestanding PoH not showing all over the maps",
+				"fixed fixed access rule to SFM",
+				"added overlays to indicate where Stones, Medallions are found",
+				"added labels to warp songs.....purely cosmetic at  the moment",
+				"fixed multiple age specific checks missing their access rules (guardhouse pots)",
+				"unhide scrubs that always have checks even without scrubsanity",
+				"added extra checks for bean planting logic",
+				"fixed big poe access rules/logic",
+				"added hiding conditions of the banon boss key and gerudo membershipcard"
+
+			]
+		},
+		{
+			"package_version": "0.0.2",
+			"download_url": "https://github.com/StripesOO7/oot-tracker/releases/download/v0.0.2/oot-ap-tracker-v0.0.2.zip",
+			"sha256": "1d2193ba2313451aac5284aa85dcbfd970d0e2eae01a0852ac58d8fd39ecd3f0",
+			"changelog": [
+				"fixed absurd RAM usage by scaling down images",
+				"fixed a typo that snug in the intial relrease",
+				"thanks to Superfid2006 placing all the checks in their respective sub maps",
+				"fixed some logic issues",
+				"added handling for showing/hiding different locatins based on settings"
+
+			]
+		},
+		{
+			"package_version": "0.0.1",
+			"download_url": "https://github.com/StripesOO7/oot-tracker/releases/download/v0.0.1/oot-ap-tracker-v0.0.1.zip",
+			"sha256": "5c2bf2fab95f3cb2c24aa4321a58a93167ffc2f7a4bcb87e64c6480fe0453fdf",
+			"changelog": [
+				"initial relrease"
+			]
+		}
+	]
+}

@@ -1,0 +1,1013 @@
+
+
+[
+  {
+    "name": "Hideout - hint",
+    "chest_unopened_img": "/images/items/close.png",
+    "chest_opened_img": "/images/items/open.png",
+    "overlay_background": "#000000",
+    "access_rules": [
+        "{}"
+    ],
+    "children": [
+        {
+            "name": "1 Torch Jail - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Gerudo Key - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_1_torch_jail_gerudo_key"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_1_torch_jail_pot_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_1_torch_jail_pot_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_1_torch_jail_pot_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Crate - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_1_torch_jail_crate"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Hideout",
+                    "x": "262",
+                    "y": "1059",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "2 Torches Jail - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "In Cell - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Pot 1 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "hideout_2_torches_jail_in_cell_pot_1"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 2 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "hideout_2_torches_jail_in_cell_pot_2"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 3 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "hideout_2_torches_jail_in_cell_pot_3"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 4 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "hideout_2_torches_jail_in_cell_pot_4"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Hideout",
+                            "x": "698",
+                            "y": "1057",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                }
+            ],
+            "sections": [
+                {
+                    "name": "Gerudo Key - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_2_torches_jail_gerudo_key"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_2_torches_jail_pot_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_2_torches_jail_pot_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_2_torches_jail_pot_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Crate 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_2_torches_jail_crate_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Crate 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_2_torches_jail_crate_2"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Hideout",
+                    "x": "675",
+                    "y": "1028",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "3 Torches Jail - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Gerudo Key - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_3_torches_jail_gerudo_key"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Crate - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_3_torches_jail_crate"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Hideout",
+                    "x": "243",
+                    "y": "927",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "4 Torches Jail - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Gerudo Key - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_4_torches_jail_gerudo_key"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_4_torches_jail_pot_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_4_torches_jail_pot_2"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Hideout",
+                    "x": "654",
+                    "y": "925",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Break Room - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Pot 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_break_room_pot_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_break_room_pot_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Crate 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_break_room_crate_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Crate 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_break_room_crate_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Hallway Crate 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_break_room_hallway_crate_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Hallway Crate 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_break_room_hallway_crate_2"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Hideout",
+                    "x": "505",
+                    "y": "873",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Kitchen - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Near Kitchen - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "Crate 1 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "hideout_kitchen_near_kitchen_crate_1"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Crate 2 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "hideout_kitchen_near_kitchen_crate_2"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Crate 3 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "hideout_kitchen_near_kitchen_crate_3"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Crate 4 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "hideout_kitchen_near_kitchen_crate_4"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Crate 5 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "hideout_kitchen_near_kitchen_crate_5"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Hideout",
+                            "x": "435",
+                            "y": "1034",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                }
+            ],
+            "sections": [
+                {
+                    "name": "Pot 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_kitchen_pot_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "hideout_kitchen_pot_2"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Hideout",
+                    "x": "533",
+                    "y": "1100",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        }
+    ],
+    "sections": [
+        {
+            "name": "Gerudo Membership Card - hint",
+            "access_rules": [],
+            "visibility_rules": [
+                "hideout_gerudo_membership_card"
+            ],
+            "item_count": 1
+        }
+    ],
+    "map_locations": [
+        {
+            "map": "Hideout",
+            "x": "296",
+            "y": "1048",
+            "size": 22,
+                    "shape": "diamond"
+        }
+    ]
+},
+    {
+      "name": "Hideout",
+      "chest_unopened_img": "/images/Items/close.png",
+      "chest_opened_img": "/images/Items/open.png",
+      "overlay_background": "#000000",
+      "access_rules": [
+        " "
+      ],
+      "children": [
+        {
+          "name": "1 Torch Jail",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Gerudo Key",
+                "access_rules": [
+                "^$CanReach|Child Hideout 1 Torch Jail Gerudo Key",
+                "^$CanReach|Adult Hideout 1 Torch Jail Gerudo Key"
+                ],
+                "visibility_rules": [
+                  "$Show|gerudo_fortress|1|<="
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child Hideout 1 Torch Jail Pot 1",
+                "^$CanReach|Adult Hideout 1 Torch Jail Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child Hideout 1 Torch Jail Pot 2",
+                "^$CanReach|Adult Hideout 1 Torch Jail Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 3",
+                "access_rules": [
+                "^$CanReach|Child Hideout 1 Torch Jail Pot 3",
+                "^$CanReach|Adult Hideout 1 Torch Jail Pot 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Crate",
+                "access_rules": [
+                "^$CanReach|Child Hideout 1 Torch Jail Crate",
+                "^$CanReach|Adult Hideout 1 Torch Jail Crate"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_crates|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Gerudo Fortress",
+              "x": 240,
+              "y": 1037,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "2 Torches Jail",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "In Cell",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child Hideout 2 Torch Jail In Cell Pot 1",
+                "^$CanReach|Adult Hideout 2 Torch Jail In Cell Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child Hideout 2 Torch Jail In Cell Pot 2",
+                "^$CanReach|Adult Hideout 2 Torch Jail In Cell Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 3",
+                "access_rules": [
+                "^$CanReach|Child Hideout 2 Torch Jail In Cell Pot 3",
+                "^$CanReach|Adult Hideout 2 Torch Jail In Cell Pot 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 4",
+                "access_rules": [
+                "^$CanReach|Child Hideout 2 Torch Jail In Cell Pot 4",
+                "^$CanReach|Adult Hideout 2 Torch Jail In Cell Pot 4"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Gerudo Fortress",
+                  "x": 676,
+                  "y": 1035,
+                  "size": 24
+                }
+              ]
+            }
+          ],
+          "sections": [
+            {
+              "name": "Gerudo Key",
+                "access_rules": [
+                "^$CanReach|Child Hideout 2 Torches Jail Gerudo Key",
+                "^$CanReach|Adult Hideout 2 Torches Jail Gerudo Key"
+                ],
+                "visibility_rules": [
+                  "$Show|gerudo_fortress|0|=="
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child Hideout 2 Torch Jail Pot 1",
+                "^$CanReach|Adult Hideout 2 Torch Jail Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child Hideout 2 Torch Jail Pot 2",
+                "^$CanReach|Adult Hideout 2 Torch Jail Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 3",
+                "access_rules": [
+                "^$CanReach|Child Hideout 2 Torch Jail Pot 3",
+                "^$CanReach|Adult Hideout 2 Torch Jail Pot 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Crate 1",
+                "access_rules": [
+                "^$CanReach|Child Hideout 2 Torch Jail Crate 1",
+                "^$CanReach|Adult Hideout 2 Torch Jail Crate 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_crates|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Crate 2",
+                "access_rules": [
+                "^$CanReach|Child Hideout 2 Torch Jail Crate 2",
+                "^$CanReach|Adult Hideout 2 Torch Jail Crate 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_crates|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Gerudo Fortress",
+              "x": 653,
+              "y": 1006,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "3 Torches Jail",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Gerudo Key",
+                "access_rules": [
+                "^$CanReach|Child Hideout 3 Torches Jail Gerudo Key",
+                "^$CanReach|Adult Hideout 3 Torches Jail Gerudo Key"
+                ],
+                "visibility_rules": [
+                  "$Show|gerudo_fortress|0|=="
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Crate",
+                "access_rules": [
+                "^$CanReach|Child Hideout 3 Torch Jail Crate",
+                "^$CanReach|Adult Hideout 3 Torch Jail Crate"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_crates|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Gerudo Fortress",
+              "x": 221,
+              "y": 905,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "4 Torches Jail",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Gerudo Key",
+                "access_rules": [
+                "^$CanReach|Child Hideout 4 Torches Jail Gerudo Key",
+                "^$CanReach|Adult Hideout 4 Torches Jail Gerudo Key"
+                ],
+                "visibility_rules": [
+                  "$Show|gerudo_fortress|0|=="
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child Hideout 4 Torch Jail Pot 1",
+                "^$CanReach|Adult Hideout 4 Torch Jail Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child Hideout 4 Torch Jail Pot 2",
+                "^$CanReach|Adult Hideout 4 Torch Jail Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Gerudo Fortress",
+              "x": 632,
+              "y": 903,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Break Room",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child Hideout Break Room Pot 1",
+                "^$CanReach|Adult Hideout Break Room Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child Hideout Break Room Pot 2",
+                "^$CanReach|Adult Hideout Break Room Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Crate 1",
+                "access_rules": [
+                "^$CanReach|Child Hideout Break Room Crate 1",
+                "^$CanReach|Adult Hideout Break Room Crate 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_crates|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Crate 2",
+                "access_rules": [
+                "^$CanReach|Child Hideout Break Room Crate 2",
+                "^$CanReach|Adult Hideout Break Room Crate 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_crates|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Hallway Crate 1",
+                "access_rules": [
+                "^$CanReach|Child Hideout Break Room Hallway Crate 1",
+                "^$CanReach|Adult Hideout Break Room Hallway Crate 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_crates|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Hallway Crate 2",
+                "access_rules": [
+                "^$CanReach|Child Hideout Break Room Hallway Crate 2",
+                "^$CanReach|Adult Hideout Break Room Hallway Crate 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_crates|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Gerudo Fortress",
+              "x": 483,
+              "y": 851,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Kitchen",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "Near Kitchen",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "Crate 1",
+                "access_rules": [
+                "^$CanReach|Child Hideout Near Kitchen Crate 1",
+                "^$CanReach|Adult Hideout Near Kitchen Crate 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_crates|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Crate 2",
+                "access_rules": [
+                "^$CanReach|Child Hideout Near Kitchen Crate 2",
+                "^$CanReach|Adult Hideout Near Kitchen Crate 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_crates|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Crate 3",
+                "access_rules": [
+                "^$CanReach|Child Hideout Near Kitchen Crate 3",
+                "^$CanReach|Adult Hideout Near Kitchen Crate 3"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_crates|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Crate 4",
+                "access_rules": [
+                "^$CanReach|Child Hideout Near Kitchen Crate 4",
+                "^$CanReach|Adult Hideout Near Kitchen Crate 4"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_crates|2"
+                ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Crate 5",
+                "access_rules": [
+                "^$CanReach|Child Hideout Near Kitchen Crate 5",
+                "^$CanReach|Adult Hideout Near Kitchen Crate 5"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_crates|2"
+                ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Gerudo Fortress",
+                  "x": 413,
+                  "y": 1012,
+                  "size": 24
+                }
+              ]
+            }
+          ],
+          "sections": [
+            {
+              "name": "Pot 1",
+                "access_rules": [
+                "^$CanReach|Child Hideout Kitchen Pot 1",
+                "^$CanReach|Adult Hideout Kitchen Pot 1"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 2",
+                "access_rules": [
+                "^$CanReach|Child Hideout Kitchen Pot 2",
+                "^$CanReach|Adult Hideout Kitchen Pot 2"
+                ],
+                "visibility_rules": [
+                  "$Show|shuffle_pots|2"
+                ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Gerudo Fortress",
+              "x": 511,
+              "y": 988,
+              "size": 24
+            }
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "name": "Gerudo Membership Card",
+                "access_rules": [
+                "^$CanReach|Child Hideout Gerudo Membership Card",
+                "^$CanReach|Adult Hideout Gerudo Membership Card"
+                ],
+                "visibility_rules": [
+                  "$Show|gerudo_fortress|1|<="
+                ],
+          "item_count": 1
+        }
+      ],
+      "map_locations": [
+        {
+          "map": "Gerudo Fortress",
+          "x": 274,
+          "y": 1026,
+          "size": 24
+        }
+      ]
+    }
+  ]

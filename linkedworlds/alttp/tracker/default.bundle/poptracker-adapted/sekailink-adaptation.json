@@ -4,7 +4,7 @@
   "source": {
     "name": "alttp-ap-poptracker-pack",
     "url": "https://github.com/StripesOO7/alttp-ap-poptracker-pack",
-    "local_reference": "/home/thelovenityjade/reference-repos/alttp-ap-poptracker-pack",
+    "local_reference": "<local-home>/reference-repos/alttp-ap-poptracker-pack",
     "commit": "bff7a80d7cfb53de5c5b49923ddedb3344108b96",
     "license": "MIT",
     "license_file": "LICENSE"

@@ -28,6 +28,7 @@ ROMNAME_START = SRAM_START + 0x2000
 ROMNAME_SIZE = 0x15
 
 INGAME_MODES = {0x07, 0x09, 0x0b}
+STABLE_INGAME_MODES = {0x07, 0x09}
 ENDGAME_MODES = {0x19, 0x1a}
 DEATH_MODES = {0x12}
 
@@ -544,7 +545,7 @@ class ALTTPSNIClient(SNIClient):
                 await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
                 ctx.finished_game = True
 
-        if gamemode in ENDGAME_MODES:  # triforce room and credits
+        if gamemode[0] in ENDGAME_MODES:  # triforce room and credits
             return
 
         data = await snes_read(ctx, RECV_PROGRESS_ADDR, 8)
@@ -553,9 +554,44 @@ class ALTTPSNIClient(SNIClient):
 
         recv_index = data[0] | (data[1] << 8)
         recv_item = data[2]
+        recv_item_player = data[3]
         roomid = data[4] | (data[5] << 8)
         roomdata = data[6]
         scout_location = data[7]
+
+        stalled_item_index = recv_index - 1 if recv_index > 0 else -1
+        if recv_item != 0 and stalled_item_index < len(ctx.items_received):
+            now = time.monotonic()
+            stall_key = (recv_index, recv_item, recv_item_player)
+            stall = getattr(ctx, "_sekailink_alttp_recv_stall", None)
+            if not isinstance(stall, dict) or stall.get("key") != stall_key:
+                stall = {"key": stall_key, "since": now, "warned_at": 0.0}
+                setattr(ctx, "_sekailink_alttp_recv_stall", stall)
+            elif gamemode[0] in STABLE_INGAME_MODES and now - float(stall.get("since", now)) >= 15.0:
+                if now - float(stall.get("warned_at", 0.0)) >= 15.0:
+                    stall["warned_at"] = now
+                    logging.warning(
+                        "ALttP receive slot appears stuck on item %s from player %s at receive index %s with %s queued; "
+                        "clearing the stale slot so queued items can continue.",
+                        recv_item,
+                        recv_item_player,
+                        stalled_item_index,
+                        len(ctx.items_received) - stalled_item_index,
+                    )
+                # The AP ROM protocol advances the progress counter when the
+                # item is placed in the receive slot. If the game never clears
+                # that slot, clearing it without rolling the counter back loses
+                # the item forever. Rewind first so the next watcher tick
+                # retries this exact item, including when it was the last one.
+                recv_index = max(0, stalled_item_index)
+                snes_buffered_write(ctx, RECV_PROGRESS_ADDR,
+                                    bytes([recv_index & 0xFF, (recv_index >> 8) & 0xFF]))
+                snes_buffered_write(ctx, RECV_ITEM_ADDR, b"\x00")
+                snes_buffered_write(ctx, RECV_ITEM_PLAYER_ADDR, b"\x00")
+                setattr(ctx, "_sekailink_alttp_recv_stall", {"key": None, "since": now, "warned_at": now})
+                recv_item = -1
+        else:
+            setattr(ctx, "_sekailink_alttp_recv_stall", None)
 
         if recv_index < len(ctx.items_received) and recv_item == 0:
             item = ctx.items_received[recv_index]

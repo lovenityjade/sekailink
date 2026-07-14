@@ -40,8 +40,9 @@
     "ap_game": "Lufia II Ancient Cave"
   },
   "tracker_pack_uid": "",
-  "tracker_web_url": "",
+  "tracker_type": "universal_tracker",
+  "tracker_web_url": "universal_tracker",
   "support_status": "supported_trackerless",
   "tracker_status": "trackerless_supported",
-  "compatibility_notes": "Supported without a PopTracker pack for the current compatibility tier."
+  "compatibility_notes": "Supported without a PopTracker pack for the current compatibility tier; launches through Universal Tracker when a tracker is requested."
 }

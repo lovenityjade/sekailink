@@ -32,20 +32,16 @@ HISTORY_PATH = Path.home() / ".local" / "state" / "sekailink-runtime-lab" / "his
 
 DEFAULT_CONFIG = {
     "ssh_host": "sekailink-windows",
-    "windows_host_ip": "10.0.0.119",
+    "windows_host_ip": "",
     "ssh_config": str(Path.home() / ".ssh" / "config"),
-    "ssh_password": "A3e5t122!",
+    "ssh_password": "",
     "remote_repo": "/d/SekaiLink/repos/sekailink-canonical",
     "lab_root": "/d/RuntimeLab",
     "worker": "./tools/windows-worker/sekai-worker-msys.sh",
     "local_rom_roots": [
-        str(Path.home() / "SekaiLink" / "scratch" / "local-roms" / "blind-test-reserve"),
-        str(Path.home() / ".local" / "share" / "MultiworldGG"),
         str(Path.home() / ".config" / "sekailink-client" / "roms"),
     ],
     "local_tracker_roots": [
-        str(Path.home() / "SekaiLink" / "canonical" / "runtime" / "tracker-bundles"),
-        str(Path.home() / "SekaiLink" / "canonical" / "runtime" / "downloaded-resources" / "sekailink-supported" / "poptracker"),
         str(Path.home() / "Downloads"),
     ],
 }

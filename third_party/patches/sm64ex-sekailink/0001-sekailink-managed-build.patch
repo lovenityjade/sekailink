@@ -1,0 +1,32 @@
+diff --git a/src/pc/cliopts.c b/src/pc/cliopts.c
+index 80df090..60c7546 100644
+--- a/src/pc/cliopts.c
++++ b/src/pc/cliopts.c
+@@ -18,12 +18,16 @@ struct PCCLIOptions gCLIOpts;
+ static void print_help(void) {
+-    printf("Super Mario 64 PC Port\n");
++    printf("Super Mario 64 - SekaiLink Edition\n");
+     printf("%-20s\tEnables the cheat menu.\n", "--cheats");
+     printf("%-20s\tSaves the configuration file as CONFIGNAME.\n", "--configfile CONFIGNAME");
+     printf("%-20s\tSets additional data directory name (only 'res' is used by default).\n", "--gamedir DIRNAME");
+     printf("%-20s\tOverrides the default save/config path ('!' expands to executable path).\n", "--savepath SAVEPATH");
+     printf("%-20s\tStarts the game in full screen mode.\n", "--fullscreen");
+     printf("%-20s\tSkips the Peach and Castle intro when starting a new game.\n", "--skip-intro");
+     printf("%-20s\tStarts the game in windowed mode.\n", "--windowed");
++    printf("%-20s\tLoads a SekaiLink/Archipelago slot file.\n", "--sm64ap_file FILE");
++    printf("%-20s\tConnects to a room server.\n", "--sm64ap_ip HOST:PORT");
++    printf("%-20s\tUses the given room slot name.\n", "--sm64ap_name SLOT");
++    printf("%-20s\tUses the room password when required.\n", "--sm64ap_passwd PASSWORD");
+ }
+ 
+ static inline int arg_string(const char *name, const char *value, char *target) {
+diff --git a/src/pc/pc_main.c b/src/pc/pc_main.c
+index 4f0bd58..4fd8ea8 100644
+--- a/src/pc/pc_main.c
++++ b/src/pc/pc_main.c
+@@ -218,4 +218,4 @@ void game_init(void) {
+-    "Super Mario 64 EX (" RAPI_NAME ")"
++    "SekaiLink - Super Mario 64 (" RAPI_NAME ")"
+     #ifdef NIGHTLY
+     " nightly " GIT_HASH
+     #endif

@@ -97,13 +97,48 @@ def read_archipelago_patch_metadata(path: str) -> dict[str, Any]:
     return {}
 
 
-def lookup_location_name(ctx: Any, location_id: Any) -> str:
+def lookup_player_name(ctx: Any, player: Any) -> str:
+    try:
+        slot = int(player)
+    except Exception:
+        return str(player or "")
+    try:
+        names = getattr(ctx, "player_names", None) or {}
+        value = names.get(slot)
+        if value:
+            return str(value)
+    except Exception:
+        pass
+    return str(slot)
+
+
+def lookup_game_for_player(ctx: Any, player: Any) -> str:
+    try:
+        slot = int(player)
+    except Exception:
+        return ""
+    try:
+        slot_info = getattr(ctx, "slot_info", None) or {}
+        info = slot_info.get(slot)
+        if info is None:
+            return ""
+        value = getattr(info, "game", None)
+        if value:
+            return str(value)
+        if isinstance(info, (list, tuple)) and len(info) > 1:
+            return str(info[1])
+    except Exception:
+        pass
+    return ""
+
+
+def lookup_location_name(ctx: Any, location_id: Any, player: Any = None) -> str:
     try:
         location = int(location_id)
     except Exception:
         return str(location_id)
     names = getattr(ctx, "location_names", None)
-    slot = getattr(ctx, "slot", None)
+    slot = player if player not in (None, "") else getattr(ctx, "slot", None)
     for call in (
         lambda: names.lookup_in_slot(location, slot),
         lambda: names.lookup_in_game(location, getattr(ctx, "game", "")),
@@ -152,14 +187,66 @@ def summarize_network_item(ctx: Any, item: Any) -> dict[str, Any]:
     location_id = network_item_field(item, "location", 1)
     player = network_item_field(item, "player", 2)
     flags = network_item_field(item, "flags", 3)
+    item_player = getattr(ctx, "slot", None) or player
     return {
         "item": item_id,
-        "item_name": lookup_item_name(ctx, item_id, player),
+        "item_name": lookup_item_name(ctx, item_id, item_player),
+        "item_player": item_player,
         "location": location_id,
-        "location_name": lookup_location_name(ctx, location_id),
+        "location_name": lookup_location_name(ctx, location_id, player),
         "player": player,
+        "source_player": player,
+        "source_player_name": lookup_player_name(ctx, player),
+        "source_game": lookup_game_for_player(ctx, player),
         "flags": flags,
         "raw": scrub_packet_for_trace(item),
+    }
+
+
+def _int_from_print_part(part: dict[str, Any], key: str = "text") -> int | None:
+    try:
+        return int(part.get(key))
+    except Exception:
+        return None
+
+
+def summarize_print_json_item_send(ctx: Any, args: dict[str, Any]) -> dict[str, Any] | None:
+    if not isinstance(args, dict) or str(args.get("type") or "") != "ItemSend":
+        return None
+    data = [part for part in list(args.get("data") or []) if isinstance(part, dict)]
+    player_parts = [part for part in data if part.get("type") == "player_id"]
+    item_part = next((part for part in data if part.get("type") == "item_id"), None)
+    location_part = next((part for part in data if part.get("type") == "location_id"), None)
+    if not player_parts or item_part is None:
+        return None
+    sender_slot = _int_from_print_part(player_parts[0])
+    recipient_slot = args.get("receiving")
+    try:
+        recipient_slot = int(recipient_slot)
+    except Exception:
+        recipient_slot = _int_from_print_part(player_parts[-1])
+    item_id = _int_from_print_part(item_part)
+    if sender_slot is None or recipient_slot is None or item_id is None:
+        return None
+    item_player = _int_from_print_part(item_part, "player") or recipient_slot
+    location_id = _int_from_print_part(location_part) if location_part is not None else None
+    location_player = (_int_from_print_part(location_part, "player") if location_part is not None else None) or sender_slot
+    flags = item_part.get("flags", 0)
+    return {
+        "sender_slot": sender_slot,
+        "sender_name": lookup_player_name(ctx, sender_slot),
+        "sender_game": lookup_game_for_player(ctx, sender_slot),
+        "recipient_slot": recipient_slot,
+        "recipient_name": lookup_player_name(ctx, recipient_slot),
+        "recipient_game": lookup_game_for_player(ctx, recipient_slot),
+        "item_id": item_id,
+        "item_player": item_player,
+        "item_name": lookup_item_name(ctx, item_id, item_player),
+        "location_id": location_id,
+        "location_player": location_player,
+        "location_name": lookup_location_name(ctx, location_id, location_player) if location_id is not None else "",
+        "flags": flags,
+        "raw": scrub_packet_for_trace(args),
     }
 
 

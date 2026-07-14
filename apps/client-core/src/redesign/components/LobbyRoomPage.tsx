@@ -1,4 +1,4 @@
-import { Users, Tag, Send, Settings, Terminal, Crown, Plus, X, Check, Loader, AlertCircle, ChevronDown, Search, Trash2, UserCircle, UserPlus, Volume2, Ban, LogOut } from 'lucide-react';
+import { Users, Tag, Send, Settings, Terminal, Crown, Plus, X, Check, Loader, AlertCircle, ChevronDown, Search, Trash2, UserCircle, UserPlus, Volume2, Ban, LogOut, SquareTerminal, Headphones } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import AnimatedBackground from './AnimatedBackground';
 import LobbySettingsModal from './LobbySettingsModal';
@@ -9,12 +9,13 @@ import { canonicalSeedGameKey, listSeeds, type SeedEntry } from '../../services/
 import { listLobbies } from '../../services/lobbyClient';
 import { buildSelfLaunchContext, indexDownloadsBySlot, indexPlayersByName, type SelfLaunchContext } from '../../services/lobbyLaunchContext';
 import { executeRoomSessionLaunch } from '../../services/roomSessionLaunch';
-import { fetchRoomStatusByUrl, resolveRoomServerHost, type RoomServerStatus } from '../../services/roomServerContext';
+import { fetchRoomStatusByUrl, resolveLaunchRoomServer, resolveRoomServerHost, type RoomServerStatus } from '../../services/roomServerContext';
 import { trace, traceError } from '../../services/trace';
 import { gameSetupRegistry } from '../../data/gameSetup';
 import { runtime } from '../../services/runtime';
 import { ErrorModal, LoadingModal } from './FeedbackModal';
 import { EmoteText } from './EmoteText';
+import { checkRomReadiness, type RomReadiness } from '../../services/romReadiness';
 
 interface LobbyRoomPageProps {
   lobbyId?: string;
@@ -23,6 +24,7 @@ interface LobbyRoomPageProps {
   createdAt?: string;
   onInitialLoadComplete?: (lobbyId: string) => void;
   onLeaveLobby?: () => void;
+  onOpenRomImport?: (gameId: string) => void;
 }
 
 type LobbyStatus = 'waiting' | 'ready' | 'generating' | 'generated' | 'error';
@@ -36,6 +38,7 @@ interface SeedConfig {
   source: 'easy' | 'advanced';
   status: 'valid' | 'draft' | 'error';
   instance?: number;
+  playerName?: string;
   trackerVariant?: string;
   trackerVariantName?: string;
   trackerGameId?: string;
@@ -102,6 +105,11 @@ interface LobbyGenerationStatus {
   };
 }
 
+type LobbyVoiceState = {
+  state: 'unavailable' | 'creating' | 'available' | 'degraded';
+  voice?: { channel_url?: string; members?: Array<{ discord_id?: string | number; display_name?: string; avatar_url?: string; muted?: boolean; deafened?: boolean }> };
+};
+
 interface LobbyMemberPayload {
   discord_id?: string;
   user_id?: string;
@@ -111,12 +119,13 @@ interface LobbyMemberPayload {
   global_name?: string;
   is_host?: boolean;
   ready?: boolean;
-  selections?: Array<{ game?: string; configs?: Array<{ id?: string; yaml_id?: string; title?: string; custom?: boolean; tracker_variant?: string; trackerVariant?: string; tracker_variant_name?: string; trackerVariantName?: string; tracker_game_id?: string; trackerGameId?: string }> }>;
+  selections?: Array<{ game?: string; player_name?: string; configs?: Array<{ id?: string; yaml_id?: string; title?: string; player_name?: string; custom?: boolean; tracker_variant?: string; trackerVariant?: string; tracker_variant_name?: string; trackerVariantName?: string; tracker_game_id?: string; trackerGameId?: string }> }>;
   active_yamls?: Array<{ id: string; title: string; game: string; player_name?: string; custom?: boolean; tracker_variant?: string; trackerVariant?: string; tracker_variant_name?: string; trackerVariantName?: string; tracker_game_id?: string; trackerGameId?: string }>;
   active_yaml_id?: string;
   active_yaml_title?: string;
   active_yaml_game?: string;
   active_yaml_player?: string;
+  active_yaml_player_name?: string;
   active_yaml_tracker_variant?: string;
   active_yaml_tracker_variant_name?: string;
   active_yaml_tracker_game_id?: string;
@@ -160,6 +169,7 @@ const mapSeedEntry = (seed: SeedEntry): SeedConfig => ({
   configName: seed.title || 'Untitled Seed',
   source: seedSource(seed.source),
   status: 'valid',
+  playerName: seed.player_name || '',
 });
 
 const trackerGameIdForSeedGame = (game: string) => {
@@ -189,6 +199,7 @@ const selectionsForMember = (member: LobbyMemberPayload): SeedConfig[] => {
         configName: String(config?.title || 'Default'),
         source: 'advanced' as const,
         status: 'valid' as const,
+        playerName: String((config as any)?.player_name || (group as any)?.player_name || ''),
         trackerVariant: String(config?.tracker_variant || config?.trackerVariant || ''),
         trackerVariantName: String(config?.tracker_variant_name || config?.trackerVariantName || ''),
         trackerGameId: String(config?.tracker_game_id || config?.trackerGameId || ''),
@@ -203,6 +214,7 @@ const selectionsForMember = (member: LobbyMemberPayload): SeedConfig[] => {
       configName: String(seed.title || 'Default'),
       source: 'advanced' as const,
       status: 'valid' as const,
+      playerName: String(seed.player_name || ''),
       trackerVariant: String(seed.tracker_variant || seed.trackerVariant || ''),
       trackerVariantName: String(seed.tracker_variant_name || seed.trackerVariantName || ''),
       trackerGameId: String(seed.tracker_game_id || seed.trackerGameId || ''),
@@ -215,6 +227,7 @@ const selectionsForMember = (member: LobbyMemberPayload): SeedConfig[] => {
       configName: String(member.active_yaml_title || 'Default'),
       source: 'advanced' as const,
       status: 'valid' as const,
+      playerName: String(member.active_yaml_player_name || member.active_yaml_player || ''),
       trackerVariant: String(member.active_yaml_tracker_variant || ''),
       trackerVariantName: String(member.active_yaml_tracker_variant_name || ''),
       trackerGameId: String(member.active_yaml_tracker_game_id || ''),
@@ -419,13 +432,13 @@ const localSystemMessage = (content: string): SekaiChatMessage => ({
   channel: 'Lobby',
 });
 
-const selectionForSeedConfig = (config: SeedConfig, username: string) => ({
+const selectionForSeedConfig = (config: SeedConfig, fallbackName: string) => ({
   id: config.id,
   config_id: config.id,
   yaml_id: config.id,
   game: config.game,
   title: config.configName,
-  player_name: username,
+  player_name: config.playerName || fallbackName,
   tracker_variant: config.trackerVariant,
   tracker_game_id: config.trackerGameId,
 });
@@ -436,7 +449,8 @@ export default function LobbyRoomPage({
   owner = '',
   createdAt = '',
   onInitialLoadComplete,
-  onLeaveLobby
+  onLeaveLobby,
+  onOpenRomImport,
 }: LobbyRoomPageProps) {
   const [lobbyStatus, setLobbyStatus] = useState<LobbyStatus>('waiting');
   const [message, setMessage] = useState('');
@@ -444,9 +458,13 @@ export default function LobbyRoomPage({
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedPlayers, setExpandedPlayers] = useState<Set<string>>(new Set());
   const [showLobbySettings, setShowLobbySettings] = useState(false);
+  const [showCloseLobbyConfirm, setShowCloseLobbyConfirm] = useState(false);
+  const [closeLobbyInFlight, setCloseLobbyInFlight] = useState(false);
   const [contextMenu, setContextMenu] = useState<{ playerId: string; x: number; y: number } | null>(null);
   const [players, setPlayers] = useState<Player[]>([]);
   const [availableSeedConfigs, setAvailableSeedConfigs] = useState<SeedConfig[]>([]);
+  const [romReadinessByConfig, setRomReadinessByConfig] = useState<Record<string, RomReadiness>>({});
+  const [readyReminderEnabled, setReadyReminderEnabled] = useState(true);
   const [chatMessages, setChatMessages] = useState<SekaiChatMessage[]>([]);
   const [currentIdentity, setCurrentIdentity] = useState<CurrentUser | null>(() => getCachedCurrentUser());
   const [lobbyMetadata, setLobbyMetadata] = useState<LobbyMetadata | null>(null);
@@ -457,12 +475,16 @@ export default function LobbyRoomPage({
   const generationSubmitRef = useRef(false);
   const [generationResetInFlight, setGenerationResetInFlight] = useState(false);
   const [launchInFlight, setLaunchInFlight] = useState(false);
+  const [launchLoadingKind, setLaunchLoadingKind] = useState<'single' | 'multi' | 'selection'>('single');
   const launchSubmitRef = useRef(false);
   const [addingSeedName, setAddingSeedName] = useState('');
   const [trackerVariantPrompt, setTrackerVariantPrompt] = useState<TrackerVariantPromptState | null>(null);
   const [launchChoicePrompt, setLaunchChoicePrompt] = useState<LaunchChoicePromptState | null>(null);
   const [error, setError] = useState('');
+  const [accessDeniedMessage, setAccessDeniedMessage] = useState('');
   const [presenceUsers, setPresenceUsers] = useState<SekaiChatPresenceUser[]>([]);
+  const [voiceState, setVoiceState] = useState<LobbyVoiceState>({ state: 'unavailable' });
+  const [voiceJoining, setVoiceJoining] = useState(false);
   const lastPresencePayload = useRef('');
   const lobbyLoadInFlight = useRef(false);
   const lastMetadataLoad = useRef(0);
@@ -482,6 +504,7 @@ export default function LobbyRoomPage({
   const readyPlayers = players.filter(p => p.readyState === 'ready').length;
   const missingConfigs = players.filter(p => p.seedConfigs.length === 0).length;
   const totalConfigs = players.reduce((sum, p) => sum + p.seedConfigs.length, 0);
+  const isCurrentUserHost = Boolean(currentUser.isHost);
 
   const filteredConfigs = availableSeedConfigs.filter(config =>
     config.game.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -491,6 +514,7 @@ export default function LobbyRoomPage({
   const launchAvailable = lobbyStatus === 'generated' || generationReady(generation);
   const canLaunch = launchAvailable && !launchInFlight && !launchChoicePrompt;
   const canGenerate =
+    isCurrentUserHost &&
     players.every(p => p.readyState === 'ready' && p.seedConfigs.length > 0) &&
     lobbyStatus === 'ready' &&
     !canLaunch &&
@@ -568,6 +592,43 @@ export default function LobbyRoomPage({
       setChatMessages((list) => [...list, localSystemMessage(content)].slice(-80));
     }
   }, [lobbyId]);
+
+  const loadVoiceState = useCallback(async () => {
+    if (!lobbyId) return;
+    try {
+      const response = await apiFetch(`/api/lobbies/${encodeURIComponent(lobbyId)}/voice`);
+      const data = await response.json().catch(() => ({}));
+      if (response.ok) setVoiceState({ state: data?.state || 'unavailable', voice: data?.voice || {} });
+    } catch (_err) {
+      setVoiceState((current) => ({ ...current, state: 'degraded' }));
+    }
+  }, [lobbyId]);
+
+  useEffect(() => {
+    void loadVoiceState();
+    const timer = window.setInterval(() => void loadVoiceState(), 5000);
+    return () => window.clearInterval(timer);
+  }, [loadVoiceState]);
+
+  const handleJoinVoice = async () => {
+    if (!lobbyId || voiceJoining) return;
+    setVoiceJoining(true);
+    try {
+      const response = await apiFetch(`/api/lobbies/${encodeURIComponent(lobbyId)}/voice`, { method: 'POST' });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        if (data?.error === 'discord_account_not_linked') throw new Error('Connect your Discord account to SekaiLink before joining voice.');
+        throw new Error(String(data?.detail || data?.error || 'Discord voice is unavailable.'));
+      }
+      const url = String(data?.channel_url || data?.voice?.channel_url || '');
+      await loadVoiceState();
+      if (url) await runtime.openExternal?.(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unable to join voice chat.');
+    } finally {
+      setVoiceJoining(false);
+    }
+  };
 
   const refreshAvailableSeedConfigs = useCallback(async (force = false) => {
     const seeds = await listSeeds(undefined, { force }).catch(() => []);
@@ -683,6 +744,9 @@ export default function LobbyRoomPage({
           seedConfigs,
         };
       }).filter((player) => player.id || player.username);
+      if (generationReady(generationResponse) && identity && nextPlayers.length > 0 && !currentPlayerFrom(nextPlayers, identity)) {
+        setAccessDeniedMessage('This generated sync does not include your account. Only participants can return to this room.');
+      }
       setPlayers(nextPlayers);
       if (Array.isArray(presence)) {
         setPresenceUsers(presence);
@@ -747,15 +811,54 @@ export default function LobbyRoomPage({
   }, [loadLobbyState]);
 
   useEffect(() => {
+    let cancelled = false;
+    Promise.resolve(runtime.configGet?.())
+      .then((config) => {
+        if (cancelled || !config || typeof config !== 'object') return;
+        const ui = (config as any)?.layout?.ui;
+        if (ui && typeof ui.ready_reminder_enabled === 'boolean') {
+          setReadyReminderEnabled(ui.ready_reminder_enabled);
+        }
+      })
+      .catch((err) => traceError('lobby-room', 'ready_reminder_config_failed', err));
+    return () => { cancelled = true; };
+  }, []);
+
+  useEffect(() => {
     if (!showSeedSelector) return;
     void refreshAvailableSeedConfigs(true);
   }, [refreshAvailableSeedConfigs, showSeedSelector]);
+
+  useEffect(() => {
+    if (!showSeedSelector || !availableSeedConfigs.length) return;
+    let cancelled = false;
+    const verify = async () => {
+      const byGame = new Map<string, Promise<RomReadiness>>();
+      const entries = await Promise.all(availableSeedConfigs.map(async (config) => {
+        const gameKey = canonicalSeedGameKey(config.game);
+        if (!byGame.has(gameKey)) byGame.set(gameKey, checkRomReadiness(config.game));
+        const readiness = await byGame.get(gameKey)!;
+        return [config.id, readiness] as const;
+      }));
+      if (!cancelled) setRomReadinessByConfig(Object.fromEntries(entries));
+    };
+    void verify().catch((err) => traceError('lobby-room', 'rom_verification_failed', err, { lobbyId }));
+    return () => { cancelled = true; };
+  }, [availableSeedConfigs, lobbyId, showSeedSelector]);
 
   const handleAddSeed = async (config: SeedConfig) => {
     if (!lobbyId || !config.id || addingSeedName) return;
     const label = String(config.configName || config.game || 'config').trim() || 'config';
     trace('lobby-room', 'add_seed_start', { lobbyId, seedId: config.id, game: config.game });
     try {
+      const romReadiness = romReadinessByConfig[config.id] || await checkRomReadiness(config.game);
+      setRomReadinessByConfig((current) => ({ ...current, [config.id]: romReadiness }));
+      if (romReadiness.blocksLobbyAdd) {
+        trace('lobby-room', 'add_seed_blocked_by_rom', {
+          lobbyId, seedId: config.id, game: config.game, romState: romReadiness.state,
+        });
+        return;
+      }
       const trackerVariant = await resolveTrackerVariantForConfig(config);
       if (trackerVariant === null) {
         trace('lobby-room', 'add_seed_tracker_variant_cancelled', { lobbyId, seedId: config.id, game: config.game });
@@ -1004,6 +1107,19 @@ export default function LobbyRoomPage({
     });
   }, []);
 
+  const resolveCurrentLaunchRoom = useCallback(async (seedGeneration?: LobbyGenerationStatus | null) => {
+    return await resolveLaunchRoomServer({
+      roomStatus: null,
+      generation: seedGeneration || null,
+      roomId: lobbyId,
+      host: resolveRoomServerHost(apiUrl),
+      fetchRoomStatus,
+      loadLatestGeneration,
+      onGenerationResolved: setGeneration,
+      launchRetries: 10,
+    });
+  }, [fetchRoomStatus, loadLatestGeneration, lobbyId]);
+
   const chooseLaunchConfig = useCallback((choices: LaunchChoice[]) => new Promise<LaunchChoice | null>((resolve) => {
     if (choices.length <= 1) {
       resolve(choices[0] || null);
@@ -1019,14 +1135,22 @@ export default function LobbyRoomPage({
   const handleLaunch = async () => {
     if (!lobbyId || launchSubmitRef.current) return;
     launchSubmitRef.current = true;
+    setLaunchLoadingKind('selection');
+    setLaunchInFlight(true);
     setError('');
     trace('lobby-room', 'launch_start', { lobbyId });
     try {
       const latestGeneration = generationReady(generation) ? generation : await loadLatestGeneration();
-      const roomUrl = String(latestGeneration?.room_url || latestGeneration?.room_server_url || latestGeneration?.response?.room_url || '');
-      const roomStatus = await fetchRoomStatus(roomUrl, 3);
-      const playersByName = indexPlayersByName(roomStatus?.players);
-      const downloads = indexDownloadsBySlot(roomStatus?.downloads, apiUrl);
+      const launchRoom = await resolveCurrentLaunchRoom(latestGeneration);
+      const resolvedGeneration = launchRoom.generation || latestGeneration;
+      const roomStatus = launchRoom.roomStatus;
+      if (!launchRoom.serverAddress || !roomStatus) {
+        setError('Room server is not ready yet.');
+        trace('lobby-room', 'launch_room_not_ready', { lobbyId }, 'warn');
+        return;
+      }
+      const playersByName = indexPlayersByName(roomStatus.players);
+      const downloads = indexDownloadsBySlot(roomStatus.downloads, apiUrl);
       const launchConfigs = currentUser.seedConfigs.length ? currentUser.seedConfigs : [{
         id: 'default-launch',
         game: '',
@@ -1051,6 +1175,9 @@ export default function LobbyRoomPage({
           downloadCount: selfLaunch.downloadUrls.length || (selfLaunch.downloadUrl ? 1 : 0),
         } satisfies LaunchChoice;
       });
+      if (choices.length > 1) {
+        setLaunchInFlight(false);
+      }
       const selectedChoice = await chooseLaunchConfig(choices);
       if (!selectedChoice) {
         trace('lobby-room', 'launch_cancelled_config_selection', { lobbyId });
@@ -1059,11 +1186,25 @@ export default function LobbyRoomPage({
       if (!selectedChoice.selfLaunch.matched || !selectedChoice.selfLaunch.playerName) {
         const gameLabel = selectedChoice.config.game || selectedChoice.config.configName || 'selected game';
         const message = `No generated Archipelago slot was found for ${gameLabel}. Regenerate the room or refresh the lobby before launching.`;
-        trace('lobby-room', 'launch_slot_match_failed', { lobbyId, game: selectedChoice.config.game, configId: selectedChoice.config.id }, 'warn');
+        trace('lobby-room', 'launch_slot_match_failed', {
+          lobbyId,
+          game: selectedChoice.config.game,
+          configId: selectedChoice.config.id,
+          roomPlayers: roomStatus.players,
+        }, 'warn');
         setError(message);
         return;
       }
-      const multiGameEntries = choices.filter((choice) => choice.selfLaunch.matched && choice.selfLaunch.playerName).map((choice) => ({
+      const matchedChoices = choices.filter((choice) => choice.selfLaunch.matched && choice.selfLaunch.playerName);
+      const playerAliasMap = Object.fromEntries(
+        (Array.isArray(roomStatus.launch_entries) ? roomStatus.launch_entries : [])
+          .map((entry) => {
+            const looseEntry = entry as { slot_name?: string; compat_player_name?: string; username?: string };
+            return [String(looseEntry.slot_name || looseEntry.compat_player_name || '').trim(), String(looseEntry.username || '').trim()];
+          })
+          .filter(([slotName, username]) => slotName && username)
+      );
+      const multiGameEntries = matchedChoices.map((choice) => ({
         id: choice.id,
         label: choice.selfLaunch.apGameName || choice.config.game || choice.config.configName || choice.id,
         configName: choice.config.configName,
@@ -1071,19 +1212,22 @@ export default function LobbyRoomPage({
         apGameName: choice.selfLaunch.apGameName || choice.config.game || '',
         slot: choice.selfLaunch.playerName || currentUser.username,
         playerAlias: currentUser.username,
+        playerAliasMap,
         trackerVariant: choice.config.trackerVariant || '',
       }));
+      setLaunchLoadingKind(matchedChoices.length > 1 ? 'multi' : 'single');
       setLaunchInFlight(true);
       const { selfLaunch } = selectedChoice;
       const launchResult = await executeRoomSessionLaunch({
         downloadUrls: selfLaunch.downloadUrls.length ? selfLaunch.downloadUrls : selfLaunch.downloadUrl,
         roomStatus,
-        generation: latestGeneration,
+        generation: resolvedGeneration,
         host: resolveRoomServerHost(apiUrl),
         fetchRoomStatus,
         loadLatestGeneration,
         playerName: selfLaunch.playerName || currentUser.username,
         playerAlias: currentUser.username,
+        playerAliasMap,
         apGameName: selfLaunch.apGameName,
         trackerVariant: selectedChoice.config.trackerVariant || '',
         playersByName,
@@ -1106,6 +1250,7 @@ export default function LobbyRoomPage({
     } finally {
       launchSubmitRef.current = false;
       setLaunchInFlight(false);
+      setLaunchLoadingKind('single');
     }
   };
 
@@ -1137,6 +1282,25 @@ export default function LobbyRoomPage({
     } catch (err) {
       traceError('lobby-room', 'leave_failed', err, { lobbyId });
       setError(err instanceof Error ? err.message : 'Unable to leave lobby.');
+    }
+  };
+
+  const handleCloseLobby = async () => {
+    if (!lobbyId || !isCurrentUserHost || closeLobbyInFlight) return;
+    setCloseLobbyInFlight(true);
+    trace('lobby-room', 'close_start', { lobbyId });
+    try {
+      const response = await apiFetch(`/api/lobbies/${encodeURIComponent(lobbyId)}/close`, { method: 'POST' });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(String((data as any)?.error || 'Unable to close lobby.'));
+      setShowCloseLobbyConfirm(false);
+      trace('lobby-room', 'close_success', { lobbyId });
+      onLeaveLobby?.();
+    } catch (err) {
+      traceError('lobby-room', 'close_failed', err, { lobbyId });
+      setError(err instanceof Error ? err.message : 'Unable to close lobby.');
+    } finally {
+      setCloseLobbyInFlight(false);
     }
   };
 
@@ -1307,16 +1471,24 @@ export default function LobbyRoomPage({
 
                     {/* Ready Toggle (only for current user) */}
                     {player.id === currentUser.id && (
-                      <button
-                        onClick={toggleCurrentReady}
-                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                          player.readyState === 'ready'
-                            ? 'bg-[#2a2b30] text-white hover:bg-[#3a3b40]'
-                            : 'bg-[#4ecdc4] text-[#14151a] hover:bg-[#95e1d3]'
-                        }`}
-                      >
-                        {player.readyState === 'ready' ? 'Unready' : 'Ready'}
-                      </button>
+                      <div className="relative">
+                        {readyReminderEnabled && player.seedConfigs.length > 0 && player.readyState !== 'ready' && (
+                          <div className="pointer-events-none absolute bottom-[calc(100%+12px)] right-0 z-20 animate-bounce whitespace-nowrap rounded-lg border border-[#4ecdc4]/70 bg-[#102421] px-3 py-2 text-xs font-bold text-[#95e1d3] shadow-[0_8px_24px_rgba(0,0,0,0.45)]">
+                            Click here to be ready
+                            <span className="absolute -bottom-1.5 right-5 h-3 w-3 rotate-45 border-b border-r border-[#4ecdc4]/70 bg-[#102421]" />
+                          </div>
+                        )}
+                        <button
+                          onClick={toggleCurrentReady}
+                          className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                            player.readyState === 'ready'
+                              ? 'bg-[#2a2b30] text-white hover:bg-[#3a3b40]'
+                              : 'bg-[#4ecdc4] text-[#14151a] hover:bg-[#95e1d3]'
+                          }`}
+                        >
+                          {player.readyState === 'ready' ? 'Unready' : 'Ready'}
+                        </button>
+                      </div>
                     )}
                   </div>
 
@@ -1450,6 +1622,26 @@ export default function LobbyRoomPage({
             )}
           </div>
 
+          <div className="p-4 border-b-2 border-[#2a2b30] bg-[#10151c]/90">
+            <div className="mb-3 flex items-center justify-between">
+              <h3 className="flex items-center gap-2 text-xs font-bold text-[#e6edf3]"><Headphones className="h-4 w-4 text-[#8fe8de]" />VOICE CHAT</h3>
+              <span className={`text-xs ${voiceState.state === 'available' ? 'text-[#8fe8de]' : voiceState.state === 'degraded' ? 'text-[#ff8b82]' : 'text-[#8e8f94]'}`}>{voiceState.state}</span>
+            </div>
+            {(voiceState.voice?.members || []).length > 0 && (
+              <div className="mb-3 flex flex-wrap gap-2">
+                {(voiceState.voice?.members || []).map((member) => (
+                  <div key={String(member.discord_id)} title={member.display_name || 'Discord member'} className="flex items-center gap-2 rounded-md border border-[#2a2b30] bg-[#1c1d22] px-2 py-1 text-xs">
+                    {member.avatar_url ? <img src={member.avatar_url} className="h-5 w-5 rounded-full" alt="" /> : <span className="h-5 w-5 rounded-full bg-[#327b75]" />}
+                    <span>{member.display_name || 'Player'}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+            <button onClick={() => void handleJoinVoice()} disabled={voiceJoining} className="flex w-full items-center justify-center gap-2 rounded-md border border-[#5865f2]/60 bg-[#5865f2]/15 px-3 py-2 text-sm font-semibold text-[#b8c0ff] hover:bg-[#5865f2]/25 disabled:opacity-50">
+              <Headphones className="h-4 w-4" />{voiceJoining ? 'Connecting...' : 'Join Voice'}
+            </button>
+          </div>
+
           {/* Chat */}
           <div className="flex-1 flex flex-col">
             <div className="p-4 border-b-2 border-[#2a2b30]">
@@ -1502,6 +1694,15 @@ export default function LobbyRoomPage({
 
           {/* Actions */}
           <div className="p-4 border-t-2 border-[#2a2b30] bg-[#14151a]/90 space-y-2">
+            {isCurrentUserHost && (
+              <button
+                onClick={() => void runtime.hostConsoleOpen?.(lobbyId)}
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-[#102b2a] hover:bg-[#163836] text-[#8fe8de] rounded-lg text-sm font-medium transition-colors border border-[#327b75]"
+              >
+                <SquareTerminal className="w-4 h-4" />
+                Host Console
+              </button>
+            )}
             <button
               onClick={() => setShowLobbySettings(true)}
               className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-[#2a2b30] hover:bg-[#3a3b40] rounded-lg text-sm font-medium transition-colors"
@@ -1509,6 +1710,16 @@ export default function LobbyRoomPage({
               <Settings className="w-4 h-4" />
               Lobby Settings
             </button>
+            {isCurrentUserHost && (
+              <button
+                onClick={() => setShowCloseLobbyConfirm(true)}
+                disabled={closeLobbyInFlight}
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-[#f85149]/10 hover:bg-[#f85149]/20 disabled:opacity-60 disabled:cursor-wait text-[#f85149] rounded-lg text-sm font-medium transition-colors border border-[#f85149]/30"
+              >
+                <Trash2 className="w-4 h-4" />
+                {closeLobbyInFlight ? 'Closing Lobby...' : 'Close Lobby'}
+              </button>
+            )}
             <button
               onClick={() => void handleLeaveLobby()}
               className="w-full px-4 py-2.5 bg-[#f85149]/10 hover:bg-[#f85149]/20 text-[#f85149] rounded-lg text-sm font-medium transition-colors border border-[#f85149]/30"
@@ -1605,7 +1816,7 @@ export default function LobbyRoomPage({
 
       {/* Seed Selector Modal */}
       {showSeedSelector && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-8">
+        <div className="fixed left-0 right-0 bottom-0 top-[32px] bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-8">
           <div className="w-full max-w-3xl bg-[#161b22] rounded-xl shadow-2xl border-2 border-[#4ecdc4] card-float overflow-hidden">
             {/* Modal Header */}
             <div className="p-6 border-b-2 border-[#2a2b30] bg-gradient-to-r from-[#1c1d22] to-[#161b22] flex items-center justify-between">
@@ -1642,38 +1853,61 @@ export default function LobbyRoomPage({
 
             {/* Seed Configs List */}
             <div className="p-4 max-h-[500px] overflow-y-auto space-y-2">
-              {filteredConfigs.map((config) => (
-                <button
-                  key={config.id}
-                  onClick={() => void handleAddSeed(config)}
-                  disabled={Boolean(addingSeedName)}
-                  className={`w-full p-4 bg-[#1c1d22] border-2 border-[#2a2b30] rounded-lg hover:border-[#4ecdc4] transition-all text-left group ${
-                    addingSeedName ? 'opacity-70 cursor-wait' : ''
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="font-bold">{config.game}</span>
-                        <span className={`px-2 py-0.5 rounded text-xs font-bold ${
-                          config.source === 'easy' ? 'bg-[#4ecdc4]/20 text-[#4ecdc4]' : 'bg-[#aa96da]/20 text-[#aa96da]'
-                        }`}>
-                          {config.source.toUpperCase()}
-                        </span>
-                        <span className={`px-2 py-0.5 rounded text-xs font-bold ${
-                          config.status === 'valid' ? 'bg-[#4ecdc4]/20 text-[#4ecdc4]' :
-                          config.status === 'draft' ? 'bg-[#f69d50]/20 text-[#f69d50]' :
-                          'bg-[#f85149]/20 text-[#f85149]'
-                        }`}>
-                          {config.status.toUpperCase()}
-                        </span>
+              {filteredConfigs.map((config) => {
+                const rom = romReadinessByConfig[config.id];
+                const romBlocked = Boolean(rom?.blocksLobbyAdd);
+                return (
+                  <div key={config.id} className={`rounded-lg border-2 bg-[#1c1d22] ${romBlocked ? 'border-[#f69d50]/60' : 'border-[#2a2b30]'}`}>
+                    <button
+                      type="button"
+                      onClick={() => void handleAddSeed(config)}
+                      disabled={Boolean(addingSeedName) || romBlocked}
+                      className={`group w-full p-4 text-left transition-all ${
+                        addingSeedName ? 'cursor-wait opacity-70' : romBlocked ? 'cursor-not-allowed' : 'hover:bg-[#25272d]'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-4">
+                        <div className="min-w-0 flex-1">
+                          <div className="mb-1 flex flex-wrap items-center gap-2">
+                            <span className="font-bold">{config.game}</span>
+                            <span className={`rounded px-2 py-0.5 text-xs font-bold ${config.source === 'easy' ? 'bg-[#4ecdc4]/20 text-[#4ecdc4]' : 'bg-[#aa96da]/20 text-[#aa96da]'}`}>
+                              {config.source.toUpperCase()}
+                            </span>
+                            <span className={`rounded px-2 py-0.5 text-xs font-bold ${
+                              config.status === 'valid' ? 'bg-[#4ecdc4]/20 text-[#4ecdc4]' :
+                              config.status === 'draft' ? 'bg-[#f69d50]/20 text-[#f69d50]' : 'bg-[#f85149]/20 text-[#f85149]'
+                            }`}>
+                              {config.status.toUpperCase()}
+                            </span>
+                            <span className={`rounded px-2 py-0.5 text-xs font-bold ${
+                              !rom ? 'bg-[#2a2b30] text-[#8e8f94]' :
+                              romBlocked ? 'bg-[#f69d50]/20 text-[#f69d50]' : 'bg-[#4ecdc4]/20 text-[#4ecdc4]'
+                            }`}>
+                              {!rom ? 'CHECKING ROM' : rom.state === 'not-required' ? 'NO ROM REQUIRED' : rom.state === 'verified' ? 'ROM VERIFIED' : rom.state === 'unknown' ? 'ROM UNKNOWN' : 'ROM REQUIRED'}
+                            </span>
+                          </div>
+                          <div className="truncate text-sm text-[#8e8f94]">{config.configName}</div>
+                        </div>
+                        <Plus className={`h-5 w-5 shrink-0 transition-colors ${romBlocked ? 'text-[#5f646d]' : 'text-[#8e8f94] group-hover:text-[#4ecdc4]'}`} />
                       </div>
-                      <div className="text-sm text-[#8e8f94]">{config.configName}</div>
-                    </div>
-                    <Plus className="w-5 h-5 text-[#8e8f94] group-hover:text-[#4ecdc4] transition-colors" />
+                    </button>
+                    {romBlocked && (
+                      <div className="flex items-center justify-between gap-4 border-t border-[#f69d50]/25 px-4 py-3">
+                        <div className="text-xs text-[#f6c58e]">{rom.message} Import and validate it before adding this config.</div>
+                        {onOpenRomImport && (
+                          <button
+                            type="button"
+                            onClick={() => onOpenRomImport(rom.importGameId)}
+                            className="shrink-0 rounded-lg bg-[#f69d50] px-3 py-2 text-xs font-bold text-[#160d03] hover:bg-[#ffb36f]"
+                          >
+                            Import ROM
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </div>
-                </button>
-              ))}
+                );
+              })}
               {filteredConfigs.length === 0 && (
                 <div className="text-center py-12 text-[#8e8f94]">
                   No seed configs found
@@ -1695,7 +1929,7 @@ export default function LobbyRoomPage({
       )}
 
       {launchChoicePrompt && (
-        <div className="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center z-[70] p-8">
+        <div className="fixed left-0 right-0 bottom-0 top-[32px] bg-black/85 backdrop-blur-sm flex items-center justify-center z-[70] p-8">
           <div className="w-full max-w-2xl bg-[#161b22] rounded-xl shadow-2xl border-2 border-[#4ecdc4] card-float overflow-hidden">
             <div className="p-6 border-b-2 border-[#2a2b30] bg-gradient-to-r from-[#1c1d22] to-[#161b22] flex items-center justify-between">
               <div>
@@ -1704,10 +1938,12 @@ export default function LobbyRoomPage({
               </div>
               <button
                 onClick={() => {
+                  if (launchInFlight) return;
                   launchChoicePrompt.resolve(null);
                   setLaunchChoicePrompt(null);
                 }}
-                className="w-10 h-10 rounded-lg bg-[#2a2b30] hover:bg-[#f85149] transition-colors flex items-center justify-center group"
+                disabled={launchInFlight}
+                className="w-10 h-10 rounded-lg bg-[#2a2b30] hover:bg-[#f85149] disabled:opacity-60 disabled:cursor-wait transition-colors flex items-center justify-center group"
               >
                 <X className="w-5 h-5 text-[#8e8f94] group-hover:text-white" />
               </button>
@@ -1721,7 +1957,11 @@ export default function LobbyRoomPage({
                 return (
                   <button
                     key={choice.id}
-                    onClick={() => setLaunchChoicePrompt((current) => current ? { ...current, selectedId: choice.id } : current)}
+                    onClick={() => {
+                      if (launchInFlight) return;
+                      setLaunchChoicePrompt((current) => current ? { ...current, selectedId: choice.id } : current);
+                    }}
+                    disabled={launchInFlight}
                     className={`w-full p-4 rounded-lg border-2 text-left transition-all ${
                       selected
                         ? 'border-[#4ecdc4] bg-[#4ecdc4]/10 shadow-[0_0_18px_rgba(78,205,196,0.18)]'
@@ -1760,22 +2000,28 @@ export default function LobbyRoomPage({
             <div className="p-4 border-t-2 border-[#2a2b30] bg-[#14151a]/90 flex gap-3">
               <button
                 onClick={() => {
+                  if (launchInFlight) return;
                   launchChoicePrompt.resolve(null);
                   setLaunchChoicePrompt(null);
                 }}
-                className="flex-1 py-3 bg-[#2a2b30] hover:bg-[#3a3b40] rounded-lg font-medium transition-colors"
+                disabled={launchInFlight}
+                className="flex-1 py-3 bg-[#2a2b30] hover:bg-[#3a3b40] disabled:opacity-60 disabled:cursor-wait rounded-lg font-medium transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={() => {
+                  if (launchInFlight) return;
                   const selected = launchChoicePrompt.choices.find((choice) => choice.id === launchChoicePrompt.selectedId) || launchChoicePrompt.choices[0] || null;
+                  setLaunchLoadingKind(launchChoicePrompt.choices.length > 1 ? 'multi' : 'single');
+                  setLaunchInFlight(true);
                   launchChoicePrompt.resolve(selected);
                   setLaunchChoicePrompt(null);
                 }}
-                className="flex-1 py-3 bg-gradient-to-r from-[#ff6b35] to-[#f38181] text-white rounded-lg font-bold shadow-lg hover:shadow-xl transition-all"
+                disabled={launchInFlight}
+                className="flex-1 py-3 bg-gradient-to-r from-[#ff6b35] to-[#f38181] text-white rounded-lg font-bold shadow-lg hover:shadow-xl disabled:opacity-70 disabled:cursor-wait transition-all"
               >
-                Launch Selected
+                {launchInFlight ? 'Launching...' : 'Launch Selected'}
               </button>
             </div>
           </div>
@@ -1783,7 +2029,7 @@ export default function LobbyRoomPage({
       )}
 
       {trackerVariantPrompt && (
-        <div className="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center z-[70] p-8">
+        <div className="fixed left-0 right-0 bottom-0 top-[32px] bg-black/85 backdrop-blur-sm flex items-center justify-center z-[70] p-8">
           <div className="w-full max-w-xl bg-[#161b22] rounded-xl shadow-2xl border-2 border-[#4ecdc4] card-float overflow-hidden">
             <div className="p-6 border-b-2 border-[#2a2b30] bg-gradient-to-r from-[#1c1d22] to-[#161b22] flex items-center justify-between">
               <div>
@@ -1884,7 +2130,44 @@ export default function LobbyRoomPage({
         />
       )}
 
-      {((lobbyStatus === 'generating' || lobbyStatus === 'error' || generationRunning(generation) || generationFailed(generation) || generationPhase === 'error' || canLaunch)) && !generationModalDismissed && (
+      {showCloseLobbyConfirm && isCurrentUserHost && (
+        <div className="fixed left-0 right-0 bottom-0 top-[32px] z-[85] flex items-center justify-center bg-black/80 backdrop-blur-sm p-8">
+          <div className="w-full max-w-md bg-[#161b22] rounded-lg border-2 border-[#f85149] shadow-2xl overflow-hidden">
+            <div className="p-5 border-b-2 border-[#2a2b30] flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-[#f85149]/15 border border-[#f85149]/40 flex items-center justify-center">
+                <AlertCircle className="w-5 h-5 text-[#f85149]" />
+              </div>
+              <div>
+                <h2 className="font-bold text-lg">Close Lobby</h2>
+                <p className="text-xs text-[#f85149] mt-0.5">HOST ACTION</p>
+              </div>
+            </div>
+            <div className="p-6">
+              <p className="text-sm text-[#e6edf3] leading-relaxed">
+                Closing this lobby will stop its room server and disconnect every player. This cannot be undone.
+              </p>
+              <div className="mt-6 flex gap-3">
+                <button
+                  onClick={() => setShowCloseLobbyConfirm(false)}
+                  disabled={closeLobbyInFlight}
+                  className="flex-1 py-3 bg-[#2a2b30] hover:bg-[#3a3b40] disabled:opacity-60 rounded-lg font-medium transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => void handleCloseLobby()}
+                  disabled={closeLobbyInFlight}
+                  className="flex-1 py-3 bg-[#f85149] hover:bg-[#ff6b63] disabled:opacity-60 disabled:cursor-wait text-white rounded-lg font-bold transition-colors"
+                >
+                  {closeLobbyInFlight ? 'Closing...' : 'Close Lobby'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {((lobbyStatus === 'generating' || lobbyStatus === 'error' || generationRunning(generation) || generationFailed(generation) || generationPhase === 'error')) && !generationModalDismissed && (
         <GenerationProgressModal
           generation={generation}
           status={lobbyStatus}
@@ -1906,8 +2189,20 @@ export default function LobbyRoomPage({
 
       {launchInFlight && (
         <LoadingModal
-          title="Launching game"
-          message="Launching game, brace yourself..."
+          title={launchLoadingKind === 'selection' ? 'Preparing Launch' : launchLoadingKind === 'multi' ? 'Loading Gamelist' : 'Loading game'}
+          message={launchLoadingKind === 'selection' ? 'Checking generated game choices...' : launchLoadingKind === 'multi' ? 'Preparing your generated games...' : 'Launching game, brace yourself...'}
+        />
+      )}
+
+      {accessDeniedMessage && (
+        <ErrorModal
+          title="Lobby access denied"
+          message={accessDeniedMessage}
+          code="LOBBY_ACCESS_DENIED"
+          onClose={() => {
+            setAccessDeniedMessage('');
+            onLeaveLobby?.();
+          }}
         />
       )}
 
@@ -1970,7 +2265,7 @@ function GenerationProgressModal({
   ];
 
   return (
-    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/75 backdrop-blur-sm p-8">
+    <div className="fixed left-0 right-0 bottom-0 top-[32px] z-[70] flex items-center justify-center bg-black/75 backdrop-blur-sm p-8">
       <div className="w-full max-w-xl bg-[#161b22] border-2 border-[#4ecdc4] rounded-xl shadow-2xl card-float overflow-hidden">
         <div className="p-6 border-b-2 border-[#2a2b30] bg-gradient-to-r from-[#1c1d22] to-[#161b22]">
           <div className="flex items-start justify-between gap-4">

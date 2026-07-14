@@ -45,6 +45,20 @@ bool ContainsOrdered(const std::string& text, std::initializer_list<std::string>
 }
 
 std::string ShellQuote(const std::string& value) {
+#if defined(_WIN32)
+    std::string out = "\"";
+    for (const char ch : value) {
+        if (ch == '"') {
+            out += "\\\"";
+        } else if (ch == '%') {
+            out += "%%";
+        } else {
+            out.push_back(ch);
+        }
+    }
+    out.push_back('"');
+    return out;
+#else
     std::string out = "'";
     for (const char ch : value) {
         if (ch == '\'') {
@@ -55,6 +69,7 @@ std::string ShellQuote(const std::string& value) {
     }
     out.push_back('\'');
     return out;
+#endif
 }
 
 std::string LuaString(const std::string& value) {
@@ -235,7 +250,7 @@ int main() {
         return EXIT_FAILURE;
     }
     const auto logic_runs_after_autotab_publish = Slurp(logic_runs_path);
-    if (logic_runs_after_autotab_publish != "run\n") {
+    if (logic_runs_after_autotab_publish != "run\n" && logic_runs_after_autotab_publish != "run\r\n") {
         std::cerr << "tracker_autotab_logic_runner_invalid\n";
         return EXIT_FAILURE;
     }
@@ -360,6 +375,7 @@ int main() {
         return EXIT_FAILURE;
     }
 
+#ifndef _WIN32
     const auto zip_path = root / "bundle.zip";
     const auto zip_command =
         "cd " + ShellQuote(root.string()) + " && zip -qr " + ShellQuote(zip_path.filename().string()) + " bundle";
@@ -395,6 +411,7 @@ int main() {
         std::cerr << "tracker_zip_snapshot_invalid\n";
         return EXIT_FAILURE;
     }
+#endif
 
     const auto autosave = Slurp(root / "tracker.autosave.state");
     if (!Contains(autosave, "meta|slot_id|Demo Slot\n") ||

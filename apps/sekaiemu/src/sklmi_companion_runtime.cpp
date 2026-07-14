@@ -76,6 +76,10 @@ std::vector<std::string> BuildRuntimeArguments(const SklmiCompanionOptions& opti
       arguments.push_back("--player-alias");
       arguments.push_back(options.player_alias);
     }
+    if (!options.player_alias_map_json.empty()) {
+      arguments.push_back("--player-alias-map");
+      arguments.push_back(options.player_alias_map_json);
+    }
   } else {
     arguments.push_back("offline");
   }
@@ -193,6 +197,8 @@ bool SklmiCompanionRuntime::Start(const SklmiCompanionOptions& options,
     error = "Could not create SKLMI runtime state directory.";
     return false;
   }
+  std::filesystem::remove(trace_log_path_, ec);
+  ec.clear();
 
 #ifdef _WIN32
   const auto arguments = BuildRuntimeArguments(options,
@@ -301,6 +307,10 @@ bool SklmiCompanionRuntime::Start(const SklmiCompanionOptions& options,
       if (!options.player_alias.empty()) {
         arguments.push_back("--player-alias");
         arguments.push_back(options.player_alias);
+      }
+      if (!options.player_alias_map_json.empty()) {
+        arguments.push_back("--player-alias-map");
+        arguments.push_back(options.player_alias_map_json);
       }
       if (!options.tracker_pack_path.empty()) {
         arguments.push_back("--tracker-pack");

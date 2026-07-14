@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import urllib.error
 import urllib.request
@@ -36,10 +37,17 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="POST generated seed-config import JSON files into Nexus.")
     parser.add_argument("--input-dir", type=Path, default=DEFAULT_INPUT_DIR)
     parser.add_argument("--base-url", required=True, help="Seed-config API base URL, for example http://127.0.0.1:19106")
-    parser.add_argument("--admin-token", required=True)
+    parser.add_argument(
+        "--admin-token",
+        default=os.environ.get("NEXUS_SEED_CONFIG_ADMIN_TOKEN", ""),
+        help="Admin token. Prefer NEXUS_SEED_CONFIG_ADMIN_TOKEN so the secret is not exposed in process arguments.",
+    )
     parser.add_argument("--game-key", action="append", default=[], help="Only import selected game_key values. Can be repeated.")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
+
+    if not args.admin_token:
+        parser.error("--admin-token or NEXUS_SEED_CONFIG_ADMIN_TOKEN is required")
 
     selected = set(args.game_key)
     files = sorted(args.input_dir.glob("*.import.json"))

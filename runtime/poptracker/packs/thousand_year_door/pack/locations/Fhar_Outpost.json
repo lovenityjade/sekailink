@@ -1,0 +1,44 @@
+[
+    {
+        "name": "Path to Fahr Outpost",
+        "children": [
+            {"sections": [{"ref": "Magical Map/Fahr Outpost/Fahr Outpost Entrance - Double Dip P"}],
+                "map_locations": [{"map": "Fahr Outpost", "x": 338, "y": 144}]},
+            {"sections": [{"ref": "Magical Map/Fahr Outpost/Fahr Outpost Entrance - Star Piece"}],
+                "map_locations": [{"map": "Fahr Outpost", "x": 193, "y": 76}]},
+            {"sections": [{"ref": "Magical Map/Fahr Outpost/Fahr Outpost West Enemy Room - Shine Sprite"}],
+                "map_locations": [{"map": "Fahr Outpost", "x": 405, "y": 250}]},
+            {"sections": [{"ref": "Magical Map/Fahr Outpost/Fahr Outpost West Enemy Room - Star Piece"}],
+                "map_locations": [{"map": "Fahr Outpost", "x": 507, "y": 342}]},
+            {"sections": [{"ref": "Magical Map/Fahr Outpost/Fahr Outpost East Enemy Room - HP Plus P"}],
+                "map_locations": [{"map": "Fahr Outpost", "x": 904, "y": 530}]},
+            {"sections": [{"ref": "Magical Map/Fahr Outpost/Fahr Outpost East Enemy Room - Star Piece"}],
+                "map_locations": [{"map": "Fahr Outpost", "x": 922, "y": 629}]}
+        ]
+    },
+    {
+        "name": "Fahr Outpost",
+        "children": [
+            {"sections": [{"ref": "Magical Map/Fahr Outpost/Fahr Outpost Town Outskirts - Star Piece"}],
+                "map_locations": [{"map": "Fahr Outpost", "x": 972, "y": 780}]},
+            {"sections": [{"ref": "Magical Map/Fahr Outpost/Fahr Outpost Town - Inn Coupon"}],
+                "map_locations": [{"map": "Fahr Outpost", "x": 1370, "y": 867}]},
+            {"sections": [{"ref": "Magical Map/Fahr Outpost/Fahr Outpost Town - Shine Sprite"}],
+                "map_locations": [{"map": "Fahr Outpost", "x": 1512, "y": 974}]},
+            {"sections": [{"ref": "Magical Map/Fahr Outpost/Fahr Outpost Town - Space Food"}],
+                "map_locations": [{"map": "Fahr Outpost", "x": 1361, "y": 796}]},
+            {"sections": [{"ref": "Magical Map/Fahr Outpost/Fahr Outpost Town - Star Piece 1"}],
+                "map_locations": [{"map": "Fahr Outpost", "x": 1374, "y": 940}]},
+            {"sections": [{"ref": "Magical Map/Fahr Outpost/Fahr Outpost Town - Star Piece 2"}],
+                "map_locations": [{"map": "Fahr Outpost", "x": 1508, "y": 908}]},
+            {"name": "Fahr Outpost - Northwinds Mart",
+                "sections": [{"name": "Shooting Star Purchase", "ref": "Magical Map/Fahr Outpost - Northwinds Mart/Shooting Star Purchase"},
+                    {"name": "Ice Storm Purchase", "ref": "Magical Map/Fahr Outpost - Northwinds Mart/Ice Storm Purchase"},
+                    {"name": "Ruin Powder Purchase", "ref": "Magical Map/Fahr Outpost - Northwinds Mart/Ruin Powder Purchase"},
+                    {"name": "Stopwatch Purchase", "ref": "Magical Map/Fahr Outpost - Northwinds Mart/Stopwatch Purchase"},
+                    {"name": "Maple Syrup Purchase", "ref": "Magical Map/Fahr Outpost - Northwinds Mart/Maple Syrup Purchase"},
+                    {"name": "Super Shroom Purchase", "ref": "Magical Map/Fahr Outpost - Northwinds Mart/Super Shroom Purchase"}],
+                "map_locations": [{"map": "Fahr Outpost", "x": 1484, "y": 842}]}
+        ]
+    }
+]

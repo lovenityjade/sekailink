@@ -1,0 +1,502 @@
+﻿{
+	"tracker_broadcast": {
+		"type": "dock",
+		"dropshadow": true,
+		"background": "#111",
+		"content": [{
+			"type": "dock",
+			"dock": "left",
+			"v_alignment": "stretch",
+			"margin": "0,0,0,0",
+			"content": [
+				{
+					"type": "array",
+					"orientation": "vertical",
+					"content": [
+						{
+							"type": "array",
+							"orientation": "horizontal",
+							"content": [
+								{
+									"type": "array",
+									"orientation": "horizontal",
+									"margin": "5, 5, -15, 5",
+									"content": [{
+										"type": "itemgrid",
+										"item_size": 32,
+										"item_margin": "1, 1",
+										"h_alignment": "center",
+										"rows": [
+											["sword1", "biggoron_sword"],
+											["bestweapon", "shield"],
+											["bombs", "bombchus"],
+											["bracelet", "boomerang1"],
+											["satchel", "slingshot1"],
+											["shooter", "glove"],
+											["flute_generic", "flippers"],
+											["cuccodex", "lonlonegg"],
+											["fish", "megaphone"],
+											["rupees", "orechunks"]
+										]
+									}]
+								},
+								{
+									"type": "array",
+									"orientation": "vertical",
+									"content": [
+										{
+											"type": "array",
+											"orientation": "horizontal",
+											"v_alignment": "top",
+											"margin": "5,5,0,0",
+											"content": [{
+												"type": "itemgrid",
+												"item_size": 32,
+												"item_margin": "1, 1",
+												"h_alignment": "center",
+												"rows": [
+													["feather", "shovel"],
+													["hook", "somaria"],
+													["summer", "fall"],
+													["spring", "winter"]
+												]
+											}]
+										},
+										{
+											"type": "itemgrid",
+											"item_size": 32,
+											"margin": "10, 0, 0, 0",
+											"item_margin": "1, -6",
+											"h_alignment": "center",
+											"rows": [
+												["emberseeds", "mysteryseeds"],
+												["scentseeds"],
+												["pegasusseeds", "galeseeds"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"item_size": 32,
+											"margin": "10,5,0,0",
+											"item_margin": "1, 1",
+											"h_alignment": "center",
+											"rows": [
+												["jewels", "blueredore"],
+												["ghastlydoll", "ironpot"],
+												["mushroom", "woodenbird"],
+												["ring_fist", "ring_heart"]
+											]
+										}
+									]
+								},
+								{
+									"type": "itemgrid",
+									"margin": "-5, 12, 5, 5",
+									"item_size": 32,
+									"item_margin": "1, 1",
+									"rows": [
+										["gnarledkey", "bombflower"],
+										["floodkey", "ribbon"],
+										["dragonkey", "starore"],
+										["memberscard", "gashaseeds"],
+										["plaque", "companion"],
+										["banana", "hardore"],
+										["rustybell", "polishedbell"],
+										["lavasoup", "goronvase"],
+										["enginegrease", "phonograph"],
+										["ring_energy", "ring_swimmer"]
+									]
+								}
+							]
+						},
+						{
+							"type": "array",
+							"orientation": "horizontal",
+							"v_alignment": "center",
+							"margin": "5, -10, 5, -15",
+							"content": [
+								{
+									"type": "array",
+									"orientation": "vertical",
+									"margin": "1, 3",
+									"content": [
+										{
+											"type": "itemgrid",
+											"margin": "10,0,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 32,
+											"rows": [
+												["d0_short"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "5,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												["d0sk", "d0_master_key"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "13,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												[""]
+											]
+										}
+									]
+								},
+								{
+									"type": "array",
+									"orientation": "vertical",
+									"margin": "1, 3",
+									"content": [
+										{
+											"type": "itemgrid",
+											"margin": "10,0,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 32,
+											"rows": [
+												["lc_short"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "5,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												["lcsk", "lc_master_key"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "13,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												[""]
+											]
+										}
+									]
+								},
+								{
+									"type": "array",
+									"orientation": "vertical",
+									"margin": "1, 3",
+									"content": [
+										{
+											"type": "itemgrid",
+											"margin": "10,0,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 32,
+											"rows": [
+												["d1"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "5,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												["d1sk", "d1_master_key"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "13,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												["d1bk"]
+											]
+										}
+									]
+								},
+								{
+									"type": "array",
+									"orientation": "vertical",
+									"margin": "1, 3",
+									"content": [
+										{
+											"type": "itemgrid",
+											"margin": "10,0,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 32,
+											"rows": [
+												["d2"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "5,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												["d2sk", "d2_master_key"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "13,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												["d2bk"]
+											]
+										}
+									]
+								},
+								{
+									"type": "array",
+									"orientation": "vertical",
+									"margin": "1, 3",
+									"content": [
+										{
+											"type": "itemgrid",
+											"margin": "10,0,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 32,
+											"rows": [
+												["d3"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "5,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												["d3sk", "d3_master_key"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "13,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												["d3bk"]
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"type": "array",
+							"orientation": "horizontal",
+							"v_alignment": "center",
+							"content": [
+								{
+									"type": "array",
+									"orientation": "vertical",
+									"margin": "1, 3",
+									"content": [
+										{
+											"type": "itemgrid",
+											"margin": "10,0,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 32,
+											"rows": [
+												["d4"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "5,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												["d4sk", "d4_master_key"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "13,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												["d4bk"]
+											]
+										}
+									]
+								},
+								{
+									"type": "array",
+									"orientation": "vertical",
+									"margin": "1, 3",
+									"content": [
+										{
+											"type": "itemgrid",
+											"margin": "10,0,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 32,
+											"rows": [
+												["d5"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "5,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												["d5sk", "d5_master_key"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "13,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												["d5bk"]
+											]
+										}
+									]
+								},
+								{
+									"type": "array",
+									"orientation": "vertical",
+									"margin": "1, 3",
+									"content": [
+										{
+											"type": "itemgrid",
+											"margin": "10,0,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 32,
+											"rows": [
+												["d6"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "5,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												["d6sk", "d6_master_key"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "13,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												["d6bk"]
+											]
+										}
+									]
+								},
+								{
+									"type": "array",
+									"orientation": "vertical",
+									"margin": "1, 3",
+									"content": [
+										{
+											"type": "itemgrid",
+											"margin": "10,0,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 32,
+											"rows": [
+												["d7"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "5,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												["d7sk", "d7_master_key"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "13,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												["d7bk"]
+											]
+										}
+									]
+								},
+								{
+									"type": "array",
+									"orientation": "vertical",
+									"margin": "1, 3",
+									"content": [
+										{
+											"type": "itemgrid",
+											"margin": "10,0,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 32,
+											"rows": [
+												["d8"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "5,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												["d8sk", "d8_master_key"]
+											]
+										},
+										{
+											"type": "itemgrid",
+											"margin": "13,-10,2,5",
+											"item_v_alignment": "center",
+											"item_margin": "-4, 2",
+											"item_size": 24,
+											"rows": [
+												["d8bk"]
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		}]
+	}
+}

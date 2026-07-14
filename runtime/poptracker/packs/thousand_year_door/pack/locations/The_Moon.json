@@ -1,0 +1,19 @@
+[
+    {
+    "name":  "The Moon",
+    "children": [
+        {"sections": [{"ref": "Magical Map/The Moon/Moon Landing Site - Stopwatch"}],
+            "map_locations": [{"map": "The Moon", "x": 560, "y": 646}]},
+        {"sections": [{"ref": "Magical Map/The Moon/Moon Fortress View - Power Punch"}],
+            "map_locations": [{"map": "The Moon", "x": 1239, "y": 299}]},
+        {"sections": [{"ref": "Magical Map/The Moon/Moon Fortress View - Star Piece"}],
+            "map_locations": [{"map": "The Moon", "x": 1228, "y": 178}]},
+        {"sections": [{"ref": "Magical Map/The Moon/Moon East Room 1 - Volt Shroom"}],
+            "map_locations": [{"map": "The Moon", "x": 918, "y": 777}]},
+        {"sections": [{"ref": "Magical Map/The Moon/Moon West Room 1 - Courage Shell"}],
+            "map_locations": [{"map": "The Moon", "x": 392, "y": 450}]},
+        {"sections": [{"ref": "Magical Map/The Moon/Moon West Room 2 - Ruin Powder"}],
+            "map_locations": [{"map": "The Moon", "x": 928, "y": 248}]}
+    ]
+    }
+]

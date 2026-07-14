@@ -5,6 +5,12 @@
 
 namespace sekaiemu::spike {
 
+namespace {
+
+constexpr int kClientCoreTitlebarHeight = 34;
+
+}  // namespace
+
 bool IsOpenGlLike(retro_hw_context_type type) {
   switch (type) {
     case RETRO_HW_CONTEXT_OPENGL:
@@ -31,18 +37,20 @@ GlViewportRect ComputeGameViewport(int window_width,
   if (reserve_sidebar) {
     available_width = std::max(1, available_width - static_cast<int>(sidebar_width));
   }
+  const int content_top = kClientCoreTitlebarHeight;
+  const int available_height = std::max(1, window_height - content_top);
 
   const double source_aspect =
       static_cast<double>(geometry.width) / static_cast<double>(geometry.height);
   int target_width = available_width;
   int target_height = static_cast<int>(target_width / source_aspect);
-  if (target_height > window_height) {
-    target_height = window_height;
+  if (target_height > available_height) {
+    target_height = available_height;
     target_width = static_cast<int>(target_height * source_aspect);
   }
 
   const int target_x = (available_width - target_width) / 2;
-  const int target_y = (window_height - target_height) / 2;
+  const int target_y = (available_height - target_height) / 2;
   return {target_x, target_y, std::max(1, target_width), std::max(1, target_height)};
 }
 

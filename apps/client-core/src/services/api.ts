@@ -12,6 +12,8 @@ export const WEB_AUTH_SESSION_KEY = "sekailink_session";
 export const DEVICE_ID_KEY = "skl_device_id";
 const SESSION_FALLBACK_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 let desktopTokenMemory = "";
+let desktopAuthHydrated = false;
+let desktopAuthHydratePromise: Promise<void> | null = null;
 
 const logApiTrace = (payload: Record<string, unknown>) => {
   try {
@@ -40,6 +42,89 @@ let currentUserCache: {
   expiresAt: number;
   inFlight?: Promise<CurrentUser>;
 } = { expiresAt: 0 };
+
+const readStoredTokenUnsafe = () => {
+  try {
+    return (
+      desktopTokenMemory ||
+      window.localStorage.getItem(DESKTOP_TOKEN_KEY) ||
+      window.localStorage.getItem(WEB_AUTH_TOKEN_KEY) ||
+      ""
+    );
+  } catch {
+    return desktopTokenMemory || "";
+  }
+};
+
+const clearLocalAuthCache = () => {
+  desktopTokenMemory = "";
+  try {
+    window.localStorage.removeItem(DESKTOP_TOKEN_KEY);
+    window.localStorage.removeItem(WEB_AUTH_TOKEN_KEY);
+    window.localStorage.removeItem(WEB_AUTH_USER_KEY);
+    window.localStorage.removeItem(WEB_AUTH_SESSION_KEY);
+  } catch {
+    // Ignore storage errors.
+  }
+};
+
+const persistDesktopAuthSession = (payload: { token?: string; user?: unknown; session?: unknown } | null) => {
+  const bridge = typeof window !== "undefined" ? window.sekailink : undefined;
+  if (!bridge?.authSetDesktopSession) return;
+  try {
+    void bridge.authSetDesktopSession(payload && payload.token ? { ...payload, updated_at: new Date().toISOString() } : null);
+  } catch {
+    // Ignore main-process persistence errors; localStorage remains a fallback.
+  }
+};
+
+export const hydrateDesktopAuthSession = async () => {
+  if (desktopAuthHydrated) return;
+  if (desktopAuthHydratePromise) return desktopAuthHydratePromise;
+  desktopAuthHydratePromise = (async () => {
+    const bridge = typeof window !== "undefined" ? window.sekailink : undefined;
+    if (!bridge?.authGetDesktopSession) {
+      desktopAuthHydrated = true;
+      return;
+    }
+    const localToken = readStoredTokenUnsafe();
+    try {
+      const result = await bridge.authGetDesktopSession();
+      const session = result?.ok && result.session && typeof result.session === "object" ? result.session : null;
+      const mainToken = String(session?.token || "").trim();
+      if (mainToken) {
+        desktopTokenMemory = mainToken;
+        try {
+          window.localStorage.setItem(DESKTOP_TOKEN_KEY, mainToken);
+          window.localStorage.setItem(WEB_AUTH_TOKEN_KEY, mainToken);
+          if (session?.user) window.localStorage.setItem(WEB_AUTH_USER_KEY, JSON.stringify(session.user));
+          if (session?.session) window.localStorage.setItem(WEB_AUTH_SESSION_KEY, JSON.stringify(session.session));
+        } catch {
+          // Ignore storage errors.
+        }
+      } else if (localToken) {
+        persistDesktopAuthSession({
+          token: localToken,
+          user: getCachedCurrentUser(),
+          session: (() => {
+            try {
+              const raw = window.localStorage.getItem(WEB_AUTH_SESSION_KEY);
+              return raw ? JSON.parse(raw) : undefined;
+            } catch {
+              return undefined;
+            }
+          })(),
+        });
+      }
+    } catch {
+      // Ignore hydration errors. The renderer cache remains the fallback.
+    } finally {
+      desktopAuthHydrated = true;
+      desktopAuthHydratePromise = null;
+    }
+  })();
+  return desktopAuthHydratePromise;
+};
 
 export const apiErrorMessage = (raw: unknown, fallback = "Request failed.") => {
   const text = typeof raw === "string" ? raw.trim() : "";
@@ -72,11 +157,8 @@ export const getDesktopToken = () => {
       const session = JSON.parse(rawSession);
       const expiresAt = Date.parse(String(session?.expires_at || ""));
       if (Number.isFinite(expiresAt) && expiresAt <= Date.now()) {
-        desktopTokenMemory = "";
-        window.localStorage.removeItem(DESKTOP_TOKEN_KEY);
-        window.localStorage.removeItem(WEB_AUTH_TOKEN_KEY);
-        window.localStorage.removeItem(WEB_AUTH_USER_KEY);
-        window.localStorage.removeItem(WEB_AUTH_SESSION_KEY);
+        clearLocalAuthCache();
+        persistDesktopAuthSession(null);
         return null;
       }
     }
@@ -93,17 +175,28 @@ export const getDesktopToken = () => {
 
 export const setDesktopToken = (token: string | null) => {
   desktopTokenMemory = token || "";
+  desktopAuthHydrated = true;
   currentUserCache = { expiresAt: 0 };
   try {
     if (!token) {
-      window.localStorage.removeItem(DESKTOP_TOKEN_KEY);
-      window.localStorage.removeItem(WEB_AUTH_TOKEN_KEY);
-      window.localStorage.removeItem(WEB_AUTH_USER_KEY);
-      window.localStorage.removeItem(WEB_AUTH_SESSION_KEY);
+      clearLocalAuthCache();
+      persistDesktopAuthSession(null);
       return;
     }
     window.localStorage.setItem(DESKTOP_TOKEN_KEY, token);
     window.localStorage.setItem(WEB_AUTH_TOKEN_KEY, token);
+    persistDesktopAuthSession({
+      token,
+      user: getCachedCurrentUser(),
+      session: (() => {
+        try {
+          const raw = window.localStorage.getItem(WEB_AUTH_SESSION_KEY);
+          return raw ? JSON.parse(raw) : undefined;
+        } catch {
+          return undefined;
+        }
+      })(),
+    });
   } catch {
     // Ignore storage errors.
   }
@@ -121,10 +214,15 @@ export const setWebAuthCache = (payload: { user?: unknown; session?: unknown } |
       const session: Record<string, unknown> = payload.session && typeof payload.session === "object"
         ? { ...(payload.session as Record<string, unknown>) }
         : { value: payload.session };
-      if (!session.expires_at) {
-        session.expires_at = new Date(Date.now() + SESSION_FALLBACK_TTL_MS).toISOString();
+      const persistentUntil = Date.now() + SESSION_FALLBACK_TTL_MS;
+      const existingExpiry = Date.parse(String(session.expires_at || ""));
+      if (!Number.isFinite(existingExpiry) || existingExpiry < persistentUntil) {
+        session.expires_at = new Date(persistentUntil).toISOString();
       }
+      session.desktop_persistent_until = new Date(persistentUntil).toISOString();
       window.localStorage.setItem(WEB_AUTH_SESSION_KEY, JSON.stringify(session));
+      const token = readStoredTokenUnsafe();
+      if (token) persistDesktopAuthSession({ token, user: payload.user, session });
     }
   } catch {
     // Ignore storage errors.
@@ -192,6 +290,7 @@ export const isUsableAvatarUrl = (value: unknown) => {
 export const apiFetch = async (path: string, init?: RequestInit) => {
   const requestId = ++apiRequestSeq;
   const startedAt = performance.now();
+  await hydrateDesktopAuthSession();
   const token = getDesktopToken();
   const url = apiUrl(path);
   const headers = new Headers(init?.headers || undefined);
@@ -345,6 +444,8 @@ export interface CurrentUser {
   locale?: string;
   role?: string;
   permissions?: string[];
+  patreon_tier?: string;
+  patreon_is_supporter?: boolean;
   terms_accepted?: boolean;
   terms_version?: string;
   terms_accepted_at?: string | null;
@@ -370,6 +471,8 @@ export const normalizeIdentityUser = (payload: any): CurrentUser | null => {
     locale: typeof user.locale === "string" ? user.locale : "",
     role: typeof user.role === "string" ? user.role : "",
     permissions: Array.isArray(user.permissions) ? user.permissions.map((p: unknown) => String(p)) : [],
+    patreon_tier: typeof (user.patreon?.tier ?? user.patreon_tier) === "string" ? String(user.patreon?.tier ?? user.patreon_tier) : "",
+    patreon_is_supporter: Boolean(user.patreon?.is_supporter ?? user.patreon_is_supporter),
     terms_accepted: Boolean(user.terms_accepted),
     terms_version: typeof user.terms_version === "string" ? user.terms_version : "",
     terms_accepted_at: typeof user.terms_accepted_at === "string" ? user.terms_accepted_at : null,
@@ -381,13 +484,24 @@ export const apiCurrentUser = async (): Promise<CurrentUser> => {
   if (currentUserCache.value && currentUserCache.expiresAt > now) return currentUserCache.value;
   if (currentUserCache.inFlight) return currentUserCache.inFlight;
   currentUserCache.inFlight = (async () => {
-    const payload = await apiJson<any>("/api/identity/me");
-    const user = normalizeIdentityUser(payload);
-    if (!user) throw new Error("invalid_identity_payload");
-    setWebAuthCache({ user: payload?.user && typeof payload.user === "object" ? payload.user : user });
-    currentUserCache.value = user;
-    currentUserCache.expiresAt = Date.now() + CURRENT_USER_CACHE_TTL_MS;
-    return user;
+    try {
+      const payload = await apiJson<any>("/api/identity/me");
+      const user = normalizeIdentityUser(payload);
+      if (!user) throw new Error("invalid_identity_payload");
+      setWebAuthCache({ user: payload?.user && typeof payload.user === "object" ? payload.user : user });
+      currentUserCache.value = user;
+      currentUserCache.expiresAt = Date.now() + CURRENT_USER_CACHE_TTL_MS;
+      return user;
+    } catch (error) {
+      const message = String((error as Error)?.message || error || "");
+      const cached = getCachedCurrentUser();
+      if (cached && /unauthorized|session expired|401|403/i.test(message)) {
+        currentUserCache.value = cached;
+        currentUserCache.expiresAt = Date.now() + CURRENT_USER_CACHE_TTL_MS;
+        return cached;
+      }
+      throw error;
+    }
   })();
   try {
     return await currentUserCache.inFlight;

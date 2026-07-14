@@ -7,19 +7,19 @@ Completed.
 SekaiLink's active source tree now lives at:
 
 ```text
-/home/thelovenityjade/SekaiLink/canonical
+<local-home>/SekaiLink/canonical
 ```
 
 The old `DevSSD` canonical location was removed:
 
 ```text
-/home/thelovenityjade/DevSSD/sekailink-canonical
+<local-home>/DevSSD/sekailink-canonical
 ```
 
 ## Active Tree
 
 ```text
-/home/thelovenityjade/SekaiLink/
+<local-home>/SekaiLink/
   canonical/      active Git working tree
   archives/       cold archives, not part of Git
   reports/        external reports
@@ -31,7 +31,7 @@ The old `DevSSD` canonical location was removed:
 Legacy and quarantine sources were compressed to:
 
 ```text
-/home/thelovenityjade/SekaiLink/archives/cold-legacy-2026-06-27/
+<local-home>/SekaiLink/archives/cold-legacy-2026-06-27/
 ```
 
 Archives created and verified:
@@ -53,8 +53,8 @@ Both archives were validated with `sha256sum -c`, `zstd -t`, and a `tar` listing
 These directories were deleted after archive verification:
 
 ```text
-/home/thelovenityjade/DevSSD/_sekailink_quarantine
-/home/thelovenityjade/DevSSD/sekailink-legacy-quarantine-2026-05-17
+<local-home>/DevSSD/_sekailink_quarantine
+<local-home>/DevSSD/sekailink-legacy-quarantine-2026-05-17
 ```
 
 ## Runtime Path Cleanup

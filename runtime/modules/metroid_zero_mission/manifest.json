@@ -39,7 +39,7 @@
     "ap_game": "Metroid: Zero Mission"
   },
   "tracker_pack_uid": "",
-  "tracker_web_url": "",
+  "tracker_web_url": "https://github.com/Ladybunne/MetroidZeroMission_PopTrackerPack",
   "support_status": "supported",
   "availability_status": "available_beta3_confirmed",
   "compatibility_notes": "BETA-3 confirmed bilateral item/check communication.",

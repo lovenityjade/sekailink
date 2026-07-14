@@ -54,8 +54,11 @@
     "ap_game": "Links Awakening DX Beta"
   },
   "tracker_pack_uid": "",
-  "tracker_web_url": "MagpieTracker",
-  "support_status": "not_available",
-  "availability_status": "unavailable_gb_gbc_pending_tester",
-  "compatibility_notes": "Temporarily unavailable for BETA-3 launch: GB/GBC runtime support is frozen pending focused tester validation and patch release."
+  "tracker_type": "magpie",
+  "tracker_status": "specialized_external",
+  "tracker_web_url": "magpie",
+  "tracker_web_title": "Link's Awakening DX - Magpie Tracker",
+  "support_status": "canari_test",
+  "availability_status": "available_canari_test",
+  "compatibility_notes": "Canari test frozen: Linux bilateral send/reception confirmed through Sekaiemu/Gambatte plus the RetroArch UDP compatibility bridge on port 55355. Windows validation is still required before Canonical promotion."
 }

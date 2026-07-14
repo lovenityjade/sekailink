@@ -40,13 +40,15 @@ std::string BuildUsageText(const std::string& executable_name) {
   text
       << "Usage:\n"
       << "  " << executable_name
+      << " --input-capture <output.cfg> [--input-capture-profile <snes|nes|gbc|gba|n64>] [--save-dir <dir>] [--log-dir <dir>]\n"
+      << "  " << executable_name
       << " --layout-preview [--fullscreen] [--windowed] [--tracker-pack <path>] [--tracker-bundle <path>] [--tracker-state <path>] [--tracker-variant <name>] [--save-dir <dir>] [--log-dir <dir>]\n"
       << "  " << executable_name
-      << " [--probe-only] [--fullscreen] [--windowed] [--profile <profile.txt>] [--system-dir <dir>] [--save-dir <dir>] [--log-dir <dir>] [--memory-socket <path>] [--sklmi-runtime <path>] [--sklmi-manifest-dir <dir>] [--ap-host <host>] [--ap-port <port>] [--ap-path <path>] [--ap-game <game>] [--ap-slot-name <slot>] [--player-alias <name>] [--ap-password <password>] [--ap-uuid <uuid>] [--ap-tags <tags>] [--chat-inbox <path>] [--chat-outbox <path>] [--input-script <path>] [--input-script-quit-after-end] [--load-state-on-start] [--save-state-at-frame <frame>] [--quit-after-frame <frame>] [--dump-frame-at-frame <frame>] [--dump-frame-path <path.ppm>] <core.so> <game.rom>\n"
+      << " [--probe-only] [--fullscreen] [--windowed] [--profile <profile.txt>] [--system-dir <dir>] [--save-dir <dir>] [--log-dir <dir>] [--memory-socket <path>] [--sklmi-runtime <path>] [--sklmi-manifest-dir <dir>] [--ap-host <host>] [--ap-port <port>] [--ap-path <path>] [--ap-game <game>] [--ap-slot-name <slot>] [--player-alias <name>] [--player-alias-map <json>] [--ap-password <password>] [--ap-uuid <uuid>] [--ap-tags <tags>] [--chat-inbox <path>] [--chat-outbox <path>] [--client-core-hud-state <path>] [--client-core-hud-events <path>] [--input-script <path>] [--input-script-quit-after-end] [--load-state-on-start] [--save-state-at-frame <frame>] [--quit-after-frame <frame>] [--dump-frame-at-frame <frame>] [--dump-frame-path <path.ppm>] <core.so> <game.rom>\n"
       << "  " << executable_name
-      << " [--probe-only] --core <core.so> --game <game.rom> [--system-dir <dir>] [--save-dir <dir>] [--profile <profile.txt>] [--log-dir <dir>] [--memory-socket <path>] [--sklmi-runtime <path>] [--sklmi-manifest-dir <dir>] [--ap-host <host>] [--ap-port <port>] [--ap-path <path>] [--ap-game <game>] [--ap-slot-name <slot>] [--player-alias <name>] [--ap-password <password>] [--ap-uuid <uuid>] [--ap-tags <tags>] [--chat-inbox <path>] [--chat-outbox <path>] [--input-script <path>] [--input-script-quit-after-end] [--load-state-on-start] [--save-state-at-frame <frame>] [--quit-after-frame <frame>] [--dump-frame-at-frame <frame>] [--dump-frame-path <path.ppm>]\n"
+      << " [--probe-only] --core <core.so> --game <game.rom> [--system-dir <dir>] [--save-dir <dir>] [--profile <profile.txt>] [--log-dir <dir>] [--memory-socket <path>] [--sklmi-runtime <path>] [--sklmi-manifest-dir <dir>] [--ap-host <host>] [--ap-port <port>] [--ap-path <path>] [--ap-game <game>] [--ap-slot-name <slot>] [--player-alias <name>] [--player-alias-map <json>] [--ap-password <password>] [--ap-uuid <uuid>] [--ap-tags <tags>] [--chat-inbox <path>] [--chat-outbox <path>] [--client-core-hud-state <path>] [--client-core-hud-events <path>] [--input-script <path>] [--input-script-quit-after-end] [--load-state-on-start] [--save-state-at-frame <frame>] [--quit-after-frame <frame>] [--dump-frame-at-frame <frame>] [--dump-frame-path <path.ppm>]\n"
       << "  " << executable_name
-      << " [--probe-only] --core <core.so> --patch <patch.aplttp> --base-rom <rom.sfc> [--system-dir <dir>] [--save-dir <dir>] [--profile <profile.txt>] [--log-dir <dir>] [--memory-socket <path>] [--sklmi-runtime <path>] [--sklmi-manifest-dir <dir>] [--ap-host <host>] [--ap-port <port>] [--ap-path <path>] [--ap-game <game>] [--ap-slot-name <slot>] [--player-alias <name>] [--ap-password <password>] [--ap-uuid <uuid>] [--ap-tags <tags>] [--chat-inbox <path>] [--chat-outbox <path>] [--input-script <path>] [--input-script-quit-after-end] [--load-state-on-start] [--save-state-at-frame <frame>] [--quit-after-frame <frame>] [--dump-frame-at-frame <frame>] [--dump-frame-path <path.ppm>]\n\n"
+      << " [--probe-only] --core <core.so> --patch <patch.aplttp> --base-rom <rom.sfc> [--system-dir <dir>] [--save-dir <dir>] [--profile <profile.txt>] [--log-dir <dir>] [--memory-socket <path>] [--sklmi-runtime <path>] [--sklmi-manifest-dir <dir>] [--ap-host <host>] [--ap-port <port>] [--ap-path <path>] [--ap-game <game>] [--ap-slot-name <slot>] [--player-alias <name>] [--player-alias-map <json>] [--ap-password <password>] [--ap-uuid <uuid>] [--ap-tags <tags>] [--chat-inbox <path>] [--chat-outbox <path>] [--client-core-hud-state <path>] [--client-core-hud-events <path>] [--input-script <path>] [--input-script-quit-after-end] [--load-state-on-start] [--test-goal-completion-at-frame <frame>] [--save-state-at-frame <frame>] [--quit-after-frame <frame>] [--dump-frame-at-frame <frame>] [--dump-frame-path <path.ppm>]\n\n"
       << "Note: legacy tracker flags are accepted for compatibility but ignored in normal runtime launches.\n\n"
       << "Examples:\n"
       << "  " << executable_name << " ./bsnes_mercury_libretro.so ./EarthBound.sfc ./system ./saves\n"
@@ -80,6 +82,15 @@ CliParseResult ParseLaunchArgs(const std::vector<std::string>& args,
       result.request.layout_preview = true;
       continue;
     }
+    if (argument == "--input-capture") {
+      if (index + 1 >= args.size()) {
+        result.user_message = "Missing value for --input-capture.";
+        return result;
+      }
+      result.request.input_capture = true;
+      result.request.input_capture_path = args[++index];
+      continue;
+    }
     if (argument == "--fullscreen") {
       result.request.start_fullscreen = true;
       continue;
@@ -107,12 +118,16 @@ CliParseResult ParseLaunchArgs(const std::vector<std::string>& args,
         argument == "--sklmi-manifest-dir" || argument == "--ap-host" ||
         argument == "--ap-port" || argument == "--ap-path" || argument == "--ap-game" ||
         argument == "--ap-slot-name" || argument == "--ap-password" || argument == "--ap-uuid" ||
-        argument == "--player-alias" || argument == "--ap-tags" || argument == "--tracker-pack" ||
+        argument == "--player-alias" || argument == "--player-alias-map" ||
+        argument == "--ap-tags" || argument == "--tracker-pack" ||
         argument == "--tracker-variant" || argument == "--tracker-snapshot" ||
         argument == "--tracker-command-log" || argument == "--tracker-assets-root" ||
         argument == "--tracker-bundle" ||
         argument == "--tracker-state" || argument == "--chat-inbox" ||
-        argument == "--chat-outbox" || argument == "--input-script" ||
+        argument == "--chat-outbox" || argument == "--client-core-hud-state" ||
+        argument == "--client-core-hud-events" || argument == "--input-script" ||
+        argument == "--input-capture-profile" ||
+        argument == "--test-goal-completion-at-frame" ||
         argument == "--save-state-at-frame" || argument == "--quit-after-frame" ||
         argument == "--dump-frame-at-frame" || argument == "--dump-frame-path") {
       if (index + 1 >= args.size()) {
@@ -159,6 +174,8 @@ CliParseResult ParseLaunchArgs(const std::vector<std::string>& args,
         result.request.ap_slot_name = value;
       } else if (argument == "--player-alias") {
         result.request.player_alias = value;
+      } else if (argument == "--player-alias-map") {
+        result.request.player_alias_map_json = value;
       } else if (argument == "--ap-password") {
         result.request.ap_password = value;
       } else if (argument == "--ap-uuid") {
@@ -183,8 +200,21 @@ CliParseResult ParseLaunchArgs(const std::vector<std::string>& args,
         result.request.chat_inbox_path = value;
       } else if (argument == "--chat-outbox") {
         result.request.chat_outbox_path = value;
+      } else if (argument == "--client-core-hud-state") {
+        result.request.client_core_hud_state_path = value;
+      } else if (argument == "--client-core-hud-events") {
+        result.request.client_core_hud_events_path = value;
       } else if (argument == "--input-script") {
         result.request.input_script_path = value;
+      } else if (argument == "--input-capture-profile") {
+        result.request.input_capture_profile = value.empty() ? "snes" : value;
+      } else if (argument == "--test-goal-completion-at-frame") {
+        const auto frame = ParseUint64(value);
+        if (!frame.has_value()) {
+          result.user_message = "Invalid frame for --test-goal-completion-at-frame.";
+          return result;
+        }
+        result.request.test_goal_completion_at_frame = *frame;
       } else if (argument == "--save-state-at-frame") {
         const auto frame = ParseUint64(value);
         if (!frame.has_value()) {
@@ -237,6 +267,17 @@ CliParseResult ParseLaunchArgs(const std::vector<std::string>& args,
     return result;
   }
 
+  if (result.request.input_capture) {
+    if (result.request.input_capture_path.empty()) {
+      result.user_message = "No input capture output path was provided.";
+      result.show_usage = true;
+      return result;
+    }
+    result.ok = true;
+    result.exit_code = 0;
+    return result;
+  }
+
   if (result.request.core_path.empty()) {
     result.user_message = "No libretro core path was provided.";
     result.show_usage = true;
@@ -275,6 +316,7 @@ HostOptions BuildHostOptions(const LaunchRequest& request) {
       .ap_game = request.ap_game,
       .ap_slot_name = request.ap_slot_name,
       .player_alias = request.player_alias,
+      .player_alias_map_json = request.player_alias_map_json,
       .ap_password = request.ap_password,
       .ap_uuid = request.ap_uuid,
       .ap_tags = request.ap_tags,
@@ -288,8 +330,11 @@ HostOptions BuildHostOptions(const LaunchRequest& request) {
       .tracker_required = false,
       .chat_inbox_path = request.chat_inbox_path,
       .chat_outbox_path = request.chat_outbox_path,
+      .client_core_hud_state_path = request.client_core_hud_state_path,
+      .client_core_hud_events_path = request.client_core_hud_events_path,
       .input_script_path = request.input_script_path,
       .dump_frame_path = request.dump_frame_path,
+      .test_goal_completion_at_frame = request.test_goal_completion_at_frame,
       .save_state_at_frame = request.save_state_at_frame,
       .quit_after_frame = request.quit_after_frame,
       .dump_frame_at_frame = request.dump_frame_at_frame,

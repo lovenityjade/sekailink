@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { windowsRuntimeRequiredDirs, windowsRuntimeRequiredFiles } from "./windows-runtime-contract.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,11 +15,17 @@ const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
 const packageVersion = String(packageJson.version || "").trim();
 const baseVersion = packageVersion.replace(/-prebeta3\.\d{8}\.\d+$/, "");
 const releaseVersion = String(process.env.SEKAILINK_RELEASE_VERSION || packageVersion || `${baseVersion}-prebeta3.${today}.1`).trim();
-const channel = String(process.env.SEKAILINK_RELEASE_CHANNEL || "test").trim();
+const normalizeReleaseChannel = (value) => {
+  const raw = String(value || "").trim().toLowerCase();
+  if (raw === "canary") return "canari";
+  if (raw === "test" || raw === "stable" || raw === "release") return "canonical";
+  return raw === "canari" ? "canari" : "canonical";
+};
+const channel = normalizeReleaseChannel(process.env.SEKAILINK_RELEASE_CHANNEL || "canonical");
 const build = String(process.env.SEKAILINK_RELEASE_BUILD || "release").trim();
 const dateDir = String(process.env.SEKAILINK_RELEASE_DATE || today).trim();
-const baseUrl = String(process.env.SEKAILINK_RELEASE_BASE_URL || `https://sekailink.com/downloads/client/prebeta3/${dateDir}`).replace(/\/+$/, "");
-const outputRoot = path.join(releaseDir, "update-bundles", dateDir);
+const baseUrl = String(process.env.SEKAILINK_RELEASE_BASE_URL || `https://sekailink.com/downloads/client/${channel}/${dateDir}`).replace(/\/+$/, "");
+const outputRoot = path.join(releaseDir, "update-bundles", channel, dateDir);
 const requestedBundleKeys = new Set(
   String(process.env.SEKAILINK_RELEASE_BUNDLES || "")
     .split(",")
@@ -85,25 +92,37 @@ const zipDirectory = (sourceDir, outPath) => {
   fs.rmSync(outPath, { force: true });
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
 
+  if (process.platform === "win32") {
+    zipWithPython(sourceDir, outPath);
+    return;
+  }
+
   if (commandExists("zip")) {
     const res = spawnSync("zip", ["-qry", outPath, "."], { cwd: sourceDir, stdio: "inherit" });
     if (res.status === 0) return;
   }
 
-  if (process.platform === "win32") {
-    const script = [
-      `$src='${sourceDir.replace(/'/g, "''")}'`,
-      `$out='${outPath.replace(/'/g, "''")}'`,
-      "if (Test-Path -LiteralPath $out) { Remove-Item -LiteralPath $out -Force }",
-      "Compress-Archive -Path (Join-Path $src '*') -DestinationPath $out -Force",
-    ].join("; ");
-    const res = spawnSync("powershell.exe", ["-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-Command", script], {
-      stdio: "inherit",
-    });
-    if (res.status === 0) return;
-  }
-
   zipWithPython(sourceDir, outPath);
+};
+
+const verifyWindowsRuntimeSource = (bundle) => {
+  if (bundle.key !== "win-x64") return;
+  const platformRoot = path.join(bundle.source, "resources", "runtime", "platforms", "win32-x64");
+  const missingFiles = windowsRuntimeRequiredFiles.filter((relativePath) => {
+    const filePath = path.join(platformRoot, relativePath);
+    return !fs.existsSync(filePath) || !fs.statSync(filePath).isFile();
+  });
+  const missingDirs = windowsRuntimeRequiredDirs.filter((relativePath) => {
+    const dirPath = path.join(platformRoot, relativePath);
+    return !fs.existsSync(dirPath) || !fs.statSync(dirPath).isDirectory();
+  });
+  if (missingFiles.length || missingDirs.length) {
+    const details = [
+      ...missingFiles.map((relativePath) => `file:${relativePath}`),
+      ...missingDirs.map((relativePath) => `dir:${relativePath}`),
+    ].join(", ");
+    throw new Error(`windows_runtime_contract_incomplete:${details}`);
+  }
 };
 
 const releases = [];
@@ -118,6 +137,7 @@ for (const bundle of bundles) {
     log(`skip ${bundle.key}: missing ${bundle.source}`);
     continue;
   }
+  verifyWindowsRuntimeSource(bundle);
   const fileName = `SekaiLink-client-${releaseVersion}-${bundle.key}.zip`;
   const outPath = path.join(outputRoot, fileName);
   log(`zipping ${bundle.key}: ${bundle.source}`);

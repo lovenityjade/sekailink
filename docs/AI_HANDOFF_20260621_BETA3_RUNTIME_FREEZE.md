@@ -212,7 +212,7 @@ SKLMI companion logs usually live under:
 Recommended commands:
 
 ```bash
-cd /home/thelovenityjade/SekaiLink/canonical
+cd <local-home>/SekaiLink/canonical
 git status --short
 tail -200 ~/.config/sekailink-client/logs/sekaiemu/sekaiemu.log
 find ~/.config/sekailink-client/sekaiemu -path '*companion.log' -printf '%T@ %p\n' | sort -nr | head -10
@@ -222,7 +222,7 @@ find ~/.config/sekailink-client/sekaiemu -path '*trace.jsonl' -printf '%T@ %p\n'
 To start Client Core dev:
 
 ```bash
-cd /home/thelovenityjade/SekaiLink/canonical/apps/client-core
+cd <local-home>/SekaiLink/canonical/apps/client-core
 npm run electron:dev
 ```
 

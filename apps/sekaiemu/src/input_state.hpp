@@ -92,9 +92,11 @@ class InputState {
 
   struct ControllerDevice {
     SDL_GameController* handle = nullptr;
+    SDL_Joystick* joystick = nullptr;
     SDL_JoystickID instance_id = -1;
     std::string name;
     std::string guid;
+    bool game_controller = false;
   };
 
   void InitializeDefaults();
@@ -106,6 +108,10 @@ class InputState {
   void RemoveController(SDL_JoystickID instance_id);
   void UpdateControllerButton(const SDL_ControllerButtonEvent& event);
   void UpdateControllerAxis(const SDL_ControllerAxisEvent& event);
+  void UpdateJoystickButton(const SDL_JoyButtonEvent& event);
+  void UpdateJoystickAxis(const SDL_JoyAxisEvent& event);
+  void UpdateJoystickHat(const SDL_JoyHatEvent& event);
+  void PollSelectedControllerState();
 
   bool HandleCaptureEvent(const SDL_Event& event);
   void StartCapture(std::size_t binding_index);

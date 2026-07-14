@@ -17,6 +17,9 @@ import sys
 from typing import Any
 
 
+MAX_UDP_READ_BYTES = 1800
+
+
 def emit(event: str, **payload: Any) -> None:
     print(json.dumps({"event": event, **payload}, ensure_ascii=False), flush=True)
 
@@ -52,6 +55,62 @@ def memory_request(endpoint: str, requests: list[dict[str, Any]], timeout: float
         return parsed if isinstance(parsed, list) else [{"type": "ERROR", "err": "bad_memory_response"}]
     finally:
         sock.close()
+
+
+def gameboy_read_segments(address: int, size: int) -> list[tuple[int, int]]:
+    """Return RetroArch-compatible contiguous Game Boy bus ranges.
+
+    LADX often asks RetroArch for a large span from WRAM through HRAM. Sekaiemu's
+    memory socket resolves real mapped ranges, so split those reads at the Game
+    Boy bus gaps instead of letting a cross-gap request fail.
+    """
+    ranges = [
+        (0x0000, 0x8000),   # ROM
+        (0xA000, 0xC000),   # cartridge RAM
+        (0xC000, 0xE000),   # WRAM
+        (0xE000, 0xFE00),   # WRAM echo
+        (0xFF80, 0x10000),  # HRAM
+    ]
+    end = min(0x10000, address + max(1, size))
+    out: list[tuple[int, int]] = []
+    cursor = address
+    while cursor < end:
+        current = next((entry for entry in ranges if entry[0] <= cursor < entry[1]), None)
+        if current is None:
+            next_start = min((start for start, _ in ranges if start > cursor), default=end)
+            cursor = min(next_start, end)
+            continue
+        _, range_end = current
+        segment_size = min(range_end, end) - cursor
+        if segment_size > 0:
+            out.append((cursor, segment_size))
+        cursor += max(1, segment_size)
+    return out
+
+
+def read_core_memory(args: argparse.Namespace, address: int, size: int) -> tuple[int, bytes] | None:
+    segments = gameboy_read_segments(address, size)
+    if not segments:
+        gap_size = max(1, min(size, MAX_UDP_READ_BYTES, 0x10000 - address)) if 0 <= address < 0x10000 else 1
+        return address, bytes(gap_size)
+    start, segment_size = segments[0]
+    if start != address:
+        return address, bytes(max(1, min(size, MAX_UDP_READ_BYTES, start - address)))
+    segment_size = min(segment_size, MAX_UDP_READ_BYTES)
+    responses = memory_request(args.memory_socket, [{
+        "type": "READ",
+        "domain": "System Bus",
+        "address": start,
+        "size": segment_size,
+    }], args.timeout)
+    response = first_response(responses, "READ_RESPONSE")
+    if response.get("type") == "ERROR":
+        return None
+    try:
+        data = base64.b64decode(str(response.get("value") or ""), validate=True)
+    except Exception:
+        return None
+    return start, data
 
 
 def first_response(responses: list[dict[str, Any]], expected: str) -> dict[str, Any]:
@@ -135,21 +194,12 @@ def handle_command(args: argparse.Namespace, command_line: str) -> bytes:
             size = max(1, min(65536, parse_int(parts[2])))
         except ValueError:
             return format_failure(command, address_raw, "invalid_arguments")
-        responses = memory_request(args.memory_socket, [{
-            "type": "READ",
-            "domain": "System Bus",
-            "address": address,
-            "size": size,
-        }], args.timeout)
-        response = first_response(responses, "READ_RESPONSE")
-        if response.get("type") == "ERROR":
-            return format_failure(command, address_raw, str(response.get("err") or "read_failed"))
-        try:
-            data = base64.b64decode(str(response.get("value") or ""), validate=True)
-        except Exception:
-            return format_failure(command, address_raw, "bad_read_payload")
-        maybe_emit_read(args, address, size, data)
-        return f"{command} {hex(address)} {data.hex()}\n".encode("ascii")
+        read_result = read_core_memory(args, address, size)
+        if read_result is None:
+            return format_failure(command, address_raw, "read_failed")
+        response_address, data = read_result
+        maybe_emit_read(args, response_address, len(data), data)
+        return f"{command} {hex(response_address)} {data.hex()}\n".encode("ascii")
 
     if command == "WRITE_CORE_MEMORY" and len(parts) >= 3:
         address_raw = parts[1]

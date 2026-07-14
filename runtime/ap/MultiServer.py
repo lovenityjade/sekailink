@@ -1107,6 +1107,126 @@ def release_player(ctx: Context, team: int, slot: int):
     update_checked_locations(ctx, team, slot)
 
 
+COMPENSATOR_GAME = "SekaiLink Compensator"
+
+
+def get_compensator_slot(ctx: Context) -> typing.Optional[int]:
+    for slot, game in ctx.games.items():
+        if game == COMPENSATOR_GAME:
+            return slot
+    return None
+
+
+def compensator_location_groups(ctx: Context, slot: int) -> tuple[list[int], list[int]]:
+    progression = []
+    other = []
+    for location_id, (_item_id, _target_player, flags) in ctx.locations[slot].items():
+        (progression if flags & 0b0001 else other).append(location_id)
+    return sorted(progression), sorted(other)
+
+
+def release_compensator(ctx: Context, mode: str = "all", *, announce: bool = True) -> int:
+    slot = get_compensator_slot(ctx)
+    mode = str(mode or "all").strip().lower()
+    if slot is None:
+        raise ValueError("compensator_not_active")
+    if mode not in {"all", "progression", "accelerate"}:
+        raise ValueError("invalid_compensator_release_mode")
+    ctx.stored_data["_sekailink_compensator_release_mode"] = mode
+    progression, other = compensator_location_groups(ctx, slot)
+    missing = set(ctx.locations[slot]) - ctx.location_checks[0, slot]
+    selected = missing if mode == "all" else missing.intersection(progression) if mode == "progression" else set()
+    released = len(selected)
+    if selected:
+        register_location_checks(ctx, 0, slot, selected, count_activity=False)
+        update_checked_locations(ctx, 0, slot)
+    elif mode == "accelerate":
+        selected = set()
+        released = advance_compensator(ctx)
+    if announce:
+        name = ctx.player_names.get((0, slot), "Compensator")
+        ctx.broadcast_text_all(
+            f"[Server]: {name} release mode changed to {mode}.",
+            {"type": "SekaiLinkCompensatorRelease", "team": 0, "slot": slot,
+             "mode": mode, "released": released},
+        )
+    ctx.save()
+    return released
+
+
+def advance_compensator(ctx: Context, *, stalled: bool = False) -> int:
+    slot = get_compensator_slot(ctx)
+    if slot is None or getattr(ctx, "_sekailink_compensator_advancing", False):
+        return 0
+    missing = set(ctx.locations[slot]) - ctx.location_checks[0, slot]
+    if not missing:
+        return 0
+    mode = str(ctx.stored_data.get("_sekailink_compensator_release_mode", "scheduled"))
+    if mode == "all":
+        selected = missing
+    elif mode == "progression":
+        progression, _other = compensator_location_groups(ctx, slot)
+        selected = missing.intersection(progression)
+        if not selected:
+            mode = "scheduled"
+    else:
+        selected = set()
+    if not selected:
+        real_slots = [player for player, game in ctx.games.items()
+                      if game != COMPENSATOR_GAME and player in ctx.locations]
+        total_real = sum(len(ctx.locations[player]) for player in real_slots)
+        checked_real = sum(len(ctx.location_checks[0, player]) for player in real_slots)
+        progression, other = compensator_location_groups(ctx, slot)
+        ordered = progression + other
+        progression_count = len(progression)
+        acceleration = 2.0 if mode == "accelerate" else 1.0
+        for index, location_id in enumerate(ordered):
+            if location_id not in missing:
+                continue
+            if index < progression_count:
+                threshold = round(((index + 1) / (progression_count + 1)) * total_real * 0.60 / acceleration)
+            else:
+                rest_index = index - progression_count
+                threshold = round((total_real * 0.60 +
+                                   ((rest_index + 1) / (len(other) + 1)) * total_real * 0.35) / acceleration)
+            if checked_real >= max(1, threshold):
+                selected.add(location_id)
+        if stalled and not selected:
+            selected.add(next(location for location in ordered if location in missing))
+    if not selected:
+        return 0
+    ctx._sekailink_compensator_advancing = True
+    try:
+        register_location_checks(ctx, 0, slot, selected, count_activity=False)
+        update_checked_locations(ctx, 0, slot)
+    finally:
+        ctx._sekailink_compensator_advancing = False
+    return len(selected)
+
+
+async def compensator_stall_loop(ctx: Context) -> None:
+    while not ctx.exit_event.is_set():
+        with contextlib.suppress(asyncio.TimeoutError):
+            await asyncio.wait_for(ctx.exit_event.wait(), 60)
+        if ctx.exit_event.is_set() or get_compensator_slot(ctx) is None:
+            continue
+        human_connected = any(
+            clients for slot, clients in ctx.clients.get(0, {}).items()
+            if ctx.games.get(slot) != COMPENSATOR_GAME
+        )
+        if not human_connected:
+            continue
+        now = datetime.datetime.now(datetime.timezone.utc)
+        last_real = getattr(ctx, "_sekailink_compensator_last_real_check", now)
+        last_stall = getattr(ctx, "_sekailink_compensator_last_stall_release", None)
+        if (now - last_real).total_seconds() < 20 * 60:
+            continue
+        if last_stall and (now - last_stall).total_seconds() < 10 * 60:
+            continue
+        if advance_compensator(ctx, stalled=True):
+            ctx._sekailink_compensator_last_stall_release = now
+
+
 def collect_player(ctx: Context, team: int, slot: int, is_group: bool = False):
     """register any locations that are in the multidata, pointing towards this player"""
     all_locations = ctx.locations.get_for_player(slot)
@@ -1174,6 +1294,9 @@ def register_location_checks(ctx: Context, team: int, slot: int, locations: typi
         del sortable
 
         ctx.location_checks[team, slot] |= new_locations
+        if ctx.games.get(slot) != COMPENSATOR_GAME:
+            ctx._sekailink_compensator_last_real_check = datetime.datetime.now(datetime.timezone.utc)
+            advance_compensator(ctx)
         send_new_items(ctx)
         ctx.broadcast(ctx.clients[team][slot], [{
             "cmd": "RoomUpdate",
@@ -2379,6 +2502,30 @@ class ServerCommandProcessor(CommonCommandProcessor):
         return False
 
     @mark_raw
+    def _cmd_compensator(self, action_and_mode: str = "status") -> bool:
+        """Inspect or release the SekaiLink Compensator. Usage: /compensator release all|progression|accelerate"""
+        action, _, mode = str(action_and_mode or "status").strip().partition(" ")
+        slot = get_compensator_slot(self.ctx)
+        if slot is None:
+            self.output("No Compensator is active in this room.")
+            return False
+        if action in {"status", ""}:
+            remaining = len(set(self.ctx.locations[slot]) - self.ctx.location_checks[0, slot])
+            current = self.ctx.stored_data.get("_sekailink_compensator_release_mode", "scheduled")
+            self.output(f"Compensator {self.ctx.player_names[0, slot]}: {remaining} remaining, mode={current}.")
+            return True
+        if action != "release":
+            self.output("Usage: /compensator release all|progression|accelerate")
+            return False
+        try:
+            released = release_compensator(self.ctx, mode or "all")
+        except ValueError as exc:
+            self.output(str(exc))
+            return False
+        self.output(f"Compensator release accepted: mode={mode or 'all'}, released={released}.")
+        return True
+
+    @mark_raw
     def _cmd_goal(self, player_name: str) -> bool:
         """Mark a player as having completed their goal."""
         player = self.resolve_player(player_name)
@@ -2821,6 +2968,10 @@ async def main(args: argparse.Namespace):
 
     await ctx.server
     console_task = asyncio.create_task(console(ctx))
+    compensator_task = None
+    if get_compensator_slot(ctx):
+        ctx._sekailink_compensator_last_real_check = datetime.datetime.now(datetime.timezone.utc)
+        compensator_task = asyncio.create_task(compensator_stall_loop(ctx))
     if ctx.auto_shutdown:
         ctx.shutdown_task = asyncio.create_task(auto_shutdown(ctx, [console_task]))
 
@@ -2845,6 +2996,8 @@ async def main(args: argparse.Namespace):
 
     await ctx.exit_event.wait()
     console_task.cancel()
+    if compensator_task:
+        compensator_task.cancel()
     if ctx.shutdown_task:
         await ctx.shutdown_task
 

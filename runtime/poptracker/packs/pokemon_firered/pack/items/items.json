@@ -1,0 +1,732 @@
+[
+  {
+    "name": "Aurora Ticket",
+    "type": "toggle",
+    "img": "images/items/aurora_ticket.png",
+    "codes": "aurora_ticket"
+  },
+  {
+    "name": "Berry Pouch",
+    "type": "toggle",
+    "img": "images/items/berry_pouch.png",
+    "codes": "berry_pouch"
+  },
+  {
+    "name": "Bicycle",
+    "type": "toggle",
+    "img": "images/items/bicycle.png",
+    "codes": "bicycle"
+  },
+  {
+    "name": "Bike Voucher",
+    "type": "toggle",
+    "img": "images/items/bike_voucher.png",
+    "codes": "bike_voucher"
+  },
+  {
+    "name": "Blue Tea",
+    "type": "toggle",
+    "img": "images/items/blue_tea.png",
+    "codes": "blue_tea"
+  },
+  {
+    "name": "Boulder Badge",
+    "type": "toggle",
+    "img": "images/items/boulder_badge.png",
+    "codes": "boulder_badge"
+  },
+  {
+    "name": "Card Key",
+    "type": "toggle",
+    "img": "images/items/card_key.png",
+    "codes": "card_key"
+  },
+  {
+    "name": "Card Key 2F",
+    "type": "toggle",
+    "img": "images/items/card_key.png",
+    "img_mods": "overlay|images/overlays/item_numbers/2.png",
+    "codes": "card_key_2f"
+  },
+  {
+    "name": "Card Key 3F",
+    "type": "toggle",
+    "img": "images/items/card_key.png",
+    "img_mods": "overlay|images/overlays/item_numbers/3.png",
+    "codes": "card_key_3f"
+  },
+  {
+    "name": "Card Key 4F",
+    "type": "toggle",
+    "img": "images/items/card_key.png",
+    "img_mods": "overlay|images/overlays/item_numbers/4.png",
+    "codes": "card_key_4f"
+  },
+  {
+    "name": "Card Key 5F",
+    "type": "toggle",
+    "img": "images/items/card_key.png",
+    "img_mods": "overlay|images/overlays/item_numbers/5.png",
+    "codes": "card_key_5f"
+  },
+  {
+    "name": "Card Key 6F",
+    "type": "toggle",
+    "img": "images/items/card_key.png",
+    "img_mods": "overlay|images/overlays/item_numbers/6.png",
+    "codes": "card_key_6f"
+  },
+  {
+    "name": "Card Key 7F",
+    "type": "toggle",
+    "img": "images/items/card_key.png",
+    "img_mods": "overlay|images/overlays/item_numbers/7.png",
+    "codes": "card_key_7f"
+  },
+  {
+    "name": "Card Key 8F",
+    "type": "toggle",
+    "img": "images/items/card_key.png",
+    "img_mods": "overlay|images/overlays/item_numbers/8.png",
+    "codes": "card_key_8f"
+  },
+  {
+    "name": "Card Key 9F",
+    "type": "toggle",
+    "img": "images/items/card_key.png",
+    "img_mods": "overlay|images/overlays/item_numbers/9.png",
+    "codes": "card_key_9f"
+  },
+  {
+    "name": "Card Key 10F",
+    "type": "toggle",
+    "img": "images/items/card_key.png",
+    "img_mods": "overlay|images/overlays/item_numbers/10.png",
+    "codes": "card_key_10f"
+  },
+  {
+    "name": "Card Key 11F",
+    "type": "toggle",
+    "img": "images/items/card_key.png",
+    "img_mods": "overlay|images/overlays/item_numbers/11.png",
+    "codes": "card_key_11f"
+  },
+  {
+    "name": "Cascade Badge",
+    "type": "toggle",
+    "img": "images/items/cascade_badge.png",
+    "codes": "cascade_badge"
+  },
+  {
+    "name": "Celadon City Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_celadon.png",
+    "codes": "celadon_fly_unlock"
+  },
+  {
+    "name": "Celadon Key",
+    "type": "toggle",
+    "img": "images/items/celadon_key.png",
+    "codes": "celadon_key"
+  },
+  {
+    "name": "Cerulean City Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_cerulean.png",
+    "codes": "cerulean_fly_unlock"
+  },
+  {
+    "name": "Cerulean Key",
+    "type": "toggle",
+    "img": "images/items/cerulean_key.png",
+    "codes": "cerulean_key"
+  },
+  {
+    "name": "Cinnabar Island Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_cinnabar.png",
+    "codes": "cinnabar_fly_unlock"
+  },
+  {
+    "name": "Cinnabar Key",
+    "type": "toggle",
+    "img": "images/items/secret_key.png",
+    "codes": "cinnabar_key"
+  },
+  {
+    "name": "Coin Case",
+    "type": "toggle",
+    "img": "images/items/coin_case.png",
+    "codes": "coin_case"
+  },
+  {
+    "name": "Dome Fossil",
+    "type": "toggle",
+    "img": "images/items/dome_fossil.png",
+    "codes": "dome_fossil"
+  },
+  {
+    "name": "Earth Badge",
+    "type": "toggle",
+    "img": "images/items/earth_badge.png",
+    "codes": "earth_badge"
+  },
+  {
+    "name": "Fame Checker",
+    "type": "toggle",
+    "img": "images/items/fame_checker.png",
+    "codes": "fame_checker"
+  },
+  {
+    "name": "Five Island Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_five_island.png",
+    "codes": "five_island_fly_unlock"
+  },
+  {
+    "name": "Five Pass",
+    "type": "toggle",
+    "img": "images/items/rainbow_pass.png",
+    "img_mods": "overlay|images/overlays/item_numbers/5.png",
+    "codes": "five_pass"
+  },
+  {
+    "name": "Four Island Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_four_island.png",
+    "codes": "four_island_fly_unlock"
+  },
+  {
+    "name": "Four Pass",
+    "type": "toggle",
+    "img": "images/items/rainbow_pass.png",
+    "img_mods": "overlay|images/overlays/item_numbers/4.png",
+    "codes": "four_pass"
+  },
+  {
+    "name": "Fresh Water",
+    "type": "toggle",
+    "img": "images/items/fresh_water.png",
+    "codes": "fresh_water"
+  },
+  {
+    "name": "Fuchsia City Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_fuchsia.png",
+    "codes": "fuchsia_fly_unlock"
+  },
+  {
+    "name": "Fuchsia Key",
+    "type": "toggle",
+    "img": "images/items/fuchsia_key.png",
+    "codes": "fuchsia_key"
+  },
+  {
+    "name": "Gold Teeth",
+    "type": "toggle",
+    "img": "images/items/gold_teeth.png",
+    "codes": "gold_teeth"
+  },
+  {
+    "name": "Good Rod",
+    "type": "toggle",
+    "img": "images/items/good_rod.png",
+    "codes": "good_rod"
+  },
+  {
+    "name": "Green Tea",
+    "type": "toggle",
+    "img": "images/items/tea.png",
+    "codes": "green_tea"
+  },
+  {
+    "name": "Helix Fossil",
+    "type": "toggle",
+    "img": "images/items/helix_fossil.png",
+    "codes": "helix_fossil"
+  },
+  {
+    "name": "Hideout Key",
+    "type": "toggle",
+    "img": "images/items/hideout_key.png",
+    "codes": "hideout_key"
+  },
+  {
+    "name": "HM01 Cut",
+    "type": "progressive_toggle",
+    "initial_stage_idx": 1,
+    "stages": [
+      {
+        "img": "images/items/normal_hm.png",
+        "img_mods": "overlay|images/overlays/item_numbers/1.png",
+        "codes": "hm01_cut"
+      },
+      {
+        "img": "images/items/normal_hm.png",
+        "img_mods": "overlay|images/overlays/item_numbers/1.png,overlay|images/overlays/cascade_badge_top_left.png",
+        "disabled_img_mods": "@disabled,overlay|images/overlays/item_numbers/1.png|@disabled,overlay|images/overlays/cascade_badge_top_left.png"
+      }
+    ]
+  },
+  {
+    "name": "HM02 Fly",
+    "type": "progressive_toggle",
+    "initial_stage_idx": 1,
+    "stages": [
+      {
+        "img": "images/items/flying_hm.png",
+        "img_mods": "overlay|images/overlays/item_numbers/2.png",
+        "codes": "hm02_fly"
+      },
+      {
+        "img": "images/items/flying_hm.png",
+        "img_mods": "overlay|images/overlays/item_numbers/2.png,overlay|images/overlays/thunder_badge_top_left.png",
+        "disabled_img_mods": "@disabled,overlay|images/overlays/item_numbers/2.png|@disabled,overlay|images/overlays/thunder_badge_top_left.png"
+      }
+    ]
+  },
+  {
+    "name": "HM03 Surf",
+    "type": "progressive_toggle",
+    "initial_stage_idx": 1,
+    "stages": [
+      {
+        "img": "images/items/water_hm.png",
+        "img_mods": "overlay|images/overlays/item_numbers/3.png",
+        "codes": "hm03_surf"
+      },
+      {
+        "img": "images/items/water_hm.png",
+        "img_mods": "overlay|images/overlays/item_numbers/3.png,overlay|images/overlays/soul_badge_top_left.png",
+        "disabled_img_mods": "@disabled,overlay|images/overlays/item_numbers/3.png|@disabled,overlay|images/overlays/soul_badge_top_left.png"
+      }
+    ]
+  },
+  {
+    "name": "HM04 Strength",
+    "type": "progressive_toggle",
+    "initial_stage_idx": 1,
+    "stages": [
+      {
+        "img": "images/items/normal_hm.png",
+        "img_mods": "overlay|images/overlays/item_numbers/4.png",
+        "codes": "hm04_strength"
+      },
+      {
+        "img": "images/items/normal_hm.png",
+        "img_mods": "overlay|images/overlays/item_numbers/4.png,overlay|images/overlays/rainbow_badge_top_left.png",
+        "disabled_img_mods": "@disabled,overlay|images/overlays/item_numbers/4.png|@disabled,overlay|images/overlays/rainbow_badge_top_left.png"
+      }
+    ]
+  },
+  {
+    "name": "HM05 Flash",
+    "type": "progressive_toggle",
+    "initial_stage_idx": 1,
+    "stages": [
+      {
+        "img": "images/items/normal_hm.png",
+        "img_mods": "overlay|images/overlays/item_numbers/5.png",
+        "codes": "hm05_flash"
+      },
+      {
+        "img": "images/items/normal_hm.png",
+        "img_mods": "overlay|images/overlays/item_numbers/5.png,overlay|images/overlays/boulder_badge_top_left.png",
+        "disabled_img_mods": "@disabled,overlay|images/overlays/item_numbers/5.png|@disabled,overlay|images/overlays/boulder_badge_top_left.png"
+      }
+    ]
+  },
+  {
+    "name": "HM06 Rock Smash",
+    "type": "progressive_toggle",
+    "initial_stage_idx": 1,
+    "stages": [
+      {
+        "img": "images/items/fighting_hm.png",
+        "img_mods": "overlay|images/overlays/item_numbers/6.png",
+        "codes": "hm06_rock_smash"
+      },
+      {
+        "img": "images/items/fighting_hm.png",
+        "img_mods": "overlay|images/overlays/item_numbers/6.png,overlay|images/overlays/marsh_badge_top_left.png",
+        "disabled_img_mods": "@disabled,overlay|images/overlays/item_numbers/6.png|@disabled,overlay|images/overlays/marsh_badge_top_left.png"
+      }
+    ]
+  },
+  {
+    "name": "HM07 Waterfall",
+    "type": "progressive_toggle",
+    "initial_stage_idx": 1,
+    "stages": [
+      {
+        "img": "images/items/water_hm.png",
+        "img_mods": "overlay|images/overlays/item_numbers/7.png",
+        "codes": "hm07_waterfall"
+      },
+      {
+        "img": "images/items/water_hm.png",
+        "img_mods": "overlay|images/overlays/item_numbers/7.png,overlay|images/overlays/volcano_badge_top_left.png",
+        "disabled_img_mods": "@disabled,overlay|images/overlays/item_numbers/7.png|@disabled,overlay|images/overlays/volcano_badge_top_left.png"
+      }
+    ]
+  },
+  {
+    "name": "Itemfinder",
+    "type": "toggle",
+    "img": "images/items/itemfinder.png",
+    "codes": "itemfinder"
+  },
+  {
+    "name": "Indigo Plateau Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_indigo.png",
+    "codes": "indigo_fly_unlock"
+  },
+  {
+    "name": "Jumping Shoes",
+    "type": "toggle",
+    "img": "images/items/jumping_shoes.png",
+    "codes": "jumping_shoes"
+  },
+  {
+    "name": "Lavender Town Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_lavender.png",
+    "codes": "lavender_fly_unlock"
+  },
+  {
+    "name": "Lemonade",
+    "type": "toggle",
+    "img": "images/items/lemonade.png",
+    "codes": "lemonade"
+  },
+  {
+    "name": "Letter",
+    "type": "toggle",
+    "img": "images/items/letter.png",
+    "codes": "letter"
+  },
+  {
+    "name": "Lift Key",
+    "type": "toggle",
+    "img": "images/items/lift_key.png",
+    "codes": "lift_key"
+  },
+  {
+    "name": "Machine Part",
+    "type": "toggle",
+    "img": "images/items/machine_part.png",
+    "codes": "machine_part"
+  },
+  {
+    "name": "Marsh Badge",
+    "type": "toggle",
+    "img": "images/items/marsh_badge.png",
+    "codes": "marsh_badge"
+  },
+  {
+    "name": "Meteorite",
+    "type": "toggle",
+    "img": "images/items/meteorite.png",
+    "codes": "meteorite"
+  },
+  {
+    "name": "Mystic Ticket",
+    "type": "toggle",
+    "img": "images/items/mystic_ticket.png",
+    "codes": "mystic_ticket"
+  },
+  {
+    "name": "Oak's Parcel",
+    "type": "toggle",
+    "img": "images/items/oaks_parcel.png",
+    "codes": "oaks_parcel"
+  },
+  {
+    "name": "Old Amber",
+    "type": "toggle",
+    "img": "images/items/old_amber.png",
+    "codes": "old_amber"
+  },
+  {
+    "name": "Old Rod",
+    "type": "toggle",
+    "img": "images/items/old_rod.png",
+    "codes": "old_rod"
+  },
+  {
+    "name": "One Island Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_one_island.png",
+    "codes": "one_island_fly_unlock"
+  },
+  {
+    "name": "One Pass",
+    "type": "toggle",
+    "img": "images/items/tri_pass.png",
+    "img_mods": "overlay|images/overlays/item_numbers/1.png",
+    "codes": "one_pass"
+  },
+  {
+    "name": "Pallet Town Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_pallet.png",
+    "codes": "pallet_fly_unlock"
+  },
+  {
+    "name": "Pewter City Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_pewter.png",
+    "codes": "pewter_fly_unlock"
+  },
+  {
+    "name": "Pewter Key",
+    "type": "toggle",
+    "img": "images/items/pewter_key.png",
+    "codes": "pewter_key"
+  },
+  {
+    "name": "Poké Flute",
+    "type": "toggle",
+    "img": "images/items/poke_flute.png",
+    "codes": "poke_flute"
+  },
+  {
+    "name": "Purple Tea",
+    "type": "toggle",
+    "img": "images/items/purple_tea.png",
+    "codes": "purple_tea"
+  },
+  {
+    "name": "Rainbow Badge",
+    "type": "toggle",
+    "img": "images/items/rainbow_badge.png",
+    "codes": "rainbow_badge"
+  },
+  {
+    "name": "Rainbow Pass",
+    "type": "toggle",
+    "img": "images/items/rainbow_pass.png",
+    "codes": "rainbow_pass"
+  },
+  {
+    "name": "Red Tea",
+    "type": "toggle",
+    "img": "images/items/red_tea.png",
+    "codes": "red_tea"
+  },
+  {
+    "name": "Route 4 Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_route_4.png",
+    "codes": "route_4_fly_unlock"
+  },
+  {
+    "name": "Route 10 Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_route_10.png",
+    "codes": "route_10_fly_unlock"
+  },
+  {
+    "name": "Ruby",
+    "type": "toggle",
+    "img": "images/items/ruby.png",
+    "codes": "ruby"
+  },
+  {
+    "name": "Running Shoes",
+    "type": "toggle",
+    "img": "images/items/running_shoes.png",
+    "codes": "running_shoes"
+  },
+  {
+    "name": "Safari Pass",
+    "type": "toggle",
+    "img": "images/items/safari_pass.png",
+    "codes": "safari_pass"
+  },
+  {
+    "name": "Saffron City Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_saffron.png",
+    "codes": "saffron_fly_unlock"
+  },
+  {
+    "name": "Saffron Key",
+    "type": "toggle",
+    "img": "images/items/saffron_key.png",
+    "codes": "saffron_key"
+  },
+  {
+    "name": "Sapphire",
+    "type": "toggle",
+    "img": "images/items/sapphire.png",
+    "codes": "sapphire"
+  },
+  {
+    "name": "Scanner",
+    "type": "toggle",
+    "img": "images/items/scanner.png",
+    "codes": "scanner"
+  },
+  {
+    "name": "Secret Key",
+    "type": "toggle",
+    "img": "images/items/secret_key.png",
+    "codes": "secret_key"
+  },
+  {
+    "name": "Seven Island Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_seven_island.png",
+    "codes": "seven_island_fly_unlock"
+  },
+  {
+    "name": "Seven Pass",
+    "type": "toggle",
+    "img": "images/items/rainbow_pass.png",
+    "img_mods": "overlay|images/overlays/item_numbers/7.png",
+    "codes": "seven_pass"
+  },
+  {
+    "name": "Silph Scope",
+    "type": "toggle",
+    "img": "images/items/silph_scope.png",
+    "codes": "silph_scope"
+  },
+  {
+    "name": "Six Island Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_six_island.png",
+    "codes": "six_island_fly_unlock"
+  },
+  {
+    "name": "Six Pass",
+    "type": "toggle",
+    "img": "images/items/rainbow_pass.png",
+    "img_mods": "overlay|images/overlays/item_numbers/6.png",
+    "codes": "six_pass"
+  },
+  {
+    "name": "Soda Pop",
+    "type": "toggle",
+    "img": "images/items/soda_pop.png",
+    "codes": "soda_pop"
+  },
+  {
+    "name": "Soul Badge",
+    "type": "toggle",
+    "img": "images/items/soul_badge.png",
+    "codes": "soul_badge"
+  },
+  {
+    "name": "S.S. Ticket",
+    "type": "toggle",
+    "img": "images/items/ss_ticket.png",
+    "codes": "ss_ticket"
+  },
+  {
+    "name": "Super Rod",
+    "type": "toggle",
+    "img": "images/items/super_rod.png",
+    "codes": "super_rod"
+  },
+  {
+    "name": "Tea",
+    "type": "toggle",
+    "img": "images/items/tea.png",
+    "codes": "tea"
+  },
+  {
+    "name": "Teachy TV",
+    "type": "toggle",
+    "img": "images/items/teachy_tv.png",
+    "codes": "teachy_tv"
+  },
+  {
+    "name": "Three Island Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_three_island.png",
+    "codes": "three_island_fly_unlock"
+  },
+  {
+    "name": "Three Pass",
+    "type": "toggle",
+    "img": "images/items/tri_pass.png",
+    "img_mods": "overlay|images/overlays/item_numbers/3.png",
+    "codes": "three_pass"
+  },
+  {
+    "name": "Thunder Badge",
+    "type": "toggle",
+    "img": "images/items/thunder_badge.png",
+    "codes": "thunder_badge"
+  },
+  {
+    "name": "TM Case",
+    "type": "toggle",
+    "img": "images/items/tm_case.png",
+    "codes": "tm_case"
+  },
+  {
+    "name": "Town Map",
+    "type": "toggle",
+    "img": "images/items/town_map.png",
+    "codes": "town_map"
+  },
+  {
+    "name": "Tri Pass",
+    "type": "toggle",
+    "img": "images/items/tri_pass.png",
+    "codes": "tri_pass"
+  },
+  {
+    "name": "Two Island Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_two_island.png",
+    "codes": "two_island_fly_unlock"
+  },
+  {
+    "name": "Two Pass",
+    "type": "toggle",
+    "img": "images/items/tri_pass.png",
+    "img_mods": "overlay|images/overlays/item_numbers/2.png",
+    "codes": "two_pass"
+  },
+  {
+    "name": "Vermilion City Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_vermilion.png",
+    "codes": "vermilion_fly_unlock"
+  },
+  {
+    "name": "Vermilion Key",
+    "type": "toggle",
+    "img": "images/items/vermilion_key.png",
+    "codes": "vermilion_key"
+  },
+  {
+    "name": "Viridian City Fly Unlock",
+    "type": "toggle",
+    "img": "images/items/fly_viridian.png",
+    "codes": "viridian_fly_unlock"
+  },
+  {
+    "name": "Viridian Key",
+    "type": "toggle",
+    "img": "images/items/viridian_key.png",
+    "codes": "viridian_key"
+  },
+  {
+    "name": "Volcano Badge",
+    "type": "toggle",
+    "img": "images/items/volcano_badge.png",
+    "codes": "volcano_badge"
+  },
+  {
+    "name": "Vs. Seeker",
+    "type": "toggle",
+    "img": "images/items/vs_seeker.png",
+    "codes": "vs_seeker"
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Dotted Hole 1F",
+    "children": [
+      {
+        "name": "Dropped Item",
+        "sections": [
+          {
+            "ref": "Dungeons/Dotted Hole/1F - Dropped Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "dotted_hole_1f",
+            "x": 200,
+            "y": 104
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Dotted Hole Sapphire Room",
+    "children": [
+      {
+        "name": "Gideon",
+        "sections": [
+          {
+            "ref": "Dungeons/Dotted Hole/Sapphire Room - Learn Yes Nah Chansey (Event)",
+            "name": "Learn Yes Nah Chansey (Event)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "dotted_hole_sapphire_room",
+            "x": 88,
+            "y": 152
+          }
+        ]
+      }
+    ]
+  }
+]

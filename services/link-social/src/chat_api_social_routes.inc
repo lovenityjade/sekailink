@@ -339,7 +339,15 @@ ChatApiHttpResponse ChatApiService::handle_social(
   }
   if (method == "POST" && parts.size() == 2 && parts[1] == "messages") {
     const auto target = body_user_id();
-    const auto content = sanitized_text(body.value_or(nlohmann::json::object()).value("content", std::string{}), 1000);
+    const auto moderated_content = moderate_user_text(
+        body.value_or(nlohmann::json::object()).value("content", std::string{}),
+        1000,
+        ModerationMode::Chat);
+    if (!moderated_content.ok) {
+      close_db();
+      return {400, moderation_error_json(moderated_content).dump()};
+    }
+    const auto content = moderated_content.text;
     if (target.empty() || content.empty()) {
       close_db();
       return {400, R"({"ok":false,"error":"invalid_message"})"};

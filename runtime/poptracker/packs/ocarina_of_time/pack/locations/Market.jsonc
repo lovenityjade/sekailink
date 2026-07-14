@@ -1,0 +1,2170 @@
+
+
+[
+  {
+    "name": "Market - hint",
+    "chest_unopened_img": "/images/items/close.png",
+    "chest_opened_img": "/images/items/open.png",
+    "overlay_background": "#000000",
+    "access_rules": [
+        "{}"
+    ],
+    "children": [
+        {
+            "name": "Shooting Gallery - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Reward - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_shooting_gallery_reward"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Market",
+                    "x": "768",
+                    "y": "340",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Bombchu Bowling - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "First Prize - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_bombchu_bowling_first_prize"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Second Prize - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_bombchu_bowling_second_prize"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Market",
+                    "x": "682",
+                    "y": "540",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Dog Lady House - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Lost Dog - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_dog_lady_house_lost_dog"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Crate - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_dog_lady_house_crate"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Market",
+                    "x": "368",
+                    "y": "745",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Guard House - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "children": [
+                {
+                    "name": "Adult - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "10 Big Poes - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_adult_10_big_poes"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 1 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_adult_pot_1"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 2 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_adult_pot_2"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 3 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_adult_pot_3"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 4 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_adult_pot_4"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 5 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_adult_pot_5"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 6 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_adult_pot_6"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 7 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_adult_pot_7"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Market",
+                            "x": "1135",
+                            "y": "975",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                },
+                {
+                    "name": "Child - hint",
+                    "chest_unopened_img": "/images/items/close.png",
+                    "chest_opened_img": "/images/items/open.png",
+                    "overlay_background": "#000000",
+                    "access_rules": [
+                        "{}"
+                    ],
+                    "sections": [
+                        {
+                            "name": "GS - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_gs"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Crate - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_crate"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 1 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_1"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 2 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_2"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 3 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_3"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 4 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_4"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 5 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_5"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 6 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_6"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 7 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_7"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 8 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_8"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 9 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_9"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 10 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_10"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 11 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_11"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 12 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_12"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 13 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_13"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 14 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_14"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 15 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_15"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 16 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_16"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 17 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_17"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 18 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_18"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 19 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_19"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 20 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_20"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 21 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_21"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 22 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_22"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 23 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_23"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 24 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_24"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 25 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_25"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 26 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_26"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 27 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_27"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 28 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_28"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 29 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_29"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 30 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_30"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 31 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_31"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 32 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_32"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 33 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_33"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 34 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_34"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 35 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_35"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 36 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_36"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 37 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_37"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 38 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_38"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 39 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_39"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 40 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_40"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 41 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_41"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 42 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_42"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 43 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_43"
+                            ],
+                            "item_count": 1
+                        },
+                        {
+                            "name": "Pot 44 - hint",
+                            "access_rules": [],
+                            "visibility_rules": [
+                                "market_guard_house_child_pot_44"
+                            ],
+                            "item_count": 1
+                        }
+                    ],
+                    "map_locations": [
+                        {
+                            "map": "Market",
+                            "x": "1072",
+                            "y": "975",
+                            "size": 22,
+                    "shape": "diamond"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Bazaar - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Item 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_bazaar_item_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_bazaar_item_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_bazaar_item_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 4 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_bazaar_item_4"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 5 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_bazaar_item_5"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 6 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_bazaar_item_6"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 7 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_bazaar_item_7"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 8 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_bazaar_item_8"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Market",
+                    "x": "1095",
+                    "y": "612",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Potion Shop - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Item 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_potion_shop_item_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_potion_shop_item_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_potion_shop_item_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 4 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_potion_shop_item_4"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 5 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_potion_shop_item_5"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 6 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_potion_shop_item_6"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 7 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_potion_shop_item_7"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 8 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_potion_shop_item_8"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Market",
+                    "x": "1100",
+                    "y": "533",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Bombchu Shop - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Item 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_bombchu_shop_item_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_bombchu_shop_item_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_bombchu_shop_item_3"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 4 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_bombchu_shop_item_4"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 5 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_bombchu_shop_item_5"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 6 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_bombchu_shop_item_6"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 7 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_bombchu_shop_item_7"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Item 8 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_bombchu_shop_item_8"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Market",
+                    "x": "508",
+                    "y": "771",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Night Crates - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Crate - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_night_crates_crate"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Crate 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_night_crates_crate_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Crate 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_night_crates_crate_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Crate 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_night_crates_crate_3"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Market",
+                    "x": "1813",
+                    "y": "1262",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        },
+        {
+            "name": "Man in Green House - hint",
+            "chest_unopened_img": "/images/items/close.png",
+            "chest_opened_img": "/images/items/open.png",
+            "overlay_background": "#000000",
+            "access_rules": [
+                "{}"
+            ],
+            "sections": [
+                {
+                    "name": "Pot 1 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_man_in_green_house_pot_1"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 2 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_man_in_green_house_pot_2"
+                    ],
+                    "item_count": 1
+                },
+                {
+                    "name": "Pot 3 - hint",
+                    "access_rules": [],
+                    "visibility_rules": [
+                        "market_man_in_green_house_pot_3"
+                    ],
+                    "item_count": 1
+                }
+            ],
+            "map_locations": [
+                {
+                    "map": "Market",
+                    "x": "463",
+                    "y": "328",
+                    "size": 22,
+                    "shape": "diamond"
+                }
+            ]
+        }
+    ],
+    "sections": [
+        {
+            "name": "Treasure Chest Game Reward - hint",
+            "access_rules": [],
+            "visibility_rules": [
+                "market_treasure_chest_game_reward"
+            ],
+            "item_count": 1
+        }
+    ],
+    "map_locations": [
+        {
+            "map": "Market",
+            "x": "745",
+            "y": "696",
+            "size": 22,
+                    "shape": "diamond"
+        }
+    ]
+},
+    {
+      "name": "Market",
+      "chest_unopened_img": "/images/Items/close.png",
+      "chest_opened_img": "/images/Items/open.png",
+      "overlay_background": "#000000",
+      "access_rules": [
+        " "
+      ],
+      "children": [
+        {
+          "name": "Shooting Gallery",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Reward",
+              "access_rules": [
+                "^$CanReach|Child Market Shooting Gallery Reward",
+                "^$CanReach|Adult Market Shooting Gallery Reward"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Market",
+              "x": 746,
+              "y": 318,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Bombchu Bowling",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "First Prize",
+              "access_rules": [
+                "^$CanReach|Child Market Bombchu Bowling First Prize",
+                "^$CanReach|Adult Market Bombchu Bowling First Prize"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Second Prize",
+              "access_rules": [
+                "^$CanReach|Child Market Bombchu Bowling Second Prize",
+                "^$CanReach|Adult Market Bombchu Bowling Second Prize"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Market",
+              "x": 660,
+              "y": 518,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Dog Lady House",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Lost Dog",
+              "access_rules": [
+                "^$CanReach|Child Market Lost Dog",
+                "^$CanReach|Adult Market Lost Dog"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Crate",
+              "access_rules": [
+                "^$CanReach|Child Market Dog Lady House Crate",
+                "^$CanReach|Adult Market Dog Lady House Crate"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_crates|2"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Market",
+              "x": 346,
+              "y": 723,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Guard House",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "children": [
+            {
+              "name": "Child",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "GS",
+                  "access_rules": [
+                    "^$CanReach|Child Market GS Guard House",
+                    "^$CanReach|Adult Market GS Guard House"
+                  ],
+                  "visibility_rules": [
+                    "$Show|tokensanity|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Crate",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Crate",
+                    "^$CanReach|Adult Market Guard House Child Crate"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_crates|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 1",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 1",
+                    "^$CanReach|Adult Market Guard House Child Pot 1"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 2",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 2",
+                    "^$CanReach|Adult Market Guard House Child Pot 2"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 3",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 3",
+                    "^$CanReach|Adult Market Guard House Child Pot 3"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 4",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 4",
+                    "^$CanReach|Adult Market Guard House Child Pot 4"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 5",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 5",
+                    "^$CanReach|Adult Market Guard House Child Pot 5"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 6",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 6",
+                    "^$CanReach|Adult Market Guard House Child Pot 6"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 7",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 7",
+                    "^$CanReach|Adult Market Guard House Child Pot 7"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 8",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 8",
+                    "^$CanReach|Adult Market Guard House Child Pot 8"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 9",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 9",
+                    "^$CanReach|Adult Market Guard House Child Pot 9"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 10",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 10",
+                    "^$CanReach|Adult Market Guard House Child Pot 10"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 11",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 11",
+                    "^$CanReach|Adult Market Guard House Child Pot 11"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 12",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 12",
+                    "^$CanReach|Adult Market Guard House Child Pot 12"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 13",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 13",
+                    "^$CanReach|Adult Market Guard House Child Pot 13"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 14",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 14",
+                    "^$CanReach|Adult Market Guard House Child Pot 14"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 15",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 15",
+                    "^$CanReach|Adult Market Guard House Child Pot 15"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 16",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 16",
+                    "^$CanReach|Adult Market Guard House Child Pot 16"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 17",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 17",
+                    "^$CanReach|Adult Market Guard House Child Pot 17"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 18",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 18",
+                    "^$CanReach|Adult Market Guard House Child Pot 18"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 19",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 19",
+                    "^$CanReach|Adult Market Guard House Child Pot 19"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 20",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 20",
+                    "^$CanReach|Adult Market Guard House Child Pot 20"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 21",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 21",
+                    "^$CanReach|Adult Market Guard House Child Pot 21"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 22",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 22",
+                    "^$CanReach|Adult Market Guard House Child Pot 22"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 23",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 23",
+                    "^$CanReach|Adult Market Guard House Child Pot 23"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 24",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 24",
+                    "^$CanReach|Adult Market Guard House Child Pot 24"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 25",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 25",
+                    "^$CanReach|Adult Market Guard House Child Pot 25"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 26",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 26",
+                    "^$CanReach|Adult Market Guard House Child Pot 26"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 27",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 27",
+                    "^$CanReach|Adult Market Guard House Child Pot 27"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 28",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 28",
+                    "^$CanReach|Adult Market Guard House Child Pot 28"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 29",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 29",
+                    "^$CanReach|Adult Market Guard House Child Pot 29"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 30",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 30",
+                    "^$CanReach|Adult Market Guard House Child Pot 30"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 31",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 31",
+                    "^$CanReach|Adult Market Guard House Child Pot 31"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 32",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 32",
+                    "^$CanReach|Adult Market Guard House Child Pot 32"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 33",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 33",
+                    "^$CanReach|Adult Market Guard House Child Pot 33"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 34",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 34",
+                    "^$CanReach|Adult Market Guard House Child Pot 34"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 35",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 35",
+                    "^$CanReach|Adult Market Guard House Child Pot 35"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 36",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 36",
+                    "^$CanReach|Adult Market Guard House Child Pot 36"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 37",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 37",
+                    "^$CanReach|Adult Market Guard House Child Pot 37"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 38",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 38",
+                    "^$CanReach|Adult Market Guard House Child Pot 38"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 39",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 39",
+                    "^$CanReach|Adult Market Guard House Child Pot 39"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 40",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 40",
+                    "^$CanReach|Adult Market Guard House Child Pot 40"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 41",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 41",
+                    "^$CanReach|Adult Market Guard House Child Pot 41"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 42",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 42",
+                    "^$CanReach|Adult Market Guard House Child Pot 42"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 43",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 43",
+                    "^$CanReach|Adult Market Guard House Child Pot 43"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 44",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Child Pot 44",
+                    "^$CanReach|Adult Market Guard House Child Pot 44"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Market",
+                  "x": 1050,
+                  "y": 953,
+                  "size": 24
+                }
+              ]
+            },
+            {
+              "name": "Adult",
+              "chest_unopened_img": "/images/Items/close.png",
+              "chest_opened_img": "/images/Items/open.png",
+              "overlay_background": "#000000",
+              "access_rules": [
+                " "
+              ],
+              "sections": [
+                {
+                  "name": "10 Big Poes",
+                  "access_rules": [
+                    "^$CanReach|Child Market 10 Big Poes",
+                    "^$CanReach|Adult Market 10 Big Poes"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 1",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Adult Pot 1",
+                    "^$CanReach|Adult Market Guard House Adult Pot 1"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 2",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Adult Pot 2",
+                    "^$CanReach|Adult Market Guard House Adult Pot 2"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 3",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Adult Pot 3",
+                    "^$CanReach|Adult Market Guard House Adult Pot 3"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 4",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Adult Pot 4",
+                    "^$CanReach|Adult Market Guard House Adult Pot 4"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 5",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Adult Pot 5",
+                    "^$CanReach|Adult Market Guard House Adult Pot 5"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 6",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Adult Pot 6",
+                    "^$CanReach|Adult Market Guard House Adult Pot 6"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                },
+                {
+                  "name": "Pot 7",
+                  "access_rules": [
+                    "^$CanReach|Child Market Guard House Adult Pot 7",
+                    "^$CanReach|Adult Market Guard House Adult Pot 7"
+                  ],
+                  "visibility_rules": [
+                    "$Show|shuffle_pots|2"
+                  ],
+                  "item_count": 1
+                }
+              ],
+              "map_locations": [
+                {
+                  "map": "Market",
+                  "x": 1113,
+                  "y": 953,
+                  "size": 24
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Bazaar",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Item 1",
+              "access_rules": [
+                "^$CanReach|Child Market Bazaar Item 1",
+                "^$CanReach|Adult Market Bazaar Item 1"
+              ],
+              "visibility_rules": [
+                "$Show|"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 2",
+              "access_rules": [
+                "^$CanReach|Child Market Bazaar Item 2",
+                "^$CanReach|Adult Market Bazaar Item 2"
+              ],
+              "visibility_rules": [
+                "$Show|"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 3",
+              "access_rules": [
+                "^$CanReach|Child Market Bazaar Item 3",
+                "^$CanReach|Adult Market Bazaar Item 3"
+              ],
+              "visibility_rules": [
+                "$Show|"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 4",
+              "access_rules": [
+                "^$CanReach|Child Market Bazaar Item 4",
+                "^$CanReach|Adult Market Bazaar Item 4"
+              ],
+              "visibility_rules": [
+                "$Show|"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 5",
+              "access_rules": [
+                "^$CanReach|Child Market Bazaar Item 5",
+                "^$CanReach|Adult Market Bazaar Item 5"
+              ],
+              "visibility_rules": [
+                "$Show|shopsanity, $ShopSlotHelper|67080|1"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 6",
+              "access_rules": [
+                "^$CanReach|Child Market Bazaar Item 7",
+                "^$CanReach|Adult Market Bazaar Item 7"
+              ],
+              "visibility_rules": [
+                "$Show|shopsanity, $ShopSlotHelper|67081|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 7",
+              "access_rules": [
+                "^$CanReach|Child Market Bazaar Item 8",
+                "^$CanReach|Adult Market Bazaar Item 8"
+              ],
+              "visibility_rules": [
+                "$Show|shopsanity, $ShopSlotHelper|67082|3"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 8",
+              "access_rules": [
+                "^$CanReach|Child Market Bazaar Item 8",
+                "^$CanReach|Adult Market Bazaar Item 8"
+              ],
+              "visibility_rules": [
+                "$Show|shopsanity, $ShopSlotHelper|67083|4"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Market",
+              "x": 1073,
+              "y": 590,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Potion Shop",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Item 1",
+              "access_rules": [
+                "^$CanReach|Child Market Potion Shop Item 1",
+                "^$CanReach|Adult Market Potion Shop Item 1"
+              ],
+              "visibility_rules": [
+                "$Show|"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 2",
+              "access_rules": [
+                "^$CanReach|Child Market Potion Shop Item 2",
+                "^$CanReach|Adult Market Potion Shop Item 2"
+              ],
+              "visibility_rules": [
+                "$Show|"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 3",
+              "access_rules": [
+                "^$CanReach|Child Market Potion Shop Item 3",
+                "^$CanReach|Adult Market Potion Shop Item 3"
+              ],
+              "visibility_rules": [
+                "$Show|"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 4",
+              "access_rules": [
+                "^$CanReach|Child Market Potion Shop Item 4",
+                "^$CanReach|Adult Market Potion Shop Item 4"
+              ],
+              "visibility_rules": [
+                "$Show|"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 5",
+              "access_rules": [
+                "^$CanReach|Child Market Potion Shop Item 5",
+                "^$CanReach|Adult Market Potion Shop Item 5"
+              ],
+              "visibility_rules": [
+                "$Show|shopsanity, $ShopSlotHelper|67088|1"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 6",
+              "access_rules": [
+                "^$CanReach|Child Market Potion Shop Item 6",
+                "^$CanReach|Adult Market Potion Shop Item 6"
+              ],
+              "visibility_rules": [
+                "$Show|shopsanity, $ShopSlotHelper|67089|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 7",
+              "access_rules": [
+                "^$CanReach|Child Market Potion Shop Item 7",
+                "^$CanReach|Adult Market Potion Shop Item 7"
+              ],
+              "visibility_rules": [
+                "$Show|shopsanity, $ShopSlotHelper|67090|3"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 8",
+              "access_rules": [
+                "^$CanReach|Child Market Potion Shop Item 8",
+                "^$CanReach|Adult Market Potion Shop Item 8"
+              ],
+              "visibility_rules": [
+                "$Show|shopsanity, $ShopSlotHelper|67091|4"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Market",
+              "x": 1078,
+              "y": 511,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Bombchu Shop",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Item 1",
+              "access_rules": [
+                "^$CanReach|Child Market Bombchu Shop Item 1",
+                "^$CanReach|Adult Market Bombchu Shop Item 1"
+              ],
+              "visibility_rules": [
+                "$Show|"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 2",
+              "access_rules": [
+                "^$CanReach|Child Market Bombchu Shop Item 2",
+                "^$CanReach|Adult Market Bombchu Shop Item 2"
+              ],
+              "visibility_rules": [
+                "$Show|"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 3",
+              "access_rules": [
+                "^$CanReach|Child Market Bombchu Shop Item 3",
+                "^$CanReach|Adult Market Bombchu Shop Item 3"
+              ],
+              "visibility_rules": [
+                "$Show|"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 4",
+              "access_rules": [
+                "^$CanReach|Child Market Bombchu Shop Item 4",
+                "^$CanReach|Adult Market Bombchu Shop Item 4"
+              ],
+              "visibility_rules": [
+                "$Show|"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 5",
+              "access_rules": [
+                "^$CanReach|Child Market Bombchu Shop Item 5",
+                "^$CanReach|Adult Market Bombchu Shop Item 5"
+              ],
+              "visibility_rules": [
+                "$Show|shopsanity, $ShopSlotHelper|67096|1"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 6",
+              "access_rules": [
+                "^$CanReach|Child Market Bombchu Shop Item 6",
+                "^$CanReach|Adult Market Bombchu Shop Item 6"
+              ],
+              "visibility_rules": [
+                "$Show|shopsanity, $ShopSlotHelper|67097|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 7",
+              "access_rules": [
+                "^$CanReach|Child Market Bombchu Shop Item 7",
+                "^$CanReach|Adult Market Bombchu Shop Item 7"
+              ],
+              "visibility_rules": [
+                "$Show|shopsanity, $ShopSlotHelper|67098|3"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Item 8",
+              "access_rules": [
+                "^$CanReach|Child Market Bombchu Shop Item 8",
+                "^$CanReach|Adult Market Bombchu Shop Item 8"
+              ],
+              "visibility_rules": [
+                "$Show|shopsanity, $ShopSlotHelper|67099|4"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Market",
+              "x": 486,
+              "y": 749,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Night Crates",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Crate",
+              "access_rules": [
+                "^$CanReach|Child Market Night Red Rupee Crate",
+                "^$CanReach|Adult Market Night Red Rupee Crate"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_crates|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Crate 1",
+              "access_rules": [
+                "^$CanReach|Child Market Night Green Rupee Crate 1",
+                "^$CanReach|Adult Market Night Green Rupee Crate 1"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_crates|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Crate 2",
+              "access_rules": [
+                "^$CanReach|Child Market Night Green Rupee Crate 2",
+                "^$CanReach|Adult Market Night Green Rupee Crate 2"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_crates|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Crate 3",
+              "access_rules": [
+                "^$CanReach|Child Market Night Green Rupee Crate 3",
+                "^$CanReach|Adult Market Night Green Rupee Crate 3"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_crates|2"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Market",
+              "x": 1791,
+              "y": 1240,
+              "size": 24
+            }
+          ]
+        },
+        {
+          "name": "Man in Green House",
+          "chest_unopened_img": "/images/Items/close.png",
+          "chest_opened_img": "/images/Items/open.png",
+          "overlay_background": "#000000",
+          "access_rules": [
+            " "
+          ],
+          "sections": [
+            {
+              "name": "Pot 1",
+              "access_rules": [
+                "^$CanReach|Child Market Man in Green House Pot 1",
+                "^$CanReach|Adult Market Man in Green House Pot 1"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_pots|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 2",
+              "access_rules": [
+                "^$CanReach|Child Market Man in Green House Pot 2",
+                "^$CanReach|Adult Market Man in Green House Pot 2"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_pots|2"
+              ],
+              "item_count": 1
+            },
+            {
+              "name": "Pot 3",
+              "access_rules": [
+                "^$CanReach|Child Market Man in Green House Pot 3",
+                "^$CanReach|Adult Market Man in Green House Pot 3"
+              ],
+              "visibility_rules": [
+                "$Show|shuffle_pots|2"
+              ],
+              "item_count": 1
+            }
+          ],
+          "map_locations": [
+            {
+              "map": "Market",
+              "x": 441,
+              "y": 306,
+              "size": 24
+            }
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "name": "Treasure Chest Game Reward",
+          "access_rules": [
+            "^$CanReach|Child Market Treasure Chest Game Reward",
+            "^$CanReach|Adult Market Treasure Chest Game Reward"
+          ],
+          "item_count": 1
+        }
+      ],
+      "map_locations": [
+        {
+          "map": "Market",
+          "x": 723,
+          "y": 674,
+          "size": 24
+        }
+      ]
+    }
+]

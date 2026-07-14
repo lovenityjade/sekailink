@@ -6,7 +6,14 @@ const createNativeGameRuntime = (deps = {}) => {
     fs,
     path,
     processRef = process,
+    spawn,
     ensureDir,
+    readConfig,
+    getModuleManifest,
+    resolveGithubRepo,
+    which,
+    pcPackageRuntime,
+    writeLogLine = () => {},
     isPlainObject,
     normalizeIpcString,
     getRuntimeToolsDir,
@@ -169,7 +176,8 @@ const createNativeGameRuntime = (deps = {}) => {
     const launcherAssetRegex =
       String(manifest.launcher_asset_regex || "").trim() ||
       "Ship\\.of\\.Harkinian\\.Archipelago\\..*\\.linux\\.zip$";
-    const exeOverride = settings.exe_path;
+    const managedInstall = pcPackageRuntime?.resolveInstalled?.("ship-of-harkinian-sekailink") || null;
+    const exeOverride = managedInstall?.executable || settings.exe_path;
     let rootDir = options.rootDir || settings.root_dir;
     let exePath = "";
   
@@ -179,7 +187,7 @@ const createNativeGameRuntime = (deps = {}) => {
       if (rootDir && fs.existsSync(rootDir)) {
         exePath = findSohExecutableInDir(rootDir);
       }
-      if (!exePath && settings.auto_install) {
+      if (!exePath && settings.auto_install && !managedInstall) {
         try {
           rootDir = await ensureGithubReleaseZipInstalled(
             "oot_soh",
@@ -204,13 +212,98 @@ const createNativeGameRuntime = (deps = {}) => {
     }
   
     try {
-      const wrapped = spawnMaybeGamescope(exePath, settings.args || [], { stdio: "ignore" });
+      const args = [...(settings.args || [])];
+      let launchManifestPath = "";
+      if (managedInstall) {
+        const server = String(options.serverAddress || "").trim();
+        const slot = String(options.slot || "").trim();
+        if (!server || !slot) return { ok: false, error: "soh_connection_missing" };
+        const launchDir = path.join(app.getPath("userData"), "pc-packages", "launch");
+        ensureDir(launchDir);
+        launchManifestPath = path.join(launchDir, `soh-${processRef.pid}-${Date.now()}.json`);
+        fs.writeFileSync(launchManifestPath, `${JSON.stringify({
+          schema: "sekailink.pc-launch/v1",
+          gameId: "ship-of-harkinian",
+          sessionId: String(options.sessionId || ""),
+          connection: { server, slot, password: String(options.password || ""), autoConnect: true },
+          paths: { data: path.dirname(exePath), logs: launchDir },
+        }, null, 2)}\n`, { mode: 0o600 });
+        args.push("--sekailink-launch", launchManifestPath);
+      }
+      const wrapped = spawnMaybeGamescope(exePath, args, { stdio: "ignore", cwd: path.dirname(exePath) });
       if (!wrapped.ok) return { ok: false, error: wrapped.error || "spawn_failed" };
       nativeGameProcs.set(wrapped.proc.pid, wrapped.proc);
-      wrapped.proc.on("exit", () => nativeGameProcs.delete(wrapped.proc.pid));
+      wrapped.proc.on("exit", () => {
+        nativeGameProcs.delete(wrapped.proc.pid);
+        if (launchManifestPath) fs.rmSync(launchManifestPath, { force: true });
+      });
+      if (launchManifestPath) {
+        setTimeout(() => {
+          try { fs.rmSync(launchManifestPath, { force: true }); } catch (error) {
+            writeLogLine("warn", "soh", `launch manifest cleanup failed: ${String(error?.message || error)}`);
+          }
+        }, 30000).unref?.();
+      }
       return { ok: true, pid: wrapped.proc.pid, method: "exe", exePath };
     } catch (err) {
       return { ok: false, error: "soh_launch_failed", detail: String(err || "") };
+    }
+  };
+
+  const tryLaunch2Ship = async (options = {}) => {
+    const managedInstall = pcPackageRuntime?.resolveInstalled?.("2ship2harkinian-sekailink") || null;
+    const exePath = managedInstall?.executable || "";
+    if (!exePath || !fs.existsSync(exePath)) {
+      return { ok: false, error: "2ship_not_installed" };
+    }
+
+    const server = String(options.serverAddress || "").trim();
+    const slot = String(options.slot || "").trim();
+    if (!server || !slot) return { ok: false, error: "2ship_connection_missing" };
+
+    try {
+      fs.chmodSync(exePath, 0o755);
+    } catch (_err) {
+      // Ignore chmod failures on filesystems that do not expose Unix modes.
+    }
+
+    let launchManifestPath = "";
+    try {
+      const launchDir = path.join(app.getPath("userData"), "pc-packages", "launch");
+      ensureDir(launchDir);
+      launchManifestPath = path.join(launchDir, `2ship-${processRef.pid}-${Date.now()}.json`);
+      fs.writeFileSync(launchManifestPath, `${JSON.stringify({
+        schema: "sekailink.pc-launch/v1",
+        gameId: "2ship2harkinian",
+        sessionId: String(options.sessionId || ""),
+        connection: {
+          server,
+          slot,
+          password: String(options.password || ""),
+          autoConnect: true,
+        },
+        paths: { data: path.dirname(exePath), logs: launchDir },
+      }, null, 2)}\n`, { mode: 0o600 });
+
+      const wrapped = spawnMaybeGamescope(exePath, ["--sekailink-launch", launchManifestPath], {
+        stdio: "ignore",
+        cwd: path.dirname(exePath),
+      });
+      if (!wrapped.ok) return { ok: false, error: wrapped.error || "spawn_failed" };
+      nativeGameProcs.set(wrapped.proc.pid, wrapped.proc);
+      wrapped.proc.on("exit", () => {
+        nativeGameProcs.delete(wrapped.proc.pid);
+        if (launchManifestPath) fs.rmSync(launchManifestPath, { force: true });
+      });
+      setTimeout(() => {
+        try { fs.rmSync(launchManifestPath, { force: true }); } catch (error) {
+          writeLogLine("warn", "2ship", `launch manifest cleanup failed: ${String(error?.message || error)}`);
+        }
+      }, 30000).unref?.();
+      return { ok: true, pid: wrapped.proc.pid, method: "pc-package", exePath };
+    } catch (err) {
+      if (launchManifestPath) fs.rmSync(launchManifestPath, { force: true });
+      return { ok: false, error: "2ship_launch_failed", detail: String(err || "") };
     }
   };
   
@@ -218,10 +311,13 @@ const createNativeGameRuntime = (deps = {}) => {
     const settings = getSm64ExSettings();
     const exeOverride = settings.exe_path;
     const rootDir = options.rootDir || settings.root_dir;
+    const managedInstall = pcPackageRuntime?.resolveInstalled?.("sm64ex-sekailink") || null;
   
     let exePath = "";
     if (exeOverride && fs.existsSync(exeOverride)) {
       exePath = exeOverride;
+    } else if (managedInstall?.executable && fs.existsSync(managedInstall.executable)) {
+      exePath = managedInstall.executable;
     } else if (rootDir && fs.existsSync(rootDir)) {
       // Common Linux build outputs:
       // - sm64ex/build/us_pc/sm64.us.f3dex2e
@@ -243,13 +339,15 @@ const createNativeGameRuntime = (deps = {}) => {
       return { ok: false, error: "missing_slot_file" };
     }
   
-    const args = ["--sm64ap_file", fileArg, ...settings.args];
+    const savePath = path.join(app.getPath("userData"), "games", "sm64ex");
+    ensureDir(savePath);
+    const args = ["--savepath", savePath, "--sm64ap_file", fileArg, ...settings.args];
     try {
       const wrapped = spawnMaybeGamescope(exePath, args, { stdio: "ignore" });
       if (!wrapped.ok) return { ok: false, error: wrapped.error || "spawn_failed" };
       nativeGameProcs.set(wrapped.proc.pid, wrapped.proc);
       wrapped.proc.on("exit", () => nativeGameProcs.delete(wrapped.proc.pid));
-      return { ok: true, pid: wrapped.proc.pid, method: "exe" };
+      return { ok: true, pid: wrapped.proc.pid, method: managedInstall?.executable === exePath ? "pc-package" : "exe" };
     } catch (err) {
       return { ok: false, error: String(err) };
     }
@@ -425,6 +523,7 @@ const createNativeGameRuntime = (deps = {}) => {
     getSohSettings,
     findSohExecutableInDir,
     tryLaunchSoh,
+    tryLaunch2Ship,
     tryLaunchSm64Ex,
     tryLaunchGzDoom,
     tryHandleDownloadedArtifact,

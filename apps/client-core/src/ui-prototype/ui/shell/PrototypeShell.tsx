@@ -64,6 +64,7 @@ const PrototypeShell: React.FC<PrototypeShellProps> = ({ children }) => {
   const [settingsOpen, setSettingsOpen] = React.useState(false);
   const [bugReportOpen, setBugReportOpen] = React.useState(false);
   const [bugReportSubmitting, setBugReportSubmitting] = React.useState(false);
+  const [bugReportContext, setBugReportContext] = React.useState({ title: "", description: "" });
   const [headerMenuOpen, setHeaderMenuOpen] = React.useState(false);
   const [logoutConfirmOpen, setLogoutConfirmOpen] = React.useState(false);
   const [me, setMe] = React.useState<MeResponse | null>(null);
@@ -80,6 +81,16 @@ const PrototypeShell: React.FC<PrototypeShellProps> = ({ children }) => {
       document.body.classList.remove("sklp-ui");
       document.body.classList.remove("sklp-metal-b", "sklp-metal-c");
     };
+  }, []);
+
+  useEffect(() => {
+    const openReport = (event: Event) => {
+      const detail = (event as CustomEvent<{ title?: string; description?: string }>).detail || {};
+      setBugReportContext({ title: String(detail.title || ""), description: String(detail.description || "") });
+      setBugReportOpen(true);
+    };
+    window.addEventListener("sekailink:report-bug", openReport);
+    return () => window.removeEventListener("sekailink:report-bug", openReport);
   }, []);
 
   useEffect(() => {
@@ -198,14 +209,15 @@ const PrototypeShell: React.FC<PrototypeShellProps> = ({ children }) => {
     };
   }, []);
 
-  const submitBugReport = React.useCallback(async ({ title, description }: { title: string; description: string }) => {
+  const submitBugReport = React.useCallback(async ({ title, description, screenshotBase64 }: { title: string; description: string; screenshotBase64?: string }) => {
     setBugReportSubmitting(true);
     setBugReportOpen(false);
     setHeaderMenuOpen(false);
     await new Promise((resolve) => window.setTimeout(resolve, 120));
     try {
       const artifactsResult = await runtime.collectBugReportArtifacts?.({
-        includeScreenshot: true,
+        includeScreenshot: Boolean(screenshotBase64),
+        screenshotBase64,
         maxLogBytes: 700 * 1024,
       });
       const artifacts = artifactsResult?.ok ? artifactsResult.artifacts || {} : {};
@@ -232,6 +244,8 @@ const PrototypeShell: React.FC<PrototypeShellProps> = ({ children }) => {
           reporter_name: reporterName,
           screenshot_base64: artifacts.screenshotBase64 || "",
           logs_text: artifacts.logsText || "",
+          bundle_base64: artifacts.bundleBase64 || "",
+          bundle_manifest: artifacts.bundleManifest || {},
           system_info: artifacts.systemInfo || {},
           app_info: appInfo,
         }),
@@ -403,6 +417,8 @@ const PrototypeShell: React.FC<PrototypeShellProps> = ({ children }) => {
       <BugReportModal
         open={bugReportOpen}
         submitting={bugReportSubmitting}
+        initialTitle={bugReportContext.title}
+        initialDescription={bugReportContext.description}
         onClose={() => setBugReportOpen(false)}
         onSubmit={submitBugReport}
       />

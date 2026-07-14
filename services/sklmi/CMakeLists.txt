@@ -200,8 +200,8 @@ add_test(NAME sekailink_sklmi_generic_bizhawk_manifest_smoke
   COMMAND sekailink_sklmi_generic_bizhawk_manifest_smoke ${CMAKE_CURRENT_SOURCE_DIR})
 add_test(NAME sekailink_sklmi_archipelago_client_wrapper_manifest_smoke
   COMMAND sekailink_sklmi_archipelago_client_wrapper_manifest_smoke)
-add_test(NAME sekailink_sklmi_runtime_socket_smoke COMMAND sekailink_sklmi_runtime_socket_smoke)
 if(NOT WIN32)
+  add_test(NAME sekailink_sklmi_runtime_socket_smoke COMMAND sekailink_sklmi_runtime_socket_smoke)
   add_test(NAME sekailink_sklmi_unix_socket_smoke COMMAND sekailink_sklmi_unix_socket_smoke)
 endif()
 add_test(NAME sekailink_sklmi_earthbound_golden COMMAND sekailink_sklmi_earthbound_golden)

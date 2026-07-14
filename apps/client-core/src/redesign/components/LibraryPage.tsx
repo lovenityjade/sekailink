@@ -18,6 +18,8 @@ import {
 
 type ConfigSource = 'pulse' | 'easy' | 'advanced';
 type ConfigStatus = 'valid' | 'draft' | 'error';
+const IN_LEARNING_LABEL = 'In learning';
+const EASY_MODE_DISABLED_MESSAGE = 'Easy Mode is in learning while the Pulse assistant is being stabilized. Use Advanced Mode for now.';
 
 interface SeedConfig {
   id: string;
@@ -34,9 +36,10 @@ interface SeedConfig {
 
 interface LibraryPageProps {
   onNavigateToEasyConfig?: (game: SeedGameEntry) => void;
+  onOpenRomImport?: (gameId: string) => void;
 }
 
-export default function LibraryPage({ onNavigateToEasyConfig }: LibraryPageProps = {}) {
+export default function LibraryPage({ onNavigateToEasyConfig, onOpenRomImport }: LibraryPageProps = {}) {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterGame, setFilterGame] = useState<string>('all');
   const [filterSource, setFilterSource] = useState<string>('all');
@@ -225,17 +228,21 @@ export default function LibraryPage({ onNavigateToEasyConfig }: LibraryPageProps
                 <div className="py-2">
                   <button
                     onClick={() => {
-                      trace('library-page', 'create_menu_select', { mode: 'easy' });
-                      setSelectedMode('easy');
-                      setShowGameSelection(true);
+                      trace('library-page', 'create_menu_disabled_select', { mode: 'easy' });
+                      setError(EASY_MODE_DISABLED_MESSAGE);
                       setShowCreateMenu(false);
                     }}
-                    className="w-full px-4 py-3 flex items-start gap-3 hover:bg-gradient-to-r hover:from-[#4ecdc4]/10 hover:to-transparent transition-all text-left"
+                    disabled
+                    title={IN_LEARNING_LABEL}
+                    className="w-full cursor-not-allowed px-4 py-3 flex items-start gap-3 opacity-55 transition-all text-left"
                   >
                     <Zap className="w-5 h-5 text-[#4ecdc4] flex-shrink-0 mt-0.5" />
                     <div>
-                      <div className="font-medium text-white">Easy Mode</div>
-                      <div className="text-xs text-[#8e8f94] mt-0.5">Quick setup with Pulse assistant</div>
+                      <div className="flex items-center gap-2 font-medium text-white">
+                        Easy Mode
+                        <span className="rounded-full border border-[#38f3dd]/25 bg-[#10201f] px-2 py-0.5 text-[10px] font-bold text-[#8cf5e8]">{IN_LEARNING_LABEL}</span>
+                      </div>
+                      <div className="text-xs text-[#8e8f94] mt-0.5">{EASY_MODE_DISABLED_MESSAGE}</div>
                     </div>
                   </button>
 
@@ -426,7 +433,7 @@ export default function LibraryPage({ onNavigateToEasyConfig }: LibraryPageProps
             setShowGameSelection(false);
 
             if (selectedMode === 'easy') {
-              onNavigateToEasyConfig?.(game);
+              setError(EASY_MODE_DISABLED_MESSAGE);
             } else {
               setEditingConfig(null);
               setShowAdvancedConfig(true);
@@ -480,6 +487,7 @@ export default function LibraryPage({ onNavigateToEasyConfig }: LibraryPageProps
           initialValues={editingConfig?.values || {}}
           title={editingConfig ? 'Edit Advanced Seed Config' : 'Advanced Seed Config'}
           saveLabel={editingConfig ? 'Save Changes' : 'Save Config'}
+          onOpenRomImport={onOpenRomImport}
         />
       )}
       {error && (

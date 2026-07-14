@@ -49,10 +49,11 @@ using json = nlohmann::json;
 namespace {
 
 constexpr const char *kApiBase = "https://sekailink.com";
-constexpr const char *kChannel = "test";
+constexpr const char *kChannel = "canonical";
 constexpr const char *kBuild = "release";
 constexpr const char *kIssuer = "sekailink-bootstrapper";
 constexpr const char *kAudience = "sekailink-client";
+constexpr const char *kReleaseSigningPublicKeyBase64 = "F2d63y8lUu+/+3Cjqw3gk/toNhHBbJUdMACb6zGwHcY=";
 
 struct Options {
   bool ui = true;
@@ -74,8 +75,58 @@ struct ReleaseInfo {
   std::string downloadUrl;
   std::string sha256;
   std::string fileName;
+  std::string channel;
+  std::string build;
+  std::string signature;
+  std::uint64_t releaseSequence = 0;
   std::uintmax_t size = 0;
 };
+
+std::vector<unsigned char> decodeBase64(const std::string &value) {
+  if (value.empty() || value.size() % 4 != 0) throw std::runtime_error("release_signature_invalid_base64");
+  std::vector<unsigned char> decoded((value.size() / 4) * 3 + 1);
+  const int size = EVP_DecodeBlock(decoded.data(),
+      reinterpret_cast<const unsigned char *>(value.data()), static_cast<int>(value.size()));
+  if (size < 0) throw std::runtime_error("release_signature_invalid_base64");
+  std::size_t padding = 0;
+  if (!value.empty() && value.back() == '=') ++padding;
+  if (value.size() > 1 && value[value.size() - 2] == '=') ++padding;
+  decoded.resize(static_cast<std::size_t>(size) - padding);
+  return decoded;
+}
+
+std::string releaseSignaturePayload(const ReleaseInfo &info) {
+  return "sekailink-release-v1\nversion=" + info.version +
+      "\nchannel=" + info.channel +
+      "\nplatform=" + info.platform +
+      "\nbuild=" + info.build +
+      "\nartifact_type=" + info.artifactType +
+      "\ndownload_url=" + info.downloadUrl +
+      "\nsha256=" + info.sha256 +
+      "\nrelease_sequence=" + std::to_string(info.releaseSequence) + "\n";
+}
+
+void verifyReleaseSignature(const ReleaseInfo &info) {
+  const auto publicKey = decodeBase64(kReleaseSigningPublicKeyBase64);
+  const auto signature = decodeBase64(info.signature);
+  if (publicKey.size() != 32 || signature.size() != 64) {
+    throw std::runtime_error("release_signature_invalid_size");
+  }
+  EVP_PKEY *key = EVP_PKEY_new_raw_public_key(EVP_PKEY_ED25519, nullptr, publicKey.data(), publicKey.size());
+  EVP_MD_CTX *ctx = EVP_MD_CTX_new();
+  if (!key || !ctx) {
+    EVP_PKEY_free(key);
+    EVP_MD_CTX_free(ctx);
+    throw std::runtime_error("release_signature_context_failed");
+  }
+  const std::string payload = releaseSignaturePayload(info);
+  const bool valid = EVP_DigestVerifyInit(ctx, nullptr, nullptr, nullptr, key) == 1 &&
+      EVP_DigestVerify(ctx, signature.data(), signature.size(),
+          reinterpret_cast<const unsigned char *>(payload.data()), payload.size()) == 1;
+  EVP_MD_CTX_free(ctx);
+  EVP_PKEY_free(key);
+  if (!valid) throw std::runtime_error("release_signature_mismatch");
+}
 
 struct UiState {
   std::mutex mutex;
@@ -450,6 +501,35 @@ std::string envString(const char *name) {
   return value && *value ? std::string(value) : std::string{};
 }
 
+std::string normalizeReleaseChannel(std::string value) {
+  value = lower(trim(std::move(value)));
+  if (value == "canary") return "canari";
+  if (value == "stable" || value == "release" || value == "test") return "canonical";
+  if (value == "canari" || value == "canonical") return value;
+  return "canonical";
+}
+
+fs::path releaseChannelPreferencePath() {
+  return appDataDir() / "sekailink-bootloader" / "release-channel.json";
+}
+
+std::string readReleaseChannelPreference() {
+  const std::string fromEnv = trim(envString("SEKAILINK_RELEASE_CHANNEL"));
+  if (!fromEnv.empty()) return normalizeReleaseChannel(fromEnv);
+  const fs::path path = releaseChannelPreferencePath();
+  try {
+    const std::string text = trim(readText(path));
+    if (text.empty()) return "";
+    if (!text.empty() && text.front() == '{') {
+      const auto parsed = json::parse(text);
+      return normalizeReleaseChannel(parsed.value("channel", ""));
+    }
+    return normalizeReleaseChannel(text);
+  } catch (...) {
+  }
+  return "";
+}
+
 void submitBootloaderBugReport(
     const std::string &url,
     const std::string &error,
@@ -545,10 +625,16 @@ ReleaseInfo fetchRelease(const Options &options, Logger &log) {
   info.downloadUrl = parsed.value("download_url", parsed.value("downloadUrl", ""));
   info.sha256 = lower(parsed.value("sha256", ""));
   info.fileName = parsed.value("file_name", parsed.value("fileName", ""));
+  info.channel = parsed.value("channel", options.channel);
+  info.build = parsed.value("build", options.build);
+  info.signature = parsed.value("signature", "");
+  info.releaseSequence = parsed.value("release_sequence", 0ull);
   info.size = parsed.value("size", 0ull);
-  if (info.version.empty() || info.downloadUrl.empty() || info.sha256.empty()) {
+  if (info.version.empty() || info.downloadUrl.empty() || info.sha256.empty() || info.signature.empty() ||
+      info.releaseSequence == 0) {
     throw std::runtime_error("release_manifest_incomplete");
   }
+  verifyReleaseSignature(info);
   log.line("release", "version=" + info.version + " url=" + info.downloadUrl + " sha256=" + info.sha256);
   return info;
 }
@@ -568,6 +654,21 @@ std::string installedVersion(const fs::path &stateDir, const fs::path &installDi
   return {};
 }
 
+std::uint64_t installedReleaseSequence(const fs::path &stateDir, const fs::path &installDir) {
+  std::uint64_t sequence = 0;
+  for (const fs::path &candidate : {stateDir / "install-state.json", installDir / ".sekailink" / "install-state.json"}) {
+    try {
+      const std::string text = readText(candidate);
+      if (!text.empty()) {
+        const auto candidate = json::parse(text).value("releaseSequence", std::uint64_t{0});
+        sequence = std::max(sequence, candidate);
+      }
+    } catch (...) {
+    }
+  }
+  return sequence;
+}
+
 bool isSafeZipPath(const std::string &name) {
   if (name.empty()) return false;
   if (name.find('\0') != std::string::npos) return false;
@@ -579,6 +680,12 @@ bool isSafeZipPath(const std::string &name) {
     if (part == "..") return false;
   }
   return true;
+}
+
+bool isZipDirectoryLike(const mz_zip_archive &zip, mz_uint index, const mz_zip_archive_file_stat &st) {
+  const std::string name = st.m_filename;
+  return mz_zip_reader_is_file_a_directory(const_cast<mz_zip_archive *>(&zip), index) ||
+         (!name.empty() && (name.back() == '/' || name.back() == '\\') && st.m_uncomp_size == 0);
 }
 
 void extractZip(const fs::path &zipPath, const fs::path &outDir, UiState *ui, Logger &log) {
@@ -602,7 +709,7 @@ void extractZip(const fs::path &zipPath, const fs::path &outDir, UiState *ui, Lo
       throw std::runtime_error("zip_unsafe_path:" + name);
     }
     const fs::path target = outDir / fs::u8path(name);
-    if (mz_zip_reader_is_file_a_directory(&zip, i)) {
+    if (isZipDirectoryLike(zip, i, st)) {
       fs::create_directories(target);
     } else {
       fs::create_directories(target.parent_path());
@@ -742,6 +849,7 @@ void writeInstallState(const fs::path &stateDir, const fs::path &installDir, con
     {"build", options.build},
     {"platform", platformId()},
     {"artifactType", release.artifactType.empty() ? "client-bundle" : release.artifactType},
+    {"releaseSequence", release.releaseSequence},
     {"installDir", installDir.u8string()},
     {"updatedAt", nowStamp()},
   };
@@ -811,6 +919,11 @@ void runUpdate(const Options &options, UiState *ui, Logger &log) {
   setUi(ui, "Checking release", platformId(), 0.02);
   ReleaseInfo release = fetchRelease(options, log);
   const std::string current = installedVersion(stateDir, installDir);
+  const std::uint64_t currentSequence = installedReleaseSequence(stateDir, installDir);
+  if (currentSequence > 0 && release.releaseSequence < currentSequence) {
+    throw std::runtime_error("release_rollback_rejected:" + std::to_string(release.releaseSequence) +
+        "<" + std::to_string(currentSequence));
+  }
   if (!options.force && !current.empty() && current == release.version && fs::exists(installDir / clientExeName())) {
     log.line("update", "already current version=" + current);
     setUi(ui, "SekaiLink is up to date", release.version, 1.0);
@@ -847,6 +960,8 @@ void runUpdate(const Options &options, UiState *ui, Logger &log) {
 
 Options parseOptions(int argc, char **argv) {
   Options options;
+  const std::string preferredChannel = readReleaseChannelPreference();
+  if (!preferredChannel.empty()) options.channel = preferredChannel;
   for (int i = 1; i < argc; ++i) {
     const std::string arg = argv[i];
     auto next = [&]() -> std::string {
@@ -857,7 +972,7 @@ Options parseOptions(int argc, char **argv) {
     else if (arg == "--no-launch") options.launch = false;
     else if (arg == "--force") options.force = true;
     else if (arg == "--api-base") options.apiBase = next();
-    else if (arg == "--channel") options.channel = next();
+    else if (arg == "--channel") options.channel = normalizeReleaseChannel(next());
     else if (arg == "--build") options.build = next();
     else if (arg == "--install-dir") options.installDir = fs::u8path(next());
     else if (arg == "--zip-test") options.zipTest = fs::u8path(next());
@@ -1163,7 +1278,8 @@ void runUi(UiState &state, std::thread &worker, const fs::path &logPath) {
 int realMain(int argc, char **argv) {
   Options options = parseOptions(argc, argv);
   Logger log;
-  log.line("boot", "SekaiLink native bootloader platform=" + platformId());
+  options.channel = normalizeReleaseChannel(options.channel);
+  log.line("boot", "SekaiLink native bootloader platform=" + platformId() + " channel=" + options.channel);
 
   if (!options.zipTest.empty()) {
     const fs::path out = options.zipTestOut.empty() ? (workDir() / "zip-test") : options.zipTestOut;

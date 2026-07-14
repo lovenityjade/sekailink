@@ -1,0 +1,1582 @@
+[
+//     "dungeon_shortcuts_list", "mq_dungeons_list",
+//     "key_rings_list",  "logic_tricks",
+    {
+        "name": "Force Update",
+        "type": "toggle",
+        "codes": "update"
+    },
+    { 
+        "name": "open_door_of_time",
+        "type": "toggle",
+        "img": "/images/settings/open_door_of_time.png",
+        "codes": "open_door_of_time"
+    },
+    {
+        "name": "logic_no_night_tokens_without_suns_song",
+        "type": "toggle",
+        "img": "/images/settings/nighttime_skulltulas_expect_sun's_song.png",
+        "codes": "logic_no_night_tokens_without_suns_song"
+    },
+    {
+        "name": "starting_age",
+        "type": "toggle",
+        "disabled_img": "/images/settings/starting_age_child.png",
+        "img": "/images/settings/starting_age_adult.png",
+        "disabled_img_mods": "none",
+        "codes": "starting_age"
+    },
+    {
+        "name": "shuffle_grotto_entrances",
+        "type": "toggle",
+        "img": "/images/settings/shuffle_entrances_grotto_&_grave.png.png",
+        "codes": "shuffle_grotto_entrances"
+    },
+    {
+        "name": "shuffle_overworld_entrances",
+        "type": "toggle",
+        "img": "/images/settings/shuffle_entrances_overworld.png",
+        "codes": "shuffle_overworld_entrances"
+    },
+    {
+        "name": "owl_drops",
+        "type": "toggle",
+        "img": "/images/settings/randomize_owl_drops.png",
+        "codes": "owl_drops"
+    },
+    {
+        "name": "warp_songs",
+        "type": "toggle",
+        "img": "/images/settings/randomize_warp_songs.png",
+        "codes": "warp_songs"
+    },
+    {
+        "name": "triforce_hunt",
+        "type": "toggle",
+        "img": "/images/settings/triforce_hunt.png",
+        "codes": "triforce_hunt"
+    },
+    {
+        "name": "bombchus_in_logic",
+        "type": "toggle",
+        "img": "/images/settings/bombchus_in_logic.png",
+        "codes": "bombchus_in_logic"
+    },
+    {
+        "name": "shuffle_cows",
+        "type": "toggle",
+        "img": "/images/settings/shuffle_cows.png",
+        "codes": "shuffle_cows"
+    },
+    {
+        "name": "shuffle_kokiri_sword",
+        "type": "toggle",
+        "img": "/images/settings/shuffle_kokiri_sword.png",
+        "codes": "shuffle_kokiri_sword"
+    },
+    {
+        "name": "shuffle_ocarinas",
+        "type": "toggle",
+        "img": "/images/settings/shuffle_ocarinas.png",
+        "codes": "shuffle_ocarinas"
+    },
+    {
+        "name": "shuffle_gerudo_card",
+        "type": "toggle",
+        "img": "/images/settings/shuffle_gerudo_card.png",
+        "codes": "shuffle_gerudo_card"
+    },
+    {
+        "name": "shuffle_beans",
+        "type": "toggle",
+        "img": "/images/settings/shuffle_magic_beans.png",
+        "codes": "shuffle_beans"
+    },
+    {
+        "name": "shuffle_medigoron_carpet_salesman",
+        "type": "toggle",
+        "img": "/images/settings/shuffle_medigoron_&_carpet_salesman.png.png",
+        "codes": "shuffle_medigoron_carpet_salesman"
+    },
+    {
+        "name": "shuffle_beehives",
+        "type": "toggle",
+        "img": "/images/settings/shuffle_beehives.png",
+        "codes": "shuffle_beehives"
+    },
+    {
+        "name": "shuffle_frog_song_rupees",
+        "type": "toggle",
+        "img": "/images/settings/shuffle_frog_song_rupees.png",
+        "codes": "shuffle_frog_song_rupees"
+    },
+    {
+        "name": "no_epona_race",
+        "type": "toggle",
+        "img": "/images/settings/skip_child_stealth.png",
+        "codes": "no_epona_race"
+    },
+    {
+        "name": "skip_some_minigame_phases",
+        "type": "toggle",
+        "img": "/images/settings/skip_some_minigame_phases.png",
+        "codes": "skip_some_minigame_phases"
+    },
+    {
+        "name": "complete_mask_quest",
+        "type": "toggle",
+        "img": "/images/settings/complete_mask_quest.png",
+        "codes": "complete_mask_quest"
+    },
+    {
+        "name": "free_scarecrow",
+        "type": "toggle",
+        "img": "/images/settings/free_scarecrow.png",
+        "codes": "free_scarecrow"
+    },
+    {
+        "name": "plant_beans",
+        "type": "toggle",
+        "img": "/images/settings/plant_magic_beans.png",
+        "codes": "plant_beans"
+    },
+    {
+        "name": "blue_fire_arrows",
+        "type": "toggle",
+        "img": "/images/settings/blue_fire_arrows.png",
+        "codes": "blue_fire_arrows"
+    },
+    {
+        "name": "start_with_consumables",
+        "type": "toggle",
+        "img": "/images/settings/start_with_consumables.png",
+        "codes": "start_with_consumables"
+    },
+    {
+        "name": "enhance_map_compass",
+        "type": "toggle",
+        "img": "/images/settings/enhance_map_compass.png",
+        "codes": "enhance_map_compass"
+    },
+    // {
+    //     "name": "WeirdEgg",
+    //     "type": "toggle",
+    //     "img": "/images/settings/WeirdEgg.png",
+    //     "codes": "WeirdEgg"
+    // },
+    {
+        "name": "logic_rules",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "glitchless",
+                "img": "/images/settings/logic_rules_glitchless.png"
+            },
+            {
+                "name": "glitched",
+                "img": "/images/settings/logic_rules_glitched.png"
+            },
+            {
+                "name": "no logic",
+                "img": "/images/settings/logic_rules_no_logic.png"
+            }
+        ],
+        "codes": "logic_rules"
+    },
+    {
+        "name": "open_forest",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "open forest",
+                "img": "/images/settings/forest_open.png"
+            },
+            {
+                "name": "closed deku",
+                "img": "/images/settings/forest_closed_deku.png"
+            },
+            {
+                "name": "closed forest",
+                "img": "/images/settings/forest_closed.png"
+            }
+        ],
+        "codes": "open_forest"
+    },
+    {
+        "name": "open_kakariko",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "open",
+                "img": "/images/settings/kakariko_gate_open.png"
+            },
+            {
+                "name": "zelda",
+                "img": "/images/settings/kakariko_gate_zelda.png"
+            },
+            {
+                "name": "closed",
+                "img": "/images/settings/kakariko_gate_closed.png"
+            }
+        ],
+        "codes": "open_kakariko"
+    },
+    {
+        "name": "zora_fountain",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "open",
+                "img": "/images/settings/zora's_fountain_open.png"
+            },
+            {
+                "name": "adult",
+                "img": "/images/settings/zora's_fountain_adult.png"
+            },
+            {
+                "name": "closed",
+                "img": "/images/settings/zora's_fountain_closed.png"
+            }
+        ],
+        "codes": "zora_fountain"
+    },
+    {
+        "name": "gerudo_fortress",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "normal",
+                "img": "/images/settings/gerudo_fortress_normal.png"
+            },
+            {
+                "name": "fast",
+                "img": "/images/settings/gerudo_fortress_fast.png"
+            },
+            {
+                "name": "open",
+                "img": "/images/settings/gerudo_fortress_open.png"
+            }
+        ],
+        "codes": "gerudo_fortress"
+    },
+    {
+        "name": "bridge",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "open",
+                "img": "/images/settings/rainbow_bridge_req._open.png"
+            },
+            {
+                "name": "vanilla",
+                "img": "/images/settings/rainbow_bridge_req._vanilla.png"
+            },
+            {
+                "name": "stones",
+                "img": "/images/settings/rainbow_bridge_req._stones.png"
+            },
+            {
+                "name": "medallions",
+                "img": "/images/settings/rainbow_bridge_req._medallions.png"
+            },
+            {
+                "name": "dungeons",
+                "img": "/images/settings/rainbow_bridge_req._dungeons.png"
+            },
+            {
+                "name": "tokens",
+                "img": "/images/settings/rainbow_bridge_req._tokens.png"
+            },
+            {
+                "name": "hearts",
+                "img": "/images/settings/rainbow_bridge_req._hearts.png"
+            }
+        ],
+        "codes": "bridge"
+    },
+    {
+        "name": "shuffle_interior_entrances",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "off",
+                "img": "/images/settings/shuffle_interior_entrances_off.png"
+            },
+            {
+                "name": "simple",
+                "img": "/images/settings/shuffle_interior_entrances_simple.png"
+            },
+            {
+                "name": "all",
+                "img": "/images/settings/shuffle_interior_entrances_all.png"
+            }
+        ],
+        "codes": "shuffle_interior_entrances"
+    },
+    {
+        "name": "shuffle_dungeon_entrances",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "off",
+                "img": "/images/settings/shuffle_dungeon_entrances_off.png"
+            },
+            {
+                "name": "simple",
+                "img": "/images/settings/shuffle_dungeon_entrances_simple.png"
+            },
+            {
+                "name": "all",
+                "img": "/images/settings/shuffle_dungeon_entrances_all.png"
+            }
+        ],
+        "codes": "shuffle_dungeon_entrances"
+    },
+    {
+        "name": "dungeon_shortcuts",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "off",
+                "img": "/images/settings/dungeon_boss_shortcuts_off.png"
+            },
+            {
+                "name": "choice",
+                "img": "/images/settings/dungeon_boss_shortcuts_choice.png"
+            },
+            {
+                "name": "all",
+                "img": "/images/settings/dungeon_boss_shortcuts_all.png"
+            },
+            {
+                "name": "random dungeons",
+                "img": "/images/settings/dungeon_boss_shortcuts_random_dungeons.png"
+            }
+        ],
+        "codes": "dungeon_shortcuts"
+    },
+    {
+        "name": "spawn_positions",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "off",
+                "img": "/images/settings/randomize_spawn_positions_off.png"
+            },
+            {
+                "name": "child",
+                "img": "/images/settings/randomize_spawn_positions_child.png"
+            },
+            {
+                "name": "adult",
+                "img": "/images/settings/randomize_spawn_positions_adult.png"
+            },
+            {
+                "name": "both",
+                "img": "/images/settings/randomize_spawn_positions_both.png"
+            }
+        ],
+        "codes": "spawn_positions"
+    },
+    {
+        "name": "shuffle_bosses",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "off",
+                "img": "/images/settings/shuffle_boss_entrances_off.png"
+            },
+            {
+                "name": "limited",
+                "img": "/images/settings/shuffle_boss_entrances_limited.png"
+            },
+            {
+                "name": "full",
+                "img": "/images/settings/shuffle_boss_entrances_full.png"
+            }
+        ],
+        "codes": "shuffle_bosses"
+    },
+    {
+        "name": "shuffle_child_trade",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "vanilla",
+                "img": "/images/settings/shuffle_child_trade_item_false.png"
+            },
+            {
+                "name": "shuffle",
+                "img": "/images/settings/shuffle_child_trade_item_true.png"
+            },
+            {
+                "name": "overworld",
+                "img": "/images/settings/shuffle_child_trade_item_skip_child_zelda.png"
+            }
+        ],
+        "codes": "shuffle_child_trade"
+    },
+    {
+        "name": "shuffle_freestanding_items",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "off",
+                "img": "/images/settings/shuffle_rupees_&_hearts_off.png"
+            },
+            {
+                "name": "dungeon",
+                "img": "/images/settings/shuffle_rupees_&_hearts_dungeons.png"
+            },
+            {
+                "name": "overworld",
+                "img": "/images/settings/shuffle_rupees_&_hearts_overworld.png"
+            },
+            {
+                "name": "all",
+                "img": "/images/settings/shuffle_rupees_&_hearts_all.png"
+            }
+        ],
+        "codes": "shuffle_freestanding_items"
+    },
+    {
+        "name": "shuffle_pots",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "off",
+                "img": "/images/settings/shuffle_pots_off.png"
+            },
+            {
+                "name": "dungeon",
+                "img": "/images/settings/shuffle_pots_dungeons.png"
+            },
+            {
+                "name": "overworld",
+                "img": "/images/settings/shuffle_pots_overworld.png"
+            },
+            {
+                "name": "all",
+                "img": "/images/settings/shuffle_pots_all.png"
+            }
+        ],
+        "codes": "shuffle_pots"
+    },
+    {
+        "name": "shuffle_crates",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "off",
+                "img": "/images/settings/shuffle_crates_off.png"
+            },
+            {
+                "name": "dungeon",
+                "img": "/images/settings/shuffle_crates_dungeons.png"
+            },
+            {
+                "name": "overworld",
+                "img": "/images/settings/shuffle_crates_overworld.png"
+            },
+            {
+                "name": "all",
+                "img": "/images/settings/shuffle_crates_all.png"
+            }
+        ],
+        "codes": "shuffle_crates"
+    },
+    {
+        "name": "mq_dungeons_mode",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "vanilla",
+                "img": "/images/settings/mq_dungeon_mode_vanilla.png"
+            },
+            {
+                "name": "masterquest",
+                "img": "/images/settings/mq_dungeon_mode_mq.png"
+            },
+            {
+                "name": "specific",
+                "img": "/images/settings/mq_dungeon_mode_specific.png"
+            },
+            {
+                "name": "count",
+                "img": "/images/settings/mq_dungeon_mode_count.png"
+            }
+        ],
+        "codes": "mq_dungeons_mode"
+    },
+    {
+        "name": "shuffle_song_items",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "song",
+                "img": "/images/settings/shuffle_songs_song.png"
+            },
+            {
+                "name": "dungeon",
+                "img": "/images/settings/shuffle_songs_dungeon.png"
+            },
+            {
+                "name": "any",
+                "img": "/images/settings/shuffle_songs_any.png"
+            }
+        ],
+        "codes": "shuffle_song_items"
+    },
+    {
+        "name": "shopsanity",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "off",
+                "img": "/images/settings/shopsanity_off.png"
+            },
+            {
+                "name": "fixed number",
+                "img": "/images/settings/shopsanity_fixed_number.png"
+            },
+            {
+                "name": "radnom number",
+                "img": "/images/settings/shopsanity_random_number.png"
+            }
+        ],
+        "codes": "shopsanity"
+    },
+    {
+        "name": "shopsanity_prices",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "normal",
+                "img": "/images/settings/shopsanity_prices_normal.png"
+            },
+            {
+                "name": "affordable",
+                "img": "/images/settings/shopsanity_prices_affordable.png"
+            },
+            {
+                "name": "staring wallet",
+                "img": "/images/settings/shopsanity_prices_starting_wallet.png"
+            },
+            {
+                "name": "adults wallet",
+                "img": "/images/settings/shopsanity_prices_adults_wallet.png"
+            },
+            {
+                "name": "giants wallet",
+                "img": "/images/settings/shopsanity_prices_giants_wallet.png"
+            },
+            {
+                "name": "tycoons wallet",
+                "img": "/images/settings/shopsanity_prices_tycoons_wallet.png"
+            }
+        ],
+        "codes": "shopsanity_prices"
+    },
+    {
+        "name": "tokensanity",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "off",
+                "img": "/images/settings/tokensanity_off.png"
+            },
+            {
+                "name": "dungeons",
+                "img": "/images/settings/tokensanity_dungeons.png"
+            },
+            {
+                "name": "overworld",
+                "img": "/images/settings/tokensanity_overworld.png"
+            },
+            {
+                "name": "all",
+                "img": "/images/settings/tokensanity_all.png"
+            }
+        ],
+        "codes": "tokensanity"
+    },
+    {
+        "name": "key_rings",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "off",
+                "img": "/images/settings/key_rings_mode_off.png"
+            },
+            {
+                "name": "choose",
+                "img": "/images/settings/key_rings_mode_choose.png"
+            },
+            {
+                "name": "all",
+                "img": "/images/settings/key_rings_mode_all.png"
+            },
+            {
+                "name": "random dungeons",
+                "img": "/images/settings/key_rings_mode_random_dungeons.png"
+            }
+        ],
+        "codes": "key_rings"
+    },
+    {
+        "name": "shuffle_scrubs",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "off",
+                "img": "/images/settings/scrub_shuffle_off.png"
+            },
+            {
+                "name": "affordable",
+                "img": "/images/settings/scrub_shuffle_affordable.png"
+            },
+            {
+                "name": "expensive",
+                "img": "/images/settings/scrub_shuffle_expensive.png"
+            },
+            {
+                "name": "random",
+                "img": "/images/settings/scrub_shuffle_random_prices.png"
+            }
+        ],
+        "codes": "shuffle_scrubs"
+    },
+    {
+        "name": "shuffle_smallkeys",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "remove",
+                "img": "/images/settings/small_keys_remove.png"
+            },
+            {
+                "name": "startwith",
+                "img": "/images/settings/small_keys_startwith.png"
+            },
+            {
+                "name": "vanilla",
+                "img": "/images/settings/small_keys_vanilla.png"
+            },
+            {
+                "name": "dungeon",
+                "img": "/images/settings/small_keys_dungeon.png"
+            },
+            {
+                "name": "regional",
+                "img": "/images/settings/small_keys_regional.png"
+            },
+            {
+                "name": "overworld",
+                "img": "/images/settings/small_keys_overworld.png"
+            },
+            {
+                "name": "any dungeon",
+                "img": "/images/settings/small_keys_any_dungeon.png"
+            },
+            {
+                "name": "keysanity",
+                "img": "/images/settings/small_keys_keysanity.png"
+            }
+        ],
+        "codes": "shuffle_smallkeys"
+    },
+    {
+        "name": "shuffle_mapcompass",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "remove",
+                "img": "/images/settings/maps_&_compasses_remove.png"
+            },
+            {
+                "name": "startwith",
+                "img": "/images/settings/maps_&_compasses_startwith.png"
+            },
+            {
+                "name": "vanilla",
+                "img": "/images/settings/maps_&_compasses_vanilla.png"
+            },
+            {
+                "name": "dungeon",
+                "img": "/images/settings/maps_&_compasses_dungeon.png"
+            },
+            {
+                "name": "regional",
+                "img": "/images/settings/maps_&_compasses_regional.png"
+            },
+            {
+                "name": "overworld",
+                "img": "/images/settings/maps_&_compasses_overworld.png"
+            },
+            {
+                "name": "any dungeon",
+                "img": "/images/settings/maps_&_compasses_any_dungeon.png"
+            },
+            {
+                "name": "keysanity",
+                "img": "/images/settings/maps_&_compasses_keysanity.png"
+            }
+        ],
+        "codes": "shuffle_mapcompass"
+    },
+    {
+        "name": "shuffle_hideoutkeys",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "vanilla",
+                "img": "/images/settings/thieves'_hideout_keys_vanilla.png"
+            },
+            {
+                "name": "regional",
+                "img": "/images/settings/thieves'_hideout_keys_regional.png"
+            },
+            {
+                "name": "overworld",
+                "img": "/images/settings/thieves'_hideout_keys_overworld.png"
+            },
+            {
+                "name": "any dungeon",
+                "img": "/images/settings/thieves'_hideout_keys_any_dungeon.png"
+            },
+            {
+                "name": "keysanity",
+                "img": "/images/settings/thieves'_hideout_keys_keysanity.png"
+            }
+        ],
+        "codes": "shuffle_hideoutkeys"
+    },
+    {
+        "name": "shuffle_bosskeys",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "remove",
+                "img": "/images/settings/boss_keys_remove.png"
+            },
+            {
+                "name": "",
+                "img": "/images/settings/boss_keys_remove.png"
+            },
+            {
+                "name": "vanilla",
+                "img": "/images/settings/boss_keys_vanilla.png"
+            },
+            {
+                "name": "dungeon",
+                "img": "/images/settings/boss_keys_dungeon.png"
+            },
+            {
+                "name": "regional",
+                "img": "/images/settings/boss_keys_regional.png"
+            },
+            {
+                "name": "overworld",
+                "img": "/images/settings/boss_keys_overworld.png"
+            },
+            {
+                "name": "any dungeon",
+                "img": "/images/settings/boss_keys_any_dungeon.png"
+            },
+            {
+                "name": "keysanity",
+                "img": "/images/settings/boss_keys_keysanity.png"
+            }
+        ],
+        "codes": "shuffle_bosskeys"
+    },
+    {
+        "name": "shuffle_ganon_bosskey",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "remove",
+                "img": "/images/settings/ganon's_boss_key_remove.png"
+            },
+            {
+                "name": "",
+                "img": "/images/settings/ganon's_boss_key_remove.png"
+            },
+            {
+                "name": "vanilla",
+                "img": "/images/settings/ganon's_boss_key_vanilla.png"
+            },
+            {
+                "name": "dungeon",
+                "img": "/images/settings/ganon's_boss_key_dungeon.png"
+            },
+            {
+                "name": "regional",
+                "img": "/images/settings/ganon's_boss_key_regional.png"
+            },
+            {
+                "name": "overworld",
+                "img": "/images/settings/ganon's_boss_key_overworld.png"
+            },
+            {
+                "name": "any dungeon",
+                "img": "/images/settings/ganon's_boss_key_any_dungeon.png"
+            },
+            {
+                "name": "keysanity",
+                "img": "/images/settings/ganon's_boss_key_keysanity.png"
+            },
+            {
+                "name": "on lacs",
+                "img": "/images/settings/ganon's_boss_key_on_lacs.png"
+            },
+            {
+                "name": "stones",
+                "img": "/images/settings/ganon's_boss_key_stones.png"
+            },
+            {
+                "name": "medallions",
+                "img": "/images/settings/ganon's_boss_key_medallions.png"
+            },
+            {
+                "name": "dungeons",
+                "img": "/images/settings/ganon's_boss_key_dungeons.png"
+            },
+            {
+                "name": "tokens",
+                "img": "/images/settings/ganon's_boss_key_tokens.png"
+            },
+            {
+                "name": "hearts",
+                "img": "/images/settings/ganon's_boss_key_hearts.png"
+            }
+        ],
+        "codes": "shuffle_ganon_bosskey"
+    },
+    {
+        "name": "damage_multiplier",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "half",
+                "img": "/images/settings/damage_multiplier_half.png"
+            },
+            {
+                "name": "normal",
+                "img": "/images/settings/damage_multiplier_normal.png"
+            },
+            {
+                "name": "double",
+                "img": "/images/settings/damage_multiplier_double.png"
+            },
+            {
+                "name": "qudaruple",
+                "img": "/images/settings/damage_multiplier_quadruple.png"
+            },
+            {
+                "name": "ohko",
+                "img": "/images/settings/damage_multiplier_ohko.png"
+            }
+            
+        ],
+        "codes": "damage_multiplier"
+    },
+    {
+        "name": "deadly_bonks",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "none",
+                "img": "/images/settings/bonks_do_damage_none.png"
+            },
+            {
+                "name": "half",
+                "img": "/images/settings/bonks_do_damage_half.png"
+            },
+            {
+                "name": "normal",
+                "img": "/images/settings/bonks_do_damage_normal.png"
+            },
+            {
+                "name": "double",
+                "img": "/images/settings/bonks_do_damage_double.png"
+            },
+            {
+                "name": "qudaruple",
+                "img": "/images/settings/bonks_do_damage_quadruple.png"
+            },
+            {
+                "name": "ohko",
+                "img": "/images/settings/bonks_do_damage_ohko.png"
+            }
+        ],
+        "codes": "deadly_bonks"
+    },
+    {
+        "name": "starting_tod",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "default",
+                "img": "/images/settings/starting_time_of_day_default.png"
+            },
+            {
+                "name": "sunrise",
+                "img": "/images/settings/starting_time_of_day_sunrise.png"
+            },
+            {
+                "name": "morning",
+                "img": "/images/settings/starting_time_of_day_morning.png"
+            },
+            {
+                "name": "noon",
+                "img": "/images/settings/starting_time_of_day_noon.png"
+            },
+            {
+                "name": "afternoon",
+                "img": "/images/settings/starting_time_of_day_afternoon.png"
+            },
+            {
+                "name": "sunset",
+                "img": "/images/settings/starting_time_of_day_sunset.png"
+            },
+            {
+                "name": "evening",
+                "img": "/images/settings/starting_time_of_day_evening.png"
+            },
+            {
+                "name": "midnight",
+                "img": "/images/settings/starting_time_of_day_midnight.png"
+            },
+            {
+                "name": "witching hour",
+                "img": "/images/settings/starting_time_of_day_witching_hour.png"
+            }
+        ],
+        "codes": "starting_tod"
+    },
+    {
+        "name": "junk_ice_traps",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "off",
+                "img": "/images/settings/ice_traps_off.png"
+            },
+            {
+                "name": "normal",
+                "img": "/images/settings/ice_traps_normal.png"
+            },
+            {
+                "name": "on",
+                "img": "/images/settings/ice_traps_on.png"
+            },
+            {
+                "name": "mayhem",
+                "img": "/images/settings/ice_traps_mayhem.png"
+            },
+            {
+                "name": "onslaught",
+                "img": "/images/settings/ice_traps_onslaught.png"
+            }
+        ],
+        "codes": "junk_ice_traps"
+    },
+    {
+        "name": "adult_trade_start",
+        "type": "progressive",
+        "loop": true, 
+        "allow_disabled": false,
+        "initial_stage_idx": 0,
+        "stages": [
+            {
+                "name": "pocket egg",
+                "img": "/images/settings/adult_trade_seq._start_pocket_egg.png"
+            },
+            {
+                "name": "pocket cucco",
+                "img": "/images/settings/adult_trade_seq._start_pocket_cucco.png"
+            },
+            {
+                "name": "cojiro",
+                "img": "/images/settings/adult_trade_seq._start_cojiro.png"
+            },
+            {
+                "name": "odd mushroom",
+                "img": "/images/settings/adult_trade_seq._start_odd_mushroom.png"
+            },
+            {
+                "name": "poachers saw",
+                "img": "/images/settings/adult_trade_seq._start_poachers_saw.png"
+            },
+            {
+                "name": "broken sword",
+                "img": "/images/settings/adult_trade_seq._start_broken_sword.png"
+            },
+            {
+                "name": "prescription",
+                "img": "/images/settings/adult_trade_seq._start_prescription.png"
+            },
+            {
+                "name": "eyeball frog",
+                "img": "/images/settings/adult_trade_seq._start_eyeball_frog.png"
+            },
+            {
+                "name": "eyedrops",
+                "img": "/images/settings/adult_trade_seq._start_eyedrops.png"
+            },
+            {
+                "name": "claim ckeck",
+                "img": "/images/settings/adult_trade_seq._start_claim_check.png"
+            }
+        ],
+        "codes": "adult_trade_start"
+    },
+    {
+        "name": "triforce_goal",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 1,
+        "max_quantity": 80,
+        "increment": 1,
+        "initial_quantity": 20,
+        "img": "/images/settings/required_triforce_pieces.png",
+        "overlay_background": "#000000",
+        "codes": "triforce_goal"
+    },
+    {
+        "name": "extra_triforce_percentage",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 10,
+        "max_quantity": 100,
+        "increment": 1,
+        "initial_quantity": 50,
+        "img": "/images/settings/perc._extra_triforce_pieces.png",
+        "overlay_background": "#000000",
+        "codes": "extra_triforce_percentage"
+    },
+    {
+        "name": "bridge_stones",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 0,
+        "max_quantity": 3,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/settings/required_for_bridge_spiritual_stones.png",
+        "overlay_background": "#000000",
+        "codes": "bridge_stones"
+    },
+    {
+        "name": "bridge_medallions",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 0,
+        "max_quantity": 6,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/settings/required_for_bridge_medallions.png",
+        "overlay_background": "#000000",
+        "codes": "bridge_medallions"
+    },
+    {
+        "name": "bridge_rewards",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 0,
+        "max_quantity": 9,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/settings/required_for_bridge_dungeon_rewards.png",
+        "overlay_background": "#000000",
+        "codes": "bridge_rewards"
+    },
+    {
+        "name": "bridge_tokens",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 0,
+        "max_quantity": 100,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/settings/required_for_bridge_tokens.png",
+        "overlay_background": "#000000",
+        "codes": "bridge_tokens"
+    },
+    {
+        "name": "bridge_hearts",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 4,
+        "max_quantity": 20,
+        "increment": 1,
+        "initial_quantity": 4,
+        "img": "/images/settings/required_for_bridge_hearts_.png",
+        "overlay_background": "#000000",
+        "codes": "bridge_hearts"
+    },
+    {
+        "name": "shop_slots",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 0,
+        "max_quantity": 4,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/settings/shuffled_shop_slots.png",
+        "overlay_background": "#000000",
+        "codes": "shop_slots"
+    },    
+    {
+        "name": "ganon_bosskey_medallions",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 1,
+        "max_quantity": 6,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/settings/required_for_ganon's_bk_medallions.png",
+        "overlay_background": "#000000",
+        "codes": "ganon_bosskey_medallions"
+    },
+    {
+        "name": "ganon_bosskey_stones",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity":1,
+        "max_quantity": 3,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/settings/required_for_ganon's_bk_spiritual_stones.png",
+        "overlay_background": "#000000",
+        "codes": "ganon_bosskey_stones"
+    },
+    {
+        "name": "ganon_bosskey_rewards",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 1,
+        "max_quantity": 9,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/settings/required_for_ganon's_bk_dungeon_rewards.png",
+        "overlay_background": "#000000",
+        "codes": "ganon_bosskey_rewards"
+    },
+    {
+        "name": "ganon_bosskey_tokens",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 1,
+        "max_quantity": 100,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/settings/required_for_ganon's_bk_tokens.png",
+        "overlay_background": "#000000",
+        "codes": "ganon_bosskey_tokens"
+    },
+    {
+        "name": "ganon_bosskey_hearts",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 4,
+        "max_quantity": 20,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/settings/required_for_ganon's_bk_hearts.png",
+        "overlay_background": "#000000",
+        "codes": "ganon_bosskey_hearts"
+    },
+    {
+        "name": "chicken_count",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 0,
+        "max_quantity": 7,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/settings/cucco_count.png",
+        "overlay_background": "#000000",
+        "codes": "chicken_count"
+    },
+    {
+        "name": "big_poe_count",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 1,
+        "max_quantity": 10,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/settings/big_poe_count.png",
+        "overlay_background": "#000000",
+        "codes": "big_poe_count"
+    },
+    {
+        "name": "fae_torch_count",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 1,
+        "max_quantity": 24,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/settings/bombs.png",
+        "overlay_background": "#000000",
+        "codes": "fae_torch_count"
+    },
+    {
+        "name": "trials",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 0,
+        "max_quantity": 6,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/settings/ganon's_trials_count.png",
+        "overlay_background": "#000000",
+        "codes": "trials"
+    },
+    {
+        "name": "mq_dungeons_count",
+        "type": "consumable",
+        "allow_disabled": true,
+        "min_quantity": 0,
+        "max_quantity": 12,
+        "increment": 1,
+        "initial_quantity": 0,
+        "img": "/images/settings/mq_dungeon_count.png",
+        "overlay_background": "#000000",
+        "codes": "mq_dungeons_count"
+    },
+    {
+        "name": "deku_tree_shortcuts",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/deku_tree_generic.png",
+        "codes": "deku_tree_shortcuts"
+    },
+    {
+        "name": "king_dodongo_shortcuts",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/king_dodongo_generic.png",
+        "codes": "king_dodongo_shortcuts"
+    },
+    {
+        "name": "dodongos_cavern_shortcuts",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/dodongos_cavern_generic.png",
+        "codes": "dodongos_cavern_shortcuts"
+    },
+    {
+        "name": "fire_temple_shortcuts",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/fire_temple_generic.png",
+        "codes": "fire_temple_shortcuts"
+    },
+    {
+        "name": "forest_temple_shortcuts",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/forest_temple_generic.png",
+        "codes": "forest_temple_shortcuts"
+    },
+    {
+        "name": "jabu_shortcuts",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/jabujabus_belly_generic.png",
+        "codes": "jabu_shortcuts"
+    },
+    {
+        "name": "shadow_temple_shortcuts",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/shadow_temple_generic.png",
+        "codes": "shadow_temple_shortcuts"
+    },
+    {
+        "name": "spirit_temple_shortcuts",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/spirit_temple_generic.png",
+        "codes": "spirit_temple_shortcuts"
+    },
+    {
+        "name": "water_temple_shortcuts",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/water_temple_generic.png",
+        "codes": "water_temple_shortcuts"
+    },
+    {
+        "name": "MQ Deku Tree",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/deku_tree_generic.png",
+        "codes": "MQ_Deku_Tree"
+    },
+    {
+        "name": "MQ Dodongos Cavern",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/dodongos_cavern_generic.png",
+        "codes": "MQ_Dodongos_Cavern"
+    },
+    {
+        "name": "MQ Bottom of the Well",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/bottom_of_the_well_generic.png",
+        "codes": "MQ_Bottom_of_the_Well"
+    },
+    {
+        "name": "MQ Fire Temple",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/fire_temple_generic.png",
+        "codes": "MQ_Fire_Temple"
+    },
+    {
+        "name": "MQ Forest Temple",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/forest_temple_generic.png",
+        "codes": "MQ_Forest_Temple"
+    },
+    {
+        "name": "MQ JJB",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/jabu_jabus_belly_generic.png",
+        "codes": "MQ_Jabu_Jabus_Belly"
+    },
+    {
+        "name": "MQ Shadow Temple",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/shadow_temple_generic.png",
+        "codes": "MQ_Shadow_Temple"
+    },
+    {
+        "name": "MQ Spirit Temple",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/spirit_temple_generic.png",
+        "codes": "MQ_Spirit_Temple"
+    },
+    {
+        "name": "MQ Water Temple",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/water_temple_generic.png",
+        "codes": "MQ_Water_Temple"
+    },
+    {
+        "name": "MQ GTG",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/gerudo_training_grounds_generic.png",
+        "codes": "MQ_Gerudo_Training_Ground"
+    },
+    {
+        "name": "MQ Ice Cavern",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/ice_cavern_generic.png",
+        "codes": "MQ_Ice_Cavern"
+    },
+    {
+        "name": "MQ Ganons Castle",
+        "type": "toggle",
+        "initial_active_state": false, 
+        "img": "/images/labels/ganons_tower_generic.png",
+        "codes": "MQ_Ganons_Castle"
+    }
+]
+
+// bottom_of_the_well_key_ring_areas.png
+// bottom_of_the_well_mq_dungeon_list.png
+// decouple_entrances.png
+// deku_tree_mq_dungeon_list.png
+// dodongo's_cavern_mq_dungeon_list.png
+// dungeon_rewards_required_for_bridge.png
+// dungeon_rewards_required_for_ganon's_bk.png
+// enable_useful_cutscenes.png
+// fast_bunny_hood.png
+// fast_chest_cutscenes.png
+// fire_temple_key_ring_areas.png
+// fire_temple_mq_dungeon_list.png
+// fix_broken_drops.png
+// forest_temple_key_ring_areas.png
+// forest_temple_mq_dungeon_list.png
+// ganon's_castle_mq_dungeon_list.png
+// ganon's_castle__key_ring_areas.png
+// gerudo_training_ground_key_ring_areas.png
+// gerudo_training_ground_mq_dungeon_list.png
+// gossip_stones_agony.png
+// gossip_stones_always.png
+// gossip_stones_mask.png
+// gossip_stones_none.png
+// hearts_required_for_bridge.png
+// hearts_required_for_ganon's_bk.png
+// hero_mode.png
+// ice_cavern_mq_dungeon_list.png
+// invisible_chests.png
+// item_pool_balanced.png
+// item_pool_minimal.png
+// item_pool_plentiful.png
+// item_pool_scarce.png
+// jabu_jabu's_belly_mq_dungeon_list.png
+// medallions_required_for_bridge.png
+// medallions_required_for_ganon's_bk.png
+// misc_hints.png
+// shadow_temple_key_ring_areas.png
+// shadow_temple_mq_dungeon_list.png
+// spiritual_stones_required_for_bridge.png
+// spiritual_stones_required_for_ganon's_bk.png
+// spirit_temple_key_ring_areas.png
+// spirit_temple_mq_dungeon_list.png
+// text_shuffle_alias_false.png
+// text_shuffle_complete.png
+// text_shuffle_except_hints.png
+// text_shuffle_none.png
+// thieves'_hideout_key_ring_areas.png
+// tokens_required_for_bridge.png
+// tokens_required_for_ganon's_bk.png
+// trap_appearance_anything.png
+// trap_appearance_junk_only.png
+// trap_appearance_major_only.png
+// water_temple_key_ring_areas.png
+// water_temple_mq_dungeon_list.png
+
+
+
+
+// free_scarecrow's_song.png
+// ganon's_trials_count.png
+// maps_and_compasses_give_information.png
+// nighttime_skulltulas_expect_sun's_song.png
+// plant_magic_beans.png
+// shuffle_entrances_overworld.png
+// shuffle_grotto_&_grave_entrances.png
+// shuffle_overworld_entrances.png
+
+// key_ring_areas_bottom_of_the_well.png
+// key_ring_areas_fire_temple.png
+// key_ring_areas_forest_temple.png
+// key_ring_areas_ganon's_castle.png
+// key_ring_areas_gerudo_training_ground.png
+// key_ring_areas_shadow_temple.png
+// key_ring_areas_spirit_temple.png
+// key_ring_areas_thieves'_hideout.png
+// key_ring_areas_water_temple.png
+
+
+// mq_dungeon_list_bottom_of_the_well.png
+// mq_dungeon_list_deku_tree.png
+// mq_dungeon_list_dodongo's_cavern.png
+// mq_dungeon_list_fire_temple.png
+// mq_dungeon_list_forest_temple.png
+// mq_dungeon_list_ganon's_castle.png
+// mq_dungeon_list_gerudo_training_ground.png
+// mq_dungeon_list_ice_cavern.png
+// mq_dungeon_list_jabu_jabu's_belly.png
+// mq_dungeon_list_shadow_temple.png
+// mq_dungeon_list_spirit_temple.png
+// mq_dungeon_list_water_temple.png

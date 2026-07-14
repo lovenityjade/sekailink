@@ -1,6 +1,6 @@
 # Compatibility Matrix
 
-Initial matrix imported from `/home/thelovenityjade/deep-research-report.md`
+Initial matrix imported from `<local-home>/deep-research-report.md`
 and cross-checked against local SekaiLink paths where possible.
 
 ## Runtime Freeze - Bilateral Confirmed

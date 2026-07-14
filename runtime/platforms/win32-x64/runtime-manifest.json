@@ -2,8 +2,8 @@
   "schema": "sekailink.runtime.windows.v1",
   "platform": "win32-x64",
   "buildTimeDependencySource": "MSYS2 UCRT64",
-  "sourceBinDir": "/mnt/windows/msys64/ucrt64/bin",
-  "generatedAt": "2026-06-08T03:17:42.121Z",
+  "sourceBinDir": "scratch/build-artifacts/2026-06-27/SekaiLink Bootloader hotfix source",
+  "generatedAt": "2026-07-03T21:44:45.724Z",
   "notes": [
     "These files are staged at build time. End users must not install MSYS2, LuaJIT, Python, or extra DLLs.",
     "ALTTP may be used as the release fixture, but runtime semantics remain generic APWorld and PopTracker pack compatibility."
@@ -12,7 +12,7 @@
     {
       "path": "bin/sekaiemu_libretro_spike.exe",
       "required": true,
-      "sha256": "76085d78983ae2c97342a6fac932309821b3b0c76c687d6df8bd7fd0abc637a5"
+      "sha256": "d65d7be501241fc54412e421e828c09b436b2e6c6e2a169c2c93db9b8557d86c"
     },
     {
       "path": "bin/sekailink_sklmi_runtime.exe",
@@ -38,6 +38,11 @@
       "path": "bin/libarchive-13.dll",
       "required": true,
       "sha256": "a23935a246234b3549523f229cbfb88d89dcefed2b1beee04a34b29d91f5954c"
+    },
+    {
+      "path": "bin/libcurl-4.dll",
+      "required": true,
+      "sha256": "4637c506f0058d5ecb10f44a76aa63b491830b9ea4d4c34542aba0a553a6af6e"
     },
     {
       "path": "bin/libgcc_s_seh-1.dll",
@@ -78,6 +83,51 @@
       "path": "bin/libcrypto-3-x64.dll",
       "required": true,
       "sha256": "10a3eea333ccf3076a0530d87a29d2bf8a45135bd7fa4f8cb17f3b85e6486a6f"
+    },
+    {
+      "path": "bin/libidn2-0.dll",
+      "required": true,
+      "sha256": "a054a6bb69aaf4666157f968740412e9697085cbc1e48a78f8dd9622169c5aaf"
+    },
+    {
+      "path": "bin/libintl-8.dll",
+      "required": true,
+      "sha256": "0e5a178731e6be6d115442a6ade3df7f03265cd1fc4338f8b6f86a8001cbf582"
+    },
+    {
+      "path": "bin/libnghttp2-14.dll",
+      "required": true,
+      "sha256": "090fb5e095489f8853e3ccd6d649921de2dcbab378cc6a430264881853e3a07e"
+    },
+    {
+      "path": "bin/libnghttp3-9.dll",
+      "required": true,
+      "sha256": "f4a80ac0fba58f03f6002b7e2f20ed13075ee43dfa144b63fb6dd9a47d5a9d51"
+    },
+    {
+      "path": "bin/libngtcp2-16.dll",
+      "required": true,
+      "sha256": "ec58e9930c880be7162b36e460a5d97d8581da35127f38033e89a6d93798bea6"
+    },
+    {
+      "path": "bin/libngtcp2_crypto_ossl-0.dll",
+      "required": true,
+      "sha256": "9a4b1a58c9a98263e1baff7568416538d7ef805a521b758819a5317cf14ade9c"
+    },
+    {
+      "path": "bin/libpsl-5.dll",
+      "required": true,
+      "sha256": "a531e72de3c64d43fb83cbfb6fa63e5ee982a970292ec51314e29d0acabf1dd5"
+    },
+    {
+      "path": "bin/libssh2-1.dll",
+      "required": true,
+      "sha256": "7c9b4edb678b738b919950492c4a390482fdd644d1276d4728990fdd3c3ea989"
+    },
+    {
+      "path": "bin/libunistring-5.dll",
+      "required": true,
+      "sha256": "ee39258fa1086269674a8179d3cfaf7c4e380ada14441b5dd9ed53d82d15c4e3"
     },
     {
       "path": "bin/libexpat-1.dll",

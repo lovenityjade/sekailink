@@ -58,6 +58,7 @@ const SettingsPage: React.FC = () => {
   const [sekaiemuChatOverlayEnabled, setSekaiemuChatOverlayEnabled] = useState(true);
   const [sekaiemuNotificationsEnabled, setSekaiemuNotificationsEnabled] = useState(true);
   const [sekaiemuBridgeTerminalEnabled, setSekaiemuBridgeTerminalEnabled] = useState(false);
+  const [sekaiemuBackgroundGamepadInput, setSekaiemuBackgroundGamepadInput] = useState(false);
   const [sekaiemuMasterVolume, setSekaiemuMasterVolume] = useState(50);
   const [sekaiemuTrackerDisplayMode, setSekaiemuTrackerDisplayMode] = useState("split-screen");
   const [sekaiemuTrackerScreenVisible, setSekaiemuTrackerScreenVisible] = useState(true);
@@ -174,7 +175,8 @@ const SettingsPage: React.FC = () => {
     setSekaiemuChatOverlayEnabled(typeof frontend?.chat_overlay_enabled === "boolean" ? Boolean(frontend.chat_overlay_enabled) : true);
     setSekaiemuNotificationsEnabled(typeof frontend?.notifications_enabled === "boolean" ? Boolean(frontend.notifications_enabled) : true);
     setSekaiemuBridgeTerminalEnabled(Boolean(frontend?.bridge_terminal_enabled));
-    setSekaiemuMasterVolume(Number.isFinite(Number(frontend?.master_volume_percent)) ? Math.max(0, Math.min(150, Number(frontend.master_volume_percent))) : 50);
+    setSekaiemuBackgroundGamepadInput(Boolean(frontend?.background_gamepad_input));
+    setSekaiemuMasterVolume(Number.isFinite(Number(frontend?.master_volume_percent)) ? Math.max(0, Math.min(150, Number(frontend.master_volume_percent))) : 35);
     setSekaiemuTrackerDisplayMode(typeof frontend?.tracker_display_mode === "string" ? frontend.tracker_display_mode : "split-screen");
     setSekaiemuTrackerScreenVisible(typeof frontend?.tracker_screen_visible === "boolean" ? Boolean(frontend.tracker_screen_visible) : true);
     setSekaiemuTrackerAutoFollow(typeof frontend?.tracker_auto_follow === "boolean" ? Boolean(frontend.tracker_auto_follow) : true);
@@ -735,6 +737,7 @@ const SettingsPage: React.FC = () => {
           chat_overlay_enabled: sekaiemuChatOverlayEnabled,
           notifications_enabled: sekaiemuNotificationsEnabled,
           bridge_terminal_enabled: sekaiemuBridgeTerminalEnabled,
+          background_gamepad_input: sekaiemuBackgroundGamepadInput,
           master_volume_percent: Math.max(0, Math.min(150, Number(sekaiemuMasterVolume) || 0)),
           tracker_display_mode: sekaiemuTrackerDisplayMode,
           tracker_screen_visible: sekaiemuTrackerScreenVisible,
@@ -1257,6 +1260,10 @@ const SettingsPage: React.FC = () => {
                   <label style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
                     <input type="checkbox" checked={sekaiemuBridgeTerminalEnabled} onChange={(e) => setSekaiemuBridgeTerminalEnabled(e.target.checked)} />
                     SKLMI terminal panel
+                  </label>
+                  <label style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
+                    <input type="checkbox" checked={sekaiemuBackgroundGamepadInput} onChange={(e) => setSekaiemuBackgroundGamepadInput(e.target.checked)} />
+                    Background gamepad input
                   </label>
                   <label style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
                     <input type="checkbox" checked={sekaiemuTrackerScreenVisible} onChange={(e) => setSekaiemuTrackerScreenVisible(e.target.checked)} />

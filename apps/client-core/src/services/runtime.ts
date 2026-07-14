@@ -3,6 +3,29 @@ export type CommonClientCommand = {
   [key: string]: unknown;
 };
 
+export type PcPackageRelease = {
+  version: string;
+  channel: string;
+  platform: string;
+  url: string;
+  bytes: number;
+  sha256: string;
+  executable: string;
+};
+
+export type PcPackageEntry = {
+  id: string;
+  gameId: string;
+  name: string;
+  summary?: string;
+  kind?: string;
+  status?: string;
+  requiresUserGameData?: boolean;
+  releases?: PcPackageRelease[];
+  availableRelease?: PcPackageRelease | null;
+  installed?: { version: string; platform: string; installedAt: string; executable: string } | null;
+};
+
 export type ArchipelagoClientStartOptions = {
   clientId?: string;
   kind: "text" | "bizhawk" | "sni" | "oot" | "dolphin";
@@ -72,6 +95,15 @@ export type SekaiEmuLabLaunchOptions = {
   apAutoconnect?: boolean;
 };
 
+export type SekaiEmuInputCaptureResult = {
+  ok: boolean;
+  profile?: string;
+  outputPath?: string;
+  mappings?: Record<string, string>;
+  error?: string;
+  detail?: string;
+};
+
 export type SekaiEmuLabMemoryOptions = {
   pid: number;
   domain?: string;
@@ -109,6 +141,7 @@ export type SessionAutoLaunchOptions = {
   serverAddress: string;
   slot: string;
   playerAlias?: string;
+  playerAliasMap?: Record<string, string>;
   password?: string;
   apGameName?: string;
   trackerVariant?: string;
@@ -129,6 +162,7 @@ export type SessionAutoLaunchOptions = {
     apGameName?: string;
     slot?: string;
     playerAlias?: string;
+    playerAliasMap?: Record<string, string>;
     trackerVariant?: string;
   }>;
 };
@@ -239,6 +273,9 @@ export type BugReportArtifacts = {
   logsText?: string;
   systemInfo?: Record<string, unknown>;
   appInfo?: Record<string, unknown>;
+  bundleBase64?: string;
+  bundleBytes?: number;
+  bundleManifest?: Record<string, unknown>;
 };
 
 export const runtime = {
@@ -259,6 +296,10 @@ export const runtime = {
   updaterOpenDownloaded: (targetPath: string) => (window.sekailink as any)?.updaterOpenDownloaded?.(targetPath),
   updaterSyncIncremental: (options: ClientUpdaterSyncOptions) => (window.sekailink as any)?.updaterSyncIncremental?.(options),
   updaterLaunchBootstrapperAndQuit: () => (window.sekailink as any)?.updaterLaunchBootstrapperAndQuit?.(),
+  bootstrapperGetReleaseChannel: () => (window.sekailink as any)?.bootstrapperGetReleaseChannel?.(),
+  bootstrapperSetReleaseChannel: (channel: string) => (window.sekailink as any)?.bootstrapperSetReleaseChannel?.(channel),
+  bootstrapperCheckUpdate: (options?: { channel?: string; force?: boolean }) => (window.sekailink as any)?.bootstrapperCheckUpdate?.(options),
+  bootstrapperGetLatest: (channel?: string) => (window.sekailink as any)?.bootstrapperGetLatest?.(channel),
   configGet: () => window.sekailink?.configGet?.(),
   configSetRom: (gameId: string, romPath: string) =>
     window.sekailink?.configSetRom?.(gameId, romPath),
@@ -299,10 +340,14 @@ export const runtime = {
     (window.sekailink as any)?.patcherResolveCachedRom?.(options) as Promise<PatchedRomPlan>,
   patcherListCachedRoms: () =>
     (window.sekailink as any)?.patcherListCachedRoms?.() as Promise<{ ok: boolean; entries?: PatchedRomCacheEntry[]; error?: string }>,
+  clearSeedCache: () =>
+    (window.sekailink as any)?.clearSeedCache?.() as Promise<{ ok: boolean; activeRuntimeCount?: number; cleared?: string[]; failed?: Array<Record<string, unknown>>; patchedRomCache?: Record<string, unknown>; error?: string }>,
   bizhawkLaunch: (options: BizHawkLaunchOptions) => window.sekailink?.bizhawkLaunch?.(options),
   bizhawkStop: (pid: number) => window.sekailink?.bizhawkStop?.(pid),
   sekaiEmuLabListCores: () => (window.sekailink as any)?.sekaiEmuLabListCores?.(),
   sekaiEmuLabLaunch: (options: SekaiEmuLabLaunchOptions) => (window.sekailink as any)?.sekaiEmuLabLaunch?.(options),
+  sekaiEmuInputCapture: (options: { profile?: string; coreId?: string }) =>
+    (window.sekailink as any)?.sekaiEmuInputCapture?.(options) as Promise<SekaiEmuInputCaptureResult>,
   sekaiEmuStop: (pid: number) => (window.sekailink as any)?.sekaiEmuStop?.(pid),
   sekaiEmuGetSession: (pid: number) => (window.sekailink as any)?.sekaiEmuGetSession?.(pid),
   sekaiEmuSetInputState: (pid: number, keys: number) => (window.sekailink as any)?.sekaiEmuSetInputState?.(pid, keys),
@@ -311,12 +356,18 @@ export const runtime = {
   sekaiEmuMemoryDomains: (options: SekaiEmuLabMemoryOptions) => (window.sekailink as any)?.sekaiEmuMemoryDomains?.(options),
   sekaiEmuReadMemory: (options: SekaiEmuLabMemoryOptions) => (window.sekailink as any)?.sekaiEmuReadMemory?.(options),
   sekaiEmuDumpMemory: (options: SekaiEmuLabMemoryOptions) => (window.sekailink as any)?.sekaiEmuDumpMemory?.(options),
+  runtimeSocialGetState: () => (window.sekailink as any)?.runtimeSocialGetState?.() as Promise<{ ok: boolean; state?: any; error?: string }>,
+  runtimeSocialOpen: (surface: "chat" | "activity" | "hint") => (window.sekailink as any)?.runtimeSocialOpen?.(surface),
+  runtimeSocialSendChat: (text: string) => (window.sekailink as any)?.runtimeSocialSendChat?.(text),
+  runtimeSocialRequestHint: (item: string) => (window.sekailink as any)?.runtimeSocialRequestHint?.(item),
+  hostConsoleOpen: (lobbyId: string) => (window.sekailink as any)?.hostConsoleOpen?.(lobbyId),
   sekaiEmuReadAudio: (options: SekaiEmuAudioOptions) => (window.sekailink as any)?.sekaiEmuReadAudio?.(options),
   trackerLaunch: (options: TrackerLaunchOptions) => window.sekailink?.trackerLaunch?.(options),
   trackerStop: (pid: number) => window.sekailink?.trackerStop?.(pid),
   trackerRuntimeStatus: (pid: number) => (window.sekailink as any)?.trackerRuntimeStatus?.(pid),
   trackerRuntimeCommand: (pid: number, command: string, detail?: Record<string, unknown>) =>
     (window.sekailink as any)?.trackerRuntimeCommand?.(pid, command, detail || {}),
+  trackerOpenBroadcast: () => (window.sekailink as any)?.trackerOpenBroadcast?.(),
   trackerGetSession: (pid: number) => (window.sekailink as any)?.trackerGetSession?.(pid),
   trackerListSessions: () => (window.sekailink as any)?.trackerListSessions?.(),
   trackerInstallPack: (options: TrackerInstallOptions) => window.sekailink?.trackerInstallPack?.(options),
@@ -344,9 +395,17 @@ export const runtime = {
   planSessionAutoLaunch: (options: { downloadUrl?: string; apGameName?: string }) =>
     (window.sekailink as any)?.planSessionAutoLaunch?.(options) as Promise<SessionLaunchPlanResult>,
   getModuleManifest: (moduleId: string) => window.sekailink?.getModuleManifest?.(moduleId),
+  validateRomForModule: (moduleId: string) =>
+    (window.sekailink as any)?.validateRomForModule?.(moduleId) as Promise<LaunchSetupValidationResult & { required?: boolean }>,
   validateSetupForModule: (moduleId: string) =>
     (window.sekailink as any)?.validateSetupForModule?.(moduleId) as Promise<LaunchSetupValidationResult>,
   listRuntimeModules: () => window.sekailink?.listRuntimeModules?.(),
+  listPcPackages: (options?: { refresh?: boolean }) =>
+    (window.sekailink as any)?.listPcPackages?.(options) as Promise<{ schema: string; packages: PcPackageEntry[] }>,
+  installPcPackage: (packageId: string) =>
+    (window.sekailink as any)?.installPcPackage?.(packageId) as Promise<{ ok: boolean; error?: string }>,
+  uninstallPcPackage: (packageId: string) =>
+    (window.sekailink as any)?.uninstallPcPackage?.(packageId) as Promise<{ ok: boolean; error?: string }>,
   linkedWorldList: () =>
     (window.sekailink as any)?.linkedWorldList?.() as Promise<{ ok: boolean; worlds?: LinkedWorldInfo[]; error?: string }>,
   linkedWorldValidate: (options: Record<string, unknown>) =>
@@ -374,6 +433,8 @@ export const runtime = {
   onUpdaterEvent: (handler: (data: unknown) => void) => window.sekailink?.onUpdaterEvent?.(handler),
 
   logToMain: (payload: Record<string, unknown>) => (window.sekailink as any)?.logToMain?.(payload),
+  listCaptureSources: () => (window.sekailink as any)?.listCaptureSources?.(),
+  captureSource: (sourceId: string) => (window.sekailink as any)?.captureSource?.(sourceId),
 
   // assets are handled internally by main process (patch download)
 };

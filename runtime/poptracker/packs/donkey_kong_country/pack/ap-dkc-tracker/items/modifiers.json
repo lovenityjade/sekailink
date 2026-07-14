@@ -1,0 +1,220 @@
+[
+    {
+      "name": "Auto Map Switch",
+      "type": "toggle",
+      "img": "images/settings/tab_switching_on.png",
+      "disabled_img": "images/settings/tab_switching_off.png",
+      "codes": "tab_switch"
+    },
+    {
+      "name": "Show All Locations",
+      "type": "toggle",
+      "img": "images/settings/visibility_checks_on.png",
+      "disabled_img": "images/settings/visibility_checks_off.png",
+      "codes": "visibility_markers"
+    },
+    {
+      "name": "Current Level",
+      "type": "progressive",
+      "codes": "cur_level_id"
+    },
+    {
+        "name": "KONG Checks On",
+        "type": "toggle",
+        "img": "images/settings/kongcheck.png",
+        "codes": "kongchecks"
+    },
+    {
+        "name": "Big Bananas Required",
+        "type": "consumable",
+        "img": "images/settings/bossbanana_req.png",
+        "img_mods": "",
+        "initial_quantity": 0,
+        "min_quantity": 0,
+        "max_quantity": 6,
+        "increment": 1,
+        "overlay_font_size": 14,
+        "codes": "bigbananasrequired"
+    },
+    {
+        "name": "Balloon Checks On",
+        "type": "toggle",
+        "img": "images/settings/balloonsanity.png",
+        "codes": "balloonsanity"
+    },
+    {
+        "name": "Banana Bunch Checks On",
+        "type": "toggle",
+        "img": "images/settings/bananasanity.png",
+        "codes": "bananasanity"
+    },
+    {
+        "name": "Animal Token Checks On",
+        "type": "toggle",
+        "img": "images/settings/tokensanity.png",
+        "codes": "tokensanity"
+    },
+    {
+        "name": "Difficulty",
+        "codes": "Logic",
+        "initial_stage_idx": 0,
+        "allow_disabled": "false",
+        "type": "progressive",
+        "stages": [
+          {
+            "img": "images/settings/easy.png",
+            "inherit_codes": "false",
+            "codes": "EASY"
+          },
+          {
+            "img": "images/settings/normal.png",
+            "inherit_codes": "false",
+            "codes": "NORMAL"
+          },
+          {
+            "img": "images/settings/hard.png",
+            "inherit_codes": "false",
+            "codes": "HARD"
+          }
+        ]
+    },
+    {
+      "name": "Konjo Jungle Level Clears Required",
+      "type": "consumable",
+      "img": "images/settings/kjbossaccess.png",
+      "allow_disabled": "false",
+      "img_mods": "",
+      "initial_quantity": 0,
+      "min_quantity": 0,
+      "max_quantity": 10,
+      "increment": 1,
+      "overlay_font_size": 14,
+      "codes": "kjbossaccess"
+  },
+  {
+      "name": "Monkey Mines Level Clears Required",
+      "type": "consumable",
+      "img": "images/settings/mmbossaccess.png",
+      "allow_disabled": "false",
+      "initial_quantity": 0,
+      "min_quantity": 0,
+      "max_quantity": 10,
+      "increment": 1,
+      "overlay_font_size": 14,
+      "codes": "mmbossaccess"
+  },
+  {
+      "name": "Vine Valley Level Clears Required",
+      "type": "consumable",
+      "img": "images/settings/vvbossaccess.png",
+      "allow_disabled": "false",
+      "initial_quantity": 0,
+      "min_quantity": 0,
+      "max_quantity": 10,
+      "increment": 1,
+      "overlay_font_size": 14,
+      "codes": "vvbossaccess"
+  },
+  {
+      "name": "Gorilla Glacier Level Clears Required",
+      "type": "consumable",
+      "img": "images/settings/ggbossaccess.png",
+      "allow_disabled": "false",
+      "initial_quantity": 0,
+      "min_quantity": 0,
+      "max_quantity": 10,
+      "increment": 1,
+      "overlay_font_size": 14,
+      "codes": "ggbossaccess"
+  },
+  {
+      "name": "Kremkroc Industries Inc. Level Clears Required",
+      "type": "consumable",
+      "img": "images/settings/kiibossaccess.png",
+      "allow_disabled": "false",
+      "initial_quantity": 0,
+      "min_quantity": 0,
+      "max_quantity": 10,
+      "increment": 1,
+      "overlay_font_size": 14,
+      "codes": "kiibossaccess"
+  },
+  {
+      "name": "Chimp Caverns Level Clears Required",
+      "type": "consumable",
+      "img": "images/settings/ccbossaccess.png",
+      "allow_disabled": "false",
+      "initial_quantity": 0,
+      "min_quantity": 0,
+      "max_quantity": 10,
+      "increment": 1,
+      "overlay_font_size": 14,
+      "codes": "ccbossaccess"
+  },
+    {
+      "name": "Konjo Jungle Level Clears",
+      "type": "consumable",
+      "img": "images/settings/kjclears.png",
+      "initial_quantity": 0,
+      "min_quantity": 0,
+      "max_quantity": 5,
+      "increment": 1,
+      "overlay_font_size": 14,
+      "codes": "kjclears"
+  },
+  {
+      "name": "Monkey Mines Level Clears",
+      "type": "consumable",
+      "img": "images/settings/mmclears.png",
+      "initial_quantity": 0,
+      "min_quantity": 0,
+      "max_quantity": 5,
+      "increment": 1,
+      "overlay_font_size": 14,
+      "codes": "mmclears"
+  },
+  {
+      "name": "Vine Valley Level Clears",
+      "type": "consumable",
+      "img": "images/settings/vvclears.png",
+      "initial_quantity": 0,
+      "min_quantity": 0,
+      "max_quantity": 6,
+      "increment": 1,
+      "overlay_font_size": 14,
+      "codes": "vvclears"
+  },
+  {
+      "name": "Gorilla Glacier Level Clears",
+      "type": "consumable",
+      "img": "images/settings/ggclears.png",
+      "initial_quantity": 0,
+      "min_quantity": 0,
+      "max_quantity": 6,
+      "increment": 1,
+      "overlay_font_size": 14,
+      "codes": "ggclears"
+  },
+  {
+      "name": "Kremkroc Industries Inc. Level Clears",
+      "type": "consumable",
+      "img": "images/settings/kiiclears.png",
+      "initial_quantity": 0,
+      "min_quantity": 0,
+      "max_quantity": 6,
+      "increment": 1,
+      "overlay_font_size": 14,
+      "codes": "kiiclears"
+  },
+  {
+      "name": "Chimp Caverns Level Clears",
+      "type": "consumable",
+      "img": "images/settings/ccclears.png",
+      "initial_quantity": 0,
+      "min_quantity": 0,
+      "max_quantity": 5,
+      "increment": 1,
+      "overlay_font_size": 14,
+      "codes": "ccclears"
+  }
+]

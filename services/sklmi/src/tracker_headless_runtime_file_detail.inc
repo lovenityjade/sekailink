@@ -18,6 +18,22 @@ void WriteJsonStringArray(std::ostringstream& out, const std::vector<std::string
 }
 
 std::string ShellEscapeSingleQuotes(std::string_view value) {
+#if defined(_WIN32)
+    std::string out;
+    out.reserve(value.size() + 8);
+    out.push_back('"');
+    for (const char ch : value) {
+        if (ch == '"') {
+            out += "\\\"";
+        } else if (ch == '%') {
+            out += "%%";
+        } else {
+            out.push_back(ch);
+        }
+    }
+    out.push_back('"');
+    return out;
+#else
     std::string out;
     out.reserve(value.size() + 8);
     out.push_back('\'');
@@ -30,6 +46,7 @@ std::string ShellEscapeSingleQuotes(std::string_view value) {
     }
     out.push_back('\'');
     return out;
+#endif
 }
 
 std::string BuildLogicStateFileText(const std::filesystem::path& resolved_bundle_path,

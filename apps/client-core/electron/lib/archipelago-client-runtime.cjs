@@ -37,6 +37,7 @@ const createArchipelagoClientRuntime = (deps = {}) => {
     archipelagoClientReadlines,
     archipelagoClientSessions,
     retroarchMemoryBridgeProcs,
+    notifyRuntimeItem = () => {},
   } = deps;
   const process = processRef;
   let commonClientProc = null;
@@ -103,15 +104,128 @@ const createArchipelagoClientRuntime = (deps = {}) => {
       .map((entry) => JSON.stringify(entry))
       .join("\n");
   };
+
+  const normalizeRuntimeText = (value, max = 300) => normalizeIpcString(value || "", max).trim();
+
+  const aliasForParticipant = (session, ...values) => {
+    const aliases = session?.playerAliasMap && typeof session.playerAliasMap === "object" ? session.playerAliasMap : {};
+    for (const value of values) {
+      const clean = normalizeRuntimeText(value, 160);
+      if (!clean) continue;
+      const alias = normalizeRuntimeText(aliases[clean], 160);
+      if (alias) return alias;
+    }
+    return "";
+  };
+
+  const humanNameForParticipant = (session, slotName, displayName = "") => {
+    const alias = aliasForParticipant(session, slotName, displayName);
+    if (alias) return alias;
+    const explicit = normalizeRuntimeText(displayName, 160);
+    if (explicit && !/^Player\s+\d+$/i.test(explicit)) return explicit;
+    return normalizeRuntimeText(slotName, 160);
+  };
+
+  const humanNameForSlot = (session, slotName) => humanNameForParticipant(session, slotName);
+
+  const gameNameForSlot = (session, slotName) => {
+    const clean = normalizeRuntimeText(slotName, 160);
+    if (!clean) return "";
+    return normalizeRuntimeText(session?.gameNameBySlot?.[clean] || "", 180);
+  };
+
+  const isOwnedParticipant = (session, slotName, displayName) => {
+    const slot = normalizeRuntimeText(slotName, 160);
+    const name = normalizeRuntimeText(displayName, 160);
+    if (isOwnedSlot(session, slot)) return true;
+    if (name && isOwnedSlot(session, name)) return true;
+    const localSlot = normalizeRuntimeText(session?.slot, 160);
+    return Boolean(localSlot && (slot === localSlot || name === localSlot));
+  };
+
+  const gameNameForParticipant = (session, ...values) => {
+    for (const value of values) {
+      const gameName = gameNameForSlot(session, value);
+      if (gameName) return gameName;
+    }
+    return "";
+  };
+
+  const isOwnedSlot = (session, slotName) => {
+    const clean = normalizeRuntimeText(slotName, 160);
+    if (!clean) return false;
+    if (clean === normalizeRuntimeText(session?.slot, 160)) return true;
+    return Boolean(session?.gameNameBySlot && Object.prototype.hasOwnProperty.call(session.gameNameBySlot, clean));
+  };
+
+  const normalizeArchipelagoItemName = (value) => {
+    const clean = normalizeRuntimeText(value, 180);
+    const knownShortNames = {
+      book: "Book of Mudora",
+      fire: "Fire Rod",
+      ice: "Ice Rod",
+      small: "Small Key",
+    };
+    const mapped = knownShortNames[clean.toLowerCase()];
+    if (mapped) return mapped;
+    if (/^small$/i.test(clean)) return "Small Key";
+    if (clean && clean === clean.toLowerCase() && /[a-z]/.test(clean)) {
+      return clean.replace(/\b([a-z])([a-z0-9']*)/g, (_match, first, rest) => `${first.toUpperCase()}${rest}`);
+    }
+    return clean;
+  };
+
+  const mirrorArchipelagoRuntimeEvent = (payload) => {
+    if (!payload || payload.event !== "item_send") return;
+    const session = archipelagoClientSessions.get(payload.clientId);
+    if (!session) return;
+    const senderSlot = normalizeRuntimeText(payload.sender_slot || payload.senderSlot, 160);
+    const senderDisplayName = normalizeRuntimeText(payload.sender_name || payload.senderName, 160);
+    const senderName = humanNameForParticipant(session, senderSlot, senderDisplayName);
+    const recipientSlot = normalizeRuntimeText(payload.recipient_slot || payload.recipientSlot, 160);
+    const recipientDisplayName = normalizeRuntimeText(payload.recipient_name || payload.recipientName, 160);
+    const recipientName = humanNameForParticipant(session, recipientSlot, recipientDisplayName);
+    if (!isOwnedParticipant(session, senderSlot, senderDisplayName)) return;
+    const itemName = normalizeArchipelagoItemName(payload.item_name || payload.itemName || payload.item_id || payload.itemId);
+    const recipientGame = normalizeRuntimeText(payload.recipient_game || payload.recipientGame, 180) ||
+      gameNameForParticipant(session, recipientSlot, recipientDisplayName, recipientName) ||
+      "their game";
+    const location = normalizeRuntimeText(payload.location_name || payload.locationName || payload.location_id || payload.locationId, 240);
+    notifyRuntimeItem({
+      lobbyId: session.lobbyId,
+      lobbyTitle: session.lobbyTitle || session.gameKey || session.moduleId,
+      moduleId: session.moduleId,
+      game: session.game || session.gameKey,
+      direction: "outgoing",
+      senderName,
+      senderSlot,
+      recipientName,
+      recipientSlot,
+      recipientGame,
+      itemName,
+      location,
+      allowAnySlot: true,
+      dedupeKey: [
+        "apclient",
+        payload.clientId,
+        "out",
+        senderSlot || senderName,
+        recipientSlot || recipientName,
+        normalizeRuntimeText(payload.item_id || payload.itemId || itemName, 180),
+        normalizeRuntimeText(payload.location_id || payload.locationId || location, 180),
+      ].join(":"),
+    });
+  };
   
   const emitArchipelagoClientEvent = (payload) => {
     recordArchipelagoClientTrace(payload);
+    mirrorArchipelagoRuntimeEvent(payload);
     const win = getMainWindow();
     if (!win || win.isDestroyed()) return;
     writeLogJson("archipelagoclient", payload);
     win.webContents.send(ARCHIPELAGOCLIENT_EVENT_CHANNEL, payload);
   };
-  
+
   const emitTrackerClientLog = (level, message) => {
     const lvl = String(level || "info").toLowerCase();
     const msg = String(message || "").trim();
@@ -355,10 +469,27 @@ const createArchipelagoClientRuntime = (deps = {}) => {
     const defaultClientId = clientSpec?.game_key ? `${clientSpec.game_key}-${Date.now()}` : `${kind}-${Date.now()}`;
     const clientId = normalizeIpcString(options.clientId || defaultClientId, 120).replace(/[^a-z0-9_.:-]+/gi, "_");
     if (archipelagoClientProcs.has(clientId)) return { ok: true, alreadyRunning: true, clientId };
+    const playerAliasMap = options.playerAliasMap && typeof options.playerAliasMap === "object" ? options.playerAliasMap : {};
+    const gameNameBySlot = {};
+    const entries = Array.isArray(options.multiGameEntries) ? options.multiGameEntries : [];
+    for (const entry of entries) {
+      const entrySlot = normalizeRuntimeText(entry?.slot, 160);
+      const entryGame = normalizeRuntimeText(entry?.apGameName || entry?.label || entry?.moduleId, 180);
+      if (entrySlot && entryGame) gameNameBySlot[entrySlot] = entryGame;
+    }
+    const localSlot = normalizeIpcString(options.slot || options.name || "", 160);
+    const localGame = normalizeIpcString(options.game || clientSpec?.game || clientSpec?.game_key || "", 180);
+    if (localSlot && localGame && !gameNameBySlot[localSlot]) gameNameBySlot[localSlot] = localGame;
+    const chatBridge = options.chatBridge && typeof options.chatBridge === "object" ? options.chatBridge : {};
     const sessionMeta = {
       moduleId: normalizeIpcString(options.moduleId || options.module_id || clientSpec?.game_key || "", 160),
-      slot: normalizeIpcString(options.slot || options.name || "", 160),
+      slot: localSlot,
+      game: localGame,
       gameKey: normalizeIpcString(options.gameKey || options.game_key || clientSpec?.game_key || "", 160),
+      lobbyId: normalizeIpcString(options.lobbyId || chatBridge.lobbyId || "", 180),
+      lobbyTitle: normalizeIpcString(options.lobbyTitle || chatBridge.lobbyTitle || "", 180),
+      playerAliasMap,
+      gameNameBySlot,
       kind,
       launchedAt: nowIso(),
     };
@@ -468,6 +599,9 @@ const createArchipelagoClientRuntime = (deps = {}) => {
       env: withApPythonEnv(process.env),
       windowsHide: true,
     });
+    proc.stdin?.on?.("error", (err) => {
+      writeLogLine("warn", "archipelagoclient", `stdin closed id=${clientId}: ${String(err?.code || err?.message || err || "")}`);
+    });
     archipelagoClientProcs.set(clientId, proc);
     archipelagoClientSessions.set(clientId, sessionMeta);
     recordArchipelagoClientTrace({ event: "spawn", clientId, kind, client: clientSpec || null, module: moduleName, pid: proc.pid || 0 });
@@ -519,7 +653,12 @@ const createArchipelagoClientRuntime = (deps = {}) => {
     const proc = archipelagoClientProcs.get(id);
     if (!proc || !command) return { ok: false, error: "not_running" };
     try {
-      proc.stdin.write(`${JSON.stringify(command)}\n`);
+      if (!proc.stdin || proc.stdin.destroyed || proc.stdin.writableEnded || proc.exitCode !== null || proc.signalCode !== null) {
+        return { ok: false, error: "stdin_closed" };
+      }
+      proc.stdin.write(`${JSON.stringify(command)}\n`, (err) => {
+        if (err) writeLogLine("warn", "archipelagoclient", `command write failed id=${id}: ${String(err?.code || err?.message || err || "")}`);
+      });
       return { ok: true };
     } catch (err) {
       return { ok: false, error: String(err?.message || err) };
@@ -531,7 +670,11 @@ const createArchipelagoClientRuntime = (deps = {}) => {
     const proc = archipelagoClientProcs.get(id);
     if (!proc) return { ok: false, error: "not_running" };
     try {
-      proc.stdin.write(`${JSON.stringify({ cmd: "shutdown" })}\n`);
+      if (proc.stdin && !proc.stdin.destroyed && !proc.stdin.writableEnded && proc.exitCode === null && proc.signalCode === null) {
+        proc.stdin.write(`${JSON.stringify({ cmd: "shutdown" })}\n`, (err) => {
+          if (err) writeLogLine("warn", "archipelagoclient", `shutdown write failed id=${id}: ${String(err?.code || err?.message || err || "")}`);
+        });
+      }
     } catch (_err) {
       // ignore shutdown write failures
     }

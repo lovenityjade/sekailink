@@ -1,0 +1,207 @@
+[
+  {
+    "name": "Route 24",
+    "children": [
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Routes/Route 24/Land Encounters",
+            "name": "Land Encounters"
+          },
+          {
+            "ref": "Routes/Route 24/Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Routes/Route 24/Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Routes/Route 24/Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Routes/Route 24/Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_24",
+            "x": 368,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Team Rocket Grunt",
+        "sections": [
+          {
+            "ref": "Routes/Route 24/Team Rocket Grunt Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Routes/Route 24/Clear Nugget Bridge",
+            "name": "Clear Nugget Bridge"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_24",
+            "x": 200,
+            "y": 248
+          }
+        ]
+      },
+      {
+        "name": "Northwest Ledge Item",
+        "sections": [
+          {
+            "ref": "Routes/Route 24/Northwest Ledge Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_24",
+            "x": 184,
+            "y": 72
+          }
+        ]
+      },
+      {
+        "name": "Northeast Ledge Hidden Item",
+        "sections": [
+          {
+            "ref": "Routes/Route 24/Northeast Ledge Hidden Item",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_24",
+            "x": 312,
+            "y": 72
+          }
+        ]
+      },
+      {
+        "name": "Bug Catcher Cale",
+        "sections": [
+          {
+            "ref": "Routes/Route 24/Bug Catcher Cale Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_24",
+            "x": 200,
+            "y": 504
+          }
+        ]
+      },
+      {
+        "name": "Camper Ethan",
+        "sections": [
+          {
+            "ref": "Routes/Route 24/Camper Ethan Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_24",
+            "x": 200,
+            "y": 312
+          }
+        ]
+      },
+      {
+        "name": "Camper Shane",
+        "sections": [
+          {
+            "ref": "Routes/Route 24/Camper Shane Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_24",
+            "x": 88,
+            "y": 344
+          }
+        ]
+      },
+      {
+        "name": "Lass Ali",
+        "sections": [
+          {
+            "ref": "Routes/Route 24/Lass Ali Reward",
+            "name": "Reward"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_24",
+            "x": 168,
+            "y": 456
+          }
+        ]
+      },
+      {
+        "name": "Lass Reli",
+        "sections": [
+          {
+            "ref": "Routes/Route 24/Lass Reli Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Routes/Route 24/Lass Reli Rematch Reward",
+            "name": "Rematch Reward"
+          },
+          {
+            "ref": "Routes/Route 24/Lass Reli Rematch Reward (4 Badges-Gyms)",
+            "name": "Rematch Reward (4 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_24",
+            "x": 168,
+            "y": 360
+          }
+        ]
+      },
+      {
+        "name": "Youngster Timmy",
+        "sections": [
+          {
+            "ref": "Routes/Route 24/Youngster Timmy Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Routes/Route 24/Youngster Timmy Rematch Reward",
+            "name": "Rematch Reward"
+          },
+          {
+            "ref": "Routes/Route 24/Youngster Timmy Rematch Reward (4 Badges-Gyms)",
+            "name": "Rematch Reward (4 Badges-Gyms)"
+          },
+          {
+            "ref": "Routes/Route 24/Youngster Timmy Rematch Reward (8 Badges-Gyms)",
+            "name": "Rematch Reward (8 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "route_24",
+            "x": 200,
+            "y": 408
+          }
+        ]
+      }
+    ]
+  }
+]

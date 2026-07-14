@@ -1,0 +1,174 @@
+[
+  {
+    "name": "One Island Town",
+    "children": [
+      {
+        "name": "Visit",
+        "sections": [
+          {
+            "ref": "Islands/One Island Town/Unlock Fly Destination"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "one_island",
+            "x": 12,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Islands/One Island Town/Surf Encounters",
+            "name": "Surf Encounters"
+          },
+          {
+            "ref": "Islands/One Island Town/Old Rod Encounters",
+            "name": "Old Rod Encounters"
+          },
+          {
+            "ref": "Islands/One Island Town/Good Rod Encounters",
+            "name": "Good Rod Encounters"
+          },
+          {
+            "ref": "Islands/One Island Town/Super Rod Encounters",
+            "name": "Super Rod Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "one_island",
+            "x": 368,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "Pokémon Center",
+        "sections": [
+          {
+            "ref": "Islands/One Island Town/PC Item",
+            "name": "PC Item"
+          },
+          {
+            "ref": "Islands/One Island Town/Delivery for Lostelle's Dad",
+            "name": "Delivery for Lostelle's Dad"
+          },
+          {
+            "ref": "Islands/One Island Town/Meet Celio",
+            "name": "Meet Celio"
+          },
+          {
+            "ref": "Islands/One Island Town/Celio Gift (Deliver Ruby)",
+            "name": "Celio Gift (Deliver Ruby)"
+          },
+          {
+            "ref": "Islands/One Island Town/Restore Pokémon Network Machine (Event)",
+            "name": "Restore Pokémon Network Machine (Event)"
+          },
+          {
+            "ref": "Islands/One Island Town/Celio Gift (Deliver Sapphire)",
+            "name": "Celio Gift (Deliver Sapphire)"
+          },
+          {
+            "ref": "Islands/One Island Town/Celio Info 1",
+            "name": "Celio Info 1"
+          },
+          {
+            "ref": "Islands/One Island Town/Celio Info 2",
+            "name": "Celio Info 2"
+          },
+          {
+            "ref": "Islands/One Island Town/Celio Info 3",
+            "name": "Celio Info 3"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "one_island",
+            "x": 232,
+            "y": 88
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "One Island Pokémon Center 1F",
+    "children": [
+      {
+        "name": "PC",
+        "sections": [
+          {
+            "ref": "Islands/One Island Town/PC Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "one_island_pokemon_center_1f",
+            "x": 152,
+            "y": 24
+          }
+        ]
+      },
+      {
+        "name": "Bill",
+        "sections": [
+          {
+            "ref": "Islands/One Island Town/Delivery for Lostelle's Dad"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "one_island_pokemon_center_1f",
+            "x": 232,
+            "y": 104
+          }
+        ]
+      },
+      {
+        "name": "Celio",
+        "sections": [
+          {
+            "ref": "Islands/One Island Town/Meet Celio",
+            "name": "Meet"
+          },
+          {
+            "ref": "Islands/One Island Town/Celio Gift (Deliver Ruby)",
+            "name": "Gift (Deliver Ruby)"
+          },
+          {
+            "ref": "Islands/One Island Town/Restore Pokémon Network Machine (Event)",
+            "name": "Restore Pokémon Network Machine (Event)"
+          },
+          {
+            "ref": "Islands/One Island Town/Celio Gift (Deliver Sapphire)",
+            "name": "Gift (Deliver Sapphire)"
+          },
+          {
+            "ref": "Islands/One Island Town/Celio Info 1",
+            "name": "Info 1"
+          },
+          {
+            "ref": "Islands/One Island Town/Celio Info 2",
+            "name": "Info 2"
+          },
+          {
+            "ref": "Islands/One Island Town/Celio Info 3",
+            "name": "Info 3"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "one_island_pokemon_center_1f",
+            "x": 248,
+            "y": 104
+          }
+        ]
+      }
+    ]
+  }
+]

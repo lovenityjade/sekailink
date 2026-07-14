@@ -2,6 +2,10 @@
   "game_id": "sm64ex",
   "display_name": "Super Mario 64",
   "emu": "sm64ex",
+  "ap_world": "Super Mario 64",
+  "game_key": "super_mario_64",
+  "aliases": ["sm64ex", "sm64", "super mario 64"],
+  "pc_package_id": "sm64ex-sekailink",
   "tracker_pack_uid": "https://github.com/ThePhar/APSM64TrackerPack",
   "patcher": "none",
   "rom_requirements": {
@@ -10,8 +14,9 @@
     "sha1": []
   },
   "features": {
-    "autotracking": false,
+    "autotracking": true,
     "save_required": false
   },
-  "tracker_web_url": ""
+  "tracker_web_url": "https://github.com/ThePhar/APSM64TrackerPack/releases/latest",
+  "tracker_pack_path": "poptracker/packs/sm64ex/pack"
 }

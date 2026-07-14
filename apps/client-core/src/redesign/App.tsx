@@ -1,5 +1,5 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Home, Library, Users, Settings, Bell, Play, Star, Clock, ChevronLeft, ChevronRight, X, UserPlus, Send, Search, Sparkles, ExternalLink, MessageCircle, Megaphone, Smile } from 'lucide-react';
+import { Home, Library, Users, Settings, Bell, Play, Star, Clock, ChevronLeft, ChevronRight, X, UserPlus, Send, Search, Sparkles, ExternalLink, MessageCircle, Megaphone, Smile, LogOut, BadgeCheck, ShoppingBag } from 'lucide-react';
 import packageJson from '../../package.json';
 import TitleBar from './components/TitleBar';
 import AnimatedBackground from './components/AnimatedBackground';
@@ -18,19 +18,22 @@ import {
   StatusMenuItem,
 } from './components/AppWidgets';
 import { ErrorModal, LoadingModal } from './components/FeedbackModal';
-import { apiCurrentUser, getCachedCurrentUser, type CurrentUser } from '../services/api';
+import { apiCurrentUser, apiFetch, getCachedCurrentUser, setDesktopToken, type CurrentUser } from '../services/api';
 import { joinLobby, listLobbies, type LobbySummary } from '../services/lobbyClient';
 import { ALTTP_SHOWCASE_GAME, type SeedGameEntry } from '../services/seedConfig';
 import { runtime } from '../services/runtime';
 import { APP_TOAST_EVENT, SOCIAL_OPEN_DM_EVENT, UPDATE_AVAILABLE_EVENT, type AppToastPayload } from '../services/toast';
 import {
   listSocialSnapshot,
+  blockSocialUser,
+  loadPublicSocialProfile,
   isPresenceOnline,
   loadDirectMessages,
   markDirectMessagesRead,
   normalizePresenceStatus,
   presenceStatusLabel,
   respondSocialFriendRequest,
+  removeSocialFriend,
   searchSocialUsers,
   sendDirectMessage,
   sendSocialFriendRequest,
@@ -42,27 +45,28 @@ import {
 import { trace, traceError } from '../services/trace';
 import { useSfx } from '../hooks/useSfx';
 import { isRuntimeLabSession } from '../services/runtimeLab';
+import { publicAssetUrl } from '../utils/publicAssets';
 
 const NEWS_ITEMS = [
   {
     title: "BETA-3 Showcase",
     description: "A Link to the Past is the current live showcase for lobbies, seed configs, and Sekaiemu launch.",
     tag: "SHOWCASE",
-    image: "/assets/img/banners/banner-1.png",
+    image: publicAssetUrl("assets/img/banners/banner-1.png"),
     detailUrl: "https://sekailink.com/showcase"
   },
   {
     title: "Live Lobby Runtime",
     description: "Lobbies, friends, room chat, and seed selections now come from Nexus.",
     tag: "LIVE",
-    image: "/assets/img/banners/banner-3.png",
+    image: publicAssetUrl("assets/img/banners/banner-3.png"),
     detailUrl: "https://sekailink.com/lobbies"
   },
   {
     title: "Pulse Seed Setup",
     description: "Use Easy Mode for guided configs or Advanced Mode for full APWorld options.",
     tag: "PULSE",
-    image: "/assets/img/banners/banner-2.png",
+    image: publicAssetUrl("assets/img/banners/banner-2.png"),
     detailUrl: "https://pulse.sekailink.com"
   }
 ];
@@ -72,11 +76,15 @@ const APP_VERSION = String((packageJson as { version?: string }).version || 'dev
 const ChatPage = lazy(() => import('./components/ChatPage'));
 const EasyConfigPage = lazy(() => import('./components/EasyConfigPage'));
 const LibraryPage = lazy(() => import('./components/LibraryPage'));
+const AppStorePage = lazy(() => import('./components/AppStorePage'));
 const LobbiesPage = lazy(() => import('./components/LobbiesPage'));
 const LobbyRoomPage = lazy(() => import('./components/LobbyRoomPage'));
 const PulsePage = lazy(() => import('./components/PulsePage'));
+const RuntimeSocialWindow = lazy(() => import('./components/RuntimeSocialWindow'));
+const HostConsoleWindow = lazy(() => import('./components/HostConsoleWindow'));
 const SekaiemuRuntimeLabPage = lazy(() => import('./components/SekaiemuRuntimeLabPage'));
 const SettingsPage = lazy(() => import('./components/SettingsPage'));
+const IN_LEARNING_LABEL = 'In learning';
 
 type UserStatus = 'online' | 'appear-offline' | 'busy' | 'afk';
 
@@ -102,6 +110,22 @@ const presenceFromUserStatus = (status: UserStatus) => {
   if (status === 'appear-offline') return 'offline';
   if (status === 'busy') return 'dnd';
   return status;
+};
+
+const displayRole = (role?: string) => {
+  const value = String(role || '').trim();
+  return value ? `${value.charAt(0).toUpperCase()}${value.slice(1)}` : 'Player';
+};
+
+const asyncRoomEligible = (user: CurrentUser | null) => {
+  if (!user?.patreon_is_supporter) return false;
+  const tier = String(user.patreon_tier || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return tier === 'super supporter' || tier === 'ultra supporter' || /(^| )tier [23]( |$)/.test(tier);
 };
 
 const maxPlayersForLobby = (lobby: LobbySummary) => {
@@ -141,6 +165,8 @@ function RedesignShell() {
     read: boolean;
   }>>([]);
   const [selectedFriend, setSelectedFriend] = useState<SocialProfile | null>(null);
+  const [publicProfileLoading, setPublicProfileLoading] = useState(false);
+  const [logoutBusy, setLogoutBusy] = useState(false);
   const [userStatus, setUserStatus] = useState<UserStatus>('online');
   const [showStatusMenu, setShowStatusMenu] = useState(false);
   const [showCreateLobby, setShowCreateLobby] = useState(false);
@@ -149,6 +175,7 @@ function RedesignShell() {
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(() => getCachedCurrentUser());
   const [selectedLobbyId, setSelectedLobbyId] = useState('');
   const [easyConfigGame, setEasyConfigGame] = useState<SeedGameEntry>(ALTTP_SHOWCASE_GAME);
+  const [romImportRequest, setRomImportRequest] = useState<{ gameId: string; nonce: number } | null>(null);
   const [liveLobbies, setLiveLobbies] = useState<LobbySummary[]>([]);
   const [lobbiesLoading, setLobbiesLoading] = useState(true);
   const [joiningLobbyId, setJoiningLobbyId] = useState('');
@@ -172,9 +199,13 @@ function RedesignShell() {
     label: string;
     phase: 'joining' | 'loading';
   } | null>(null);
+  const [runningGameLabel, setRunningGameLabel] = useState('');
+  const [runtimeGameSwitchEntries, setRuntimeGameSwitchEntries] = useState<Array<{ id: string; label: string; game?: string }>>([]);
+  const [runtimeGameSwitchBusy, setRuntimeGameSwitchBusy] = useState(false);
   const lobbiesRefreshInFlight = useRef(false);
   const socialRefreshInFlight = useRef(false);
   const previousSocialCounts = useRef({ friendsOnline: 0, incoming: 0, unread: 0 });
+  const runtimeItemNotificationsSeen = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     trace('redesign-app', 'mounted');
@@ -259,6 +290,64 @@ function RedesignShell() {
         message: version ? `A new version is available ${version}!` : 'A new version is available!',
         type: 'update',
       });
+    });
+    return () => {
+      if (typeof unsubscribe === 'function') unsubscribe();
+    };
+  }, [addSystemNotification]);
+
+  useEffect(() => {
+    const unsubscribe = runtime.onSessionEvent?.((raw) => {
+      const event = raw && typeof raw === 'object' ? raw as Record<string, unknown> : {};
+      const type = String(event.event || event.type || '').toLowerCase();
+      if (type === 'runtime:item_received' || type === 'item_received') {
+        const message = String(event.message || '').trim();
+        const itemName = String(event.itemName || event.item || '').trim();
+        const senderName = String(event.senderName || event.sender || '').trim();
+        const title = String(event.title || 'Item received').trim();
+        const key = [
+          String(event.lobbyId || ''),
+          String(event.roomId || ''),
+          String(event.recipientSlot || event.slot || ''),
+          String(event.receivedIndex || event.deliveryId || event.itemId || ''),
+          itemName,
+          message,
+        ].join(':');
+        if (!runtimeItemNotificationsSeen.current.has(key)) {
+          runtimeItemNotificationsSeen.current.add(key);
+          if (runtimeItemNotificationsSeen.current.size > 256) {
+            const first = runtimeItemNotificationsSeen.current.values().next().value;
+            if (first) runtimeItemNotificationsSeen.current.delete(first);
+          }
+          addSystemNotification({
+            title,
+            message: message || (senderName && itemName ? `${senderName} sent you ${itemName}` : `You received ${itemName || 'an item'}`),
+            type: 'info',
+          });
+        }
+        return;
+      }
+      if (type === 'ready' || type === 'multi-game-switch-ready') {
+        const label = String(event.gameLabel || event.apGameName || event.moduleId || 'game').trim();
+        setRunningGameLabel(label || 'game');
+        return;
+      }
+      if (['done', 'stopped', 'closed', 'exit', 'exited', 'shutdown', 'error'].includes(type)) {
+        setRunningGameLabel('');
+        setRuntimeGameSwitchEntries([]);
+        return;
+      }
+      if (['game-switch-request', 'multi-game-switch-request', 'change-game-request'].includes(type)) {
+        void (async () => {
+          const result = await Promise.resolve(runtime.multiGameList?.()).catch(() => null);
+          const entries = Array.isArray((result as any)?.entries) ? (result as any).entries : [];
+          setRuntimeGameSwitchEntries(entries.map((entry: any) => ({
+            id: String(entry?.id || ''),
+            label: String(entry?.label || entry?.apGameName || entry?.configName || entry?.id || 'Game'),
+            game: String(entry?.apGameName || ''),
+          })).filter((entry: { id: string }) => entry.id));
+        })();
+      }
     });
     return () => {
       if (typeof unsubscribe === 'function') unsubscribe();
@@ -427,12 +516,46 @@ function RedesignShell() {
   }, [friendSearchQuery, showAddFriends]);
 
   useEffect(() => {
+    const handle = String(selectedFriend?.username || '').trim();
+    if (!handle) {
+      setPublicProfileLoading(false);
+      return;
+    }
+    let cancelled = false;
+    setPublicProfileLoading(true);
+    loadPublicSocialProfile(handle)
+      .then((profile) => {
+        if (cancelled || !profile) return;
+        setSelectedFriend((current) => {
+          if (!current || current.username.toLowerCase() !== handle.toLowerCase()) return current;
+          return {
+            ...current,
+            ...profile,
+            status: current.status,
+            presence_status: current.presence_status,
+          };
+        });
+      })
+      .catch((error) => {
+        if (!cancelled) traceError('redesign-app', 'public_profile_load_failed', error, { handle });
+      })
+      .finally(() => {
+        if (!cancelled) setPublicProfileLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedFriend?.username]);
+
+  useEffect(() => {
     if (!selectedFriend?.user_id) {
       setDmMessages([]);
       setDmDraft('');
       return;
     }
     let cancelled = false;
+    let unreadCleared = false;
+    const initialUnreadCount = Number(unreadDmByUser[selectedFriend.user_id] || 0);
     const load = async () => {
       setDmLoading(true);
       try {
@@ -442,12 +565,15 @@ function RedesignShell() {
         });
         if (!cancelled) {
           setDmMessages(next);
-          setUnreadDmByUser((prev) => {
-            const nextUnread = { ...prev };
-            delete nextUnread[selectedFriend.user_id];
-            return nextUnread;
-          });
-          setUnreadDmCount((count) => Math.max(0, count - Number(unreadDmByUser[selectedFriend.user_id] || 0)));
+          if (!unreadCleared) {
+            unreadCleared = true;
+            setUnreadDmByUser((prev) => {
+              const nextUnread = { ...prev };
+              delete nextUnread[selectedFriend.user_id];
+              return nextUnread;
+            });
+            setUnreadDmCount((count) => Math.max(0, count - initialUnreadCount));
+          }
         }
       } catch (error) {
         if (!cancelled) {
@@ -464,7 +590,7 @@ function RedesignShell() {
       cancelled = true;
       window.clearInterval(interval);
     };
-  }, [selectedFriend?.user_id, unreadDmByUser]);
+  }, [selectedFriend?.user_id]);
 
   const onlineFriends = useMemo(() => friends.filter(isProfileOnline), [friends]);
   const unreadSystemCount = systemNotifications.filter((notification) => !notification.read).length;
@@ -479,6 +605,25 @@ function RedesignShell() {
       void refreshSocial();
     } catch (error) {
       traceError('redesign-app', 'presence_update_failed', error, { status });
+    }
+  };
+
+  const handleLogout = async () => {
+    if (logoutBusy) return;
+    setLogoutBusy(true);
+    setShowStatusMenu(false);
+    try {
+      await apiFetch('/api/identity/me/sessions/revoke', { method: 'POST' });
+    } catch (error) {
+      traceError('redesign-app', 'logout_revoke_failed', error);
+    } finally {
+      setDesktopToken(null);
+      try {
+        window.localStorage.removeItem('skl.activeYamlId');
+      } catch {
+        // Ignore storage errors during logout.
+      }
+      window.location.reload();
     }
   };
 
@@ -524,6 +669,29 @@ function RedesignShell() {
     } catch (error) {
       traceError('redesign-app', 'friend_request_failed', error, { userId: profile.user_id });
       setUiError(error instanceof Error ? error.message : 'Unable to send friend request.');
+    } finally {
+      setFriendActionBusyId('');
+    }
+  };
+
+  const handleFriendContextAction = async (friend: SocialProfile, action: 'remove' | 'block') => {
+    if (!friend.user_id || friendActionBusyId) return;
+    const label = profileName(friend);
+    const confirmed = window.confirm(
+      action === 'block'
+        ? `Block ${label}? This also removes them from your friends.`
+        : `Remove ${label} from your friends?`,
+    );
+    if (!confirmed) return;
+    setFriendActionBusyId(friend.user_id);
+    try {
+      if (action === 'block') await blockSocialUser(friend.user_id);
+      else await removeSocialFriend(friend.user_id);
+      if (selectedFriend?.user_id === friend.user_id) setSelectedFriend(null);
+      await refreshSocial();
+    } catch (error) {
+      traceError('redesign-app', 'friend_context_action_failed', error, { action, userId: friend.user_id });
+      setUiError(error instanceof Error ? error.message : `Unable to ${action} friend.`);
     } finally {
       setFriendActionBusyId('');
     }
@@ -603,7 +771,7 @@ function RedesignShell() {
         <div className="p-6 border-b border-[#2a2b30]">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-[#161b22] flex items-center justify-center shadow-lg overflow-hidden border border-[#2a2b30]">
-              <img src="/assets/img/sekailink-logo-image.png" alt="SekaiLink" className="w-8 h-8 object-contain" />
+              <img src={publicAssetUrl("assets/img/sekailink-logo-image.png")} alt="SekaiLink" className="w-8 h-8 object-contain" />
             </div>
             <div>
               <div className="font-bold text-lg">SekaiLink</div>
@@ -616,9 +784,10 @@ function RedesignShell() {
         <nav className="flex-1 p-4 space-y-1">
           <NavItem icon={<Home className="w-5 h-5" />} label="Home" active={activeNav === 'home'} onClick={() => setActiveNav('home')} />
           <NavItem icon={<Library className="w-5 h-5" />} label="Library" active={activeNav === 'library'} onClick={() => setActiveNav('library')} />
+          <NavItem icon={<ShoppingBag className="w-5 h-5" />} label="Games & Mods" active={activeNav === 'app-store'} onClick={() => setActiveNav('app-store')} />
           <NavItem icon={<MessageCircle className="w-5 h-5" />} label="Chat" active={activeNav === 'chat'} onClick={() => setActiveNav('chat')} />
           <NavItem icon={<Users className="w-5 h-5" />} label="Lobbies" active={activeNav === 'lobbies'} onClick={() => setActiveNav('lobbies')} />
-          <NavItem icon={<Sparkles className="w-5 h-5" />} label="Pulse" active={activeNav === 'pulse'} onClick={() => setActiveNav('pulse')} />
+          <NavItem icon={<Sparkles className="w-5 h-5" />} label="Pulse" active={activeNav === 'pulse'} onClick={() => setActiveNav('pulse')} disabled badge={IN_LEARNING_LABEL} />
           <NavItem icon={<Settings className="w-5 h-5" />} label="Settings" active={activeNav === 'settings'} onClick={() => setActiveNav('settings')} />
         </nav>
 
@@ -641,7 +810,7 @@ function RedesignShell() {
             <div className="flex-1 min-w-0">
               <div className="font-medium text-sm">{displayName}</div>
               <div className="text-xs text-[#8e8f94] capitalize">
-                {userStatus === 'appear-offline' ? 'Appear Offline' : userStatus === 'afk' ? 'AFK' : userStatus}
+                {userStatus === 'appear-offline' ? 'Appear Offline' : userStatus === 'afk' ? 'Away' : userStatus}
               </div>
             </div>
           </div>
@@ -651,7 +820,7 @@ function RedesignShell() {
             <>
               {/* Backdrop */}
               <div
-                className="fixed inset-0 z-40"
+                className="fixed left-0 right-0 bottom-0 top-[32px] z-40"
                 onClick={() => setShowStatusMenu(false)}
               />
 
@@ -674,7 +843,7 @@ function RedesignShell() {
                   />
                   <StatusMenuItem
                     status="afk"
-                    label="AFK"
+                    label="Away"
                     color="bg-[#f69d50]"
                     isActive={userStatus === 'afk'}
                     onClick={() => void handleSetUserStatus('afk')}
@@ -686,6 +855,16 @@ function RedesignShell() {
                     isActive={userStatus === 'appear-offline'}
                     onClick={() => void handleSetUserStatus('appear-offline')}
                   />
+                  <div className="my-2 border-t border-[#34353b]" />
+                  <button
+                    type="button"
+                    onClick={() => void handleLogout()}
+                    disabled={logoutBusy}
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#f38181] hover:bg-[#f85149]/10 transition-colors disabled:opacity-50"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span className="text-sm font-medium">{logoutBusy ? 'Logging off...' : 'Log off'}</span>
+                  </button>
                 </div>
               </div>
             </>
@@ -714,7 +893,7 @@ function RedesignShell() {
           </div>
 
           {/* News Banner */}
-          <div className="relative rounded-xl card-float overflow-hidden border border-[#2a2b30]">
+          <div className="relative h-[236px] rounded-xl card-float overflow-hidden border-2 border-[#4ecdc4]/55 bg-[#0b0c10] shadow-[0_0_28px_rgba(78,205,196,0.16)]">
             <button
               onClick={() => setShowBannerModal(true)}
               className="absolute inset-0 z-10"
@@ -726,44 +905,38 @@ function RedesignShell() {
                 src={item.image}
                 alt={index === currentNews ? item.title : ''}
                 aria-hidden={index === currentNews ? undefined : true}
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out ${
+                className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-500 ease-in-out ${
                   index === currentNews ? 'opacity-100' : 'opacity-0'
                 }`}
               />
             ))}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0e0f13]/80 via-[#0e0f13]/35 to-[#0e0f13]/70" />
-            <div className="relative flex items-center justify-between min-h-44 p-6">
+            <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/10" />
+            <div className="relative flex h-full items-center justify-between p-4">
               <button
                 onClick={() => selectNews(currentNews - 1)}
-                className="relative z-20 w-8 h-8 flex items-center justify-center rounded-lg bg-[#2a2b30] hover:bg-[#3a3b40] transition-colors"
+                className="relative z-20 flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-[#14151a]/70 text-white shadow-lg backdrop-blur hover:bg-[#2a2b30]/85 transition-colors"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
 
-              <div className="flex-1 mx-6 text-center pointer-events-none">
-                <div className="inline-block px-3 py-1 bg-[#ff6b35] rounded-full text-xs font-bold mb-2">
-                  {NEWS_ITEMS[currentNews].tag}
-                </div>
-                <h3 className="text-xl font-bold mb-1">{NEWS_ITEMS[currentNews].title}</h3>
-                <p className="text-sm text-[#8e8f94]">{NEWS_ITEMS[currentNews].description}</p>
-              </div>
+              <div className="flex-1 pointer-events-none" />
 
               <button
                 onClick={() => selectNews(currentNews + 1)}
-                className="relative z-20 w-8 h-8 flex items-center justify-center rounded-lg bg-[#2a2b30] hover:bg-[#3a3b40] transition-colors"
+                className="relative z-20 flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-[#14151a]/70 text-white shadow-lg backdrop-blur hover:bg-[#2a2b30]/85 transition-colors"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
             </div>
 
             {/* Indicator dots */}
-            <div className="flex justify-center gap-2 mt-4">
+            <div className="absolute bottom-4 left-0 right-0 z-20 flex justify-center gap-2">
               {NEWS_ITEMS.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => selectNews(index)}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    index === currentNews ? 'bg-[#ff6b35] w-6' : 'bg-[#2a2b30]'
+                  className={`h-2 rounded-full border border-white/10 transition-all ${
+                    index === currentNews ? 'w-7 bg-[#4ecdc4]' : 'w-2 bg-white/35 hover:bg-white/55'
                   }`}
                 />
               ))}
@@ -850,7 +1023,17 @@ function RedesignShell() {
                   setEasyConfigGame(game);
                   setActiveNav('easy-config');
                 }}
+                onOpenRomImport={(gameId) => {
+                  setRomImportRequest({ gameId, nonce: Date.now() });
+                  setActiveNav('settings');
+                }}
               />
+            </div>
+          )}
+
+          {activeNav === 'app-store' && (
+            <div className="relative z-10 h-full">
+              <AppStorePage />
             </div>
           )}
 
@@ -929,13 +1112,17 @@ function RedesignShell() {
                   setSelectedLobbyId('');
                   setActiveNav('lobbies');
                 }}
+                onOpenRomImport={(gameId) => {
+                  setRomImportRequest({ gameId, nonce: Date.now() });
+                  setActiveNav('settings');
+                }}
               />
             </div>
           )}
 
           {activeNav === 'settings' && (
             <div className="relative z-10 h-full">
-              <SettingsPage />
+              <SettingsPage initialSection={romImportRequest ? 'rom-library' : 'general'} romImportRequest={romImportRequest} />
             </div>
           )}
 
@@ -996,6 +1183,10 @@ function RedesignShell() {
               online={isProfileOnline(friend)}
               unreadCount={unreadDmByUser[friend.user_id] || 0}
               onClick={() => setSelectedFriend(friend)}
+              onViewProfile={() => setSelectedFriend(friend)}
+              onOpenPublicProfile={() => void runtime.openExternal(`https://sekailink.com/@${encodeURIComponent(friend.username)}`)}
+              onRemove={() => void handleFriendContextAction(friend, 'remove')}
+              onBlock={() => void handleFriendContextAction(friend, 'block')}
             />
           ))}
           {!socialLoading && friends.length === 0 && (
@@ -1015,7 +1206,7 @@ function RedesignShell() {
           <>
             {/* Backdrop */}
             <div
-              className="fixed inset-0 z-40"
+              className="fixed left-0 right-0 bottom-0 top-[32px] z-40"
               onClick={() => setShowNotifications(false)}
             />
 
@@ -1097,7 +1288,7 @@ function RedesignShell() {
           <>
             {/* Backdrop */}
             <div
-              className="fixed inset-0 bg-black/60 z-50 backdrop-blur-sm"
+              className="fixed left-0 right-0 bottom-0 top-[32px] bg-black/60 z-50 backdrop-blur-sm"
               onClick={() => {
                 setSelectedFriend(null);
                 setShowDmEmotes(false);
@@ -1105,9 +1296,13 @@ function RedesignShell() {
             />
 
             {/* Chat Panel */}
-            <div className="fixed right-0 top-0 bottom-0 w-96 bg-[#0e0f13] shadow-2xl z-50 flex flex-col animate-slide-in-right border-l border-[#2a2b30]">
+            <div className="fixed right-0 top-[32px] bottom-0 w-96 bg-[#0e0f13] shadow-2xl z-50 flex flex-col animate-slide-in-right border-l border-[#2a2b30]">
               {/* Header */}
-              <div className="p-6 border-b border-[#2a2b30] bg-gradient-to-r from-[#1c1d22] to-[#14151a]">
+              <div className="relative overflow-hidden border-b border-[#2a2b30] bg-gradient-to-r from-[#1c1d22] to-[#14151a]">
+                {selectedFriend.banner_url && (
+                  <img src={selectedFriend.banner_url} alt="" className="absolute inset-0 h-full w-full object-cover opacity-20" />
+                )}
+                <div className="relative p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <div className="relative">
@@ -1116,8 +1311,12 @@ function RedesignShell() {
                         <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full border-2 border-[#0e0f13] bg-[#4ecdc4]" />
                       )}
                     </div>
-                    <div>
-                      <h3 className="font-bold text-lg">{profileName(selectedFriend)}</h3>
+                    <div className="min-w-0">
+                      <h3 className="flex items-center gap-1.5 font-bold text-lg truncate">
+                        <span className="truncate">{profileName(selectedFriend)}</span>
+                        {selectedFriend.verified && <BadgeCheck className="h-4 w-4 shrink-0 text-[#38f3dd]" />}
+                      </h3>
+                      <p className="truncate text-xs text-[#4ecdc4]">@{selectedFriend.username}</p>
                       <p className="text-sm text-[#8e8f94]">
                         {statusLabel(selectedFriend.presence_status || selectedFriend.status)}
                       </p>
@@ -1136,12 +1335,23 @@ function RedesignShell() {
 
                 {/* Quick Actions */}
                 <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => void runtime.openExternal(`https://sekailink.com/@${encodeURIComponent(selectedFriend.username)}`)}
+                    className="flex flex-1 items-center justify-center gap-2 py-2 px-3 bg-[#2a2b30] hover:bg-[#34353b] rounded-lg text-xs font-medium text-[#d7dde5] transition-colors"
+                  >
+                    <ExternalLink className="h-3.5 w-3.5" />
+                    Public profile
+                  </button>
                   <div className="flex-1 py-2 px-3 bg-[#2a2b30] rounded-lg text-xs font-medium text-center text-[#8e8f94]">
-                    Nexus profile
+                    {selectedFriend.patreon_is_supporter ? selectedFriend.patreon_tier || 'Supporter' : displayRole(selectedFriend.role)}
                   </div>
-                  <div className="flex-1 py-2 px-3 bg-[#2a2b30] rounded-lg text-xs font-medium text-center text-[#8e8f94]">
-                    {selectedFriend.user_id}
+                </div>
+                {(publicProfileLoading || selectedFriend.bio) && (
+                  <div className="mt-3 whitespace-pre-wrap break-words text-xs leading-5 text-[#b8bec7]">
+                    {publicProfileLoading && !selectedFriend.bio ? 'Loading profile...' : selectedFriend.bio}
                   </div>
+                )}
                 </div>
               </div>
 
@@ -1240,12 +1450,12 @@ function RedesignShell() {
           <>
             {/* Backdrop */}
             <div
-              className="fixed inset-0 bg-black/60 z-50 backdrop-blur-sm"
+              className="fixed left-0 right-0 bottom-0 top-[32px] bg-black/60 z-50 backdrop-blur-sm"
               onClick={() => setShowAddFriends(false)}
             />
 
             {/* Add Friends Panel */}
-            <div className="fixed right-0 top-0 bottom-0 w-96 bg-[#0e0f13] shadow-2xl z-50 flex flex-col animate-slide-in-right border-l border-[#2a2b30]">
+            <div className="fixed right-0 top-[32px] bottom-0 w-96 bg-[#0e0f13] shadow-2xl z-50 flex flex-col animate-slide-in-right border-l border-[#2a2b30]">
               {/* Header */}
               <div className="p-6 border-b border-[#2a2b30] bg-gradient-to-r from-[#1c1d22] to-[#14151a]">
                 <div className="flex items-center justify-between mb-4">
@@ -1334,6 +1544,7 @@ function RedesignShell() {
       {showCreateLobby && (
         <CreateLobbyModal
           onClose={() => setShowCreateLobby(false)}
+          asyncRoomEligible={asyncRoomEligible(currentUser)}
           onCreateSuccess={(lobbyId, createdLobbyName) => {
             if (lobbyId) {
               setLobbyTransition({
@@ -1349,7 +1560,7 @@ function RedesignShell() {
       )}
 
       {showUpdateInstallModal && (
-        <div className="fixed inset-0 z-[75] flex items-center justify-center bg-black/70 backdrop-blur-sm p-6">
+        <div className="fixed left-0 right-0 bottom-0 top-[32px] z-[75] flex items-center justify-center bg-black/70 backdrop-blur-sm p-6">
           <div className="w-full max-w-md rounded-xl border border-[#2a2b30] bg-[#161b22] p-6 shadow-2xl">
             <div className="mb-5 flex items-start justify-between gap-4">
               <div>
@@ -1412,8 +1623,64 @@ function RedesignShell() {
         />
       )}
 
+      {runningGameLabel && !runtimeGameSwitchEntries.length && (
+        <div className="fixed left-0 right-0 bottom-0 top-[32px] z-[65] flex items-center justify-center bg-black/70 backdrop-blur-sm p-6">
+          <div className="w-full max-w-md rounded-xl border border-[#4ecdc4] bg-[#161b22] p-6 text-center shadow-2xl">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-[#4ecdc4]">Game Running</p>
+            <h3 className="text-xl font-bold text-white">A game is currently running.</h3>
+            <p className="mt-3 text-sm leading-relaxed text-[#b9babf]">Quit the game to return to Sekaiemu.</p>
+          </div>
+        </div>
+      )}
+
+      {runtimeGameSwitchEntries.length > 0 && (
+        <div className="fixed left-0 right-0 bottom-0 top-[32px] z-[80] flex items-center justify-center bg-black/75 backdrop-blur-sm p-6">
+          <div className="w-full max-w-lg rounded-xl border border-[#4ecdc4] bg-[#161b22] p-6 shadow-2xl">
+            <div className="mb-5 flex items-start justify-between gap-4">
+              <div>
+                <p className="mb-1 text-xs font-bold uppercase tracking-[0.16em] text-[#4ecdc4]">Change Game</p>
+                <h3 className="text-xl font-bold text-white">Choose a game to load</h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setRuntimeGameSwitchEntries([])}
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2a2b30] text-[#8e8f94] transition-colors hover:bg-[#3a3b40] hover:text-white"
+                aria-label="Close game switch"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            <div className="space-y-2">
+              {runtimeGameSwitchEntries.map((entry) => (
+                <button
+                  key={entry.id}
+                  type="button"
+                  disabled={runtimeGameSwitchBusy}
+                  onClick={async () => {
+                    setRuntimeGameSwitchBusy(true);
+                    try {
+                      await runtime.multiGameSwitch?.(entry.id, {});
+                      setRuntimeGameSwitchEntries([]);
+                    } catch (error) {
+                      traceError('redesign-app', 'runtime_game_switch_failed', error, { entryId: entry.id });
+                      setUiError(error instanceof Error ? error.message : 'Unable to switch game.');
+                    } finally {
+                      setRuntimeGameSwitchBusy(false);
+                    }
+                  }}
+                  className="w-full rounded-lg border border-[#2a2b30] bg-[#1c1d22] px-4 py-3 text-left transition-colors hover:border-[#4ecdc4] disabled:opacity-60"
+                >
+                  <div className="font-bold text-white">{entry.label}</div>
+                  {entry.game && <div className="text-xs text-[#8e8f94]">{entry.game}</div>}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {showDiscordModal && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/70 backdrop-blur-sm p-6">
+        <div className="fixed left-0 right-0 bottom-0 top-[32px] z-[70] flex items-center justify-center bg-black/70 backdrop-blur-sm p-6">
           <div className="w-full max-w-md rounded-xl border border-[#2a2b30] bg-[#161b22] p-6 shadow-2xl">
             <div className="flex items-start justify-between gap-4 mb-4">
               <div className="flex items-center gap-3">
@@ -1444,7 +1711,7 @@ function RedesignShell() {
       )}
 
       {showBannerModal && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/75 backdrop-blur-sm p-6">
+        <div className="fixed left-0 right-0 bottom-0 top-[32px] z-[70] flex items-center justify-center bg-black/75 backdrop-blur-sm p-6">
           <div className="w-full max-w-3xl rounded-xl border border-[#2a2b30] bg-[#161b22] shadow-2xl overflow-hidden">
             <div className="relative h-56">
               <img src={NEWS_ITEMS[currentNews].image} alt={NEWS_ITEMS[currentNews].title} className="absolute inset-0 w-full h-full object-cover" />
@@ -1499,6 +1766,20 @@ function RedesignShell() {
 }
 
 export default function App() {
+  if (window.location.hash.startsWith('#/host-console/')) {
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <HostConsoleWindow />
+      </Suspense>
+    );
+  }
+  if (window.location.hash.startsWith('#/runtime-social/')) {
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <RuntimeSocialWindow />
+      </Suspense>
+    );
+  }
   if (isRuntimeLabSession()) {
     return (
       <Suspense fallback={<PageLoader />}>

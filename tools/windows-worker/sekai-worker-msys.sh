@@ -146,7 +146,7 @@ run_client_cmd() {
   {
     printf '@echo off\r\n'
     printf 'setlocal\r\n'
-    printf 'set "PATH=C:\\Program Files\\nodejs;%%PATH%%"\r\n'
+    printf 'set "PATH=C:\\Program Files\\nodejs;C:\\msys64\\ucrt64\\bin;C:\\msys64\\usr\\bin;%%PATH%%"\r\n'
     printf 'cd /d "%s" || exit /b 1\r\n' "$client_dir"
     for line in "$@"; do
       printf '%s\r\n' "$line"

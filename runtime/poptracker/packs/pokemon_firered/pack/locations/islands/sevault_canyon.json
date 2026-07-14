@@ -1,0 +1,285 @@
+[
+  {
+    "name": "Sevault Canyon",
+    "children": [
+      {
+        "name": "Encounters",
+        "sections": [
+          {
+            "ref": "Islands/Sevault Canyon/Land Encounters",
+            "name": "Land Encounters"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "sevault_canyon_north",
+            "x": 368,
+            "y": 12
+          },
+          {
+            "map": "sevault_canyon_south",
+            "x": 368,
+            "y": 12
+          }
+        ]
+      },
+      {
+        "name": "North Item",
+        "sections": [
+          {
+            "ref": "Islands/Sevault Canyon/North Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "sevault_canyon_north",
+            "x": 280,
+            "y": 376
+          }
+        ]
+      },
+      {
+        "name": "Tall Grass Item",
+        "sections": [
+          {
+            "ref": "Islands/Sevault Canyon/Tall Grass Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "sevault_canyon_north",
+            "x": 120,
+            "y": 616
+          }
+        ]
+      },
+      {
+        "name": "Black Belt",
+        "sections": [
+          {
+            "ref": "Islands/Sevault Canyon/Black Belt Info",
+            "name": "Info"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "sevault_canyon_north",
+            "x": 136,
+            "y": 424
+          }
+        ]
+      },
+      {
+        "name": "Item Behind Smashable Rocks",
+        "sections": [
+          {
+            "ref": "Islands/Sevault Canyon/Item Behind Smashable Rocks",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "sevault_canyon_south",
+            "x": 296,
+            "y": 88
+          }
+        ]
+      },
+      {
+        "name": "Sevault Canyon Chansey House",
+        "sections": [
+          {
+            "ref": "Islands/Sevault Canyon/Chansey House Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "sevault_canyon_south",
+            "x": 232,
+            "y": 344
+          }
+        ]
+      },
+      {
+        "name": "Hidden Item Near Chansey House",
+        "sections": [
+          {
+            "ref": "Islands/Sevault Canyon/Hidden Item Near Chansey House",
+            "name": "Hidden Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "sevault_canyon_south",
+            "x": 248,
+            "y": 424
+          }
+        ]
+      },
+      {
+        "name": "Cooltrainer Leroy",
+        "sections": [
+          {
+            "ref": "Islands/Sevault Canyon/Cooltrainer Leroy Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Islands/Sevault Canyon/Cooltrainer Leroy Rematch Reward (8 Badges-Gyms)",
+            "name": "Rematch Reward (8 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "sevault_canyon_south",
+            "x": 120,
+            "y": 264
+          }
+        ]
+      },
+      {
+        "name": "Cooltrainer Michelle",
+        "sections": [
+          {
+            "ref": "Islands/Sevault Canyon/Cooltrainer Michelle Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Islands/Sevault Canyon/Cooltrainer Michelle Rematch Reward (8 Badges-Gyms)",
+            "name": "Rematch Reward (8 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "sevault_canyon_south",
+            "x": 184,
+            "y": 376
+          }
+        ]
+      },
+      {
+        "name": "Cool Couple Lex & Nya",
+        "sections": [
+          {
+            "ref": "Islands/Sevault Canyon/Cool Couple Lex & Nya Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Islands/Sevault Canyon/Cool Couple Lex & Nya Rematch Reward (8 Badges-Gyms)",
+            "name": "Rematch Reward (8 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "sevault_canyon_north",
+            "x": 232,
+            "y": 224
+          }
+        ]
+      },
+      {
+        "name": "Crush Girl Cyndy",
+        "sections": [
+          {
+            "ref": "Islands/Sevault Canyon/Crush Girl Cyndy Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Islands/Sevault Canyon/Crush Girl Cyndy Rematch Reward (8 Badges-Gyms)",
+            "name": "Rematch Reward (8 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "sevault_canyon_south",
+            "x": 216,
+            "y": 56
+          }
+        ]
+      },
+      {
+        "name": "Pokémon Ranger Jackson",
+        "sections": [
+          {
+            "ref": "Islands/Sevault Canyon/Pokémon Ranger Jackson Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Islands/Sevault Canyon/Pokémon Ranger Jackson Rematch Reward (8 Badges-Gyms)",
+            "name": "Rematch Reward (8 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "sevault_canyon_north",
+            "x": 56,
+            "y": 568
+          }
+        ]
+      },
+      {
+        "name": "Pokémon Ranger Katelyn",
+        "sections": [
+          {
+            "ref": "Islands/Sevault Canyon/Pokémon Ranger Katelyn Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Islands/Sevault Canyon/Pokémon Ranger Katelyn Rematch Reward (8 Badges-Gyms)",
+            "name": "Rematch Reward (8 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "sevault_canyon_north",
+            "x": 56,
+            "y": 584
+          }
+        ]
+      },
+      {
+        "name": "Tamer Evan",
+        "sections": [
+          {
+            "ref": "Islands/Sevault Canyon/Tamer Evan Reward",
+            "name": "Reward"
+          },
+          {
+            "ref": "Islands/Sevault Canyon/Tamer Evan Rematch Reward (8 Badges-Gyms)",
+            "name": "Rematch Reward (8 Badges-Gyms)"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "sevault_canyon_north",
+            "x": 216,
+            "y": 584
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Sevault Canyon Chansey House",
+    "children": [
+      {
+        "name": "Item",
+        "sections": [
+          {
+            "ref": "Islands/Sevault Canyon/Chansey House Item",
+            "name": "Item"
+          }
+        ],
+        "map_locations": [
+          {
+            "map": "sevault_canyon_chansey_house",
+            "x": 104,
+            "y": 72
+          }
+        ]
+      }
+    ]
+  }
+]

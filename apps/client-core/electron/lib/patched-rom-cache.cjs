@@ -173,6 +173,34 @@ function createPatchedRomCacheStore(options) {
     return rows;
   };
 
+  const clear = ({ removeFiles = false } = {}) => {
+    const cache = load();
+    let removedFiles = 0;
+    let failedFiles = 0;
+    if (removeFiles) {
+      const outputPaths = new Set();
+      for (const entry of Object.values(cache.entries || {})) {
+        if (entry?.outputPath) outputPaths.add(String(entry.outputPath));
+      }
+      for (const entry of Object.values(cache.urlEntries || {})) {
+        if (entry?.outputPath) outputPaths.add(String(entry.outputPath));
+      }
+      for (const outputPath of outputPaths) {
+        try {
+          if (outputPath && fs.existsSync(outputPath)) {
+            fs.rmSync(outputPath, { force: true });
+            removedFiles += 1;
+          }
+        } catch (_err) {
+          failedFiles += 1;
+        }
+      }
+    }
+    cacheData = { entries: {}, urlEntries: {} };
+    save();
+    return { removedFiles, failedFiles };
+  };
+
   return {
     load,
     save,
@@ -180,6 +208,7 @@ function createPatchedRomCacheStore(options) {
     resolveByUrl,
     remember,
     listEntries,
+    clear,
   };
 }
 

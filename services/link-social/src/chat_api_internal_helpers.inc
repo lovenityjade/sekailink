@@ -9,6 +9,24 @@ std::string lower(std::string value) {
   return value;
 }
 
+bool patreon_async_room_eligible(const nlohmann::json& user) {
+  const auto patreon = user.contains("patreon") && user.at("patreon").is_object()
+                            ? user.at("patreon")
+                            : nlohmann::json::object();
+  const auto active = patreon.value("is_supporter", user.value("patreon_is_supporter", false));
+  if (!active) return false;
+  auto tier = lower(trim(patreon.value("tier", user.value("patreon_tier", std::string{}))));
+  for (auto& character : tier) {
+    if (std::isalnum(static_cast<unsigned char>(character)) == 0) character = ' ';
+  }
+  while (tier.find("  ") != std::string::npos) tier.erase(tier.find("  "), 1);
+  tier = trim(tier);
+  const auto padded_tier = " " + tier + " ";
+  return tier == "super supporter" || tier == "ultra supporter" ||
+         padded_tier.find(" tier 2 ") != std::string::npos ||
+         padded_tier.find(" tier 3 ") != std::string::npos;
+}
+
 std::string path_without_query(std::string_view raw_path) {
   const auto q = raw_path.find('?');
   return std::string(raw_path.substr(0, q == std::string_view::npos ? raw_path.size() : q));
@@ -111,6 +129,164 @@ std::string sanitized_text(std::string value, std::size_t max_len) {
   return value;
 }
 
+enum class ModerationMode {
+  Chat,
+  LobbyText,
+};
+
+struct ModerationResult {
+  bool ok = true;
+  std::string text;
+  std::string code;
+  std::string message;
+};
+
+char normalize_moderation_char(unsigned char c) {
+  if (std::isalpha(c) != 0) return static_cast<char>(std::tolower(c));
+  if (std::isdigit(c) != 0) {
+    switch (c) {
+      case '0': return 'o';
+      case '1': return 'i';
+      case '3': return 'e';
+      case '4': return 'a';
+      case '5': return 's';
+      case '7': return 't';
+      default: return static_cast<char>(c);
+    }
+  }
+  switch (c) {
+    case '@': return 'a';
+    case '$': return 's';
+    case '!': return 'i';
+    default: return '\0';
+  }
+}
+
+std::vector<std::string> moderation_tokens(const std::string& value) {
+  std::vector<std::string> tokens;
+  std::string current;
+  for (unsigned char c : value) {
+    const char normalized = normalize_moderation_char(c);
+    if (normalized != '\0') {
+      current.push_back(normalized);
+      continue;
+    }
+    if (!current.empty()) {
+      tokens.push_back(current);
+      current.clear();
+    }
+  }
+  if (!current.empty()) tokens.push_back(current);
+  return tokens;
+}
+
+std::string moderation_compact(const std::string& value) {
+  std::string compact;
+  for (unsigned char c : value) {
+    const char normalized = normalize_moderation_char(c);
+    if (normalized != '\0') compact.push_back(normalized);
+  }
+  return compact;
+}
+
+bool moderation_contains_token(const std::vector<std::string>& tokens, const std::vector<std::string_view>& blocked) {
+  for (const auto& token : tokens) {
+    for (std::string_view word : blocked) {
+      if (token == word) return true;
+    }
+  }
+  return false;
+}
+
+bool moderation_contains_compact(const std::string& compact, const std::vector<std::string_view>& blocked) {
+  for (std::string_view word : blocked) {
+    if (compact.find(word) != std::string::npos) return true;
+  }
+  return false;
+}
+
+bool lobby_text_looks_like_spam(const std::string& text) {
+  const auto lowered = lower(text);
+  if (lowered.find("http://") != std::string::npos ||
+      lowered.find("https://") != std::string::npos ||
+      lowered.find("www.") != std::string::npos ||
+      lowered.find("discord.gg/") != std::string::npos ||
+      lowered.find("discord.com/invite") != std::string::npos) {
+    return true;
+  }
+
+  std::size_t letters_or_digits = 0;
+  std::size_t punctuation = 0;
+  std::size_t spaces = 0;
+  int repeated = 0;
+  char previous = '\0';
+  for (unsigned char c : text) {
+    if (std::isalnum(c) != 0) ++letters_or_digits;
+    else if (std::isspace(c) != 0) ++spaces;
+    else ++punctuation;
+
+    const char normalized = normalize_moderation_char(c);
+    if (normalized != '\0' && normalized == previous) {
+      ++repeated;
+      if (repeated >= 6) return true;
+    } else {
+      previous = normalized;
+      repeated = normalized == '\0' ? 0 : 1;
+    }
+  }
+  const auto visible = letters_or_digits + punctuation;
+  if (visible >= 12 && punctuation > letters_or_digits) return true;
+  return letters_or_digits == 0 && spaces == 0 && punctuation >= 4;
+}
+
+ModerationResult moderate_user_text(std::string value, std::size_t max_len, ModerationMode mode) {
+  ModerationResult result;
+  result.text = sanitized_text(std::move(value), max_len);
+  if (result.text.empty()) return result;
+
+  const auto tokens = moderation_tokens(result.text);
+  const auto compact = moderation_compact(result.text);
+  const std::vector<std::string_view> severe_tokens = {
+      "nigger", "nigga", "faggot", "kike", "chink", "spic",
+      "rapist", "pedo", "pedophile",
+      "negre", "tapette",
+  };
+  const std::vector<std::string_view> severe_compact = {
+      "killyourself", "killurself", "gasjews", "childporn", "cporn",
+  };
+  const std::vector<std::string_view> lobby_tokens = {
+      "fuck", "shit", "bitch", "cunt", "slut", "whore", "dick", "cock", "pussy", "asshole",
+      "porn", "hentai", "onlyfans",
+      "merde", "putain", "pute", "salope", "connard", "connasse", "conasse",
+      "tabarnak", "tabarnac", "osti", "estie", "criss", "caliss", "calisse",
+      "bite", "chatte", "couille",
+  };
+
+  if (moderation_contains_token(tokens, severe_tokens) || moderation_contains_compact(compact, severe_compact)) {
+    result.ok = false;
+    result.code = "content_blocked";
+    result.message = "This text cannot be sent on SekaiLink.";
+    return result;
+  }
+  if (mode == ModerationMode::LobbyText) {
+    if (moderation_contains_token(tokens, lobby_tokens) || lobby_text_looks_like_spam(result.text)) {
+      result.ok = false;
+      result.code = "lobby_text_blocked";
+      result.message = "Lobby names and descriptions must stay clean and readable.";
+      return result;
+    }
+  }
+  return result;
+}
+
+nlohmann::json moderation_error_json(const ModerationResult& moderation) {
+  return {
+      {"ok", false},
+      {"error", moderation.code.empty() ? "content_blocked" : moderation.code},
+      {"message", moderation.message.empty() ? "This text cannot be used on SekaiLink." : moderation.message},
+  };
+}
+
 bool is_safe_channel_id(const std::string& value) {
   if (value.empty() || value.size() > 96) return false;
   return std::all_of(value.begin(), value.end(), [](unsigned char c) {
@@ -172,18 +348,36 @@ nlohmann::json read_json_file_object(const std::filesystem::path& path) {
   }
 }
 
+std::string normalized_release_channel(std::string value) {
+  value = lower(trim(std::move(value)));
+  if (value == "canary") return "canari";
+  if (value == "stable" || value == "release" || value == "test" || value.empty()) return "canonical";
+  if (value == "canari" || value == "canonical") return value;
+  return value;
+}
+
+std::string normalized_release_platform(std::string value) {
+  value = lower(trim(std::move(value)));
+  if (value == "windows" || value == "win" || value == "win64") return "win32-x64";
+  if (value == "linux" || value == "linux64") return "linux-x64";
+  return value;
+}
+
 nlohmann::json select_release_manifest_entry(
     const nlohmann::json& manifest,
     const std::string& channel,
     const std::string& platform,
     const std::string& build = "") {
+  const auto requested_channel = normalized_release_channel(channel);
+  const auto requested_platform = normalized_release_platform(platform);
+  const auto requested_build = lower(trim(build));
   const auto matches_request = [&](const nlohmann::json& entry) {
-    const auto entry_channel = first_string_limited(entry, {"channel"}, "", 80);
-    const auto entry_platform = first_string_limited(entry, {"platform"}, "", 80);
-    const auto entry_build = first_string_limited(entry, {"build"}, "", 80);
-    if (!channel.empty() && !entry_channel.empty() && entry_channel != channel) return false;
-    if (!platform.empty() && !entry_platform.empty() && entry_platform != platform) return false;
-    if (!build.empty() && !entry_build.empty() && entry_build != build) return false;
+    const auto entry_channel = normalized_release_channel(first_string_limited(entry, {"channel"}, "", 80));
+    const auto entry_platform = normalized_release_platform(first_string_limited(entry, {"platform"}, "", 80));
+    const auto entry_build = lower(trim(first_string_limited(entry, {"build"}, "", 80)));
+    if (!requested_channel.empty() && !entry_channel.empty() && entry_channel != requested_channel) return false;
+    if (!requested_platform.empty() && !entry_platform.empty() && entry_platform != requested_platform) return false;
+    if (!requested_build.empty() && !entry_build.empty() && entry_build != requested_build) return false;
     return true;
   };
   if (manifest.contains("releases") && manifest.at("releases").is_array()) {
@@ -195,6 +389,37 @@ nlohmann::json select_release_manifest_entry(
   }
   if (!manifest.is_object()) return nlohmann::json::object();
   return matches_request(manifest) ? manifest : nlohmann::json::object();
+}
+
+nlohmann::json select_bootstrapper_manifest_entry(
+    const nlohmann::json& manifest,
+    const std::string& channel,
+    const std::string& platform,
+    const std::string& build = "") {
+  const auto requested_channel = normalized_release_channel(channel);
+  const auto requested_platform = normalized_release_platform(platform);
+  const auto requested_build = lower(trim(build));
+  const auto candidates = [&]() -> nlohmann::json {
+    if (manifest.contains("bootstrapper") && manifest.at("bootstrapper").is_object()) {
+      const auto& bootstrapper = manifest.at("bootstrapper");
+      if (bootstrapper.contains("releases") && bootstrapper.at("releases").is_array()) return bootstrapper.at("releases");
+      if (bootstrapper.contains("artifacts") && bootstrapper.at("artifacts").is_array()) return bootstrapper.at("artifacts");
+    }
+    if (manifest.contains("bootstrapper_releases") && manifest.at("bootstrapper_releases").is_array()) return manifest.at("bootstrapper_releases");
+    if (manifest.contains("bootstrapper_artifacts") && manifest.at("bootstrapper_artifacts").is_array()) return manifest.at("bootstrapper_artifacts");
+    return nlohmann::json::array();
+  }();
+  for (const auto& entry : candidates) {
+    if (!entry.is_object()) continue;
+    const auto entry_channel = normalized_release_channel(first_string_limited(entry, {"channel"}, "", 80));
+    const auto entry_platform = normalized_release_platform(first_string_limited(entry, {"platform"}, "", 80));
+    const auto entry_build = lower(trim(first_string_limited(entry, {"build"}, "", 80)));
+    if (!entry_channel.empty() && entry_channel != requested_channel) continue;
+    if (!entry_platform.empty() && entry_platform != requested_platform) continue;
+    if (!requested_build.empty() && !entry_build.empty() && entry_build != requested_build) continue;
+    return entry;
+  }
+  return nlohmann::json::object();
 }
 
 std::string avatar_url_from_user(const nlohmann::json& user) {
@@ -220,11 +445,19 @@ std::string user_id_string(const nlohmann::json& user) {
 }
 
 std::string legacy_display_name(const nlohmann::json& user) {
-  return first_string(user, {"display_name", "global_name", "username", "email"}, "SekaiLink");
+  for (const auto* key : {"display_name", "global_name", "username"}) {
+    const auto candidate = first_string_limited(user, {key}, "", 160);
+    if (!candidate.empty() && candidate.find('@') == std::string::npos) return candidate;
+  }
+  return "SekaiLink";
 }
 
 std::string legacy_username(const nlohmann::json& user) {
-  return first_string(user, {"username", "email", "display_name"}, "SekaiLink");
+  for (const auto* key : {"username", "display_name", "global_name"}) {
+    const auto candidate = first_string_limited(user, {key}, "", 160);
+    if (!candidate.empty() && candidate.find('@') == std::string::npos) return candidate;
+  }
+  return "SekaiLink";
 }
 
 std::string identity_user_id(const nlohmann::json& identity) {
@@ -242,6 +475,21 @@ std::string identity_username(const nlohmann::json& identity) {
 std::string identity_display_name(const nlohmann::json& identity) {
   if (!identity.contains("user") || !identity.at("user").is_object()) return "SekaiLink";
   return legacy_display_name(identity.at("user"));
+}
+
+bool normalized_text_equal(std::string left, std::string right) {
+  left = lower(trim(std::move(left)));
+  right = lower(trim(std::move(right)));
+  return !left.empty() && !right.empty() && left == right;
+}
+
+bool identity_matches_lobby_owner(const nlohmann::json& identity, const nlohmann::json& lobby) {
+  const auto owner = first_string_limited(lobby, {"owner_username", "owner"}, "", 160);
+  if (owner.empty() || !identity.contains("user") || !identity.at("user").is_object()) return false;
+  const auto& user = identity.at("user");
+  return normalized_text_equal(owner, legacy_display_name(user)) ||
+         normalized_text_equal(owner, legacy_username(user)) ||
+         normalized_text_equal(owner, user_id_string(user));
 }
 
 std::string identity_avatar_url(const nlohmann::json& identity) {

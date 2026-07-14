@@ -49,7 +49,6 @@ Dry run:
 tools/resource-import/import_seed_configs_to_nexus.py \
   --input-dir runtime/generated/nexus-seed-config-imports \
   --base-url http://127.0.0.1:19106 \
-  --admin-token "$NEXUS_SEED_CONFIG_ADMIN_TOKEN" \
   --dry-run
 ```
 
@@ -58,8 +57,7 @@ Real import:
 ```bash
 tools/resource-import/import_seed_configs_to_nexus.py \
   --input-dir runtime/generated/nexus-seed-config-imports \
-  --base-url http://127.0.0.1:19106 \
-  --admin-token "$NEXUS_SEED_CONFIG_ADMIN_TOKEN"
+  --base-url http://127.0.0.1:19106
 ```
 
 To import one game:
@@ -68,9 +66,13 @@ To import one game:
 tools/resource-import/import_seed_configs_to_nexus.py \
   --input-dir runtime/generated/nexus-seed-config-imports \
   --base-url http://127.0.0.1:19106 \
-  --admin-token "$NEXUS_SEED_CONFIG_ADMIN_TOKEN" \
   --game-key a_link_to_the_past
 ```
+
+Set `NEXUS_SEED_CONFIG_ADMIN_TOKEN` in the environment before running these
+commands. The legacy `--admin-token` option remains available for isolated
+development, but must not be used on shared or production hosts because command
+arguments can be visible to other processes.
 
 ## Current Coverage
 

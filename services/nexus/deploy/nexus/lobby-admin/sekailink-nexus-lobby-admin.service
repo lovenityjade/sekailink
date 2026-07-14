@@ -5,11 +5,26 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-User=root
+User=sekailink
+Group=sekailink
 WorkingDirectory=/opt/sekailink/src/sekailink_server_core
 ExecStart=/opt/sekailink/nexus/lobby-admin/bin/sekailink_lobby_admin_service --config /opt/sekailink/nexus/lobby-admin/config/lobby_admin.json
 Restart=always
 RestartSec=2
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/sekailink/nexus/lobby-admin/data
+CapabilityBoundingSet=
+LockPersonality=true
+MemoryDenyWriteExecute=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
 
 [Install]
 WantedBy=multi-user.target

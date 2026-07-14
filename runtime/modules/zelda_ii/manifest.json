@@ -38,7 +38,7 @@
     "ap_game": "Zelda II: The Adventure of Link"
   },
   "tracker_pack_uid": "",
-  "tracker_web_url": "",
-  "tracker_pack_path": "poptracker/packs/zelda_ii/pack/zelda-2-ap-tracker-0.0.4",
+  "tracker_web_url": "https://github.com/palex00/zelda-2-ap-tracker/releases/latest",
+  "tracker_pack_path": "poptracker/packs/zelda_ii/pack/palex00-zelda-2-ap-tracker-b621b07",
   "default_tracker_variant": "Map Tracker"
 }

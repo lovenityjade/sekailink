@@ -1,6 +1,6 @@
 {
   "name": "sekailink-client",
-  "version": "0.3.1-prebeta3.20260613.2",
+  "version": "0.3.1-prebeta3.20260714.1",
   "description": "SekaiLink desktop client (Archipelago-focused).",
   "author": "SekaiLink",
   "private": true,
@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.1",
+    "archiver": "^7.0.1",
     "framer-motion": "^12.36.0",
     "js-yaml": "^4.1.1",
     "lucide-react": "^0.487.0",

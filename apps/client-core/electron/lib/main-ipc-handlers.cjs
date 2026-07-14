@@ -1,5 +1,7 @@
 "use strict";
 
+const { hardenBrowserWindow } = require("./browser-window-hardening.cjs");
+
 const registerMainIpcHandlers = (deps = {}) => {
   const {
     app,
@@ -8,6 +10,7 @@ const registerMainIpcHandlers = (deps = {}) => {
     dialog,
     clipboard,
     screen,
+    desktopCapturer,
     processRef = process,
     secureIpcHandle,
     isPlainObject,
@@ -22,6 +25,10 @@ const registerMainIpcHandlers = (deps = {}) => {
     getClientBundleInstallDir,
     validateBootstrapLaunchToken,
     resolveBootstrapperExecutable,
+    getPreferredReleaseChannel,
+    setPreferredReleaseChannel,
+    fetchBootstrapperLatest,
+    checkAndApplyBootstrapperUpdate,
     getBootstrapperDownloadUrl,
     launchBootstrapperAndQuit,
     readConfig,
@@ -51,13 +58,16 @@ const registerMainIpcHandlers = (deps = {}) => {
     runPatcher,
     resolvePatchedRomPlan,
     patchedRomCache,
+    clearRuntimeCaches = () => {},
     launchBizHawk,
     stopBizHawk,
     sekaiemuLab,
+    sekaiemuRuntimeSocial,
     launchPopTracker,
     stopPopTracker,
     readPopTrackerRuntimeStatus,
     sendPopTrackerRuntimeCommand,
+    openPopTrackerBroadcast,
     installTrackerPack,
     getPopTrackerStatus,
     getInstalledTrackerPack,
@@ -69,8 +79,10 @@ const registerMainIpcHandlers = (deps = {}) => {
     resolveModuleForDownload,
     planSessionAutoLaunch,
     getModuleManifest,
+    validateRomForModule,
     validateSetupForModule,
     listRuntimeModules,
+    pcPackageRuntime,
     createLinkedWorldRuntime,
     fs,
     path,
@@ -78,6 +90,8 @@ const registerMainIpcHandlers = (deps = {}) => {
     spawnSync,
     readline,
     dirname,
+    isDev = false,
+    devServerUrl = "http://localhost:5173",
     findFreeLocalPort,
     writeLogLine,
     emitSessionEvent,
@@ -89,9 +103,115 @@ const registerMainIpcHandlers = (deps = {}) => {
   } = deps;
   const process = processRef;
   const mainWindow = () => getMainWindow?.() || null;
+  const hostConsoleWindows = new Map();
+  const desktopAuthSessionPath = () => path.join(app.getPath("userData"), "desktop-auth-session.json");
+  const normalizeDesktopAuthSession = (payload) => {
+    if (!isPlainObject(payload)) return null;
+    const token = normalizeIpcString(payload.token, 16 * 1024);
+    if (!token) return null;
+    const session = {
+      token,
+      updated_at: normalizeIpcString(payload.updated_at, 64) || new Date().toISOString(),
+    };
+    if (isPlainObject(payload.user)) session.user = payload.user;
+    if (isPlainObject(payload.session)) session.session = payload.session;
+    return session;
+  };
+  const readDesktopAuthSession = () => {
+    try {
+      const filePath = desktopAuthSessionPath();
+      if (!fs.existsSync(filePath)) return { ok: true, session: null };
+      const parsed = JSON.parse(fs.readFileSync(filePath, "utf8"));
+      const session = normalizeDesktopAuthSession(parsed);
+      if (!session) return { ok: true, session: null };
+      return { ok: true, session };
+    } catch (err) {
+      return { ok: false, error: String(err && err.message ? err.message : err) };
+    }
+  };
+  const writeDesktopAuthSession = (payload) => {
+    try {
+      const filePath = desktopAuthSessionPath();
+      fs.mkdirSync(path.dirname(filePath), { recursive: true });
+      const session = normalizeDesktopAuthSession(payload);
+      if (!session) {
+        try {
+          fs.rmSync(filePath, { force: true });
+        } catch (_err) {
+          // ignore missing auth store
+        }
+        return { ok: true, session: null };
+      }
+      const tmpPath = `${filePath}.${process.pid}.tmp`;
+      fs.writeFileSync(tmpPath, JSON.stringify(session, null, 2), { mode: 0o600 });
+      fs.renameSync(tmpPath, filePath);
+      return { ok: true };
+    } catch (err) {
+      return { ok: false, error: String(err && err.message ? err.message : err) };
+    }
+  };
+
+  const rmPathIfExists = (targetPath) => {
+    const clean = String(targetPath || "");
+    if (!clean || !fs.existsSync(clean)) return { removed: false };
+    fs.rmSync(clean, { recursive: true, force: true });
+    return { removed: true };
+  };
+
+  const clearSeedCache = () => {
+    const userDataRuntimeDir = path.join(app.getPath("userData"), "runtime");
+    const targets = [
+      path.join(userDataRuntimeDir, "downloads"),
+      path.join(userDataRuntimeDir, "patches"),
+      path.join(userDataRuntimeDir, "roms"),
+    ];
+    const result = {
+      ok: true,
+      activeRuntimeCount: nativeGameProcs?.size || 0,
+      cleared: [],
+      failed: [],
+      patchedRomCache: { removedFiles: 0, failedFiles: 0 },
+    };
+    try {
+      result.patchedRomCache = patchedRomCache?.clear?.({ removeFiles: true }) || result.patchedRomCache;
+    } catch (err) {
+      result.failed.push({ target: "patched-rom-cache", error: String(err?.message || err || "") });
+    }
+    for (const target of targets) {
+      try {
+        const removed = rmPathIfExists(target);
+        if (removed.removed) result.cleared.push(target);
+      } catch (err) {
+        result.failed.push({ target, error: String(err?.message || err || "") });
+      }
+    }
+    try {
+      clearRuntimeCaches();
+    } catch (err) {
+      result.failed.push({ target: "runtime-module-caches", error: String(err?.message || err || "") });
+    }
+    result.ok = result.failed.length === 0;
+    writeLogJson("maintenance", {
+      event: "seed_cache_cleared",
+      activeRuntimeCount: result.activeRuntimeCount,
+      clearedCount: result.cleared.length,
+      failedCount: result.failed.length,
+      patchedRomRemovedFiles: result.patchedRomCache.removedFiles,
+      at: new Date().toISOString(),
+    });
+    return result;
+  };
 
   secureIpcHandle("app:openExternal", async (_event, url) => {
     return openExternalSafely(url, "ipc.app:openExternal");
+  });
+
+  secureIpcHandle("auth:getDesktopSession", async () => {
+    return readDesktopAuthSession();
+  });
+
+  secureIpcHandle("auth:setDesktopSession", async (_event, payload) => {
+    return writeDesktopAuthSession(isPlainObject(payload) ? payload : null);
   });
   
   secureIpcHandle("app:getEnv", async () => {
@@ -103,6 +223,7 @@ const registerMainIpcHandlers = (deps = {}) => {
       app_version: app.getVersion ? String(app.getVersion() || "") : "",
       bootstrap_release_version: String(installState.version || installState.manifestVersion || "").trim(),
       bootstrap_channel: String(installState.channel || "").trim().toLowerCase(),
+      bootstrap_preferred_channel: typeof getPreferredReleaseChannel === "function" ? getPreferredReleaseChannel() : String(installState.channel || "").trim().toLowerCase(),
       bootstrap_build: String(installState.build || "").trim().toLowerCase(),
       bootstrap_install_dir: String(installState.installDir || process.env.SEKAILINK_BOOTSTRAP_INSTALL_DIR || "").trim(),
       bootstrapper_path: bootstrapperPath,
@@ -142,6 +263,10 @@ const registerMainIpcHandlers = (deps = {}) => {
     const artifacts = await collectBugReportArtifacts(isPlainObject(options) ? options : {});
     return { ok: true, artifacts };
   });
+
+  secureIpcHandle("app:clearSeedCache", async () => {
+    return clearSeedCache();
+  });
   
   secureIpcHandle("app:copyText", async (_event, text) => {
     const value = normalizeIpcString(text, 1024 * 1024);
@@ -167,6 +292,67 @@ const registerMainIpcHandlers = (deps = {}) => {
     if (!isSafeExternalUrl(targetUrl)) return { ok: false, error: "unsafe_url" };
     createDashboardWindow(targetUrl);
     return { ok: true };
+  });
+
+  secureIpcHandle("app:listCaptureSources", async () => {
+    const sources = await desktopCapturer.getSources({ types: ["screen"], thumbnailSize: { width: 320, height: 180 }, fetchWindowIcons: false });
+    return {
+      ok: true,
+      sources: sources.map((source) => ({ id: source.id, name: source.name, displayId: source.display_id, previewBase64: source.thumbnail.toPNG().toString("base64") })),
+    };
+  });
+
+  secureIpcHandle("app:captureSource", async (_event, sourceId) => {
+    const safeId = normalizeIpcString(sourceId, 160);
+    if (!safeId) return { ok: false, error: "invalid_capture_source" };
+    const displays = screen.getAllDisplays();
+    const maxWidth = Math.max(1280, ...displays.map((display) => Number(display.size?.width || 0)));
+    const maxHeight = Math.max(720, ...displays.map((display) => Number(display.size?.height || 0)));
+    const sources = await desktopCapturer.getSources({ types: ["screen"], thumbnailSize: { width: maxWidth, height: maxHeight }, fetchWindowIcons: false });
+    const source = sources.find((entry) => entry.id === safeId);
+    if (!source) return { ok: false, error: "capture_source_not_found" };
+    return { ok: true, screenshotBase64: source.thumbnail.toPNG().toString("base64"), sourceName: source.name };
+  });
+
+  secureIpcHandle("hostConsole:open", async (_event, lobbyId) => {
+    const safeLobbyId = normalizeIpcString(lobbyId, 160).replace(/[^A-Za-z0-9_.:-]/g, "-");
+    if (!safeLobbyId) return { ok: false, error: "invalid_lobby_id" };
+    const existing = hostConsoleWindows.get(safeLobbyId);
+    if (existing && !existing.isDestroyed()) {
+      existing.show();
+      existing.focus();
+      return { ok: true, focused: true };
+    }
+    const win = new BrowserWindow({
+      width: 980,
+      height: 720,
+      minWidth: 720,
+      minHeight: 520,
+      title: `Host Console - ${safeLobbyId}`,
+      frame: false,
+      titleBarStyle: "hidden",
+      autoHideMenuBar: true,
+      backgroundColor: "#05070A",
+      show: false,
+      webPreferences: {
+        preload: path.join(dirname, "preload.cjs"),
+        contextIsolation: true,
+        nodeIntegration: false,
+        sandbox: true,
+        devTools: false,
+      },
+    });
+    hardenBrowserWindow(win);
+    win.once("ready-to-show", () => {
+      win.show();
+      win.focus();
+    });
+    win.on("closed", () => hostConsoleWindows.delete(safeLobbyId));
+    hostConsoleWindows.set(safeLobbyId, win);
+    const hash = `#/host-console/${encodeURIComponent(safeLobbyId)}`;
+    if (isDev) await win.loadURL(`${devServerUrl}${hash}`);
+    else await win.loadFile(path.join(dirname, "../dist/index.html"), { hash });
+    return { ok: true, opened: true };
   });
   
   secureIpcHandle("app:window:minimize", async () => {
@@ -209,6 +395,31 @@ const registerMainIpcHandlers = (deps = {}) => {
   
   secureIpcHandle("updater:launchBootstrapperAndQuit", async () => {
     return launchBootstrapperAndQuit();
+  });
+
+  secureIpcHandle("bootstrapper:getReleaseChannel", async () => {
+    const installState = getBootstrapInstallState() || {};
+    return {
+      ok: true,
+      channel: typeof getPreferredReleaseChannel === "function" ? getPreferredReleaseChannel() : String(installState.channel || "canonical").trim().toLowerCase(),
+      installedChannel: String(installState.channel || "").trim().toLowerCase(),
+      installedVersion: String(installState.version || installState.manifestVersion || "").trim(),
+    };
+  });
+
+  secureIpcHandle("bootstrapper:setReleaseChannel", async (_event, channel) => {
+    if (typeof setPreferredReleaseChannel !== "function") return { ok: false, error: "release_channel_unavailable" };
+    return setPreferredReleaseChannel(channel);
+  });
+
+  secureIpcHandle("bootstrapper:checkUpdate", async (_event, options) => {
+    if (typeof checkAndApplyBootstrapperUpdate !== "function") return { ok: false, error: "bootstrapper_update_unavailable" };
+    return checkAndApplyBootstrapperUpdate(isPlainObject(options) ? options : {});
+  });
+
+  secureIpcHandle("bootstrapper:getLatest", async (_event, channel) => {
+    if (typeof fetchBootstrapperLatest !== "function") return { ok: false, error: "bootstrapper_manifest_unavailable" };
+    return fetchBootstrapperLatest(channel);
   });
   
   secureIpcHandle("app:pickFile", async (_event, options) => {
@@ -414,6 +625,7 @@ const registerMainIpcHandlers = (deps = {}) => {
   });
   
   sekaiemuLab.registerIpcHandlers();
+  sekaiemuRuntimeSocial?.registerIpcHandlers?.();
   
   secureIpcHandle("tracker:launch", async (_event, options) => {
     return launchPopTracker(isPlainObject(options) ? options : {});
@@ -436,6 +648,10 @@ const registerMainIpcHandlers = (deps = {}) => {
     if (!Number.isFinite(safePid) || safePid <= 0) return { ok: false, error: "invalid_pid" };
     const safeCommand = normalizeIpcString(command, 64) || "ping";
     return sendPopTrackerRuntimeCommand(safePid, safeCommand, isPlainObject(detail) ? detail : {});
+  });
+
+  secureIpcHandle("tracker:openBroadcast", async () => {
+    return openPopTrackerBroadcast();
   });
   
   secureIpcHandle("tracker:installPack", async (_event, options) => {
@@ -509,9 +725,27 @@ const registerMainIpcHandlers = (deps = {}) => {
     if (!safeModuleId) return { ok: false, error: "invalid_module_id" };
     return validateSetupForModule(safeModuleId);
   });
+
+  secureIpcHandle("runtime:validateRomForModule", async (_event, moduleId) => {
+    const safeModuleId = normalizeGameId(moduleId);
+    if (!safeModuleId) return { ok: false, error: "invalid_module_id", setupArea: "roms" };
+    return validateRomForModule(safeModuleId);
+  });
   
   secureIpcHandle("runtime:listModules", async () => {
     return { ok: true, modules: listRuntimeModules() };
+  });
+
+  secureIpcHandle("pcPackages:list", async (_event, options) => {
+    return await pcPackageRuntime.getCatalog({ refresh: Boolean(options?.refresh) });
+  });
+
+  secureIpcHandle("pcPackages:install", async (_event, packageId) => {
+    return await pcPackageRuntime.install(normalizeIpcString(packageId, 128));
+  });
+
+  secureIpcHandle("pcPackages:uninstall", async (_event, packageId) => {
+    return await pcPackageRuntime.uninstall(normalizeIpcString(packageId, 128));
   });
   
   createLinkedWorldRuntime({

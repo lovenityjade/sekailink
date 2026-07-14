@@ -1,0 +1,9 @@
+/* This file was automatically generated via Phakager. Do not make manual edits to this file. */
+[
+    {
+        "name": "map_castle",
+        "location_size": 32,
+        "location_border_thickness": 2,
+        "img": "images/maps/castle.png"
+    }
+]

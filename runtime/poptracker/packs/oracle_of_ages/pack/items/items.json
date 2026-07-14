@@ -1,0 +1,1811 @@
+[
+  {
+    "name": "Progressive Shield",
+    "type": "progressive",
+    "stages": [
+      {
+        "img": "images/items/shield1.png",
+        "codes": "shield1, shield, Progressive Shield"
+      },
+      {
+        "img": "images/items/shield2.png",
+        "codes": "shield2, Progressive Shield"
+      }
+    ]
+  },
+  {
+    "name": "Bombs (10)",
+    "type": "progressive",
+    "stages": [
+      {
+        "disabled_img": "images/items/bomb.png",
+        "img": "images/items/bomb10.png",
+        "codes": "bombs, bombs1"
+      },
+      {
+        "img": "images/items/bomb20.png",
+        "codes": "bombs, bombs2"
+      },
+      {
+        "img": "images/items/bomb30.png",
+        "codes": "bombs, bombs3"
+      },
+      {
+        "img": "images/items/bomb40.png",
+        "codes": "bombs, bombs4"
+      },
+      {
+        "img": "images/items/bomb50.png",
+        "codes": "bombs, bombs5"
+      },
+      {
+        "img": "images/items/bomb60.png",
+        "codes": "bombs, bombs6"
+      },
+      {
+        "img": "images/items/bomb70.png",
+        "codes": "bombs, bombs7"
+      },
+      {
+        "img": "images/items/bomb80.png",
+        "codes": "bombs, bombs8"
+      },
+      {
+        "img": "images/items/bomb90.png",
+        "codes": "bombs, bombs9"
+      },
+      {
+        "img": "images/items/bomb99.png",
+        "codes": "bombs, bombs10"
+      }
+    ]
+  },
+  {
+    "name": "Progressive Sword",
+    "type": "progressive",
+    "stages": [
+      {
+        "img": "images/items/sword1.png",
+        "codes": "sword1, swordupgrade, Progressive Sword"
+      },
+      {
+        "img": "images/items/sword2.png",
+        "codes": "sword2, swordupgrade, Progressive Sword"
+      },
+      {
+        "img": "images/items/Master Sword.png",
+        "codes": "sword3, swordupgrade, Progressive Sword"
+      }
+    ]
+  },
+  {
+    "name": "Boomerang",
+    "type": "progressive",
+    "stages": [
+      {
+        "img": "images/items/boomerang.png",
+        "codes": "boomerang, Boomerang"
+      },
+      {
+        "img": "images/items/magicboomerang.png",
+        "codes": "magboom, Boomerang"
+      }
+    ]
+  },
+  {
+    "name": "Progressive Harp",
+    "type": "progressive",
+    "stages": [
+      {
+        "img": "images/items/song_echoes.png",
+        "codes": "echoes, song1, harpupgrade, Progressive Harp"
+      },
+      {
+        "img": "images/items/song_currents.png",
+        "codes": "currents, song2, harpupgrade, Progressive Harp"
+      },
+      {
+        "img": "images/items/song_ages.png",
+        "codes": "ages, song3, harpupgrade, Progressive Harp"
+      }
+    ]
+  },
+  {
+    "name": "Progressive Hook",
+    "type": "progressive",
+    "stages": [
+      {
+        "img": "images/items/switchhook1.png",
+        "codes": "hook1, hookupgrade, Progressive Hook"
+      },
+      {
+        "img": "images/items/switchhook2.png",
+        "codes": "hook2, hookupgrade, Progressive Hook"
+      }
+    ]
+  },
+  {
+    "name": "Cane of Somaria",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/somaria.png",
+    "codes": "Cane of Somaria, cane, somaria"
+  },
+  {
+    "name": "Biggoron's Sword",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/goron sword.png",
+    "codes": "bigsword, Biggoron's Sword"
+  },
+  {
+    "name": "Flute",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/flute.png",
+    "codes": "flute, Flute"
+  },
+  {
+    "name": "Seed Shooter",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/shooter.png",
+    "codes": "shooter, Seed Shooter"
+  },
+  {
+    "name": "Shovel",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/shovel.png",
+    "codes": "shovel, Shovel"
+  },
+  {
+    "name": "Progressive Bracelet",
+    "type": "progressive",
+    "stages": [
+      {
+        "img": "images/items/powerbracelet.png",
+        "codes": "bracelet, bracelet1, lift1, liftupgrade, Progressive Bracelet"
+      },
+      {
+        "img": "images/items/powergloves.png",
+        "codes": "bracelet2, lift2, liftupgrade, Progressive Bracelet"
+      }
+    ]
+  },
+  {
+    "name": "Feather",
+    "type": "progressive",
+    "stages": [
+      {
+        "img": "images/items/feather.png",
+        "codes": "feather, Feather"
+      },
+      {
+        "img": "images/items/cape.png",
+        "codes": "cape, Feather"
+      }
+    ]
+  },
+  {
+    "name": "Seed Satchel",
+    "type": "progressive",
+    "stages": [
+      {
+        "disabled_img": "images/items/satchel.png",
+        "img": "images/items/satchel1.png",
+        "codes": "satchel, satchel1, Seed Satchel"
+      },
+      {
+        "img": "images/items/satchel2.png",
+        "codes": "satchel, satchel2, Seed Satchel"
+      },
+      {
+        "img": "images/items/satchel3.png",
+        "codes": "satchel, satchel3, Seed Satchel"
+      }
+    ]
+  },
+  {
+    "name": "Ember Seeds",
+    "type": "toggle",
+    "loop": false,
+    "img": "images/items/seedember.png",
+    "codes": "emberseeds, Ember Seeds"
+  },
+  {
+    "name": "Scent Seeds",
+    "type": "toggle",
+    "loop": false,
+    "img": "images/items/seedscent.png",
+    "codes": "scentseeds, Scent Seeds"
+  },
+  {
+    "name": "Pegasus Seeds",
+    "type": "toggle",
+    "loop": false,
+    "img": "images/items/seedpegasus.png",
+    "codes": "pegasusseeds, Pegasus Seeds"
+  },
+  {
+    "name": "Gale Seeds",
+    "type": "toggle",
+    "loop": false,
+    "img": "images/items/seedgale.png",
+    "codes": "galeseeds, Gale Seeds"
+  },
+  {
+    "name": "Mystery Seeds",
+    "type": "toggle",
+    "loop": false,
+    "img": "images/items/seedmystery.png",
+    "codes": "mysteryseeds, Mystery Seeds"
+  },
+  {
+    "name": "Rupees",
+    "type": "consumable",
+    "codes": "rupees, RupeesCount",
+    "increment": 5,
+    "decrement": 5,
+    "img": "images/items/Rupee (Giant Red).png"
+  },
+  {
+    "name": "Progressive Flippers",
+    "type": "progressive",
+    "stages": [
+      {
+        "img": "images/items/flippers.png",
+        "codes": "flippers, swim, swim1, swimupgrade, Progressive Flippers"
+      },
+      {
+        "img": "images/items/mermaid.png",
+        "codes": "mermaid, swim2, swimupgrade, Progressive Flippers"
+      }
+    ]
+  },
+  {
+    "name": "King Zora's Potion",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/potion.png",
+    "codes": "potion, King Zora's Potion"
+  },
+  {
+    "name": "Small Key (Maku Path)",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/smallkey.png",
+    "codes": "pathkey, d0sk, Small Key (Maku Path)"
+  },
+  {
+    "name": "Small Key (Spirit's Grave)",
+    "type": "consumable",
+    "codes": "d1sk, Small Key (Spirit's Grave)",
+    "max_quantity": 3,
+    "img": "images/items/smallkey.png"
+  },
+  {
+    "name": "Small Key (Wing Dungeon)",
+    "type": "consumable",
+    "codes": "d2sk, Small Key (Wing Dungeon)",
+    "max_quantity": 5,
+    "img": "images/items/smallkey.png"
+  },
+  {
+    "name": "Small Key (Moonlit Grotto)",
+    "type": "consumable",
+    "codes": "d3sk, Small Key (Moonlit Grotto)",
+    "max_quantity": 4,
+    "img": "images/items/smallkey.png"
+  },
+  {
+    "name": "Small Key (Skull Dungeon)",
+    "type": "consumable",
+    "codes": "d4sk, Small Key (Skull Dungeon)",
+    "max_quantity": 5,
+    "img": "images/items/smallkey.png"
+  },
+  {
+    "name": "Small Key (Crown Dungeon)",
+    "type": "consumable",
+    "codes": "d5sk, Small Key (Crown Dungeon)",
+    "max_quantity": 5,
+    "img": "images/items/smallkey.png"
+  },
+  {
+    "name": "Small Key (Mermaid's Cave Past)",
+    "type": "consumable",
+    "codes": "d6_1sk, Small Key (Mermaid's Cave Past)",
+    "max_quantity": 3,
+    "img": "images/items/smallkey.png"
+  },
+  {
+    "name": "Small Key (Mermaid's Cave Present)",
+    "type": "consumable",
+    "codes": "d6_2sk, Small Key (Mermaid's Cave Present)",
+    "max_quantity": 3,
+    "img": "images/items/smallkey.png"
+  },
+  {
+    "name": "Small Key (Jabu-Jabu's Belly)",
+    "type": "consumable",
+    "codes": "d7sk, Small Key (Jabu-Jabu's Belly)",
+    "max_quantity": 7,
+    "img": "images/items/smallkey.png"
+  },
+  {
+    "name": "Small Key (Ancient Tomb)",
+    "type": "consumable",
+    "codes": "d8sk, Small Key (Ancient Tomb)",
+    "max_quantity": 5,
+    "img": "images/items/smallkey.png"
+  },
+  {
+    "name": "Small Key (Hero's Cave)",
+    "type": "consumable",
+    "codes": "d11sk, Small Key (Hero's Cave)",
+    "max_quantity": 200,
+    "img": "images/items/smallkey.png"
+  },
+  {
+    "name": "Master Key (Spirit's Grave)",
+    "type": "toggle",
+    "codes": "d1mk, Master Key (Spirit's Grave)",
+    "img": "images/items/master_key.png"
+  },
+  {
+    "name": "Master Key (Wing Dungeon)",
+    "type": "toggle",
+    "codes": "d2mk, Master Key (Wing Dungeon)",
+    "img": "images/items/master_key.png"
+  },
+  {
+    "name": "Master Key (Moonlit Grotto)",
+    "type": "toggle",
+    "codes": "d3mk, Master Key (Moonlit Grotto)",
+    "img": "images/items/master_key.png"
+  },
+  {
+    "name": "Master Key (Skull Dungeon)",
+    "type": "toggle",
+    "codes": "d4mk, Master Key (Skull Dungeon)",
+    "img": "images/items/master_key.png"
+  },
+  {
+    "name": "Master Key (Crown Dungeon)",
+    "type": "toggle",
+    "codes": "d5mk, Master Key (Crown Dungeon)",
+    "img": "images/items/master_key.png"
+  },
+  {
+    "name": "Master Key (Mermaid's Cave Past)",
+    "type": "toggle",
+    "codes": "d6_1mk, Master Key (Mermaid's Cave Past)",
+    "img": "images/items/master_key.png"
+  },
+  {
+    "name": "Master Key (Mermaid's Cave Present)",
+    "type": "toggle",
+    "codes": "d6_2mk, Master Key (Mermaid's Cave Present)",
+    "img": "images/items/master_key.png"
+  },
+  {
+    "name": "Master Key (Jabu-Jabu's Belly)",
+    "type": "toggle",
+    "codes": "d7mk, Master Key (Jabu-Jabu's Belly)",
+    "img": "images/items/master_key.png"
+  },
+  {
+    "name": "Master Key (Ancient Tomb)",
+    "type": "toggle",
+    "codes": "d8mk, Master Key (Ancient Tomb)",
+    "img": "images/items/master_key.png"
+  },
+  {
+    "name": "Master Key (Hero's Cave)",
+    "type": "toggle",
+    "codes": "d11mk, Master Key (Hero's Cave)",
+    "img": "images/items/master_key.png"
+  },
+  {
+    "name": "Boss Key (Spirit's Grave)",
+    "type": "toggle",
+    "codes": "d1bk, Boss Key (Spirit's Grave)",
+    "img": "images/items/bosskey.png"
+  },
+  {
+    "name": "Boss Key (Wing Dungeon)",
+    "type": "toggle",
+    "codes": "d2bk, Boss Key (Wing Dungeon)",
+    "img": "images/items/bosskey.png"
+  },
+  {
+    "name": "Boss Key (Moonlit Grotto)",
+    "type": "toggle",
+    "codes": "d3bk, Boss Key (Moonlit Grotto)",
+    "img": "images/items/bosskey.png"
+  },
+  {
+    "name": "Boss Key (Skull Dungeon)",
+    "type": "toggle",
+    "codes": "d4bk, Boss Key (Skull Dungeon)",
+    "img": "images/items/bosskey.png"
+  },
+  {
+    "name": "Boss Key (Crown Dungeon)",
+    "type": "toggle",
+    "codes": "d5bk, Boss Key (Crown Dungeon)",
+    "img": "images/items/bosskey.png"
+  },
+  {
+    "name": "Boss Key (Mermaid's Cave)",
+    "type": "toggle",
+    "codes": "d6bk, Boss Key (Mermaid's Cave)",
+    "img": "images/items/bosskey.png"
+  },
+  {
+    "name": "Boss Key (Jabu-Jabu's Belly)",
+    "type": "toggle",
+    "codes": "d7bk, Boss Key (Jabu-Jabu's Belly)",
+    "img": "images/items/bosskey.png"
+  },
+  {
+    "name": "Boss Key (Ancient Tomb)",
+    "type": "toggle",
+    "codes": "d8bk, Boss Key (Ancient Tomb)",
+    "img": "images/items/bosskey.png"
+  },
+  {
+    "name": "Poe Clock",
+    "type": "toggle",
+    "img": "images/items/Poe Clock.png",
+    "codes": "poeclock, Poe Clock"
+  },
+  {
+    "name": "Stationary",
+    "type": "toggle",
+    "img": "images/items/Stationery.png",
+    "codes": "stationary, Stationary, Stationery"
+  },
+  {
+    "name": "Stink Bag",
+    "type": "toggle",
+    "img": "images/items/Stink Bag.png",
+    "codes": "stinkbag, Stink Bag"
+  },
+  {
+    "name": "Tasty Meat",
+    "type": "toggle",
+    "img": "images/items/Tasty Meat.png",
+    "codes": "tastymeat, Tasty Meat"
+  },
+  {
+    "name": "Doggie Mask",
+    "type": "toggle",
+    "img": "images/items/Doggie Mask.png",
+    "codes": "doggiemask, Doggie Mask"
+  },
+  {
+    "name": "Dumbbell",
+    "type": "toggle",
+    "img": "images/items/Dumbbell.png",
+    "codes": "dumbbell, Dumbbell"
+  },
+  {
+    "name": "Cheesy Mustache",
+    "type": "toggle",
+    "img": "images/items/Cheesy Mustache.png",
+    "codes": "mustache, Cheesy Mustache"
+  },
+  {
+    "name": "Funny Joke",
+    "type": "toggle",
+    "img": "images/items/Funny Joke.png",
+    "codes": "funnyjoke, Funny Joke"
+  },
+  {
+    "name": "Touching Book",
+    "type": "toggle",
+    "img": "images/items/Touching Book.png",
+    "codes": "touchingbook, Touching Book"
+  },
+  {
+    "name": "Magic Oar",
+    "type": "toggle",
+    "img": "images/items/Magic Oar.png",
+    "codes": "magicoar, Magic Oar"
+  },
+  {
+    "name": "Sea Ukulele",
+    "type": "toggle",
+    "img": "images/items/Sea Ukelele.png",
+    "codes": "seaukulele, Sea Ukulele"
+  },
+  {
+    "name": "Broken Sword",
+    "type": "toggle",
+    "img": "images/items/Broken Sword.png",
+    "codes": "brokensword, Broken Sword"
+  },
+  {
+    "name": "Bomb Flower",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/bombflower.png",
+    "codes": "bombflower, Bomb Flower"
+  },
+  {
+    "name": "Book of Seals",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/book.png",
+    "codes": "book, Book of Seals"
+  },
+  {
+    "name": "Brother Emblem",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/emblem.png",
+    "codes": "emblem, goronemblem, Brother Emblem"
+  },
+  {
+    "name": "Cheval Rope",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/cheval.png",
+    "codes": "cheval, chevalrope, Cheval Rope"
+  },
+  {
+    "name": "Crown Key",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/keycrown.png",
+    "codes": "d5key, crownkey, Crown Key"
+  },
+  {
+    "name": "Fairy Powder",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/powder.png",
+    "codes": "powder, Fairy Powder"
+  },
+  {
+    "name": "Goron Vase",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/vase.png",
+    "codes": "vase, Goron Vase"
+  },
+  {
+    "name": "Goronade",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/goronade.png",
+    "codes": "goronade, Goronade"
+  },
+  {
+    "name": "Graveyard Key",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/keygraveyard.png",
+    "codes": "d1key, gravekey, Graveyard Key"
+  },
+  {
+    "name": "Island Chart",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/chart.png",
+    "codes": "chart, islandchart, Island Chart"
+  },
+  {
+    "name": "Lava Juice",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/lavajuice.png",
+    "codes": "lavajuice, Lava Juice"
+  },
+  {
+    "name": "Letter of Introduction",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/letter.png",
+    "codes": "letter, introduction, Letter of Introduction"
+  },
+  {
+    "name": "Library Key",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/keylibrary.png",
+    "codes": "librarykey, Library Key"
+  },
+  {
+    "name": "Mermaid Key",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/keymermaid.png",
+    "codes": "d6keypast, Mermaid Key"
+  },
+  {
+    "name": "Old Mermaid Key",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/keymermaid_old.png",
+    "codes": "d6keypresent, Old Mermaid Key"
+  },
+  {
+    "name": "Ricky's Gloves",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/gloves.png",
+    "codes": "gloves, rickygloves, Ricky's Gloves"
+  },
+  {
+    "name": "Rock Brisket",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/brisket.png",
+    "codes": "brisket, Rock Brisket"
+  },
+  {
+    "name": "Scent Seedling",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/seedling.png",
+    "codes": "seedling, Scent Seedling"
+  },
+  {
+    "name": "Slate",
+    "type": "consumable",
+    "codes": "d8slate, Slate",
+    "max_quantity": 4,
+    "img": "images/items/slate.png"
+  },
+  {
+    "name": "Tokay Eyeball",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/eyeball.png",
+    "codes": "eyeball, Tokay Eyeball"
+  },
+  {
+    "name": "Cracked Tuni Nut",
+    "type": "toggle",
+    "img": "images/items/tuninut.png",
+    "codes": "tuninut, Cracked Tuni Nut"
+  },
+  {
+    "name": "Tuni Nut",
+    "type": "toggle",
+    "img": "images/items/tuninut_repaired.png",
+    "codes": "repairednut, Tuni Nut"
+  },
+  {
+    "name": "Zora Scale",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/scale.png",
+    "codes": "scale, zorascale, Zora Scale"
+  },
+  {
+    "name": "Expert's Ring",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/ring_expert.png",
+    "codes": "ring_expert, Expert's Ring"
+  },
+  {
+    "name": "Toss Ring",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/ring_toss.png",
+    "codes": "ring_toss, Toss Ring"
+  },
+  {
+    "name": "Energy Ring",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/ring_energy.png",
+    "codes": "ring_energy, Energy Ring"
+  },
+  {
+    "name": "Peace Ring",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/ring_peace.png",
+    "codes": "ring_peace, Peace Ring"
+  },
+  {
+    "name": "Fist Ring",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/ring_fist.png",
+    "codes": "ring_fist, Fist Ring"
+  },
+  {
+    "name": "Eternal Spirit",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/essences/d1.png",
+    "codes": "_finished_d1, d1, Eternal Spirit"
+  },
+  {
+    "name": "Ancient Wood",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/essences/d2.png",
+    "codes": "_finished_d2, d2, Ancient Wood"
+  },
+  {
+    "name": "Echoing Howl",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/essences/d3.png",
+    "codes": "_finished_d3, d3, Echoing Howl"
+  },
+  {
+    "name": "Burning Flame",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/essences/d4.png",
+    "codes": "_finished_d4, d4,Burning Flame"
+  },
+  {
+    "name": "Sacred Soil",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/essences/d5.png",
+    "codes": "_finished_d5, d5, Sacred Soil"
+  },
+  {
+    "name": "Lonely Peak",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/essences/d6.png",
+    "codes": "_finished_d6, d6, Lonely Peak"
+  },
+  {
+    "name": "Rolling Sea",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/essences/d7.png",
+    "codes": "_finished_d7, d7, Rolling Sea"
+  },
+  {
+    "name": "Falling Star",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/essences/d8.png",
+    "codes": "d8, Falling Star"
+  },
+  // COMBO
+  {
+    "name": "Both Tuni Nuts",
+    "type": "composite_toggle",
+    "item_left": "repairednut",
+    "item_right": "tuninut",
+    "codes": "bothtuninuts",
+    "images": [
+      {
+        "left": false,
+        "right": false,
+        "img": "images/items/bothtuni_a.png"
+      },
+      {
+        "left": true,
+        "right": false,
+        "img": "images/items/bothtuni_b.png"
+      },
+      {
+        "left": false,
+        "right": true,
+        "img": "images/items/bothtuni_c.png"
+      },
+      {
+        "left": true,
+        "right": true,
+        "img": "images/items/bothtuni_d.png"
+      }
+    ]
+  },
+  {
+    "name": "D6 Keys",
+    "type": "composite_toggle",
+    "item_left": "d6keypast",
+    "item_right": "d6keypresent",
+    "codes": "d6keys",
+    "images": [
+      {
+        "left": false,
+        "right": false,
+        "img": "images/items/mermaidkeys_a.png"
+      },
+      {
+        "left": true,
+        "right": false,
+        "img": "images/items/mermaidkeys_b.png"
+      },
+      {
+        "left": false,
+        "right": true,
+        "img": "images/items/mermaidkeys_c.png"
+      },
+      {
+        "left": true,
+        "right": true,
+        "img": "images/items/mermaidkeys_d.png"
+      }
+    ]
+  },
+  {
+    "name": "Powder/Potion",
+    "type": "composite_toggle",
+    "item_left": "powder",
+    "item_right": "potion",
+    "codes": "powderpotion",
+    "images": [
+      {
+        "left": false,
+        "right": false,
+        "img": "images/items/powderpotion_a.png"
+      },
+      {
+        "left": true,
+        "right": false,
+        "img": "images/items/powderpotion_b.png"
+      },
+      {
+        "left": false,
+        "right": true,
+        "img": "images/items/powderpotion_c.png"
+      },
+      {
+        "left": true,
+        "right": true,
+        "img": "images/items/powderpotion_d.png"
+      }
+    ]
+  },
+  // CARPENTER
+  {
+    "name": "Carpenter Boss",
+    "type": "toggle",
+    "img": "images/items/carpenter.png",
+    "codes": "carpenterboss"
+  },
+  {
+    "name": "Carpenter 1",
+    "type": "toggle",
+    "img": "images/items/carpenter.png",
+    "codes": "carpenter1"
+  },
+  {
+    "name": "Carpenter 2",
+    "type": "toggle",
+    "img": "images/items/carpenter.png",
+    "codes": "carpenter2"
+  },
+  {
+    "name": "Carpenter 3",
+    "type": "toggle",
+    "img": "images/items/carpenter.png",
+    "codes": "carpenter3"
+  },
+  // OTHER TOGGLE
+  {
+    "name": "Get Maku Seed for Go Mode",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/makuseed.png",
+    "codes": "makuseed_toggle"
+  },
+  {
+    "name": "Get Raft for Sea Travel!",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/raft.png",
+    "codes": "raft_toggle"
+  },
+  {
+    "name": "Rescue Nayru",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/Nayru.png",
+    "codes": "Nayru"
+  },
+  {
+    "name": "Turn in Seedling to Tokay",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/seedling.png",
+    "codes": "turningseedling_toggle"
+  },
+  {
+    "name": "Bomb the northern wall in Mermaid's Cave (Past)",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/d6_wall_b_open.png",
+    "codes": "_d6_wall_B_bombed"
+  },
+  {
+    "name": "Light up the torches in Mermaid's Cave (Past)",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/d6_canal_expanded.png",
+    "codes": "_d6_canal_expanded"
+  },
+  {
+    "name": "Cure King Zora in the past",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/kingzora_cure.png",
+    "codes": "curezora_toggle"
+  },
+  {
+    "name": "Cure the cursed Fairy",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/greatfairy.png",
+    "codes": "curefairy_toggle"
+  },
+  {
+    "name": "King Zora Permission to enter Jabu",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/kingzora_access.png",
+    "codes": "enterjabu_toggle"
+  },
+  // Dungeon Entrances
+  {
+    "name": "Maku Road Entrance",
+    "type": "toggle",
+    "loop": true,
+    "initial_active_state": true,
+    "img": "images/dungeons/d0_entrance.png",
+    "codes": "mrer"
+  },
+  {
+    "name": "D1 Entrance",
+    "type": "toggle",
+    "loop": true,
+    "allow_disabled": false,
+    "img": "images/dungeons/d1_entrance.png",
+    "codes": "d1er"
+  },
+  {
+    "name": "D2 Present Entrance",
+    "type": "toggle",
+    "loop": true,
+    "allow_disabled": false,
+    "img": "images/dungeons/d2_entrance.png",
+    "codes": "d2er"
+  },
+  {
+    "name": "D2 Past Entrance",
+    "type": "toggle",
+    "loop": true,
+    "allow_disabled": false,
+    "img": "images/dungeons/d2_past_entrance.png",
+    "codes": "d2paster"
+  },
+  {
+    "name": "D3 Entrance",
+    "type": "toggle",
+    "loop": true,
+    "allow_disabled": false,
+    "img": "images/dungeons/d3_entrance.png",
+    "codes": "d3er"
+  },
+  {
+    "name": "D4 Entrance",
+    "type": "toggle",
+    "loop": true,
+    "allow_disabled": false,
+    "img": "images/dungeons/d4_entrance.png",
+    "codes": "d4er"
+  },
+  {
+    "name": "D5 Entrance",
+    "type": "toggle",
+    "loop": true,
+    "allow_disabled": false,
+    "img": "images/dungeons/d5_entrance.png",
+    "codes": "d5er"
+  },
+  {
+    "name": "D6 PAST Entrance",
+    "type": "toggle",
+    "loop": true,
+    "allow_disabled": false,
+    "img": "images/dungeons/d6_past_entrance.png",
+    "codes": "d6older"
+  },
+  {
+    "name": "D6 PRESENT Entrance",
+    "type": "toggle",
+    "loop": true,
+    "allow_disabled": false,
+    "img": "images/dungeons/d6_present_entrance.png",
+    "codes": "d6newer"
+  },
+  {
+    "name": "D7 Entrance",
+    "type": "toggle",
+    "loop": true,
+    "allow_disabled": false,
+    "img": "images/dungeons/d7_entrance.png",
+    "codes": "d7er"
+  },
+  {
+    "name": "D8 Entrance",
+    "type": "toggle",
+    "loop": true,
+    "allow_disabled": false,
+    "img": "images/dungeons/d8_entrance.png",
+    "codes": "d8er"
+  },
+  {
+    "name": "D11 Entrance",
+    "type": "toggle",
+    "loop": true,
+    "initial_active_state": true,
+    "img": "images/dungeons/d11_entrance.png",
+    "codes": "d11er"
+  },
+  // Dungeon Texts (lots of duplicates here to make it work lol)
+  {
+    "name": "Maku Road Entrances",
+    "type": "progressive",
+    "allow_disabled": false,
+    "loop": true,
+    "stages": [
+      {
+        "codes": "questionmark0",
+        "inherit_codes": false,
+        "img": "images/dungeons/questionlabel.png"
+      },
+      {
+        "codes": "makupath0",
+        "inherit_codes": false,
+        "img": "images/dungeons/d0_entrance.png"
+      },
+      {
+        "codes": "spiritsgrave0",
+        "inherit_codes": false,
+        "img": "images/dungeons/d1_entrance.png"
+      },
+      {
+        "codes": "wingdungeonpast0",
+        "inherit_codes": false,
+        "img": "images/dungeons/d2_past_entrance.png"
+      },
+      {
+        "codes": "moonlitgrotto0",
+        "inherit_codes": false,
+        "img": "images/dungeons/d3_entrance.png"
+      },
+      {
+        "codes": "skulldungeon0",
+        "inherit_codes": false,
+        "img": "images/dungeons/d4_entrance.png"
+      },
+      {
+        "codes": "crowndungeon0",
+        "inherit_codes": false,
+        "img": "images/dungeons/d5_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepast0",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_past_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepresent0",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_present_entrance.png"
+      },
+      {
+        "codes": "jabujabusbelly0",
+        "inherit_codes": false,
+        "img": "images/dungeons/d7_entrance.png"
+      },
+      {
+        "codes": "ancienttomb0",
+        "inherit_codes": false,
+        "img": "images/dungeons/d8_entrance.png"
+      },
+      {
+        "codes": "heroscave0",
+        "inherit_codes": false,
+        "img": "images/dungeons/d11_entrance.png"
+      }
+    ]
+  },
+  {
+    "name": "D1 Dungeon Entrances",
+    "type": "progressive",
+    "allow_disabled": false,
+    "loop": true,
+    "stages": [
+      {
+        "codes": "questionmark1",
+        "inherit_codes": false,
+        "img": "images/dungeons/questionlabel.png"
+      },
+      {
+        "codes": "makupath1",
+        "inherit_codes": false,
+        "img": "images/dungeons/d0_entrance.png"
+      },
+      {
+        "codes": "spiritsgrave1",
+        "inherit_codes": false,
+        "img": "images/dungeons/d1_entrance.png"
+      },
+      {
+        "codes": "wingdungeonpast1",
+        "inherit_codes": false,
+        "img": "images/dungeons/d2_past_entrance.png"
+      },
+      {
+        "codes": "moonlitgrotto1",
+        "inherit_codes": false,
+        "img": "images/dungeons/d3_entrance.png"
+      },
+      {
+        "codes": "skulldungeon1",
+        "inherit_codes": false,
+        "img": "images/dungeons/d4_entrance.png"
+      },
+      {
+        "codes": "crowndungeon1",
+        "inherit_codes": false,
+        "img": "images/dungeons/d5_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepast1",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_past_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepresent1",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_present_entrance.png"
+      },
+      {
+        "codes": "jabujabusbelly1",
+        "inherit_codes": false,
+        "img": "images/dungeons/d7_entrance.png"
+      },
+      {
+        "codes": "ancienttomb1",
+        "inherit_codes": false,
+        "img": "images/dungeons/d8_entrance.png"
+      },
+      {
+        "codes": "heroscave1",
+        "inherit_codes": false,
+        "img": "images/dungeons/d11_entrance.png"
+      }
+    ]
+  },
+  {
+    "name": "D2 Dungeon Entrances",
+    "type": "progressive",
+    "allow_disabled": false,
+    "loop": true,
+    "stages": [
+      {
+        "codes": "questionmark2",
+        "inherit_codes": false,
+        "img": "images/dungeons/questionlabel.png"
+      },
+      {
+        "codes": "makupath2",
+        "inherit_codes": false,
+        "img": "images/dungeons/d0_entrance.png"
+      },
+      {
+        "codes": "spiritsgrave2",
+        "inherit_codes": false,
+        "img": "images/dungeons/d1_entrance.png"
+      },
+      {
+        "codes": "wingdungeonpast2",
+        "inherit_codes": false,
+        "img": "images/dungeons/d2_past_entrance.png"
+      },
+      {
+        "codes": "moonlitgrotto2",
+        "inherit_codes": false,
+        "img": "images/dungeons/d3_entrance.png"
+      },
+      {
+        "codes": "skulldungeon2",
+        "inherit_codes": false,
+        "img": "images/dungeons/d4_entrance.png"
+      },
+      {
+        "codes": "crowndungeon2",
+        "inherit_codes": false,
+        "img": "images/dungeons/d5_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepast2",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_past_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepresent2",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_present_entrance.png"
+      },
+      {
+        "codes": "jabujabusbelly2",
+        "inherit_codes": false,
+        "img": "images/dungeons/d7_entrance.png"
+      },
+      {
+        "codes": "ancienttomb2",
+        "inherit_codes": false,
+        "img": "images/dungeons/d8_entrance.png"
+      },
+      {
+        "codes": "heroscave2",
+        "inherit_codes": false,
+        "img": "images/dungeons/d11_entrance.png"
+      }
+    ]
+  },
+  {
+    "name": "D3 Dungeon Entrances",
+    "type": "progressive",
+    "allow_disabled": false,
+    "loop": true,
+    "stages": [
+      {
+        "codes": "questionmark3",
+        "inherit_codes": false,
+        "img": "images/dungeons/questionlabel.png"
+      },
+      {
+        "codes": "makupath3",
+        "inherit_codes": false,
+        "img": "images/dungeons/d0_entrance.png"
+      },
+      {
+        "codes": "spiritsgrave3",
+        "inherit_codes": false,
+        "img": "images/dungeons/d1_entrance.png"
+      },
+      {
+        "codes": "wingdungeonpast3",
+        "inherit_codes": false,
+        "img": "images/dungeons/d2_past_entrance.png"
+      },
+      {
+        "codes": "moonlitgrotto3",
+        "inherit_codes": false,
+        "img": "images/dungeons/d3_entrance.png"
+      },
+      {
+        "codes": "skulldungeon3",
+        "inherit_codes": false,
+        "img": "images/dungeons/d4_entrance.png"
+      },
+      {
+        "codes": "crowndungeon3",
+        "inherit_codes": false,
+        "img": "images/dungeons/d5_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepast3",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_past_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepresent3",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_present_entrance.png"
+      },
+      {
+        "codes": "jabujabusbelly3",
+        "inherit_codes": false,
+        "img": "images/dungeons/d7_entrance.png"
+      },
+      {
+        "codes": "ancienttomb3",
+        "inherit_codes": false,
+        "img": "images/dungeons/d8_entrance.png"
+      },
+      {
+        "codes": "heroscave3",
+        "inherit_codes": false,
+        "img": "images/dungeons/d11_entrance.png"
+      }
+    ]
+  },
+  {
+    "name": "D4 Dungeon Entrances",
+    "type": "progressive",
+    "allow_disabled": false,
+    "loop": true,
+    "stages": [
+      {
+        "codes": "questionmark4",
+        "inherit_codes": false,
+        "img": "images/dungeons/questionlabel.png"
+      },
+      {
+        "codes": "makupath4",
+        "inherit_codes": false,
+        "img": "images/dungeons/d0_entrance.png"
+      },
+      {
+        "codes": "spiritsgrave4",
+        "inherit_codes": false,
+        "img": "images/dungeons/d1_entrance.png"
+      },
+      {
+        "codes": "wingdungeonpast4",
+        "inherit_codes": false,
+        "img": "images/dungeons/d2_past_entrance.png"
+      },
+      {
+        "codes": "moonlitgrotto4",
+        "inherit_codes": false,
+        "img": "images/dungeons/d3_entrance.png"
+      },
+      {
+        "codes": "skulldungeon4",
+        "inherit_codes": false,
+        "img": "images/dungeons/d4_entrance.png"
+      },
+      {
+        "codes": "crowndungeon4",
+        "inherit_codes": false,
+        "img": "images/dungeons/d5_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepast4",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_past_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepresent4",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_present_entrance.png"
+      },
+      {
+        "codes": "jabujabusbelly4",
+        "inherit_codes": false,
+        "img": "images/dungeons/d7_entrance.png"
+      },
+      {
+        "codes": "ancienttomb4",
+        "inherit_codes": false,
+        "img": "images/dungeons/d8_entrance.png"
+      },
+      {
+        "codes": "heroscave4",
+        "inherit_codes": false,
+        "img": "images/dungeons/d11_entrance.png"
+      }
+    ]
+  },
+  {
+    "name": "D5 Dungeon Entrances",
+    "type": "progressive",
+    "allow_disabled": false,
+    "loop": true,
+    "stages": [
+      {
+        "codes": "questionmark5",
+        "inherit_codes": false,
+        "img": "images/dungeons/questionlabel.png"
+      },
+      {
+        "codes": "makupath5",
+        "inherit_codes": false,
+        "img": "images/dungeons/d0_entrance.png"
+      },
+      {
+        "codes": "spiritsgrave5",
+        "inherit_codes": false,
+        "img": "images/dungeons/d1_entrance.png"
+      },
+      {
+        "codes": "wingdungeonpast5",
+        "inherit_codes": false,
+        "img": "images/dungeons/d2_past_entrance.png"
+      },
+      {
+        "codes": "moonlitgrotto5",
+        "inherit_codes": false,
+        "img": "images/dungeons/d3_entrance.png"
+      },
+      {
+        "codes": "skulldungeon5",
+        "inherit_codes": false,
+        "img": "images/dungeons/d4_entrance.png"
+      },
+      {
+        "codes": "crowndungeon5",
+        "inherit_codes": false,
+        "img": "images/dungeons/d5_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepast5",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_past_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepresent5",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_present_entrance.png"
+      },
+      {
+        "codes": "jabujabusbelly5",
+        "inherit_codes": false,
+        "img": "images/dungeons/d7_entrance.png"
+      },
+      {
+        "codes": "ancienttomb5",
+        "inherit_codes": false,
+        "img": "images/dungeons/d8_entrance.png"
+      },
+      {
+        "codes": "heroscave5",
+        "inherit_codes": false,
+        "img": "images/dungeons/d11_entrance.png"
+      }
+    ]
+  },
+  {
+    "name": "D6 Past Dungeon Entrances",
+    "type": "progressive",
+    "allow_disabled": false,
+    "loop": true,
+    "stages": [
+      {
+        "codes": "questionmark6p",
+        "inherit_codes": false,
+        "img": "images/dungeons/questionlabel.png"
+      },
+      {
+        "codes": "makupath6p",
+        "inherit_codes": false,
+        "img": "images/dungeons/d0_entrance.png"
+      },
+      {
+        "codes": "spiritsgrave6p",
+        "inherit_codes": false,
+        "img": "images/dungeons/d1_entrance.png"
+      },
+      {
+        "codes": "wingdungeonpast6p",
+        "inherit_codes": false,
+        "img": "images/dungeons/d2_past_entrance.png"
+      },
+      {
+        "codes": "moonlitgrotto6p",
+        "inherit_codes": false,
+        "img": "images/dungeons/d3_entrance.png"
+      },
+      {
+        "codes": "skulldungeon6p",
+        "inherit_codes": false,
+        "img": "images/dungeons/d4_entrance.png"
+      },
+      {
+        "codes": "crowndungeon6p",
+        "inherit_codes": false,
+        "img": "images/dungeons/d5_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepast6p",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_past_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepresent6p",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_present_entrance.png"
+      },
+      {
+        "codes": "jabujabusbelly6p",
+        "inherit_codes": false,
+        "img": "images/dungeons/d7_entrance.png"
+      },
+      {
+        "codes": "ancienttomb6p",
+        "inherit_codes": false,
+        "img": "images/dungeons/d8_entrance.png"
+      },
+      {
+        "codes": "heroscave6p",
+        "inherit_codes": false,
+        "img": "images/dungeons/d11_entrance.png"
+      }
+    ]
+  },
+  {
+    "name": "D6 Present Dungeon Entrances",
+    "type": "progressive",
+    "allow_disabled": false,
+    "loop": true,
+    "stages": [
+      {
+        "codes": "questionmark6",
+        "inherit_codes": false,
+        "img": "images/dungeons/questionlabel.png"
+      },
+      {
+        "codes": "makupath6",
+        "inherit_codes": false,
+        "img": "images/dungeons/d0_entrance.png"
+      },
+      {
+        "codes": "spiritsgrave6",
+        "inherit_codes": false,
+        "img": "images/dungeons/d1_entrance.png"
+      },
+      {
+        "codes": "wingdungeonpast6",
+        "inherit_codes": false,
+        "img": "images/dungeons/d2_past_entrance.png"
+      },
+      {
+        "codes": "moonlitgrotto6",
+        "inherit_codes": false,
+        "img": "images/dungeons/d3_entrance.png"
+      },
+      {
+        "codes": "skulldungeon6",
+        "inherit_codes": false,
+        "img": "images/dungeons/d4_entrance.png"
+      },
+      {
+        "codes": "crowndungeon6",
+        "inherit_codes": false,
+        "img": "images/dungeons/d5_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepast6",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_past_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepresent6",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_present_entrance.png"
+      },
+      {
+        "codes": "jabujabusbelly6",
+        "inherit_codes": false,
+        "img": "images/dungeons/d7_entrance.png"
+      },
+      {
+        "codes": "ancienttomb6",
+        "inherit_codes": false,
+        "img": "images/dungeons/d8_entrance.png"
+      },
+      {
+        "codes": "heroscave6",
+        "inherit_codes": false,
+        "img": "images/dungeons/d11_entrance.png"
+      }
+    ]
+  },
+  {
+    "name": "D7 Dungeon Entrances",
+    "type": "progressive",
+    "allow_disabled": false,
+    "loop": true,
+    "stages": [
+      {
+        "codes": "questionmark7",
+        "inherit_codes": false,
+        "img": "images/dungeons/questionlabel.png"
+      },
+      {
+        "codes": "makupath7",
+        "inherit_codes": false,
+        "img": "images/dungeons/d0_entrance.png"
+      },
+      {
+        "codes": "spiritsgrave7",
+        "inherit_codes": false,
+        "img": "images/dungeons/d1_entrance.png"
+      },
+      {
+        "codes": "wingdungeonpast7",
+        "inherit_codes": false,
+        "img": "images/dungeons/d2_past_entrance.png"
+      },
+      {
+        "codes": "moonlitgrotto7",
+        "inherit_codes": false,
+        "img": "images/dungeons/d3_entrance.png"
+      },
+      {
+        "codes": "skulldungeon7",
+        "inherit_codes": false,
+        "img": "images/dungeons/d4_entrance.png"
+      },
+      {
+        "codes": "crowndungeon7",
+        "inherit_codes": false,
+        "img": "images/dungeons/d5_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepast7",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_past_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepresent7",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_present_entrance.png"
+      },
+      {
+        "codes": "jabujabusbelly7",
+        "inherit_codes": false,
+        "img": "images/dungeons/d7_entrance.png"
+      },
+      {
+        "codes": "ancienttomb7",
+        "inherit_codes": false,
+        "img": "images/dungeons/d8_entrance.png"
+      },
+      {
+        "codes": "heroscave7",
+        "inherit_codes": false,
+        "img": "images/dungeons/d11_entrance.png"
+      }
+    ]
+  },
+  {
+    "name": "D8 Dungeon Entrances",
+    "type": "progressive",
+    "allow_disabled": false,
+    "loop": true,
+    "stages": [
+      {
+        "codes": "questionmark8",
+        "inherit_codes": false,
+        "img": "images/dungeons/questionlabel.png"
+      },
+      {
+        "codes": "makupath8",
+        "inherit_codes": false,
+        "img": "images/dungeons/d0_entrance.png"
+      },
+      {
+        "codes": "spiritsgrave8",
+        "inherit_codes": false,
+        "img": "images/dungeons/d1_entrance.png"
+      },
+      {
+        "codes": "wingdungeonpast8",
+        "inherit_codes": false,
+        "img": "images/dungeons/d2_past_entrance.png"
+      },
+      {
+        "codes": "moonlitgrotto8",
+        "inherit_codes": false,
+        "img": "images/dungeons/d3_entrance.png"
+      },
+      {
+        "codes": "skulldungeon8",
+        "inherit_codes": false,
+        "img": "images/dungeons/d4_entrance.png"
+      },
+      {
+        "codes": "crowndungeon8",
+        "inherit_codes": false,
+        "img": "images/dungeons/d5_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepast8",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_past_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepresent8",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_present_entrance.png"
+      },
+      {
+        "codes": "jabujabusbelly8",
+        "inherit_codes": false,
+        "img": "images/dungeons/d7_entrance.png"
+      },
+      {
+        "codes": "ancienttomb8",
+        "inherit_codes": false,
+        "img": "images/dungeons/d8_entrance.png"
+      },
+      {
+        "codes": "heroscave8",
+        "inherit_codes": false,
+        "img": "images/dungeons/d11_entrance.png"
+      }
+    ]
+  },
+
+  {
+    "name": "D11 Dungeon Entrances",
+    "type": "progressive",
+    "allow_disabled": false,
+    "loop": true,
+    "stages": [
+      {
+        "codes": "questionmark11",
+        "inherit_codes": false,
+        "img": "images/dungeons/questionlabel.png"
+      },
+      {
+        "codes": "makupath11",
+        "inherit_codes": false,
+        "img": "images/dungeons/d0_entrance.png"
+      },
+      {
+        "codes": "spiritsgrave11",
+        "inherit_codes": false,
+        "img": "images/dungeons/d1_entrance.png"
+      },
+      {
+        "codes": "wingdungeonpast11",
+        "inherit_codes": false,
+        "img": "images/dungeons/d2_past_entrance.png"
+      },
+      {
+        "codes": "moonlitgrotto11",
+        "inherit_codes": false,
+        "img": "images/dungeons/d3_entrance.png"
+      },
+      {
+        "codes": "skulldungeon11",
+        "inherit_codes": false,
+        "img": "images/dungeons/d4_entrance.png"
+      },
+      {
+        "codes": "crowndungeon11",
+        "inherit_codes": false,
+        "img": "images/dungeons/d5_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepast11",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_past_entrance.png"
+      },
+      {
+        "codes": "mermaidscavepresent11",
+        "inherit_codes": false,
+        "img": "images/dungeons/d6_present_entrance.png"
+      },
+      {
+        "codes": "jabujabusbelly11",
+        "inherit_codes": false,
+        "img": "images/dungeons/d7_entrance.png"
+      },
+      {
+        "codes": "ancienttomb11",
+        "inherit_codes": false,
+        "img": "images/dungeons/d8_entrance.png"
+      },
+      {
+        "codes": "heroscave11",
+        "inherit_codes": false,
+        "img": "images/dungeons/d11_entrance.png"
+      }
+    ]
+  },
+  {
+    "name": "Found Maku Road",
+    "type": "toggle",
+    "loop": true,
+    "img": "images/items/foundmakuroad.png",
+    "codes": "foundmakuroad"
+  }
+]

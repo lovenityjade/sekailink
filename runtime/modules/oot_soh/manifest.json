@@ -17,5 +17,6 @@
     "save_required": true
   },
   "tracker_pack_uid": "",
-  "tracker_web_url": "https://nightly.track-oot.net/"
+  "tracker_web_url": "https://nightly.track-oot.net/",
+  "tracker_pack_path": "poptracker/packs/oot_soh/pack"
 }

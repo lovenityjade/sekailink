@@ -1,5 +1,5 @@
 client:
-  last_server_address: link.sekailink.com:38290
+  last_server_address: link.sekailink.com:38363
 groups_by_checksum:
   12f632000dfc0e2bb4404146d4c9121e830b9b8f:
     SMZ3:
@@ -1425,6 +1425,266 @@ groups_by_checksum:
         - Max Arrows Upgrade
         - Max Bombs Upgrade
         - Max Powder Upgrade
+  336db93bd73e246821e48569586f8733095495bc:
+    The Legend of Zelda - Oracle of Seasons:
+      item_name_groups:
+        Boss Keys:
+        - Boss Key (Ancient Ruins)
+        - Boss Key (Dancing Dragon Dungeon)
+        - Boss Key (Explorer's Crypt)
+        - Boss Key (Gnarled Root Dungeon)
+        - Boss Key (Poison Moth's Lair)
+        - Boss Key (Snake's Remains)
+        - Boss Key (Sword & Shield Dungeon)
+        - Boss Key (Unicorn's Cave)
+        Compasses:
+        - Compass (Ancient Ruins)
+        - Compass (Dancing Dragon Dungeon)
+        - Compass (Explorer's Crypt)
+        - Compass (Gnarled Root Dungeon)
+        - Compass (Poison Moth's Lair)
+        - Compass (Snake's Remains)
+        - Compass (Sword & Shield Dungeon)
+        - Compass (Unicorn's Cave)
+        Dungeon Maps:
+        - Dungeon Map (Ancient Ruins)
+        - Dungeon Map (Dancing Dragon Dungeon)
+        - Dungeon Map (Explorer's Crypt)
+        - Dungeon Map (Gnarled Root Dungeon)
+        - Dungeon Map (Poison Moth's Lair)
+        - Dungeon Map (Snake's Remains)
+        - Dungeon Map (Sword & Shield Dungeon)
+        - Dungeon Map (Unicorn's Cave)
+        Essences:
+        - Blowing Wind
+        - Bright Sun
+        - Changing Seasons
+        - Fertile Soil
+        - Gift of Time
+        - Nurturing Warmth
+        - Seed of Life
+        - Soothing Rain
+        Everything:
+        - 100th Ring
+        - Armor Ring L-1
+        - Armor Ring L-2
+        - Armor Ring L-3
+        - Biggoron's Sword
+        - Blast Ring
+        - Blowing Wind
+        - Blue Holy Ring
+        - Blue Joy Ring
+        - Blue Luck Ring
+        - Blue Ore
+        - Blue Ring
+        - Bomb Flower
+        - Bombchus (10)
+        - Bombchus (20)
+        - Bomber's Ring
+        - Bombproof Ring
+        - Bombs (10)
+        - Bombs (20)
+        - Boss Key (Ancient Ruins)
+        - Boss Key (Dancing Dragon Dungeon)
+        - Boss Key (Explorer's Crypt)
+        - Boss Key (Gnarled Root Dungeon)
+        - Boss Key (Poison Moth's Lair)
+        - Boss Key (Snake's Remains)
+        - Boss Key (Sword & Shield Dungeon)
+        - Boss Key (Unicorn's Cave)
+        - Bright Sun
+        - Cane of Somaria
+        - Changing Seasons
+        - Charge Ring
+        - Compass (Ancient Ruins)
+        - Compass (Dancing Dragon Dungeon)
+        - Compass (Explorer's Crypt)
+        - Compass (Gnarled Root Dungeon)
+        - Compass (Hero's Cave)
+        - Compass (Poison Moth's Lair)
+        - Compass (Snake's Remains)
+        - Compass (Sword & Shield Dungeon)
+        - Compass (Unicorn's Cave)
+        - Cuccodex
+        - Cursed Ring
+        - Dbl. Edge Ring
+        - Dimitri's Flute
+        - Discovery Ring
+        - Dragon Key
+        - Dungeon Map (Ancient Ruins)
+        - Dungeon Map (Dancing Dragon Dungeon)
+        - Dungeon Map (Explorer's Crypt)
+        - Dungeon Map (Gnarled Root Dungeon)
+        - Dungeon Map (Hero's Cave)
+        - Dungeon Map (Poison Moth's Lair)
+        - Dungeon Map (Snake's Remains)
+        - Dungeon Map (Sword & Shield Dungeon)
+        - Dungeon Map (Unicorn's Cave)
+        - Ember Seeds
+        - Energy Ring
+        - Engine Grease
+        - Expert's Ring
+        - Fertile Soil
+        - First Gen Ring
+        - Fish
+        - Fist Ring
+        - Flippers
+        - Floodgate Key
+        - Fool's Ore
+        - Friendship Ring
+        - GBA Nature Ring
+        - GBA Time Ring
+        - Gale Seeds
+        - Gasha Ring
+        - Gasha Seed
+        - Ghastly Doll
+        - Gift of Time
+        - Gnarled Key
+        - Gold Joy Ring
+        - Gold Luck Ring
+        - Goron Vase
+        - Green Holy Ring
+        - Green Joy Ring
+        - Green Luck Ring
+        - Green Ring
+        - Hard Ore
+        - Heart Container
+        - Heart Ring L-1
+        - Heart Ring L-2
+        - Iron Pot
+        - Lava Soup
+        - Light Ring L-1
+        - Light Ring L-2
+        - Like Like Ring
+        - Lon Lon Egg
+        - Magnetic Gloves
+        - Maku Seed
+        - Maple's Ring
+        - Master Key (Ancient Ruins)
+        - Master Key (Dancing Dragon Dungeon)
+        - Master Key (Explorer's Crypt)
+        - Master Key (Gnarled Root Dungeon)
+        - Master Key (Hero's Cave)
+        - Master Key (Poison Moth's Lair)
+        - Master Key (Snake's Remains)
+        - Master Key (Sword & Shield Dungeon)
+        - Master Key (Unicorn's Cave)
+        - Master's Plaque
+        - Megaphone
+        - Member's Card
+        - Moblin Ring
+        - Moosh's Flute
+        - Mushroom
+        - Mystery Seeds
+        - Nurturing Warmth
+        - Octo Ring
+        - Ore Chunks (10)
+        - Ore Chunks (25)
+        - Ore Chunks (50)
+        - Peace Ring
+        - Pegasus Ring
+        - Pegasus Seeds
+        - Phonograph
+        - Piece of Heart
+        - Pirate's Bell
+        - Potion
+        - Power Bracelet
+        - Power Ring L-1
+        - Power Ring L-2
+        - Power Ring L-3
+        - Progressive Boomerang
+        - Progressive Feather
+        - Progressive Shield
+        - Progressive Slingshot
+        - Progressive Sword
+        - Protection Ring
+        - Pyramid Jewel
+        - Quicksand Ring
+        - Rang Ring L-1
+        - Rang Ring L-2
+        - Rare Peach Stone
+        - Red Holy Ring
+        - Red Joy Ring
+        - Red Luck Ring
+        - Red Ore
+        - Red Ring
+        - Ribbon
+        - Ricky's Flute
+        - Roc's Ring
+        - Rod of Seasons (Autumn)
+        - Rod of Seasons (Spring)
+        - Rod of Seasons (Summer)
+        - Rod of Seasons (Winter)
+        - Round Jewel
+        - Rupee Ring
+        - Rupees (1)
+        - Rupees (10)
+        - Rupees (100)
+        - Rupees (20)
+        - Rupees (200)
+        - Rupees (30)
+        - Rupees (5)
+        - Rupees (50)
+        - Rusty Bell
+        - Scent Seeds
+        - Seed Satchel
+        - Seed Shooter
+        - Seed of Life
+        - Shovel
+        - Sign Ring
+        - Slayer's Ring
+        - Small Key (Ancient Ruins)
+        - Small Key (Dancing Dragon Dungeon)
+        - Small Key (Explorer's Crypt)
+        - Small Key (Gnarled Root Dungeon)
+        - Small Key (Hero's Cave)
+        - Small Key (Poison Moth's Lair)
+        - Small Key (Snake's Remains)
+        - Small Key (Sword & Shield Dungeon)
+        - Small Key (Unicorn's Cave)
+        - Snowshoe Ring
+        - Soothing Rain
+        - Spin Ring
+        - Spring Banana
+        - Square Jewel
+        - Star Ore
+        - Steadfast Ring
+        - Subrosian Ring
+        - Swimmer's Ring
+        - Switch Hook
+        - Toss Ring
+        - Treasure Map
+        - Victory Ring
+        - Whimsical Ring
+        - Whisp Ring
+        - Wooden Bird
+        - X-Shaped Jewel
+        - Zora Ring
+        Jewels:
+        - Pyramid Jewel
+        - Round Jewel
+        - Square Jewel
+        - X-Shaped Jewel
+        Master Keys:
+        - Master Key (Ancient Ruins)
+        - Master Key (Dancing Dragon Dungeon)
+        - Master Key (Explorer's Crypt)
+        - Master Key (Gnarled Root Dungeon)
+        - Master Key (Hero's Cave)
+        - Master Key (Poison Moth's Lair)
+        - Master Key (Snake's Remains)
+        - Master Key (Sword & Shield Dungeon)
+        - Master Key (Unicorn's Cave)
+        Small Keys:
+        - Small Key (Ancient Ruins)
+        - Small Key (Dancing Dragon Dungeon)
+        - Small Key (Explorer's Crypt)
+        - Small Key (Gnarled Root Dungeon)
+        - Small Key (Hero's Cave)
+        - Small Key (Poison Moth's Lair)
+        - Small Key (Snake's Remains)
+        - Small Key (Sword & Shield Dungeon)
+        - Small Key (Unicorn's Cave)
   42039f897828a6fc7de049432aed7eee0d984b7d:
     'Zelda II: The Adventure of Link':
       item_name_groups:
@@ -1510,6 +1770,659 @@ groups_by_checksum:
         - Reflect Spell
         - Spell Spell
         - Thunder Spell
+  45b4b5772dddfc0305ab9bab4f1eabb098747a63:
+    Pokemon Red and Blue:
+      item_name_groups:
+        Badges:
+        - Boulder Badge
+        - Cascade Badge
+        - Earth Badge
+        - Marsh Badge
+        - Rainbow Badge
+        - Soul Badge
+        - Thunder Badge
+        - Volcano Badge
+        Battle Items:
+        - Dire Hit
+        - Guard Spec
+        - X Accuracy
+        - X Attack
+        - X Defend
+        - X Special
+        - X Speed
+        Card Keys:
+        - Card Key
+        - Card Key 10F
+        - Card Key 11F
+        - Card Key 2F
+        - Card Key 3F
+        - Card Key 4F
+        - Card Key 5F
+        - Card Key 6F
+        - Card Key 7F
+        - Card Key 8F
+        - Card Key 9F
+        - Progressive Card Key
+        Coins:
+        - 10 Coins
+        - 100 Coins
+        - 20 Coins
+        Consumables:
+        - Antidote
+        - Awakening
+        - Burn Heal
+        - Calcium
+        - Carbos
+        - Dire Hit
+        - Elixir
+        - Escape Rope
+        - Ether
+        - Fresh Water
+        - Full Heal
+        - Full Restore
+        - Great Ball
+        - Guard Spec
+        - HP Up
+        - Hyper Potion
+        - Ice Heal
+        - Iron
+        - Lemonade
+        - Master Ball
+        - Max Elixir
+        - Max Ether
+        - Max Potion
+        - Max Repel
+        - Max Revive
+        - PP Up
+        - Paralyze Heal
+        - Poke Ball
+        - Poke Doll
+        - Potion
+        - Protein
+        - Rare Candy
+        - Repel
+        - Revive
+        - Soda Pop
+        - Super Potion
+        - Super Repel
+        - Ultra Ball
+        - X Accuracy
+        - X Attack
+        - X Defend
+        - X Special
+        - X Speed
+        Everything:
+        - 10 Coins
+        - 100 Coins
+        - 20 Coins
+        - Antidote
+        - Awakening
+        - Bicycle
+        - Bike Voucher
+        - Boulder Badge
+        - Burn Heal
+        - Calcium
+        - Carbos
+        - Card Key
+        - Card Key 10F
+        - Card Key 11F
+        - Card Key 2F
+        - Card Key 3F
+        - Card Key 4F
+        - Card Key 5F
+        - Card Key 6F
+        - Card Key 7F
+        - Card Key 8F
+        - Card Key 9F
+        - Cascade Badge
+        - Coin Case
+        - Dire Hit
+        - Dome Fossil
+        - Earth Badge
+        - Elixir
+        - Escape Rope
+        - Ether
+        - Exp. All
+        - Fire Stone
+        - Fire Trap
+        - Fresh Water
+        - Full Heal
+        - Full Restore
+        - Gold Teeth
+        - Good Rod
+        - Great Ball
+        - Guard Spec
+        - HM01 Cut
+        - HM02 Fly
+        - HM03 Surf
+        - HM04 Strength
+        - HM05 Flash
+        - HP Up
+        - Helix Fossil
+        - Hideout Key
+        - Hyper Potion
+        - Ice Heal
+        - Ice Trap
+        - Iron
+        - Item Finder
+        - Leaf Stone
+        - Lemonade
+        - Lift Key
+        - Mansion Key
+        - Marsh Badge
+        - Master Ball
+        - Max Elixir
+        - Max Ether
+        - Max Potion
+        - Max Repel
+        - Max Revive
+        - Moon Stone
+        - Nugget
+        - Oak's Parcel
+        - Old Amber
+        - Old Rod
+        - PP Up
+        - Paralyze Heal
+        - Paralyze Trap
+        - Plant Key
+        - Poison Trap
+        - Poke Ball
+        - Poke Doll
+        - Poke Flute
+        - Pokedex
+        - Potion
+        - Progressive Card Key
+        - Protein
+        - Rainbow Badge
+        - Rare Candy
+        - Repel
+        - Revive
+        - S.S. Ticket
+        - Safari Pass
+        - Secret Key
+        - Silph Scope
+        - Sleep Trap
+        - Soda Pop
+        - Soul Badge
+        - Super Potion
+        - Super Repel
+        - Super Rod
+        - TM01
+        - TM01 Mega Punch
+        - TM02
+        - TM02 Razor Wind
+        - TM03
+        - TM03 Swords Dance
+        - TM04
+        - TM04 Whirlwind
+        - TM05
+        - TM05 Mega Kick
+        - TM06
+        - TM06 Toxic
+        - TM07
+        - TM07 Horn Drill
+        - TM08
+        - TM08 Body Slam
+        - TM09
+        - TM09 Take Down
+        - TM10
+        - TM10 Double Edge
+        - TM11
+        - TM11 Bubble Beam
+        - TM12
+        - TM12 Water Gun
+        - TM13
+        - TM13 Ice Beam
+        - TM14
+        - TM14 Blizzard
+        - TM15
+        - TM15 Hyper Beam
+        - TM16
+        - TM16 Pay Day
+        - TM17
+        - TM17 Submission
+        - TM18
+        - TM18 Counter
+        - TM19
+        - TM19 Seismic Toss
+        - TM20
+        - TM20 Rage
+        - TM21
+        - TM21 Mega Drain
+        - TM22
+        - TM22 Solar Beam
+        - TM23
+        - TM23 Dragon Rage
+        - TM24
+        - TM24 Thunderbolt
+        - TM25
+        - TM25 Thunder
+        - TM26
+        - TM26 Earthquake
+        - TM27
+        - TM27 Fissure
+        - TM28
+        - TM28 Dig
+        - TM29
+        - TM29 Psychic
+        - TM30
+        - TM30 Teleport
+        - TM31
+        - TM31 Mimic
+        - TM32
+        - TM32 Double Team
+        - TM33
+        - TM33 Reflect
+        - TM34
+        - TM34 Bide
+        - TM35
+        - TM35 Metronome
+        - TM36
+        - TM36 Self-Destruct
+        - TM37
+        - TM37 Egg Bomb
+        - TM38
+        - TM38 Fire Blast
+        - TM39
+        - TM39 Swift
+        - TM40
+        - TM40 Skull Bash
+        - TM41
+        - TM41 Soft-Boiled
+        - TM42
+        - TM42 Dream Eater
+        - TM43
+        - TM43 Sky Attack
+        - TM44
+        - TM44 Rest
+        - TM45
+        - TM45 Thunder Wave
+        - TM46
+        - TM46 Psywave
+        - TM47
+        - TM47 Explosion
+        - TM48
+        - TM48 Rock Slide
+        - TM49
+        - TM49 Tri Attack
+        - TM50
+        - TM50 Substitute
+        - Tea
+        - Thunder Badge
+        - Thunder Stone
+        - Town Map
+        - Ultra Ball
+        - Volcano Badge
+        - Water Stone
+        - X Accuracy
+        - X Attack
+        - X Defend
+        - X Special
+        - X Speed
+        Evolution Stones:
+        - Fire Stone
+        - Leaf Stone
+        - Moon Stone
+        - Thunder Stone
+        - Water Stone
+        Fossils:
+        - Dome Fossil
+        - Helix Fossil
+        - Old Amber
+        HM01:
+        - HM01 Cut
+        HM02:
+        - HM02 Fly
+        HM03:
+        - HM03 Surf
+        HM04:
+        - HM04 Strength
+        HM05:
+        - HM05 Flash
+        HMs:
+        - HM01 Cut
+        - HM02 Fly
+        - HM03 Surf
+        - HM04 Strength
+        - HM05 Flash
+        Key Items:
+        - Bicycle
+        - Bike Voucher
+        - Boulder Badge
+        - Card Key
+        - Card Key 10F
+        - Card Key 11F
+        - Card Key 2F
+        - Card Key 3F
+        - Card Key 4F
+        - Card Key 5F
+        - Card Key 6F
+        - Card Key 7F
+        - Card Key 8F
+        - Card Key 9F
+        - Cascade Badge
+        - Coin Case
+        - Dome Fossil
+        - Earth Badge
+        - Exp. All
+        - Fire Stone
+        - Gold Teeth
+        - Good Rod
+        - HM01 Cut
+        - HM02 Fly
+        - HM03 Surf
+        - HM04 Strength
+        - HM05 Flash
+        - Helix Fossil
+        - Hideout Key
+        - Item Finder
+        - Leaf Stone
+        - Lift Key
+        - Mansion Key
+        - Marsh Badge
+        - Moon Stone
+        - Oak's Parcel
+        - Old Amber
+        - Old Rod
+        - Plant Key
+        - Poke Flute
+        - Pokedex
+        - Progressive Card Key
+        - Rainbow Badge
+        - S.S. Ticket
+        - Safari Pass
+        - Secret Key
+        - Silph Scope
+        - Soul Badge
+        - Super Rod
+        - Tea
+        - Thunder Badge
+        - Thunder Stone
+        - Town Map
+        - Volcano Badge
+        - Water Stone
+        Poke Balls:
+        - Great Ball
+        - Master Ball
+        - Poke Ball
+        - Ultra Ball
+        Rods:
+        - Good Rod
+        - Old Rod
+        - Super Rod
+        TMs:
+        - TM01
+        - TM01 Mega Punch
+        - TM02
+        - TM02 Razor Wind
+        - TM03
+        - TM03 Swords Dance
+        - TM04
+        - TM04 Whirlwind
+        - TM05
+        - TM05 Mega Kick
+        - TM06
+        - TM06 Toxic
+        - TM07
+        - TM07 Horn Drill
+        - TM08
+        - TM08 Body Slam
+        - TM09
+        - TM09 Take Down
+        - TM10
+        - TM10 Double Edge
+        - TM11
+        - TM11 Bubble Beam
+        - TM12
+        - TM12 Water Gun
+        - TM13
+        - TM13 Ice Beam
+        - TM14
+        - TM14 Blizzard
+        - TM15
+        - TM15 Hyper Beam
+        - TM16
+        - TM16 Pay Day
+        - TM17
+        - TM17 Submission
+        - TM18
+        - TM18 Counter
+        - TM19
+        - TM19 Seismic Toss
+        - TM20
+        - TM20 Rage
+        - TM21
+        - TM21 Mega Drain
+        - TM22
+        - TM22 Solar Beam
+        - TM23
+        - TM23 Dragon Rage
+        - TM24
+        - TM24 Thunderbolt
+        - TM25
+        - TM25 Thunder
+        - TM26
+        - TM26 Earthquake
+        - TM27
+        - TM27 Fissure
+        - TM28
+        - TM28 Dig
+        - TM29
+        - TM29 Psychic
+        - TM30
+        - TM30 Teleport
+        - TM31
+        - TM31 Mimic
+        - TM32
+        - TM32 Double Team
+        - TM33
+        - TM33 Reflect
+        - TM34
+        - TM34 Bide
+        - TM35
+        - TM35 Metronome
+        - TM36
+        - TM36 Self-Destruct
+        - TM37
+        - TM37 Egg Bomb
+        - TM38
+        - TM38 Fire Blast
+        - TM39
+        - TM39 Swift
+        - TM40
+        - TM40 Skull Bash
+        - TM41
+        - TM41 Soft-Boiled
+        - TM42
+        - TM42 Dream Eater
+        - TM43
+        - TM43 Sky Attack
+        - TM44
+        - TM44 Rest
+        - TM45
+        - TM45 Thunder Wave
+        - TM46
+        - TM46 Psywave
+        - TM47
+        - TM47 Explosion
+        - TM48
+        - TM48 Rock Slide
+        - TM49
+        - TM49 Tri Attack
+        - TM50
+        - TM50 Substitute
+        Traps:
+        - Fire Trap
+        - Ice Trap
+        - Paralyze Trap
+        - Poison Trap
+        - Sleep Trap
+        Unique:
+        - Bicycle
+        - Bike Voucher
+        - Boulder Badge
+        - Card Key
+        - Card Key 10F
+        - Card Key 11F
+        - Card Key 2F
+        - Card Key 3F
+        - Card Key 4F
+        - Card Key 5F
+        - Card Key 6F
+        - Card Key 7F
+        - Card Key 8F
+        - Card Key 9F
+        - Cascade Badge
+        - Coin Case
+        - Dome Fossil
+        - Earth Badge
+        - Exp. All
+        - Fire Stone
+        - Gold Teeth
+        - Good Rod
+        - HM01 Cut
+        - HM02 Fly
+        - HM03 Surf
+        - HM04 Strength
+        - HM05 Flash
+        - Helix Fossil
+        - Hideout Key
+        - Item Finder
+        - Leaf Stone
+        - Lift Key
+        - Mansion Key
+        - Marsh Badge
+        - Moon Stone
+        - Oak's Parcel
+        - Old Amber
+        - Old Rod
+        - Plant Key
+        - Poke Flute
+        - Pokedex
+        - Progressive Card Key
+        - Rainbow Badge
+        - S.S. Ticket
+        - Safari Pass
+        - Secret Key
+        - Silph Scope
+        - Soul Badge
+        - Super Rod
+        - TM01
+        - TM01 Mega Punch
+        - TM02
+        - TM02 Razor Wind
+        - TM03
+        - TM03 Swords Dance
+        - TM04
+        - TM04 Whirlwind
+        - TM05
+        - TM05 Mega Kick
+        - TM06
+        - TM06 Toxic
+        - TM07
+        - TM07 Horn Drill
+        - TM08
+        - TM08 Body Slam
+        - TM09
+        - TM09 Take Down
+        - TM10
+        - TM10 Double Edge
+        - TM11
+        - TM11 Bubble Beam
+        - TM12
+        - TM12 Water Gun
+        - TM13
+        - TM13 Ice Beam
+        - TM14
+        - TM14 Blizzard
+        - TM15
+        - TM15 Hyper Beam
+        - TM16
+        - TM16 Pay Day
+        - TM17
+        - TM17 Submission
+        - TM18
+        - TM18 Counter
+        - TM19
+        - TM19 Seismic Toss
+        - TM20
+        - TM20 Rage
+        - TM21
+        - TM21 Mega Drain
+        - TM22
+        - TM22 Solar Beam
+        - TM23
+        - TM23 Dragon Rage
+        - TM24
+        - TM24 Thunderbolt
+        - TM25
+        - TM25 Thunder
+        - TM26
+        - TM26 Earthquake
+        - TM27
+        - TM27 Fissure
+        - TM28
+        - TM28 Dig
+        - TM29
+        - TM29 Psychic
+        - TM30
+        - TM30 Teleport
+        - TM31
+        - TM31 Mimic
+        - TM32
+        - TM32 Double Team
+        - TM33
+        - TM33 Reflect
+        - TM34
+        - TM34 Bide
+        - TM35
+        - TM35 Metronome
+        - TM36
+        - TM36 Self-Destruct
+        - TM37
+        - TM37 Egg Bomb
+        - TM38
+        - TM38 Fire Blast
+        - TM39
+        - TM39 Swift
+        - TM40
+        - TM40 Skull Bash
+        - TM41
+        - TM41 Soft-Boiled
+        - TM42
+        - TM42 Dream Eater
+        - TM43
+        - TM43 Sky Attack
+        - TM44
+        - TM44 Rest
+        - TM45
+        - TM45 Thunder Wave
+        - TM46
+        - TM46 Psywave
+        - TM47
+        - TM47 Explosion
+        - TM48
+        - TM48 Rock Slide
+        - TM49
+        - TM49 Tri Attack
+        - TM50
+        - TM50 Substitute
+        - Tea
+        - Thunder Badge
+        - Thunder Stone
+        - Town Map
+        - Volcano Badge
+        - Water Stone
+        Vending Machine Drinks:
+        - Fresh Water
+        - Lemonade
+        - Soda Pop
+        Vitamins:
+        - Calcium
+        - Carbos
+        - HP Up
+        - Iron
+        - Protein
   4fd6c0bb6c0f0ab1157fb5dbda01a572ae3d0da6:
     Super Metroid:
       item_name_groups:
@@ -2113,6 +3026,248 @@ groups_by_checksum:
         - Spinning Blade
         - Tornado Fang
         - Triad Thunder
+  6717bb9ff598393f2d40c8d01602f9bdcfb4082a:
+    The Legend of Zelda - Oracle of Ages:
+      item_name_groups:
+        Boss Keys:
+        - Boss Key (Ancient Tomb)
+        - Boss Key (Crown Dungeon)
+        - Boss Key (Jabu-Jabu's Belly)
+        - Boss Key (Mermaid's Cave)
+        - Boss Key (Moonlit Grotto)
+        - Boss Key (Skull Dungeon)
+        - Boss Key (Spirit's Grave)
+        - Boss Key (Wing Dungeon)
+        Compasses:
+        - Compass (Ancient Tomb)
+        - Compass (Crown Dungeon)
+        - Compass (Jabu-Jabu's Belly)
+        - Compass (Mermaid's Cave Past)
+        - Compass (Mermaid's Cave Present)
+        - Compass (Moonlit Grotto)
+        - Compass (Skull Dungeon)
+        - Compass (Spirit's Grave)
+        - Compass (Wing Dungeon)
+        Dungeon Maps:
+        - Dungeon Map (Ancient Tomb)
+        - Dungeon Map (Crown Dungeon)
+        - Dungeon Map (Mermaid's Cave Past)
+        - Dungeon Map (Mermaid's Cave Present)Dungeon Map (Jabu-Jabu's Belly)
+        - Dungeon Map (Moonlit Grotto)
+        - Dungeon Map (Skull Dungeon)
+        - Dungeon Map (Spirit's Grave)
+        - Dungeon Map (Wing Dungeon)
+        Everything:
+        - 100th Ring
+        - Ancient Wood
+        - Armor Ring L-1
+        - Armor Ring L-2
+        - Armor Ring L-3
+        - Biggoron's Sword
+        - Blast Ring
+        - Blue Holy Ring
+        - Blue Joy Ring
+        - Blue Luck Ring
+        - Blue Ring
+        - Bomb Flower
+        - Bomber's Ring
+        - Bombproof Ring
+        - Bombs (10)
+        - Book of Seals
+        - Boomerang
+        - Boss Key (Ancient Tomb)
+        - Boss Key (Crown Dungeon)
+        - Boss Key (Jabu-Jabu's Belly)
+        - Boss Key (Mermaid's Cave)
+        - Boss Key (Moonlit Grotto)
+        - Boss Key (Skull Dungeon)
+        - Boss Key (Spirit's Grave)
+        - Boss Key (Wing Dungeon)
+        - Broken Sword
+        - Brother Emblem
+        - Burning Flame
+        - Cane of Somaria
+        - Charge Ring
+        - Cheesy Mustache
+        - Cheval Rope
+        - Compass (Ancient Tomb)
+        - Compass (Crown Dungeon)
+        - Compass (Jabu-Jabu's Belly)
+        - Compass (Mermaid's Cave Past)
+        - Compass (Mermaid's Cave Present)
+        - Compass (Moonlit Grotto)
+        - Compass (Skull Dungeon)
+        - Compass (Spirit's Grave)
+        - Compass (Wing Dungeon)
+        - Cracked Tuni Nut
+        - Crown Key
+        - Cursed Ring
+        - Dbl. Edge Ring
+        - Dimitri's Flute
+        - Discovery Ring
+        - Doggie Mask
+        - Dumbbell
+        - Dungeon Map (Ancient Tomb)
+        - Dungeon Map (Crown Dungeon)
+        - Dungeon Map (Jabu-Jabu's Belly)
+        - Dungeon Map (Mermaid's Cave Past)
+        - Dungeon Map (Mermaid's Cave Present)
+        - Dungeon Map (Moonlit Grotto)
+        - Dungeon Map (Skull Dungeon)
+        - Dungeon Map (Spirit's Grave)
+        - Dungeon Map (Wing Dungeon)
+        - Echoing Howl
+        - Ember Seeds
+        - Energy Ring
+        - Eternal Spirit
+        - Expert's Ring
+        - Fairy Powder
+        - Falling Star
+        - Feather
+        - First Gen Ring
+        - Fist Ring
+        - Friendship Ring
+        - Funny Joke
+        - GBA Nature Ring
+        - GBA Time Ring
+        - Gale Seeds
+        - Gasha Ring
+        - Gasha Seed
+        - Gold Joy Ring
+        - Gold Luck Ring
+        - Goron Vase
+        - Goronade
+        - Graveyard Key
+        - Green Holy Ring
+        - Green Joy Ring
+        - Green Luck Ring
+        - Green Ring
+        - Heart Container
+        - Heart Ring L-1
+        - Heart Ring L-2
+        - Island Chart
+        - King Zora's Potion
+        - Lava Juice
+        - Letter of Introduction
+        - Library Key
+        - Light Ring L-1
+        - Light Ring L-2
+        - Like Like Ring
+        - Lonely Peak
+        - Magic Oar
+        - Maple's Ring
+        - Master Key (Ancient Tomb)
+        - Master Key (Crown Dungeon)
+        - Master Key (Jabu-Jabu's Belly)
+        - Master Key (Maku Path)
+        - Master Key (Mermaid's Cave Past)
+        - Master Key (Mermaid's Cave Present)
+        - Master Key (Moonlit Grotto)
+        - Master Key (Skull Dungeon)
+        - Master Key (Spirit's Grave)
+        - Master Key (Wing Dungeon)
+        - Mermaid Key
+        - Moblin Ring
+        - Moosh's Flute
+        - Mystery Seeds
+        - Octo Ring
+        - Old Mermaid Key
+        - Peace Ring
+        - Pegasus Ring
+        - Pegasus Seeds
+        - Piece of Heart
+        - Poe Clock
+        - Potion
+        - Power Ring L-1
+        - Power Ring L-2
+        - Power Ring L-3
+        - Progressive Bracelet
+        - Progressive Flippers
+        - Progressive Harp
+        - Progressive Hook
+        - Progressive Shield
+        - Progressive Sword
+        - Protection Ring
+        - Quicksand Ring
+        - Rang Ring L-1
+        - Rang Ring L-2
+        - Red Holy Ring
+        - Red Joy Ring
+        - Red Luck Ring
+        - Red Ring
+        - Ricky's Flute
+        - Ricky's Gloves
+        - Roc's Ring
+        - Rock Brisket
+        - Rolling Sea
+        - Rupee Ring
+        - Rupees (1)
+        - Rupees (10)
+        - Rupees (100)
+        - Rupees (20)
+        - Rupees (200)
+        - Rupees (30)
+        - Rupees (5)
+        - Rupees (50)
+        - Sacred Soil
+        - Scent Seedling
+        - Scent Seeds
+        - Sea Ukulele
+        - Seed Satchel
+        - Seed Shooter
+        - Shovel
+        - Sign Ring
+        - Slate
+        - Slayer's Ring
+        - Small Key (Ancient Tomb)
+        - Small Key (Crown Dungeon)
+        - Small Key (Jabu-Jabu's Belly)
+        - Small Key (Maku Path)
+        - Small Key (Mermaid's Cave Past)
+        - Small Key (Mermaid's Cave Present)
+        - Small Key (Moonlit Grotto)
+        - Small Key (Skull Dungeon)
+        - Small Key (Spirit's Grave)
+        - Small Key (Wing Dungeon)
+        - Snowshoe Ring
+        - Spin Ring
+        - Stationary
+        - Steadfast Ring
+        - Stink Bag
+        - Subrosian Ring
+        - Swimmer's Ring
+        - Tasty Meat
+        - Tokay Eyeball
+        - Toss Ring
+        - Touching Book
+        - Tuni Nut
+        - Victory Ring
+        - Whimsical Ring
+        - Whisp Ring
+        - Zora Ring
+        - Zora Scale
+        Master Keys:
+        - Master Key (Ancient Tomb)
+        - Master Key (Crown Dungeon)
+        - Master Key (Jabu-Jabu's Belly)
+        - Master Key (Maku Path)
+        - Master Key (Mermaid's Cave Past)
+        - Master Key (Mermaid's Cave Present)
+        - Master Key (Moonlit Grotto)
+        - Master Key (Skull Dungeon)
+        - Master Key (Spirit's Grave)
+        - Master Key (Wing Dungeon)
+        Small Keys:
+        - Small Key (Ancient Tomb)
+        - Small Key (Crown Dungeon)
+        - Small Key (Jabu-Jabu's Belly)
+        - Small Key (Maku Path)
+        - Small Key (Mermaid's Cave Past)
+        - Small Key (Mermaid's Cave Present)
+        - Small Key (Moonlit Grotto)
+        - Small Key (Skull Dungeon)
+        - Small Key (Spirit's Grave)
+        - Small Key (Wing Dungeon)
   6ac97f85481367bcc996b2f4fb3dd851b09e25ec:
     Wario Land 4:
       item_name_groups:
@@ -7035,6 +8190,985 @@ groups_by_checksum:
         - Metal Blade
         - Quick Boomerang
         - Time Stopper
+  ecdcfa676b87093ede197cfec1b2cfb0e18d745e:
+    Pokemon FireRed and LeafGreen:
+      item_name_groups:
+        Badges:
+        - Boulder Badge
+        - Cascade Badge
+        - Earth Badge
+        - Marsh Badge
+        - Rainbow Badge
+        - Soul Badge
+        - Thunder Badge
+        - Volcano Badge
+        Balls:
+        - Dive Ball
+        - Great Ball
+        - Luxury Ball
+        - Master Ball
+        - Nest Ball
+        - Net Ball
+        - Poke Ball
+        - Premier Ball
+        - Repeat Ball
+        - Safari Ball
+        - Timer Ball
+        - Ultra Ball
+        Battle Items:
+        - Dire Hit
+        - Fluffy Tail
+        - Guard Spec
+        - Poke Doll
+        - X Accuracy
+        - X Attack
+        - X Defend
+        - X Special
+        - X Speed
+        Berries:
+        - Aguav Berry
+        - Apicot Berry
+        - Aspear Berry
+        - Belue Berry
+        - Bluk Berry
+        - Cheri Berry
+        - Chesto Berry
+        - Cornn Berry
+        - Durin Berry
+        - Figy Berry
+        - Ganlon Berry
+        - Grepa Berry
+        - Hondew Berry
+        - Iapapa Berry
+        - Kelpsy Berry
+        - Lansat Berry
+        - Leppa Berry
+        - Liechi Berry
+        - Lum Berry
+        - Mago Berry
+        - Magost Berry
+        - Nanab Berry
+        - Nomel Berry
+        - Oran Berry
+        - Pamtre Berry
+        - Pecha Berry
+        - Persim Berry
+        - Petaya Berry
+        - Pinap Berry
+        - Pomeg Berry
+        - Qualot Berry
+        - Rabuta Berry
+        - Rawst Berry
+        - Razz Berry
+        - Salac Berry
+        - Sitrus Berry
+        - Spelon Berry
+        - Starf Berry
+        - Tamato Berry
+        - Watmel Berry
+        - Wepear Berry
+        - Wiki Berry
+        Card Keys:
+        - Card Key
+        - Card Key 10F
+        - Card Key 11F
+        - Card Key 2F
+        - Card Key 3F
+        - Card Key 4F
+        - Card Key 5F
+        - Card Key 6F
+        - Card Key 7F
+        - Card Key 8F
+        - Card Key 9F
+        - Progressive Card Key
+        Coins:
+        - 10 Coins
+        - 100 Coins
+        - 20 Coins
+        - 40 Coins
+        Event Tickets:
+        - Aurora Ticket
+        - Mystic Ticket
+        Everything:
+        - 10 Coins
+        - 100 Coins
+        - 20 Coins
+        - 40 Coins
+        - Aguav Berry
+        - Amulet Coin
+        - Antidote
+        - Apicot Berry
+        - Aspear Berry
+        - Aurora Ticket
+        - Awakening
+        - Bead Mail
+        - Belue Berry
+        - Berry Juice
+        - Berry Pouch
+        - Bicycle
+        - Big Mushroom
+        - Big Pearl
+        - Bike Voucher
+        - Black Belt
+        - Black Flute
+        - Black Glasses
+        - Blue Flute
+        - Blue Scarf
+        - Blue Shard
+        - Blue Tea
+        - Bluk Berry
+        - Boulder Badge
+        - Bright Powder
+        - Burn Heal
+        - Calcium
+        - Carbos
+        - Card Key
+        - Card Key 10F
+        - Card Key 11F
+        - Card Key 2F
+        - Card Key 3F
+        - Card Key 4F
+        - Card Key 5F
+        - Card Key 6F
+        - Card Key 7F
+        - Card Key 8F
+        - Card Key 9F
+        - Cascade Badge
+        - Celadon Key
+        - Cerulean Key
+        - Charcoal
+        - Cheri Berry
+        - Chesto Berry
+        - Choice Band
+        - Cinnabar Key
+        - Cleanse Tag
+        - Coin Case
+        - Cornn Berry
+        - Deep Sea Scale
+        - Deep Sea Tooth
+        - Dire Hit
+        - Dive Ball
+        - Dome Fossil
+        - Dragon Fang
+        - Dragon Scale
+        - Dream Mail
+        - Durin Berry
+        - Earth Badge
+        - Elixir
+        - Energy Powder
+        - Energy Root
+        - Escape Rope
+        - Ether
+        - Everstone
+        - Exp. Share
+        - Fab Mail
+        - Fame Checker
+        - Figy Berry
+        - Fire Stone
+        - Five Pass
+        - Fluffy Tail
+        - Fly Unlock (Celadon City)
+        - Fly Unlock (Cerulean City)
+        - Fly Unlock (Cinnabar Island)
+        - Fly Unlock (Five Island)
+        - Fly Unlock (Four Island)
+        - Fly Unlock (Fuchsia City)
+        - Fly Unlock (Indigo Plateau)
+        - Fly Unlock (Lavender Town)
+        - Fly Unlock (One Island)
+        - Fly Unlock (Pallet Town)
+        - Fly Unlock (Pewter City)
+        - Fly Unlock (Route 10)
+        - Fly Unlock (Route 4)
+        - Fly Unlock (Saffron City)
+        - Fly Unlock (Seven Island)
+        - Fly Unlock (Six Island)
+        - Fly Unlock (Three Island)
+        - Fly Unlock (Two Island)
+        - Fly Unlock (Vermilion City)
+        - Fly Unlock (Viridian City)
+        - Focus Band
+        - Four Pass
+        - Fresh Water
+        - Fuchsia Key
+        - Full Heal
+        - Full Restore
+        - Ganlon Berry
+        - Glitter Mail
+        - Gold Teeth
+        - Good Rod
+        - Great Ball
+        - Green Scarf
+        - Green Shard
+        - Green Tea
+        - Grepa Berry
+        - Guard Spec
+        - HM01 Cut
+        - HM02 Fly
+        - HM03 Surf
+        - HM04 Strength
+        - HM05 Flash
+        - HM06 Rock Smash
+        - HM07 Waterfall
+        - HP Up
+        - Harbor Mail
+        - Hard Stone
+        - Heal Powder
+        - Heart Scale
+        - Helix Fossil
+        - Hideout Key
+        - Hondew Berry
+        - Hyper Potion
+        - Iapapa Berry
+        - Ice Heal
+        - Iron
+        - Itemfinder
+        - Jumping Shoes
+        - Kelpsy Berry
+        - King's Rock
+        - Lansat Berry
+        - Lava Cookie
+        - Lax Incense
+        - Leaf Stone
+        - Leftovers
+        - Lemonade
+        - Leppa Berry
+        - Letter
+        - Liechi Berry
+        - Lift Key
+        - Light Ball
+        - Link Cable
+        - Lucky Egg
+        - Lucky Punch
+        - Lum Berry
+        - Luxury Ball
+        - Machine Part
+        - Macho Brace
+        - Magnet
+        - Mago Berry
+        - Magost Berry
+        - Marsh Badge
+        - Master Ball
+        - Max Elixir
+        - Max Ether
+        - Max Potion
+        - Max Repel
+        - Max Revive
+        - Mech Mail
+        - Mental Herb
+        - Metal Coat
+        - Metal Powder
+        - Meteorite
+        - Miracle Seed
+        - Moomoo Milk
+        - Moon Stone
+        - Mystic Ticket
+        - Mystic Water
+        - Nanab Berry
+        - Nest Ball
+        - Net Ball
+        - Never Melt Ice
+        - Nomel Berry
+        - Nugget
+        - Oak's Parcel
+        - Old Amber
+        - Old Rod
+        - One Pass
+        - Oran Berry
+        - Orange Mail
+        - PP Max
+        - PP Up
+        - Pamtre Berry
+        - Paralyze Heal
+        - Pearl
+        - Pecha Berry
+        - Persim Berry
+        - Petaya Berry
+        - Pewter Key
+        - Pinap Berry
+        - Pink Scarf
+        - Poison Barb
+        - Poke Ball
+        - Poke Doll
+        - Poke Flute
+        - Pokedex
+        - Pomeg Berry
+        - Potion
+        - Powder Jar
+        - Premier Ball
+        - Progressive Card Key
+        - Progressive Pass
+        - Progressive Rod
+        - Protein
+        - Purple Tea
+        - Qualot Berry
+        - Quick Claw
+        - Rabuta Berry
+        - Rainbow Badge
+        - Rainbow Pass
+        - Rare Candy
+        - Rawst Berry
+        - Razz Berry
+        - Red Flute
+        - Red Scarf
+        - Red Shard
+        - Red Tea
+        - Repeat Ball
+        - Repel
+        - Retro Mail
+        - Revival Herb
+        - Revive
+        - Ruby
+        - Running Shoes
+        - S.S. Ticket
+        - Sacred Ash
+        - Safari Ball
+        - Safari Pass
+        - Saffron Key
+        - Salac Berry
+        - Sapphire
+        - Scanner
+        - Scope Lens
+        - Sea Incense
+        - Secret Key
+        - Seven Pass
+        - Shadow Mail
+        - Sharp Beak
+        - Shell Bell
+        - Shoal Salt
+        - Shoal Shell
+        - Silk Scarf
+        - Silph Scope
+        - Silver Powder
+        - Sitrus Berry
+        - Six Pass
+        - Smoke Ball
+        - Soda Pop
+        - Soft Sand
+        - Soothe Bell
+        - Soul Badge
+        - Soul Dew
+        - Spell Tag
+        - Spelon Berry
+        - Star Piece
+        - Stardust
+        - Starf Berry
+        - Stick
+        - Sun Stone
+        - Super Potion
+        - Super Repel
+        - Super Rod
+        - TM Case
+        - TM01
+        - TM02
+        - TM03
+        - TM04
+        - TM05
+        - TM06
+        - TM07
+        - TM08
+        - TM09
+        - TM10
+        - TM11
+        - TM12
+        - TM13
+        - TM14
+        - TM15
+        - TM16
+        - TM17
+        - TM18
+        - TM19
+        - TM20
+        - TM21
+        - TM22
+        - TM23
+        - TM24
+        - TM25
+        - TM26
+        - TM27
+        - TM28
+        - TM29
+        - TM30
+        - TM31
+        - TM32
+        - TM33
+        - TM34
+        - TM35
+        - TM36
+        - TM37
+        - TM38
+        - TM39
+        - TM40
+        - TM41
+        - TM42
+        - TM43
+        - TM44
+        - TM45
+        - TM46
+        - TM47
+        - TM48
+        - TM49
+        - TM50
+        - Tamato Berry
+        - Tea
+        - Teachy TV
+        - Thick Club
+        - Three Pass
+        - Thunder Badge
+        - Thunder Stone
+        - Timer Ball
+        - Tiny Mushroom
+        - Town Map
+        - Tri Pass
+        - Tropic Mail
+        - Twisted Spoon
+        - Two Pass
+        - Ultra Ball
+        - Up-Grade
+        - Vermilion Key
+        - Viridian Key
+        - Volcano Badge
+        - Vs. Seeker
+        - Water Stone
+        - Watmel Berry
+        - Wave Mail
+        - Wepear Berry
+        - White Flute
+        - White Herb
+        - Wiki Berry
+        - Wood Mail
+        - X Accuracy
+        - X Attack
+        - X Defend
+        - X Special
+        - X Speed
+        - Yellow Flute
+        - Yellow Scarf
+        - Yellow Shard
+        - Zinc
+        Evolution Items:
+        - Deep Sea Scale
+        - Deep Sea Tooth
+        - Dragon Scale
+        - Fire Stone
+        - Heart Scale
+        - King's Rock
+        - Leaf Stone
+        - Link Cable
+        - Metal Coat
+        - Moon Stone
+        - Sun Stone
+        - Thunder Stone
+        - Up-Grade
+        - Water Stone
+        Field Items:
+        - Black Flute
+        - Escape Rope
+        - Max Repel
+        - Repel
+        - Super Repel
+        - White Flute
+        Fly Unlocks:
+        - Fly Unlock (Celadon City)
+        - Fly Unlock (Cerulean City)
+        - Fly Unlock (Cinnabar Island)
+        - Fly Unlock (Five Island)
+        - Fly Unlock (Four Island)
+        - Fly Unlock (Fuchsia City)
+        - Fly Unlock (Indigo Plateau)
+        - Fly Unlock (Lavender Town)
+        - Fly Unlock (One Island)
+        - Fly Unlock (Pallet Town)
+        - Fly Unlock (Pewter City)
+        - Fly Unlock (Route 10)
+        - Fly Unlock (Route 4)
+        - Fly Unlock (Saffron City)
+        - Fly Unlock (Seven Island)
+        - Fly Unlock (Six Island)
+        - Fly Unlock (Three Island)
+        - Fly Unlock (Two Island)
+        - Fly Unlock (Vermilion City)
+        - Fly Unlock (Viridian City)
+        Fossils:
+        - Dome Fossil
+        - Helix Fossil
+        - Old Amber
+        Gems:
+        - Ruby
+        - Sapphire
+        Gym Keys:
+        - Celadon Key
+        - Cerulean Key
+        - Cinnabar Key
+        - Fuchsia Key
+        - Pewter Key
+        - Saffron Key
+        - Secret Key
+        - Vermilion Key
+        - Viridian Key
+        HM01:
+        - HM01 Cut
+        HM02:
+        - HM02 Fly
+        HM03:
+        - HM03 Surf
+        HM04:
+        - HM04 Strength
+        HM05:
+        - HM05 Flash
+        HM06:
+        - HM06 Rock Smash
+        HM07:
+        - HM07 Waterfall
+        HMs:
+        - HM01 Cut
+        - HM02 Fly
+        - HM03 Surf
+        - HM04 Strength
+        - HM05 Flash
+        - HM06 Rock Smash
+        - HM07 Waterfall
+        HP Healing Items:
+        - Berry Juice
+        - Energy Powder
+        - Energy Root
+        - Fresh Water
+        - Full Restore
+        - Hyper Potion
+        - Lemonade
+        - Max Potion
+        - Moomoo Milk
+        - Potion
+        - Soda Pop
+        - Super Potion
+        Healing Items:
+        - Antidote
+        - Awakening
+        - Berry Juice
+        - Blue Flute
+        - Burn Heal
+        - Elixir
+        - Energy Powder
+        - Energy Root
+        - Ether
+        - Fresh Water
+        - Full Heal
+        - Full Restore
+        - Heal Powder
+        - Hyper Potion
+        - Ice Heal
+        - Lava Cookie
+        - Lemonade
+        - Max Elixir
+        - Max Ether
+        - Max Potion
+        - Max Revive
+        - Moomoo Milk
+        - Paralyze Heal
+        - Potion
+        - Red Flute
+        - Revival Herb
+        - Revive
+        - Sacred Ash
+        - Soda Pop
+        - Super Potion
+        - Yellow Flute
+        Held Items:
+        - Amulet Coin
+        - Black Belt
+        - Black Glasses
+        - Blue Scarf
+        - Bright Powder
+        - Charcoal
+        - Choice Band
+        - Cleanse Tag
+        - Deep Sea Scale
+        - Deep Sea Tooth
+        - Dragon Fang
+        - Dragon Scale
+        - Everstone
+        - Focus Band
+        - Green Scarf
+        - Hard Stone
+        - Heart Scale
+        - King's Rock
+        - Lax Incense
+        - Leftovers
+        - Light Ball
+        - Lucky Egg
+        - Lucky Punch
+        - Macho Brace
+        - Magnet
+        - Mental Herb
+        - Metal Coat
+        - Metal Powder
+        - Miracle Seed
+        - Mystic Water
+        - Never Melt Ice
+        - Pink Scarf
+        - Poison Barb
+        - Quick Claw
+        - Red Scarf
+        - Scope Lens
+        - Sea Incense
+        - Sharp Beak
+        - Shell Bell
+        - Silk Scarf
+        - Silver Powder
+        - Smoke Ball
+        - Soft Sand
+        - Soothe Bell
+        - Soul Dew
+        - Spell Tag
+        - Stick
+        - Thick Club
+        - Twisted Spoon
+        - Up-Grade
+        - White Herb
+        - Yellow Scarf
+        Island Passes:
+        - Five Pass
+        - Four Pass
+        - One Pass
+        - Progressive Pass
+        - Rainbow Pass
+        - Seven Pass
+        - Six Pass
+        - Three Pass
+        - Tri Pass
+        - Two Pass
+        Junk Items:
+        - Blue Shard
+        - Green Shard
+        - Red Shard
+        - Shoal Salt
+        - Shoal Shell
+        - Yellow Shard
+        Key Items:
+        - Aurora Ticket
+        - Berry Pouch
+        - Bicycle
+        - Bike Voucher
+        - Blue Tea
+        - Card Key
+        - Card Key 10F
+        - Card Key 11F
+        - Card Key 2F
+        - Card Key 3F
+        - Card Key 4F
+        - Card Key 5F
+        - Card Key 6F
+        - Card Key 7F
+        - Card Key 8F
+        - Card Key 9F
+        - Celadon Key
+        - Cerulean Key
+        - Cinnabar Key
+        - Coin Case
+        - Dome Fossil
+        - Exp. Share
+        - Fame Checker
+        - Fire Stone
+        - Five Pass
+        - Four Pass
+        - Fuchsia Key
+        - Gold Teeth
+        - Good Rod
+        - Green Tea
+        - Helix Fossil
+        - Hideout Key
+        - Itemfinder
+        - Jumping Shoes
+        - Leaf Stone
+        - Letter
+        - Lift Key
+        - Link Cable
+        - Machine Part
+        - Meteorite
+        - Moon Stone
+        - Mystic Ticket
+        - Oak's Parcel
+        - Old Amber
+        - Old Rod
+        - One Pass
+        - Pewter Key
+        - Poke Flute
+        - Pokedex
+        - Powder Jar
+        - Progressive Card Key
+        - Progressive Pass
+        - Progressive Rod
+        - Purple Tea
+        - Rainbow Pass
+        - Red Tea
+        - Ruby
+        - Running Shoes
+        - S.S. Ticket
+        - Safari Pass
+        - Saffron Key
+        - Sapphire
+        - Scanner
+        - Secret Key
+        - Seven Pass
+        - Silph Scope
+        - Six Pass
+        - Sun Stone
+        - Super Rod
+        - TM Case
+        - Tea
+        - Teachy TV
+        - Three Pass
+        - Thunder Stone
+        - Town Map
+        - Tri Pass
+        - Two Pass
+        - Vermilion Key
+        - Viridian Key
+        - Vs. Seeker
+        - Water Stone
+        Mails:
+        - Bead Mail
+        - Dream Mail
+        - Fab Mail
+        - Glitter Mail
+        - Harbor Mail
+        - Mech Mail
+        - Orange Mail
+        - Retro Mail
+        - Shadow Mail
+        - Tropic Mail
+        - Wave Mail
+        - Wood Mail
+        PP Healing Items:
+        - Elixir
+        - Ether
+        - Max Elixir
+        - Max Ether
+        Power-Up Items:
+        - Calcium
+        - Carbos
+        - Dire Hit
+        - Guard Spec
+        - HP Up
+        - Iron
+        - PP Max
+        - PP Up
+        - Protein
+        - Rare Candy
+        - X Accuracy
+        - X Attack
+        - X Defend
+        - X Special
+        - X Speed
+        - Zinc
+        Progressive Items:
+        - Progressive Card Key
+        - Progressive Pass
+        - Progressive Rod
+        Revival Items:
+        - Max Revive
+        - Revival Herb
+        - Revive
+        Rods:
+        - Good Rod
+        - Old Rod
+        - Progressive Rod
+        - Super Rod
+        Sellables:
+        - Big Mushroom
+        - Big Pearl
+        - Nugget
+        - Pearl
+        - Star Piece
+        - Stardust
+        - Tiny Mushroom
+        Status Healing Items:
+        - Antidote
+        - Awakening
+        - Blue Flute
+        - Burn Heal
+        - Full Heal
+        - Full Restore
+        - Heal Powder
+        - Ice Heal
+        - Lava Cookie
+        - Paralyze Heal
+        - Red Flute
+        - Yellow Flute
+        TMs:
+        - TM01
+        - TM02
+        - TM03
+        - TM04
+        - TM05
+        - TM06
+        - TM07
+        - TM08
+        - TM09
+        - TM10
+        - TM11
+        - TM12
+        - TM13
+        - TM14
+        - TM15
+        - TM16
+        - TM17
+        - TM18
+        - TM19
+        - TM20
+        - TM21
+        - TM22
+        - TM23
+        - TM24
+        - TM25
+        - TM26
+        - TM27
+        - TM28
+        - TM29
+        - TM30
+        - TM31
+        - TM32
+        - TM33
+        - TM34
+        - TM35
+        - TM36
+        - TM37
+        - TM38
+        - TM39
+        - TM40
+        - TM41
+        - TM42
+        - TM43
+        - TM44
+        - TM45
+        - TM46
+        - TM47
+        - TM48
+        - TM49
+        - TM50
+        Teas:
+        - Blue Tea
+        - Green Tea
+        - Purple Tea
+        - Red Tea
+        - Tea
+        Unique Items:
+        - Aurora Ticket
+        - Berry Pouch
+        - Bicycle
+        - Bike Voucher
+        - Blue Tea
+        - Boulder Badge
+        - Card Key
+        - Card Key 10F
+        - Card Key 11F
+        - Card Key 2F
+        - Card Key 3F
+        - Card Key 4F
+        - Card Key 5F
+        - Card Key 6F
+        - Card Key 7F
+        - Card Key 8F
+        - Card Key 9F
+        - Cascade Badge
+        - Celadon Key
+        - Cerulean Key
+        - Cinnabar Key
+        - Coin Case
+        - Dome Fossil
+        - Earth Badge
+        - Exp. Share
+        - Fame Checker
+        - Five Pass
+        - Fly Unlock (Celadon City)
+        - Fly Unlock (Cerulean City)
+        - Fly Unlock (Cinnabar Island)
+        - Fly Unlock (Five Island)
+        - Fly Unlock (Four Island)
+        - Fly Unlock (Fuchsia City)
+        - Fly Unlock (Indigo Plateau)
+        - Fly Unlock (Lavender Town)
+        - Fly Unlock (One Island)
+        - Fly Unlock (Pallet Town)
+        - Fly Unlock (Pewter City)
+        - Fly Unlock (Route 10)
+        - Fly Unlock (Route 4)
+        - Fly Unlock (Saffron City)
+        - Fly Unlock (Seven Island)
+        - Fly Unlock (Six Island)
+        - Fly Unlock (Three Island)
+        - Fly Unlock (Two Island)
+        - Fly Unlock (Vermilion City)
+        - Fly Unlock (Viridian City)
+        - Four Pass
+        - Fuchsia Key
+        - Gold Teeth
+        - Good Rod
+        - Green Tea
+        - HM01 Cut
+        - HM02 Fly
+        - HM03 Surf
+        - HM04 Strength
+        - HM05 Flash
+        - HM06 Rock Smash
+        - HM07 Waterfall
+        - Helix Fossil
+        - Hideout Key
+        - Itemfinder
+        - Jumping Shoes
+        - Letter
+        - Lift Key
+        - Link Cable
+        - Machine Part
+        - Marsh Badge
+        - Meteorite
+        - Mystic Ticket
+        - Oak's Parcel
+        - Old Amber
+        - Old Rod
+        - One Pass
+        - Pewter Key
+        - Poke Flute
+        - Pokedex
+        - Powder Jar
+        - Purple Tea
+        - Rainbow Badge
+        - Rainbow Pass
+        - Red Tea
+        - Ruby
+        - Running Shoes
+        - S.S. Ticket
+        - Safari Pass
+        - Saffron Key
+        - Sapphire
+        - Scanner
+        - Secret Key
+        - Seven Pass
+        - Silph Scope
+        - Six Pass
+        - Soul Badge
+        - Super Rod
+        - TM Case
+        - Tea
+        - Teachy TV
+        - Three Pass
+        - Thunder Badge
+        - Town Map
+        - Tri Pass
+        - Two Pass
+        - Vermilion Key
+        - Viridian Key
+        - Volcano Badge
+        - Vs. Seeker
+        Vitamins:
+        - Calcium
+        - Carbos
+        - HP Up
+        - Iron
+        - PP Max
+        - PP Up
+        - Protein
+        - Zinc
   f90acedcd958213f483a6a4c238e2a3faf92165e:
     Donkey Kong Country 3:
       item_name_groups:

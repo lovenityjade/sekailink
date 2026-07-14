@@ -35,6 +35,7 @@ enum class RuntimeMenuAction {
   LoadStateSlot4,
   ToggleChatOverlay,
   ToggleNotifications,
+  ToggleActivityFeed,
   DecreaseMasterVolume,
   IncreaseMasterVolume,
   CycleTrackerDisplayMode,
@@ -44,6 +45,7 @@ enum class RuntimeMenuAction {
   ResetCoreSettingsToDefaults,
   RestartBridge,
   ToggleBridgeTerminal,
+  CycleWindowMode,
   ChangeGame,
   CloseMenu,
   QuitRuntime,
@@ -111,6 +113,7 @@ class RuntimeMenu {
               int master_volume_percent,
               bool chat_overlay_enabled,
               bool notifications_enabled,
+              bool activity_feed_enabled,
               bool bridge_terminal_enabled);
   void RenderImGui(const CoreOptionManager& core_options,
                    InputState& input_state,
@@ -122,6 +125,7 @@ class RuntimeMenu {
                    int master_volume_percent,
                    bool chat_overlay_enabled,
                    bool notifications_enabled,
+                   bool activity_feed_enabled,
                    bool bridge_terminal_enabled);
   RuntimeMenuAction ConsumePendingAction();
   void QueueAction(RuntimeMenuAction action) { pending_action_ = action; }

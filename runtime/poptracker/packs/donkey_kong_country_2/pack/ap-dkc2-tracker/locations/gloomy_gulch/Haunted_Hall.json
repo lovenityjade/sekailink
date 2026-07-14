@@ -1,0 +1,236 @@
+[
+    {
+        "name": "Haunted Hall",
+        "access_rules": [" "],
+        "visibility_rules": [""],
+        "children": [
+            {
+        "sections": [
+            {
+                "name": "Clear",
+                "access_rules": ["EASY, cling, skullkart", "NORMAL, skullkart, cartwheel", "NORMAL, skullkart, helicopterspin, dixie", "NORMAL, skullkart, cling", "NORMAL, skullkart, teamattack, diddy, dixie", "NORMAL, skullkart, cartwheel", "NORMAL, skullkart, helicopterspin, dixie", "NORMAL, skullkart, cling", "NORMAL, skullkart, teamattack, diddy, dixie"],
+                "chest_unopened_img": "images/checks/clear_disabled.png",
+                "chest_opened_img": "images/checks/clear.png",
+                "visibility_rules": [],
+                "item_count": 1
+            }
+        ],
+            "name": "Haunted Hall - Clear",
+            "map_locations": [
+                {
+                    "map": "glg-hauntedhall",
+                    "x": "4270",
+                    "y": "2081"
+                }
+            ]
+        },
+        {
+            "sections": [
+                {
+                "name": "DK Coin",
+                "access_rules": ["EASY, cling, skullkart", "NORMAL, skullkart, cartwheel", "NORMAL, skullkart, helicopterspin, dixie", "NORMAL, skullkart, cling", "NORMAL, skullkart, teamattack, diddy, dixie", "NORMAL, skullkart, cartwheel", "NORMAL, skullkart, helicopterspin, dixie", "NORMAL, skullkart, cling", "NORMAL, skullkart, teamattack, diddy, dixie"],
+                "chest_unopened_img": "images/checks/dkcoin_disabled.png",
+                "chest_opened_img": "images/checks/dkcoin.png",
+                "visibility_rules": ["dkcoinchecks"],
+                "item_count": 1
+            }
+        ],
+            "name": "Haunted Hall - DK Coin",
+            "map_locations": [
+                {
+                    "map": "glg-hauntedhall",
+                    "x": "4103",
+                    "y": "2062"
+                }
+            ]
+        },
+        {
+            "sections": [
+                {
+                "name": "KONG",
+                "access_rules": ["EASY, cling, skullkart", "NORMAL, skullkart, cartwheel", "NORMAL, skullkart, helicopterspin, dixie", "NORMAL, skullkart, cling", "NORMAL, skullkart, teamattack, diddy, dixie", "NORMAL, skullkart, cartwheel", "NORMAL, skullkart, helicopterspin, dixie", "NORMAL, skullkart, cling", "NORMAL, skullkart, teamattack, diddy, dixie"],
+                "chest_unopened_img": "images/checks/kong_disabled.png",
+                "chest_opened_img": "images/checks/kong.png",
+                "visibility_rules": ["kongchecks"],
+                "item_count": 1
+            }
+        ],
+            "name": "Haunted Hall - KONG",
+            "map_locations": [
+                {
+                    "map": "glg-hauntedhall",
+                    "shape": "diamond",
+                    "x": "2716",
+                    "y": "140"
+                },
+                {
+                    "map": "glg-hauntedhall",
+                    "shape": "diamond",
+                    "x": "489",
+                    "y": "1083"
+                },
+                {
+                    "map": "glg-hauntedhall",
+                    "shape": "diamond",
+                    "x": "179",
+                    "y": "1597"
+                },
+                {
+                    "map": "glg-hauntedhall",
+                    "shape": "diamond",
+                    "x": "923",
+                    "y": "1822"
+                }
+            ]
+        },
+        {
+            "sections": [
+                {
+                "name": "Bonus #1",
+                "access_rules": ["EASY, cling, skullkart", "NORMAL, skullkart, cartwheel", "NORMAL, skullkart, helicopterspin, dixie", "NORMAL, skullkart, cling", "NORMAL, skullkart, teamattack, diddy, dixie", "NORMAL, skullkart, cartwheel", "NORMAL, skullkart, helicopterspin, dixie", "NORMAL, skullkart, cling", "NORMAL, skullkart, teamattack, diddy, dixie"],
+                "chest_unopened_img": "images/checks/kremkoin_disabled.png",
+                "chest_opened_img": "images/checks/kremkoin.png",
+                "visibility_rules": [],
+                "item_count": 1
+            }
+        ],
+            "name": "Haunted Hall - Bonus #1",
+            "map_locations": [
+                {
+                    "map": "glg-hauntedhall",
+                    "x": "535",
+                    "y": "496"
+                }
+            ]
+        },
+        {
+            "sections": [
+                {
+                "name": "Bonus #2",
+                "access_rules": ["EASY, cling, skullkart", "NORMAL, skullkart, cartwheel", "NORMAL, skullkart, helicopterspin, dixie", "NORMAL, skullkart, cling", "NORMAL, skullkart, teamattack, diddy, dixie", "NORMAL, skullkart, cartwheel", "NORMAL, skullkart, helicopterspin, dixie", "NORMAL, skullkart, cling", "NORMAL, skullkart, teamattack, diddy, dixie"],
+                "chest_unopened_img": "images/checks/kremkoin_disabled.png",
+                "chest_opened_img": "images/checks/kremkoin.png",
+                "visibility_rules": [],
+                "item_count": 1
+            }
+        ],
+            "name": "Haunted Hall - Bonus #2",
+            "map_locations": [
+                {
+                    "map": "glg-hauntedhall",
+                    "x": "271",
+                    "y": "576"
+                }
+            ]
+        },
+        {
+            "sections": [
+                {
+                "name": "Bonus #3",
+                "access_rules": ["EASY, cling, skullkart", "HARD, skullkart, diddy", "HARD, skullkart, dixie, helicopterspin", "HARD, skullkart, dixie, cartwheel", "NORMAL, skullkart, cartwheel", "NORMAL, skullkart, helicopterspin, dixie", "NORMAL, skullkart, cling", "NORMAL, skullkart, teamattack, diddy, dixie"],
+                "chest_unopened_img": "images/checks/kremkoin_disabled.png",
+                "chest_opened_img": "images/checks/kremkoin.png",
+                "visibility_rules": [],
+                "item_count": 1
+            }
+        ],
+            "name": "Haunted Hall - Bonus #3",
+            "map_locations": [
+                {
+                    "map": "glg-hauntedhall",
+                    "x": "1824",
+                    "y": "1529"
+                }
+            ]
+        },
+        {
+            "sections": [
+                {
+                "name": "Banana Bunch #1 (Start)",
+                "access_rules": [""],
+                "chest_unopened_img": "images/checks/bananabunch_disabled.png",
+                "chest_opened_img": "images/checks/bananabunch.png",
+                "visibility_rules": ["bananasanity"],
+                "item_count": 1
+            },
+            {
+                "name": "Banana Bunch #2 (Start)",
+                "access_rules": [""],
+                "chest_unopened_img": "images/checks/bananabunch_disabled.png",
+                "chest_opened_img": "images/checks/bananabunch.png",
+                "visibility_rules": ["bananasanity"],
+                "item_count": 1
+            }
+        ],
+            "name": "Haunted Hall - Banana Bunches",
+            "map_locations": [
+                {
+                    "map": "glg-hauntedhall",
+                    "x": "16",
+                    "y": "92"
+                }
+            ]
+        },
+        {
+            "sections": [
+                {
+                "name": "Banana Coin #1 (Below second hook)",
+                "access_rules": ["EASY, cartwheel", "NORMAL, cartwheel", "HARD"],
+                "chest_unopened_img": "images/checks/bananacoin_disabled.png",
+                "chest_opened_img": "images/checks/bananacoin.png",
+                "visibility_rules": ["coinsanity"],
+                "item_count": 1
+            }
+        ],
+            "name": "Haunted Hall - Banana Coin #1",
+            "map_locations": [
+                {
+                    "map": "glg-hauntedhall",
+                    "x": "411",
+                    "y": "150"
+                }
+            ]
+        },
+        {
+            "sections": [
+                {
+                "name": "Banana Coin #2 (Green kackle)",
+                "access_rules": ["EASY, cling, skullkart", "NORMAL, skullkart, cartwheel", "NORMAL, skullkart, helicopterspin, dixie", "NORMAL, skullkart, cling", "NORMAL, skullkart, teamattack, diddy, dixie", "NORMAL, skullkart, cartwheel", "NORMAL, skullkart, helicopterspin, dixie", "NORMAL, skullkart, cling", "NORMAL, skullkart, teamattack, diddy, dixie"],
+                "chest_unopened_img": "images/checks/bananacoin_disabled.png",
+                "chest_opened_img": "images/checks/bananacoin.png",
+                "visibility_rules": ["coinsanity"],
+                "item_count": 1
+            }
+        ],
+            "name": "Haunted Hall - Banana Coin #2",
+            "map_locations": [
+                {
+                    "map": "glg-hauntedhall",
+                    "x": "3974",
+                    "y": "764"
+                }
+            ]
+        },
+        {
+            "sections": [
+                {
+                "name": "Banana Coin #3 (Yellow kackle)",
+                "access_rules": ["EASY, cling, skullkart", "NORMAL, skullkart, cartwheel", "NORMAL, skullkart, helicopterspin, dixie", "NORMAL, skullkart, cling", "NORMAL, skullkart, teamattack, diddy, dixie", "NORMAL, skullkart, cartwheel", "NORMAL, skullkart, helicopterspin, dixie", "NORMAL, skullkart, cling", "NORMAL, skullkart, teamattack, diddy, dixie"],
+                "chest_unopened_img": "images/checks/bananacoin_disabled.png",
+                "chest_opened_img": "images/checks/bananacoin.png",
+                "visibility_rules": ["coinsanity"],
+                "item_count": 1
+            }
+        ],
+            "name": "Haunted Hall - Banana Coin #3",
+            "map_locations": [
+                {
+                    "map": "glg-hauntedhall",
+                    "x": "4027",
+                    "y": "923"
+                }
+            ]
+        }
+        ]
+    }
+]

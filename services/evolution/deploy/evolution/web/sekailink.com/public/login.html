@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SekaiLink — Connexion" />
+  <title>Connexion - SekaiLink</title>
+  <link rel="icon" type="image/png" sizes="64x64" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+  <script>
+    (function () {
+      try {
+        var allowed = ["fr", "en", "es", "ja", "zh-Hans", "zh-Hant", "ko", "de", "pt", "it"];
+        var v = null;
+        var q = new URLSearchParams(location.search).get("lang");
+        if (q && allowed.indexOf(q) !== -1) v = q;
+        if (!v) v = localStorage.getItem("sekailink-lang");
+        if (v && allowed.indexOf(v) !== -1) {
+          document.documentElement.setAttribute("lang", v === "zh-Hans" ? "zh-Hans" : v === "zh-Hant" ? "zh-Hant" : v);
+          document.documentElement.setAttribute("data-lang", v);
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+  <script>document.documentElement.classList.replace("no-js","js");</script>
+</head>
+<body class="auth-page">
+  <div class="stage" aria-hidden="true">
+    <div class="stage__void"></div>
+    <div class="stage__flare">
+      <span class="stage__flare-core"></span>
+      <span class="stage__flare-bloom"></span>
+      <span class="stage__flare-iris"></span>
+      <span class="stage__flare-streak stage__flare-streak--h"></span>
+      <span class="stage__flare-streak stage__flare-streak--v"></span>
+      <span class="stage__flare-streak stage__flare-streak--diag"></span>
+      <span class="stage__flare-ghost"></span>
+      <span class="stage__flare-ring"></span>
+    </div>
+    <div class="stage__grid"></div>
+    <div class="stage__tech" aria-hidden="true">
+      <div class="stage__tech-aurora"></div>
+      <div class="stage__tech-scan"></div>
+      <div class="stage__tech-sweep"></div>
+      <div class="stage__tech-chips"></div>
+    </div>
+    <div class="stage__vignette"></div>
+  </div>
+
+  <header class="topbar">
+    <div class="shell topbar__row">
+      <a class="brand" href="index.html">
+        <img class="brand__mark" src="assets/sekailink-logo-image.png" width="36" height="36" alt="" />
+        <img class="brand__wordmark" src="assets/sekailink-logo-text.png" height="26" alt="SekaiLink" />
+      </a>
+      <div class="topbar__cta">
+        <div class="lang-select-wrap">
+          <label class="vh" for="lang-select" data-i18n="lang_aria">Choisir la langue</label>
+          <select id="lang-select" class="lang-select">
+            <option value="fr">Français</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="auth-layout">
+    <div class="auth-container">
+      <div class="glow-card auth-card">
+        <div class="glow-card__aurora"></div>
+        <div class="glow-card__inner">
+          <h1 class="auth-title" data-i18n="auth.login_title">Connexion</h1>
+          <p class="auth-subtitle" data-i18n="auth.login_subtitle">Bienvenue sur SekaiLink</p>
+          
+          <form id="login-form" class="auth-form">
+            <div class="form-group">
+              <label for="identity" data-i18n="auth.identity">Email ou Nom d'utilisateur</label>
+              <input type="text" id="identity" name="identity" required />
+            </div>
+            <div class="form-group">
+              <label for="password" data-i18n="auth.password">Mot de passe</label>
+              <input type="password" id="password" name="password" required />
+            </div>
+            
+            <div id="auth-error" class="auth-error" style="display: none;"></div>
+            
+            <button type="submit" class="btn btn--primary btn--block">
+                <span data-i18n="auth.login_btn">Se connecter</span>
+            </button>
+            <p class="auth-switch">
+                <span data-i18n="auth.no_account">Pas encore de compte ?</span>
+                <a href="register.html" data-i18n="auth.register_link">S'inscrire</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/locales.js" defer></script>
+  <script src="js/i18n.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/login.js" defer></script>
+</body>
+</html>

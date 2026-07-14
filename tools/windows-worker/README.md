@@ -82,8 +82,8 @@ rsync -az --delete --info=stats2 \
   --exclude '**/*.ilk' \
   --exclude '**/*.tmp' \
   --exclude 'apps/client-core/tsconfig.tsbuildinfo' \
-  -e "sshpass -p 'A3e5t122!' ssh -F /home/thelovenityjade/.ssh/config" \
-  /home/thelovenityjade/SekaiLink/canonical/ \
+  -e "ssh -F ~/.ssh/config" \
+  /path/to/sekailink-canonical/ \
   sekailink-windows:/d/SekaiLink/repos/sekailink-canonical/
 ```
 

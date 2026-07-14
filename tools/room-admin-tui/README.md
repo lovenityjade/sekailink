@@ -61,6 +61,7 @@ Le TUI utilise le même endpoint que le Client Core (`/api/identity/login`), dem
 - `players`: liste les noms de slots de la room sélectionnée.
 - `items [game]`: liste les items connus depuis le datapackage Archipelago.
 - `give <slotname> <item name...>`: valide le nom d'item via le datapackage, suggère les noms proches si besoin, puis envoie `!admin /send <slotname> <item>` au serveur AP. Requiert un mot de passe AP admin; le TUI le récupère automatiquement si `SEKAILINK_ROOM_ADMIN_TOOL_TOKEN` est configuré, sinon il utilise `SEKAILINK_AP_ADMIN_PASSWORD`.
+- `release <slotname>`: envoie `!admin /release <slotname>` au serveur AP pour libérer les items restants de ce slot. Requiert le même mot de passe AP admin que `give`.
 - `raw <json>`: envoie une commande admin brute.
 - `ap-check [slot_name game] <location_id...>`: se connecte au serveur AP de la room et envoie `LocationChecks`. Si une room est sélectionnée, le slot et le jeu sont détectés automatiquement.
 - `ap-say [slot_name game] <message...>`: envoie un message `Say` au serveur AP. Si une room est sélectionnée, le slot et le jeu sont détectés automatiquement.
@@ -72,6 +73,6 @@ Le TUI masque les tokens dans ses exports. Il ne remplace pas les garde-fous ser
 
 Actuellement, `/api/room_status/<room_id>` expose le port public Archipelago de la room. Les commandes `snapshot`, `summary`, `events`, `reports`, `check` et `item` nécessitent un endpoint admin room server distinct. Si cet endpoint n'est pas exposé, le TUI le dit clairement et propose les commandes AP (`ap-info`, `ap-check`, `ap-say`) ou `status`.
 
-Après `select`, le TUI charge les secrets admin de la room si possible, puis ouvre aussi un moniteur Archipelago persistant sur le slot par défaut. Ce moniteur utilise `items_handling=0` et des tags tracker/admin: il peut lire les paquets serveur et envoyer les commandes admin comme `!admin /send`, mais il ne doit pas consommer les items destinés au vrai client du joueur.
+Après `select`, le TUI charge les secrets admin de la room si possible, puis ouvre aussi un moniteur Archipelago persistant sur le slot par défaut. Ce moniteur utilise `items_handling=0` et des tags tracker/admin: il peut lire les paquets serveur et envoyer les commandes admin comme `!admin /send` et `!admin /release`, mais il ne doit pas consommer les items destinés au vrai client du joueur.
 
-Le prompt supporte Tab completion et historique. Après `select`, Tab complète notamment les noms de joueurs et les items pour `give`.
+Le prompt supporte Tab completion et historique. Après `select`, Tab complète notamment les noms de joueurs pour `give`/`release` et les items pour `give`.

@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <optional>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 namespace sekailink::sklmi {
@@ -37,6 +38,7 @@ struct RuntimeOptions {
     std::string ap_game;
     std::string ap_slot_name;
     std::string player_alias;
+    std::unordered_map<std::string, std::string> player_aliases_by_slot_name;
     std::string ap_password;
     std::string ap_uuid = "sekailink-sklmi";
     std::vector<std::string> ap_tags = {"AP", "SekaiLink", "SKLMI"};

@@ -1,0 +1,31 @@
+{
+    "tracker_default": {
+        "type": "container",
+        "background": "#171717",
+        "content": {
+            "type": "dock",
+            "dropshadow": false,
+            "content": [
+                {
+                    "type": "dock",
+                    "dropshadow": false,
+                    "dock": "bottom",
+                    "background": "#2D2D2D",
+                    "content": [
+                        {
+                            "type": "layout",
+                            "key": "item_grids"
+                        }
+                    ]
+                },
+                {
+                    "type": "dock",
+                    "content": {
+                        "type": "layout",
+                        "key": "tabbed_maps"
+                    }
+                }
+            ]
+        }
+    }
+}

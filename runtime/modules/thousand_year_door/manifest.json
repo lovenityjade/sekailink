@@ -36,5 +36,6 @@
     "ap_game": "Paper Mario: The Thousand-Year Door"
   },
   "tracker_pack_uid": "",
-  "tracker_web_url": ""
+  "tracker_web_url": "https://github.com/ZobeePlays/TTYD-Randomizer-AP-Tracker/releases/latest",
+  "tracker_pack_path": "poptracker/packs/thousand_year_door/pack"
 }

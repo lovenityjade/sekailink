@@ -614,7 +614,9 @@ const LobbyPage: React.FC = () => {
     onWarning: (text) => showToast(text, "error"),
     onSm64ManualTutorial: () => setSm64exTutorialOpen(true),
   });
-  const launchInProgress = launchModalOpen && !launchError;
+  const [launchClickInProgress, setLaunchClickInProgress] = useState(false);
+  const launchSubmitRef = useRef(false);
+  const launchInProgress = (launchModalOpen && !launchError) || launchClickInProgress;
 
   useEffect(() => {
     if (!toast) return;
@@ -1997,43 +1999,52 @@ const LobbyPage: React.FC = () => {
   };
 
   const handleLaunch = async (downloadUrls?: string | string[]) => {
-    if (launchInProgress) return;
-    window.SKL_SFX?.stopBgm?.();
-    const launchRes = await executeRoomSessionLaunch({
-      downloadUrls,
-      roomStatus,
-      generation,
-      host,
-      fetchRoomStatus,
-      loadLatestGeneration: () => loadGeneration(),
-      playerName: selfLaunchContext.playerName || selfPlayerName,
-      playerAlias: me?.global_name || me?.username || selfPlayerName,
-      apGameName: selfApGameName,
-      playersByName,
-      password: lobbyPassword,
-      forceTrackerVariantPrompt,
-      lobbyId: lobbyKey,
-      onLaunchBegin: beginLaunch,
-    });
-    if (!launchRes.ok) {
-      if (launchRes.surface === "toast") {
-        showToast(launchRes.message, "error");
-      } else {
-        reportLaunchFailure(launchRes.errorMessage, launchRes.recoveryAction);
-      }
-      return;
-    }
-    if (launchRes.status === "manual") {
-      setLaunchManual({
-        path: launchRes.manualDownload.path,
-        ext: launchRes.manualDownload.ext,
-        moduleId: launchRes.manualDownload.moduleId,
-        apGameName: launchRes.manualDownload.apGameName,
-        installedPath: launchRes.manualDownload.installedPath,
-        note: launchRes.manualDownload.note,
+    if (launchSubmitRef.current || launchInProgress) return;
+    launchSubmitRef.current = true;
+    setLaunchClickInProgress(true);
+    beginLaunch();
+    try {
+      window.SKL_SFX?.stopBgm?.();
+      const launchRes = await executeRoomSessionLaunch({
+        downloadUrls,
+        roomStatus,
+        generation,
+        host,
+        fetchRoomStatus,
+        loadLatestGeneration: () => loadGeneration(),
+        playerName: selfLaunchContext.playerName || selfPlayerName,
+        playerAlias: me?.global_name || me?.username || selfPlayerName,
+        apGameName: selfApGameName,
+        playersByName,
+        password: lobbyPassword,
+        forceTrackerVariantPrompt,
+        lobbyId: lobbyKey,
+        onLaunchBegin: beginLaunch,
       });
-    } else {
-      setLaunchReady();
+      if (!launchRes.ok) {
+        if (launchRes.surface === "toast") {
+          reportLaunchFailure(launchRes.message, null);
+          showToast(launchRes.message, "error");
+        } else {
+          reportLaunchFailure(launchRes.errorMessage, launchRes.recoveryAction);
+        }
+        return;
+      }
+      if (launchRes.status === "manual") {
+        setLaunchManual({
+          path: launchRes.manualDownload.path,
+          ext: launchRes.manualDownload.ext,
+          moduleId: launchRes.manualDownload.moduleId,
+          apGameName: launchRes.manualDownload.apGameName,
+          installedPath: launchRes.manualDownload.installedPath,
+          note: launchRes.manualDownload.note,
+        });
+      } else {
+        setLaunchReady();
+      }
+    } finally {
+      launchSubmitRef.current = false;
+      setLaunchClickInProgress(false);
     }
   };
 

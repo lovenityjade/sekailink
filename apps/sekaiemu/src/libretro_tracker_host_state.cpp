@@ -273,14 +273,15 @@ void TickTrackerRuntimeForHost(TrackerRuntime& tracker_runtime,
                                               room_state_last_write_time,
                                               tracker_runtime) ||
                       tracker_dirty;
-      tracker_dirty = PumpTrackerTraceEvents(sklmi_companion_runtime.TraceLogPath(),
-                                             trace_offset,
-                                             item_label_by_key,
-                                             tracker_runtime) ||
-                      tracker_dirty;
     }
+    tracker_dirty = PumpTrackerTraceEvents(sklmi_companion_runtime.TraceLogPath(),
+                                           trace_offset,
+                                           item_label_by_key,
+                                           tracker_runtime) ||
+                    tracker_dirty;
     last_poll_frame = frame_counter;
   }
+
   tracker_runtime.Tick(1.0 / 60.0);
   if (tracker_runtime.MutationSerial() != last_mutation_serial) {
     last_mutation_serial = tracker_runtime.MutationSerial();
