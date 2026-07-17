@@ -44,6 +44,14 @@ target_link_libraries(sekailink_sklmi_runtime PRIVATE sekailink_sklmi)
 target_link_libraries(sekailink_sklmi_runtime PRIVATE PkgConfig::LIBARCHIVE PkgConfig::CURL)
 target_include_directories(sekailink_sklmi_runtime PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
+add_executable(sekailink_sklmi_runtime_jsonl_sink_smoke
+  tests/sklmi_runtime_jsonl_sink_smoke_main.cpp
+  src/runtime_jsonl_sink.cpp
+)
+
+target_link_libraries(sekailink_sklmi_runtime_jsonl_sink_smoke PRIVATE sekailink_sklmi)
+target_include_directories(sekailink_sklmi_runtime_jsonl_sink_smoke PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
 add_executable(sekailink_sklmi_smoke
   tests/sklmi_smoke_main.cpp
 )
@@ -195,6 +203,7 @@ target_link_libraries(sekailink_sklmi_tracker_runtime_e2e_smoke PRIVATE sekailin
 enable_testing()
 
 add_test(NAME sekailink_sklmi_smoke COMMAND sekailink_sklmi_smoke)
+add_test(NAME sekailink_sklmi_runtime_jsonl_sink_smoke COMMAND sekailink_sklmi_runtime_jsonl_sink_smoke)
 add_test(NAME sekailink_sklmi_legacy_manifest_smoke COMMAND sekailink_sklmi_legacy_manifest_smoke)
 add_test(NAME sekailink_sklmi_generic_bizhawk_manifest_smoke
   COMMAND sekailink_sklmi_generic_bizhawk_manifest_smoke ${CMAKE_CURRENT_SOURCE_DIR})

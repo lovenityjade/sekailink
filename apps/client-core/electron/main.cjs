@@ -32,6 +32,7 @@ const { createMonoRuntime } = require("./lib/mono-runtime.cjs");
 const { createPatcherRuntime } = require("./lib/patcher-runtime.cjs");
 const { createElectronAppShell } = require("./lib/electron-app-shell.cjs");
 const { createRuntimeShutdown } = require("./lib/runtime-shutdown.cjs");
+const { pruneOversizedSklmiTraceLogs } = require("./lib/runtime-log-maintenance.cjs");
 const { isSafeExternalUrl, isPlainObject, normalizeIpcString, normalizeIpcPath, normalizeGameId, createIpcSecurity } = require("./lib/ipc-security.cjs");
 
 const isDev = !app.isPackaged, devServerUrl = process.env.VITE_DEV_SERVER_URL || "http://localhost:5173", shouldOpenDevTools = process.env.SEKAILINK_OPEN_DEVTOOLS === "1";
@@ -909,6 +910,18 @@ const {
 appShell.registerAppLifecycle();
 
 app.whenReady().then(() => {
+  const traceCleanup = pruneOversizedSklmiTraceLogs({
+    rootDir: path.join(app.getPath("userData"), "sekaiemu"),
+    fs,
+    path,
+  });
+  if (traceCleanup.filesPruned > 0 || traceCleanup.errors.length > 0) {
+    writeLogLine(
+      traceCleanup.errors.length > 0 ? "warn" : "info",
+      "runtime-log-maintenance",
+      `trace cleanup files=${traceCleanup.filesPruned} reclaimed_bytes=${traceCleanup.bytesReclaimed} errors=${traceCleanup.errors.length}`,
+    );
+  }
   setTimeout(() => {
     void checkAndApplyBootstrapperUpdate()
       .then((result) => {

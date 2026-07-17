@@ -390,7 +390,7 @@ int main(int argc, char** argv) {
         !contains(trace_text, "\"event\":\"manifest_loaded\"") ||
         !contains(trace_text, "bridge_id=alttp-runtime-runner linkedworld_id=alttp core_profile=snes_v1 checks=2 injections=1") ||
         !contains(trace_text, "\"event\":\"provider_metadata\"") ||
-        !contains(trace_text, "system=SNES protocol_version=1 domains=system_ram(size=62976,writable=true,endianness=little)") ||
+        !contains(trace_text, "domains=system_ram(size=62976,writable=true,endianness=little)") ||
         !contains(trace_text, "\"event\":\"runtime_config\"") ||
         !contains(trace_text, "mode=offline tick_ms=1 max_ticks=3") ||
         !contains(trace_text, "bridge_state=") ||

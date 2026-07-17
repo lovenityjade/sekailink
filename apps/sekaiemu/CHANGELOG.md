@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-07-15
+
+- Capped SKLMI `trace.jsonl` diagnostics at 16 MiB with one bounded rotation.
+- Removed successful per-tick trace records that could grow runtime storage continuously during long sessions.
+- Client Core now reclaims oversized legacy SKLMI trace logs at startup without touching game saves or configuration.
+
 ## 2026-06-25
 
 - Froze NES as a validated BETA-3 runtime system after successful Client Core

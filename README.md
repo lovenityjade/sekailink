@@ -1,11 +1,11 @@
 # SekaiLink
 
 > [!IMPORTANT]
-> **Project archived on July 14, 2026.** SekaiLink is no longer under active
-> development or operated as a supported service by its original maintainer.
-> This repository preserves the final source state for study, auditing, and a
-> possible community-led continuation. It is provided as-is, without support or
-> a security-maintenance commitment.
+> **SekaiLink is active.** Development and operation resumed after the brief
+> July 14, 2026 archival period. The current focus is BETA-3 stability,
+> security, compatibility, and making Archipelago multiworld play easier to
+> access. Bug reports, testing, documentation, and carefully reviewed community
+> contributions are welcome.
 
 <p align="center">
   <img src="apps/client-core/public/assets/img/sekailink-logo-image.png" alt="SekaiLink logo mark" width="96" />
@@ -31,11 +31,16 @@ At a high level, SekaiLink helps players:
 
 ## Project Status
 
-This repository is the final canonical BETA-3 source tree. Some parts were
-production-facing, some remained experimental, and some are integration or
-reference code used to package the desktop experience. See
-[`docs/PROJECT_CLOSURE_2026-07-14.md`](docs/PROJECT_CLOSURE_2026-07-14.md) before
-attempting to build, deploy, or continue the project.
+This repository is the active canonical BETA-3 source tree. SekaiLink's public
+services and desktop releases are operated from this codebase while development
+prioritizes bug fixes, runtime reliability, security hardening, and support for
+validated games. Some modules remain experimental or serve as integration and
+packaging references; their status is documented alongside the relevant code.
+
+The July 14 closure notice is retained in
+[`docs/PROJECT_CLOSURE_2026-07-14.md`](docs/PROJECT_CLOSURE_2026-07-14.md) as a
+historical record. It was superseded when the project resumed and does not
+describe SekaiLink's current status.
 
 ## Core Integrations
 
@@ -76,9 +81,11 @@ testing, release approval, and the final behavior shipped to players.
 - `runtime`: packaged local runtime tree used by the client.
 - `docs`: source-of-truth notes and migration guardrails.
 
-## Continuation
+## Contributing
 
-A future maintainer should begin with a security and architecture audit, review
-the source-of-truth and technical handoff documents under `docs`, rotate every
-deployment credential, and rebuild all release artifacts from source. Do not
-assume that historical live-service configuration or credentials remain valid.
+SekaiLink welcomes focused contributions that improve reliability,
+accessibility, documentation, security, game compatibility, and the player
+experience. Start by reading the source-of-truth and technical documents under
+`docs`, keep changes scoped, and include verification appropriate to the area
+being changed. Never commit ROMs, credentials, private server configuration, or
+user data.
